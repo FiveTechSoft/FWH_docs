@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TImageBase64 - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/tdde.html">TDde / TDdeClient / TDdeServer</a>
+<a class="nav-item" href="../../en/reference/tform.html">TForm</a>
+<a class="nav-item active" href="../../en/reference/timagebase64.html">TImageBase64</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TImageBase64</h1>
+<p class="class-source">Source: <code>source/classes/imageb64.prg</code></p>
+<p class="class-hierarchy">Standalone utility class</p>
+
+<p>
+TImageBase64 is a utility class that encodes images to Base64 for use in web pages (HTML <code>&lt;img&gt;</code> tags with data URIs). It can also extract and save images from Base64-encoded HTML. The class auto-detects whether the input source is a file path, URL, or plain text.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aImage</code></td><td>Array</td><td>Internal image array from FW_ReadImage</td></tr>
+<tr><td><code>cFile</code></td><td>Character</td><td>Source file path or URL (if applicable)</td></tr>
+<tr><td><code>cBase64</code></td><td>Character</td><td>Base64 encoded image string</td></tr>
+<tr><td><code>lTag</code></td><td>Logical</td><td>Include <code>&lt;img&gt;</code> tags in output</td></tr>
+<tr><td><code>lHtml</code></td><td>Logical</td><td>Generate full HTML document in output</td></tr>
+<tr><td><code>lUrlEncode</code></td><td>Logical</td><td>URL-encode the data URI instead of plain base64</td></tr>
+<tr><td><code>nImgWidth</code></td><td>Numeric</td><td>Image width in pixels (ACCESS readonly)</td></tr>
+<tr><td><code>nImgHeight</code></td><td>Numeric</td><td>Image height in pixels (ACCESS readonly)</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cSource )</code></td><td>Create object; optionally load source immediately</td></tr>
+<tr><td><code>SetSource( cSource )</code></td><td>Set source: auto-detects file, URL, or base64 text</td></tr>
+<tr><td><code>ChooseFile()</code></td><td>Open file picker dialog to select an image</td></tr>
+<tr><td><code>Paste()</code></td><td>Load image from clipboard</td></tr>
+<tr><td><code>MakeText( lUrlEncode, lTag, lHtml, cTitle )</code></td><td>Generate output text (data URI or HTML)</td></tr>
+<tr><td><code>SaveText( cFile, lUrlEncode, lTag, lHtml )</code></td><td>Save output text to file; returns filename or nil</td></tr>
+<tr><td><code>CopyText( lUrlEncode, lTag, lHtml )</code></td><td>Copy output text to clipboard; returns the text</td></tr>
+<tr><td><code>SaveImage()</code></td><td>Save the decoded image to a file (.jpg or .png)</td></tr>
+<tr><td><code>TestHTML()</code></td><td>Generate a test HTML file and open it in the browser</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Image to Base64 HTML Tag</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oImg := TImageBase64():New( "c:\images\photo.jpg" )
+
+   // Generate an HTML img tag with inline base64 data
+   oImg:lTag := .T.
+   oImg:CopyText()   // copies to clipboard
+
+   // Or save as a complete HTML file
+   oImg:lHtml := .T.
+   oImg:SaveText( "preview.html" )
+
+   // Open in browser to test
+   oImg:TestHTML()
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>The source auto-detection checks: file path (<=255 chars, exists on disk), HTTP/HTTPS URL, or base64-encoded text.</li>
+<li>Use <code>Paste()</code> to grab an image directly from the Windows clipboard (bitmap, file list, or PNG format).</li>
+<li>The <code>nLineWidth</code> class data (default 1024) controls line breaking in the base64 output.</li>
+<li>Supported output formats: <code>data:image/...</code> URIs, <code>&lt;img&gt;</code> tags, or full HTML documents.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

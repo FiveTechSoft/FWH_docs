@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSelex / TSelector - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/tribbon_elems.html">TRbGroup / TRBtn / TRPanel</a>
+<a class="nav-item" href="../../en/ui/tscrollimg.html">TScrollImg</a>
+<a class="nav-item active" href="../../en/ui/tselex.html">TSelex / TSelector</a>
+<a class="nav-item" href="../../en/ui/tskin.html">TSkin</a>
+<a class="nav-item" href="../../en/ui/tslidermetro.html">TSliderMetro</a>
+<a class="nav-item" href="../../en/ui/tfolderex.html">TFolderEx</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+<a class="nav-item" href="../../en/data/ttable.html">TTable / TAccTable</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Utilities</div>
+<a class="nav-item" href="../../en/utilities/tfile.html">TFile</a>
+<a class="nav-item" href="../../en/utilities/ttime.html">TTime</a>
+<a class="nav-item" href="../../en/utilities/txmlwriter.html">TXmlWriter</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+<a class="nav-item" href="../../en/reference/ttitle.html">TTitle</a>
+<a class="nav-item" href="../../en/reference/ttreeitem.html">TTreeItem / TTVItem</a>
+<a class="nav-item" href="../../en/reference/tview.html">TView</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TSelex / TSelector</h1>
+<p class="class-source">Source: <code>source/classes/tselex.prg</code>, <code>source/classes/selector.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code> (both)</p>
+
+<p>
+TSelex is a segmented slider control with a draggable thumb that lets users pick from a discrete set of options. TSelector is a circular / radial dial control for selecting a value along an arc. Both provide visual selection with gradient rendering and keyboard/mouse interaction.
+</p>
+
+<h2 id="tselex">TSelex — Segmented Slider</h2>
+
+<h3 id="tselex-data">Key DATA Members</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aOptions</code></td><td>Array</td><td>Array of option labels displayed along the track</td></tr>
+<tr><td><code>bOnSelect</code></td><td>Codeblock</td><td>Code block fired when an option is selected</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Currently selected option index (1-based)</td></tr>
+<tr><td><code>nClrThumb</code></td><td>Numeric</td><td>Thumb color (RGB)</td></tr>
+<tr><td><code>aGradOut</code></td><td>Array</td><td>Gradient for the outer track area</td></tr>
+<tr><td><code>aGradIn</code></td><td>Array</td><td>Gradient for the inner track area</td></tr>
+<tr><td><code>nRound</code></td><td>Numeric</td><td>Corner radius for the track background</td></tr>
+</tbody>
+</table>
+
+<h3 id="tselex-methods">Methods</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, nW, nH, oWnd, lPixel, aOptions, bOnSelect, ... )</code></td><td>Create a segmented slider with gradient and thumb parameters</td></tr>
+<tr><td><code>SetOption( nOption )</code></td><td>Programmatically select an option by index</td></tr>
+<tr><td><code>GoNext( lRefresh )</code></td><td>Move selection to the next option</td></tr>
+<tr><td><code>GoPrev( lRefresh )</code></td><td>Move selection to the previous option</td></tr>
+<tr><td><code>AddOption( cText )</code></td><td>Append a new option to the slider</td></tr>
+<tr><td><code>InsertOption( cText, nPos )</code></td><td>Insert an option at a specific position</td></tr>
+<tr><td><code>DelOption( nOption )</code></td><td>Remove an option by index</td></tr>
+<tr><td><code>SetText( cText, nOption )</code></td><td>Change the text of an existing option</td></tr>
+</tbody>
+</table>
+
+<h2 id="tselector">TSelector — Radial Dial</h2>
+
+<h3 id="tselector-data">Key DATA Members</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Current angular position in radians</td></tr>
+<tr><td><code>nArc</code></td><td>Numeric</td><td>Total arc length in radians</td></tr>
+<tr><td><code>nRadius</code></td><td>Numeric</td><td>Dial radius in pixels</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum value of the dial range</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum value of the dial range</td></tr>
+<tr><td><code>nMarks</code></td><td>Numeric</td><td>Number of tick marks along the arc (0 = none)</td></tr>
+<tr><td><code>lExact</code></td><td>Logical</td><td>Snap to nearest tick mark when dragging</td></tr>
+</tbody>
+</table>
+
+<h3 id="tselector-methods">Methods</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, bSetGet, nAngle1, nAngle2, nMin, nMax, nMarks, lExact, oWnd, ... )</code></td><td>Create a radial dial with angular range and value bounds</td></tr>
+<tr><td><code>Set( nVal )</code></td><td>Set the dial to a specific value</td></tr>
+<tr><td><code>nGetPos( nVal )</code></td><td>Convert a value to its angular position</td></tr>
+<tr><td><code>nGetVal( nPos )</code></td><td>Convert an angular position to its corresponding value</td></tr>
+<tr><td><code>PlaceMark( nPos, nStep )</code></td><td>Place a visual tick mark at a position</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Segmented Slider and Radial Dial</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oSelex, oSelector, nOpt := 1, nVal := 5
+
+   DEFINE WINDOW oWnd TITLE "TSelex + TSelector Demo" SIZE 400, 300
+
+   @ 20, 20 SELEX oSelex VAR nOpt OPTIONS { "Low", "Med", "High" } ;
+        SIZE 200, 30 OF oWnd
+
+   @ 80, 20 SELECTOR oSelector VAR nVal ;
+        ANGLES 180, 540 MIN 0 MAX 10 ;
+        MARKS 11 EXACT OF oWnd SIZE 120, 120
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TSelex tracks are rendered with two gradient layers (<code>aGradOut</code> = outer track, <code>aGradIn</code> = inner highlight).</li>
+<li>The thumb is drawn as a rounded rectangle; its size is controlled by <code>nWidthThumb</code> / <code>nHeightThumb</code>.</li>
+<li>TSelector uses an angular coordinate system. Angles are specified in degrees; the constructor converts them to radians internally.</li>
+<li>When <code>lExact</code> is true and marks are defined, the dial snaps to the nearest mark on mouse release.</li>
+<li>Both controls support keyboard navigation (arrow keys for TSelex, arrows for TSelector).</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

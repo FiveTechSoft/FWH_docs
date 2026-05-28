@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOutLook2003 / TOutLook2010 - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/ttabs.html">TTabs</a>
+<a class="nav-item" href="../../en/ui/tpages.html">TPages</a>
+<a class="nav-item" href="../../en/ui/tpanel.html">TPanel</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/ttrackbar.html">TTrackBar</a>
+<a class="nav-item" href="../../en/ui/tupdown.html">TUpDown</a>
+<a class="nav-item" href="../../en/ui/tscrollbar.html">TScrollBar</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item active" href="../../en/ui/toutlook2003.html">TOutLook2003 / TOutLook2010</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/tvideo.html">TVideo</a>
+<a class="nav-item" href="../../en/ui/tximage.html">TXImage</a>
+<a class="nav-item" href="../../en/ui/twbrowse.html">TWBrowse</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TOutLook2003 / TOutLook2010</h1>
+<p class="class-source">Sources: <code>source/classes/outl2003.prg</code>, <code>source/classes/outl2010.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+
+<p>
+TOutLook2003 and TOutLook2010 are navigation pane controls modeled after the Microsoft Outlook sidebar. They display a header, collapsible groups with icons, and a client area for child dialogs. Both classes share the same API; the difference is the color scheme (Outlook 2003 blue vs. Outlook 2010 light gray).
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>oHeader</code></td><td>Object</td><td>Header group displayed at the top</td></tr>
+<tr><td><code>aGroups</code></td><td>Array</td><td>Array of TOutLook2003Group navigation buttons</td></tr>
+<tr><td><code>aDialogs</code></td><td>Array</td><td>Array of child dialogs for each group's content area</td></tr>
+<tr><td><code>nOver</code></td><td>Numeric</td><td>Index of the group currently under the mouse cursor</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Code block executed when the selected group changes</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Index of the currently selected group</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( oWnd, aPrompts, aBmpNames, bChange, lBorder )</code></td><td>Create the navigation pane with groups and bitmaps</td></tr>
+<tr><td><code>Redefine( nId, oWnd, aPrompts, aBmpNames, bChange, aDialogs )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>AddGroup( cPrompt, cBitmap )</code></td><td>Add a navigation group with icon bitmap</td></tr>
+<tr><td><code>SetOption( nOption )</code></td><td>Switch to the specified group by index</td></tr>
+</tbody>
+</table>
+
+<h2 id="commands">Commands</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol OUTLOOK2003 oOut PROMPTS aPrompts BITMAPS aBmps ;
+   SIZE nW, nH OF oWnd</code></pre>
+
+<h2 id="example">Example: Navigation Pane</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oOutlook
+   local aPrompts := { "Mail", "Calendar", "Contacts" }
+   local aBitmaps := { "mail.bmp", "cal.bmp", "cont.bmp" }
+
+   DEFINE WINDOW oWnd TITLE "Outlook 2003 Pane" SIZE 700, 500
+
+   @ 0, 0 OUTLOOK2003 oOutlook ;
+      PROMPTS aPrompts BITMAPS aBitmaps ;
+      SIZE 190, 500 OF oWnd
+
+   // For Outlook 2010 styling, use OUTLOOK2010
+   // @ 0, 0 OUTLOOK2010 oOutlook ...
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="outlook2010">TOutLook2010 Differences</h2>
+
+<p>
+TOutLook2010 uses the same API and method signatures as TOutLook2003. The only differences are:
+</p>
+<ul>
+<li>Background color: <code>nRGB( 220, 223, 228 )</code> (light gray) vs. Outlook 2003's dark blue.</li>
+<li>Group button gradient colors use warm orange/cyan tones instead of blue tones.</li>
+</ul>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>The pane is 190 pixels wide by default, positioned on the left side of the window.</li>
+<li>Each group has an associated child dialog created as a WS_CHILD window; switch groups by clicking the group button.</li>
+<li>The <code>bChange</code> block fires when the user selects a different group via <code>SetOption()</code>.</li>
+<li>A right-click popup menu lets users switch between groups programmatically.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>
