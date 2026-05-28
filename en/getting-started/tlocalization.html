@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Localization &amp; Multi-language Support - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+<a class="nav-item active" href="../../en/getting-started/tlocalization.html">Localization</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/tproxy.html">TProxy</a>
+<a class="nav-item" href="../../en/internet/tras.html">TRas</a>
+<a class="nav-item" href="../../en/internet/tmail.html">TMail</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tgrok.html">TGrok</a>
+<a class="nav-item" href="../../en/internet/tkimi.html">TKimi</a>
+<a class="nav-item" href="../../en/internet/tdeepseek.html">TDeepSeek</a>
+<a class="nav-item" href="../../en/internet/tembeddings.html">TEmbeddings</a>
+<a class="nav-item" href="../../en/internet/tneuralnet.html">TNeuralNetwork</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>Localization &amp; Multi-language Support</h1>
+<p class="class-source">Source: <code>source/function/strings.prg</code></p>
+
+<p>
+FiveWin's localization system provides centralized multi-language support for all framework components through <strong>FWString()</strong> and <strong>FWSetLanguage()</strong>. The system stores hundreds of predefined translations in a static array within <code>strings.prg</code>, covering six languages: English, Spanish, French, Portuguese, German, and Italian. All framework components -- windows, menus, dialogs, reports, print previews, and error handlers -- retrieve their UI text through this unified system. Applications can switch languages at runtime or add new languages with custom translation tables.
+</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="mermaid">
+flowchart LR
+    subgraph "Application Code"
+        A[FWString<br/>cEnglish]
+        B[FWSetLanguage<br/>nLang]
+    end
+    subgraph "Core Engine (strings.prg)"
+        C[aStrings Array]
+        D[nLanguage]
+    end
+    A --> C
+    B --> D
+    D --> A
+    C -->|"aStrings[i][nLang]"| A
+    A --> E[Localized UI]
+</div>
+
+<h2 id="language-constants">Language Constants</h2>
+
+<table>
+<thead>
+<tr><th>ID</th><th>Language</th><th>Array Index</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>English (EN)</td><td>1</td></tr>
+<tr><td>2</td><td>Spanish (ES)</td><td>2</td></tr>
+<tr><td>3</td><td>French (FR)</td><td>3</td></tr>
+<tr><td>4</td><td>Portuguese (PT)</td><td>4</td></tr>
+<tr><td>5</td><td>German (DE)</td><td>5</td></tr>
+<tr><td>6</td><td>Italian (IT)</td><td>6</td></tr>
+</tbody>
+</table>
+
+<h2 id="functions">Core Functions</h2>
+
+<h3 id="fwstring">FWString()</h3>
+<pre><code class="language-harbour">FWString( cEnglishText ) --> cLocalized</code></pre>
+<p>The primary interface for retrieving localized text. Searches the <code>aStrings</code> array for the English key and returns the translation for the currently selected language. Falls back to the original text if no translation is found.</p>
+<pre><code class="language-harbour">? FWString( "Save" )     // "Guardar" (if language = Spanish)
+? FWString( "Cancel" )    // "Annuler" (if language = French)</code></pre>
+
+<h3 id="fwsetlanguage">FWSetLanguage()</h3>
+<pre><code class="language-harbour">FWSetLanguage( nLang [, cLang ] ) --> nPrevLang</code></pre>
+<p>Sets the active language by its numeric ID (1-6). An optional string name ("ES", "FR", etc.) can be passed for readability. Returns the previous language ID. All subsequent <code>FWString()</code> calls use the new language.</p>
+<pre><code class="language-harbour">FWSetLanguage( 2 )    // Switch to Spanish
+FWSetLanguage( 4 )    // Switch to Portuguese</code></pre>
+
+<h3 id="fwaddlanguage">FWAddLanguage()</h3>
+<pre><code class="language-harbour">FWAddLanguage( cLang, hStrings ) --> lSuccess</code></pre>
+<p>Adds a new language with a custom translation hash. <code>cLang</code> is a two-letter code and <code>hStrings</code> is a hash mapping each English string to its translation. This allows includable translation modules without modifying <code>strings.prg</code> itself.</p>
+
+<h3 id="fwmissingstrings">FWMissingStrings()</h3>
+<pre><code class="language-harbour">FWMissingStrings( lWriteToFile ) --> nCount</code></pre>
+<p>Reports the number of strings used by the application that have no translation for the current language. When <code>lWriteToFile</code> is <code>.T.</code>, writes the missing strings to a text file for translator reference.</p>
+
+<h3 id="fwaddstring">FWAddString()</h3>
+<pre><code class="language-harbour">FWAddString( cEnglish, cTranslated ) --> nil</code></pre>
+<p>Adds a single string pair to the current language's translation table at runtime. Useful for application-specific strings not in the predefined set.</p>
+
+<h3 id="fwsetstring">FWSetString()</h3>
+<pre><code class="language-harbour">FWSetString( nLang, cEnglish, cTranslated ) --> nil</code></pre>
+<p>Sets or overrides the translation for a specific English key in a specific language. Allows patching individual translations without reloading the entire table.</p>
+
+<h3 id="fwlanguageid">FWLanguageID()</h3>
+<pre><code class="language-harbour">FWLanguageID() --> nLang</code></pre>
+<p>Returns the numeric ID of the currently active language (1-6). Useful for conditional logic that depends on the active language (e.g., handling leading punctuation in Spanish).</p>
+<pre><code class="language-harbour">if FWLanguageID() == 2  // Spanish
+   cPrompt := FWString( "Open" ) + " " + FWString( "file" )
+endif</code></pre>
+
+<h3 id="fwloadstrings">FWLoadStrings() / FWSaveStrings()</h3>
+<pre><code class="language-harbour">FWLoadStrings( cFile ) --> lSuccess
+FWSaveStrings( cFile ) --> lSuccess</code></pre>
+<p>Load or save the complete translation table from/to a text file. Useful for shipping separate language packs or allowing end-user translation customization.</p>
+
+<h2 id="encoding">File Encoding</h2>
+<p>The <code>strings.prg</code> source file <strong>must</strong> be encoded as CP1252 (Western European), not UTF-8. Accented characters are stored as single bytes (e.g., n=0xF1, a=0xE4, u=0xFC). The Harbour compiler preserves string literal bytes as-is, so the encoding must match the expected codepage at compile time. This applies to all files containing translated strings.</p>
+
+<h2 id="example">Example: Multi-language App</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oMenu
+
+   DEFINE WINDOW oWnd TITLE "Localization Demo" ;
+      MENU BuildMenu( oWnd ) ;
+      SIZE 600, 400
+
+   ACTIVATE WINDOW oWnd
+
+return nil
+
+function BuildMenu( oWnd )
+
+   local oMenu
+
+   MENU oMenu
+      MENUITEM FWString( "&amp;File" )
+      MENU
+         MENUITEM FWString( "&amp;Open" ) ACTION MsgInfo( FWString( "Open file" ) )
+         MENUITEM FWString( "E&amp;xit" )  ACTION oWnd:End()
+      ENDMENU
+      MENUITEM "Language"
+      MENU
+         MENUITEM "English"   ACTION ( FWSetLanguage( 1 ), oWnd:SetMenu( BuildMenu( oWnd ) ) )
+         MENUITEM "Espanol"   ACTION ( FWSetLanguage( 2 ), oWnd:SetMenu( BuildMenu( oWnd ) ) )
+         MENUITEM "Francais"  ACTION ( FWSetLanguage( 3 ), oWnd:SetMenu( BuildMenu( oWnd ) ) )
+         MENUITEM "Deutsch"   ACTION ( FWSetLanguage( 5 ), oWnd:SetMenu( BuildMenu( oWnd ) ) )
+         MENUITEM "Italiano"  ACTION ( FWSetLanguage( 6 ), oWnd:SetMenu( BuildMenu( oWnd ) ) )
+      ENDMENU
+   ENDMENU
+
+return oMenu</code></pre>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>
