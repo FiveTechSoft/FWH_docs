@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Barcode Generation (FWER_BarCode) - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a><span class="version">Versión 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeros Pasos</div><a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a><a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a><a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a><a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a></div>
+<div class="nav-section"><div class="nav-section-title">Clases Base</div><a class="nav-item" href="../../es/core/twindow.html">TWindow</a><a class="nav-item" href="../../es/core/tdialog.html">TDialog</a><a class="nav-item" href="../../es/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a></div>
+<div class="nav-section"><div class="nav-section-title">Acceso a Datos</div><a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a><a class="nav-item" href="../../es/data/torm.html">ORM Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Impresión e Informes</div><a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../es/printing/treport.html">TReport</a><a class="nav-item active" href="../../es/printing/tbarcode.html">Barcode</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../es/internet/tai.html">Clases IA</a></div>
+<div class="nav-section"><div class="nav-section-title">Referencia</div><a class="nav-item" href="../../es/reference/functions.html">Funciones</a><a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a></div>
+</nav>
+<main id="content">
+
+<h1>Barcode Generation (FWER_BarCode)</h1>
+<p class="class-source">Source: <code>source/classes/fwbarcod.prg</code>, <code>source/function/fwzebra.prg</code></p>
+
+<p>
+FWER_BarCode is FiveWin's built-in barcode rendering engine. It supports 17 barcode symbologies
+through a native GDI engine, with optional fallback to the <code>hbzebra</code> library for 2D codes
+(QR, DataMatrix, PDF417). Barcodes can be rendered on windows, dialogs, printers, and PDF output.
+</p>
+
+<h2 id="symbology">Symbology Referencia</h2>
+
+<table>
+<thead><tr><th>nBCodeType</th><th>Symbology</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Code 39</td><td>Standard Code 39 (3-of-9) alphanumeric</td></tr>
+<tr><td>2</td><td>Code 39 + check</td><td>Code 39 with mandatory check digit</td></tr>
+<tr><td>3</td><td>Code 128 auto</td><td>Code 128 with automatic mode selection (A/B/C)</td></tr>
+<tr><td>4</td><td>Code 128 A</td><td>Code 128 mode A (uppercase, control chars)</td></tr>
+<tr><td>5</td><td>Code 128 B</td><td>Code 128 mode B (full ASCII)</td></tr>
+<tr><td>6</td><td>Code 128 C</td><td>Code 128 mode C (numeric pairs, highest density)</td></tr>
+<tr><td>7</td><td>EAN-8</td><td>EAN-8 (8-digit product code)</td></tr>
+<tr><td>8</td><td>EAN-13</td><td>EAN-13 (13-digit product code, most common retail)</td></tr>
+<tr><td>9</td><td>UPC-A</td><td>UPC-A (12-digit US product code)</td></tr>
+<tr><td>10</td><td>Codabar</td><td>Codabar (libraries, blood banks, FedEx)</td></tr>
+<tr><td>11</td><td>Supplement 5</td><td>5-digit supplement for EAN/UPC</td></tr>
+<tr><td>12</td><td>Industrial 2 of 5</td><td>Industrial 2 of 5 numeric</td></tr>
+<tr><td>13</td><td>Industrial 2 of 5 + check</td><td>Industrial 2 of 5 with check digit</td></tr>
+<tr><td>14</td><td>Interleaved 2 of 5</td><td>Interleaved 2 of 5 (high-density numeric)</td></tr>
+<tr><td>15</td><td>Interleaved 2 of 5 + check</td><td>Interleaved 2 of 5 with check digit</td></tr>
+<tr><td>16</td><td>Matrix 2 of 5</td><td>Matrix 2 of 5 numeric</td></tr>
+<tr><td>17</td><td>Matrix 2 of 5 + check</td><td>Matrix 2 of 5 with check digit</td></tr>
+</tbody>
+</table>
+
+<h2 id="data-members">DATA Members</h2>
+
+<table>
+<thead><tr><th>DATA</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>hDC</code></td><td>--</td><td>Device context handle (window, dialog, printer)</td></tr>
+<tr><td><code>cText</code></td><td><code>""</code></td><td>Barcode text to encode</td></tr>
+<tr><td><code>nTop, nLeft</code></td><td>--</td><td>Position coordinates</td></tr>
+<tr><td><code>nWidth, nHeight</code></td><td>200, 20</td><td>Barcode dimensions</td></tr>
+<tr><td><code>nColText</code></td><td>0 (black)</td><td>Bar (pin) color</td></tr>
+<tr><td><code>nColPane</code></td><td>RGB(255,255,255)</td><td>Background color</td></tr>
+<tr><td><code>lHorizontal</code></td><td>.T.</td><td>Horizontal (.T.) or vertical (.F.) orientation</td></tr>
+<tr><td><code>lTransparent</code></td><td>.F.</td><td>Transparent background</td></tr>
+<tr><td><code>nPinWidth</code></td><td>--</td><td>Individual bar (pin) width in pixels</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( hDC, cText, nTop, nLeft, nW, nH, nType, nClrT, nClrP, lHorz, lTransp, nPinW, nFlags, lPrinter )</code></td><td>Create a barcode object. Accepts numeric type (1-17) or string alias ("EAN13", "128", "39", etc.)</td></tr>
+<tr><td><code>ShowBarcode()</code></td><td>Render the barcode to the device context using the configured parameters</td></tr>
+<tr><td><code>CreateBarcode( cCode )</code></td><td>Generate the bar pattern string for a given code</td></tr>
+<tr><td><code>CheckDigit()</code></td><td>Compute and append the appropriate check digit for the current symbology</td></tr>
+</tbody>
+</table>
+
+<h2 id="free-functions">Free Funciones</h2>
+
+<h3>FW_SayBarCode()</h3>
+<p>Direct barcode rendering without creating an object instance:</p>
+<pre><code class="language-harbour">FW_SayBarCode( oWnd, cText, aRect, cType, nClrT, nClrB, lVert, lTransp )</code></pre>
+<p>Parameters: <code>oWnd</code> (window/dialog/printer), <code>cText</code> (data to encode), <code>aRect</code> (array { nTop, nLeft, nBottom, nRight }), <code>cType</code> (symbology string), <code>nClrT</code>/<code>nClrB</code> (fore/back colors), <code>lVert</code> (vertical orientation), <code>lTransp</code> (transparent background).</p>
+
+<h3>FW_BarCodeBmp()</h3>
+<p>Generates a standalone bitmap handle of the barcode for use in reports or image controls.</p>
+
+<h2 id="example">Example: EAN-13 on Printer</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION PrintBarcode()
+   LOCAL oPrn, nRow := 2.0  // cm from top
+
+   PRINT oPrn NAME "Barcode Test"
+   PAGE
+      oPrn:Say( nRow, 1.0, "Product Barcode:" )
+      nRow += 0.8
+
+      // Method 1: Using FWER_BarCode directly
+      FWER_BarCode():New( oPrn:hDC, "5901234567890", ;
+                          oPrn:CmToPix( nRow ),        // nTop
+                          oPrn:CmToPix( 1.0 ),         // nLeft
+                          oPrn:CmToPix( 5.0 ),         // nWidth
+                          oPrn:CmToPix( 2.5 ),         // nHeight
+                          8, 0, 16777215, .T., .F. ):ShowBarcode()
+
+      // Method 2: Using FW_SayBarCode convenience function
+      nRow += 3.0
+      FW_SayBarCode( oPrn, "5901234567890", ;
+                     { oPrn:CmToPix( nRow ), oPrn:CmToPix( 1.0 ), ;
+                       oPrn:CmToPix( nRow + 2.5 ), oPrn:CmToPix( 6.0 ) }, ;
+                     "EAN13", 0, 16777215 )
+   ENDPAGE
+   ENDPRINT
+RETURN NIL</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>String type names are case-insensitive and normalized by removing <code>"CODE"</code> prefix, spaces, underscores, and hyphens. Example: <code>"CODE128"</code>, <code>"code 128"</code>, and <code>"128"</code> all resolve to Code 128 auto.</li>
+<li>When the <code>hbzebra</code> library is linked, 2D symbologies (QR, DataMatrix, PDF417) are automatically routed through the Zebra engine, which also supports direct PDF output via <code>TPDF</code> object detection.</li>
+<li>Use <code>FWER_BarCode:lUseZebraLib := .T.</code> at class level to force the Zebra engine for all supported symbologies.</li>
+<li>Printer output uses GDI <code>FillRect</code> for bars and <code>FillRectEx</code> for background, ensuring correct scaling on high-DPI devices.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

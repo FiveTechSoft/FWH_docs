@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAgent / TOLlama - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Versão 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Overview</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../pt/ui/tbutton.html">TButton</a>
+<a class="nav-item" href="../../pt/ui/tget.html">TGet</a>
+<a class="nav-item" href="../../pt/ui/tpanel.html">TPanel</a>
+<a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../pt/internet/tai.html">Classes IA</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div>
+<a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+<a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a>
+<div class="nav-section-title" style="font-size:0.85em;padding-left:10px;margin-top:4px;color:#888;">IA e ML</div>
+<a class="nav-item active" href="../../pt/reference/ttagent.html" style="padding-left:20px;">TAgent / TOLlama</a></div>
+</nav>
+<main id="content">
+
+<h1>TAgent / TOLlama</h1>
+<p class="class-source">Source: <code>source/classes/tollama.prg</code></p>
+<p class="class-hierarchy">TOLlama: Standalone | TAgent: Uses TOLlama internally</p>
+
+<p>
+TOLlama provides integration with locally running Ollama LLM models via the Ollama REST API. It supports text prompts, streaming responses, and image analysis (for multimodal models). TAgent builds on TOLlama to create an AI agent that can invoke Harbour functions as tools, enabling LLM-driven automation.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+<table><thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>cModel</code></td><td>Character</td><td>Ollama model name (default "deepseek-r1:14b")</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td>API URL (default "http://localhost:11434/api/chat")</td></tr>
+<tr><td><code>cSystemPrompt</code></td><td>Character</td><td>System prompt defining agent behavior</td></tr>
+<tr><td><code>aTools</code></td><td>Array</td><td>Array of tool definitions for the agent</td></tr>
+</tbody></table>
+
+<h2 id="methods">Methods</h2>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( cModel )</code></td><td>Create an Ollama client with the specified model</td></tr>
+<tr><td><code>Send( cPrompt )</code></td><td>Send a prompt; returns the complete response</td></tr>
+<tr><td><code>SendStream( cPrompt, bWriteFunction )</code></td><td>Send with streaming callback for real-time token output</td></tr>
+<tr><td><code>SendImage( cImageFile, cPrompt )</code></td><td>Send image + prompt for multimodal models</td></tr>
+<tr><td><code>GetValue()</code></td><td>Parse JSON response and extract content text</td></tr>
+<tr><td><code>End()</code></td><td>Clean up the libcurl handle</td></tr>
+<tr><td><code>SetSystemPrompt( c )</code></td><td>Set the system prompt for the agent</td></tr>
+<tr><td><code>AddTool( cName, cDesc, bAction )</code></td><td>Register a Harbour function as a callable tool</td></tr>
+<tr><td><code>Run( cPrompt )</code></td><td>Execute a prompt through the agent; returns result</td></tr>
+</tbody></table>
+
+<h2 id="example">Example: Agent with Calculator Tool</h2>
+<pre><code class="language-harbour">#include "FiveWin.ch"
+function Main()
+   local oAgent
+   oAgent := TAgent():New( "deepseek-r1:14b" )
+   oAgent:SetSystemPrompt( "You are a helpful assistant." )
+   oAgent:AddTool( "calculator", "Add two numbers", { |a,b| a + b } )
+   ? oAgent:Run( "What is 123 + 456?" )
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>TOLlama requires a local Ollama server running on port 11434.</li>
+<li>Uses libcurl (<code>hbcurl.ch</code>) for HTTP communication with the Ollama API.</li>
+<li><code>SendStream</code> enables incremental display of generated tokens as they arrive.</li>
+<li><code>SendImage</code> works with multimodal models like LLaVA or bakllava.</li>
+<li>TAgent organizes tools by category, providing an extensible LLM tool-use framework.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

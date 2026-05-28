@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TForm - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+<span class="version">Versão 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeiros Passos</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Classes Base</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referência</div>
+<a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+<a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a>
+<a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../pt/reference/tdde.html">TDde / TDdeClient / TDdeServer</a>
+<a class="nav-item active" href="../../pt/reference/tform.html">TForm</a>
+<a class="nav-item" href="../../pt/reference/timagebase64.html">TImageBase64</a>
+<a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TForm</h1>
+<p class="class-source">Source: <code>source/classes/tform.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TWindow</code></p>
+
+<p>
+TForm is a visual form container that loads its control layout from a .ffm resource (Forms File Memory). It is used by the Visual FiveWin IDE to design and run forms at runtime. The form serializes child controls, their properties, and database bindings.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nBorderStyle</code></td><td>Numeric</td><td>Window border style (default 3 = sizable)</td></tr>
+<tr><td><code>nPosition</code></td><td>Numeric</td><td>Startup position: 0=normal, 1=maximized, 2=minimized</td></tr>
+<tr><td><code>cDescription</code></td><td>Character</td><td>Description visible in the Visual Project manager</td></tr>
+<tr><td><code>cClassName</code></td><td>Character</td><td>Class name used as default resource name for loading .ffm</td></tr>
+<tr><td><code>oInspector</code></td><td>Object</td><td>Property inspector object for design mode</td></tr>
+<tr><td><code>aProperties</code></td><td>Array</td><td>Class DATA array listing all serializable properties</td></tr>
+<tr><td><code>lDesign</code></td><td>Logical</td><td>Enables design mode with drag-and-drop for child controls</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>Create a new form with default settings and load .ffm resource</td></tr>
+<tr><td><code>LoadRes( cResName, cResType )</code></td><td>Load form definition from a resource (default "FORMS" type)</td></tr>
+<tr><td><code>ShowModal()</code></td><td>Show the form as a modal dialog, respecting nPosition</td></tr>
+<tr><td><code>Initiate()</code></td><td>Initialize controls: creates child windows, resolves aliases, sets up database bindings</td></tr>
+<tr><td><code>Default()</code></td><td>Set default values for border style, position, scrollbars</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Load and Show Form</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oForm := TForm():New()
+
+   oForm:cTitle     := "My Form"
+   oForm:nWidth     := 600
+   oForm:nHeight    := 400
+   oForm:nPosition  := 0   // normal
+
+   oForm:ShowModal()
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TForm loads its control layout from a binary .ffm resource stored under the "FORMS" resource type, keyed by the class name.</li>
+<li><code>Initiate()</code> processes database components (TDataBaseComp) before other controls so that aliases are available for TXBrowse and similar controls.</li>
+<li>Design mode is toggled via <code>lDesign</code>, which enables drag-and-drop repositioning of all child controls.</li>
+<li>Controls without existing hWnd are created from their stored properties; coordinates are normalized if negative.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

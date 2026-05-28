@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNg - Norton Guides Writer - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Versión 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Utilidades</div>
+<a class="nav-item" href="../../es/utilities/tfile.html">TFile</a>
+<a class="nav-item" href="../../es/utilities/tobjectfile.html">TObjFile</a>
+<a class="nav-item" href="../../es/utilities/tlibfile.html">TLibFile</a>
+<a class="nav-item" href="../../es/utilities/ttextfile.html">TTxtFile</a>
+<a class="nav-item" href="../../es/utilities/trtffile.html">TRtfFile</a>
+<a class="nav-item" href="../../es/utilities/tini.html">TIni</a>
+<a class="nav-item" href="../../es/utilities/treg32.html">TReg32</a>
+<a class="nav-item" href="../../es/utilities/tclipboard.html">TClipBoard</a>
+<a class="nav-item" href="../../es/utilities/tlinklist.html">TLinkList</a>
+<a class="nav-item" href="../../es/utilities/tmru.html">TMRU</a>
+<a class="nav-item" href="../../es/utilities/tblock.html">TBlock</a>
+<a class="nav-item" href="../../es/utilities/tlayout.html">TLayout</a>
+<a class="nav-item active" href="../../es/utilities/tng.html">TNg</a>
+<a class="nav-item" href="../../es/utilities/tparser.html">TParser</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TNg - Norton Guides Writer</h1>
+<p class="class-source">Source: <code>source/classes/ng.prg</code></p>
+
+<p>
+TNg is a simple writer class for producing Norton Guides format files. It supports writing short entries, long descriptions, and cross-reference ("see also") lists. The output format uses the <code>!short:</code>, <code>!seealso:</code>, and plain text directives understood by Norton Guides viewers.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>hFile</code></td><td>Handle</td><td>File handle for the output file</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cOutFile )</code></td><td>Create and open the output file for writing</td></tr>
+<tr><td><code>WriteShort( cShort )</code></td><td>Write a short entry (<code>!short:</code> directive)</td></tr>
+<tr><td><code>WriteLong( cLong )</code></td><td>Write a long description text block</td></tr>
+<tr><td><code>WriteSeeAlso( cSeeAlsoList )</code></td><td>Write cross-reference list (<code>!seealso:</code> directive)</td></tr>
+<tr><td><code>End()</code></td><td>Close the output file</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Write NG File</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oNg := TNg():New( "commands.ng" )
+
+   oNg:WriteShort( "DEFINE WINDOW - Create a new window" )
+   oNg:WriteLong(  "DEFINE WINDOW oWnd TITLE cTitle [SIZE nW, nH] ..." + CRLF + ;
+                   "Creates a new window object and activates it." )
+   oNg:WriteSeeAlso( "DEFINE DIALOG, ACTIVATE WINDOW" )
+   oNg:End()
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>The output file is created via <code>FCreate()</code> in the <code>New()</code> constructor.</li>
+<li>Short entries use the <code>!short:</code> marker; see-also lists use <code>!seealso:</code>.</li>
+<li>Long text is written as plain text lines separated by CRLF.</li>
+<li>Always call <code>End()</code> to close the file handle; the class does not auto-close on destroy.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

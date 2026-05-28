@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TPen - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Versión 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../es/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../es/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../es/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../es/ui/trating.html">TRating</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresión e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../es/internet/tai.html">Clases IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item active" href="../../es/reference/tpen.html">TPen</a>
+<a class="nav-item" href="../../es/reference/tbrushex.html">TBrushEx</a>
+<a class="nav-item" href="../../es/reference/tcursor.html">TCursor</a>
+<a class="nav-item" href="../../es/reference/trect.html">TRect / TPoint</a>
+<a class="nav-item" href="../../es/reference/tgdip.html">GDI+ Classes</a>
+<a class="nav-item" href="../../es/reference/tenhmeta.html">TEnhMetaFile</a>
+<a class="nav-item" href="../../es/reference/tmetafil.html">TMetaFile</a>
+<a class="nav-item" href="../../es/reference/tgselect.html">TGSelector</a>
+<a class="nav-item" href="../../es/reference/tprogress.html">TProgress</a>
+<a class="nav-item" href="../../es/reference/ticon.html">TIcon</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TPen</h1>
+<p class="class-source">Source: <code>source/classes/pen.prg</code></p>
+<p class="class-hierarchy">Standalone class (no inheritance)</p>
+
+<p>
+TPen encapsulates a Windows GDI pen object for drawing lines, borders, and outlines.
+Pens define the color, width, and style (solid, dashed, dotted, etc.) of lines drawn
+on any device context. TPen is used internally by many FiveWin controls and is also
+available for direct use in custom painting routines.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>hPen</code></td><td>Numeric (Handle)</td><td>Windows GDI pen handle</td></tr>
+<tr><td><code>nStyle</code></td><td>Numeric</td><td>Pen style (PS_SOLID, PS_DASH, PS_DOT, PS_DASHDOT, etc.)</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Pen width in logical units (pixels)</td></tr>
+<tr><td><code>nColor</code></td><td>Numeric</td><td>Pen color as RGB value</td></tr>
+<tr><td><code>oDevice</code></td><td>Object</td><td>Optional device context owner for DPI-aware width scaling</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nStyle, nWidth, nColor, oDevice )</code></td><td>Create a new pen. Defaults: PS_SOLID, width 1, CLR_BLACK. When oDevice is provided, width is scaled by DPI.</td></tr>
+<tr><td><code>End()</code></td><td>Delete the GDI pen object and release resources. Alias for <code>Release()</code>.</td></tr>
+</tbody>
+</table>
+
+<h2 id="styles">Pen Styles</h2>
+
+<table>
+<thead>
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>PS_SOLID</code></td><td>0</td><td>Solid line (default)</td></tr>
+<tr><td><code>PS_DASH</code></td><td>1</td><td>Dashed line (valid only when width is 1)</td></tr>
+<tr><td><code>PS_DOT</code></td><td>2</td><td>Dotted line (valid only when width is 1)</td></tr>
+<tr><td><code>PS_DASHDOT</code></td><td>3</td><td>Alternating dash-dot pattern</td></tr>
+<tr><td><code>PS_DASHDOTDOT</code></td><td>4</td><td>Dash-dot-dot pattern</td></tr>
+<tr><td><code>PS_NULL</code></td><td>5</td><td>Invisible pen</td></tr>
+<tr><td><code>PS_INSIDEFRAME</code></td><td>6</td><td>Solid pen that draws inside the bounding frame</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oPen
+
+   DEFINE WINDOW oWnd TITLE "TPen Demo" SIZE 400, 300
+
+   oWnd:bPainted = {| hDC |
+      // Create a red pen with width 2
+      DEFINE PEN oPen WIDTH 2 COLOR CLR_RED
+
+      // Draw a line from top-left to bottom-right
+      MoveTo( hDC, 50, 50 )
+      LineTo( hDC, 350, 250, oPen:hPen )
+
+      oPen:End()
+      }
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>Always call <code>End()</code> or <code>Release()</code> when the pen is no longer needed to avoid GDI resource leaks.</li>
+<li>When specifying an <code>oDevice</code> (window, printer, etc.), the pen width is automatically scaled based on the device's logical pixels per inch, making the visual width consistent across different DPI settings.</li>
+<li>The <code>DEFINE PEN</code> command provides a convenient syntax alternative to calling <code>TPen():New()</code> directly.</li>
+<li>TPen is used extensively by FiveWin controls internally. Once a pen is selected into a device context via <code>SelectObject()</code>, it affects all subsequent drawing operations until another pen is selected.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

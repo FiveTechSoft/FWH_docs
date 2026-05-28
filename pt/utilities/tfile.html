@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TFile - Binary File I/O - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+<span class="version">Versão 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeiros Passos</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Classes Base</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../pt/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../pt/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../pt/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../pt/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../pt/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../pt/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../pt/ui/tscintilla.html">TScintilla</a>
+<a class="nav-item" href="../../pt/ui/tswitch.html">TSwitch</a>
+<a class="nav-item" href="../../pt/ui/tcalendar.html">TCalendar</a>
+<a class="nav-item" href="../../pt/ui/tdtpicker.html">TDatePick</a>
+<a class="nav-item" href="../../pt/ui/ttmpicker.html">TTimePick</a>
+<a class="nav-item" href="../../pt/ui/tslider.html">TSlider</a>
+<a class="nav-item" href="../../pt/ui/timagelist.html">TImageList</a>
+<a class="nav-item" href="../../pt/ui/texplorerbar.html">TExplorerBar</a>
+<a class="nav-item" href="../../pt/ui/tmetropanel.html">TMetroPanel</a>
+<a class="nav-item" href="../../pt/ui/tscrollpanel.html">TScrollPanel</a>
+<a class="nav-item" href="../../pt/ui/tpager.html">TPager</a>
+<a class="nav-item" href="../../pt/ui/theader.html">THeader</a>
+<a class="nav-item" href="../../pt/ui/tbartabs.html">TBarTabs</a>
+<a class="nav-item" href="../../pt/ui/tprogresswheel.html">TProgressWheel</a>
+<a class="nav-item" href="../../pt/ui/ttagcloud.html">TTagCloud</a>
+<a class="nav-item" href="../../pt/ui/tscrollmsg.html">TScrollMsg</a>
+<a class="nav-item" href="../../pt/ui/tnavigator.html">TNavigator</a>
+<a class="nav-item" href="../../pt/ui/tmytitle.html">TMyTitle</a>
+<a class="nav-item" href="../../pt/ui/tskinbutton.html">TSkinButton</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acesso a Dados</div>
+<a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../pt/data/trecset.html">TRecSet (ADO)</a>
+<a class="nav-item" href="../../pt/data/tarraydata.html">TArrayData</a>
+<a class="nav-item" href="../../pt/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../pt/data/tdbodbc.html">TDbOdbc</a>
+<a class="nav-item" href="../../pt/data/tstruct.html">TStruct / TField / TIndex</a>
+<a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impressão e Relatórios</div>
+<a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
+<a class="nav-item" href="../../pt/printing/tpreview.html">TPreview</a>
+<a class="nav-item" href="../../pt/printing/tpdf.html">TPdf</a>
+<a class="nav-item" href="../../pt/printing/tfwpdf.html">FWPdf</a>
+<a class="nav-item" href="../../pt/printing/tvrd.html">VRD</a>
+<a class="nav-item" href="../../pt/printing/easyreport.html">EasyReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Utilitários</div>
+<a class="nav-item active" href="../../pt/utilities/tfile.html">TFile</a>
+<a class="nav-item" href="../../pt/utilities/tobjectfile.html">TObjFile</a>
+<a class="nav-item" href="../../pt/utilities/tlibfile.html">TLibFile</a>
+<a class="nav-item" href="../../pt/utilities/ttextfile.html">TTxtFile</a>
+<a class="nav-item" href="../../pt/utilities/trtffile.html">TRtfFile</a>
+<a class="nav-item" href="../../pt/utilities/tini.html">TIni</a>
+<a class="nav-item" href="../../pt/utilities/treg32.html">TReg32</a>
+<a class="nav-item" href="../../pt/utilities/tclipboard.html">TClipBoard</a>
+<a class="nav-item" href="../../pt/utilities/tlinklist.html">TLinkList</a>
+<a class="nav-item" href="../../pt/utilities/tmru.html">TMRU</a>
+<a class="nav-item" href="../../pt/utilities/tblock.html">TBlock</a>
+<a class="nav-item" href="../../pt/utilities/tlayout.html">TLayout</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../pt/internet/tai.html">Classes IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referência</div>
+<a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+<a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a>
+<a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TFile - Binary File I/O</h1>
+<p class="class-source">
+Source: <code>source/classes/tfile.prg</code>
+</p>
+
+<p>
+TFile provides low-level binary file input/output operations. It wraps the Harbour file-handling
+APIs (<code>FOpen()</code>, <code>FRead()</code>, <code>FWrite()</code>, etc.) into an
+object-oriented interface with sequential and random-access positioning, byte/word/string
+read/write, searching, counting, and insertion/deletion of bytes. TFile is the base parent class
+of <code>TObjFile</code>, <code>TLibFile</code>, and <code>TTxtFile</code>.
+</p>
+
+<div class="mermaid">
+classDiagram
+    class TFile {
+        +cName
+        +hFile
+        +nLen
+        +nMode
+        +New(cFile, nMode)
+        +Create(cFile, nMode)
+        +nGetByte()
+        +nGetWord()
+        +cGetStr(n)
+        +PutByte(n)
+        +PutWord(n)
+        +PutStr(c)
+        +GoTop()
+        +GoBottom()
+        +Skip(n)
+        +GoTo(n)
+        +Seek(cStr)
+        +Count(cStr)
+        +DelBytes(n)
+        +InsBytes(n)
+        +lEof()
+        +lBoF()
+        +Close()
+    }
+    TFile <|-- TObjFile
+    TFile <|-- TLibFile
+    TFile <|-- TTxtFile
+</div>
+
+<h3>DATA Members</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cName</code></td><td>Character</td><td>File name (full path)</td></tr>
+<tr><td><code>hFile</code></td><td>Numeric</td><td>Harbour file handle returned by FOpen()/FCreate()</td></tr>
+<tr><td><code>nLen</code></td><td>Numeric</td><td>File length in bytes</td></tr>
+<tr><td><code>nMode</code></td><td>Numeric</td><td>File open mode (0=read, 1=write, 2=read+write)</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cFile, nMode )</code></td><td>Open an existing file. nMode: 0=read, 1=write, 2=read+write</td></tr>
+<tr><td><code>Create( cFile, nMode )</code></td><td>Create a new file (or truncate existing). nMode: 1=write, 2=read+write</td></tr>
+<tr><td><code>nGetByte()</code></td><td>Read one byte (0-255) at current position and advance</td></tr>
+<tr><td><code>nGetWord()</code></td><td>Read two bytes as a signed 16-bit integer and advance</td></tr>
+<tr><td><code>cGetStr( n )</code></td><td>Read n bytes as a character string and advance</td></tr>
+<tr><td><code>PutByte( n )</code></td><td>Write one byte at current position and advance</td></tr>
+<tr><td><code>PutWord( n )</code></td><td>Write two bytes (16-bit integer) at current position and advance</td></tr>
+<tr><td><code>PutStr( c )</code></td><td>Write a character string at current position and advance</td></tr>
+<tr><td><code>GoTop()</code></td><td>Seek to beginning of file (position 0)</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Seek to end of file</td></tr>
+<tr><td><code>Skip( n )</code></td><td>Move forward (positive n) or backward (negative n) n bytes</td></tr>
+<tr><td><code>GoTo( n )</code></td><td>Seek to absolute byte position n</td></tr>
+<tr><td><code>Seek( cStr )</code></td><td>Search forward for string cStr, return position or 0 if not found</td></tr>
+<tr><td><code>Count( cStr )</code></td><td>Count occurrences of string cStr in the file</td></tr>
+<tr><td><code>DelBytes( n )</code></td><td>Delete n bytes at current position (shifts remainder left)</td></tr>
+<tr><td><code>InsBytes( n )</code></td><td>Insert n zero-bytes at current position (shifts remainder right)</td></tr>
+<tr><td><code>lEof()</code></td><td>Return .T. if at end of file</td></tr>
+<tr><td><code>lBoF()</code></td><td>Return .T. if at beginning of file</td></tr>
+<tr><td><code>Close()</code></td><td>Close the file handle</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Read a Binary File Byte by Byte</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oFile := TFile():New( "c:\data\sample.bin", 0 )
+   local nByte, aBytes := {}
+
+   if oFile:hFile != nil
+      while ! oFile:lEof()
+         nByte := oFile:nGetByte()
+         if nByte != -1
+            AAdd( aBytes, nByte )
+         endif
+      endwhile
+      oFile:Close()
+
+      ? "Total bytes read:", Len( aBytes )
+      ? "First byte:", aBytes[ 1 ]
+      ? "Last byte:", aBytes[ Len( aBytes ) ]
+   else
+      ? "Cannot open file"
+   endif
+
+return nil</code></pre>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

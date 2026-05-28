@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TFtpServer / TFTP / TFTPFile - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Versão 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Overview</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../pt/ui/tbutton.html">TButton</a>
+<a class="nav-item" href="../../pt/ui/tget.html">TGet</a>
+<a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../pt/ui/tpanel.html">TPanel</a>
+<a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../pt/internet/tai.html">Classes IA</a>
+<a class="nav-item active" href="../../pt/internet/tftpserver.html">TFtpServer / TFTP</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div>
+<a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+<a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TFtpServer</h1>
+<p class="class-source">Source: <code>source/classes/tftpserv.prg</code></p>
+<p class="class-hierarchy">Standalone class</p>
+
+<p>
+TFtpServer implements a basic FTP server using TSocket. It listens on port 21 and handles standard FTP commands (USER, PASS, STOR, RETR, LIST, CWD, PWD, QUIT). Supports anonymous access and serves files from a configurable root directory.
+</p>
+
+<h2 id="data-fs">Key DATA Members</h2>
+<table><thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>oSocket</code></td><td>Object</td><td>Main listening TSocket</td></tr>
+<tr><td><code>cRootDir</code></td><td>Character</td><td>Default FTP directory (default "ftp")</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td>Listening port (default 21)</td></tr>
+<tr><td><code>lDebug</code></td><td>Logical</td><td>Enable debug logging to <code>cLogFile</code></td></tr>
+</tbody></table>
+
+<h2 id="methods-fs">Methods</h2>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( nPort )</code></td><td>Create server; creates root dir if missing</td></tr>
+<tr><td><code>Activate()</code></td><td>Start listening for clients</td></tr>
+<tr><td><code>End()</code></td><td>Stop the server</td></tr>
+<tr><td><code>OnAccept()</code></td><td>Handle new client connections</td></tr>
+<tr><td><code>OnRead( oSocket )</code></td><td>Process FTP commands from a client</td></tr>
+</tbody></table>
+
+<h1>TFTP</h1>
+<p class="class-source">Source: <code>source/classes/tftp.prg</code></p>
+<p>FTP client via WinINet. Supports directory listing, file deletion, rename, and directory management.</p>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( cFTPSite, oInternet, cUser, cPass )</code></td><td>Connect to an FTP site</td></tr>
+<tr><td><code>Directory( cMask )</code></td><td>Return array of remote file records</td></tr>
+<tr><td><code>DeleteFile( cFile )</code></td><td>Delete a remote file</td></tr>
+<tr><td><code>RenameFile( cOld, cNew )</code></td><td>Rename a remote file</td></tr>
+</tbody></table>
+
+<h1>TFTPFile</h1>
+<p class="class-source">Source: <code>source/classes/tftpfile.prg</code></p>
+<p>Manages individual remote file transfers. Supports ASCII and binary modes.</p>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( cFileName, oFTP )</code></td><td>Create a file object</td></tr>
+<tr><td><code>OpenRead() / OpenWrite()</code></td><td>Open for reading or writing</td></tr>
+<tr><td><code>Read( nBytes ) / Write( cData )</code></td><td>Read or write data</td></tr>
+<tr><td><code>Seek( nBytes, nFrom )</code></td><td>Seek to a position</td></tr>
+<tr><td><code>End()</code></td><td>Close the file handle</td></tr>
+</tbody></table>
+
+<h2 id="example">Example: Start FTP Server</h2>
+<pre><code class="language-harbour">#include "FiveWin.ch"
+function Main()
+   local oServer
+   oServer := TFtpServer():New( 21 )
+   oServer:cRootDir = "c:\ftproot"
+   oServer:lDebug   = .T.
+   oServer:Activate()
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>TFtpServer supports anonymous login only; no password authentication is enforced.</li>
+<li>Comandos handled: NOOP, USER, PASS, QUIT, CWD, CDUP, PWD, PORT, TYPE, RETR, STOR, LIST, SYST.</li>
+<li>TFTP client uses WinINet, requiring Internet Explorer components.</li>
+<li>TFTPFile supports binary (<code>lBinary := .T.</code>) and ASCII transfer modes.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

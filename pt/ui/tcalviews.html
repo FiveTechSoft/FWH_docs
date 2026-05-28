@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCalViews (Day/Week/Month) - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Versão 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div><a class="nav-item" href="../../pt/core/twindow.html">TWindow</a><a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a><a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../pt/ui/tgraph.html">TGraph</a><a class="nav-item" href="../../pt/ui/tgantt.html">TGantt</a><a class="nav-item" href="../../pt/ui/ttoast.html">TToast</a><a class="nav-item" href="../../pt/ui/trating.html">TRating</a><a class="nav-item" href="../../pt/ui/tvideo.html">TVideo</a><a class="nav-item" href="../../pt/ui/tximage.html">TXImage</a><a class="nav-item" href="../../pt/ui/twbrowse.html">TWBrowse</a><a class="nav-item" href="../../pt/ui/tcalex.html">TCalEx</a><a class="nav-item active" href="../../pt/ui/tcalviews.html">TCalViews (Day/Week/Month)</a></div>
+<div class="nav-section"><div class="nav-section-title">Acesso a Dados</div><a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../pt/data/todbc.html">TODBC</a><a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a><a class="nav-item" href="../../pt/data/tmariaconnect.html">TMariaConnection</a><a class="nav-item" href="../../pt/data/tmariarecord.html">TMariaRecord</a><a class="nav-item" href="../../pt/data/torm.html">ORM Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Impressão e Relatórios</div><a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../pt/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a><a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../pt/internet/tai.html">Classes IA</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div><a class="nav-item" href="../../pt/reference/commands.html">Comandos</a><a class="nav-item" href="../../pt/reference/functions.html">Funções</a><a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a><a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TCalViews: TDayView, TWeekView, TMonthView</h1>
+<p class="class-source">Source: <code>source/classes/tdayv.prg</code>, <code>source/classes/tweekv.prg</code>, <code>source/classes/tmonthv.prg</code></p>
+<p class="class-hierarchy">Each inherits from: <code>TCalEx</code></p>
+
+<p>
+TDayView, TWeekView, and TMonthView are the three sub-view classes used by TCalEx
+to render different calendar perspectives. Each view inherits from TCalEx and provides
+specialized rendering, navigation, and event handling for its specific time granularity.
+The active view is set via TCalEx methods <code>SetDayView()</code>, <code>SetWeekView()</code>,
+and <code>SetMonthView()</code>.
+</p>
+
+<!-- ================================================================ -->
+<h2 id="tdayview">TDayView - Day View</h2>
+
+<p>
+TDayView displays a single day with a time-slot grid. The grid is divided into rows
+representing time intervals (controlled by <code>nInterval</code> in TCalEx) between
+<code>nStartHour</code> and <code>nEndHour</code>. Each appointment or event appears as
+a colored block spanning its duration. Users can click on empty slots to create new
+events and drag existing events to reschedule.
+</p>
+
+<h3>Key DATA</h3>
+
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>nRowCount</code></td><td>Numeric</td><td>Total number of time-slot rows in the grid</td></tr>
+<tr><td><code>nRowHeight</code></td><td>Numeric</td><td>Height of each time-slot row in pixels</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( oCalex )</code></td><td>Create a TDayView bound to a TCalEx parent</td></tr>
+<tr><td><code>GoNextDay()</code></td><td>Navigate to the next day</td></tr>
+<tr><td><code>GoPrevDay()</code></td><td>Navigate to the previous day</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the view to a specific date</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Switch to Day View</h3>
+
+<pre><code class="language-harbour">// Assume oCal is a TCalEx instance
+oCal:SetDayView( dDate(), 30 )  // 30-minute intervals</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tweekview">TWeekView - Week View</h2>
+
+<p>
+TWeekView displays a full week (7 days) with time-slot rows for each day. Each column
+represents one day of the week, and each row represents a time interval. Events are
+rendered as colored blocks spanning their time range within each day column. The view
+supports horizontal and vertical scrolling for weeks with many events.
+</p>
+
+<h3>Key DATA</h3>
+
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>nDays</code></td><td>Numeric</td><td>Number of days displayed (always 7)</td></tr>
+<tr><td><code>nRowHeight</code></td><td>Numeric</td><td>Height of each time-slot row</td></tr>
+<tr><td><code>nRowCount</code></td><td>Numeric</td><td>Total number of time-slot rows</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( oCalex )</code></td><td>Create a TWeekView bound to a TCalEx parent</td></tr>
+<tr><td><code>GoNextWeek()</code></td><td>Navigate to the next week</td></tr>
+<tr><td><code>GoPrevWeek()</code></td><td>Navigate to the previous week</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the view to a specific week containing dDate</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Switch to Week View</h3>
+
+<pre><code class="language-harbour">// Assume oCal is a TCalEx instance
+oCal:SetWeekView( dDate(), 30 )  // Current week, 30-min intervals</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tmonthview">TMonthView - Month View</h2>
+
+<p>
+TMonthView displays a full month in a traditional calendar grid layout. The grid has
+7 columns (days of the week) and 5 or 6 rows (weeks in the month). Each cell shows
+the day number and can display event indicators. Double-clicking a cell typically
+switches to TDayView for the selected date via <code>oCalex:SetDayView()</code>.
+</p>
+
+<h3>Key DATA</h3>
+
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>nWks</code></td><td>Numeric</td><td>Number of weeks displayed (5 or 6, depending on the month)</td></tr>
+<tr><td><code>nRowHeight</code></td><td>Numeric</td><td>Height of each week row</td></tr>
+<tr><td><code>nColWidth</code></td><td>Numeric</td><td>Width of each day column</td></tr>
+<tr><td><code>nInfoHeight</code></td><td>Numeric</td><td>Height reserved for event info in each cell</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( oCalex )</code></td><td>Create a TMonthView bound to a TCalEx parent</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the view to the month containing dDate</td></tr>
+<tr><td><code>GoNextMonth()</code></td><td>Navigate to the next month</td></tr>
+<tr><td><code>GoPrevMonth()</code></td><td>Navigate to the previous month</td></tr>
+<tr><td><code>GetDateFromPos( nAtRow, nAtCol )</code></td><td>Return the date at grid position (row, col)</td></tr>
+<tr><td><code>GetPosFromDate( dDate )</code></td><td>Return grid row and column for a given date</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Switch to Month View</h3>
+
+<pre><code class="language-harbour">// Assume oCal is a TCalEx instance
+oCal:SetMonthView()  // Show current month</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>All three views are created internally by TCalEx and accessed through its <code>oDayView</code>, <code>oWeekView</code>, and <code>oMonthView</code> DATA members.</li>
+<li>View navigation methods (GoNext/GoPrev) are automatically scoped to the active view. For example, <code>oCal:GoNext()</code> advances one day, week, or month depending on the active view.</li>
+<li>Double-clicking a cell in TMonthView triggers <code>oCalex:SetDayView()</code>, drilling down from month to day granularity.</li>
+<li>The <code>nInterval</code> setting from TCalEx controls the row granularity in day and week views. Common values are 30 (half-hour rows) or 60 (hour rows).</li>
+<li>Event rendering and mouse interaction logic is shared between the views through inherited methods from TCalEx.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

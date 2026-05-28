@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TParser - Dynamic Parser Machine - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+<span class="version">Versão 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeiros Passos</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Classes Base</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Utilitários</div>
+<a class="nav-item" href="../../pt/utilities/tfile.html">TFile</a>
+<a class="nav-item" href="../../pt/utilities/tobjectfile.html">TObjFile</a>
+<a class="nav-item" href="../../pt/utilities/tlibfile.html">TLibFile</a>
+<a class="nav-item" href="../../pt/utilities/ttextfile.html">TTxtFile</a>
+<a class="nav-item" href="../../pt/utilities/trtffile.html">TRtfFile</a>
+<a class="nav-item" href="../../pt/utilities/tini.html">TIni</a>
+<a class="nav-item" href="../../pt/utilities/treg32.html">TReg32</a>
+<a class="nav-item" href="../../pt/utilities/tclipboard.html">TClipBoard</a>
+<a class="nav-item" href="../../pt/utilities/tlinklist.html">TLinkList</a>
+<a class="nav-item" href="../../pt/utilities/tmru.html">TMRU</a>
+<a class="nav-item" href="../../pt/utilities/tblock.html">TBlock</a>
+<a class="nav-item" href="../../pt/utilities/tlayout.html">TLayout</a>
+<a class="nav-item" href="../../pt/utilities/tng.html">TNg</a>
+<a class="nav-item active" href="../../pt/utilities/tparser.html">TParser</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TParser - Dynamic Parser Machine</h1>
+<p class="class-source">Source: <code>source/classes/tparser.prg</code></p>
+
+<p>
+TParser is a generic grammar-rule engine skeleton. It maintains a list of production rules and a state stack. Rules consist of a non-terminal symbol, a token array, and an action code block. This class provides the framework for building expression parsers, command interpreters, or domain-specific language processors.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aRules</code></td><td>Array</td><td>Array of grammar rules, each { cNonTerminal, aTokens, bAction }</td></tr>
+<tr><td><code>aStates</code></td><td>Array</td><td>State stack for parsing; state 0 is empty by default</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>Create a new parser with empty rules and initial state</td></tr>
+<tr><td><code>Add( cNonTerminal, aTokens, bAction )</code></td><td>Add a production rule: non-terminal -> sequence of tokens with action</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Add Grammar Rules</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oParser := TParser():New()
+
+   // expr -> number
+   oParser:Add( "expr", { "number" }, {|n| n } )
+
+   // expr -> expr + expr
+   oParser:Add( "expr", { "expr", "+", "expr" }, {|a,b| a + b } )
+
+   // expr -> expr * expr
+   oParser:Add( "expr", { "expr", "*", "expr" }, {|a,b| a * b } )
+
+   // Access the rules
+   ? Len( oParser:aRules )   // 3 rules added
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>TParser is a skeleton class. The core <code>Add()</code> method builds the rule table; you must implement the tokenizer and the parsing algorithm (shift-reduce, recursive descent, etc.) yourself using the <code>aRules</code> and <code>aStates</code> data.</li>
+<li>Each rule's <code>aTokens</code> array defines the expected token sequence; the <code>bAction</code> block is the semantic action fired when the rule matches.</li>
+<li><code>aStates</code> starts with a single empty state (index 0). States can be pushed/popped during parsing to handle nested constructs.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OAuth2 Email: TOAuth, TGmail, TOutlookMail - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+<span class="version">Versão 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeiros Passos</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Classes Base</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../pt/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../pt/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acesso a Dados</div>
+<a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../pt/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impressão e Relatórios</div>
+<a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../pt/internet/tproxy.html">TProxy</a>
+<a class="nav-item" href="../../pt/internet/tmail.html">TMail</a>
+<a class="nav-item active" href="../../pt/internet/toauth.html">TOAuth / TGmail / TOutlookMail</a>
+<a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../pt/internet/tgrok.html">TGrok</a>
+<a class="nav-item" href="../../pt/internet/tkimi.html">TKimi</a>
+<a class="nav-item" href="../../pt/internet/tdeepseek.html">TDeepSeek</a>
+<a class="nav-item" href="../../pt/internet/tai.html">Classes IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referência</div>
+<a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+<a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a>
+<a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>OAuth2 Email: TOAuth, TGmail, TOutlookMail</h1>
+<p class="class-source">Sources: <code>source/classes/oauth.prg</code>, <code>source/classes/gmail.prg</code>, <code>source/classes/outlookmail.prg</code></p>
+
+<p>
+FiveWin provides OAuth2 email support for Gmail (TGmail) and Outlook/Office 365 (TOutlookMail) through a common class hierarchy. <strong>TOAuth</strong> handles authentication, token management, and MIME message construction. <strong>TGmail</strong> implements the Gmail REST API, <strong>TOutlookMail</strong> uses Microsoft Graph. All network communication uses <code>libcurl</code>; the interactive login uses <code>TWebView2</code>.
+</p>
+
+<h2 id="architecture">OAuth2 Authentication Flow</h2>
+
+<div class="mermaid">
+sequenceDiagram
+    participant App as "FWH App"
+    participant WV as "TWebView2"
+    participant Srv as "THttpServer"
+    participant Cloud as "Provider API"
+    App->>Srv: Start on local port
+    App->>WV: Navigate to auth URL
+    WV->>Cloud: User grants permission
+    Cloud-->>WV: Redirect to localhost/?code=XYZ
+    WV->>Srv: HTTP GET with auth code
+    Srv-->>App: Return captured code
+    App->>WV: Close browser window
+    App->>Cloud: POST /token (code + client_secret)
+    Cloud-->>App: JSON {access_token, refresh_token}
+    Note over App: Store refresh_token locally
+    App->>Cloud: Send email via REST API
+</div>
+
+<h2 id="oauth-class">TOAuth: Base Class</h2>
+
+<p>
+TOAuth provides the core OAuth2 workflow and MIME multipart construction. It manages client credentials, the local HTTP server for redirect capture, and token lifecycle including automatic refresh.
+</p>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cClientId</code></td><td>Character</td><td>OAuth2 client ID from provider</td></tr>
+<tr><td><code>cClientSecret</code></td><td>Character</td><td>OAuth2 client secret</td></tr>
+<tr><td><code>cRedirectUri</code></td><td>Character</td><td>Redirect URI (defaults to <code>http://localhost:2025</code>)</td></tr>
+<tr><td><code>cAccessToken</code></td><td>Character</td><td>Current access token</td></tr>
+<tr><td><code>cRefreshToken</code></td><td>Character</td><td>Persistent refresh token</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GetAuthCode()</code></td><td>Opens WebView2, navigates to provider auth URL, captures authorization code via local THttpServer</td></tr>
+<tr><td><code>GetToken()</code></td><td>Exchanges authorization code for access and refresh tokens via POST to /token endpoint</td></tr>
+<tr><td><code>RefreshToken()</code></td><td>Uses refresh_token to obtain a new access_token when the current one expires</td></tr>
+<tr><td><code>mimeMultipart(cTo,cSubj,cBody,aAttach)</code></td><td>Builds an RFC-compliant MIME multipart message with base64-encoded attachments</td></tr>
+<tr><td><code>getFileMime(cPath)</code></td><td>Returns MIME type string for a given file extension (lookup table for jpg, png, pdf, etc.)</td></tr>
+</tbody>
+</table>
+
+<h2 id="gmail">TGmail: Google Gmail API</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New(cClientId,cClientSecret,cUser)</code></td><td>Create a TGmail instance for the specified user. Triggers the OAuth2 auth flow if no token is cached.</td></tr>
+<tr><td><code>Send(cTo,cSubj,cBody,aAttach)</code></td><td>Send an email via the Gmail API endpoint. <code>aAttach</code> is an array of file paths.</td></tr>
+<tr><td><code>GetToken()</code></td><td>Obtain a fresh access token, checking validity via the tokeninfo endpoint first.</td></tr>
+<tr><td><code>RefreshToken()</code></td><td>Force refresh of the access token from the stored refresh token.</td></tr>
+</tbody>
+</table>
+
+<p>TGmail sends via <code>https://gmail.googleapis.com/gmail/v1/users/me/messages/send?uploadType=multipart</code> and requires a Google Cloud Console "Web Application" client ID with redirect URI set to <code>http://localhost:2025</code>.</p>
+
+<h2 id="outlook">TOutlookMail: Microsoft Graph API</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New(cClientId,cTenantId,cUser)</code></td><td>Create a TOutlookMail instance. <code>cTenantId</code> identifies the Azure AD tenant.</td></tr>
+<tr><td><code>Send(cTo,cSubj,cBody,aAttach)</code></td><td>Send email via Microsoft Graph <code>/users/{user}/sendMail</code> endpoint. Supports HTML body and attachments.</td></tr>
+<tr><td><code>me()</code></td><td>Retrieve the authenticated user's profile from <code>https://graph.microsoft.com/v1.0/me</code></td></tr>
+</tbody>
+</table>
+
+<p>Required OAuth2 scopes: <code>Mail.Send</code>, <code>offline_access</code>, <code>openid</code>, <code>profile</code>, <code>SMTP.Send</code>, <code>User.Read</code>. Microsoft may rotate refresh tokens; the class detects new refresh tokens in token responses and updates the local store automatically.</p>
+
+<h2 id="example">Example: Gmail OAuth2 Send</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oGmail := TGmail():New( ;
+      "your-client-id.apps.googleusercontent.com", ;
+      "your-client-secret", ;
+      "user@gmail.com" )
+
+   // The OAuth2 browser window opens automatically
+   // if no cached token is found
+
+   if ! Empty( oGmail:cAccessToken )
+      oGmail:Send( "recipient@example.com", ;
+                   "Test from FWH", ;
+                   "&lt;h1&gt;Hello!&lt;/h1&gt;&lt;p&gt;Sent via Gmail API.&lt;/p&gt;", ;
+                   { "C:\docs\invoice.pdf" } )
+      MsgInfo( "Email sent successfully!" )
+   else
+      MsgStop( "Authentication failed" )
+   endif
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>Requires <code>libcurl.dll</code>, <code>libssl-3-x64.dll</code>, <code>zlib1.dll</code> for 64-bit builds; <code>TWebView2</code> runtime must be installed.</li>
+<li>Tokens are cached locally; refresh token rotation ensures long-lived access without repeated login prompts.</li>
+<li>The local <code>THttpServer</code> listens on port 2025 (default) to capture the redirect with the authorization code.</li>
+<li>MIME messages use proper boundaries, Content-Type headers, and base64 attachment encoding per RFC 2822.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

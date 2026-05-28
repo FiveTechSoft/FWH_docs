@@ -288,6 +288,27 @@ function highlightHarbour(code) {
   return code;
 }
 
+// Fallback: ES/PT sidebar links that don't exist redirect to EN
+(function() {
+  var path = window.location.pathname;
+  var langMatch = path.match(/\/(en|es|pt)\//);
+  if (langMatch && langMatch[1] !== 'en') {
+    var lang = langMatch[1];
+    var sidebar = document.getElementById('sidebar');
+    if (sidebar) {
+      sidebar.addEventListener('click', function(e) {
+        var link = e.target.closest('.nav-item');
+        if (!link || !link.href) return;
+        // Only intercept same-language links
+        if (link.href.indexOf('/' + lang + '/') === -1) return;
+        // Replace href with EN fallback
+        link.setAttribute('data-orig-href', link.href);
+        link.href = link.href.replace('/' + lang + '/', '/en/');
+      });
+    }
+  }
+})();
+
 // Mobile responsive menu toggle
 (function() {
   var btn = document.createElement('button');

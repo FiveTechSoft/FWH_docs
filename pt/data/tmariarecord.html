@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TMariaRecord (FWMariaRecord) - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Versão 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div><a class="nav-item" href="../../pt/core/twindow.html">TWindow</a><a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a><a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../pt/ui/tgraph.html">TGraph</a><a class="nav-item" href="../../pt/ui/tgantt.html">TGantt</a><a class="nav-item" href="../../pt/ui/ttoast.html">TToast</a><a class="nav-item" href="../../pt/ui/trating.html">TRating</a><a class="nav-item" href="../../pt/ui/tvideo.html">TVideo</a><a class="nav-item" href="../../pt/ui/tximage.html">TXImage</a><a class="nav-item" href="../../pt/ui/twbrowse.html">TWBrowse</a><a class="nav-item" href="../../pt/ui/tcalex.html">TCalEx</a><a class="nav-item" href="../../pt/ui/tcalviews.html">TCalViews (Day/Week/Month)</a></div>
+<div class="nav-section"><div class="nav-section-title">Acesso a Dados</div><a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../pt/data/todbc.html">TODBC</a><a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a><a class="nav-item" href="../../pt/data/tmariaconnect.html">TMariaConnection</a><a class="nav-item active" href="../../pt/data/tmariarecord.html">TMariaRecord</a><a class="nav-item" href="../../pt/data/torm.html">ORM Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Impressão e Relatórios</div><a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../pt/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a><a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../pt/internet/tai.html">Classes IA</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div><a class="nav-item" href="../../pt/reference/commands.html">Comandos</a><a class="nav-item" href="../../pt/reference/functions.html">Funções</a><a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a><a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>FWMariaRecord</h1>
+<p class="class-source">Source: <code>source/classes/mariarec.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TDataRow</code></p>
+
+<p>
+FWMariaRecord provides single-record ORM-style access to MariaDB/MySQL tables.
+It extends TDataRow to automatically detect table structure, primary keys, and
+auto-increment columns. The class handles the complete CRUD lifecycle: loading
+a record from the database, editing field values via TDataRow's property access,
+and saving changes with automatic upsert (INSERT or UPDATE as appropriate).
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>oCn</code></td><td>Object</td><td>FWMariaConnection object</td></tr>
+<tr><td><code>cTable</code></td><td>Character</td><td>Table name</td></tr>
+<tr><td><code>cWhere</code></td><td>Character</td><td>WHERE clause identifying the current record</td></tr>
+<tr><td><code>aStruct</code></td><td>Array</td><td>Table column structure (name, type, length, decimals, flags)</td></tr>
+<tr><td><code>aBlank</code></td><td>Array</td><td>Blank values for new record creation</td></tr>
+<tr><td><code>aPrimary</code></td><td>Array</td><td>Indices of primary key columns in aStruct</td></tr>
+<tr><td><code>nAutoIncFld</code></td><td>Numeric</td><td>Position of auto-increment field (0 if none)</td></tr>
+<tr><td><code>lValidData</code></td><td>Logical</td><td>ACCESS: .T. when record data is loaded</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( oCn, cTable, cWhere )</code></td><td>Create and load a record. If cWhere is nil or empty, creates a blank record for new entry.</td></tr>
+<tr><td><code>Read( cWhere )</code></td><td>Load a specific record identified by the WHERE clause</td></tr>
+<tr><td><code>Blank()</code></td><td>Reset the record to a blank template for inserting a new row</td></tr>
+<tr><td><code>Load( lBlank )</code></td><td>Load record from server (or blank template if lBlank is .T.)</td></tr>
+<tr><td><code>Save()</code></td><td>Save changes using automatic upsert: INSERT if new, UPDATE if existing</td></tr>
+<tr><td><code>MakePrimaryWhere()</code></td><td>Build a WHERE clause from current primary key field values</td></tr>
+</tbody>
+</table>
+
+<h2 id="access">Field Access</h2>
+
+<p>
+Since FWMariaRecord inherits from TDataRow, field values are accessible via the
+<code>FieldGet()</code> and <code>FieldPut()</code> methods using either field names
+or numeric positions:
+</p>
+
+<pre><code class="language-harbour">oRec:FieldGet( "name" )     // by field name
+oRec:FieldGet( 2 )           // by numeric position
+oRec:FieldPut( "phone", "555-1234" )  // set by field name</code></pre>
+
+<h2 id="example">Example: Load and Update Record</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oCn, oRec
+
+   // Connect to database
+   oCn := FWMariaConnection():New( "localhost", "mydb", "root", "password" )
+   if oCn:nError != 0
+      MsgStop( "Connection failed" )
+      return nil
+   endif
+
+   // --- READ existing record ---
+   oRec := FWMariaRecord():New( oCn, "customers", "id = 1" )
+   if oRec:lValidData
+      ? "Customer:", oRec:FieldGet( "name" )
+      ? "Email:",    oRec:FieldGet( "email" )
+      ? "Phone:",    oRec:FieldGet( "phone" )
+   endif
+
+   // --- UPDATE record ---
+   oRec:FieldPut( "phone", "555-9999" )
+   oRec:FieldPut( "city",  "Madrid" )
+   if oRec:Save()
+      MsgInfo( "Record updated successfully" )
+   endif
+
+   // --- CREATE new record ---
+   oRec := FWMariaRecord():New( oCn, "customers" )  // blank record
+   oRec:FieldPut( "name",  "Jane Smith" )
+   oRec:FieldPut( "email", "jane@example.com" )
+   oRec:FieldPut( "phone", "555-4321" )
+   if oRec:Save()
+      MsgInfo( "New customer ID: " + Str( oRec:FieldGet( "id" ) ) )
+   endif
+
+   // --- Load a different record ---
+   oRec:Read( "email = 'jane@example.com'" )
+   if oRec:lValidData
+      MsgInfo( "Found: " + oRec:FieldGet( "name" ) )
+   endif
+
+   oCn:Close()
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>FWMariaRecord automatically detects the table structure, primary keys, and auto-increment columns on first load. This enables intelligent upsert behavior without manual configuration.</li>
+<li>The <code>Save()</code> method uses <code>oCn:Upsert()</code> internally, which generates an <code>INSERT ... ON DUPLICATE KEY UPDATE</code> statement. The primary key detection ensures correct behavior.</li>
+<li>After inserting a new record with an auto-increment primary key, the new ID is automatically retrieved and stored in the record's data.</li>
+<li>Character fields are padded to their defined length when Unicode mode is active (controlled by <code>oCn:lUnicode</code>).</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

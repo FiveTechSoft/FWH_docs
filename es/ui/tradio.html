@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRadio - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Versión 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tclipget.html">TClipGet</a>
+<a class="nav-item" href="../../es/ui/thotkey.html">THotKey</a>
+<a class="nav-item" href="../../es/ui/tipaddr.html">TIPAddress</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/ttabs.html">TTabs</a>
+<a class="nav-item" href="../../es/ui/tpages.html">TPages</a>
+<a class="nav-item" href="../../es/ui/tpanel.html">TPanel</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item active" href="../../es/ui/tradio.html">TRadio</a>
+<a class="nav-item" href="../../es/ui/ttrackbar.html">TTrackBar</a>
+<a class="nav-item" href="../../es/ui/tupdown.html">TUpDown</a>
+<a class="nav-item" href="../../es/ui/tscrollbar.html">TScrollBar</a>
+<a class="nav-item" href="../../es/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../es/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../es/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../es/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../es/ui/tvideo.html">TVideo</a>
+<a class="nav-item" href="../../es/ui/tximage.html">TXImage</a>
+<a class="nav-item" href="../../es/ui/twbrowse.html">TWBrowse</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TRadio</h1>
+<p class="class-source">Source: <code>source/classes/radio.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+
+<p>
+TRadio implements an individual radio button (auto radio button style). Radio buttons are used in groups where only one option can be selected at a time. They are typically managed by a <code>TRadMenu</code> parent that handles mutual exclusion and keyboard navigation within the group.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>lChecked</code></td><td>Logical</td><td>Current checked state of the radio button</td></tr>
+<tr><td><code>oRadMenu</code></td><td>Object</td><td>Parent TRadMenu that manages this radio button group</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Position/index of this button within the group</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, cPrompt, oWnd, bSetGet, lChecked, nPos, oRadMenu )</code></td><td>Create a radio button; <code>bSetGet</code> is a SETGET code block for the selected value</td></tr>
+<tr><td><code>Redefine( nId, lChecked, nPos, oDlg, oRadMenu )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>SetCheck( lOnOff )</code></td><td>Set the checked state and update Windows button control</td></tr>
+<tr><td><code>IsChecked()</code></td><td>Query the button's checked state from Windows</td></tr>
+<tr><td><code>Check()</code></td><td>Set checked to .T. (convenience method)</td></tr>
+<tr><td><code>UnCheck()</code></td><td>Set checked to .F. (convenience method)</td></tr>
+<tr><td><code>Click()</code></td><td>Handle click: selects this button in the parent TRadMenu and refreshes</td></tr>
+</tbody>
+</table>
+
+<h2 id="commands">Comandos</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol RADIO oRad VAR nOpt PROMPT cText OF oDlg</code></pre>
+
+<h2 id="example">Example: Radio Group with TRadMenu</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oRadMenu, nOption := 1
+
+   DEFINE WINDOW oWnd TITLE "Radio Demo" SIZE 300, 200
+
+   @ 10, 10 RADIO oRadMenu VAR nOption ;
+      ITEMS "Option &1", "Option &2", "Option &3" ;
+      OF oWnd SIZE 120, 80
+
+   @ 100, 10 BUTTON "Show" SIZE 60, 25 OF oWnd ;
+      ACTION MsgInfo( "Selected: " + Str( nOption ) )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>Each TRadio is an <code>BS_AUTORADIOBUTTON</code> Windows control. The first button in a group should use the <code>lGroup</code> parameter (<code>WS_GROUP</code> style) to define group boundaries.</li>
+<li>The <code>lChanged</code> ACCESS compares the current checked state to the original value, useful for change tracking.</li>
+<li>TRadio buttons are typically created via the <code>RADIO</code> command, which sets up the TRadMenu and individual TRadio objects automatically.</li>
+<li>Keyboard navigation (arrow keys) within the group is managed by the parent TRadMenu.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

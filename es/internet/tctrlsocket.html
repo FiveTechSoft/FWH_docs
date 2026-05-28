@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCtrlSocket - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Versión 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../es/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../es/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../es/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../es/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../es/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../es/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../es/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresión e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item active" href="../../es/internet/tctrlsocket.html">TCtrlSocket</a>
+<a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../es/internet/tai.html">Clases IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TCtrlSocket</h1>
+<p class="class-source">Source: <code>source/classes/tctrsock.prg</code></p>
+<p class="class-hierarchy">Standalone class</p>
+
+<p>
+TCtrlSocket implements a multiplexed socket server that manages multiple client connections through a request queue. Instead of dedicating one thread per client, it maintains an array of pending requests (<code>aRequests</code>) and serves them in sequence. Each request entry stores the socket object and optional callback blocks for connection end (<code>abEnd</code>) and processing chance (<code>abChance</code>). The class tracks sent byte counts (<code>anSended</code>) and the server running state (<code>lServerWorking</code>).
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aRequests</code></td><td>Array</td><td>Array of pending request objects (socket + callbacks)</td></tr>
+<tr><td><code>abEnd</code></td><td>Array</td><td>Array of codeblocks evaluated when each request connection ends</td></tr>
+<tr><td><code>abChance</code></td><td>Array</td><td>Array of codeblocks evaluated when each request gets processing time</td></tr>
+<tr><td><code>anSended</code></td><td>Array</td><td>Array of byte counts sent for each request</td></tr>
+<tr><td><code>lServerWorking</code></td><td>Logical</td><td>.T. when the server is actively serving requests</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>Create a new multiplexed socket controller</td></tr>
+<tr><td><code>AddRequest( oSocket, bEnd, bChance )</code></td><td>Queue a socket with optional end and chance callbacks</td></tr>
+<tr><td><code>ServeClients()</code></td><td>Process all pending requests in round-robin fashion</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: 2-Socket Multiplexed Server</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oCtrl, oSocket1, oSocket2
+
+   // Create the multiplexed socket controller
+   oCtrl := TCtrlSocket():New()
+
+   // Create two client sockets
+   oSocket1 := TSocket():New()
+   oSocket2 := TSocket():New()
+
+   // Add requests with callbacks
+   oCtrl:AddRequest( oSocket1, ;
+      { || QOut( "Socket 1 ended" ) }, ;
+      { || QOut( "Socket 1 processing" ) } )
+
+   oCtrl:AddRequest( oSocket2, ;
+      { || QOut( "Socket 2 ended" ) }, ;
+      { || QOut( "Socket 2 processing" ) } )
+
+   // Serve clients in a loop
+   do while oCtrl:lServerWorking
+      oCtrl:ServeClients()
+      // Yield to Windows message queue
+      SysRefresh()
+   enddo
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TCtrlSocket is designed for cooperative multitasking within a single thread. Call <code>ServeClients()</code> periodically to give each queued socket a chance to read/write data.</li>
+<li>Use the <code>abChance</code> callback to handle data processing for each socket. This callback receives the socket object and can call <code>Recv()</code>/<code>Send()</code> to communicate.</li>
+<li>The <code>abEnd</code> callback fires when a connection terminates, allowing cleanup of per-socket resources.</li>
+<li><code>anSended</code> tracks cumulative bytes sent per request, useful for progress monitoring.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

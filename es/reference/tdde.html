@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TDde / TDdeClient / TDdeServer - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Versión 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tpanel.html">TPanel</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item active" href="../../es/reference/tdde.html">TDde / TDdeClient / TDdeServer</a>
+<a class="nav-item" href="../../es/reference/tform.html">TForm</a>
+<a class="nav-item" href="../../es/reference/timagebase64.html">TImageBase64</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TDde / TDdeClient / TDdeServer</h1>
+<p class="class-source">Sources: <code>source/classes/dde.prg</code>, <code>source/classes/ddeclien.prg</code>, <code>source/classes/ddeserv.prg</code></p>
+<p class="class-hierarchy">Standalone classes (not control-based)</p>
+
+<p>
+These three classes implement Dynamic Data Exchange (DDE) communication between Windows applications. TDde is a simplified DDE wrapper, while TDdeClient and TDdeServer provide a more complete client-server implementation with support for Execute, Request, Poke, and acknowledgment handling.
+</p>
+
+<h2 id="tdde">TDde (Simple DDE)</h2>
+
+<h3>Key DATA Members</h3>
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nService</code></td><td>Numeric</td><td>Global atom for the service name</td></tr>
+<tr><td><code>nTopic</code></td><td>Numeric</td><td>Global atom for the topic name</td></tr>
+<tr><td><code>oWndServer</code></td><td>Object</td><td>Server window object after connection</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>.T. when DDE conversation is active</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cService, cTopic, cItem, bAction, bEnd )</code></td><td>Create a DDE object with service, topic, item atoms and action/end code blocks</td></tr>
+<tr><td><code>Activate()</code></td><td>Broadcast WM_DDE_INITIATE to all top-level windows</td></tr>
+<tr><td><code>Execute( cCommand )</code></td><td>Send a DDE execute command to the server</td></tr>
+<tr><td><code>End()</code></td><td>Terminate the DDE conversation and delete atoms</td></tr>
+</tbody>
+</table>
+
+<h2 id="tddecli">TDdeClient (Full Client)</h2>
+
+<h3>Key DATA Members</h3>
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Main window object for message handling</td></tr>
+<tr><td><code>cService</code></td><td>Character</td><td>Service name (converted to atom)</td></tr>
+<tr><td><code>cTopic</code></td><td>Character</td><td>Topic name (converted to atom)</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>.T. when DDE conversation is active</td></tr>
+<tr><td><code>nAck</code></td><td>Numeric</td><td>ACK status: 0=OK, 1=Busy, 2=NotSupported, 3=Timeout</td></tr>
+<tr><td><code>cData</code></td><td>Character</td><td>Holds data received from a Request call</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( oWnd, cService, cTopic )</code></td><td>Create client; wires bDDE_ACK and bDDE_DATA to the window</td></tr>
+<tr><td><code>Activate( nWait )</code></td><td>Send WM_DDE_INITIATE; optionally wait nWait seconds for ACK</td></tr>
+<tr><td><code>Execute( cCommand, nWaitOK )</code></td><td>Send a command string and optionally wait for confirmation</td></tr>
+<tr><td><code>Request( nType, cCommand, nWaitOK )</code></td><td>Request data from the server (CF_TEXT default); result in ::cData</td></tr>
+<tr><td><code>Poke( nType, cItem, cData, nWaitOK )</code></td><td>Send data to the server identified by cItem</td></tr>
+<tr><td><code>End()</code></td><td>Terminate conversation and delete atoms</td></tr>
+</tbody>
+</table>
+
+<h2 id="tddesrv">TDdeServer (Full Server)</h2>
+
+<h3>Key DATA Members</h3>
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Main window object for message handling</td></tr>
+<tr><td><code>cService</code></td><td>Character</td><td>Service name to respond to</td></tr>
+<tr><td><code>cTopic</code></td><td>Character</td><td>Topic name to respond to</td></tr>
+<tr><td><code>bInit</code></td><td>Block</td><td>Code block executed on DDE initiate (return .F. to reject)</td></tr>
+<tr><td><code>bExecute</code></td><td>Block</td><td>Code block executed on DDE_EXECUTE</td></tr>
+<tr><td><code>bRequest</code></td><td>Block</td><td>Code block executed on DDE_REQUEST (return data string)</td></tr>
+<tr><td><code>bPoke</code></td><td>Block</td><td>Code block executed on DDE_POKE</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( oWnd, cService, cTopic, bInit, bExecute, bRequest, bPoke, bTerminate )</code></td><td>Create server and wire DDE message handlers to window</td></tr>
+<tr><td><code>End()</code></td><td>Remove message handlers and mark inactive</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: DDE Client</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function DDEClientDemo()
+
+   local oClient := TDdeClient():New( oWnd, "MyService", "MyTopic" )
+
+   // Activate with 5-second timeout
+   if oClient:Activate( 5 )
+      // Execute a command
+      oClient:Execute( "OPEN_FILE|C:\data.txt" )
+      // Request data
+      oClient:Request( 1, "GET_STATUS" )
+      MsgInfo( oClient:cData )
+      oClient:End()
+   endif
+
+return nil</code></pre>
+
+<h2 id="example2">Example: DDE Server</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function DDEServerDemo( oWnd )
+
+   local oServer := TDdeServer():New( oWnd, "MyService", "MyTopic",;
+      {|cSrv,cTop| MsgInfo( "Client connected: "+cSrv ), .T. },;
+      {|cCmd|   MsgInfo( "Exec: " + cCmd ), .T. },;
+      {|cItem|  If( cItem == "TIME", Time(), "" ) },;
+      {|cItem,cData| MsgInfo( "Poked: "+cItem+"="+cData ), .T. } )
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>DDE uses Windows messaging (WM_DDE_*) and global atoms for service/topic identification.</li>
+<li>The server window must remain alive for the conversation to stay active. Server activation happens automatically when <code>New()</code> wires the handlers.</li>
+<li>ACK codes are: 0=OK, 1=Busy, 2=NotSupported, 3=Timeout. Check <code>::nAck</code> after each operation.</li>
+<li>For <code>Request()</code>, the returned data is stored in <code>::cData</code>. Only CF_TEXT is supported.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>
