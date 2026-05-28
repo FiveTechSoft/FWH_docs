@@ -139,6 +139,32 @@ stateDiagram-v2
    [ PROMPT cText ] ;
    [ WHEN bWhen ]</code></pre>
 
+<h2 id="bitmap-states">4-State Bitmap System</h2>
+
+<p><code>TBtnBmp</code> supports four distinct visual states, each with its own bitmap. The button automatically switches between them based on user interaction:</p>
+
+<table>
+<thead><tr><th>State</th><th>Constant</th><th>Position</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Normal</td><td><code>BTN_UP</code></td><td>1</td><td>Default appearance when the button is idle and enabled</td></tr>
+<tr><td>Pressed</td><td><code>BTN_DOWN</code></td><td>2</td><td>Appearance while the user clicks or holds the mouse button down</td></tr>
+<tr><td>Disabled</td><td><code>BTN_DISABLE</code></td><td>3</td><td>Appearance when the button is inactive (<code>lActive := .F.</code>)</td></tr>
+<tr><td>Hover</td><td><code>BTN_OVER</code></td><td>4</td><td>Appearance when the mouse cursor hovers over the button</td></tr>
+</tbody>
+</table>
+
+<p>For resource-based buttons, bitmap IDs follow Borland conventions: the normal bitmap uses the base ID, the pressed bitmap uses <code>base_id + 10000</code>, the disabled bitmap uses <code>base_id + 20000</code>, and the hover bitmap uses <code>base_id + 30000</code>. File-based buttons use four separate files or a multi-image strip, specified via the <code>FILENAME</code> clause.</p>
+
+<h3 id="bitmap-advanced">Advanced Rendering Options</h3>
+
+<p>Additional visual enhancements are available through TBtnBmp DATA members:</p>
+
+<ul>
+<li><code>lGDIP</code> -- Enables GDI+ alpha-blended rendering, providing anti-aliased edges and smooth transparency for PNG and 32-bit BMP bitmaps.</li>
+<li><code>bColorMap</code> -- A codeblock for dynamic color remapping on the button bitmap, allowing per-state or per-button color substitution (e.g., changing icon color for active vs. inactive states).</li>
+<li><code>bAlphaLevel</code> -- A codeblock that returns a custom alpha value (0-255) per state, enabling granular transparency control for each button state independently.</li>
+</ul>
+
 <h2 id="buttonbar">BUTTONBAR (Toolbar)</h2>
 
 <p>The <code>DEFINE BUTTONBAR</code> command creates a <code>TButtonBar</code> container that hosts <code>TBtnBmp</code> buttons as a toolbar at the top of a window.</p>

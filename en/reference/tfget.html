@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TFGet - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/ttabs.html">TTabs</a>
+<a class="nav-item" href="../../en/ui/tpanel.html">TPanel</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item active" href="../../en/reference/tfget.html">TFGet</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TFGet</h1>
+<p class="class-source">Source: <code>source/classes/fget.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+
+<p>
+TFGet is a custom-painted multi-line text editor for FiveWin. Unlike the standard Windows EDIT control, it provides per-character fonts, colors, and alignment. It supports copy/cut/paste, undo, block selection, word wrap, and scroll bars. It is the foundation of FiveWin's format-capable text editing.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+<table><thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Code block to get/set the text value</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>When <code>.T.</code>, editing is disabled</td></tr>
+<tr><td><code>nAlign</code></td><td>Numeric</td><td>Text alignment: ES_LEFT, ES_CENTER, ES_RIGHT</td></tr>
+<tr><td><code>nClrText / nClrPane</code></td><td>Numeric</td><td>Foreground and background colors (RGB)</td></tr>
+<tr><td><code>oFont / aFonts</code></td><td>Object/Array</td><td>Default font and per-character font array</td></tr>
+</tbody></table>
+
+<h2 id="methods">Methods</h2>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, bSetGet, oWnd, nW, nH, oFont, lHScroll, nClrFore, nClrBack, lPixel, lReadOnly, ... )</code></td><td>Create a new TFGet control</td></tr>
+<tr><td><code>Redefine( nId, bSetGet, oWnd )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>Copy() / Cut() / Paste()</code></td><td>Clipboard operations</td></tr>
+<tr><td><code>Undo()</code></td><td>Undo last edit operation</td></tr>
+<tr><td><code>SelectAll()</code></td><td>Select all text</td></tr>
+<tr><td><code>SetFormat( oFont, nColor )</code></td><td>Apply font and color formatting</td></tr>
+</tbody></table>
+
+<h2 id="example">Example: Custom GET with Picture</h2>
+<pre><code class="language-harbour">#include "FiveWin.ch"
+function Main()
+   local oWnd, oGet, cVar := "Hello World"
+   DEFINE WINDOW oWnd TITLE "TFGet Demo" SIZE 400, 200
+   @ 20, 20 GET oGet VAR cVar OF oWnd MEMO SIZE 300, 100
+   ACTIVATE WINDOW oWnd CENTERED
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>TFGet uses an internal GTF (Get Text Format) protocol for per-character font/color storage.</li>
+<li>Full clipboard support (Copy, Cut, Paste, Delete) with a right-click context menu.</li>
+<li>Unlike TGet, TFGet is fully owner-drawn, not relying on the Windows EDIT control.</li>
+<li>Use <code>lReadOnly := .T.</code> for formatted display without editing.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

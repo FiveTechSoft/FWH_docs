@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TTimer - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/ttabs.html">TTabs</a>
+<a class="nav-item" href="../../en/ui/tpanel.html">TPanel</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Utilities</div>
+<a class="nav-item active" href="../../en/utilities/ttimer.html">TTimer</a></div>
+</nav>
+<main id="content">
+
+<h1>TTimer</h1>
+<p class="class-source">Source: <code>source/classes/timer.prg</code></p>
+<p class="class-hierarchy">Standalone class</p>
+
+<p>
+TTimer wraps the Win32 <code>SetTimer</code>/<code>KillTimer</code> API to fire a Harbour code block at configurable intervals. Timers are used for periodic background tasks, animations, auto-save, and polling.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+<table><thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>nInterval</code></td><td>Numeric</td><td>Timer interval in milliseconds (default 18)</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on each timer tick</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>Whether the timer is currently running</td></tr>
+<tr><td><code>nId</code></td><td>Numeric</td><td>Unique timer identifier</td></tr>
+</tbody></table>
+
+<h2 id="methods">Methods</h2>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( nInterval, bAction, oWnd )</code></td><td>Create a timer. Default interval 18 ms. If oWnd is omitted, the active window is used.</td></tr>
+<tr><td><code>Activate()</code></td><td>Start the timer by calling <code>SetTimer()</code></td></tr>
+<tr><td><code>DeActivate()</code></td><td>Stop the timer by calling <code>KillTimer()</code></td></tr>
+<tr><td><code>End()</code></td><td>Deactivate and remove the timer from the global list</td></tr>
+</tbody></table>
+
+<h2 id="commands">Commands</h2>
+<pre><code class="language-harbour">DEFINE TIMER oTmr INTERVAL nMs ACTION bAction OF oWnd</code></pre>
+
+<h2 id="example">Example: One-Second Timer</h2>
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+   local oWnd, oTimer, nSec := 0
+   DEFINE WINDOW oWnd TITLE "TTimer Demo" SIZE 300, 200
+   @ 20, 20 SAY "Elapsed: " + Str( nSec ) + " seconds"
+   DEFINE TIMER oTimer INTERVAL 1000 ;
+      ACTION ( nSec++, oWnd:Refresh() ) ;
+      OF oWnd
+   oTimer:Activate()
+   ACTIVATE WINDOW oWnd CENTERED
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Timers are stored in an internal static array and matched by <code>nId</code> in the global <code>TimerEvent()</code> function.</li>
+<li>Always call <code>End()</code> when a timer is no longer needed.</li>
+<li>Keep <code>bAction</code> lightweight; long operations cause UI lag.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>
