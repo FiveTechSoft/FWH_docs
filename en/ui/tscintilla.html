@@ -191,6 +191,93 @@ function Main()
 
 return nil</code></pre>
 
+<h2 id="lexer-config">Lexer Configuration</h2>
+
+<p>
+TScintilla supports syntax highlighting via configurable keyword color sets
+and token-specific color arrays:
+</p>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cCKeyw1..cCKeyw5</code></td><td>Array</td><td>Keyword color sets: <code>{ nForeColor, nBackColor, nCase }</code> for keyword levels 1&ndash;5</td></tr>
+<tr><td><code>cCString</code></td><td>Array</td><td>String literal color: <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
+<tr><td><code>cCNumber</code></td><td>Array</td><td>Numeric literal color: <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
+<tr><td><code>cCOperator</code></td><td>Array</td><td>Operator color: <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
+<tr><td><code>cCComment</code></td><td>Array</td><td>Comment color (supports multi-line): <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
+</tbody>
+</table>
+
+<p>
+Each color array contains three elements:
+</p>
+<ul>
+<li><strong>nForeColor</strong> &mdash; Foreground (text) color as an RGB numeric value.</li>
+<li><strong>nBackColor</strong> &mdash; Background color as an RGB numeric value.</li>
+<li><strong>nCase</strong> &mdash; Case mode: <code>SC_CASE_MIXED</code>, <code>SC_CASE_UPPER</code>, or <code>SC_CASE_LOWER</code>.</li>
+</ul>
+
+<p>
+Default colors for Harbour/xHarbour syntax are defined as class data members:
+</p>
+
+<pre><code class="language-harbour">DATA cCComment  INIT { CLR_GRAY,    CLR_WHITE, SC_CASE_MIXED }
+DATA cCString   INIT { CLR_HRED,    CLR_WHITE, SC_CASE_MIXED }
+DATA cCNumber   INIT { CLR_HBLUE,   CLR_WHITE, SC_CASE_MIXED }
+DATA cCOperator INIT { CLR_HBLACK,  CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw1    INIT { METRO_ORANGE,CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw2    INIT { CLR_HGREEN,  CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw3    INIT { CLR_HPURPLE, CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw4    INIT { CLR_HCYAN,   CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw5    INIT { CLR_HRED,    CLR_WHITE, SC_CASE_MIXED }</code></pre>
+
+<h2 id="encoding-modes">File Encoding Modes</h2>
+
+<p>
+TScintilla supports multiple file encoding modes for reading and saving documents
+in different character encodings. These are controlled by the <code>nModeSave</code>
+and <code>nModeLoad</code> data members along with the <code>lBom</code> flag.
+</p>
+
+<table>
+<thead>
+<tr><th>Mode</th><th>Constant</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td><code>nModeLoad := 0</code></td><td>Normal (ANSI/CP1252) encoding</td></tr>
+<tr><td>1</td><td><code>nModeLoad := 1</code> / <code>nModeSave := 1</code></td><td>UTF-8 with BOM</td></tr>
+<tr><td>2</td><td><code>nModeLoad := 2</code> / <code>nModeSave := 2</code></td><td>UTF-8 without BOM</td></tr>
+<tr><td>3</td><td><code>nModeLoad := 3</code> / <code>nModeSave := 3</code></td><td>UTF-16 Little Endian</td></tr>
+</tbody>
+</table>
+
+<ul>
+<li><code>nModeLoad</code> controls how the file is interpreted when opened. Mode 0 reads as ANSI; modes 1&ndash;3 decode the appropriate Unicode format.</li>
+<li><code>nModeSave</code> controls how the document is written back to disk.</li>
+<li><code>lBom</code> (logical) controls whether a Byte Order Mark is written at the beginning of the file on save. Relevant for UTF-8 and UTF-16 modes.</li>
+<li>When <code>OpenFile()</code> loads a document, UTF-8 BOM is detected automatically regardless of <code>nModeLoad</code>.</li>
+</ul>
+
+<h2 id="editor-comparison">Editor Control Comparison</h2>
+
+<table>
+<thead>
+<tr><th>Control</th><th>Source File</th><th>Features</th></tr>
+</thead>
+<tbody>
+<tr><td><code>TEdit</code></td><td><code>edit.prg</code></td><td>Basic edit, multi-line memo mode, no RTF support</td></tr>
+<tr><td><code>TGet</code></td><td><code>tget.prg</code></td><td>Single-line input, picture clauses, input validation</td></tr>
+<tr><td><code>TMultiGet</code></td><td><code>mget.prg</code></td><td>Multi-line text, no formatting, basic editing</td></tr>
+<tr><td><code>TRichEdit</code></td><td><code>trichedi.prg</code></td><td>RTF 2.0 (riched20.dll), basic font/color formatting</td></tr>
+<tr><td><code>TRichEdit5</code></td><td><code>triched5.prg</code></td><td>RTF 5.0 (msftedit.dll), tables, images, PDF export</td></tr>
+<tr><td><code>TTxtEdit</code></td><td><code>ttxtedit.prg</code></td><td>Source code display, syntax highlighting, line numbers</td></tr>
+<tr><td><code>TScintilla</code></td><td><code>scintila.prg</code></td><td>Full IDE-class editor, code folding, lexers, bookmarks, search/replace, multi-encoding</td></tr>
+</tbody>
+</table>
+
 <h2 id="notes">Notes</h2>
 
 <ul>

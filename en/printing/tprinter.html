@@ -470,6 +470,34 @@ return nil</code></pre>
 </tbody>
 </table>
 
+<h2 id="pdf-delegation">PDF Delegation Architecture</h2>
+
+<p>
+TPrinter supports transparent PDF output through a call-log recording and replay
+mechanism. When one of the PDF-related class data flags (listed above) is enabled,
+every drawing command is captured as a call-log entry and replayed through the
+selected PDF backend at page completion. The application code does not change at
+all &mdash; the same <code>TPrinter:Say()</code>, <code>TPrinter:Line()</code>,
+and other drawing calls produce PDF output without any code modifications.
+</p>
+
+<p>
+The delegation architecture works as follows:
+</p>
+
+<ol>
+<li>The <code>aCallLog</code> array stores every drawing operation performed on the printer device context.</li>
+<li><code>AddLog()</code> records each individual call &mdash; <code>Say</code>, <code>Line</code>, <code>Box</code>, <code>Ellipse</code>, <code>PrintImage</code>, etc. &mdash; along with its parameters.</li>
+<li>When a PDF flag is active, <code>AddLog()</code> captures each call during the page and <code>EndPage()</code> replays the accumulated entries through the selected PDF backend.</li>
+<li>The same mechanism works for print preview: the metafile recording (<code>lMeta</code>) captures GDI calls for on-screen rendering, while the PDF flags capture the same logical operations for file output.</li>
+</ol>
+
+<p>
+This design ensures that any application using standard TPrinter drawing commands
+can produce PDF output simply by setting one class data flag at the start of the
+print job, with no changes to the drawing logic itself.
+</p>
+
 </main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
