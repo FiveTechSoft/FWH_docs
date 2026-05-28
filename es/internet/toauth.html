@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OAuth2 Email: TOAuth, TGmail, TOutlookMail - FWH Docs</title>
+<title>OAuth2 Email: TOAuth, TGmail, TOutlookMail - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -80,98 +80,98 @@
 </nav>
 <main id="content">
 
-<h1>OAuth2 Email: TOAuth, TGmail, TOutlookMail</h1>
-<p class="class-source">Sources: <code>source/classes/oauth.prg</code>, <code>source/classes/gmail.prg</code>, <code>source/classes/outlookmail.prg</code></p>
+<h1>Correo OAuth2: TOAuth, TGmail, TOutlookMail</h1>
+<p class="class-source">Fuentes: <code>source/classes/oauth.prg</code>, <code>source/classes/gmail.prg</code>, <code>source/classes/outlookmail.prg</code></p>
 
 <p>
-FiveWin provides OAuth2 email support for Gmail (TGmail) and Outlook/Office 365 (TOutlookMail) through a common class hierarchy. <strong>TOAuth</strong> handles authentication, token management, and MIME message construction. <strong>TGmail</strong> implements the Gmail REST API, <strong>TOutlookMail</strong> uses Microsoft Graph. All network communication uses <code>libcurl</code>; the interactive login uses <code>TWebView2</code>.
+FiveWin proporciona soporte de correo electrónico OAuth2 para Gmail (TGmail) y Outlook/Office 365 (TOutlookMail) a través de una jerarquía de clases común. <strong>TOAuth</strong> maneja la autenticación, la gestión de tokens y la construcción de mensajes MIME. <strong>TGmail</strong> implementa la API REST de Gmail, <strong>TOutlookMail</strong> usa Microsoft Graph. Toda la comunicación de red usa <code>libcurl</code>; el inicio de sesión interactivo usa <code>TWebView2</code>.
 </p>
 
-<h2 id="architecture">OAuth2 Authentication Flow</h2>
+<h2 id="architecture">Flujo de Autenticación OAuth2</h2>
 
 <div class="mermaid">
 sequenceDiagram
-    participant App as "FWH App"
+    participant App as "App FWH"
     participant WV as "TWebView2"
     participant Srv as "THttpServer"
-    participant Cloud as "Provider API"
-    App->>Srv: Start on local port
-    App->>WV: Navigate to auth URL
-    WV->>Cloud: User grants permission
-    Cloud-->>WV: Redirect to localhost/?code=XYZ
-    WV->>Srv: HTTP GET with auth code
-    Srv-->>App: Return captured code
-    App->>WV: Close browser window
+    participant Cloud as "API del Proveedor"
+    App->>Srv: Iniciar en puerto local
+    App->>WV: Navegar a URL de auth
+    WV->>Cloud: El usuario concede permiso
+    Cloud-->>WV: Redirigir a localhost/?code=XYZ
+    WV->>Srv: HTTP GET con código auth
+    Srv-->>App: Devolver código capturado
+    App->>WV: Cerrar ventana del navegador
     App->>Cloud: POST /token (code + client_secret)
     Cloud-->>App: JSON {access_token, refresh_token}
-    Note over App: Store refresh_token locally
-    App->>Cloud: Send email via REST API
+    Note over App: Almacenar refresh_token localmente
+    App->>Cloud: Enviar correo vía API REST
 </div>
 
-<h2 id="oauth-class">TOAuth: Base Class</h2>
+<h2 id="oauth-class">TOAuth: Clase Base</h2>
 
 <p>
-TOAuth provides the core OAuth2 workflow and MIME multipart construction. It manages client credentials, the local HTTP server for redirect capture, and token lifecycle including automatic refresh.
+TOAuth proporciona el flujo de trabajo OAuth2 principal y la construcción multiparte MIME. Gestiona las credenciales del cliente, el servidor HTTP local para la captura de redirección y el ciclo de vida del token incluyendo la actualización automática.
 </p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cClientId</code></td><td>Character</td><td>OAuth2 client ID from provider</td></tr>
-<tr><td><code>cClientSecret</code></td><td>Character</td><td>OAuth2 client secret</td></tr>
-<tr><td><code>cRedirectUri</code></td><td>Character</td><td>Redirect URI (defaults to <code>http://localhost:2025</code>)</td></tr>
-<tr><td><code>cAccessToken</code></td><td>Character</td><td>Current access token</td></tr>
-<tr><td><code>cRefreshToken</code></td><td>Character</td><td>Persistent refresh token</td></tr>
+<tr><td><code>cClientId</code></td><td>Carácter</td><td>ID de cliente OAuth2 del proveedor</td></tr>
+<tr><td><code>cClientSecret</code></td><td>Carácter</td><td>Secreto de cliente OAuth2</td></tr>
+<tr><td><code>cRedirectUri</code></td><td>Carácter</td><td>URI de redirección (por defecto <code>http://localhost:2025</code>)</td></tr>
+<tr><td><code>cAccessToken</code></td><td>Carácter</td><td>Token de acceso actual</td></tr>
+<tr><td><code>cRefreshToken</code></td><td>Carácter</td><td>Token de actualización persistente</td></tr>
 </tbody>
 </table>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>GetAuthCode()</code></td><td>Opens WebView2, navigates to provider auth URL, captures authorization code via local THttpServer</td></tr>
-<tr><td><code>GetToken()</code></td><td>Exchanges authorization code for access and refresh tokens via POST to /token endpoint</td></tr>
-<tr><td><code>RefreshToken()</code></td><td>Uses refresh_token to obtain a new access_token when the current one expires</td></tr>
-<tr><td><code>mimeMultipart(cTo,cSubj,cBody,aAttach)</code></td><td>Builds an RFC-compliant MIME multipart message with base64-encoded attachments</td></tr>
-<tr><td><code>getFileMime(cPath)</code></td><td>Returns MIME type string for a given file extension (lookup table for jpg, png, pdf, etc.)</td></tr>
+<tr><td><code>GetAuthCode()</code></td><td>Abre WebView2, navega a la URL de autenticación del proveedor, captura el código de autorización vía THttpServer local</td></tr>
+<tr><td><code>GetToken()</code></td><td>Intercambia el código de autorización por tokens de acceso y actualización vía POST al endpoint /token</td></tr>
+<tr><td><code>RefreshToken()</code></td><td>Usa refresh_token para obtener un nuevo access_token cuando el actual expira</td></tr>
+<tr><td><code>mimeMultipart(cTo,cSubj,cBody,aAttach)</code></td><td>Construye un mensaje multiparte MIME compatible con RFC con adjuntos codificados en base64</td></tr>
+<tr><td><code>getFileMime(cPath)</code></td><td>Devuelve la cadena de tipo MIME para una extensión de archivo dada (tabla de búsqueda para jpg, png, pdf, etc.)</td></tr>
 </tbody>
 </table>
 
-<h2 id="gmail">TGmail: Google Gmail API</h2>
+<h2 id="gmail">TGmail: API de Google Gmail</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New(cClientId,cClientSecret,cUser)</code></td><td>Create a TGmail instance for the specified user. Triggers the OAuth2 auth flow if no token is cached.</td></tr>
-<tr><td><code>Send(cTo,cSubj,cBody,aAttach)</code></td><td>Send an email via the Gmail API endpoint. <code>aAttach</code> is an array of file paths.</td></tr>
-<tr><td><code>GetToken()</code></td><td>Obtain a fresh access token, checking validity via the tokeninfo endpoint first.</td></tr>
-<tr><td><code>RefreshToken()</code></td><td>Force refresh of the access token from the stored refresh token.</td></tr>
+<tr><td><code>New(cClientId,cClientSecret,cUser)</code></td><td>Crea una instancia de TGmail para el usuario especificado. Activa el flujo de autenticación OAuth2 si no hay token en caché.</td></tr>
+<tr><td><code>Send(cTo,cSubj,cBody,aAttach)</code></td><td>Envía un correo electrónico vía el endpoint de la API de Gmail. <code>aAttach</code> es un array de rutas de archivos.</td></tr>
+<tr><td><code>GetToken()</code></td><td>Obtiene un token de acceso nuevo, verificando primero la validez vía el endpoint tokeninfo.</td></tr>
+<tr><td><code>RefreshToken()</code></td><td>Forza la actualización del token de acceso desde el token de actualización almacenado.</td></tr>
 </tbody>
 </table>
 
-<p>TGmail sends via <code>https://gmail.googleapis.com/gmail/v1/users/me/messages/send?uploadType=multipart</code> and requires a Google Cloud Console "Web Application" client ID with redirect URI set to <code>http://localhost:2025</code>.</p>
+<p>TGmail envía vía <code>https://gmail.googleapis.com/gmail/v1/users/me/messages/send?uploadType=multipart</code> y requiere un ID de cliente de "Aplicación Web" de Google Cloud Console con URI de redirección configurada a <code>http://localhost:2025</code>.</p>
 
-<h2 id="outlook">TOutlookMail: Microsoft Graph API</h2>
+<h2 id="outlook">TOutlookMail: API de Microsoft Graph</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New(cClientId,cTenantId,cUser)</code></td><td>Create a TOutlookMail instance. <code>cTenantId</code> identifies the Azure AD tenant.</td></tr>
-<tr><td><code>Send(cTo,cSubj,cBody,aAttach)</code></td><td>Send email via Microsoft Graph <code>/users/{user}/sendMail</code> endpoint. Supports HTML body and attachments.</td></tr>
-<tr><td><code>me()</code></td><td>Retrieve the authenticated user's profile from <code>https://graph.microsoft.com/v1.0/me</code></td></tr>
+<tr><td><code>New(cClientId,cTenantId,cUser)</code></td><td>Crea una instancia de TOutlookMail. <code>cTenantId</code> identifica el inquilino de Azure AD.</td></tr>
+<tr><td><code>Send(cTo,cSubj,cBody,aAttach)</code></td><td>Envía correo vía el endpoint de Microsoft Graph <code>/users/{user}/sendMail</code>. Soporta cuerpo HTML y adjuntos.</td></tr>
+<tr><td><code>me()</code></td><td>Recupera el perfil del usuario autenticado desde <code>https://graph.microsoft.com/v1.0/me</code></td></tr>
 </tbody>
 </table>
 
-<p>Required OAuth2 scopes: <code>Mail.Send</code>, <code>offline_access</code>, <code>openid</code>, <code>profile</code>, <code>SMTP.Send</code>, <code>User.Read</code>. Microsoft may rotate refresh tokens; the class detects new refresh tokens in token responses and updates the local store automatically.</p>
+<p>Ámbitos OAuth2 requeridos: <code>Mail.Send</code>, <code>offline_access</code>, <code>openid</code>, <code>profile</code>, <code>SMTP.Send</code>, <code>User.Read</code>. Microsoft puede rotar los tokens de actualización; la clase detecta nuevos tokens de actualización en las respuestas y actualiza el almacén local automáticamente.</p>
 
-<h2 id="example">Example: Gmail OAuth2 Send</h2>
+<h2 id="example">Ejemplo: Envío Gmail OAuth2</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -197,13 +197,13 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>Requires <code>libcurl.dll</code>, <code>libssl-3-x64.dll</code>, <code>zlib1.dll</code> for 64-bit builds; <code>TWebView2</code> runtime must be installed.</li>
-<li>Tokens are cached locally; refresh token rotation ensures long-lived access without repeated login prompts.</li>
-<li>The local <code>THttpServer</code> listens on port 2025 (default) to capture the redirect with the authorization code.</li>
-<li>MIME messages use proper boundaries, Content-Type headers, and base64 attachment encoding per RFC 2822.</li>
+<li>Requiere <code>libcurl.dll</code>, <code>libssl-3-x64.dll</code>, <code>zlib1.dll</code> para compilaciones de 64 bits; el runtime de <code>TWebView2</code> debe estar instalado.</li>
+<li>Los tokens se almacenan en caché local; la rotación del token de actualización asegura acceso de larga duración sin solicitudes de inicio de sesión repetidas.</li>
+<li>El <code>THttpServer</code> local escucha en el puerto 2025 (por defecto) para capturar la redirección con el código de autorización.</li>
+<li>Los mensajes MIME usan delimitadores adecuados, cabeceras Content-Type y codificación base64 de adjuntos según RFC 2822.</li>
 </ul>
 
 </main>

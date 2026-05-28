@@ -92,57 +92,57 @@
 <main id="content">
 
 <h1>TScrollImg</h1>
-<p class="class-source">Source: <code>source/classes/scrolimg.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
+<p class="class-source">Fonte: <code>source/classes/scrolimg.prg</code></p>
+<p class="class-hierarchy">Herda de: <code>TPanel</code></p>
 
 <p>
-TScrollImg is an image banner / carousel control that displays a scrolling collection of images. It supports multiple display modes, automatic animation, fading transitions, zoom on hover, click actions per image, and state persistence. Originally designed for product showcases and advertisement banners.
+TScrollImg é um controle de banner / carrossel de imagens que exibe uma coleção rolável de imagens. Suporta múltiplos modos de exibição, animação automática, transições de desvanecimento, zoom ao passar o mouse, ações por clique em cada imagem e persistência de estado. Originalmente projetado para vitrines de produtos e banners publicitários.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Membros DATA Principais</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aElements</code></td><td>Array</td><td>Array of element definitions (file, URL, action, prompt)</td></tr>
-<tr><td><code>nImages</code></td><td>Numeric</td><td>Number of images loaded from the banner list</td></tr>
-<tr><td><code>nMode</code></td><td>Numeric</td><td>Display mode 1-4 (scroll direction / layout variant)</td></tr>
-<tr><td><code>nSpeed</code></td><td>Numeric</td><td>Scroll speed in pixels per timer tick</td></tr>
-<tr><td><code>lRunning</code></td><td>Logical</td><td>Animation is currently running</td></tr>
-<tr><td><code>lPaused</code></td><td>Logical</td><td>Animation is paused</td></tr>
-<tr><td><code>aOpacity</code></td><td>Array</td><td>Per-image opacity values (0-255)</td></tr>
-<tr><td><code>nZoomedImage</code></td><td>Numeric</td><td>Index of the currently zoomed image (0 = none)</td></tr>
-<tr><td><code>lFading</code></td><td>Logical</td><td>Fading transition is in progress</td></tr>
-<tr><td><code>lMouseWheel</code></td><td>Logical</td><td>Enable mouse wheel scrolling</td></tr>
-<tr><td><code>lChangeSpeed</code></td><td>Logical</td><td>Allow speed change via +/- keys</td></tr>
+<tr><td><code>aElements</code></td><td>Array</td><td>Array de definições de elementos (arquivo, URL, ação, prompt)</td></tr>
+<tr><td><code>nImages</code></td><td>Numérico</td><td>Número de imagens carregadas da lista de banners</td></tr>
+<tr><td><code>nMode</code></td><td>Numérico</td><td>Modo de exibição 1-4 (direção de rolagem / variante de layout)</td></tr>
+<tr><td><code>nSpeed</code></td><td>Numérico</td><td>Velocidade de rolagem em pixels por tick do temporizador</td></tr>
+<tr><td><code>lRunning</code></td><td>Lógico</td><td>Animação está atualmente em execução</td></tr>
+<tr><td><code>lPaused</code></td><td>Lógico</td><td>Animação está pausada</td></tr>
+<tr><td><code>aOpacity</code></td><td>Array</td><td>Valores de opacidade por imagem (0-255)</td></tr>
+<tr><td><code>nZoomedImage</code></td><td>Numérico</td><td>Índice da imagem atualmente ampliada (0 = nenhuma)</td></tr>
+<tr><td><code>lFading</code></td><td>Lógico</td><td>Transição de desvanecimento em progresso</td></tr>
+<tr><td><code>lMouseWheel</code></td><td>Lógico</td><td>Habilitar rolagem com roda do mouse</td></tr>
+<tr><td><code>lChangeSpeed</code></td><td>Lógico</td><td>Permitir alteração de velocidade via teclas +/-</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, oWnd, aBanners, nMode, nSpeed, ... )</code></td><td>Create a new image carousel with banner file list and display mode</td></tr>
-<tr><td><code>Redefine( nId, oWnd, aBanners, nMode, nSpeed, ... )</code></td><td>Redefine from a dialog resource</td></tr>
-<tr><td><code>Reset()</code></td><td>Reset the carousel to its initial state, reposition all images</td></tr>
-<tr><td><code>Animate()</code></td><td>Start or restart the scrolling animation timer</td></tr>
-<tr><td><code>Paint()</code></td><td>Render the background and all visible images</td></tr>
-<tr><td><code>TimerAction()</code></td><td>Timer callback that advances the scroll position each tick</td></tr>
-<tr><td><code>SaveState( cFile )</code></td><td>Save the current carousel state (positions, images) to a file</td></tr>
-<tr><td><code>LoadState( cFile )</code></td><td>Restore a previously saved carousel state from a file</td></tr>
-<tr><td><code>MouseMove( nRow, nCol )</code></td><td>Handle mouse movement for hover detection and zoom</td></tr>
-<tr><td><code>LButtonUp( nRow, nCol )</code></td><td>Execute action associated with the clicked image</td></tr>
-<tr><td><code>KeyDown( nKey, nFlags )</code></td><td>Handle +/- keys for speed control</td></tr>
-<tr><td><code>MouseWheel( nKeys, nDelta, nX, nY )</code></td><td>Handle mouse wheel for manual scrolling</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, oWnd, aBanners, nMode, nSpeed, ... )</code></td><td>Criar um novo carrossel de imagens com lista de banners e modo de exibição</td></tr>
+<tr><td><code>Redefine( nId, oWnd, aBanners, nMode, nSpeed, ... )</code></td><td>Redefinir a partir de um recurso de diálogo</td></tr>
+<tr><td><code>Reset()</code></td><td>Restaurar o carrossel ao seu estado inicial, reposicionar todas as imagens</td></tr>
+<tr><td><code>Animate()</code></td><td>Iniciar ou reiniciar o temporizador de animação de rolagem</td></tr>
+<tr><td><code>Paint()</code></td><td>Renderizar o fundo e todas as imagens visíveis</td></tr>
+<tr><td><code>TimerAction()</code></td><td>Callback do temporizador que avança a posição de rolagem a cada tick</td></tr>
+<tr><td><code>SaveState( cFile )</code></td><td>Salvar o estado atual do carrossel (posições, imagens) em um arquivo</td></tr>
+<tr><td><code>LoadState( cFile )</code></td><td>Restaurar um estado de carrossel previamente salvo de um arquivo</td></tr>
+<tr><td><code>MouseMove( nRow, nCol )</code></td><td>Lidar com movimento do mouse para detecção de hover e zoom</td></tr>
+<tr><td><code>LButtonUp( nRow, nCol )</code></td><td>Executar a ação associada à imagem clicada</td></tr>
+<tr><td><code>KeyDown( nKey, nFlags )</code></td><td>Lidar com teclas +/- para controle de velocidade</td></tr>
+<tr><td><code>MouseWheel( nKeys, nDelta, nX, nY )</code></td><td>Lidar com roda do mouse para rolagem manual</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Image Carousel</h2>
+<h2 id="example">Exemplo: Carrossel de Imagens</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -162,14 +162,14 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>The <code>aBanners</code> array can contain filenames, or sub-arrays with <code>{ file, url, action, prompt }</code> for extended interactivity.</li>
-<li>Mode determines the scroll direction: 1 = horizontal left, 2 = horizontal right, 3 = vertical up, 4 = vertical down.</li>
-<li>When the mouse hovers over an image, <code>nZoomedImage</code> enables a zoom effect using <code>nZoomFactor</code>.</li>
-<li>Opacity transitions (fading) are applied via <code>aOpacity</code> and <code>lFading</code> / <code>nFadeDuration</code>.</li>
-<li>State persistence with <code>SaveState</code> / <code>LoadState</code> allows the carousel to resume from where it left off.</li>
+<li>O array <code>aBanners</code> pode conter nomes de arquivo, ou sub-arrays com <code>{ file, url, action, prompt }</code> para interatividade estendida.</li>
+<li>O modo determina a direção de rolagem: 1 = horizontal esquerda, 2 = horizontal direita, 3 = vertical cima, 4 = vertical baixo.</li>
+<li>Quando o mouse passa sobre uma imagem, <code>nZoomedImage</code> ativa um efeito de zoom usando <code>nZoomFactor</code>.</li>
+<li>Transições de opacidade (desvanecimento) são aplicadas via <code>aOpacity</code> e <code>lFading</code> / <code>nFadeDuration</code>.</li>
+<li>A persistência de estado com <code>SaveState</code> / <code>LoadState</code> permite que o carrossel retome de onde parou.</li>
 </ul>
 
 </main>

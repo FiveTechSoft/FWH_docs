@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRichEdit5 - FWH Docs</title>
+<title>TRichEdit5 - Documenta&ccedil;&atilde;o FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <nav id="sidebar">
 <div id="sidebar-header">
-<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
-<span class="version">Versão 26.05</span>
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documenta&ccedil;&atilde;o FWH</h2></a>
+<span class="version">Vers&atilde;o 26.05</span>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Primeiros Passos</div>
-<a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
-<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Vis&atilde;o Geral</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instala&ccedil;&atilde;o</a>
 <a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
-<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Classes Base</div>
@@ -68,7 +68,7 @@
 <a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Impressão e Relatórios</div>
+<div class="nav-section-title">Impress&atilde;o e Relat&oacute;rios</div>
 <a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
 <a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
 <a class="nav-item" href="../../pt/printing/trcolumn.html">TRColumn</a>
@@ -90,9 +90,9 @@
 <a class="nav-item" href="../../pt/internet/tai.html">Classes IA</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Referência</div>
+<div class="nav-section-title">Refer&ecirc;ncia</div>
 <a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
-<a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Fun&ccedil;&otilde;es</a>
 <a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a>
 <a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a>
 <a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a>
@@ -101,76 +101,73 @@
 <main id="content">
 
 <h1>TRichEdit5</h1>
-<p class="class-source">Source: <code>source/classes/triched5.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fonte: <code>source/classes/triched5.prg</code></p>
+<p class="class-hierarchy">Herda de: <code>TControl</code></p>
 
 <p>
-TRichEdit5 wraps the Windows RichEdit 5.0 control (<code>RichEdit50W</code> window class), providing
-advanced rich text editing with support for RTF formatting, syntax highlighting, table
-insertion, inline pictures, spell checking, printing, and PDF export. It is suitable for
-building full-featured text editors and code editors within FiveWin applications.
+TRichEdit5 encapsula o controle RichEdit 5.0 do Windows (classe de janela <code>RichEdit50W</code>), fornecendo edi&ccedil;&atilde;o de texto rico avan&ccedil;ada com suporte para formata&ccedil;&atilde;o RTF, realce de sintaxe, inser&ccedil;&atilde;o de tabelas, imagens em linha, verifica&ccedil;&atilde;o ortogr&aacute;fica, impress&atilde;o e exporta&ccedil;&atilde;o para PDF. &Eacute; adequado para construir editores de texto completos e editores de c&oacute;digo em aplica&ccedil;&otilde;es FiveWin.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Principais Membros DATA</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cFileName</code></td><td>Character</td><td>Loaded file name</td></tr>
-<tr><td><code>nRTFSize</code></td><td>Numeric</td><td>Maximum RTF text size limit</td></tr>
-<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Read-only mode</td></tr>
-<tr><td><code>lHighlight</code></td><td>Logical</td><td>Enable syntax highlighting</td></tr>
-<tr><td><code>aKeywords1</code></td><td>Array</td><td>First keyword set for syntax highlighting</td></tr>
-<tr><td><code>aKeywords2</code></td><td>Array</td><td>Second keyword set for syntax highlighting</td></tr>
-<tr><td><code>lBar</code></td><td>Logical</td><td>Show built-in formatting toolbar</td></tr>
-<tr><td><code>oBar</code></td><td>Object</td><td>Built-in toolbar object</td></tr>
-<tr><td><code>lSpell</code></td><td>Logical</td><td>Enable spell checking</td></tr>
-<tr><td><code>nClrNumber</code></td><td>Numeric</td><td>Syntax color for numbers</td></tr>
-<tr><td><code>nClrString</code></td><td>Numeric</td><td>Syntax color for strings</td></tr>
-<tr><td><code>nClrComment</code></td><td>Numeric</td><td>Syntax color for comments</td></tr>
-<tr><td><code>nClrKey1</code></td><td>Numeric</td><td>Syntax color for first keyword set</td></tr>
-<tr><td><code>nClrKey2</code></td><td>Numeric</td><td>Syntax color for second keyword set</td></tr>
+<tr><td><code>cFileName</code></td><td>Character</td><td>Nome do arquivo carregado</td></tr>
+<tr><td><code>nRTFSize</code></td><td>Numeric</td><td>Limite m&aacute;ximo de tamanho de texto RTF</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Modo somente leitura</td></tr>
+<tr><td><code>lHighlight</code></td><td>Logical</td><td>Habilitar realce de sintaxe</td></tr>
+<tr><td><code>aKeywords1</code></td><td>Array</td><td>Primeiro conjunto de palavras-chave para realce de sintaxe</td></tr>
+<tr><td><code>aKeywords2</code></td><td>Array</td><td>Segundo conjunto de palavras-chave para realce de sintaxe</td></tr>
+<tr><td><code>lBar</code></td><td>Logical</td><td>Mostrar barra de ferramentas de formata&ccedil;&atilde;o integrada</td></tr>
+<tr><td><code>oBar</code></td><td>Object</td><td>Objeto da barra de ferramentas integrada</td></tr>
+<tr><td><code>lSpell</code></td><td>Logical</td><td>Habilitar verifica&ccedil;&atilde;o ortogr&aacute;fica</td></tr>
+<tr><td><code>nClrNumber</code></td><td>Numeric</td><td>Cor de sintaxe para n&uacute;meros</td></tr>
+<tr><td><code>nClrString</code></td><td>Numeric</td><td>Cor de sintaxe para strings</td></tr>
+<tr><td><code>nClrComment</code></td><td>Numeric</td><td>Cor de sintaxe para coment&aacute;rios</td></tr>
+<tr><td><code>nClrKey1</code></td><td>Numeric</td><td>Cor de sintaxe para primeiro conjunto de palavras-chave</td></tr>
+<tr><td><code>nClrKey2</code></td><td>Numeric</td><td>Cor de sintaxe para segundo conjunto de palavras-chave</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">M&eacute;todos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, bSetGet, oWnd, nW, nH, oFont, lPixel, cMsg, lHScroll, lReadOnly, bWhen, bValid, bChanged, lDesign, lHighlight, cFileName, nRTFSize, lNoURL, lNoScroll, lNoBorder, nLeftMargin, lNew, lBar )</code></td><td>Create a new TRichEdit5 control</td></tr>
-<tr><td><code>ReDefine( nId, ... )</code></td><td>Redefine from dialog resource</td></tr>
-<tr><td><code>LoadRTF( cRTF, lTxt )</code></td><td>Load RTF or plain text content</td></tr>
-<tr><td><code>SaveAsRTF()</code> / <code>cText( cText )</code></td><td>Get or set the control content as text</td></tr>
-<tr><td><code>InsertTable( nRows, nCols )</code></td><td>Insert a table at the cursor position</td></tr>
-<tr><td><code>InsertPicture5( cFile, nSizeX, nSizeY )</code></td><td>Insert a picture from file</td></tr>
-<tr><td><code>InsertBitmap( hBitmap, nSizeX, nSizeY, lSpecial )</code></td><td>Insert a bitmap handle</td></tr>
-<tr><td><code>SetBold() / SetItalic() / SetUnderline() / SetStrikeOut()</code></td><td>Toggle character formatting on selection</td></tr>
-<tr><td><code>SetAlign( nAlign )</code></td><td>Set paragraph alignment</td></tr>
-<tr><td><code>SetIndent( nIndent )</code></td><td>Set paragraph indentation</td></tr>
-<tr><td><code>Find( cFind, lDown, lCase, lWord )</code></td><td>Search for text in the document</td></tr>
-<tr><td><code>ReplaceAll( lUndo, cFind, lDown, lCase, lWord, lAll, cText, lMsg )</code></td><td>Find and replace all occurrences</td></tr>
-<tr><td><code>Cut() / Copy() / Paste() / Undo() / ReDo()</code></td><td>Standard clipboard and undo operations</td></tr>
-<tr><td><code>SaveToPDF( cFile )</code></td><td>Export document to PDF</td></tr>
-<tr><td><code>Print( cName )</code></td><td>Print the document</td></tr>
-<tr><td><code>Preview( cName, lModal )</code></td><td>Show print preview</td></tr>
-<tr><td><code>HighLightAllText()</code></td><td>Re-apply syntax highlighting to entire document</td></tr>
-<tr><td><code>ImportExcel( nOp, nH )</code></td><td>Import Excel worksheet content</td></tr>
-<tr><td><code>ImportWord( nOp )</code></td><td>Import Word document content</td></tr>
-<tr><td><code>ImportHtml( cFile )</code></td><td>Import HTML file</td></tr>
-<tr><td><code>RtfBarEdit()</code></td><td>Show or manage the built-in formatting toolbar</td></tr>
-<tr><td><code>Colorize( nStart, nEnd, nColor )</code></td><td>Apply color to a range of text</td></tr>
-<tr><td><code>GetSelection() / GetSel() / SetSel() / SetPos()</code></td><td>Selection and cursor position management</td></tr>
-<tr><td><code>GetZoom() / SetZoom( nNum, nDen )</code></td><td>Zoom level control</td></tr>
-<tr><td><code>GetLine( nLine ) / GetRow() / GetCol()</code></td><td>Line and position query methods</td></tr>
+<tr><td><code>New( nTop, nLeft, bSetGet, oWnd, nW, nH, oFont, lPixel, cMsg, lHScroll, lReadOnly, bWhen, bValid, bChanged, lDesign, lHighlight, cFileName, nRTFSize, lNoURL, lNoScroll, lNoBorder, nLeftMargin, lNew, lBar )</code></td><td>Criar um novo controle TRichEdit5</td></tr>
+<tr><td><code>ReDefine( nId, ... )</code></td><td>Redefinir a partir de recurso de di&aacute;logo</td></tr>
+<tr><td><code>LoadRTF( cRTF, lTxt )</code></td><td>Carregar conte&uacute;do RTF ou texto simples</td></tr>
+<tr><td><code>SaveAsRTF()</code> / <code>cText( cText )</code></td><td>Obter ou definir o conte&uacute;do do controle como texto</td></tr>
+<tr><td><code>InsertTable( nRows, nCols )</code></td><td>Inserir uma tabela na posi&ccedil;&atilde;o do cursor</td></tr>
+<tr><td><code>InsertPicture5( cFile, nSizeX, nSizeY )</code></td><td>Inserir uma imagem de arquivo</td></tr>
+<tr><td><code>InsertBitmap( hBitmap, nSizeX, nSizeY, lSpecial )</code></td><td>Inserir um handle de bitmap</td></tr>
+<tr><td><code>SetBold() / SetItalic() / SetUnderline() / SetStrikeOut()</code></td><td>Alternar formata&ccedil;&atilde;o de caracteres na sele&ccedil;&atilde;o</td></tr>
+<tr><td><code>SetAlign( nAlign )</code></td><td>Definir alinhamento de par&aacute;grafo</td></tr>
+<tr><td><code>SetIndent( nIndent )</code></td><td>Definir indentac&atilde;o de par&aacute;grafo</td></tr>
+<tr><td><code>Find( cFind, lDown, lCase, lWord )</code></td><td>Pesquisar texto no documento</td></tr>
+<tr><td><code>ReplaceAll( lUndo, cFind, lDown, lCase, lWord, lAll, cText, lMsg )</code></td><td>Localizar e substituir todas as ocorr&ecirc;ncias</td></tr>
+<tr><td><code>Cut() / Copy() / Paste() / Undo() / ReDo()</code></td><td>Opera&ccedil;&otilde;es padr&atilde;o de &aacute;rea de transfer&ecirc;ncia e desfazer</td></tr>
+<tr><td><code>SaveToPDF( cFile )</code></td><td>Exportar documento para PDF</td></tr>
+<tr><td><code>Print( cName )</code></td><td>Imprimir o documento</td></tr>
+<tr><td><code>Preview( cName, lModal )</code></td><td>Mostrar pr&eacute;-visualiza&ccedil;&atilde;o de impress&atilde;o</td></tr>
+<tr><td><code>HighLightAllText()</code></td><td>Reaplicar realce de sintaxe a todo o documento</td></tr>
+<tr><td><code>ImportExcel( nOp, nH )</code></td><td>Importar conte&uacute;do de planilha Excel</td></tr>
+<tr><td><code>ImportWord( nOp )</code></td><td>Importar conte&uacute;do de documento Word</td></tr>
+<tr><td><code>ImportHtml( cFile )</code></td><td>Importar arquivo HTML</td></tr>
+<tr><td><code>RtfBarEdit()</code></td><td>Mostrar ou gerenciar a barra de ferramentas de formata&ccedil;&atilde;o integrada</td></tr>
+<tr><td><code>Colorize( nStart, nEnd, nColor )</code></td><td>Aplicar cor a um intervalo de texto</td></tr>
+<tr><td><code>GetSelection() / GetSel() / SetSel() / SetPos()</code></td><td>Gerenciamento de sele&ccedil;&atilde;o e posi&ccedil;&atilde;o do cursor</td></tr>
+<tr><td><code>GetZoom() / SetZoom( nNum, nDen )</code></td><td>Controle de n&iacute;vel de zoom</td></tr>
+<tr><td><code>GetLine( nLine ) / GetRow() / GetCol()</code></td><td>M&eacute;todos de consulta de linha e posi&ccedil;&atilde;o</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: RTF Editor</h2>
+<h2 id="example">Exemplo: Editor RTF</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -191,20 +188,20 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TRichEdit5 uses the RichEdit 5.0 (MsftEdit 5.0) control, which is available on Windows Vista and later. It provides significantly more features than the standard RichEdit control.</li>
-<li>Syntax highlighting is controlled by <code>lHighlight</code> and configured via the <code>aKeywords1</code>, <code>aKeywords2</code> arrays and the <code>nClrNumber</code>, <code>nClrString</code>, <code>nClrComment</code>, <code>nClrKey1</code>, <code>nClrKey2</code> color values.</li>
-<li>The <code>lBar</code> flag enables a built-in formatting toolbar with bold, italic, underline, font, size, color, alignment, and table buttons.</li>
-<li>Use <code>cText</code> (SETGET access) to get or set the plain text content, or <code>LoadRTF()</code>/<code>SaveAsRTF()</code> for RTF content.</li>
-<li>Spell checking (<code>lSpell</code>) highlights misspelled words with a red underline.</li>
-<li>PDF export and print preview are built-in via <code>SaveToPDF()</code> and <code>Preview()</code>.</li>
-<li>The control supports drag-and-drop of files via the <code>EN_DROPFILES</code> notification.</li>
+<li>TRichEdit5 usa o controle RichEdit 5.0 (MsftEdit 5.0), dispon&iacute;vel no Windows Vista e posteriores. Ele fornece significativamente mais recursos que o controle RichEdit padr&atilde;o.</li>
+<li>O realce de sintaxe &eacute; controlado por <code>lHighlight</code> e configurado atrav&eacute;s dos arrays <code>aKeywords1</code>, <code>aKeywords2</code> e dos valores de cor <code>nClrNumber</code>, <code>nClrString</code>, <code>nClrComment</code>, <code>nClrKey1</code>, <code>nClrKey2</code>.</li>
+<li>O indicador <code>lBar</code> habilita uma barra de ferramentas de formata&ccedil;&atilde;o integrada com bot&otilde;es de negrito, it&aacute;lico, sublinhado, fonte, tamanho, cor, alinhamento e tabela.</li>
+<li>Use <code>cText</code> (acesso SETGET) para obter ou definir o conte&uacute;do de texto simples, ou <code>LoadRTF()</code>/<code>SaveAsRTF()</code> para conte&uacute;do RTF.</li>
+<li>A verifica&ccedil;&atilde;o ortogr&aacute;fica (<code>lSpell</code>) destaca palavras mal escritas com um sublinhado vermelho.</li>
+<li>A exporta&ccedil;&atilde;o para PDF e a pr&eacute;-visualiza&ccedil;&atilde;o de impress&atilde;o s&atilde;o integradas via <code>SaveToPDF()</code> e <code>Preview()</code>.</li>
+<li>O controle suporta arrastar e soltar arquivos via a notifica&ccedil;&atilde;o <code>EN_DROPFILES</code>.</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 </body>
 </html>

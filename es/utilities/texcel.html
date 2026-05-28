@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Excel Integration - FWH Docs</title>
+<title>Excel Integration - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -160,7 +160,7 @@ large spreadsheets quickly without any dependency on Microsoft Excel.
 <h3>TWorkBook Class</h3>
 
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
 <tr><td><code>New( cFile )</code></td><td>Create a new workbook. If the file exists, it is erased before creating a new one. Returns nil on failure.</td></tr>
 <tr><td><code>AddSheet( cName )</code></td><td>Add a new worksheet with the given name. Returns a <code>TWorkSheet</code> object.</td></tr>
@@ -172,7 +172,7 @@ large spreadsheets quickly without any dependency on Microsoft Excel.
 <h3>TWorkSheet Class</h3>
 
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
 <tr><td><code>Say( nRow, nCol, uValue, oFormat, cPicture )</code></td><td>Write a value to a cell. Automatically detects Harbour type: numeric → <code>worksheet_write_number()</code>, date/datetime → <code>worksheet_write_datetime()</code>, logical → <code>worksheet_write_boolean()</code>, string → <code>worksheet_write_string()</code> with Ansi-to-UTF-8 conversion. Also accepts cell references like <code>"A1"</code> as row parameter.</td></tr>
 <tr><td><code>SayImage( nRow, nCol, cImage )</code></td><td>Insert an image into a cell. Supports file paths and image buffers. Scales to fit <code>aImageSize</code> (default 200x200px).</td></tr>
@@ -195,7 +195,7 @@ large spreadsheets quickly without any dependency on Microsoft Excel.
 The <code>TFormat</code> class provides cell formatting for <code>TWorkSheet:Say()</code>:
 </p>
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
 <tr><td><code>Bold()</code></td><td>Apply bold font</td></tr>
 <tr><td><code>Italic()</code></td><td>Apply italic font</td></tr>
@@ -233,7 +233,7 @@ archive and parsing the internal OpenXML components. No Excel installation is re
 </p>
 
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
 <tr><td><code>New( cXlsx, cSheet )</code></td><td>Open an <code>.xlsx</code> file for reading. Optionally specify a sheet name. Returns nil if the file is not found or invalid.</td></tr>
 <tr><td><code>ReadData()</code></td><td>Read all data into <code>aData</code> (2D array). Automatically detects types (N, D, T, L, C, M) and computes structure.</td></tr>
@@ -248,7 +248,7 @@ archive and parsing the internal OpenXML components. No Excel installation is re
 <h3>Data Members</h3>
 
 <table>
-<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
 <tbody>
 <tr><td><code>nRows</code></td><td>Numeric</td><td>Number of rows in the sheet</td></tr>
 <tr><td><code>nCols</code></td><td>Numeric</td><td>Number of columns in the sheet</td></tr>
@@ -264,7 +264,7 @@ The two convenience functions wrap the reader for one-liner usage:
 </p>
 
 <table>
-<thead><tr><th>Function</th><th>Description</th></tr></thead>
+<thead><tr><th>Function</th><th>Descripción</th></tr></thead>
 <tbody>
 <tr><td><code>FW_ShowXlsx( cXlsx, cSheet )</code></td><td>Open and display an <code>.xlsx</code> file in an XBrowse browser dialog.</td></tr>
 <tr><td><code>FW_OpenXlsx( cXlsx, cSheet )</code></td><td>Open an <code>.xlsx</code> file and return a <code>TXlsxReader</code> object for programmatic access.</td></tr>
@@ -281,7 +281,7 @@ avoid hard dependencies.
 </p>
 
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
 <tr><td><code>New( cFile )</code></td><td>Create a new Excel file via OLE. Prompts for a filename if not provided.</td></tr>
 <tr><td><code>Say( nRow, nCol, uValue, oFormat, cPicture )</code></td><td>Write a value to a cell. Accepts both numeric coordinates and cell references (e.g., <code>"A1"</code>).</td></tr>
@@ -300,7 +300,7 @@ Runtime linking and selection logic:
 </p>
 
 <table>
-<thead><tr><th>Function</th><th>Description</th></tr></thead>
+<thead><tr><th>Function</th><th>Descripción</th></tr></thead>
 <tbody>
 <tr><td><code>UseDrXlsx( lSet )</code></td><td>Returns <code>.T.</code> if OLE automation should be used (drxl.prg linked and Excel not installed). Optionally set the preference with a logical parameter.</td></tr>
 <tr><td><code>DrXlsxLinked()</code></td><td>Returns <code>.T.</code> if the <code>FWDrXLSX</code> class is available at runtime.</td></tr>
@@ -313,7 +313,7 @@ Runtime linking and selection logic:
 <h2 id="utility-functions">Utility Funciones</h2>
 
 <table>
-<thead><tr><th>Function</th><th>Description</th></tr></thead>
+<thead><tr><th>Function</th><th>Descripción</th></tr></thead>
 <tbody>
 <tr><td><code>XLSXLIBLinked()</code></td><td>Returns <code>.T.</code> if the <code>xlsxlibhb</code> native library is available (checks for <code>XLSXLIB</code> or <code>TWORKBOOK</code> function pointers).</td></tr>
 <tr><td><code>UseXLSXLIB( lSet )</code></td><td>Returns <code>.T.</code> if native <code>xlsxlibhb</code> should be preferred over OLE. Optionally set the preference.</td></tr>
@@ -403,7 +403,7 @@ function ReadXlsx()
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
 <li><strong>Native XLSX</strong> (<code>TWorkBook</code>) is the recommended approach for creating

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TImageList - FWH Docs</title>
+<title>TImageList - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -14,20 +14,20 @@
 <span class="version">Version 26.05</span>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Primeiros Passos</div>
+<div class="nav-section-title">Getting Started</div>
 <a class="nav-item" href="../../pt/getting-started/overview.html">Framework Overview</a>
 <a class="nav-item" href="../../pt/getting-started/installation.html">Installation</a>
 <a class="nav-item" href="../../pt/getting-started/build-system.html">Build System</a>
 <a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Classes Principais</div>
+<div class="nav-section-title">Core Classes</div>
 <a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
 <a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
 <a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Controles de Interface</div>
+<div class="nav-section-title">UI Controls</div>
 <a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
 <a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a>
 <a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a>
@@ -47,19 +47,19 @@
 <a class="nav-item" href="../../pt/ui/ttmpicker.html">TTimePick</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Acesso a Dados</div>
+<div class="nav-section-title">Data Access</div>
 <a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a>
 <a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a>
 <a class="nav-item" href="../../pt/data/todbc.html">TODBC</a>
 <a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Impressão e Relatórios</div>
+<div class="nav-section-title">Printing &amp; Reports</div>
 <a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
 <a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Internet e IA</div>
+<div class="nav-section-title">Internet &amp; AI</div>
 <a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a>
 <a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a>
 <a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
@@ -72,7 +72,7 @@
 <a class="nav-item" href="../../pt/internet/tai.html">AI Classes</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Referência</div>
+<div class="nav-section-title">Reference</div>
 <a class="nav-item" href="../../pt/reference/commands.html">Commands</a>
 <a class="nav-item" href="../../pt/reference/functions.html">Functions</a>
 <a class="nav-item" href="../../pt/reference/errorsys.html">Error System</a>
@@ -84,7 +84,7 @@
 
 <h1>TImageList</h1>
 <p class="class-source">Fonte: <code>source/classes/timaglst.prg</code></p>
-<p class="class-hierarchy">Classe independente (não derivada de TControl)</p>
+<p class="class-hierarchy">Classe independente (not derived from TControl)</p>
 
 <p>
 TImageList is a standalone wrapper around the Win32 HIMAGELIST API for managing collections
@@ -99,30 +99,30 @@ tab controls, toolbars, and other common controls to efficiently manage icon set
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hImageList</code></td><td>Handle</td><td>Handle Win32 HIMAGELIST</td></tr>
-<tr><td><code>aBitmaps</code></td><td>Array</td><td>Matriz de objetos TBitmap adicionados à lista</td></tr>
+<tr><td><code>hImageList</code></td><td>Handle</td><td>Win32 HIMAGELIST handle</td></tr>
+<tr><td><code>aBitmaps</code></td><td>Array</td><td>Array of TBitmap objects added to the list</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nWidth, nHeight )</code></td><td>Criar uma nova lista de imagens. O tamanho padrão é 16x16 pixels.</td></tr>
-<tr><td><code>Add( oBmpImage, oBmpMask )</code></td><td>Adicionar uma imagem com bitmap de máscara opcional à lista. Retorna o índice da imagem.</td></tr>
-<tr><td><code>AddMasked( oBmpImage, nClrMask )</code></td><td>Adicionar uma imagem usando uma cor transparente como máscara. Retorna o índice da imagem.</td></tr>
-<tr><td><code>AddIcon( oIcon )</code></td><td>Adicionar um ícone (objeto TIcon ou nome de arquivo/recurso de ícone) à lista. Retorna o índice da imagem.</td></tr>
-<tr><td><code>AddImage( cFile )</code></td><td>Carregar e adicionar uma imagem a partir de um caminho de arquivo. Retorna o índice da imagem.</td></tr>
-<tr><td><code>ReadBitmap( cFile, nWidth, nImages, nClrTransparent )</code></td><td>Carregar uma tira de bitmap de um arquivo, dividir em <code>nImages</code> quadros, usando <code>nClrTransparent</code> como a cor da máscara transparente.</td></tr>
-<tr><td><code>SetBkColor( nColor )</code></td><td>Definir a cor de fundo usada ao renderizar imagens mascaradas. Use CLR_NONE para fundo transparente.</td></tr>
-<tr><td><code>End()</code></td><td>Destruir a lista de imagens e liberar todos os recursos associados.</td></tr>
+<tr><td><code>New( nWidth, nHeight )</code></td><td>Create a new image list. Default size is 16x16 pixels.</td></tr>
+<tr><td><code>Add( oBmpImage, oBmpMask )</code></td><td>Add an image with optional mask bitmap to the list. Returns the image index.</td></tr>
+<tr><td><code>AddMasked( oBmpImage, nClrMask )</code></td><td>Add an image using a transparent color as mask. Returns the image index.</td></tr>
+<tr><td><code>AddIcon( oIcon )</code></td><td>Add an icon (TIcon object or icon file/resource name) to the list. Returns the image index.</td></tr>
+<tr><td><code>AddImage( cFile )</code></td><td>Load and add an image from a file path. Returns the image index.</td></tr>
+<tr><td><code>ReadBitmap( cFile, nWidth, nImages, nClrTransparent )</code></td><td>Load a bitmap strip from a file, split into <code>nImages</code> frames, using <code>nClrTransparent</code> as the transparent mask color.</td></tr>
+<tr><td><code>SetBkColor( nColor )</code></td><td>Set the background color used when rendering masked images. Use CLR_NONE for transparent background.</td></tr>
+<tr><td><code>End()</code></td><td>Destroy the image list and release all associated resources.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Criando uma Lista de Imagens para uma Barra de Ferramentas</h2>
+<h2 id="example">Exemplo: Criar uma Lista de Imagens para uma Barra de Ferramentas</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -147,14 +147,14 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Observações</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TImageList is a non-visual class and does not inherit from TControl. It manages the lifecycle of a Handle Win32 HIMAGELIST that can be shared across multiple common controls.</li>
-<li>Todas as imagens em uma única lista de imagens devem ter o mesmo tamanho (largura e altura), que é especificado no momento da criação em <code>New()</code>.</li>
-<li>O método <code>AddMasked()</code> é a forma mais comum de adicionar bitmaps, usando uma cor transparente (tipicamente CLR_MAGENTA ou CLR_WHITE) para criar a máscara automaticamente.</li>
-<li><code>ReadBitmap()</code> é útil para carregar tiras de bitmap (várias imagens organizadas horizontalmente em um único arquivo bitmap). Especifique o número de imagens e a cor transparente para dividi-las automaticamente.</li>
-<li>Sempre chame <code>End()</code> quando a lista de imagens não for mais necessária para evitar vazamentos de handles GDI. A lista de imagens é frequentemente destruída automaticamente quando a janela pai é destruída.</li>
+<li>TImageList is a non-visual class and does not inherit from TControl. It manages the lifecycle of a Win32 HIMAGELIST handle that can be shared across multiple common controls.</li>
+<li>All images in a single image list must be the same size (width and height), which is specified at creation time in <code>New()</code>.</li>
+<li>The <code>AddMasked()</code> method is the most common way to add bitmaps, using a transparent color (typically CLR_MAGENTA or CLR_WHITE) to create the mask automatically.</li>
+<li><code>ReadBitmap()</code> is useful for loading bitmap strips (multiple images arranged horizontally in a single bitmap file). Specify the number of images and the transparent color to split them automatically.</li>
+<li>Always call <code>End()</code> when the image list is no longer needed to avoid GDI handle leaks. The image list is often destroyed automatically when the parent window is destroyed.</li>
 </ul>
 
 </main>

@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TSay - FWH Docs</title>
+<title>TSay - Documenta&ccedil;&atilde;o FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <nav id="sidebar">
 <div id="sidebar-header">
-<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
-<span class="version">Versão 26.05</span>
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documenta&ccedil;&atilde;o FWH</h2></a>
+<span class="version">Vers&atilde;o 26.05</span>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Primeiros Passos</div>
-<a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
-<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Vis&atilde;o Geral</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instala&ccedil;&atilde;o</a>
 <a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
-<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Classes Base</div>
@@ -64,7 +64,7 @@
 <a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Impressão e Relatórios</div>
+<div class="nav-section-title">Impress&atilde;o e Relat&oacute;rios</div>
 <a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
 <a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
 </div>
@@ -82,9 +82,9 @@
 <a class="nav-item" href="../../pt/internet/tai.html">Classes IA</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Referência</div>
+<div class="nav-section-title">Refer&ecirc;ncia</div>
 <a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
-<a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Fun&ccedil;&otilde;es</a>
 <a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a>
 <a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a>
 <a class="nav-item" href="../../pt/reference/tbrush.html">TBrush</a>
@@ -106,47 +106,47 @@
 <main id="content">
 
 <h1>TSay</h1>
-<p class="class-source">Source: <code>source/classes/say.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fonte: <code>source/classes/say.prg</code></p>
+<p class="class-hierarchy">Herda de: <code>TControl</code></p>
 
 <p>
-TSay renders static text within a window or dialog. It is the standard control for labels, prompts, and read-only text display. TSay supports data binding via <code>bSetGet</code>, automatic refresh when the bound variable changes, picture clauses for formatted output, 3D effects (raised or sunk), transparent backgrounds, border styles, and tooltip text. It is one of the most frequently used controls in FiveWin applications.
+TSay renderiza texto est&aacute;tico dentro de uma janela ou di&aacute;logo. &Eacute; o controle padr&atilde;o para r&oacute;tulos, prompts e exibi&ccedil;&atilde;o de texto somente leitura. TSay suporta v&iacute;nculo de dados via <code>bSetGet</code>, atualiza&ccedil;&atilde;o autom&aacute;tica quando a vari&aacute;vel vinculada muda, cl&aacute;usulas picture para sa&iacute;da formatada, efeitos 3D (elevados ou rebaixados), fundos transparentes, estilos de borda e texto tooltip. &Eacute; um dos controles mais frequentemente usados em aplica&ccedil;&otilde;es FiveWin.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Principais Membros DATA</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
 </thead>
 <tbody>
-<tr><td><code>bSetGet</code></td><td>Block</td><td>Data-binding code block. When the say is refreshed, the block is evaluated and the result becomes the displayed text.</td></tr>
-<tr><td><code>cPicture</code></td><td>Character</td><td>Picture clause for formatted output (e.g. <code>"999,999.99"</code>, <code>"@!"</code> for uppercase).</td></tr>
-<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Border color when <code>lBorder</code> is <code>.T.</code> (RGB value).</td></tr>
-<tr><td><code>bClrText</code></td><td>Block</td><td>Code block that returns a color value. Evaluated at paint time to support dynamic text colors.</td></tr>
-<tr><td><code>l3D</code></td><td>Logical</td><td>If <code>.T.</code>, the text is rendered with a 3D effect (raised or etched).</td></tr>
-<tr><td><code>lAdjust</code></td><td>Logical</td><td>If <code>.T.</code>, the control size adjusts automatically to fit the text content.</td></tr>
-<tr><td><code>lBorder</code></td><td>Logical</td><td>If <code>.T.</code>, a border is drawn around the say control.</td></tr>
-<tr><td><code>nClrText</code></td><td>Numeric</td><td>Text foreground color (RGB value).</td></tr>
-<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Background fill color (RGB value).</td></tr>
-<tr><td><code>cCaption</code></td><td>Character</td><td>Current displayed text.</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloco de c&oacute;digo de v&iacute;nculo de dados. Quando o say &eacute; atualizado, o bloco &eacute; avaliado e o resultado torna-se o texto exibido.</td></tr>
+<tr><td><code>cPicture</code></td><td>Character</td><td>Cl&aacute;usula picture para sa&iacute;da formatada (ex. <code>"999,999.99"</code>, <code>"@!"</code> para mai&uacute;sculas).</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Cor da borda quando <code>lBorder</code> &eacute; <code>.T.</code> (valor RGB).</td></tr>
+<tr><td><code>bClrText</code></td><td>Block</td><td>Bloco de c&oacute;digo que retorna um valor de cor. Avaliado no momento da pintura para suportar cores de texto din&acirc;micas.</td></tr>
+<tr><td><code>l3D</code></td><td>Logical</td><td>Se <code>.T.</code>, o texto &eacute; renderizado com efeito 3D (elevado ou gravado).</td></tr>
+<tr><td><code>lAdjust</code></td><td>Logical</td><td>Se <code>.T.</code>, o tamanho do controle se ajusta automaticamente para caber o conte&uacute;do do texto.</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Se <code>.T.</code>, uma borda &eacute; desenhada ao redor do controle say.</td></tr>
+<tr><td><code>nClrText</code></td><td>Numeric</td><td>Cor de primeiro plano do texto (valor RGB).</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Cor de preenchimento de fundo (valor RGB).</td></tr>
+<tr><td><code>cCaption</code></td><td>Character</td><td>Texto atualmente exibido.</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">M&eacute;todos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, bText, oWnd, nClrT, nClrP, oFont, lPixel, lDesign, lTransparent, cMsg, lUpdate, cPict, lBorder, lAdjust, oToolTip, nClrBorder )</code></td><td>Create a new say control. <code>bText</code> is a fixed string or code block that returns the text. The say is immediately created as a child of <code>oWnd</code>.</td></tr>
-<tr><td><code>ReDefine( nId, bText, oWnd )</code></td><td>Redefine a say from a dialog resource. Links to an existing Win32 static control by its control ID.</td></tr>
-<tr><td><code>SetText( cText )</code></td><td>Change the displayed text directly (overrides <code>bSetGet</code>).</td></tr>
-<tr><td><code>Refresh()</code></td><td>Re-evaluate the data-bound text and repaint the control. If <code>bSetGet</code> is set, the block is re-evaluated.</td></tr>
-<tr><td><code>SetColor( nClrText, nClrPane )</code></td><td>Change the text and background colors dynamically.</td></tr>
-<tr><td><code>SetFont( oFont )</code></td><td>Assign a new font to the say control.</td></tr>
-<tr><td><code>End()</code></td><td>Destroy the control and remove it from the parent's <code>aControls</code>.</td></tr>
+<tr><td><code>New( nRow, nCol, bText, oWnd, nClrT, nClrP, oFont, lPixel, lDesign, lTransparent, cMsg, lUpdate, cPict, lBorder, lAdjust, oToolTip, nClrBorder )</code></td><td>Criar um novo controle say. <code>bText</code> &eacute; uma string fixa ou bloco de c&oacute;digo que retorna o texto. O say &eacute; criado imediatamente como filho de <code>oWnd</code>.</td></tr>
+<tr><td><code>ReDefine( nId, bText, oWnd )</code></td><td>Redefinir um say a partir de um recurso de di&aacute;logo. Vincula-se a um controle est&aacute;tico Win32 existente pelo seu ID de controle.</td></tr>
+<tr><td><code>SetText( cText )</code></td><td>Alterar o texto exibido diretamente (substitui <code>bSetGet</code>).</td></tr>
+<tr><td><code>Refresh()</code></td><td>Reavaliar o texto vinculado a dados e repintar o controle. Se <code>bSetGet</code> estiver definido, o bloco &eacute; reavaliado.</td></tr>
+<tr><td><code>SetColor( nClrText, nClrPane )</code></td><td>Alterar as cores de texto e fundo dinamicamente.</td></tr>
+<tr><td><code>SetFont( oFont )</code></td><td>Atribuir uma nova fonte ao controle say.</td></tr>
+<tr><td><code>End()</code></td><td>Destruir o controle e remov&ecirc;-lo de <code>aControls</code> do pai.</td></tr>
 </tbody>
 </table>
 
@@ -166,7 +166,7 @@ TSay renders static text within a window or dialog. It is the standard control f
    [ UPDATE ] ;
    [ TOOLTIP cTip ]</code></pre>
 
-<h2 id="example">Example: Auto-Refresh Say from Variable</h2>
+<h2 id="example">Exemplo: Say de Atualiza&ccedil;&atilde;o Autom&aacute;tica a partir de Vari&aacute;vel</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -176,10 +176,10 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "TSay Demo" SIZE 400, 200
 
-   // Static prompt
+   // Prompt est&aacute;tico
    @ 30, 20 SAY "Counter:" OF oWnd SIZE 60, 12
 
-   // Data-bound say that auto-updates
+   // Say vinculado a dados que atualiza automaticamente
    @ 30, 90 SAY oSay VAR nCounter OF oWnd ;
       SIZE 100, 20 UPDATE PICTURE "999,999"
 
@@ -190,19 +190,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TSay inherits from TControl, which inherits from TWindow. All standard control methods are available.</li>
-<li>Use the <code>UPDATE</code> clause (or set <code>lUpdate := .T.</code>) to make the say automatically refresh when <code>oWnd:Update()</code> is called, which is useful for database field displays that should update when the record pointer moves.</li>
-<li>The <code>VAR</code> clause (as opposed to <code>PROMPT</code>) creates a <code>bSetGet</code> code block bound to a Harbour variable. The say displays the current value of the variable.</li>
-<li>The <code>PICTURE</code> clause applies formatting to the displayed value, following Harbour's picture function syntax (e.g. <code>"999,999.99"</code> for numeric formatting, <code>"@!"</code> for uppercase).</li>
-<li>Set <code>TRANSPARENT</code> when the say is placed over a gradient or bitmap background. Without it, the say draws an opaque background that may obscure the parent's background.</li>
-<li>The 3D effect draws the text with a shadow offset by one pixel, creating a raised or etched appearance. Use <code>NO3D</code> for flat text.</li>
+<li>TSay herda de TControl, que herda de TWindow. Todos os m&eacute;todos de controle padr&atilde;o est&atilde;o dispon&iacute;veis.</li>
+<li>Use a cl&aacute;usula <code>UPDATE</code> (ou defina <code>lUpdate := .T.</code>) para fazer o say atualizar automaticamente quando <code>oWnd:Update()</code> for chamado, o que &eacute; &uacute;til para exibi&ccedil;&otilde;es de campos de banco de dados que devem atualizar quando o ponteiro de registro se move.</li>
+<li>A cl&aacute;usula <code>VAR</code> (ao contr&aacute;rio de <code>PROMPT</code>) cria um bloco de c&oacute;digo <code>bSetGet</code> vinculado a uma vari&aacute;vel Harbour. O say exibe o valor atual da vari&aacute;vel.</li>
+<li>A cl&aacute;usula <code>PICTURE</code> aplica formata&ccedil;&atilde;o ao valor exibido, seguindo a sintaxe de fun&ccedil;&atilde;o picture do Harbour (ex. <code>"999,999.99"</code> para formata&ccedil;&atilde;o num&eacute;rica, <code>"@!"</code> para mai&uacute;sculas).</li>
+<li>Defina <code>TRANSPARENT</code> quando o say for colocado sobre um fundo gradiente ou bitmap. Sem ele, o say desenha um fundo opaco que pode obscurecer o fundo do pai.</li>
+<li>O efeito 3D desenha o texto com uma sombra deslocada por um pixel, criando uma apar&ecirc;ncia elevada ou gravada. Use <code>NO3D</code> para texto plano.</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 </body>
 </html>

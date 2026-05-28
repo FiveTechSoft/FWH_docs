@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMsgBar / TMsgItem - FWH Docs</title>
+<title>TMsgBar / TMsgItem - Documentaci&oacute;n FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <nav id="sidebar">
 <div id="sidebar-header">
-<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
-<span class="version">Versión 26.05</span>
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentaci&oacute;n FWH</h2></a>
+<span class="version">Versi&oacute;n 26.05</span>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Primeros Pasos</div>
-<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
-<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
-<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visi&oacute;n General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalaci&oacute;n</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcci&oacute;n</a>
 <a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
 </div>
 <div class="nav-section">
@@ -47,7 +47,7 @@
 <a class="nav-item" href="../../es/ui/trebar.html">TReBar</a>
 <a class="nav-item" href="../../es/ui/tsplitter.html">TSplitter</a>
 <a class="nav-item" href="../../es/ui/tstatusbar.html">TStatusBar</a>
-<a class="nav-item" href="../../es/ui/tmsgbar.html">TMsgBar</a>
+<a class="nav-item active" href="../../es/ui/tmsgbar.html">TMsgBar</a>
 <a class="nav-item" href="../../es/ui/ttrayicon.html">TTrayIcon</a>
 <a class="nav-item" href="../../es/ui/turllink.html">TURLLink</a>
 </div>
@@ -59,7 +59,7 @@
 <a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Impresión e Informes</div>
+<div class="nav-section-title">Impresi&oacute;n e Informes</div>
 <a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
 <a class="nav-item" href="../../es/printing/treport.html">TReport</a>
 </div>
@@ -82,89 +82,86 @@
 <a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
 <a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
 <a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
-<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">M&aacute;s Clases</a>
 </div>
 </nav>
 <main id="content">
 
 <h1>TMsgBar / TMsgItem</h1>
-<p class="class-source">Sources: <code>source/classes/msgbar.prg</code>, <code>source/classes/tmsgitem.prg</code></p>
-<p class="class-hierarchy">TMsgBar inherits from <code>TControl</code>; TMsgItem is a helper class</p>
+<p class="class-source">Fuentes: <code>source/classes/msgbar.prg</code>, <code>source/classes/tmsgitem.prg</code></p>
+<p class="class-hierarchy">TMsgBar hereda de <code>TControl</code>; TMsgItem es una clase auxiliar</p>
 
 <p>
-TMsgBar is a themed status bar replacement that supports embedded interactive
-items (clock, date, keyboard indicators, and custom action buttons). It offers
-Office 2007/2010/2015 visual styles and centered text alignment. TMsgItem
-defines individual embeddable items within a TMsgBar.
+TMsgBar es un reemplazo de barra de estado con temas que admite elementos interactivos incrustados (reloj, fecha, indicadores de teclado y botones de acci&oacute;n personalizados). Ofrece estilos visuales Office 2007/2010/2015 y alineaci&oacute;n de texto centrada. TMsgItem define elementos individuales incrustables dentro de un TMsgBar.
 </p>
 
-<h2 id="data-msgbar">TMsgBar Key DATA Members</h2>
+<h2 id="data-msgbar">Miembros DATA Principales de TMsgBar</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cMsgDef</code></td><td>Character</td><td>Default message text</td></tr>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array of TMsgItem objects embedded in the bar</td></tr>
-<tr><td><code>l2007</code></td><td>Logical</td><td>Office 2007 theme style</td></tr>
-<tr><td><code>l2010</code></td><td>Logical</td><td>Office 2010 theme style</td></tr>
-<tr><td><code>l2015</code></td><td>Logical</td><td>Office 2015 theme style</td></tr>
-<tr><td><code>lCentered</code></td><td>Logical</td><td>Center the message text horizontally</td></tr>
-<tr><td><code>oClock</code></td><td>Object</td><td>Embedded clock item (TMsgItem)</td></tr>
-<tr><td><code>oDate</code></td><td>Object</td><td>Embedded date item (TMsgItem)</td></tr>
-<tr><td><code>oKeyCaps</code></td><td>Object</td><td>Caps Lock indicator item</td></tr>
-<tr><td><code>oKeyNum</code></td><td>Object</td><td>Num Lock indicator item</td></tr>
+<tr><td><code>cMsgDef</code></td><td>Character</td><td>Texto de mensaje predeterminado</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array de objetos TMsgItem incrustados en la barra</td></tr>
+<tr><td><code>l2007</code></td><td>Logical</td><td>Estilo de tema Office 2007</td></tr>
+<tr><td><code>l2010</code></td><td>Logical</td><td>Estilo de tema Office 2010</td></tr>
+<tr><td><code>l2015</code></td><td>Logical</td><td>Estilo de tema Office 2015</td></tr>
+<tr><td><code>lCentered</code></td><td>Logical</td><td>Centrar el texto del mensaje horizontalmente</td></tr>
+<tr><td><code>oClock</code></td><td>Object</td><td>Elemento de reloj incrustado (TMsgItem)</td></tr>
+<tr><td><code>oDate</code></td><td>Object</td><td>Elemento de fecha incrustado (TMsgItem)</td></tr>
+<tr><td><code>oKeyCaps</code></td><td>Object</td><td>Indicador de Bloq May&uacute;sculas</td></tr>
+<tr><td><code>oKeyNum</code></td><td>Object</td><td>Indicador de Bloq Num</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods-msgbar">TMsgBar Methods</h2>
+<h2 id="methods-msgbar">M&eacute;todos de TMsgBar</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cPrompt, lCentered, lClock, lDate, lKbd )</code></td><td>Create a themed message bar</td></tr>
-<tr><td><code>SetMsg( c )</code></td><td>Set the main message text</td></tr>
-<tr><td><code>AddItem( oItem )</code></td><td>Add a TMsgItem to the bar</td></tr>
-<tr><td><code>ClockOn()</code></td><td>Show the embedded clock</td></tr>
-<tr><td><code>DateOn()</code></td><td>Show the embedded date</td></tr>
-<tr><td><code>KeybOn()</code></td><td>Show keyboard status indicators (Caps, Num)</td></tr>
+<tr><td><code>New( oWnd, cPrompt, lCentered, lClock, lDate, lKbd )</code></td><td>Crear una barra de mensajes con temas</td></tr>
+<tr><td><code>SetMsg( c )</code></td><td>Establecer el texto del mensaje principal</td></tr>
+<tr><td><code>AddItem( oItem )</code></td><td>Agregar un TMsgItem a la barra</td></tr>
+<tr><td><code>ClockOn()</code></td><td>Mostrar el reloj incrustado</td></tr>
+<tr><td><code>DateOn()</code></td><td>Mostrar la fecha incrustada</td></tr>
+<tr><td><code>KeybOn()</code></td><td>Mostrar indicadores de estado del teclado (Caps, Num)</td></tr>
 </tbody>
 </table>
 
-<h2 id="data-msgitem">TMsgItem Key DATA Members</h2>
+<h2 id="data-msgitem">Miembros DATA Principales de TMsgItem</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cMsg</code></td><td>Character</td><td>Item caption text</td></tr>
-<tr><td><code>nWidth</code></td><td>Numeric</td><td>Item width in pixels</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on click</td></tr>
-<tr><td><code>hBitmap1</code></td><td>Handle</td><td>Bitmap handle for the "on" state</td></tr>
-<tr><td><code>hBitmap2</code></td><td>Handle</td><td>Bitmap handle for the "off" state</td></tr>
-<tr><td><code>lActive</code></td><td>Logical</td><td>Current active/checked state</td></tr>
+<tr><td><code>cMsg</code></td><td>Character</td><td>Texto del t&iacute;tulo del elemento</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Ancho del elemento en p&iacute;xeles</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Bloque de c&oacute;digo ejecutado al hacer clic</td></tr>
+<tr><td><code>hBitmap1</code></td><td>Handle</td><td>Identificador de mapa de bits para el estado "encendido"</td></tr>
+<tr><td><code>hBitmap2</code></td><td>Handle</td><td>Identificador de mapa de bits para el estado "apagado"</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>Estado activo/marcado actual</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods-msgitem">TMsgItem Methods</h2>
+<h2 id="methods-msgitem">M&eacute;todos de TMsgItem</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oBar, cMsg, nW, oFont, nClrT, nClrB, lAdd, bAction )</code></td><td>Create a new message bar item</td></tr>
-<tr><td><code>SetText( c )</code></td><td>Update the item caption text</td></tr>
-<tr><td><code>SetBitmap( cOn, cOff )</code></td><td>Set the on/off state bitmaps</td></tr>
-<tr><td><code>ShowPopup( oMenu )</code></td><td>Show a popup menu when the item is clicked</td></tr>
+<tr><td><code>New( oBar, cMsg, nW, oFont, nClrT, nClrB, lAdd, bAction )</code></td><td>Crear un nuevo elemento de barra de mensajes</td></tr>
+<tr><td><code>SetText( c )</code></td><td>Actualizar el texto del t&iacute;tulo del elemento</td></tr>
+<tr><td><code>SetBitmap( cOn, cOff )</code></td><td>Establecer los mapas de bits de estado encendido/apagado</td></tr>
+<tr><td><code>ShowPopup( oMenu )</code></td><td>Mostrar un men&uacute; emergente al hacer clic en el elemento</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Message Bar with Clock and Custom Item</h2>
+<h2 id="example">Ejemplo: Barra de Mensajes con Reloj y Elemento Personalizado</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -177,7 +174,7 @@ function Main()
    DEFINE MSGBAR oMsgBar OF oWnd PROMPT "Ready" ;
       2010 CLOCK DATE KEYBOARD
 
-   // Add a custom clickable item
+   // Agregar un elemento personalizado cliqueable
    oItem := TMsgItem():New( oMsgBar, "Records: 0", 120 )
    oItem:bAction := {|| MsgInfo( "Status clicked!" ) }
    oMsgBar:AddItem( oItem )
@@ -186,18 +183,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TMsgBar supports visual themes via <code>l2007</code>, <code>l2010</code>, and <code>l2015</code> flags. Only one theme should be enabled at a time.</li>
-<li>The <code>CLOCK</code>, <code>DATE</code>, and <code>KEYBOARD</code> clauses (or corresponding methods) add standard system indicators. Clock and date update automatically via an internal timer.</li>
-<li>TMsgItem supports two-state bitmaps (<code>hBitmap1</code> for "on", <code>hBitmap2</code> for "off"), useful for toggle indicators. Set <code>lActive</code> to switch between them.</li>
-<li>Use <code>ShowPopup()</code> to attach a popup menu to an item, enabling context-sensitive actions when the user clicks the item.</li>
-<li>TMsgBar is typically used as <code>oWnd:oMsgBar</code> and replaces the traditional <code>oWnd:oStatusBar</code> in themed applications.</li>
+<li>TMsgBar admite temas visuales mediante los indicadores <code>l2007</code>, <code>l2010</code> y <code>l2015</code>. Solo debe estar habilitado un tema a la vez.</li>
+<li>Las cl&aacute;usulas <code>CLOCK</code>, <code>DATE</code> y <code>KEYBOARD</code> (o los m&eacute;todos correspondientes) agregan indicadores de sistema est&aacute;ndar. El reloj y la fecha se actualizan autom&aacute;ticamente mediante un temporizador interno.</li>
+<li>TMsgItem admite mapas de bits de dos estados (<code>hBitmap1</code> para "encendido", <code>hBitmap2</code> para "apagado"), &uacute;tiles para indicadores de alternancia. Establezca <code>lActive</code> para cambiar entre ellos.</li>
+<li>Use <code>ShowPopup()</code> para adjuntar un men&uacute; emergente a un elemento, permitiendo acciones sensibles al contexto cuando el usuario hace clic en el elemento.</li>
+<li>TMsgBar se usa t&iacute;picamente como <code>oWnd:oMsgBar</code> y reemplaza el tradicional <code>oWnd:oStatusBar</code> en aplicaciones con temas.</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 </body>
 </html>

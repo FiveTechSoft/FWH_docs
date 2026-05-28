@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TComObject - FWH Docs</title>
+<title>TComObject - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -122,29 +122,29 @@
 <main id="content">
 
 <h1>TComObject</h1>
-<p class="class-source">Source: <code>source/classes/tcomobj.prg</code></p>
-<p class="class-hierarchy">Standalone class</p>
+<p class="class-source">Fuente: <code>source/classes/tcomobj.prg</code></p>
+<p class="class-hierarchy">Clase independiente</p>
 
 <p>
 TComObject provides a generic wrapper around Windows COM (Component Object Model) objects via the <code>IDispatch</code> interface. It stores the <code>nIDispatch</code> pointer and exposes methods to invoke COM methods, get/set properties, and auto-wrap returned IDispatch pointers. The class supports chained COM calls through its error handler: property names prefixed with <code>_</code> set values, bare property names get values, and IDispatch return values are automatically wrapped in new TComObject instances.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Miembros DATA Principales</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
 <tr><td><code>nIDispatch</code></td><td>Numeric</td><td>Pointer to the COM IDispatch interface</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos Principales</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New( cProgID )</code></td><td>Create a COM object from a ProgID string (e.g. "Word.Application")</td></tr>
@@ -188,7 +188,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
 <li>The error handler (<code>Error()</code>) is the core of TComObject's convenience. When you access a property without the underscore prefix, it calls <code>IDispatch::GetIDsOfNames</code> and <code>Invoke</code> with DISPATCH_PROPERTYGET. If the return value is another IDispatch pointer, it is auto-wrapped in a new TComObject, enabling chained navigation like <code>oWord:Selection:Text</code>.</li>

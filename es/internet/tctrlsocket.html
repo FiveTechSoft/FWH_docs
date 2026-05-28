@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TCtrlSocket - FWH Docs</title>
+<title>TCtrlSocket - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -81,42 +81,42 @@
 <main id="content">
 
 <h1>TCtrlSocket</h1>
-<p class="class-source">Source: <code>source/classes/tctrsock.prg</code></p>
-<p class="class-hierarchy">Standalone class</p>
+<p class="class-source">Fuente: <code>source/classes/tctrsock.prg</code></p>
+<p class="class-hierarchy">Clase independiente</p>
 
 <p>
-TCtrlSocket implements a multiplexed socket server that manages multiple client connections through a request queue. Instead of dedicating one thread per client, it maintains an array of pending requests (<code>aRequests</code>) and serves them in sequence. Each request entry stores the socket object and optional callback blocks for connection end (<code>abEnd</code>) and processing chance (<code>abChance</code>). The class tracks sent byte counts (<code>anSended</code>) and the server running state (<code>lServerWorking</code>).
+TCtrlSocket implementa un servidor de sockets multiplexado que gestiona múltiples conexiones de clientes a través de una cola de peticiones. En lugar de dedicar un hilo por cliente, mantiene un array de peticiones pendientes (<code>aRequests</code>) y las atiende en secuencia. Cada entrada de petición almacena el objeto socket y bloques de callback opcionales para el fin de la conexión (<code>abEnd</code>) y la oportunidad de procesamiento (<code>abChance</code>). La clase lleva el conteo de bytes enviados (<code>anSended</code>) y el estado de ejecución del servidor (<code>lServerWorking</code>).
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Miembros DATA Principales</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aRequests</code></td><td>Array</td><td>Array of pending request objects (socket + callbacks)</td></tr>
-<tr><td><code>abEnd</code></td><td>Array</td><td>Array of codeblocks evaluated when each request connection ends</td></tr>
-<tr><td><code>abChance</code></td><td>Array</td><td>Array of codeblocks evaluated when each request gets processing time</td></tr>
-<tr><td><code>anSended</code></td><td>Array</td><td>Array of byte counts sent for each request</td></tr>
-<tr><td><code>lServerWorking</code></td><td>Logical</td><td>.T. when the server is actively serving requests</td></tr>
+<tr><td><code>aRequests</code></td><td>Array</td><td>Array de objetos de petición pendiente (socket + callbacks)</td></tr>
+<tr><td><code>abEnd</code></td><td>Array</td><td>Array de codeblocks evaluados cuando cada conexión de petición termina</td></tr>
+<tr><td><code>abChance</code></td><td>Array</td><td>Array de codeblocks evaluados cuando cada petición recibe tiempo de procesamiento</td></tr>
+<tr><td><code>anSended</code></td><td>Array</td><td>Array de conteos de bytes enviados por cada petición</td></tr>
+<tr><td><code>lServerWorking</code></td><td>Lógico</td><td>.T. cuando el servidor está sirviendo peticiones activamente</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos Principales</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Create a new multiplexed socket controller</td></tr>
-<tr><td><code>AddRequest( oSocket, bEnd, bChance )</code></td><td>Queue a socket with optional end and chance callbacks</td></tr>
-<tr><td><code>ServeClients()</code></td><td>Process all pending requests in round-robin fashion</td></tr>
+<tr><td><code>New()</code></td><td>Crea un nuevo controlador de sockets multiplexado</td></tr>
+<tr><td><code>AddRequest( oSocket, bEnd, bChance )</code></td><td>Pone en cola un socket con callbacks opcionales de fin y oportunidad</td></tr>
+<tr><td><code>ServeClients()</code></td><td>Procesa todas las peticiones pendientes en modo round-robin</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: 2-Socket Multiplexed Server</h2>
+<h2 id="example">Ejemplo: Servidor Multiplexado de 2 Sockets</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -149,13 +149,13 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TCtrlSocket is designed for cooperative multitasking within a single thread. Call <code>ServeClients()</code> periodically to give each queued socket a chance to read/write data.</li>
-<li>Use the <code>abChance</code> callback to handle data processing for each socket. This callback receives the socket object and can call <code>Recv()</code>/<code>Send()</code> to communicate.</li>
-<li>The <code>abEnd</code> callback fires when a connection terminates, allowing cleanup of per-socket resources.</li>
-<li><code>anSended</code> tracks cumulative bytes sent per request, useful for progress monitoring.</li>
+<li>TCtrlSocket está diseñado para multitarea cooperativa dentro de un solo hilo. Llame a <code>ServeClients()</code> periódicamente para dar a cada socket en cola la oportunidad de leer/escribir datos.</li>
+<li>Use el callback <code>abChance</code> para manejar el procesamiento de datos de cada socket. Este callback recibe el objeto socket y puede llamar a <code>Recv()</code>/<code>Send()</code> para comunicarse.</li>
+<li>El callback <code>abEnd</code> se dispara cuando una conexión termina, permitiendo la limpieza de recursos por socket.</li>
+<li><code>anSended</code> rastrea los bytes acumulados enviados por petición, útil para monitoreo de progreso.</li>
 </ul>
 
 </main>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TDlgFind - FWH Docs</title>
+<title>TDlgFind - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,23 +11,23 @@
 <nav id="sidebar">
 <div id="sidebar-header">
 <a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
-<span class="version">Versión 26.05</span>
+<span class="version">Version 26.05</span>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Primeros Pasos</div>
-<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
-<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
-<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
-<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Clases Base</div>
+<div class="nav-section-title">Core Classes</div>
 <a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
 <a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
 <a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Controles UI</div>
+<div class="nav-section-title">UI Controls</div>
 <a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
 <a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
 <a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
@@ -53,44 +53,44 @@
 <a class="nav-item" href="../../es/ui/twbrowse.html">TWBrowse</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Referencia</div>
-<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
-<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../es/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../es/reference/functions.html">Functions</a>
 </div>
 </nav>
 <main id="content">
 
 <h1>TDlgFind</h1>
-<p class="class-source">Source: <code>source/classes/dlgfind.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TDialog</code></p>
+<p class="class-source">Fuente: <code>source/classes/dlgfind.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TDialog</code></p>
 
 <p>
-TDlgFind wraps the standard Windows Find Text common dialog (<code>FindText</code> API). It is a modeless dialog managed by Windows that allows users to search for text within an application. The dialog sends notification messages back to the caller when the user clicks "Find Next".
+TDlgFind envuelve el cuadro de diálogo común de Buscar Texto de Windows (API <code>FindText</code>). Es un diálogo no modal gestionado por Windows que permite a los usuarios buscar texto dentro de una aplicación. El diálogo envía mensajes de notificación al llamante cuando el usuario hace clic en "Buscar Siguiente".
 </p>
 
 <h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cText, oWnd, bSearch )</code></td><td>Create the Find dialog with initial text, owner window, and search action block</td></tr>
+<tr><td><code>New( cText, oWnd, bSearch )</code></td><td>Crear el diálogo de búsqueda con texto inicial, ventana propietaria y bloque de acción de búsqueda</td></tr>
 </tbody>
 </table>
 
-<h2 id="free">Free Function</h2>
+<h2 id="free">Función Libre</h2>
 
 <table>
 <thead>
-<tr><th>Function</th><th>Description</th></tr>
+<tr><th>Función</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>DlgFindText( cText, oWnd, bSearch )</code> -> oDlg</td><td>Convenience function that creates and returns a TDlgFind object</td></tr>
+<tr><td><code>DlgFindText( cText, oWnd, bSearch )</code> -> oDlg</td><td>Función de conveniencia que crea y devuelve un objeto TDlgFind</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Find Dialog with Search Callback</h2>
+<h2 id="example">Ejemplo: Diálogo de Búsqueda con Callback</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -116,10 +116,10 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>The Find dialog is modeless (<code>lModal = .F.</code>). The application continues processing while it is open.</li>
-<li>The <code>bSearch</code> block receives the search text and a logical direction flag (.T. = forward, .F. = backward).</li>
-<li>The dialog is automatically centered within its owner window.</li>
-<li>Internally, the <code>FindText()</code> Windows API creates the dialog; TDlgFind subclasses it via <code>RegDialog()</code> to handle events.</li>
+<li>El diálogo de búsqueda es no modal (<code>lModal = .F.</code>). La aplicación continúa procesando mientras está abierto.</li>
+<li>El bloque <code>bSearch</code> recibe el texto de búsqueda y una bandera de dirección lógica (.T. = adelante, .F. = atrás).</li>
+<li>El diálogo se centra automáticamente dentro de su ventana propietaria.</li>
+<li>Internamente, la API <code>FindText()</code> de Windows crea el diálogo; TDlgFind lo subclasifica mediante <code>RegDialog()</code> para manejar eventos.</li>
 </ul>
 
 </main>

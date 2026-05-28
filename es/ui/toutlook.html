@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TOutLook - FWH Docs</title>
+<title>TOutLook - Documentaci&oacute;n FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <nav id="sidebar">
 <div id="sidebar-header">
-<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
-<span class="version">Versión 26.05</span>
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentaci&oacute;n FWH</h2></a>
+<span class="version">Versi&oacute;n 26.05</span>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Primeros Pasos</div>
-<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
-<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
-<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visi&oacute;n General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalaci&oacute;n</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcci&oacute;n</a>
 <a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
 </div>
 <div class="nav-section">
@@ -42,7 +42,7 @@
 <a class="nav-item" href="../../es/ui/tactivex.html">TActiveX</a>
 <a class="nav-item" href="../../es/ui/tanimate.html">TAnimate</a>
 <a class="nav-item" href="../../es/ui/tcoverflow.html">TCoverFlow</a>
-<a class="nav-item" href="../../es/ui/toutlook.html">TOutLook</a>
+<a class="nav-item active" href="../../es/ui/toutlook.html">TOutLook</a>
 <a class="nav-item" href="../../es/ui/tradmenu.html">TRadMenu</a>
 <a class="nav-item" href="../../es/ui/trebar.html">TReBar</a>
 <a class="nav-item" href="../../es/ui/tsplitter.html">TSplitter</a>
@@ -59,7 +59,7 @@
 <a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
 </div>
 <div class="nav-section">
-<div class="nav-section-title">Impresión e Informes</div>
+<div class="nav-section-title">Impresi&oacute;n e Informes</div>
 <a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
 <a class="nav-item" href="../../es/printing/treport.html">TReport</a>
 </div>
@@ -82,53 +82,50 @@
 <a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
 <a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
 <a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
-<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">M&aacute;s Clases</a>
 </div>
 </nav>
 <main id="content">
 
 <h1>TOutLook</h1>
-<p class="class-source">Source: <code>source/classes/outlook.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fuente: <code>source/classes/outlook.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
 
 <p>
-TOutLook implements an Outlook-style navigation bar with collapsible groups
-containing icon-and-text navigation items. It is commonly used as a sidebar
-panel in MDI or SDI applications to organize navigation destinations into
-logical categories, similar to Microsoft Outlook's folder pane.
+TOutLook implementa una barra de navegaci&oacute;n estilo Outlook con grupos colapsables que contienen elementos de navegaci&oacute;n con icono y texto. Se usa com&uacute;nmente como panel lateral en aplicaciones MDI o SDI para organizar destinos de navegaci&oacute;n en categor&iacute;as l&oacute;gicas, similar al panel de carpetas de Microsoft Outlook.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Miembros DATA Principales</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aGroup</code></td><td>Array</td><td>Array of group objects containing items</td></tr>
-<tr><td><code>nActual</code></td><td>Numeric</td><td>Index of the currently selected item</td></tr>
+<tr><td><code>aGroup</code></td><td>Array</td><td>Array de objetos de grupo que contienen elementos</td></tr>
+<tr><td><code>nActual</code></td><td>Numeric</td><td>&Iacute;ndice del elemento actualmente seleccionado</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">M&eacute;todos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nW, nH, nClrF, nClrB, nStyle, oFont, lPixel, oWnd )</code></td><td>Create a new TOutLook control</td></tr>
-<tr><td><code>AddGroup( cPrompt )</code></td><td>Add a new collapsible group with the given caption</td></tr>
-<tr><td><code>AddItem( cPrompt, cBmp, cRes, bAction, nGroup )</code></td><td>Add an item to the specified group</td></tr>
-<tr><td><code>Set( nGroup )</code></td><td>Expand a specific group by its index</td></tr>
-<tr><td><code>DeleteItem( oItem )</code></td><td>Remove an item from its group</td></tr>
-<tr><td><code>MoveToGroup( xItem, nGroup )</code></td><td>Move an item (by index or object reference) to a different group</td></tr>
-<tr><td><code>SaveOrder()</code></td><td>Return the current group/item order as a serialized string</td></tr>
-<tr><td><code>RestoreOrder( cOrder )</code></td><td>Restore a previously saved group/item order</td></tr>
+<tr><td><code>New( nTop, nLeft, nW, nH, nClrF, nClrB, nStyle, oFont, lPixel, oWnd )</code></td><td>Crear un nuevo control TOutLook</td></tr>
+<tr><td><code>AddGroup( cPrompt )</code></td><td>Agregar un nuevo grupo colapsable con el t&iacute;tulo indicado</td></tr>
+<tr><td><code>AddItem( cPrompt, cBmp, cRes, bAction, nGroup )</code></td><td>Agregar un elemento al grupo especificado</td></tr>
+<tr><td><code>Set( nGroup )</code></td><td>Expandir un grupo espec&iacute;fico por su &iacute;ndice</td></tr>
+<tr><td><code>DeleteItem( oItem )</code></td><td>Eliminar un elemento de su grupo</td></tr>
+<tr><td><code>MoveToGroup( xItem, nGroup )</code></td><td>Mover un elemento (por &iacute;ndice u objeto) a un grupo diferente</td></tr>
+<tr><td><code>SaveOrder()</code></td><td>Devolver el orden actual de grupo/elemento como una cadena serializada</td></tr>
+<tr><td><code>RestoreOrder( cOrder )</code></td><td>Restaurar un orden de grupo/elemento previamente guardado</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Two Groups with Items</h2>
+<h2 id="example">Ejemplo: Dos Grupos con Elementos</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -157,18 +154,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>Groups are displayed as collapsible headers. Clicking a group header expands it and collapses the previously expanded group.</li>
-<li>Items display an icon and a caption. The <code>cBmp</code> parameter accepts a bitmap file path, resource name, or icon.</li>
-<li>The <code>bAction</code> code block in <code>AddItem()</code> is executed when the user clicks the item.</li>
-<li>Use <code>SaveOrder()</code> to persist the user's custom group/item arrangement (e.g. in the registry or an INI file) and <code>RestoreOrder()</code> to reload it on the next session.</li>
-<li>The control automatically handles vertical scrolling when groups and items exceed the visible area.</li>
+<li>Los grupos se muestran como encabezados colapsables. Al hacer clic en un encabezado de grupo, se expande y colapsa el grupo expandido anteriormente.</li>
+<li>Los elementos muestran un icono y un t&iacute;tulo. El par&aacute;metro <code>cBmp</code> acepta una ruta de archivo de mapa de bits, nombre de recurso o icono.</li>
+<li>El bloque de c&oacute;digo <code>bAction</code> en <code>AddItem()</code> se ejecuta cuando el usuario hace clic en el elemento.</li>
+<li>Use <code>SaveOrder()</code> para persistir la disposici&oacute;n personalizada de grupos/elementos del usuario (por ejemplo, en el registro o un archivo INI) y <code>RestoreOrder()</code> para recargarla en la siguiente sesi&oacute;n.</li>
+<li>El control maneja autom&aacute;ticamente el desplazamiento vertical cuando los grupos y elementos exceden el &aacute;rea visible.</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 </body>
 </html>
