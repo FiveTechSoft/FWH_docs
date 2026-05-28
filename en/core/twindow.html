@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TWindow - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
-<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.03</span></div>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.05</span></div>
 <div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
 <div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item active" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
 <div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
@@ -77,6 +77,18 @@ classDiagram
 <tr><td><code>cToolTip</code></td><td>Character</td><td>nil</td><td>Tooltip text shown on hover.</td></tr>
 <tr><td><code>aGradColors</code></td><td>Array</td><td>nil</td><td>Gradient color pairs for background painting.</td></tr>
 <tr><td><code>lUnicode</code></td><td>Logical</td><td>.F.</td><td>Whether the window uses Unicode (wide-char) API.</td></tr>
+<tr><td><code>hAlphaColor</code></td><td>Numeric</td><td>nil</td><td>Alpha-blend overlay color (RGB value). When set, the window background is blended with this color at <code>hAlphaLevel</code> opacity.</td></tr>
+<tr><td><code>hAlphaLevel</code></td><td>Numeric</td><td>0</td><td>Alpha blend opacity level (0-255). Used with <code>hAlphaColor</code>.</td></tr>
+<tr><td><code>aMinMaxInfo</code></td><td>Array</td><td>nil</td><td>Array <code>{ nMinW, nMaxW, nMinH, nMaxH }</code> restricting min/max window size.</td></tr>
+<tr><td><code>l2007</code></td><td>Logical</td><td>.F.</td><td>Enable Office 2007-style theme for the window and its controls.</td></tr>
+<tr><td><code>l2010</code></td><td>Logical</td><td>.F.</td><td>Enable Office 2010-style theme.</td></tr>
+<tr><td><code>l2013</code></td><td>Logical</td><td>.F.</td><td>Enable Office 2013-style flat theme.</td></tr>
+<tr><td><code>l2015</code></td><td>Logical</td><td>.F.</td><td>Enable Office 2015-style theme.</td></tr>
+<tr><td><code>oTop</code></td><td>TControl</td><td>nil</td><td>Control docked to the top edge. <code>oClient</code> respects this slot during <code>AdjClient()</code>.</td></tr>
+<tr><td><code>oLeft</code></td><td>TControl</td><td>nil</td><td>Control docked to the left edge.</td></tr>
+<tr><td><code>oBottom</code></td><td>TControl</td><td>nil</td><td>Control docked to the bottom edge (above the message bar).</td></tr>
+<tr><td><code>oRight</code></td><td>TControl</td><td>nil</td><td>Control docked to the right edge.</td></tr>
+<tr><td><code>oClient</code></td><td>TControl</td><td>nil</td><td>Control that fills the remaining client area after all docked slots.</td></tr>
 </table>
 
 <h2 id="event-blocks">Event Code Blocks</h2>
@@ -95,6 +107,22 @@ classDiagram
 <tr><td><code>bLostFocus</code></td><td><code>|Self, hTo|</code></td><td>Window lost focus.</td></tr>
 <tr><td><code>bDropFiles</code></td><td><code>|hDrop, Self|</code></td><td>Files dropped onto window.</td></tr>
 <tr><td><code>bMouseWheel</code></td><td><code>|nDelta, nKeys|</code></td><td>Mouse wheel scrolled.</td></tr>
+<tr><td><code>bKeyChar</code></td><td><code>|nKey, nFlags|</code></td><td>Character key pressed (WM_CHAR).</td></tr>
+<tr><td><code>bLButtonDown</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Left mouse button pressed.</td></tr>
+<tr><td><code>bLButtonUp</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Left mouse button released.</td></tr>
+<tr><td><code>bRButtonDown</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Right mouse button pressed.</td></tr>
+<tr><td><code>bMMoved</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Mouse moved over the client area.</td></tr>
+<tr><td><code>bWhen</code></td><td><code>|Self|</code></td><td>Must return <code>.T.</code> for window to receive focus.</td></tr>
+<tr><td><code>bPostEnd</code></td><td><code>|Self|</code></td><td>Fires after the window has been closed (WM_DESTROY processed).</td></tr>
+<tr><td><code>bDestroy</code></td><td><code>|Self|</code></td><td>Fires during WM_DESTROY.</td></tr>
+<tr><td><code>bHelp</code></td><td><code>|nHelpId, Self|</code></td><td>Fires on F1 or Help button.</td></tr>
+<tr><td><code>bTimer</code></td><td><code>|hWnd, nMsg, nId, nTime|</code></td><td>Fires on each WM_TIMER tick. Use <code>SetTimer()</code>.</td></tr>
+<tr><td><code>bCommand</code></td><td><code>|nCtrlId, nNotify|</code></td><td>General WM_COMMAND handler.</td></tr>
+<tr><td><code>bMeasureItem</code></td><td><code>|nId, nCtlType|</code></td><td>Returns <code>{ nW, nH }</code> for owner-drawn items.</td></tr>
+<tr><td><code>bDrawItem</code></td><td><code>|nId, nCtlType, hDC, aRect, nState|</code></td><td>Custom owner-draw rendering.</td></tr>
+<tr><td><code>bDragBegin</code></td><td><code>|nRow, nCol, oCtrl|</code></td><td>Fires when drag begins. Return .T. to allow.</td></tr>
+<tr><td><code>bDragOver</code></td><td><code>|nRow, nCol, oSource|</code></td><td>Dragged object moves over the window.</td></tr>
+<tr><td><code>bDrop</code></td><td><code>|nRow, nCol, oSource|</code></td><td>Dragged object dropped on the window.</td></tr>
 </table>
 
 <h2 id="methods">Key Methods</h2>
@@ -135,6 +163,15 @@ classDiagram
 <tr><td><code>DispBegin() / DispEnd()</code></td><td>Bracket double-buffered painting to eliminate flicker.</td></tr>
 <tr><td><code>CoorsUpdate()</code></td><td>Synchronizes <code>nTop/nLeft/nBottom/nRight</code> with the actual window rect.</td></tr>
 <tr><td><code>GetCliRect()</code></td><td>Returns the client area rectangle as an array <code>{ nTop, nLeft, nBottom, nRight }</code>.</td></tr>
+<tr><td><code>Create( cClass, nStyle, nExStyle )</code></td><td>Creates the Win32 window via CreateWindowEx().</td></tr>
+<tr><td><code>Resize( nW, nH )</code></td><td>Resize the window. Triggers bResized.</td></tr>
+<tr><td><code>SetMenu( oMenu )</code></td><td>Assign a TMenu as the main menu bar.</td></tr>
+<tr><td><code>DefControl( oCtrl )</code></td><td>Set the default focus control for the window.</td></tr>
+<tr><td><code>Destroy()</code></td><td>DestroyWindow() immediately; skips bValid.</td></tr>
+<tr><td><code>Say( nRow, nCol, cText, hDC, nClrT, nClrB, oFont, nAlign, lPixel )</code></td><td>Draw text directly on the window.</td></tr>
+<tr><td><code>GetDC() / ReleaseDC( hDC )</code></td><td>Obtain/release a device context for manual GDI drawing.</td></tr>
+<tr><td><code>SaveState( cSection, cFile )</code></td><td>Save window position, size, and state to INI.</td></tr>
+<tr><td><code>RestoreState( cSection, cFile )</code></td><td>Restore window position, size, and state from INI.</td></tr>
 </table>
 
 <h2 id="commands">Commands: DEFINE WINDOW / ACTIVATE WINDOW</h2>
@@ -316,6 +353,22 @@ return nil</code></pre>
 <li><strong>aControls</strong> &mdash; Iterate child controls via <code>AEval( oWnd:aControls, {|o| o:Refresh() } )</code> or the newer <code>ForEachControl()</code> method.</li>
 <li><strong>Monitor-aware</strong> &mdash; Pass <code>oMonitor</code> to <code>Activate()</code> to open the window on a specific monitor in multi-display setups.</li>
 </ul>
+
+<h2 id="docking">Docking Bars</h2>
+<p>TWindow provides dedicated docking slots for arranging controls around the window edges. Assign a control to the appropriate slot and call the corresponding adjustment method to create resizable layouts:</p>
+
+<table>
+<tr><th>Slot</th><th>Data</th><th>Adj Method</th><th>Position</th></tr>
+<tr><td>Top toolbar</td><td><code>oBar</code></td><td>Auto-docked</td><td>Top edge, full width</td></tr>
+<tr><td>Top dock</td><td><code>oTop</code></td><td><code>AdjTop()</code></td><td>Top edge, below <code>oBar</code></td></tr>
+<tr><td>Bottom dock</td><td><code>oBottom</code></td><td><code>AdjBottom()</code></td><td>Bottom edge, above <code>oMsgBar</code></td></tr>
+<tr><td>Left dock</td><td><code>oLeft</code></td><td><code>AdjLeft()</code></td><td>Left edge, between top and bottom</td></tr>
+<tr><td>Right dock</td><td><code>oRight</code></td><td><code>AdjRight()</code></td><td>Right edge, between top and bottom</td></tr>
+<tr><td>Client area</td><td><code>oClient</code></td><td><code>AdjClient()</code></td><td>Fills remaining space</td></tr>
+<tr><td>Status bar</td><td><code>oMsgBar</code></td><td>Auto-docked</td><td>Bottom edge</td></tr>
+</table>
+
+<p>The docking system follows a standard layout algorithm: the message bar occupies the bottom, the toolbar the top, then left/right docks claim their widths, and the client control fills whatever space remains. Assign a control to the slot and call <code>AdjClient()</code> (or the specific <code>Adj*()</code> method) to position it. In the <code>ON RESIZE</code> handler, call the methods again to adapt to size changes.</p>
 
 <h2 id="see-also">See Also</h2>
 <ul>

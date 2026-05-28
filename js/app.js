@@ -42,6 +42,16 @@ var searchIndex = [
   { k: "functions msginfo msgalert msgstop msgyesno fwstring getfile putfile cvaltochar version", t: "Functions", u: "../../en/reference/functions.html", s: "Reference" },
   { k: "error errorsys errorblock error.log debug dark mode copy clipboard", t: "Error System", u: "../../en/reference/errorsys.html", s: "Reference" },
   { k: "tfont tbrush tcursor ticon tbitmap timage tini treg32 font brush cursor icon bitmap image gdi resources", t: "Resources (GDI)", u: "../../en/reference/resources.html", s: "Reference" },
+  { k: "tpen pen gdi line draw ps_solid ps_dash ps_dot ps_dasddot style width color", t: "TPen", u: "../../en/reference/tpen.html", s: "Reference" },
+  { k: "tbrushex brush gradient pattern degrade bitmap createpatternbrush creabitmapex", t: "TBrushEx", u: "../../en/reference/tbrushex.html", s: "Reference" },
+  { k: "tcursor cursor hand wait arrow cross ibeam drag stop search predefined cur ico", t: "TCursor", u: "../../en/reference/tcursor.html", s: "Reference" },
+  { k: "trect tpoint rectangle point geometry moveby contains fitinside resize assquare distance center", t: "TRect / TPoint", u: "../../en/reference/trect.html", s: "Reference" },
+  { k: "gdip gdiplus graphics pen brush gdibmp path region antialias alphablend gradient", t: "GDI+ Classes", u: "../../en/reference/tgdip.html", s: "Reference" },
+  { k: "tenhmetafile enhmeta emf metafile vector zoom shadow gdi plus enhanced", t: "TEnhMetaFile", u: "../../en/reference/tenhmeta.html", s: "Reference" },
+  { k: "tmetafile metafile wmf emf vector zoom shadow gdi convert", t: "TMetaFile", u: "../../en/reference/tmetafil.html", s: "Reference" },
+  { k: "tgselector tchoosegradient tink gradient selector editor color stop ink picker choosegradient", t: "TGSelector", u: "../../en/reference/tgselect.html", s: "Reference" },
+  { k: "tprogress progress bar marquee step range position percent msctls_progress32", t: "TProgress", u: "../../en/reference/tprogress.html", s: "Reference" },
+  { k: "ticon icon ico resource load display clickable extracticon", t: "TIcon", u: "../../en/reference/ticon.html", s: "Reference" },
   // Additional UI
   { k: "tsay tmeter tprogress tslider tsplitter tpanel tscrollpanel trebar tpager ttimer ttray ttoast trating turllink tanimate tactivex tdatepicker tipaddress thotkey tupdown", t: "More Controls", u: "../../en/ui/more-controls.html", s: "UI Controls" },
   { k: "tlistview listview icon details groups columns", t: "TListView", u: "../../en/ui/tlistview.html", s: "Advanced UI" },
@@ -73,6 +83,18 @@ var searchIndex = [
   { k: "alert choose option buttons", t: "Alert()", u: "../../en/reference/functions.html#alert", s: "Functions" },
   { k: "xbrowser quick browse array alias", t: "XBrowser()", u: "../../en/reference/functions.html#xbrowser", s: "Functions" },
   { k: "version harbour fivewin", t: "Version()", u: "../../en/reference/functions.html#version", s: "Functions" },
+  // UI Calendar
+  { k: "tcalex calendar extended scheduler appointment event month week day view navigate", t: "TCalEx", u: "../../en/ui/tcalex.html", s: "UI Controls" },
+  { k: "tdayview day view daily schedule time slot grid calendar event", t: "TDayView", u: "../../en/ui/tcalviews.html#tdayview", s: "UI Controls" },
+  { k: "tweekview week view weekly 7 day calendar schedule event", t: "TWeekView", u: "../../en/ui/tcalviews.html#tweekview", s: "UI Controls" },
+  { k: "tmonthview month view monthly calendar grid date navigation event", t: "TMonthView", u: "../../en/ui/tcalviews.html#tmonthview", s: "UI Controls" },
+  // Data: MariaDB
+  { k: "fwmariaconnection mariadb mysql connection query execute transaction", t: "TMariaConnection", u: "../../en/data/tmariaconnect.html", s: "Data Access" },
+  { k: "frecset recordset mariadb mysql result set paging navigation browse", t: "FRecSet (MariaDB)", u: "../../en/data/tmariaconnect.html#frecset", s: "Data Access" },
+  { k: "fwmariarecord mariadb mysql record crud insert update tdatarow orm", t: "TMariaRecord (FWMariaRecord)", u: "../../en/data/tmariarecord.html", s: "Data Access" },
+  { k: "orm orm_connection orm_table object relational mapping multi backend ado fwh dolphin chain query aggregate relate", t: "ORM Classes", u: "../../en/data/torm.html", s: "Data Access" },
+  // Utilities
+  { k: "fwstack stack lifo push pop peek clear data structure", t: "FWStack", u: "../../en/utilities/tfwstack.html", s: "Utilities" },
 ];
 
 // Initialize Mermaid
@@ -167,7 +189,8 @@ document.addEventListener('DOMContentLoaded', function() {
       + '<div class="nav-section"><div class="nav-section-title">Utilities</div>'
       + '<a class="nav-item" href="'+lp+'/utilities/files.html">File &amp; Text</a>'
       + '<a class="nav-item" href="'+lp+'/utilities/ole.html">OLE / COM / .NET</a>'
-      + '<a class="nav-item" href="'+lp+'/utilities/misc.html">Miscellaneous</a></div>'
+      + '<a class="nav-item" href="'+lp+'/utilities/misc.html">Miscellaneous</a>'
+      + '<a class="nav-item" href="'+lp+'/utilities/tfwstack.html">FWStack</a></div>'
       + '<div class="nav-section"><div class="nav-section-title">Advanced</div>'
       + '<a class="nav-item" href="'+lp+'/advanced/dll.html">DLL &amp; API Calls</a>'
       + '<a class="nav-item" href="'+lp+'/advanced/unicode.html">Unicode &amp; i18n</a></div>'

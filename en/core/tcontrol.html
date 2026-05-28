@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TControl - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
-<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.03</span></div>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.05</span></div>
 <div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
 <div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item active" href="../../en/core/tcontrol.html">TControl</a></div>
 <div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
@@ -78,6 +78,7 @@ classDiagram
 <tr><td><code>oJump</code></td><td>TControl</td><td>nil</td><td>After <code>VALID</code> succeeds, focus jumps to this control instead of the next tab-order control.</td></tr>
 <tr><td><code>nClientBevel</code></td><td>Numeric</td><td>nil</td><td>Bevel/border offset for <code>AdjClient()</code> docking.</td></tr>
 <tr><td><code>aSizeRect</code></td><td>Array</td><td>nil</td><td>Stores original size rectangle for proportional resizing.</td></tr>
+<tr><td><code>ResizeType</code></td><td>Numeric</td><td>nil</td><td>Resize behavior flag set by <code>SetResizeType()</code>. Controls how the control scales when its parent is resized.</td></tr>
 <tr><td><code>uOriginalValue</code></td><td>Any</td><td>nil</td><td>Original value at control creation. Used by <code>lChanged</code> access method.</td></tr>
 <tr><td><code>LastValidValue</code></td><td>Any</td><td>nil</td><td>Stores the last value that passed validation.</td></tr>
 </table>
@@ -113,6 +114,16 @@ METHOD VarPut( uVal ) INLINE If( ValType( ::bSetGet ) == "B", Eval( ::bSetGet, u
 
 <h3 id="end">End()</h3>
 <p>Destroys the control's Win32 window and removes it from the parent's <code>aControls</code> array.</p>
+
+<h3 id="initiate-method">Initiate()</h3>
+<pre><code>METHOD Initiate( hWnd )</code></pre>
+<p>Called automatically by the parent after the control's Win32 window is created. It subclasses the window procedure to intercept control messages and completes the control's initialization. Not typically called directly.</p>
+
+<h3 id="checkdots">CheckDots() / ShowDots() / HideDots()</h3>
+<pre><code>METHOD CheckDots( hWnd, nId )
+METHOD ShowDots()
+METHOD HideDots()</code></pre>
+<p>Design-mode helper methods that manage the eight resize handles (dots) around the control border. <code>ShowDots()</code> displays the handles; <code>HideDots()</code> removes them; <code>CheckDots()</code> is called during <code>MResize()</code> to adjust handle positions. These are used by the visual dialog designer.</p>
 
 <h2 id="docking">Docking and Anchoring</h2>
 <p>TControl provides docking methods that automatically position a control to fill specific regions of the parent window. These are essential for building resizable layouts:</p>

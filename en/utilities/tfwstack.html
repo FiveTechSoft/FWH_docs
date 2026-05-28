@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FWStack - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a><a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a><a class="nav-item" href="../../en/ui/ttoast.html">TToast</a><a class="nav-item" href="../../en/ui/trating.html">TRating</a><a class="nav-item" href="../../en/ui/tvideo.html">TVideo</a><a class="nav-item" href="../../en/ui/tximage.html">TXImage</a><a class="nav-item" href="../../en/ui/twbrowse.html">TWBrowse</a><a class="nav-item" href="../../en/ui/tcalex.html">TCalEx</a><a class="nav-item" href="../../en/ui/tcalviews.html">TCalViews (Day/Week/Month)</a></div>
+<div class="nav-section"><div class="nav-section-title">Data Access</div><a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../en/data/todbc.html">TODBC</a><a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a><a class="nav-item" href="../../en/data/tmariaconnect.html">TMariaConnection</a><a class="nav-item" href="../../en/data/tmariarecord.html">TMariaRecord</a><a class="nav-item" href="../../en/data/torm.html">ORM Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Printing &amp; Reports</div><a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../en/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div><a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../en/internet/tftp.html">TFtp</a><a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div><a class="nav-item" href="../../en/reference/commands.html">Commands</a><a class="nav-item" href="../../en/reference/functions.html">Functions</a><a class="nav-item" href="../../en/reference/errorsys.html">Error System</a><a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a><a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>FWStack</h1>
+<p class="class-source">Source: <code>source/classes/fwstack.prg</code></p>
+
+<p>
+FWStack implements a classic LIFO (Last-In, First-Out) stack data structure.
+It stores items in an internal array and provides push, pop, and peek operations.
+The constructor and Push() method accept variable-length argument lists, allowing
+multiple items to be added in a single call. FWStack is useful for undo/redo
+operations, expression evaluation, and any scenario requiring last-in-first-out
+data management.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>aStack</code></td><td>Array</td><td>Internal array holding stack items</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( item1, item2, ... )</code></td><td>Create a stack initialized with the given items (bottom to top)</td></tr>
+<tr><td><code>Push( item1, item2, ... )</code></td><td>Push one or more items onto the top of the stack. Returns Self for chaining.</td></tr>
+<tr><td><code>Pop()</code></td><td>Remove and return the top item from the stack. Returns nil if the stack is empty.</td></tr>
+<tr><td><code>Peek( n )</code></td><td>Return the nth item from the top without removing it. n defaults to 1 (the top). Negative n indexes from the bottom (e.g., -1 is bottom). Returns nil if the index is out of range.</td></tr>
+<tr><td><code>Size()</code></td><td>Return the number of items in the stack</td></tr>
+<tr><td><code>Clear()</code></td><td>Remove all items from the stack. Returns Self for chaining.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Push/Pop Values</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oStack := FWStack():New()
+
+   // Push multiple items
+   oStack:Push( 10, 20, 30, 40, 50 )
+
+   ? "Stack size:", oStack:Size()       // 5
+
+   // Peek at top item without removing
+   ? "Top item:", oStack:Peek()         // 50
+
+   // Peek at item 2 from top (0-indexed from the top)
+   ? "Second from top:", oStack:Peek( 2 )  // 40
+
+   // Pop items
+   while oStack:Size() > 0
+      ? "Popped:", oStack:Pop()
+   end
+
+   ? "Stack is empty:", oStack:Size() == 0  // .T.
+
+   // Initialize with items
+   oStack := FWStack():New( "apple", "banana", "cherry" )
+   ? oStack:Pop()   // "cherry"
+   ? oStack:Pop()   // "banana"
+   ? oStack:Pop()   // "apple"
+   ? oStack:Pop()   // nil (empty)
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>FWStack methods that accept variable arguments (New, Push) work with both Harbour and xHarbour. On xHarbour, they accept an array parameter instead of varargs.</li>
+<li>The <code>Peek()</code> method with no argument returns the top item without removing it. With a positive argument n, it looks n positions from the top (1 = top). With a negative argument, it counts from the bottom (-1 = bottom).</li>
+<li>Push() and Clear() return Self, enabling method chaining: <code>oStack:Clear():Push( 1, 2, 3 ):Push( 4 )</code>.</li>
+<li>Pop() returns nil when the stack is empty -- test with <code>oStack:Size() > 0</code> before popping.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

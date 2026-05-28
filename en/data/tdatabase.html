@@ -11,7 +11,7 @@
 <nav id="sidebar">
 <div id="sidebar-header">
 <a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
-<span class="version">Version 26.03</span>
+<span class="version">Version 26.05</span>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Getting Started</div>
@@ -67,6 +67,11 @@
 <a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
 <a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
 <a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+<a class="nav-item" href="../../en/data/tdatarow.html">TDataRow</a>
+<a class="nav-item" href="../../en/data/tdatabase2.html">TDBase (SQL Metadata)</a>
+<a class="nav-item" href="../../en/data/tordinfo.html">TOrdInfo</a>
+<a class="nav-item" href="../../en/data/tlocks.html">TLocks</a>
+<a class="nav-item" href="../../en/data/tsqlerror.html">TSqlError</a>
 <a class="nav-item" href="../../en/data/tarraydata.html">TArrayData</a>
 <a class="nav-item" href="../../en/data/tdbodbc.html">TDbOdbc</a>
 <a class="nav-item" href="../../en/data/tstruct.html">TStruct</a>
@@ -156,6 +161,7 @@ flowchart TB
 <tr><td><code>aStruct</code></td><td>Array</td><td></td><td>Extended field structure array (beyond standard 4-element)</td></tr>
 <tr><td><code>hRec</code></td><td>Hash</td><td></td><td>Current record as a hash (field name => value)</td></tr>
 <tr><td><code>aBuffer</code></td><td>Array</td><td></td><td>Record buffer for optimistic locking</td></tr>
+<tr><td><code>nBufRecNo</code></td><td>Numeric</td><td><code>0</code></td><td>Record number of the current buffer content</td></tr>
 <tr><td><code>bBoF</code></td><td>Block</td><td></td><td>Code block evaluated at beginning of file</td></tr>
 <tr><td><code>bEoF</code></td><td>Block</td><td></td><td>Code block evaluated at end of file</td></tr>
 <tr><td><code>bNetError</code></td><td>Block</td><td></td><td>Code block evaluated on network error</td></tr>
@@ -187,6 +193,10 @@ Opens a DBF file with explicit alias. This is the preferred constructor for open
 <pre><code>METHOD Create( cFile, aStruct, cDriver, cIndexFields, cPassword )</code></pre>
 <p>
 Creates a new DBF file with the specified structure and optionally creates an index.
+The <code>aStruct</code> parameter is an array of field definitions, where each element contains
+<code>{ cFieldName, cType, nLen, nDec }</code>. The optional <code>cIndexFields</code> parameter
+specifies a comma-separated list of field names for an automatic index. After creation,
+the table is opened and the work area is ready for use.
 </p>
 
 <h2 id="navigation">Navigation Methods</h2>
@@ -237,6 +247,7 @@ navigation within an index range.
 <tbody>
 <tr><td><code>FieldGet( cnCol )</code></td><td>Get field value by name or position</td></tr>
 <tr><td><code>FieldPut( nField, uVal )</code></td><td>Set field value by position</td></tr>
+<tr><td><code>FieldPos( cField )</code></td><td>Get the ordinal position of a field by name</td></tr>
 <tr><td><code>Append( aFlds, aVals )</code></td><td>Append blank record, optionally fill fields</td></tr>
 <tr><td><code>Blank()</code></td><td>Create a blank buffer (no physical append yet)</td></tr>
 <tr><td><code>Save()</code></td><td>Save buffered changes to disk</td></tr>
@@ -281,6 +292,52 @@ navigation within an index range.
 <tr><td><code>IndexName( nTag, cFile )</code></td><td>Get index tag name</td></tr>
 </tbody>
 </table>
+
+<h2 id="buffering">Buffering</h2>
+
+<p>
+TDatabase supports optional record buffering for optimistic concurrency control. When buffering
+is enabled, changes are held in memory and written to disk only when <code>Save()</code> is called.
+</p>
+
+<table>
+<thead>
+<tr><th>DATA / Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>lBuffer</code></td><td>Set to .T. to enable buffering. When on, field modifications are held in the buffer array rather than written directly to disk.</td></tr>
+<tr><td><code>aBuffer</code></td><td>Array containing the buffered field values. The array is sized to match the field count.</td></tr>
+<tr><td><code>nBufRecNo</code></td><td>Record number corresponding to the content currently in <code>aBuffer</code>. Used to detect if the buffer is stale.</td></tr>
+<tr><td><code>Blank()</code></td><td>Create a blank buffer for appending a new record without writing to disk. Call <code>Save()</code> to commit.</td></tr>
+<tr><td><code>Load( lReload )</code></td><td>Fill the buffer from the current record on disk. When <code>lReload</code> is .T., re-reads even if the buffer already contains data.</td></tr>
+<tr><td><code>Save()</code></td><td>Commit buffered changes to disk. For new records (created with <code>Blank()</code>), performs an append. For existing records, writes field values.</td></tr>
+<tr><td><code>SaveBuff()</code></td><td>Save the buffer to disk without re-reading the current record first. Used for performance when the record is known to be current.</td></tr>
+<tr><td><code>RollBack()</code></td><td>Discard buffered changes and restore the buffer to the original disk state.</td></tr>
+</tbody>
+</table>
+
+<h2 id="edit-shortcut">Editing with TDataRow</h2>
+
+<p>
+The <code>Record()</code> method provides a shortcut to create a TDataRow object for the current
+record, enabling rich editing dialogs:
+</p>
+
+<pre><code class="language-harbour">METHOD Record( cFieldList, lBlank ) -&gt; oDataRow</code></pre>
+
+<p>
+Pass a comma-separated field list to limit the visible fields, or <code>lBlank=.T.</code> to
+start with a blank record. The returned TDataRow can be used with <code>Edit()</code> to display
+an interactive editing dialog:
+</p>
+
+<pre><code class="language-harbour">oDb:GoTop()
+oRow := oDb:Record()
+if oRow:Edit( , , "Edit Customer" )
+   MsgInfo( "Changes saved" )
+endif</code></pre>
+
+<p>See <a href="../../en/data/tdatarow.html">TDataRow</a> for full documentation.</p>
 
 <h2 id="browsing">Browsing &amp; XBrowse</h2>
 

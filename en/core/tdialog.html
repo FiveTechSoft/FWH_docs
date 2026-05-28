@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TDialog - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
-<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.03</span></div>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.05</span></div>
 <div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
 <div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item active" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
 <div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
@@ -104,6 +104,22 @@ classDiagram
 <h3 id="setdarkmode-method">SetDarkMode()</h3>
 <pre><code>METHOD SetDarkMode( nClrText, nClrBack )</code></pre>
 <p>Enables dark mode styling for the dialog and its child controls.</p>
+
+<h3 id="defcontrol">DefControl()</h3>
+<pre><code>METHOD DefControl( oCtrl )</code></pre>
+<p>Register a control as the default focus target for the dialog. When the dialog is activated, this control receives the initial focus.</p>
+
+<h3 id="initiate">Initiate()</h3>
+<pre><code>METHOD Initiate( hDlg )</code></pre>
+<p>Called internally during dialog creation to subclass the Win32 dialog procedure, distribute child controls via <code>REDEFINE</code>, evaluate <code>bInit</code>, and apply dark mode colors. Called automatically during <code>Activate()</code>.</p>
+
+<h3 id="command">Command()</h3>
+<pre><code>METHOD Command( nCtrlId, nNotifyCode )</code></pre>
+<p>Handles <code>WM_COMMAND</code> messages from child controls. Routes button clicks, menu selections, and control notifications to the appropriate event handlers.</p>
+
+<h3 id="ctlcolor">CtlColor()</h3>
+<pre><code>METHOD CtlColor( hDC, oCtrl, nCtlType )</code></pre>
+<p>Handles <code>WM_CTLCOLOR</code> messages to set text and background colors for child controls. Called automatically during dialog painting.</p>
 
 <h2 id="commands">Commands: DEFINE DIALOG / ACTIVATE DIALOG</h2>
 
@@ -330,6 +346,32 @@ flowchart LR
 <li><strong>Dark mode</strong> &mdash; Call <code>oDlg:SetDarkMode( nClrText, nClrBack )</code> in the <code>ON INIT</code> block for a dark-themed dialog.</li>
 <li><strong>Resizable dialogs</strong> &mdash; Use the <code>RESIZABLE</code> clause. Combine with control anchoring (<code>AdjClient()</code>, <code>AdjTop()</code>) to auto-resize child controls.</li>
 </ul>
+
+<h2 id="dark-mode-api">FW_SetDarkMode &mdash; Global Dark Theme</h2>
+<p>FiveWin provides a global dark mode function that automatically themes all new and existing dialogs. Call <code>FW_SetDarkMode()</code> once to enable dark styling across the entire application:</p>
+
+<pre><code>// Enable with default colors
+FW_SetDarkMode( .T. )
+
+// Enable with custom colors
+FW_SetDarkMode( .T., nClrText, nClrBack )
+
+// Disable
+FW_SetDarkMode( .F. )
+
+// Query current state
+lIsDark := FW_SetDarkMode()
+</code></pre>
+
+<p>When enabled:
+<ul>
+<li>All new dialogs are automatically themed in <code>Initiate()</code> using the configured dark colors.</li>
+<li>Existing open windows are themed immediately.</li>
+<li>Child controls inherit the dark colors automatically via <code>WM_CTLCOLOR</code> handling.</li>
+<li>The <code>aDarkColors</code> DATA member stores the <code>{ nClrText, nClrBack }</code> pair for each dialog.</li>
+<li>Individual dialogs can override the global theme using <code>oDlg:SetDarkMode( nClrT, nClrP )</code> in <code>ON INIT</code>.</li>
+</ul>
+</p>
 
 <h2 id="see-also">See Also</h2>
 <ul>

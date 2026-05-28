@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCalEx - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a><a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a><a class="nav-item" href="../../en/ui/ttoast.html">TToast</a><a class="nav-item" href="../../en/ui/trating.html">TRating</a><a class="nav-item" href="../../en/ui/tvideo.html">TVideo</a><a class="nav-item" href="../../en/ui/tximage.html">TXImage</a><a class="nav-item" href="../../en/ui/twbrowse.html">TWBrowse</a><a class="nav-item active" href="../../en/ui/tcalex.html">TCalEx</a><a class="nav-item" href="../../en/ui/tcalviews.html">TCalViews (Day/Week/Month)</a></div>
+<div class="nav-section"><div class="nav-section-title">Data Access</div><a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../en/data/todbc.html">TODBC</a><a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a><a class="nav-item" href="../../en/data/tmariaconnect.html">TMariaConnection</a><a class="nav-item" href="../../en/data/tmariarecord.html">TMariaRecord</a><a class="nav-item" href="../../en/data/torm.html">ORM Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Printing &amp; Reports</div><a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../en/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div><a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../en/internet/tftp.html">TFtp</a><a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div><a class="nav-item" href="../../en/reference/commands.html">Commands</a><a class="nav-item" href="../../en/reference/functions.html">Functions</a><a class="nav-item" href="../../en/reference/errorsys.html">Error System</a><a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a><a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TCalEx</h1>
+<p class="class-source">Source: <code>source/classes/tcalex.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+
+<p>
+TCalEx is the base class for FiveWin's extended calendar and scheduling controls.
+It provides a full-featured date navigation system with support for multiple views
+(month, week, day), appointment/event management, custom gradient rendering, and
+interactive mouse-based selection. The class is designed to handle complex scheduling
+UIs with configurable time intervals, date ranges, and visual styling.
+</p>
+
+<p>
+TCalEx manages three sub-view objects -- <code>oMonthView</code>, <code>oWeekView</code>,
+and <code>oDayView</code> -- which handle the actual rendering and event handling for
+each specific view mode. The active view is controlled via <code>SetMonthView()</code>,
+<code>SetWeekView()</code>, and <code>SetDayView()</code> methods.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>dStart</code></td><td>Date</td><td>Start date of the visible range</td></tr>
+<tr><td><code>dEnd</code></td><td>Date</td><td>End date of the visible range</td></tr>
+<tr><td><code>dDate</code></td><td>Date</td><td>Currently displayed date</td></tr>
+<tr><td><code>dDateSelected</code></td><td>Date</td><td>Date currently selected by the user</td></tr>
+<tr><td><code>hCalInfo</code></td><td>Hash</td><td>Hash table of calendar info (appointment/event) objects</td></tr>
+<tr><td><code>oMonthView</code></td><td>Object</td><td>TMonthView sub-view for month display</td></tr>
+<tr><td><code>oWeekView</code></td><td>Object</td><td>TWeekView sub-view for week display</td></tr>
+<tr><td><code>oDayView</code></td><td>Object</td><td>TDayView sub-view for day display</td></tr>
+<tr><td><code>nStartHour</code></td><td>Numeric</td><td>First visible hour (0-23)</td></tr>
+<tr><td><code>nEndHour</code></td><td>Numeric</td><td>Last visible hour (0-23)</td></tr>
+<tr><td><code>nInterval</code></td><td>Numeric</td><td>Time slot interval in minutes (5, 10, 15, 20, 30, 60)</td></tr>
+<tr><td><code>lAmPm</code></td><td>Logical</td><td>Display time in AM/PM format</td></tr>
+<tr><td><code>lLeftLabel</code></td><td>Logical</td><td>Show/hide left time labels</td></tr>
+<tr><td><code>nColorGrid</code></td><td>Numeric</td><td>Grid line color</td></tr>
+<tr><td><code>nColorGridToday</code></td><td>Numeric</td><td>Today grid line color</td></tr>
+<tr><td><code>aGradCellNormal</code></td><td>Array</td><td>Gradient colors for normal cells</td></tr>
+<tr><td><code>aGradCellSelected</code></td><td>Array</td><td>Gradient colors for selected cells</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( oWnd, nFirst, nClrText, nTop, nLeft, nBottom, nRight, cAdjust )</code></td><td>Create a new TCalEx control within a window</td></tr>
+<tr><td><code>LoadDates( nStart, nEnd, dStart, dEnd, cText, cSubject, nIdx, lND, lAplicado, lBloqueoT, aGrad, nClrT, nStatus )</code></td><td>Load appointment/event data into the calendar</td></tr>
+<tr><td><code>SetMonthView()</code></td><td>Switch to month view display</td></tr>
+<tr><td><code>SetWeekView( dDate, nInterval )</code></td><td>Switch to week view display</td></tr>
+<tr><td><code>SetDayView( dDate, nInterval )</code></td><td>Switch to day view display</td></tr>
+<tr><td><code>GoNext()</code></td><td>Navigate to the next time period (month/week/day)</td></tr>
+<tr><td><code>GoPrev()</code></td><td>Navigate to the previous time period</td></tr>
+<tr><td><code>HitTest( nRow, nCol )</code></td><td>Return calendar info object at the given row/col coordinates</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the calendar to a specific date</td></tr>
+<tr><td><code>SetInterval( nMin )</code></td><td>Set the time slot interval (5, 10, 15, 20, 30, or 60 minutes)</td></tr>
+<tr><td><code>DelCalInfo( lAll )</code></td><td>Delete calendar info items (all or current selection)</td></tr>
+<tr><td><code>SelectCalInfo( oCalInfo )</code></td><td>Select a specific calendar info object</td></tr>
+<tr><td><code>Reset()</code></td><td>Reset the calendar info hash</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destroy the control and free resources</td></tr>
+</tbody>
+</table>
+
+<h2 id="commands">Command Syntax</h2>
+
+<pre><code class="language-harbour">// Calendar control in a window:
+@ nRow, nCol CALENDAR oCal OF oWnd</code></pre>
+
+<h2 id="example">Example: Calendar with Appointments</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oCal
+
+   DEFINE WINDOW oWnd TITLE "Calendar Demo" SIZE 800, 600
+
+   @ 10, 10 CALENDAR oCal OF oWnd
+
+   // Load appointments for a date range
+   oCal:LoadDates( 9, 18, ;           // display hours 9:00-18:00
+      CToD( "2026-06-01" ), ;        // start date
+      CToD( "2026-06-30" ), ;        // end date
+      "Team Meeting", ;              // event text
+      "Project review", ;            // subject
+      , , , , , CLR_YELLOW, CLR_RED, 1 )
+
+   // Switch to week view initially
+   oCal:SetWeekView( dDate(), 30 )
+
+   ACTIVATE WINDOW oWnd MAXIMIZED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TCalEx does <strong>not</strong> use the standard PIXEL coordinate system. All positioning values use dialog units (text coordinates).</li>
+<li>The three sub-view objects (oMonthView, oWeekView, oDayView) are created internally by TCalEx. Switch between them using the <code>SetMonthView()</code>, <code>SetWeekView()</code>, and <code>SetDayView()</code> methods.</li>
+<li>Event/appointment data is stored in the <code>hCalInfo</code> hash table and rendered within the active view grid.</li>
+<li>Gradient coloring for cells, headers, and labels is configured via the <code>aGrad*</code> DATA arrays.</li>
+<li>Time intervals control the granularity of the day/week view grid. Valid values are 5, 10, 15, 20, 30, and 60 minutes.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

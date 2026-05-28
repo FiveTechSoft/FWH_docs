@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TProgress - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/tpen.html">TPen</a>
+<a class="nav-item" href="../../en/reference/tbrushex.html">TBrushEx</a>
+<a class="nav-item" href="../../en/reference/tcursor.html">TCursor</a>
+<a class="nav-item" href="../../en/reference/trect.html">TRect / TPoint</a>
+<a class="nav-item" href="../../en/reference/tgdip.html">GDI+ Classes</a>
+<a class="nav-item" href="../../en/reference/tenhmeta.html">TEnhMetaFile</a>
+<a class="nav-item" href="../../en/reference/tmetafil.html">TMetaFile</a>
+<a class="nav-item" href="../../en/reference/tgselect.html">TGSelector</a>
+<a class="nav-item active" href="../../en/reference/tprogress.html">TProgress</a>
+<a class="nav-item" href="../../en/reference/ticon.html">TIcon</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TProgress</h1>
+<p class="class-source">Source: <code>source/classes/tprogres.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+
+<p>
+TProgress wraps the Windows common control progress bar (msctls_progress32). It supports
+standard progress indication with configurable range and position, step increments, vertical
+orientation, and marquee (indeterminate) mode. TProgress is suitable for showing operation
+progress in windows, dialogs, and status bars.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum range value (default 0)</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum range value (default determined by system)</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Current position</td></tr>
+<tr><td><code>nStep</code></td><td>Numeric</td><td>Step increment value</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, oWnd, nPos, nClrF, nClrB, lPixel, lDesign, nW, nH, cMsg, lVert, lMarquee )</code></td><td>Create a progress bar. Supports vertical and marquee modes via <code>lVert</code> and <code>lMarquee</code>.</td></tr>
+<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine from a dialog resource template</td></tr>
+<tr><td><code>SetPos( nPos )</code></td><td>Set the current position (alias <code>_nPosition</code>, <code>nPosition</code>)</td></tr>
+<tr><td><code>GetPos()</code></td><td>Return the current position</td></tr>
+<tr><td><code>SetRange( nMin, nMax )</code></td><td>Set the minimum and maximum range values</td></tr>
+<tr><td><code>SetStep( nStepInc )</code></td><td>Set the step increment value</td></tr>
+<tr><td><code>StepIt()</code></td><td>Advance the position by the current step value</td></tr>
+<tr><td><code>DeltaPos( nIncrement )</code></td><td>Change the position by a relative amount (positive or negative)</td></tr>
+<tr><td><code>SetMarquee( lOnOff )</code></td><td>Enable or disable marquee (indeterminate) mode</td></tr>
+</tbody>
+</table>
+
+<h2 id="commands">Commands</h2>
+
+<pre><code class="language-harbour">// Standard progress bar
+DEFINE PROGRESS oProg OF oDlg
+
+// Marquee (indeterminate) progress bar
+DEFINE PROGRESS oProg OF oDlg MARQUEE</code></pre>
+
+<h2 id="example">Example</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oProg, n
+
+   DEFINE WINDOW oWnd TITLE "Progress Demo" SIZE 400, 150
+
+   @ 30, 30 PROGRESS oProg OF oWnd SIZE 340, 25
+
+   oProg:SetRange( 0, 100 )
+   oProg:SetStep( 1 )
+
+   @ 80, 30 BUTTON "Start" OF oWnd SIZE 80, 25 ;
+      ACTION ( oProg:SetPos( 0 ), ;
+               For n := 1 To 100,;
+                   oProg:SetPos( n ),;
+                   SysRefresh(),;
+                   Sleep( 10 ),;
+               Next )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>The progress bar uses the Windows common control class <code>msctls_progress32</code>.</li>
+<li>Marquee mode (indeterminate) shows an animated scrolling bar when the operation length is unknown. Enable via <code>lMarquee := .T.</code> at creation or call <code>SetMarquee( .T. )</code> at runtime.</li>
+<li>Vertical progress bars are created by setting <code>lVertical := .T.</code> (style <code>PBS_VERTICAL</code>).</li>
+<li>The <code>StepIt()</code> method advances the position by the value set via <code>SetStep()</code>. The default step is 1.</li>
+<li>Use <code>DeltaPos()</code> for relative position changes without modifying the step value.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>
