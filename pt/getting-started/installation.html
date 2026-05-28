@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instalação - Documentação FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+    <span class="version">Version 26.03</span>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Primeiros Passos</div>
+    <a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
+    <a class="nav-item active" href="../../pt/getting-started/installation.html">Instalação</a>
+    <a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
+    <a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos &amp; Caminho de Aprendizado</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Classes Base</div>
+    <a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+    <a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+    <a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Controles UI</div>
+    <a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+    <a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a>
+    <a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a>
+    <a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a>
+    <a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a>
+    <a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a>
+    <a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Acesso a Dados</div>
+    <a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a>
+    <a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a>
+    <a class="nav-item" href="../../pt/data/todbc.html">TODBC</a>
+    <a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Impressão e Relatórios</div>
+    <a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
+    <a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Internet e IA</div>
+    <a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a>
+    <a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI / TChatGPT</a>
+    <a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Referência</div>
+    <a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
+    <a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+    <a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a>
+    <a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a>
+    <a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a>
+  </div>
+</nav>
+<main id="content">
+  <h1>Instalação</h1>
+  <p>
+    Este guia conduz você pelo processo de instalação do FiveWin for Harbour (FWH) e pela verificação
+    de que seu ambiente de desenvolvimento está pronto para construir aplicações Windows.
+  </p>
+
+  <h2 id="requirements">Requisitos do Sistema</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Componente</th>
+        <th>Mínimo</th>
+        <th>Recomendado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sistema Operacional</td>
+        <td>Windows 7 SP1</td>
+        <td>Windows 10 / 11</td>
+      </tr>
+      <tr>
+        <td>Compilador Harbour</td>
+        <td>Harbour 3.2.0</td>
+        <td>Harbour 3.2.0 (último nightly)</td>
+      </tr>
+      <tr>
+        <td>xHarbour (alternativa)</td>
+        <td>xHarbour 1.2.3</td>
+        <td>xHarbour 1.3+ (último build)</td>
+      </tr>
+      <tr>
+        <td>Compilador C</td>
+        <td>Qualquer um: BCC 5.5+, MSVC 2017+ ou MinGW GCC 8+</td>
+        <td>MSVC 2022 (64-bit) ou BCC32C</td>
+      </tr>
+      <tr>
+        <td>Espaço em Disco</td>
+        <td>200 MB</td>
+        <td>500 MB (com exemplos e documentação)</td>
+      </tr>
+      <tr>
+        <td>RAM</td>
+        <td>2 GB</td>
+        <td>4 GB+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="install-flow">Fluxo de Instalação</h2>
+  <div class="mermaid">
+flowchart LR
+    A["Download FWH<br/>from fivetech.com"] --> B["Run Installer<br/>or Unzip"]
+    B --> C["Set Environment<br/>Variables"]
+    C --> D["Install Harbour<br/>Compiler"]
+    D --> E["Install C Compiler<br/>(BCC/MSVC/GCC)"]
+    E --> F["Run First<br/>Test Build"]
+    F --> G{"Build OK?"}
+    G -- Yes --> H["Ready to<br/>Develop!"]
+    G -- No --> I["Check Paths<br/>&amp; Libraries"]
+    I --> F
+  </div>
+
+  <h2 id="download">Download e Instalação</h2>
+  <h3 id="step1">Passo 1: Obter o FiveWin</h3>
+  <p>
+    Baixe o pacote mais recente do FiveWin for Harbour em
+    <a href="https://www.fivetech.com">fivetech.com</a>. Você receberá um instalador
+    auto-extraível ou um arquivo ZIP.
+  </p>
+  <ul>
+    <li><strong>Instalador:</strong> Execute <code>fwh_2603.exe</code> e siga o assistente. O caminho
+      de instalação padrão é <code>C:\FWH</code>.</li>
+    <li><strong>Arquivo ZIP:</strong> Extraia para uma pasta de sua escolha, por exemplo <code>C:\FWH</code>.</li>
+  </ul>
+
+  <h3 id="step2">Passo 2: Instalar o Harbour</h3>
+  <p>
+    Se você ainda não tem o Harbour instalado, baixe-o em
+    <a href="https://github.com/harbour/core">github.com/harbour/core</a> ou use uma distribuição
+    binária pré-compilada. Uma instalação típica do Harbour fica em <code>C:\harbour</code>.
+  </p>
+  <pre><code>// Verify Harbour is installed:
+C:\> harbour --version
+Harbour 3.2.0dev (r2104281802)</code></pre>
+
+  <h3 id="step3">Passo 3: Instalar um Compilador C</h3>
+  <p>Escolha um ou mais dos seguintes compiladores:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Compilador</th>
+        <th>Fonte de Download</th>
+        <th>Caminho Típico</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Borland BCC 5.5</td>
+        <td>Ferramentas gratuitas da Embarcadero</td>
+        <td><code>C:\BCC55</code> ou <code>C:\Borland\BCC55</code></td>
+      </tr>
+      <tr>
+        <td>Borland BCC32C (Clang)</td>
+        <td>Ferramentas gratuitas da Embarcadero</td>
+        <td><code>C:\BCC32C</code></td>
+      </tr>
+      <tr>
+        <td>Microsoft Visual C++</td>
+        <td>Visual Studio Build Tools</td>
+        <td><code>C:\Program Files\Microsoft Visual Studio\2022</code></td>
+      </tr>
+      <tr>
+        <td>MinGW GCC</td>
+        <td>mingw-w64.org ou MSYS2</td>
+        <td><code>C:\mingw64</code> ou <code>C:\msys64\mingw64</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 id="step4">Passo 4: Configurar Variáveis de Ambiente</h3>
+  <p>
+    Os scripts de build do FiveWin procuram certas variáveis de ambiente. Configure-as no seu sistema ou em um
+    arquivo batch antes de compilar:
+  </p>
+  <pre><code>// Example environment setup (add to your PATH or setenv.bat):
+SET FWH=C:\FWH
+SET HARBOURDIR=C:\harbour
+SET BCCDIR=C:\BCC55
+SET PATH=%BCCDIR%\BIN;%HARBOURDIR%\BIN;%PATH%</code></pre>
+
+  <h2 id="directory-structure">Estrutura de Diretórios</h2>
+  <p>
+    Após a instalação, o diretório do FWH contém as seguintes pastas:
+  </p>
+  <div class="mermaid">
+graph TD
+    ROOT["C:\FWH (root)"]
+    ROOT --> LIB["lib/<br/>Pre-built .lib files<br/>for all compilers"]
+    ROOT --> INC["include/<br/>Header files (.ch)<br/>FiveWin.ch, etc."]
+    ROOT --> SRC["source/<br/>FWH source code<br/>classes/ function/"]
+    ROOT --> SAM["samples/<br/>Example programs<br/>organized by topic"]
+    ROOT --> MAK["makes/<br/>Build scripts for<br/>each compiler"]
+    ROOT --> DOC["docs/<br/>Documentation<br/>HTML reference"]
+
+    LIB --> L1["FiveH32.lib"]
+    LIB --> L2["FiveHC32.lib"]
+    LIB --> L3["FiveH64.lib"]
+    LIB --> L4["FiveHM32.lib"]
+    LIB --> L5["FiveHG32.lib"]
+
+    SRC --> SC["source/classes/<br/>TWindow.prg, TDialog.prg..."]
+    SRC --> SF["source/function/<br/>Utility functions"]
+    SRC --> SW["source/winapi/<br/>Win32 API wrappers (C)"]
+
+    MAK --> M1["makes/hb_bcc32/"]
+    MAK --> M2["makes/hb_msvc64/"]
+    MAK --> M3["makes/hb_gcc64/"]
+  </div>
+
+  <h3 id="lib-folder">A Pasta lib/</h3>
+  <p>
+    Esta pasta contém as bibliotecas estáticas pré-compiladas do FiveWin. Cada variante de compilador possui
+    seu próprio arquivo <code>.lib</code>:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Arquivo</th>
+        <th>Compilador</th>
+        <th>Arquitetura</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>FiveH32.lib</code></td><td>BCC 5.x (Borland)</td><td>32-bit</td></tr>
+      <tr><td><code>FiveHC32.lib</code></td><td>BCC32C (Clang)</td><td>32-bit</td></tr>
+      <tr><td><code>FiveHM32.lib</code></td><td>MSVC</td><td>32-bit</td></tr>
+      <tr><td><code>FiveH64.lib</code></td><td>MSVC</td><td>64-bit</td></tr>
+      <tr><td><code>FiveHG32.lib</code></td><td>MinGW GCC</td><td>32-bit</td></tr>
+      <tr><td><code>FiveHG64.lib</code></td><td>MinGW GCC</td><td>64-bit</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="include-folder">A Pasta include/</h3>
+  <p>
+    Os arquivos de cabeçalho fornecem definições de comandos e constantes. O arquivo de inclusão mais importante é
+    o <code>FiveWin.ch</code>, que você inclui no topo de cada programa FWH:
+  </p>
+  <pre><code>#include "FiveWin.ch"</code></pre>
+  <p>Outros cabeçalhos comumente utilizados:</p>
+  <ul>
+    <li><code>xbrowse.ch</code> &mdash; Comandos do grid TXBrowse</li>
+    <li><code>report.ch</code> &mdash; Comandos de impressão do TReport</li>
+    <li><code>ribbon.ch</code> &mdash; Comandos da barra de ferramentas estilo Ribbon</li>
+    <li><code>dtpicker.ch</code> &mdash; Comandos do seletor de data/hora</li>
+  </ul>
+
+  <h3 id="samples-folder">A Pasta samples/</h3>
+  <p>
+    Dezenas de programas de exemplo prontos para compilar, organizados por tópico. Cada pasta de exemplo tipicamente
+    contém um arquivo <code>.prg</code> e um script de build (<code>b32.bat</code> ou <code>b32.bc</code>):
+  </p>
+  <pre><code>samples/
+  +-- ai/            // OpenAI, ChatGPT integration
+  +-- misc/          // General-purpose examples
+  +-- ui/
+  |   +-- xbrowse/   // TXBrowse grid examples
+  +-- manus/         // Automation examples</code></pre>
+
+  <h2 id="first-build">Primeiro Teste de Compilação</h2>
+  <p>
+    A forma mais rápida de verificar sua instalação é compilar um dos programas de exemplo incluídos
+    usando o script de build fornecido. Navegue até a pasta makes do seu compilador e execute:
+  </p>
+  <pre><code>// For BCC32 (Borland):
+cd C:\FWH\makes\hb_bcc32
+go.bat ..\samples\hello.prg
+
+// For MSVC 64-bit:
+cd C:\FWH\makes\hb_msvc64
+go.bat ..\samples\hello.prg
+
+// For GCC 64-bit:
+cd C:\FWH\makes\hb_gcc64
+go.bat ..\samples\hello.prg</code></pre>
+  <p>
+    Se o build for bem-sucedido, você verá <code>hello.exe</code> na pasta de saída. Execute-o
+    e uma janela do FiveWin deverá aparecer. Se o build falhar, verifique:
+  </p>
+  <ul>
+    <li>Se o <code>PATH</code> inclui os diretórios bin do Harbour e do compilador C</li>
+    <li>Se as variáveis de ambiente (<code>FWH</code>, <code>HARBOURDIR</code>) estão configuradas corretamente</li>
+    <li>Se o arquivo de biblioteca do seu compilador existe em <code>lib/</code></li>
+  </ul>
+
+  <h2 id="build-new">Usando o build_new.bat</h2>
+  <p>
+    O FiveWin inclui um script de build universal <code>build_new.bat</code> que suporta todas as
+    variantes de compilador com um único comando. Veja a página
+    <a href="build-system.html">Sistema de Build</a> para detalhes completos.
+  </p>
+  <pre><code>// Quick test with BCC32:
+build_new.bat hello.prg hb32
+
+// Quick test with MSVC 64-bit:
+build_new.bat hello.prg hm64</code></pre>
+
+  <h2 id="verify">Lista de Verificação</h2>
+  <p>Após a instalação, verifique o seguinte:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Verificação</th>
+        <th>Comando / Ação</th>
+        <th>Resultado Esperado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Harbour está no PATH</td>
+        <td><code>harbour --version</code></td>
+        <td>Exibe a versão 3.2.0+</td>
+      </tr>
+      <tr>
+        <td>Compilador C está no PATH</td>
+        <td><code>bcc32 --version</code> ou <code>cl /?</code></td>
+        <td>Exibe informações do compilador</td>
+      </tr>
+      <tr>
+        <td>Ambiente FWH configurado</td>
+        <td><code>echo %FWH%</code></td>
+        <td>Mostra o diretório raiz do FWH</td>
+      </tr>
+      <tr>
+        <td>Arquivo de biblioteca existe</td>
+        <td>Verificar <code>%FWH%\lib\</code></td>
+        <td>Contém FiveH32.lib (ou variante)</td>
+      </tr>
+      <tr>
+        <td>Exemplo compila</td>
+        <td>Compilar <code>hello.prg</code></td>
+        <td>Gera hello.exe, executa corretamente</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="troubleshooting">Solução de Problemas</h2>
+  <h3 id="ts-path">Compilador Não Encontrado</h3>
+  <p>
+    Se você receber erros de "comando não encontrado", certifique-se de que o diretório <code>bin\</code> do compilador
+    está no <code>PATH</code> do sistema. Para MSVC, pode ser necessário executar a partir de um
+    "Prompt de Comando do Desenvolvedor" ou chamar <code>vcvarsall.bat</code> primeiro.
+  </p>
+
+  <h3 id="ts-lib">Símbolos Externos Não Resolvidos</h3>
+  <p>
+    Isso geralmente significa que o linker não consegue encontrar uma biblioteca necessária. Certifique-se de que está usando
+    a biblioteca FiveWin correta para o seu compilador (por exemplo, não use <code>FiveH32.lib</code>
+    com MSVC &mdash; use <code>FiveHM32.lib</code> em vez disso).
+  </p>
+
+  <h3 id="ts-include">Arquivo de Cabeçalho Não Encontrado</h3>
+  <p>
+    Adicione a pasta <code>include\</code> do FiveWin ao caminho de inclusão do Harbour:
+  </p>
+  <pre><code>harbour myapp.prg -i%FWH%\include -i%HARBOURDIR%\include -n -w</code></pre>
+
+  <h2 id="next-steps">Próximos Passos</h2>
+  <ul>
+    <li><a href="build-system.html">Sistema de Build</a> &mdash; Entenda todas as opções de build e configurações de compilador</li>
+    <li><a href="overview.html">Visão Geral</a> &mdash; Conheça a arquitetura e a hierarquia de classes do FiveWin</li>
+    <li><a href="../../pt/core/twindow.html">TWindow</a> &mdash; Comece com a classe base de janela</li>
+  </ul>
+</main>
+<aside id="toc">
+  <div id="toc-title">Nesta página</div>
+  <div id="toc-links"></div>
+</aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

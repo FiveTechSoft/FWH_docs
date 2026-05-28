@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TProxy - Documentação FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+<span class="version">Versão 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Introdução</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral do Framework</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos &amp; Rota de Aprendizado</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Classes Principais</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles de UI</div>
+<a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../pt/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../pt/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../pt/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../pt/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../pt/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../pt/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../pt/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acesso a Dados</div>
+<a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../pt/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impressão &amp; Relatórios</div>
+<a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; IA</div>
+<a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item active" href="../../pt/internet/tproxy.html">TProxy</a>
+<a class="nav-item" href="../../pt/internet/tras.html">TRas</a>
+<a class="nav-item" href="../../pt/internet/tmail.html">TMail</a>
+<a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../pt/internet/tgrok.html">TGrok</a>
+<a class="nav-item" href="../../pt/internet/tkimi.html">TKimi</a>
+<a class="nav-item" href="../../pt/internet/tdeepseek.html">TDeepSeek</a>
+<a class="nav-item" href="../../pt/internet/tembeddings.html">TEmbeddings</a>
+<a class="nav-item" href="../../pt/internet/tneuralnet.html">TNeuralNetwork</a>
+<a class="nav-item" href="../../pt/internet/tai.html">Classes de IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referência</div>
+<a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+<a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a>
+<a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TProxy</h1>
+<p class="class-source">Fonte: <code>source/classes/tproxy.prg</code></p>
+
+<p>
+TProxy é o servidor proxy TCP multi-protocolo do FiveWin. Escuta numa porta local,
+aceita ligações de entrada e encaminha tráfego para um servidor backend remoto.
+O proxy funciona de forma transparente para qualquer protocolo baseado em TCP (HTTP, POP3, SMTP, FTP,
+etc.) criando ligações de socket emparelhadas entre o cliente e o servidor backend
+e retransmitindo dados bidirecionalmente.
+</p>
+
+<h2 id="architecture">Arquitetura</h2>
+
+<div class="mermaid">
+flowchart LR
+    subgraph "Cliente"
+        A[App Cliente]
+    end
+    subgraph "TProxy"
+        B[Socket de Escuta<br/>nPort]
+        C[Socket Cliente]
+        D[Socket Backend]
+    end
+    subgraph "Backend"
+        E[Servidor Remoto<br/>cServerIP]
+    end
+    A -->|"liga-se ao<br/>porto local"| B
+    B --> C
+    C -->|"retransmite dados"| D
+    D -->|"encaminha para"| E
+    E -->|"resposta"| D
+    D -->|"retransmite de volta"| C
+    C -->|"resposta"| A
+</div>
+
+<h2 id="data">Principais Membros DATA</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>oSocket</code></td><td>Objeto</td><td></td><td>TSocket principal a escutar por ligações de entrada</td></tr>
+<tr><td><code>cAddress</code></td><td>Caractere</td><td></td><td>Endereço IP local onde o proxy escuta (auto-detetado)</td></tr>
+<tr><td><code>cServerIP</code></td><td>Caractere</td><td><code>"194.224.203.2"</code></td><td>Endereço IP do servidor backend remoto para encaminhar tráfego</td></tr>
+<tr><td><code>nPort</code></td><td>Numérico</td><td><code>110</code></td><td>Porto local onde o proxy escuta</td></tr>
+<tr><td><code>lDebug</code></td><td>Lógico</td><td></td><td>Ativar registo de depuração para <code>cLogFile</code></td></tr>
+<tr><td><code>cLogFile</code></td><td>Caractere</td><td><code>"proxy.log"</code></td><td>Caminho para o ficheiro de registo de depuração</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Métodos Principais</h2>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nPort, cServerIP )</code></td><td>Criar uma instância do proxy. Cria o TSocket de escuta e configura o callback de aceitação. Padrão para porto 110 (POP3). Resolve nomes de anfitrião para endereços IP automaticamente.</td></tr>
+<tr><td><code>Activate()</code></td><td>Iniciar escuta por ligações de entrada. Delega para <code>oSocket:Listen()</code>.</td></tr>
+<tr><td><code>End()</code></td><td>Parar o proxy e liberar o socket de escuta. Delega para <code>oSocket:End()</code>.</td></tr>
+<tr><td><code>OnAccept()</code></td><td>Interno: Chamado quando um novo cliente se liga. Cria um socket de cliente emparelhado e socket backend, configura retransmissão bidirecional de dados com callbacks de leitura/fecho.</td></tr>
+<tr><td><code>OnRead( oSocket, oServer )</code></td><td>Interno: Chamado quando dados chegam do cliente. Encaminha os dados para o servidor backend.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Exemplo: Proxy POP3</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oProxy, oWnd
+
+   DEFINE WINDOW oWnd TITLE "POP3 Proxy - Port 8080"
+
+   // Proxy on port 8080, forwarding to the mail server
+   oProxy := TProxy():New( 8080, "mail.example.com" )
+   oProxy:lDebug := .T.
+   oProxy:Activate()
+
+   ACTIVATE WINDOW oWnd VALID ( oProxy:End(), .T. )
+
+return nil</code></pre>
+
+<p>
+Quando um cliente se liga ao porto 8080, TProxy cria uma ligação backend para
+<code>mail.example.com:8080</code> (mesmo porto) e retransmite todos os dados bidirecionalmente.
+Com <code>lDebug := .T.</code>, todo o tráfego é registado em <code>proxy.log</code>.
+</p>
+
+<h2 id="notes">Notas</h2>
+
+<ul>
+<li>TProxy é agnóstico quanto a protocolo — funciona com qualquer protocolo baseado em TCP, pois simplesmente retransmite bytes brutos entre cliente e servidor.</li>
+<li>O método <code>New()</code> aceita nomes de anfitrião e resolve-os para IPs usando <code>GetHostByName()</code>.</li>
+<li>Cada ligação de entrada cria dois objetos TSocket: um para o cliente e um para o backend. Ambos são limpos quando a ligação fecha.</li>
+<li>Definir <code>lDebug := .T.</code> regista todos os dados do cliente e servidor no ficheiro especificado por <code>cLogFile</code>.</li>
+<li>O porto do proxy padroniza para 110 (POP3) se não for especificado.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

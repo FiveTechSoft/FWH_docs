@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSlider - Documentación FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Introducción</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General del Framework</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Compilación</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Principales</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles de UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../es/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../es/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../es/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../es/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../es/ui/tcalendar.html">TCalendar</a>
+<a class="nav-item" href="../../es/ui/tdtpicker.html">TDatePick</a>
+<a class="nav-item" href="../../es/ui/timagelist.html">TImageList</a>
+<a class="nav-item active" href="../../es/ui/tslider.html">TSlider</a>
+<a class="nav-item" href="../../es/ui/tswitch.html">TSwitch</a>
+<a class="nav-item" href="../../es/ui/ttmpicker.html">TTimePick</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresión e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../es/internet/tai.html">Clases de IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TSlider</h1>
+<p class="class-source">Fuente: <code>source/classes/slider.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+
+<p>
+TSlider proporciona un control de barra deslizante para seleccionar un valor numérico arrastrando un indicador
+a lo largo de una pista. Admite orientación horizontal y vertical, marcas de graduación, posicionamiento exacto
+y un estilo delgado con indicador coloreado.
+</p>
+
+<h2 id="command">Sintaxis del Comando</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol SLIDER oSld VAR nValue RANGE nMin, nMax SIZE nW, nH PIXEL OF oWnd ;
+   HORIZONTAL MARKS nMarks EXACT ON CHANGE bBlock</code></pre>
+
+<h2 id="data">Miembros DATA Principales</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>lHorizontal</code></td><td>Logical</td><td>Horizontal orientation (.T.) or vertical (.F.)</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum value of the slider range</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum value of the slider range</td></tr>
+<tr><td><code>nMarks</code></td><td>Numeric</td><td>Number of tick marks along the track (0 = no marks)</td></tr>
+<tr><td><code>lExact</code></td><td>Logical</td><td>Snap the thumb to the nearest tick mark</td></tr>
+<tr><td><code>nClrBtn</code></td><td>Numeric</td><td>Color of the slider thumb button</td></tr>
+<tr><td><code>lSlimStyle</code></td><td>Logical</td><td>Render with a slim track and colored thumb</td></tr>
+<tr><td><code>nDirection</code></td><td>Numeric</td><td>Tick mark direction (1=top, 2=left, 3=bottom, 4=right)</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Métodos</h2>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, bSetGet, lHorizontal, lDirect1, lDirect2, nMin, nMax, nMarks, lExact, oWnd, bChange, bPos, nWidth, nHeight, lPixel, cMsg, nClrFore, nClrBack, nClrBtn, lDesign, lUpdate, lSlim )</code></td><td>Create a new TSlider control</td></tr>
+<tr><td><code>ReDefine( nId, bSetGet, lHorizontal, lDirect1, lDirect2, nMin, nMax, nMarks, lExact, oWnd, bChange, bPos, cMsg, nClrFore, nClrBack, nClrBtn, lUpdate, lSlim )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>Set( nVal )</code></td><td>Programmatically set the slider to a value</td></tr>
+<tr><td><code>Change()</code></td><td>Execute bChange code block with the current value</td></tr>
+<tr><td><code>Default()</code></td><td>Recalculate positions and redraw</td></tr>
+</tbody>
+</table>
+
+<h2 id="examples">Ejemplos</h2>
+
+<h3>Deslizador de Volumen (0-100)</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oSld, nVolume := 50
+
+   DEFINE WINDOW oWnd TITLE "Volume Slider" SIZE 400, 150
+
+   @ 40, 30 SLIDER oSld VAR nVolume RANGE 0, 100 ;
+      SIZE 300, 30 PIXEL OF oWnd HORIZONTAL ;
+      ON CHANGE oWnd:SetText( "Volume: " + Str( nVolume, 3 ) + "%" )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h3>Selector con Marcas de Graduaci
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oSld, nOption := 3, aOpts := { "Low", "Med", "Norm", "High", "Max" }
+
+   DEFINE WINDOW oWnd TITLE "Speed Selector" SIZE 400, 150
+
+   @ 40, 30 SLIDER oSld VAR nOption RANGE 1, 5 ;
+      SIZE 300, 30 PIXEL OF oWnd HORIZONTAL ;
+      MARKS 5 EXACT ;
+      ON CHANGE oWnd:SetText( "Speed: " + aOpts[ nOption ] )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notas</h2>
+
+<ul>
+<li>El deslizador es un control GDI autodibujado, no la barra deslizante com
+<li>Cuando se especifica <code>MARKS nMarks</code> junto con <code>EXACT</code>, el indicador se ajusta a la posici
+<li>El estilo delgado (<code>lSlimStyle</code> o la cl
+<li>Navegaci
+<li>El control admite tanto arrastre del rat
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

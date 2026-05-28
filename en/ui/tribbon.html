@@ -1,0 +1,416 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TRibbonBar - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a><a class="nav-item" href="../../en/ui/more-controls.html">More Controls</a></div>
+<div class="nav-section"><div class="nav-section-title">Advanced UI</div><a class="nav-item" href="../../en/ui/tlistview.html">TListView</a><a class="nav-item" href="../../en/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../en/ui/ttreeview.html">TTreeView</a><a class="nav-item active" href="../../en/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Data Access</div><a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../en/data/todbc.html">TODBC</a><a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Printing &amp; Reports</div><a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../en/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div><a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../en/internet/tftp.html">TFtp</a><a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div><a class="nav-item" href="../../en/reference/commands.html">Commands</a><a class="nav-item" href="../../en/reference/functions.html">Functions</a><a class="nav-item" href="../../en/reference/errorsys.html">Error System</a><a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a><a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TRibbonBar</h1>
+<p class="subtitle">Office-style ribbon bar with tabs, groups, and buttons</p>
+
+<p><strong>Source:</strong> <code>source/classes/tribbon.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code> &nbsp;|&nbsp; <strong>Header:</strong> <code>include/ribbon.ch</code></p>
+
+<h2 id="overview">Overview</h2>
+
+<p><code>TRibbonBar</code> implements a Microsoft Office-style ribbon interface. The ribbon docks to the top of a window and organizes commands into tabs, each containing groups of buttons. It supports multiple visual styles (2010, 2013, 2015, 2016), a Quick Access toolbar, keyboard accelerators, backstage view, and fully owner-drawn rendering with gradients.</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="mermaid">
+graph TD
+    WINDOW["TWindow<br/>(Main Window)"] --> RIBBON["TRibbonBar"]
+
+    RIBBON --> QUICK["Quick Access<br/>Toolbar"]
+    RIBBON --> TAB1["Tab: Home"]
+    RIBBON --> TAB2["Tab: Insert"]
+    RIBBON --> TAB3["Tab: View"]
+    RIBBON --> BACK["BackStage<br/>Panel"]
+
+    TAB1 --> G1["TRBGroup<br/>Clipboard"]
+    TAB1 --> G2["TRBGroup<br/>Font"]
+    TAB1 --> G3["TRBGroup<br/>Paragraph"]
+
+    G1 --> B1["TRBButton<br/>Paste"]
+    G1 --> B2["TRBButton<br/>Cut"]
+    G1 --> B3["TRBButton<br/>Copy"]
+
+    G2 --> B4["TRBButton<br/>Bold"]
+    G2 --> B5["TRBButton<br/>Italic"]
+
+    style RIBBON fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style G1 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style G2 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style G3 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+</div>
+
+<h2 id="ribbon-components">Component Hierarchy</h2>
+
+<div class="mermaid">
+graph LR
+    RB["TRibbonBar"] --> RBG["TRBGroup"]
+    RBG --> RBB["TRBButton"]
+    RBG --> SEP["Separator"]
+    RBB --> POPUP["Popup Menu"]
+
+    subgraph "Button Types"
+        NORMAL["NORMAL<br/>Standard button"]
+        POPUPB["POPUP<br/>Menu dropdown"]
+        SPLIT["SPLITPOPUP<br/>Button + dropdown"]
+        SAYB["SAYBUTTON<br/>Label button"]
+    end
+
+    RBB --> NORMAL
+    RBB --> POPUPB
+    RBB --> SPLIT
+    RBB --> SAYB
+</div>
+
+<h2 id="properties">TRibbonBar Properties</h2>
+
+<table>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of tab label strings</td></tr>
+<tr><td><code>aDialogs</code></td><td>Array</td><td>Array of dialog objects (one per tab, holding groups)</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Currently selected tab index (1-based)</td></tr>
+<tr><td><code>nOldOption</code></td><td>Numeric</td><td>Previously selected tab (for change detection)</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block fired on tab change: <code>{ |nOption, nOldOption| ... }</code></td></tr>
+<tr><td><code>aEnable</code></td><td>Array</td><td>Per-tab enable state</td></tr>
+<tr><td><code>aVisible</code></td><td>Array</td><td>Per-tab visibility state</td></tr>
+<tr><td><code>nTopMargin</code></td><td>Numeric</td><td>Height of the tab strip area (default 25)</td></tr>
+<tr><td><code>nGroupSeparation</code></td><td>Numeric</td><td>Pixel gap between groups (default 3)</td></tr>
+<tr><td><code>nLeftMargin</code></td><td>Numeric</td><td>Left margin for the first group</td></tr>
+<tr><td><code>nRightMargin</code></td><td>Numeric</td><td>Right margin</td></tr>
+<tr><td><code>nRoundBox</code></td><td>Numeric</td><td>Corner radius for tab boxes (default 7)</td></tr>
+<tr><td><code>nClrPaneRB</code></td><td>Numeric</td><td>Ribbon background color</td></tr>
+<tr><td><code>nClrBoxOut / nClrBoxIn</code></td><td>Numeric</td><td>Tab box outer/inner colors</td></tr>
+<tr><td><code>nClrBoxSelOut / nClrBoxSelIn</code></td><td>Numeric</td><td>Selected tab box outer/inner colors</td></tr>
+<tr><td><code>aGrad</code></td><td>Array</td><td>Background gradient</td></tr>
+<tr><td><code>aGradFld</code></td><td>Array</td><td>Tab content area gradient</td></tr>
+<tr><td><code>aGradHigh</code></td><td>Array</td><td>Tab highlight gradient (mouse-over)</td></tr>
+<tr><td><code>aGradOver</code></td><td>Array</td><td>Tab hover gradient</td></tr>
+<tr><td><code>l2010 / l2013 / l2015 / l2016</code></td><td>Logical</td><td>Visual style flags (only one should be <code>.T.</code>)</td></tr>
+<tr><td><code>oBackStage</code></td><td>Object</td><td>Panel used as the backstage view (File tab)</td></tr>
+<tr><td><code>lUseAcc</code></td><td>Logical</td><td>Enable keyboard accelerator hints</td></tr>
+<tr><td><code>aQuickBmp</code></td><td>Array</td><td>Quick Access toolbar bitmaps</td></tr>
+<tr><td><code>nStart</code></td><td>Numeric</td><td>Starting button offset for Quick Access</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Key Methods</h2>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( oWnd, aPrompts, bAction, nOption, nWidth, nHeight, nTopMargin, nClrPaneRB, nClrBoxOut, nClrBoxIn, nClrBoxSelOut, nClrBoxSelIn, aGrad, aGradFld, aGradHigh, aGradOver, l2010, nStart, l2013, l2015, l2016 )</code></td><td>Constructor. Creates the ribbon bar at the top of the window.</td></tr>
+<tr><td><code>AddTab( cPrompt, nPos, lDefault, bClrTxt )</code></td><td>Add a new tab at runtime</td></tr>
+<tr><td><code>DeleteTab( nTab )</code></td><td>Remove a tab</td></tr>
+<tr><td><code>AddGroup( nWidth, cCaption, nDialogs, bAction, cBitmap, aGrad )</code></td><td>Add a group to a tab. Returns the group object.</td></tr>
+<tr><td><code>SetOption( nOption )</code></td><td>Programmatically switch to a tab</td></tr>
+<tr><td><code>GoLeft() / GoRight()</code></td><td>Navigate to previous/next tab</td></tr>
+<tr><td><code>Enable( nPos, lOnOff )</code></td><td>Enable or disable a specific tab</td></tr>
+<tr><td><code>Show( nPos ) / Hide( nPos )</code></td><td>Show or hide a specific tab</td></tr>
+<tr><td><code>QuickAccess( nLeft, lQuickGrad )</code></td><td>Set up the Quick Access toolbar area</td></tr>
+<tr><td><code>QuickRoundBtn( cBitmap, cBmp, cBmpOver, cBmpPush, bAction, lQuickGrad, bLDblClick )</code></td><td>Add a Quick Access round button (e.g. the "File" orb)</td></tr>
+<tr><td><code>SetBackStage( oBackStage )</code></td><td>Assign a backstage panel</td></tr>
+<tr><td><code>BackStage()</code></td><td>Show the backstage view</td></tr>
+<tr><td><code>SetStyles( l2010, l2013, l2015, nTopMargin, ... )</code></td><td>Change visual style at runtime</td></tr>
+<tr><td><code>KeybMode()</code></td><td>Enter keyboard accelerator mode (Alt key)</td></tr>
+</tbody>
+</table>
+
+<h2 id="group-methods">TRBGroup Methods</h2>
+
+<p>Groups are created by <code>TRibbonBar:AddGroup()</code> or the <code>ADD GROUP</code> command. Each group can contain buttons, separators, and other controls.</p>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>AddButton( nRow, nCol, nHeight, nWidth, cCaption, bAction, cType, bWhen, cBitmap, lBorder, lRound, cLayout, oPopup, ... )</code></td><td>Add a button to this group</td></tr>
+<tr><td><code>AddSeparator( nCol )</code></td><td>Add a vertical separator line</td></tr>
+</tbody>
+</table>
+
+<h2 id="command">Command Syntax</h2>
+
+<pre><code class="language-harbour">#include "ribbon.ch"
+
+// Create the ribbon bar
+DEFINE RIBBONBAR [ oRBar ] ;
+   [ OF oWnd ] ;
+   [ PROMPTS cTab1, cTab2, cTab3 ] ;
+   [ ACTION bAction ] ;
+   [ OPTION nOption ] ;
+   [ HEIGHT nHeight ] ;
+   [ TOPMARGIN nTopMargin ] ;
+   [ COLOR nClrPane ] ;
+   [ COLORBOX nClrBoxOut, nClrBoxIn ] ;
+   [ COLORSEL nClrBoxSelOut, nClrBoxSelIn ] ;
+   [ 2010 | 2013 | 2015 | 2016 ] ;
+   [ STARTBTN nStart ]
+
+// Add a group to a tab
+ADD GROUP [ oGr ] ;
+   RIBBON oRBar ;
+   TO nTabIndex ;
+   [ PROMPT cCaption ] ;
+   [ WIDTH nWidth ] ;
+   [ ACTION bAction ] ;
+   [ BITMAP cBitmap ]
+
+// Add buttons to a group (using @ row, col notation)
+@ nRow, nCol ADD BUTTON [ oBtn ] ;
+   [ PROMPT cCaption ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ BITMAP cBitmap ] ;
+   [ ACTION bAction ] ;
+   [ OF oGroup ] ;
+   [ WHEN bWhen ] ;
+   [ BORDER ] ;
+   [ ROUND ] ;
+   [ TOP | LEFT | BOTTOM | RIGHT | CENTER ] ;
+   [ NORMAL | POPUP | SPLITPOPUP | SAYBUTTON ] ;
+   [ MENU oPopup ] ;
+   [ TOOLTIP cToolTip ]
+
+// Add a separator
+ADD SEPARATOR TO GROUP oGr [ COL nCol ]</code></pre>
+
+<h2 id="ribbon-lifecycle">Ribbon Lifecycle</h2>
+
+<div class="mermaid">
+sequenceDiagram
+    participant App
+    participant RB as TRibbonBar
+    participant GR as TRBGroup
+    participant BT as TRBButton
+
+    App->>RB: DEFINE RIBBONBAR PROMPTS "Home","Insert","View"
+    RB-->>App: Creates ribbon with 3 tab dialogs
+
+    App->>RB: ADD GROUP RIBBON oRBar TO 1 PROMPT "Clipboard" WIDTH 120
+    RB->>GR: Creates group on tab 1
+    RB-->>App: Returns oGrClip
+
+    App->>GR: @ 2,2 ADD BUTTON PROMPT "Paste" BITMAP "paste.bmp" ACTION ...
+    GR->>BT: Creates button inside group
+    GR-->>App: Returns oBtn
+
+    App->>RB: ACTIVATE WINDOW oWnd
+    Note over RB: Tab 1 visible, groups painted
+
+    RB-->>App: User clicks "Insert" tab
+    RB->>RB: SetOption(2)
+    RB-->>App: Eval(bAction, 2, 1)
+    Note over RB: Tab 2 groups now visible
+</div>
+
+<h2 id="examples">Code Examples</h2>
+
+<h3>Example 1: Basic Ribbon with Groups and Buttons</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "Ribbon.ch"
+
+FUNCTION Main()
+   LOCAL oWnd, oRBar
+   LOCAL oGrFile, oGrEdit, oGrView
+
+   DEFINE WINDOW oWnd TITLE "Ribbon Demo"
+
+   DEFINE RIBBONBAR oRBar OF oWnd ;
+      PROMPTS "Home", "Insert", "View" ;
+      HEIGHT 160 2015
+
+   // ----- HOME TAB (option 1) -----
+
+   ADD GROUP oGrFile RIBBON oRBar TO 1 ;
+      PROMPT "File" WIDTH 140
+
+   @ 2, 5 ADD BUTTON PROMPT "New" ;
+      SIZE 36, 60 BITMAP "new32.bmp" ;
+      ACTION NewDocument() ;
+      OF oGrFile TOP
+
+   @ 2, 45 ADD BUTTON PROMPT "Open" ;
+      SIZE 36, 60 BITMAP "open32.bmp" ;
+      ACTION OpenDocument() ;
+      OF oGrFile TOP
+
+   @ 2, 85 ADD BUTTON PROMPT "Save" ;
+      SIZE 36, 60 BITMAP "save32.bmp" ;
+      ACTION SaveDocument() ;
+      OF oGrFile TOP
+
+   ADD GROUP oGrEdit RIBBON oRBar TO 1 ;
+      PROMPT "Editing" WIDTH 180
+
+   @ 2, 5 ADD BUTTON PROMPT "Cut" ;
+      SIZE 50, 22 BITMAP "cut16.bmp" ;
+      ACTION Cut() OF oGrEdit
+
+   @ 26, 5 ADD BUTTON PROMPT "Copy" ;
+      SIZE 50, 22 BITMAP "copy16.bmp" ;
+      ACTION Copy() OF oGrEdit
+
+   @ 50, 5 ADD BUTTON PROMPT "Paste" ;
+      SIZE 50, 22 BITMAP "paste16.bmp" ;
+      ACTION Paste() OF oGrEdit
+
+   ADD SEPARATOR TO GROUP oGrEdit COL 65
+
+   @ 2, 70 ADD BUTTON PROMPT "Find" ;
+      SIZE 50, 22 BITMAP "find16.bmp" ;
+      ACTION FindText() OF oGrEdit
+
+   @ 26, 70 ADD BUTTON PROMPT "Replace" ;
+      SIZE 60, 22 BITMAP "replace16.bmp" ;
+      ACTION ReplaceText() OF oGrEdit
+
+   // ----- INSERT TAB (option 2) -----
+
+   ADD GROUP oGrView RIBBON oRBar TO 2 ;
+      PROMPT "Objects" WIDTH 200
+
+   @ 2, 5 ADD BUTTON PROMPT "Table" ;
+      SIZE 36, 60 BITMAP "table32.bmp" ;
+      ACTION InsertTable() OF oGrView TOP
+
+   @ 2, 50 ADD BUTTON PROMPT "Image" ;
+      SIZE 36, 60 BITMAP "image32.bmp" ;
+      ACTION InsertImage() OF oGrView TOP
+
+   @ 2, 95 ADD BUTTON PROMPT "Chart" ;
+      SIZE 36, 60 BITMAP "chart32.bmp" ;
+      ACTION InsertChart() OF oGrView TOP
+
+   SET MESSAGE OF oWnd TO "Ready" CENTERED
+
+   ACTIVATE WINDOW oWnd
+RETURN NIL</code></pre>
+
+<h3>Example 2: Ribbon with Quick Access and Backstage</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "Ribbon.ch"
+
+FUNCTION RibbonAdvanced()
+   LOCAL oWnd, oRBar, oBackStage
+
+   DEFINE WINDOW oWnd TITLE "Advanced Ribbon"
+
+   DEFINE RIBBONBAR oRBar OF oWnd ;
+      PROMPTS "Home", "Data", "Reports" ;
+      HEIGHT 160 2016 ;
+      STARTBTN 1
+
+   // Quick Access round button (File orb)
+   oRBar:QuickRoundBtn( "orb.bmp",, , , ;
+      { || oRBar:BackStage() } )
+
+   // Backstage panel (shown when orb is clicked)
+   oBackStage := TPanel():New( 0, 0, 600, 300, oWnd )
+   @ 2, 2 SAY "New"   OF oBackStage
+   @ 4, 2 SAY "Open"  OF oBackStage
+   @ 6, 2 SAY "Save"  OF oBackStage
+   @ 8, 2 SAY "Print" OF oBackStage
+   oBackStage:Hide()
+   oRBar:SetBackStage( oBackStage )
+
+   // Tab change handling
+   oRBar:bAction := { |nTab, nOld| ;
+      MsgInfo( "Switched from tab " + Str(nOld) + ;
+               " to tab " + Str(nTab) ) }
+
+   // Disable a tab at runtime
+   // oRBar:Enable( 3, .F. )
+
+   // Hide a tab at runtime
+   // oRBar:Hide( 2 )
+
+   ACTIVATE WINDOW oWnd
+RETURN NIL</code></pre>
+
+<h3>Example 3: Popup Buttons and Split Buttons</h3>
+
+<pre><code class="language-harbour">// Button with a dropdown popup menu
+LOCAL oPopup
+
+MENU oPopup POPUP
+   MENUITEM "Option A" ACTION DoA()
+   MENUITEM "Option B" ACTION DoB()
+   SEPARATOR
+   MENUITEM "More..."  ACTION DoMore()
+ENDMENU
+
+@ 2, 5 ADD BUTTON PROMPT "Dropdown" ;
+   SIZE 80, 60 BITMAP "menu32.bmp" ;
+   ACTION NIL ;
+   OF oGroup ;
+   POPUP ;
+   MENU oPopup TOP
+
+// Split button: click fires action, arrow opens menu
+@ 2, 90 ADD BUTTON PROMPT "Print" ;
+   SIZE 70, 60 BITMAP "print32.bmp" ;
+   ACTION QuickPrint() ;
+   OF oGroup ;
+   SPLITPOPUP ;
+   MENU oPopup TOP</code></pre>
+
+<h2 id="visual-styles">Visual Styles</h2>
+
+<table>
+<thead><tr><th>Style</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>2010</code></td><td>Office 2010 style with gradient tabs and rounded orb button. Left margin = 10.</td></tr>
+<tr><td><code>2013</code></td><td>Office 2013 flat style with minimal borders</td></tr>
+<tr><td><code>2015</code></td><td>Office 2015/2016 style with colored tab strip</td></tr>
+<tr><td><code>2016</code></td><td>Office 2016/365 modern flat style</td></tr>
+<tr><td>(default)</td><td>Classic ribbon style with full gradients and 3D boxes</td></tr>
+</tbody>
+</table>
+
+<p>You can change the style at runtime using <code>SetStyles()</code>:</p>
+
+<pre><code class="language-harbour">// Switch to 2016 style
+oRBar:SetStyles( .F., .F., .F., 25, , , , , , , , , , .T. )</code></pre>
+
+<h2 id="tips">Tips</h2>
+
+<ul>
+  <li>Always include <code>ribbon.ch</code> for the ribbon command preprocessor directives.</li>
+  <li>The ribbon height should be around 140-160 pixels for comfortable button placement.</li>
+  <li>Use <code>TOP</code> layout for large icon buttons (icon above text) and default layout for small icon buttons (icon left of text).</li>
+  <li>Groups are added to specific tabs via the <code>TO nOption</code> clause. Tab indices are 1-based.</li>
+  <li>Use <code>SPLITPOPUP</code> type for buttons that have both a direct action and a dropdown menu.</li>
+  <li>Keyboard accelerators are automatically supported when <code>lUseAcc</code> is <code>.T.</code> -- press Alt to show key hints.</li>
+  <li>The <code>WHEN</code> clause on buttons supports dynamic enable/disable based on application state.</li>
+  <li>For responsive layouts, the ribbon automatically resizes with the window width.</li>
+</ul>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+  <li><a href="../../en/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../en/ui/tbutton.html">TButton / TBtnBmp</a> -- traditional toolbar buttons</li>
+  <li><a href="../../en/ui/tmenu.html">TMenu</a> -- menus used in popup/split buttons</li>
+  <li><a href="../../en/ui/more-controls.html">More Controls</a> -- TReBar for classic dockable toolbars</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TMenu - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item active" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a><a class="nav-item" href="../../en/ui/more-controls.html">More Controls</a></div>
+<div class="nav-section"><div class="nav-section-title">Advanced UI</div><a class="nav-item" href="../../en/ui/tlistview.html">TListView</a><a class="nav-item" href="../../en/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../en/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../en/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Data Access</div><a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../en/data/todbc.html">TODBC</a><a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Printing &amp; Reports</div><a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../en/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div><a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../en/internet/tftp.html">TFtp</a><a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div><a class="nav-item" href="../../en/reference/commands.html">Commands</a><a class="nav-item" href="../../en/reference/functions.html">Functions</a><a class="nav-item" href="../../en/reference/errorsys.html">Error System</a><a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a><a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TMenu / TMenuItem</h1>
+<p class="subtitle">Pull-down menus, popup menus, and context menus</p>
+
+<p><strong>Source:</strong> <code>source/classes/menu.prg</code> &nbsp;|&nbsp; <strong>Header:</strong> <code>FiveWin.ch</code></p>
+
+<h2 id="overview">Overview</h2>
+
+<p><code>TMenu</code> manages a menu bar or popup menu, while <code>TMenuItem</code> represents an individual item within a menu. FiveWin menus support hierarchical popups, separators, checkmarks, accelerator keys, bitmaps, and modern visual styles (2007, 2010, 2013, 2015).</p>
+
+<p>There are two main usage patterns:</p>
+<ul>
+  <li><strong>Menu bar</strong> -- attached to a window via <code>DEFINE MENU oMenu OF oWnd</code></li>
+  <li><strong>Popup / context menu</strong> -- shown at a position via <code>ACTIVATE POPUP oMenu AT nRow, nCol OF oWnd</code></li>
+</ul>
+
+<h2 id="architecture">Menu Structure</h2>
+
+<div class="mermaid">
+graph TD
+    WINDOW["TWindow / TDialog"] --> MENUBAR["TMenu<br/>(Menu Bar)"]
+    MENUBAR --> MI_FILE["TMenuItem<br/>&amp;File"]
+    MENUBAR --> MI_EDIT["TMenuItem<br/>&amp;Edit"]
+    MENUBAR --> MI_HELP["TMenuItem<br/>&amp;Help"]
+
+    MI_FILE --> POPUP_FILE["TMenu<br/>(Popup)"]
+    POPUP_FILE --> MI_NEW["TMenuItem: New"]
+    POPUP_FILE --> MI_OPEN["TMenuItem: Open"]
+    POPUP_FILE --> MI_SEP["Separator"]
+    POPUP_FILE --> MI_EXIT["TMenuItem: Exit"]
+
+    MI_EDIT --> POPUP_EDIT["TMenu<br/>(Popup)"]
+    POPUP_EDIT --> MI_CUT["TMenuItem: Cut"]
+    POPUP_EDIT --> MI_COPY["TMenuItem: Copy"]
+    POPUP_EDIT --> MI_PASTE["TMenuItem: Paste"]
+
+    MI_HELP --> POPUP_HELP["TMenu<br/>(Popup)"]
+    POPUP_HELP --> MI_ABOUT["TMenuItem: About"]
+
+    style MENUBAR fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style MI_FILE fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style MI_EDIT fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style MI_HELP fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+</div>
+
+<h2 id="tmenu-properties">TMenu Key Properties</h2>
+
+<table>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>aMenuItems</code></td><td>Array</td><td>Array of <code>TMenuItem</code> objects in this menu</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Parent window that owns the menu</td></tr>
+<tr><td><code>hMenu</code></td><td>Handle</td><td>Windows HMENU handle</td></tr>
+<tr><td><code>l2007</code></td><td>Logical</td><td>Office 2007 visual style</td></tr>
+<tr><td><code>l2010</code></td><td>Logical</td><td>Office 2010 visual style</td></tr>
+<tr><td><code>l2013</code></td><td>Logical</td><td>Office 2013 visual style</td></tr>
+<tr><td><code>l2015</code></td><td>Logical</td><td>Office 2015 (modern flat) visual style</td></tr>
+<tr><td><code>lPopup</code></td><td>Logical</td><td><code>.T.</code> if this is a popup (context) menu rather than a menu bar</td></tr>
+</tbody>
+</table>
+
+<h2 id="tmenuitem-properties">TMenuItem Key Properties</h2>
+
+<table>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>cPrompt</code></td><td>String</td><td>Text displayed for the item. Use <code>&amp;</code> for accelerator underline.</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed when this item is selected</td></tr>
+<tr><td><code>bWhen</code></td><td>Block</td><td>Condition block; item is grayed when it returns <code>.F.</code></td></tr>
+<tr><td><code>lChecked</code></td><td>Logical</td><td>When <code>.T.</code>, a checkmark appears beside the item</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>When <code>.F.</code>, the item is disabled (grayed out)</td></tr>
+<tr><td><code>oMenu</code></td><td>Object</td><td>If this item opens a sub-popup, this points to that <code>TMenu</code></td></tr>
+<tr><td><code>cBmpFile</code></td><td>String</td><td>Path to a bitmap file shown beside the item</td></tr>
+<tr><td><code>nVirtKey</code></td><td>Numeric</td><td>Virtual key for the keyboard accelerator (e.g. <code>VK_F5</code>)</td></tr>
+</tbody>
+</table>
+
+<h2 id="commands">Command Syntax</h2>
+
+<h3>Menu Bar</h3>
+<pre><code class="language-harbour">DEFINE MENU oMenu OF oWnd [ 2007 | 2010 | 2013 | 2015 ]
+
+   MENUITEM "&amp;File"
+   MENU
+      MENUITEM "&amp;New"   ACTION NewDoc()   RESOURCE "NEW"
+      MENUITEM "&amp;Open"  ACTION OpenDoc()  RESOURCE "OPEN"
+      SEPARATOR
+      MENUITEM "E&amp;xit"  ACTION oWnd:End()
+   ENDMENU
+
+   MENUITEM "&amp;Edit"
+   MENU
+      MENUITEM "Cu&amp;t"   ACTION CutText()   ACCELERATOR ACC_CTRL, VK_X
+      MENUITEM "&amp;Copy"  ACTION CopyText()  ACCELERATOR ACC_CTRL, VK_C
+      MENUITEM "&amp;Paste" ACTION PasteText() ACCELERATOR ACC_CTRL, VK_V
+   ENDMENU
+
+ENDMENU</code></pre>
+
+<h3>Popup Context Menu</h3>
+<pre><code class="language-harbour">DEFINE MENU oPopup POPUP [ 2015 ]
+   MENUITEM "Edit"   ACTION EditRecord()
+   MENUITEM "Delete" ACTION DeleteRecord()
+   SEPARATOR
+   MENUITEM "Properties" ACTION ShowProperties()
+ENDMENU
+
+// Activate on right-click
+ACTIVATE POPUP oPopup AT nRow, nCol OF oWnd</code></pre>
+
+<h2 id="menu-lifecycle">Menu Event Lifecycle</h2>
+
+<div class="mermaid">
+sequenceDiagram
+    participant User
+    participant Window as TWindow
+    participant Menu as TMenu
+    participant Item as TMenuItem
+
+    User->>Window: Click on menu bar
+    Window->>Menu: WM_INITMENUPOPUP
+    Menu->>Item: Eval( bWhen ) for each item
+    Item-->>Menu: Enable/Disable items
+    Menu-->>Window: Display popup
+
+    User->>Item: Click menu item
+    Item->>Item: Check lActive
+    alt Item is active
+        Item->>Item: Eval( bAction )
+    end
+
+    Note over Menu,Item: For checkable items,<br/>lChecked is toggled<br/>before bAction fires
+</div>
+
+<h2 id="examples">Code Examples</h2>
+
+<h3>Example 1: Complete Application Menu</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION Main()
+   LOCAL oWnd, oMenu
+
+   DEFINE WINDOW oWnd TITLE "Menu Demo" FROM 1, 1 TO 30, 80
+
+   DEFINE MENU oMenu OF oWnd 2015
+
+      MENUITEM "&amp;File"
+      MENU
+         MENUITEM "&amp;New"        ACTION NewDoc()      RESOURCE "NEW"
+         MENUITEM "&amp;Open..."    ACTION OpenDoc()     RESOURCE "OPEN"
+         MENUITEM "&amp;Save"       ACTION SaveDoc()     RESOURCE "SAVE"
+         MENUITEM "Save &amp;As..." ACTION SaveDocAs()
+         SEPARATOR
+         MENUITEM "&amp;Print..."   ACTION PrintDoc()    RESOURCE "PRINT" ;
+            ACCELERATOR ACC_CTRL, VK_P
+         SEPARATOR
+         MENUITEM "Recent Files"
+         MENU
+            MENUITEM "Document1.dbf" ACTION OpenRecent( 1 )
+            MENUITEM "Report2.prg"   ACTION OpenRecent( 2 )
+            MENUITEM "Data3.xls"     ACTION OpenRecent( 3 )
+         ENDMENU
+         SEPARATOR
+         MENUITEM "E&amp;xit"       ACTION oWnd:End()
+      ENDMENU
+
+      MENUITEM "&amp;Edit"
+      MENU
+         MENUITEM "&amp;Undo"  ACTION Undo()  ACCELERATOR ACC_CTRL, VK_Z
+         SEPARATOR
+         MENUITEM "Cu&amp;t"   ACTION Cut()   ACCELERATOR ACC_CTRL, VK_X
+         MENUITEM "&amp;Copy"  ACTION Copy()  ACCELERATOR ACC_CTRL, VK_C
+         MENUITEM "&amp;Paste" ACTION Paste() ACCELERATOR ACC_CTRL, VK_V
+         SEPARATOR
+         MENUITEM "Select &amp;All" ACTION SelectAll() ACCELERATOR ACC_CTRL, VK_A
+      ENDMENU
+
+      MENUITEM "&amp;View"
+      MENU
+         MENUITEM "&amp;Toolbar"    ACTION ToggleToolbar()  CHECK
+         MENUITEM "&amp;Status Bar" ACTION ToggleStatus()   CHECK
+         SEPARATOR
+         MENUITEM "&amp;Refresh"    ACTION Refresh()        ACCELERATOR 0, VK_F5
+      ENDMENU
+
+      MENUITEM "&amp;Help"
+      MENU
+         MENUITEM "&amp;Contents"     ACTION HelpContents()  ACCELERATOR 0, VK_F1
+         MENUITEM "&amp;About..."     ACTION MsgAbout()
+      ENDMENU
+
+   ENDMENU
+
+   SET MESSAGE OF oWnd TO "Ready" CENTERED
+
+   ACTIVATE WINDOW oWnd
+RETURN NIL</code></pre>
+
+<h3>Example 2: Right-Click Context Menu</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION SetupContextMenu( oWnd, oBrw )
+   // Assign to the browse's right-click event
+   oBrw:bRClicked := {|nRow, nCol| ShowContextMenu( oWnd, oBrw, nRow, nCol ) }
+RETURN NIL
+
+FUNCTION ShowContextMenu( oWnd, oBrw, nRow, nCol )
+   LOCAL oMenu
+
+   DEFINE MENU oMenu POPUP 2015
+
+      MENUITEM "&amp;Edit Record"   ACTION EditCurrentRecord( oBrw )
+      MENUITEM "&amp;Delete Record" ACTION DeleteCurrentRecord( oBrw ) ;
+         WHEN ( !oBrw:cAlias->( Eof() ) )
+      SEPARATOR
+      MENUITEM "&amp;Copy Row"      ACTION oBrw:ClipRow()
+      MENUITEM "Copy &amp;All"      ACTION oBrw:ToClip()
+      SEPARATOR
+      MENUITEM "Export to &amp;Excel" ACTION oBrw:ToExcel()
+      MENUITEM "Export to &amp;CSV"   ACTION ExportCSV( oBrw )
+      SEPARATOR
+      MENUITEM "&amp;Print..."       ACTION oBrw:Report()
+
+   ENDMENU
+
+   ACTIVATE POPUP oMenu AT nRow, nCol OF oWnd
+RETURN NIL</code></pre>
+
+<h3>Example 3: Dynamic Menu with bWhen</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION BuildDynamicMenu( oWnd )
+   LOCAL oMenu, oMI_Save, oMI_Paste
+
+   DEFINE MENU oMenu OF oWnd 2013
+
+      MENUITEM "&amp;File"
+      MENU
+         MENUITEM "&amp;Save" ACTION SaveDoc() ;
+            WHEN ( lDocModified ) ;    // grayed when doc is unchanged
+            MESSAGE "Save current document"
+         MENUITEM "E&amp;xit" ACTION oWnd:End()
+      ENDMENU
+
+      MENUITEM "&amp;Edit"
+      MENU
+         MENUITEM "&amp;Paste" ACTION PasteText() ;
+            WHEN ( !Empty( GetClipboardText() ) )  // grayed when clipboard is empty
+      ENDMENU
+
+   ENDMENU
+RETURN NIL</code></pre>
+
+<h2 id="styles">Visual Styles</h2>
+
+<p>FiveWin supports multiple menu rendering styles controlled by flags on the <code>DEFINE MENU</code> command:</p>
+
+<table>
+<thead><tr><th>Style</th><th>Appearance</th></tr></thead>
+<tbody>
+<tr><td>(default)</td><td>Classic Windows look</td></tr>
+<tr><td><code>2007</code></td><td>Office 2007 gradient with rounded selections</td></tr>
+<tr><td><code>2010</code></td><td>Office 2010 softer gradient</td></tr>
+<tr><td><code>2013</code></td><td>Office 2013 flat with colored accent bar</td></tr>
+<tr><td><code>2015</code></td><td>Modern flat appearance, recommended for new applications</td></tr>
+</tbody>
+</table>
+
+<h2 id="tips">Tips</h2>
+
+<ul>
+  <li>Use <code>&amp;</code> in <code>MENUITEM</code> text to set the Alt-key accelerator: <code>"&amp;File"</code> means Alt+F.</li>
+  <li>Use <code>ACCELERATOR</code> to assign keyboard shortcuts like Ctrl+S, F5, etc.</li>
+  <li>The <code>CHECK</code> clause makes a menu item toggleable; each click flips <code>lChecked</code>.</li>
+  <li>Use <code>RESOURCE</code> or <code>FILENAME</code> to display a small icon beside the menu item.</li>
+  <li>The <code>bWhen</code> block is evaluated each time the popup opens, so items gray/ungray dynamically.</li>
+  <li>For very long menus, consider nested <code>MENU...ENDMENU</code> blocks to create sub-popups.</li>
+</ul>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+  <li><a href="../../en/core/twindow.html">TWindow</a> -- menus are attached to windows</li>
+  <li><a href="../../en/ui/tbutton.html">TButton / TBtnBmp</a> -- toolbar buttons often mirror menu actions</li>
+  <li><a href="../../en/reference/commands.html">Commands</a> -- full command reference</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

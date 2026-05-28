@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TScrollMsg - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/tprogresswheel.html">TProgressWheel</a>
+<a class="nav-item" href="../../en/ui/ttagcloud.html">TTagCloud</a>
+<a class="nav-item active" href="../../en/ui/tscrollmsg.html">TScrollMsg</a>
+<a class="nav-item" href="../../en/ui/tnavigator.html">TNavigator</a>
+<a class="nav-item" href="../../en/ui/tmytitle.html">TMyTitle</a>
+<a class="nav-item" href="../../en/ui/tskinbutton.html">TSkinButton</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TScrollMsg</h1>
+<p class="class-source">Source: <code>source/classes/scrolmsg.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
+
+<p>
+TScrollMsg is an auto-scrolling marquee text control. It continuously scrolls text either horizontally (ticker-tape style) or vertically (scrolling credits style). A timer drives incremental pixel scrolling, and the text wraps around seamlessly when it reaches the end. It supports configurable speed, colors, borders, and runtime text updates.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cText</code></td><td>Character</td><td>The text to scroll (read-only, use <code>SetText()</code> to update)</td></tr>
+<tr><td><code>lVertical</code></td><td>Logical</td><td>Vertical scrolling when <code>.T.</code> (default), horizontal when <code>.F.</code></td></tr>
+<tr><td><code>nSpeed</code></td><td>Numeric</td><td>Scroll speed in pixels per tick (default 2)</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Draw a border around the control (default <code>.T.</code>)</td></tr>
+<tr><td><code>nScrollPix</code></td><td>Numeric</td><td>Current pixel scroll offset (protected)</td></tr>
+<tr><td><code>nTextSize</code></td><td>Numeric</td><td>Cached text dimension for wrap calculation (protected)</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, nW, nH, cText, oWnd, oFont, nSpeed, nClrText, nClrBack, lHoriz, lPixels, lDesign, cVarName, lNoBorder )</code></td><td>Create a new TScrollMsg marquee control</td></tr>
+<tr><td><code>SetText( cText )</code></td><td>Change the scrolling text at runtime and restart scroll</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Horizontal Marquee</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oScroll
+
+   DEFINE WINDOW oWnd TITLE "News Ticker" SIZE 600, 100
+
+   oScroll := TScrollMsg():New( 10, 10, 560, 30,;
+               "Breaking news: FWH 26.03 released!",;
+               oWnd,, 3, CLR_YELLOW, CLR_BLUE, .T., .T. )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>The marquee timer interval is fixed at 18 ms (approximately 55 fps). Adjust <code>nSpeed</code> (pixels per tick) to control the effective scroll velocity.</li>
+<li>When scrolling vertically, text wraps using <code>DT_WORDBREAK</code>. Horizontal scrolling uses a single line with <code>DT_SINGLELINE</code>.</li>
+<li>Pass <code>lHoriz := .T.</code> to enable horizontal scrolling; the default is vertical.</li>
+<li>The control automatically creates and activates its timer on first paint and destroys it on <code>Destroy()</code>.</li>
+<li>Set <code>lNoBorder := .T.</code> to suppress the surrounding box outline.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TGet / TMGet - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item active" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a><a class="nav-item" href="../../en/ui/more-controls.html">More Controls</a></div>
+<div class="nav-section"><div class="nav-section-title">Advanced UI</div><a class="nav-item" href="../../en/ui/tlistview.html">TListView</a><a class="nav-item" href="../../en/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../en/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../en/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Data Access</div><a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../en/data/todbc.html">TODBC</a><a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Printing &amp; Reports</div><a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../en/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div><a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../en/internet/tftp.html">TFtp</a><a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div><a class="nav-item" href="../../en/reference/commands.html">Commands</a><a class="nav-item" href="../../en/reference/functions.html">Functions</a><a class="nav-item" href="../../en/reference/errorsys.html">Error System</a><a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a><a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TGet / TMGet</h1>
+<p class="subtitle">Text input controls with PICTURE formatting, validation, and multi-line editing</p>
+
+<h2 id="tget-overview">TGet Overview</h2>
+
+<p><strong>Source:</strong> <code>source/classes/tget.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TGet</code> is the FiveWin equivalent of the classic Clipper GET command -- a single-line text input control that supports PICTURE masks, validation blocks, and data binding via <code>bSetGet</code>. It is the workhorse of data-entry forms.</p>
+
+<h2 id="tmget-overview">TMGet Overview</h2>
+
+<p><strong>Source:</strong> <code>source/classes/mget.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TMGet</code> (also known as a memo GET) provides multi-line text editing. It is used for free-form text fields such as notes, comments, and descriptions. It wraps the Windows EDIT control with the <code>ES_MULTILINE</code> style.</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="mermaid">
+graph TD
+    subgraph "GET Family"
+        TGet["TGet<br/>Single-line input"]
+        TMGet["TMGet<br/>Multi-line memo"]
+    end
+
+    TControl --> TGet
+    TControl --> TMGet
+
+    subgraph "Data Binding"
+        VAR["Harbour Variable"]
+        FIELD["DBF Field"]
+        BLOCK["bSetGet Block"]
+    end
+
+    VAR --> BLOCK
+    FIELD --> BLOCK
+    BLOCK --> TGet
+    BLOCK --> TMGet
+
+    subgraph "Validation Pipeline"
+        PICTURE["cPicture<br/>Input mask"]
+        WHEN["bWhen<br/>Enable condition"]
+        VALID["bValid<br/>Exit validation"]
+    end
+
+    PICTURE --> TGet
+    WHEN --> TGet
+    VALID --> TGet
+
+    style TGet fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style TMGet fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+</div>
+
+<h2 id="tget-properties">TGet Key Properties</h2>
+
+<table>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Data-binding block. <code>Eval( bSetGet )</code> reads the value; <code>Eval( bSetGet, x )</code> writes it.</td></tr>
+<tr><td><code>cPicture</code></td><td>String</td><td>PICTURE mask controlling input formatting (e.g. <code>"@E 999,999.99"</code>, <code>"@!"</code>, <code>"99/99/9999"</code>)</td></tr>
+<tr><td><code>bValid</code></td><td>Block</td><td>Validation block evaluated when the user leaves the GET. Must return <code>.T.</code> to allow exit.</td></tr>
+<tr><td><code>bWhen</code></td><td>Block</td><td>Condition block evaluated when focus approaches. If <code>.F.</code>, the GET is skipped (read-only).</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>When <code>.T.</code>, the field is not editable.</td></tr>
+<tr><td><code>lPassword</code></td><td>Logical</td><td>When <code>.T.</code>, input is masked with bullet characters.</td></tr>
+<tr><td><code>cCueText</code></td><td>String</td><td>Placeholder text shown when the GET is empty and unfocused (watermark).</td></tr>
+<tr><td><code>lSpinner</code></td><td>Logical</td><td>When <code>.T.</code>, adds up/down spinner arrows for numeric input.</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum value for spinner.</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum value for spinner.</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Block evaluated each time the text changes (live update).</td></tr>
+<tr><td><code>lRight</code></td><td>Logical</td><td>Right-align the text (useful for numeric fields).</td></tr>
+</tbody>
+</table>
+
+<h2 id="tmget-properties">TMGet Key Properties</h2>
+
+<table>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Data-binding block, same as TGet.</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>When <code>.T.</code>, the memo is not editable.</td></tr>
+<tr><td><code>lWordWrap</code></td><td>Logical</td><td>When <code>.T.</code>, text wraps at the right edge instead of scrolling horizontally.</td></tr>
+<tr><td><code>nMaxChars</code></td><td>Numeric</td><td>Maximum number of characters allowed.</td></tr>
+</tbody>
+</table>
+
+<h2 id="picture-masks">Common PICTURE Masks</h2>
+
+<table>
+<thead><tr><th>Mask</th><th>Effect</th><th>Example Input/Output</th></tr></thead>
+<tbody>
+<tr><td><code>"@!"</code></td><td>Force uppercase</td><td><code>hello</code> &rarr; <code>HELLO</code></td></tr>
+<tr><td><code>"999,999.99"</code></td><td>Numeric with comma separators</td><td><code>1234.50</code> &rarr; <code>  1,234.50</code></td></tr>
+<tr><td><code>"@E 999,999.99"</code></td><td>European numeric (dot=thousands, comma=decimal)</td><td><code>1234.50</code> &rarr; <code>  1.234,50</code></td></tr>
+<tr><td><code>"99/99/9999"</code></td><td>Date mask</td><td><code>03242026</code> &rarr; <code>03/24/2026</code></td></tr>
+<tr><td><code>"(999)999-9999"</code></td><td>US phone number</td><td><code>5551234567</code> &rarr; <code>(555)123-4567</code></td></tr>
+<tr><td><code>"@K"</code></td><td>Clear field when first key is pressed</td><td>Selects all text on entry</td></tr>
+<tr><td><code>"@S15"</code></td><td>Scroll within 15-char display width</td><td>Long text scrolls horizontally</td></tr>
+</tbody>
+</table>
+
+<h2 id="validation">Validation Flow</h2>
+
+<div class="mermaid">
+sequenceDiagram
+    participant User
+    participant GET as TGet
+    participant bWhen
+    participant bValid
+    participant NextCtrl as Next Control
+
+    User->>GET: Tab / Click to enter
+    GET->>bWhen: Eval( bWhen )
+    alt bWhen returns .T.
+        bWhen-->>GET: .T. (enabled)
+        GET->>GET: Receive focus, allow editing
+        User->>GET: Type data, then Tab to leave
+        GET->>bValid: Eval( bValid )
+        alt bValid returns .T.
+            bValid-->>GET: .T. (valid)
+            GET->>NextCtrl: Move focus forward
+        else bValid returns .F.
+            bValid-->>GET: .F. (invalid)
+            GET->>GET: Keep focus, show error
+        end
+    else bWhen returns .F.
+        bWhen-->>GET: .F. (disabled)
+        GET->>NextCtrl: Skip this GET
+    end
+</div>
+
+<h2 id="commands">Command Syntax</h2>
+
+<h3>Single-line GET</h3>
+<pre><code class="language-harbour">@ nRow, nCol GET oGet VAR cVar ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ PICTURE cMask ] ;
+   [ VALID bValid ] ;
+   [ WHEN bWhen ] ;
+   [ READONLY ] ;
+   [ PASSWORD ] ;
+   [ SPINNER [ MIN nMin ] [ MAX nMax ] ] ;
+   [ CUETEXT cPlaceholder ] ;
+   [ ON CHANGE bChange ] ;
+   [ FONT oFont ] ;
+   [ RIGHT ]</code></pre>
+
+<h3>Multi-line Memo GET</h3>
+<pre><code class="language-harbour">@ nRow, nCol GET oMGet VAR cMemo MEMO ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ READONLY ] ;
+   [ FONT oFont ] ;
+   [ HSCROLL ] ;
+   [ NO WORDWRAP ]</code></pre>
+
+<h2 id="examples">Code Examples</h2>
+
+<h3>Example 1: Data Entry Form with Various GET Types</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION CustomerForm()
+   LOCAL oDlg, oFont
+   LOCAL cName   := Space( 30 )
+   LOCAL cPhone  := Space( 14 )
+   LOCAL nAge    := 0
+   LOCAL dBirth  := CToD( "" )
+   LOCAL cPass   := Space( 12 )
+   LOCAL nSalary := 0
+   LOCAL cNotes  := Space( 500 )
+
+   DEFINE FONT oFont NAME "Segoe UI" SIZE 0, -14
+   DEFINE DIALOG oDlg TITLE "Customer Entry" SIZE 480, 520 FONT oFont
+
+   // Text input with uppercase mask
+   @ 1.0, 1 SAY "Name:" OF oDlg
+   @ 1.0, 6 GET cName OF oDlg SIZE 200, 22 ;
+      PICTURE "@!" ;
+      VALID ( !Empty( cName ) ) ;
+      CUETEXT "Enter full name"
+
+   // Phone with template mask
+   @ 2.5, 1 SAY "Phone:" OF oDlg
+   @ 2.5, 6 GET cPhone OF oDlg SIZE 140, 22 ;
+      PICTURE "(999)999-9999"
+
+   // Numeric with spinner
+   @ 4.0, 1 SAY "Age:" OF oDlg
+   @ 4.0, 6 GET nAge OF oDlg SIZE 80, 22 ;
+      PICTURE "999" ;
+      SPINNER MIN 0 MAX 120
+
+   // Date field
+   @ 5.5, 1 SAY "Birth Date:" OF oDlg
+   @ 5.5, 6 GET dBirth OF oDlg SIZE 100, 22 ;
+      PICTURE "99/99/9999"
+
+   // Password field
+   @ 7.0, 1 SAY "Password:" OF oDlg
+   @ 7.0, 6 GET cPass OF oDlg SIZE 160, 22 ;
+      PASSWORD
+
+   // Numeric with European formatting
+   @ 8.5, 1 SAY "Salary:" OF oDlg
+   @ 8.5, 6 GET nSalary OF oDlg SIZE 140, 22 ;
+      PICTURE "@E 9,999,999.99" ;
+      RIGHT
+
+   // Multi-line memo
+   @ 10.0, 1 SAY "Notes:" OF oDlg
+   @ 10.5, 1 GET cNotes MEMO OF oDlg SIZE 400, 100
+
+   // Buttons
+   @ 17, 6  BUTTON "&Save"   OF oDlg SIZE 80, 25 ACTION oDlg:End() DEFAULT
+   @ 17, 16 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+   RELEASE FONT oFont
+RETURN NIL</code></pre>
+
+<h3>Example 2: Validated GET with Dynamic WHEN</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION ValidatedForm()
+   LOCAL oDlg
+   LOCAL cCode    := Space( 5 )
+   LOCAL cDesc    := Space( 40 )
+   LOCAL nQty     := 0
+   LOCAL nPrice   := 0
+   LOCAL lApprove := .F.
+
+   DEFINE DIALOG oDlg TITLE "Order Entry" SIZE 400, 300
+
+   @ 1, 1 SAY "Code:" OF oDlg
+   @ 1, 5 GET cCode OF oDlg SIZE 80, 22 ;
+      PICTURE "@!" ;
+      VALID ( ValidateCode( cCode, @cDesc ) )  // look up code, fill description
+
+   @ 2.5, 1 SAY "Description:" OF oDlg
+   @ 2.5, 5 GET cDesc OF oDlg SIZE 200, 22 READONLY
+
+   @ 4.0, 1 SAY "Quantity:" OF oDlg
+   @ 4.0, 5 GET nQty OF oDlg SIZE 80, 22 ;
+      PICTURE "9999" ;
+      SPINNER MIN 1 MAX 9999 ;
+      VALID ( nQty > 0 )
+
+   @ 5.5, 1 SAY "Price:" OF oDlg
+   @ 5.5, 5 GET nPrice OF oDlg SIZE 100, 22 ;
+      PICTURE "@E 99,999.99" ;
+      WHEN ( !Empty( cCode ) )          // only enabled after valid code
+
+   @ 7.5, 5 BUTTON "&OK" OF oDlg SIZE 80, 25 ;
+      ACTION ( lApprove := .T., oDlg:End() ) DEFAULT
+
+   @ 7.5, 14 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ;
+      ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+   IF lApprove
+      // process the order...
+   ENDIF
+RETURN NIL
+
+STATIC FUNCTION ValidateCode( cCode, cDesc )
+   IF Empty( cCode )
+      MsgStop( "Code is required." )
+      RETURN .F.
+   ENDIF
+   // Look up in database
+   cDesc := GetDescForCode( AllTrim( cCode ) )
+   IF Empty( cDesc )
+      MsgStop( "Code not found." )
+      RETURN .F.
+   ENDIF
+RETURN .T.</code></pre>
+
+<h2 id="tips">Tips and Best Practices</h2>
+
+<ul>
+  <li>The <code>bSetGet</code> block is created automatically by the <code>GET var</code> command. To bind to a field: <code>GET FieldWBlock( "NAME", Select() )</code>.</li>
+  <li>Use <code>CUETEXT</code> (placeholder) to give the user a hint about expected input format.</li>
+  <li>The <code>bValid</code> block can display a message and return <code>.F.</code> to prevent the user from leaving the field.</li>
+  <li>For numeric GETs, always provide a PICTURE to control decimal places and thousands separators.</li>
+  <li>The SPINNER clause adds increment/decrement arrows; combine with <code>MIN</code>/<code>MAX</code> to constrain the range.</li>
+  <li>TMGet supports <code>HSCROLL</code> to add a horizontal scroll bar, and <code>NO WORDWRAP</code> to disable wrapping.</li>
+  <li>When using GETs in a dialog, FiveWin handles Tab-order automatically based on creation order.</li>
+</ul>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+  <li><a href="../../en/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../en/ui/tcombobox.html">TComboBox</a> -- drop-down selection alternative to text input</li>
+  <li><a href="../../en/ui/txbrowse.html">TXBrowse</a> -- uses TGet internally for cell editing</li>
+  <li><a href="../../en/reference/commands.html">Commands</a> -- full command reference</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

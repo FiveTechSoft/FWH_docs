@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCheckBox / TRadio - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeros Pasos</div><a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a><a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a><a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a><a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Clases Base</div><a class="nav-item" href="../../es/core/twindow.html">TWindow</a><a class="nav-item" href="../../es/core/tdialog.html">TDialog</a><a class="nav-item" href="../../es/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a><a class="nav-item active" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../es/ui/more-controls.html">Más Controles</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Avanzada</div><a class="nav-item" href="../../es/ui/tlistview.html">TListView</a><a class="nav-item" href="../../es/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../es/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../es/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Acceso a Datos</div><a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../es/data/todbc.html">TODBC</a><a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Impresión e Informes</div><a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../es/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../es/internet/tftp.html">TFtp</a><a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../es/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Referencia</div><a class="nav-item" href="../../es/reference/commands.html">Comandos</a><a class="nav-item" href="../../es/reference/functions.html">Funciones</a><a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a><a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a></div>
+</nav>
+<main id="content">
+
+<h1>TCheckBox / TRadio</h1>
+<p class="subtitle">Casillas de verificación booleanas y grupos de botones de radio mutuamente excluyentes</p>
+
+<h2 id="tcheckbox">TCheckBox</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/checkbox.prg</code> &nbsp;|&nbsp; <strong>Padre:</strong> <code>TControl</code></p>
+
+<p><code>TCheckBox</code> envuelve el control estándar de casilla de verificación de Windows. Se enlaza a una variable lógica -- <code>.T.</code> cuando está marcada, <code>.F.</code> cuando no lo está. Las casillas de verificación son independientes; se pueden marcar cualquier número simultáneamente.</p>
+
+<h3 id="tcheckbox-properties">Propiedades de TCheckBox</h3>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloque de enlace de datos que lee/escribe la variable lógica</td></tr>
+<tr><td><code>cCaption</code></td><td>String</td><td>Texto mostrado junto a la casilla de verificación</td></tr>
+<tr><td><code>lChecked</code></td><td>Logical</td><td>Estado actual de marcado</td></tr>
+</tbody>
+</table>
+
+<h3 id="tcheckbox-methods">Métodos de TCheckBox</h3>
+
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, cCaption, bSetGet, oWnd, ... )</code></td><td>Constructor.</td></tr>
+<tr><td><code>Click()</code></td><td>Alternar el estado de marcado y evaluar <code>bSetGet</code>.</td></tr>
+<tr><td><code>Check()</code></td><td>Establecer el estado de marcado a <code>.T.</code></td></tr>
+<tr><td><code>UnCheck()</code></td><td>Establecer el estado de marcado a <code>.F.</code></td></tr>
+<tr><td><code>SetCheck( lOnOff )</code></td><td>Establecer el estado de marcado al valor dado.</td></tr>
+<tr><td><code>lIsChecked()</code></td><td>Retorna el estado visual actual de marcado desde la API de Windows.</td></tr>
+<tr><td><code>Refresh()</code></td><td>Releer la variable enlazada y actualizar el estado visual.</td></tr>
+</tbody>
+</table>
+
+<h3 id="tcheckbox-command">Comando de TCheckBox</h3>
+
+<pre><code class="language-harbour">@ nRow, nCol CHECKBOX oChk VAR lVar ;
+   PROMPT "Label text" ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ ON CHANGE bChange ] ;
+   [ WHEN bWhen ] ;
+   [ FONT oFont ]</code></pre>
+
+<h2 id="tradio">TRadio y TRadMenu</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/radio.prg</code> &nbsp;|&nbsp; <strong>Padre:</strong> <code>TControl</code></p>
+
+<p><code>TRadio</code> representa un único botón de radio. Los botones de radio son <em>mutuamente excluyentes</em> dentro de un grupo -- al seleccionar uno se deseleccionan todos los demás. El grupo es gestionado por un objeto <code>TRadMenu</code>, que se enlaza a una variable numérica indicando qué opción está seleccionada (basada en 1).</p>
+
+<h3 id="tradio-architecture">Arquitectura del Grupo de Radio</h3>
+
+<div class="mermaid">
+graph TD
+    RADMENU["TRadMenu<br/>nOption = 2<br/>bSetGet: {|u| nChoice}"]
+
+    RADMENU --> R1["TRadio 1<br/>nPos = 1<br/>'Estándar'"]
+    RADMENU --> R2["TRadio 2<br/>nPos = 2<br/>'Express' (seleccionado)"]
+    RADMENU --> R3["TRadio 3<br/>nPos = 3<br/>'Nocturno'"]
+
+    R2 -.->|"Clic"| RADMENU
+    RADMENU -.->|"Select(Self)"| R2
+    RADMENU -.->|"Deseleccionar otros"| R1
+    RADMENU -.->|"Deseleccionar otros"| R3
+
+    style RADMENU fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style R2 fill:#1c2129,stroke:#3fb950,stroke-width:2px,color:#e6edf3
+    style R1 fill:#1c2129,stroke:#30363d,stroke-width:1px,color:#8b949e
+    style R3 fill:#1c2129,stroke:#30363d,stroke-width:1px,color:#8b949e
+</div>
+
+<h3 id="tradio-properties">Propiedades de TRadio</h3>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>oRadMenu</code></td><td>Object</td><td>Referencia al <code>TRadMenu</code> que posee este botón de radio</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Índice de posición dentro del grupo. Cuando se selecciona este radio, <code>TRadMenu:nOption</code> es igual a <code>nPos</code>.</td></tr>
+<tr><td><code>cCaption</code></td><td>String</td><td>Texto mostrado junto al botón de radio</td></tr>
+</tbody>
+</table>
+
+<h3 id="tradio-command">Comando de Radio</h3>
+
+<pre><code class="language-harbour">@ nRow, nCol RADIO oRad VAR nChoice ;
+   PROMPT "Option text" ;
+   [ OF oWnd ] ;
+   [ WHEN bWhen ] ;
+   [ ON CHANGE bChange ]</code></pre>
+
+<p>Cuando varios comandos <code>RADIO</code> comparten la misma <code>VAR</code>, FiveWin los agrupa automáticamente en un <code>TRadMenu</code>.</p>
+
+<h2 id="checkbox-vs-radio">Checkbox vs. Radio: Cuándo Usar Cada Uno</h2>
+
+<div class="mermaid">
+graph LR
+    Q{"El usuario necesita..."}
+    Q -->|"activar/desactivar"| CB["Usar TCheckBox<br/>Independiente, cualquier combinación"]
+    Q -->|"elegir 1 de N"| RB["Usar grupo TRadio<br/>Mutuamente excluyente"]
+    Q -->|"seleccionar varios de una lista"| ML["Usar grupo TCheckBox<br/>o TXBrowse con marcas"]
+
+    style CB fill:#1c2129,stroke:#3fb950,color:#e6edf3
+    style RB fill:#1c2129,stroke:#58a6ff,color:#e6edf3
+    style ML fill:#1c2129,stroke:#d29922,color:#e6edf3
+</div>
+
+<h2 id="examples">Ejemplos de Código</h2>
+
+<h3>Ejemplo 1: Casillas de Verificación para Opciones</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION PrintOptions()
+   LOCAL oDlg
+   LOCAL lLandscape  := .F.
+   LOCAL lColor      := .T.
+   LOCAL lDuplex     := .F.
+   LOCAL lCollate    := .T.
+   LOCAL lPreview    := .F.
+
+   DEFINE DIALOG oDlg TITLE "Print Options" SIZE 350, 320
+
+   @ 1.0, 2 SAY "Select print options:" OF oDlg
+
+   @ 2.5, 2 CHECKBOX lLandscape PROMPT "&Landscape orientation" OF oDlg SIZE 200, 18
+   @ 4.0, 2 CHECKBOX lColor     PROMPT "&Color printing"        OF oDlg SIZE 200, 18
+   @ 5.5, 2 CHECKBOX lDuplex    PROMPT "&Duplex (two-sided)"    OF oDlg SIZE 200, 18
+   @ 7.0, 2 CHECKBOX lCollate   PROMPT "Co&llate copies"        OF oDlg SIZE 200, 18
+   @ 8.5, 2 CHECKBOX lPreview   PROMPT "Print Pre&view"         OF oDlg SIZE 200, 18
+
+   @ 11, 5  BUTTON "&Print"  OF oDlg SIZE 80, 25 ;
+      ACTION ( PrintDoc( lLandscape, lColor, lDuplex, lCollate, lPreview ), ;
+               oDlg:End() ) DEFAULT
+   @ 11, 15 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+RETURN NIL</code></pre>
+
+<h3>Ejemplo 2: Grupo de Botones de Radio</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION ShippingMethod()
+   LOCAL oDlg
+   LOCAL nShipping := 1   // 1=Estándar, 2=Express, 3=Nocturno
+
+   DEFINE DIALOG oDlg TITLE "Shipping Method" SIZE 350, 280
+
+   @ 1.0, 2 SAY "Select shipping method:" OF oDlg
+
+   @ 2.5, 3 RADIO nShipping PROMPT "&Standard (5-7 days)"  OF oDlg
+   @ 4.0, 3 RADIO nShipping PROMPT "&Express (2-3 days)"   OF oDlg
+   @ 5.5, 3 RADIO nShipping PROMPT "&Overnight (1 day)"    OF oDlg
+
+   @ 8, 5  BUTTON "&OK" OF oDlg SIZE 80, 25 ;
+      ACTION ( ShowShippingCost( nShipping ), oDlg:End() ) DEFAULT
+   @ 8, 15 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+RETURN NIL
+
+STATIC FUNCTION ShowShippingCost( nMethod )
+   LOCAL aCosts := { 4.99, 12.99, 29.99 }
+   LOCAL aNames := { "Standard", "Express", "Overnight" }
+
+   MsgInfo( aNames[ nMethod ] + " shipping: $" + ;
+            LTrim( Str( aCosts[ nMethod ], 8, 2 ) ) )
+RETURN NIL</code></pre>
+
+<h3>Ejemplo 3: Mezcla de Checkboxes y Radios en un Diálogo de Configuración</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION AppSettings()
+   LOCAL oDlg, oFld, oDlg1, oDlg2
+   // Configuración de visualización
+   LOCAL lShowToolbar := .T.
+   LOCAL lShowStatus  := .T.
+   LOCAL lFullScreen  := .F.
+   LOCAL nTheme       := 1    // 1=Claro, 2=Oscuro, 3=Sistema
+   // Configuración de comportamiento
+   LOCAL lAutoSave    := .T.
+   LOCAL lConfirmDel  := .T.
+   LOCAL lSounds      := .F.
+   LOCAL nStartup     := 1    // 1=Último archivo, 2=Nuevo archivo, 3=Nada
+
+   DEFINE DIALOG oDlg TITLE "Application Settings" SIZE 450, 400
+
+   @ 0.3, 0.3 FOLDER oFld OF oDlg ;
+      PROMPTS "Display", "Behavior" ;
+      DIALOGS oDlg1, oDlg2 ;
+      SIZE 420, 280
+
+   // --- Página de Visualización ---
+   @ 1.0, 2 CHECKBOX lShowToolbar PROMPT "Show &Toolbar"      OF oDlg1 SIZE 200, 18
+   @ 2.5, 2 CHECKBOX lShowStatus  PROMPT "Show &Status Bar"   OF oDlg1 SIZE 200, 18
+   @ 4.0, 2 CHECKBOX lFullScreen  PROMPT "&Full Screen Mode"  OF oDlg1 SIZE 200, 18
+
+   @ 6.0, 2 SAY "Color Theme:" OF oDlg1
+   @ 7.5, 3 RADIO nTheme PROMPT "&Light"  OF oDlg1
+   @ 9.0, 3 RADIO nTheme PROMPT "&Dark"   OF oDlg1
+   @ 10.5, 3 RADIO nTheme PROMPT "&System" OF oDlg1
+
+   // --- Página de Comportamiento ---
+   @ 1.0, 2 CHECKBOX lAutoSave   PROMPT "&Auto-save every 5 minutes" OF oDlg2 SIZE 250, 18
+   @ 2.5, 2 CHECKBOX lConfirmDel PROMPT "&Confirm before deleting"   OF oDlg2 SIZE 250, 18
+   @ 4.0, 2 CHECKBOX lSounds    PROMPT "Enable &Sounds"             OF oDlg2 SIZE 250, 18
+
+   @ 6.0, 2 SAY "On startup:" OF oDlg2
+   @ 7.5, 3 RADIO nStartup PROMPT "Open &last file"    OF oDlg2
+   @ 9.0, 3 RADIO nStartup PROMPT "Create &new file"   OF oDlg2
+   @ 10.5, 3 RADIO nStartup PROMPT "Do &nothing"        OF oDlg2
+
+   // Botones en el diálogo padre
+   @ 23, 8  BUTTON "&Save"   OF oDlg SIZE 80, 25 ;
+      ACTION ( SaveSettings( lShowToolbar, lShowStatus, lFullScreen, nTheme, ;
+                             lAutoSave, lConfirmDel, lSounds, nStartup ), ;
+               oDlg:End() ) DEFAULT
+   @ 23, 18 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+RETURN NIL</code></pre>
+
+<h2 id="tips">Consejos</h2>
+
+<ul>
+  <li><strong>Checkbox</strong> se enlaza a una variable <em>lógica</em>. <strong>Grupo de Radio</strong> se enlaza a una variable <em>numérica</em> (el índice de la opción).</li>
+  <li>FiveWin agrupa automáticamente comandos <code>RADIO</code> consecutivos que comparten la misma <code>VAR</code> en un <code>TRadMenu</code>.</li>
+  <li>Use <code>&amp;</code> en el PROMPT para establecer un acelerador con la tecla Alt: <code>"&amp;Landscape"</code> significa que Alt+L lo activa.</li>
+  <li>Para un checkbox enlazado a un campo lógico de DBF, use <code>FieldWBlock( "ACTIVE", Select() )</code> como <code>bSetGet</code>.</li>
+  <li>La cláusula <code>ON CHANGE</code> se ejecuta después de cada cambio de estado, útil para habilitar/deshabilitar controles dependientes.</li>
+  <li>Los botones de radio soportan navegación con teclas de flecha dentro del grupo automáticamente.</li>
+  <li>Para más de 5-6 opciones, considere usar un <code>TComboBox</code> en lugar de un grupo largo de radios.</li>
+</ul>
+
+<h2 id="see-also">Ver También</h2>
+<ul>
+  <li><a href="../../es/core/tcontrol.html">TControl</a> -- clase padre</li>
+  <li><a href="../../es/ui/tcombobox.html">TComboBox</a> -- alternativa para seleccionar uno de muchos elementos</li>
+  <li><a href="../../es/ui/tget.html">TGet</a> -- controles de entrada de texto</li>
+  <li><a href="../../es/ui/tfolder.html">TFolder</a> -- control de pestañas frecuentemente usado para organizar checkboxes y radios</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

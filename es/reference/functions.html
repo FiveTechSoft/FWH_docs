@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funciones - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../es/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../es/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../es/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../es/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../es/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../es/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../es/ui/tscintilla.html">TScintilla</a>
+<a class="nav-item" href="../../es/ui/tswitch.html">TSwitch</a>
+<a class="nav-item" href="../../es/ui/tcalendar.html">TCalendar</a>
+<a class="nav-item" href="../../es/ui/tdtpicker.html">TDatePick</a>
+<a class="nav-item" href="../../es/ui/ttmpicker.html">TTimePick</a>
+<a class="nav-item" href="../../es/ui/tslider.html">TSlider</a>
+<a class="nav-item" href="../../es/ui/timagelist.html">TImageList</a>
+<a class="nav-item" href="../../es/ui/texplorerbar.html">TExplorerBar</a>
+<a class="nav-item" href="../../es/ui/tmetropanel.html">TMetroPanel</a>
+<a class="nav-item" href="../../es/ui/tscrollpanel.html">TScrollPanel</a>
+<a class="nav-item" href="../../es/ui/tpager.html">TPager</a>
+<a class="nav-item" href="../../es/ui/theader.html">THeader</a>
+<a class="nav-item" href="../../es/ui/tbartabs.html">TBarTabs</a>
+<a class="nav-item" href="../../es/ui/tprogresswheel.html">TProgressWheel</a>
+<a class="nav-item" href="../../es/ui/ttagcloud.html">TTagCloud</a>
+<a class="nav-item" href="../../es/ui/tscrollmsg.html">TScrollMsg</a>
+<a class="nav-item" href="../../es/ui/tnavigator.html">TNavigator</a>
+<a class="nav-item" href="../../es/ui/tmytitle.html">TMyTitle</a>
+<a class="nav-item" href="../../es/ui/tskinbutton.html">TSkinButton</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresión e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../es/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item active" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>Funciones Principales de FWH</h1>
+
+<p>
+FiveWin proporciona cientos de funciones que extienden Harbour con acceso a la API de Windows, utilidades GUI
+y funciones auxiliares de conveniencia. Esta página documenta las más utilizadas.
+</p>
+
+<!-- ===== CUADROS DE MENSAJE ===== -->
+<h2 id="message-boxes">Funciones de Cuadro de Mensaje</h2>
+
+<h3>MsgInfo()</h3>
+<pre><code class="language-harbour">MsgInfo( cMessage [, cTitle ] ) --> nil</code></pre>
+<p>
+Muestra un cuadro de mensaje informativo con un icono "i" y botón Aceptar. El título por defecto es "Information".
+</p>
+<pre><code class="language-harbour">MsgInfo( "Record saved successfully" )
+MsgInfo( "Total: " + LTrim( Str( nTotal ) ), "Calculation Result" )</code></pre>
+
+<h3>MsgAlert()</h3>
+<pre><code class="language-harbour">MsgAlert( cMessage [, cTitle ] ) --> nil</code></pre>
+<p>
+Muestra un cuadro de mensaje de advertencia con un icono de exclamación. Título por defecto: "Alert".
+</p>
+<pre><code class="language-harbour">MsgAlert( "File not found: " + cFile )</code></pre>
+
+<h3>MsgStop()</h3>
+<pre><code class="language-harbour">MsgStop( cMessage [, cTitle ] ) --> nil</code></pre>
+<p>
+Muestra un cuadro de mensaje de error/parada con un icono de X roja. Título por defecto: "Stop".
+</p>
+<pre><code class="language-harbour">MsgStop( "Invalid data entered", "Validation Error" )</code></pre>
+
+<h3>MsgYesNo()</h3>
+<pre><code class="language-harbour">MsgYesNo( cMessage [, cTitle ] ) --> lYes</code></pre>
+<p>
+Muestra un diálogo de pregunta Sí/No. Devuelve <code>.T.</code> si el usuario hace clic en Sí, <code>.F.</code> para No.
+</p>
+<pre><code class="language-harbour">if MsgYesNo( "Are you sure you want to delete this record?" )
+   oDb:Delete()
+endif</code></pre>
+
+<h3>MsgNoYes()</h3>
+<pre><code class="language-harbour">MsgNoYes( cMessage [, cTitle ] ) --> lYes</code></pre>
+<p>
+Igual que MsgYesNo() pero con "No" como botón predeterminado (enfocado).
+</p>
+
+<h3>MsgGet()</h3>
+<pre><code class="language-harbour">MsgGet( cTitle, cPrompt, @cValue [, cPicture ] ) --> lOk</code></pre>
+<p>
+Muestra un diálogo de entrada con un campo GET. Devuelve <code>.T.</code> si el usuario hace clic en Aceptar.
+El valor se devuelve por referencia en <code>cValue</code>.
+</p>
+<pre><code class="language-harbour">local cName := Space( 40 )
+if MsgGet( "Input", "Enter your name:", @cName )
+   ? "Name:", Trim( cName )
+endif</code></pre>
+
+<h3>Alert()</h3>
+<pre><code class="language-harbour">Alert( cMessage [, aButtons ] ) --> nButton</code></pre>
+<p>
+Función alert estándar de Harbour, mejorada por FiveWin para mostrar un diálogo GUI en lugar de una alerta de consola.
+Devuelve el número del botón pulsado (base 1).
+</p>
+<pre><code class="language-harbour">local nChoice := Alert( "Choose an action", { "Save", "Discard", "Cancel" } )
+do case
+   case nChoice == 1 ; SaveData()
+   case nChoice == 2 ; // descartar
+   case nChoice == 3 ; // cancelar
+endcase</code></pre>
+
+<!-- ===== IDIOMA ===== -->
+<h2 id="language">Idioma y Localización</h2>
+
+<h3>FWString()</h3>
+<pre><code class="language-harbour">FWString( cEnglishText ) --> cLocalizedText</code></pre>
+<p>
+Devuelve la versión localizada de una cadena según la configuración de idioma actual.
+FiveWin incluye traducciones para español, francés, alemán, portugués, italiano, holandés, ruso
+y muchos otros idiomas.
+</p>
+<pre><code class="language-harbour">? FWString( "Save" )   // "Guardar" (si es español)
+? FWString( "Cancel" ) // "Annuler" (si es francés)</code></pre>
+
+<h3>FWSetLanguage()</h3>
+<pre><code class="language-harbour">FWSetLanguage( cLang [, hCustomStrings ] ) --> cPrevLang</code></pre>
+<p>
+Establecer el idioma de la aplicación. Los valores integrados incluyen: "EN" (inglés), "ES" (español),
+"FR" (francés), "DE" (alemán), "PT" (portugués), "IT" (italiano), "NL" (holandés), "RU" (ruso),
+"PL" (polaco), "CZ" (checo), "SK" (eslovaco), "HR" (croata), "HU" (húngaro), "RO" (rumano),
+"BG" (búlgaro), "TR" (turco), "ZH" (chino), "JA" (japonés), "KO" (coreano), "AR" (árabe).
+</p>
+<pre><code class="language-harbour">FWSetLanguage( "ES" )  // Cambiar a español</code></pre>
+
+<!-- ===== DIÁLOGOS DE ARCHIVO ===== -->
+<h2 id="file-dialogs">Diálogos de Archivo y Directorio</h2>
+
+<h3>cGetFile()</h3>
+<pre><code class="language-harbour">cGetFile( cFilter, cTitle [, nFilterIndex [, cInitDir [, lMulti [, nFlags ] ] ] ] ) --> cFile</code></pre>
+<p>
+Muestra un diálogo de Abrir Archivo. Devuelve la ruta del archivo seleccionado, o cadena vacía si se cancela.
+</p>
+<pre><code class="language-harbour">local cFile
+
+cFile := cGetFile( "DBF Files (*.dbf)|*.dbf|All Files (*.*)|*.*", ;
+                   "Select Database" )
+
+if ! Empty( cFile )
+   ? "Seleccionado:", cFile
+endif
+
+// Selección múltiple de archivos
+cFile := cGetFile( "Images|*.jpg;*.png;*.bmp", "Select Images",,,  .T. )
+// Devuelve archivos separados por CRLF</code></pre>
+
+<h3>cPutFile()</h3>
+<pre><code class="language-harbour">cPutFile( cFilter, cTitle [, nFilterIndex [, cInitDir [, cDefFile ] ] ] ) --> cFile</code></pre>
+<p>
+Muestra un diálogo de Guardar Archivo. Devuelve la ruta seleccionada, o cadena vacía si se cancela.
+</p>
+<pre><code class="language-harbour">local cFile := cPutFile( "PDF Files (*.pdf)|*.pdf", "Save Report As" )
+if ! Empty( cFile )
+   SaveReport( cFile )
+endif</code></pre>
+
+<h3>cGetDir()</h3>
+<pre><code class="language-harbour">cGetDir( [cTitle [, cInitDir ] ] ) --> cDir</code></pre>
+<p>
+Muestra un diálogo de selección de carpeta. Devuelve la ruta del directorio seleccionado.
+</p>
+<pre><code class="language-harbour">local cDir := cGetDir( "Select output folder" )
+if ! Empty( cDir )
+   SetErrorPath( cDir )
+endif</code></pre>
+
+<!-- ===== CONVERSIÓN ===== -->
+<h2 id="conversion">Funciones de Conversión</h2>
+
+<h3>cValToChar()</h3>
+<pre><code class="language-harbour">cValToChar( uValue ) --> cString</code></pre>
+<p>
+Convierte cualquier valor Harbour a su representación de cadena de caracteres. Funciona con tipos numérico, fecha,
+lógico, array, hash, nil y objeto.
+</p>
+<pre><code class="language-harbour">? cValToChar( 42 )           // "42"
+? cValToChar( .T. )          // ".T."
+? cValToChar( Date() )       // "03/24/2026"
+? cValToChar( nil )          // "NIL"
+? cValToChar( { 1, 2, 3 } ) // "{ 1, 2, 3 }"</code></pre>
+
+<h3>nLoWord() / nHiWord()</h3>
+<pre><code class="language-harbour">nLoWord( nDWord ) --> nWord
+nHiWord( nDWord ) --> nWord</code></pre>
+<p>
+Extraer la palabra de 16 bits de orden bajo o alto de un valor de 32 bits. Esencial para procesar
+mensajes de Windows donde wParam/lParam empaquetan dos valores.
+</p>
+<pre><code class="language-harbour">// En un manejador WM_SIZE:
+local nWidth  := nLoWord( nLParam )
+local nHeight := nHiWord( nLParam )</code></pre>
+
+<!-- ===== FECHA/HORA ===== -->
+<h2 id="date-time">Funciones de Fecha/Hora</h2>
+
+<h3>FW_ADDMONTH()</h3>
+<pre><code class="language-harbour">FW_ADDMONTH( tDate, nMths ) --> tDateTime</code></pre>
+<p>
+Añade un número de meses a una fecha o valor datetime. Maneja los límites de año y los ajustes de
+fin de mes automáticamente.
+</p>
+<pre><code class="language-harbour">? FW_ADDMONTH( CTOD( "01/15/2026" ), 3 )  // 04/15/2026
+? FW_ADDMONTH( CTOD( "01/31/2026" ), 1 )  // 02/28/2026 (ajustado fin de mes)</code></pre>
+
+<h3>FW_YMDLAPSED()</h3>
+<pre><code class="language-harbour">FW_YMDLAPSED( dFrom, dLast ) --> { nYears, nMonths, nDays }</code></pre>
+<p>
+Devuelve el tiempo transcurrido entre dos fechas como un array de años, meses y días.
+Útil para calcular edad o antigüedad en un formato legible.
+</p>
+<pre><code class="language-harbour">local aLapsed := FW_YMDLAPSED( CTOD( "03/15/2020" ), Date() )
+? "Years:", aLapsed[ 1 ], "Months:", aLapsed[ 2 ], "Days:", aLapsed[ 3 ]</code></pre>
+
+<h3>FW_MTHSLAPSED()</h3>
+<pre><code class="language-harbour">FW_MTHSLAPSED( dDate1, dDate2 ) --> nMonths</code></pre>
+<p>
+Devuelve el número de meses calendario completos entre dos fechas. A diferencia de una simple
+división por días, esta función respeta los límites de los meses calendario.
+</p>
+<pre><code class="language-harbour">? FW_MTHSLAPSED( CTOD( "01/15/2026" ), CTOD( "04/20/2026" ) )  // 3</code></pre>
+
+<h3>FW_AGE()</h3>
+<pre><code class="language-harbour">FW_AGE( dDob, dAsOn ) --> nAge</code></pre>
+<p>
+Calcula la edad en años completos a partir de una fecha de nacimiento, hasta una fecha dada.
+</p>
+<pre><code class="language-harbour">local nAge := FW_AGE( CTOD( "04/15/1980" ), Date() )
+? "Age:", nAge</code></pre>
+
+<h3>FW_NEXTBIRTHDAY()</h3>
+<pre><code class="language-harbour">FW_NEXTBIRTHDAY( dDob, dToday, lIncludeToday ) --> dDate</code></pre>
+<p>
+Devuelve la fecha del próximo cumpleaños a partir de una fecha de nacimiento, relativa a una fecha dada.
+Si <code>lIncludeToday</code> es <code>.T.</code> y hoy es el cumpleaños, devuelve la fecha de hoy.
+</p>
+<pre><code class="language-harbour">local dNext := FW_NEXTBIRTHDAY( CTOD( "04/15/1980" ), Date() )
+? "Next birthday:", dNext</code></pre>
+
+<h3>FW_ADDTIME()</h3>
+<pre><code class="language-harbour">FW_ADDTIME( tDate, cTimeStr ) --> tDateTime</code></pre>
+<p>
+Añade una cadena de duración de tiempo a un valor datetime. La cadena de tiempo soporta el formato
+"HH:MM:SS" y puede abarcar múltiples días.
+</p>
+<pre><code class="language-harbour">local tStart := FW_ADDMONTH( Date(), 0 ) // hoy a medianoche
+local tEnd   := FW_ADDTIME( tStart, "02:30:00" )
+? "Two and a half hours later:", tEnd</code></pre>
+
+<h3>FW_DateToUnix()</h3>
+<pre><code class="language-harbour">FW_DateToUnix( tDateTime ) --> nMilliSecs</code></pre>
+<p>
+Convierte un valor datetime a milisegundos epoch Unix (milisegundos desde 1970-01-01 00:00:00 UTC).
+Esencial para comunicación con APIs y aritmética de marcas de tiempo.
+</p>
+<pre><code class="language-harbour">local nMs := FW_DateToUnix( DateTime() )
+? "Current epoch ms:", nMs</code></pre>
+
+<h3>FW_UnixToDate()</h3>
+<pre><code class="language-harbour">FW_UnixToDate( nMilliSecs ) --> tDateTime</code></pre>
+<p>
+Convierte milisegundos epoch Unix de vuelta a un valor datetime. La inversa de FW_DateToUnix().
+</p>
+<pre><code class="language-harbour">local tDate := FW_UnixToDate( 1713129600000 )
+? "Date from epoch:", tDate</code></pre>
+
+<h3>UTC_TIMESTAMP()</h3>
+<pre><code class="language-harbour">UTC_TIMESTAMP( dDateTime ) --> tDateTime</code></pre>
+<p>
+Convierte una fecha/hora local a Tiempo Universal Coordinado (UTC). Aplica el offset de la zona
+horaria local para producir el datetime UTC equivalente.
+</p>
+<pre><code class="language-harbour">local tUtc := UTC_TIMESTAMP( DateTime() )
+? "UTC time:", tUtc</code></pre>
+
+<h3>FW_UTCTOLOCAL()</h3>
+<pre><code class="language-harbour">FW_UTCTOLOCAL( tUtcTime ) --> tDateTime</code></pre>
+<p>
+Convierte un datetime UTC de vuelta a hora local. La inversa de UTC_TIMESTAMP().
+</p>
+<pre><code class="language-harbour">local tLocal := FW_UTCTOLOCAL( tUtc )
+? "Local time:", tLocal</code></pre>
+
+<h3>FW_TIMEZONE()</h3>
+<pre><code class="language-harbour">FW_TIMEZONE() --> cTimezoneStr</code></pre>
+<p>
+Devuelve el offset de zona horaria local como una cadena formateada, ej. "+05:30" para India
+o "-05:00" para la Zona Horaria del Este.
+</p>
+<pre><code class="language-harbour">? "Timezone offset:", FW_TIMEZONE()  // ej. "+05:30"</code></pre>
+
+<h3>FW_SToT()</h3>
+<pre><code class="language-harbour">FW_SToT( cDateTime ) --> tDateTime</code></pre>
+<p>
+Convierte una cadena datetime a un valor datetime de Harbour. Acepta varios formatos estándar
+incluyendo "YYYY-MM-DD HH:MM:SS" y "MM/DD/YYYY HH:MM:SS".
+</p>
+<pre><code class="language-harbour">local t := FW_SToT( "2026-05-28 14:30:00" )
+? "Parsed datetime:", t</code></pre>
+
+<!-- ===== VERSIÓN ===== -->
+<h2 id="version">Información de Versión y Sistema</h2>
+
+<h3>FWVersion()</h3>
+<pre><code class="language-harbour">FWVersion() --> cVersion</code></pre>
+<p>Devuelve la cadena de versión de FiveWin, ej. <code>"FWH 26.03"</code>.</p>
+
+<h3>GetVersion()</h3>
+<pre><code class="language-harbour">GetVersion() --> aVersion</code></pre>
+<p>Devuelve un array con información de versión de Windows: { nMajor, nMinor, nBuild, cPlatform }.</p>
+
+<h3>hb_Compiler()</h3>
+<pre><code class="language-harbour">hb_Compiler() --> cCompiler</code></pre>
+<p>Devuelve la cadena de versión del compilador Harbour.</p>
+
+<h3>IsExe64()</h3>
+<pre><code class="language-harbour">IsExe64() --> lIs64</code></pre>
+<p>Devuelve <code>.T.</code> si la aplicación actual es un ejecutable de 64 bits.</p>
+
+<h3>IsWinNT() / IsWin10() / IsWin11()</h3>
+<pre><code class="language-harbour">IsWinNT() --> lNT
+IsWin10() --> lWin10</code></pre>
+<p>Detectar la versión de Windows.</p>
+
+<!-- ===== INFORMACIÓN DEL SISTEMA ===== -->
+<h2 id="system-information">Funciones de Información del Sistema</h2>
+
+<h3>ScreenWidth()</h3>
+<pre><code class="language-harbour">ScreenWidth() --> nPixels</code></pre>
+<p>
+Devuelve el ancho completo de la pantalla en píxeles. Útil para posicionar ventanas y diálogos
+relativos a los límites de la pantalla.
+</p>
+<pre><code class="language-harbour">local nW := ScreenWidth()
+oWnd:SetSize( nW / 2, ScreenHeight() / 2 )</code></pre>
+
+<h3>ScreenHeight()</h3>
+<pre><code class="language-harbour">ScreenHeight() --> nPixels</code></pre>
+<p>
+Devuelve la altura completa de la pantalla en píxeles. Se combina con ScreenWidth() para cálculos
+de centrado y dimensionamiento.
+</p>
+
+<h3>ScreenScaling()</h3>
+<pre><code class="language-harbour">ScreenScaling() --> nScale</code></pre>
+<p>
+Devuelve el factor de escalado DPI para el monitor principal. Devuelve 1.0 para 96 DPI (100%),
+1.25 para 120 DPI (125%), 1.5 para 144 DPI (150%), etc.
+</p>
+<pre><code class="language-harbour">local nScale := ScreenScaling()
+if nScale > 1.0
+   MsgInfo( "Pantalla de alta densidad detectada: " + Str( nScale * 100, 3, 0 ) + "%" )
+endif</code></pre>
+
+<h3>IsWindows11()</h3>
+<pre><code class="language-harbour">IsWindows11() --> lBoolean</code></pre>
+<p>
+Devuelve <code>.T.</code> si la aplicación se ejecuta en Windows 11. Verifica el número de compilación
+de Windows (requiere compilación 22000 o superior).
+</p>
+<pre><code class="language-harbour">if IsWindows11()
+   // Aplicar estilos específicos de Windows 11
+   oWnd:lWin11 := .T.
+endif</code></pre>
+
+<h3>IsWindows10()</h3>
+<pre><code class="language-harbour">IsWindows10() --> lBoolean</code></pre>
+<p>
+Devuelve <code>.T.</code> si la aplicación se ejecuta en Windows 10.
+</p>
+
+<h3>IsWin64()</h3>
+<pre><code class="language-harbour">IsWin64() --> lBoolean</code></pre>
+<p>
+Devuelve <code>.T.</code> si se ejecuta en una versión de Windows de 64 bits, independientemente de si la
+aplicación en sí es de 32 o 64 bits.
+</p>
+<pre><code class="language-harbour">if IsWin64()
+   ? "Ejecutándose en Windows de 64 bits"
+endif</code></pre>
+
+<h3>IsDarkTheme()</h3>
+<pre><code class="language-harbour">IsDarkTheme() --> lBoolean</code></pre>
+<p>
+Detecta si el tema oscuro de Windows (configuración de personalización) está actualmente activo.
+Útil para adaptar los colores de la aplicación en tiempo de ejecución.
+</p>
+<pre><code class="language-harbour">if IsDarkTheme()
+   SetAppColors( CLR_BLACK, CLR_WHITE )
+else
+   SetAppColors( CLR_WHITE, CLR_BLACK )
+endif</code></pre>
+
+<h3>FW_IsTouchScreen()</h3>
+<pre><code class="language-harbour">FW_IsTouchScreen() --> lBoolean</code></pre>
+<p>
+Devuelve <code>.T.</code> si el sistema tiene capacidades de entrada táctil. Útil para adaptar la interfaz
+de usuario proporcionando objetivos táctiles más grandes y soporte de gestos.
+</p>
+<pre><code class="language-harbour">if FW_IsTouchScreen()
+   oBtn:SetSize( 64, 48 )  // botones más grandes para táctil
+endif</code></pre>
+
+<h3>FW_IsMousePresent()</h3>
+<pre><code class="language-harbour">FW_IsMousePresent() --> lBoolean</code></pre>
+<p>
+Devuelve <code>.T.</code> si al menos un ratón está conectado al sistema. Útil para dispositivos solo táctiles
+donde los efectos hover y el clic derecho pueden no aplicarse.
+</p>
+<pre><code class="language-harbour">if ! FW_IsMousePresent()
+   // Habilitar navegación táctil
+   oWnd:SetTouchMode( .T. )
+endif</code></pre>
+
+<h3>GetCPUSpeed()</h3>
+<pre><code class="language-harbour">GetCPUSpeed() --> nMhz</code></pre>
+<p>
+Devuelve la velocidad aproximada de la CPU en MHz. Utiliza contadores de rendimiento de Windows
+para estimar la frecuencia del reloj del procesador.
+</p>
+<pre><code class="language-harbour">? "Velocidad de CPU:", GetCPUSpeed(), "MHz"</code></pre>
+
+<h3>FW_ActiveMonitors()</h3>
+<pre><code class="language-harbour">FW_ActiveMonitors() --> nCount</code></pre>
+<p>
+Devuelve el número de monitores activos conectados al sistema. Útil para configuraciones
+multimonitor y colocación de ventanas.
+</p>
+<pre><code class="language-harbour">if FW_ActiveMonitors() > 1
+   // Posicionar ventana en el monitor secundario
+   oWnd:SetWindowPos(, 1920, 100, 800, 600 )
+endif</code></pre>
+
+<h3>cWinVersion()</h3>
+<pre><code class="language-harbour">cWinVersion() --> cVersion</code></pre>
+<p>
+Devuelve una cadena legible de versión de Windows como "Windows 11 Pro" o
+"Windows 10 Enterprise". Incluye información de edición cuando está disponible.
+</p>
+<pre><code class="language-harbour">? "SO:", cWinVersion()</code></pre>
+
+<h3>ScrResolution()</h3>
+<pre><code class="language-harbour">ScrResolution() --> { nWidth, nHeight }</code></pre>
+<p>
+Devuelve la resolución de la pantalla como un array de ancho y alto en píxeles.
+Similar a ScreenWidth()/ScreenHeight() pero devuelve ambos en una sola llamada.
+</p>
+<pre><code class="language-harbour">local aRes := ScrResolution()
+oWnd:SetSize( aRes[ 1 ] * 0.75, aRes[ 2 ] * 0.75 )</code></pre>
+
+<h3>WndCenterEx()</h3>
+<pre><code class="language-harbour">WndCenterEx( hWnd, hParent ) --> nil</code></pre>
+<p>
+Centra una ventana en el monitor donde se muestra actualmente la ventana padre.
+A diferencia de la función básica WndCenter(), esta función maneja correctamente configuraciones
+multimonitor.
+</p>
+<pre><code class="language-harbour">WndCenterEx( hWnd, hParent )
+// Centra la ventana hija en el mismo monitor que su padre</code></pre>
+
+<!-- ===== SHELL ===== -->
+<h2 id="shell">Funciones de Shell y Proceso</h2>
+
+<h3>ShellExecute()</h3>
+<pre><code class="language-harbour">ShellExecute( nHwnd, cOperation, cFile [, cParams [, cDir [, nShowCmd ] ] ] ) --> nResult</code></pre>
+<p>
+Ejecutar o abrir un archivo usando el shell de Windows. Operaciones comunes: "open", "print", "explore", "runas".
+</p>
+<pre><code class="language-harbour">// Abrir un archivo con su aplicación predeterminada
+ShellExecute( 0, "open", "report.pdf" )
+
+// Abrir una URL en el navegador predeterminado
+ShellExecute( 0, "open", "https://www.fivetechsoft.com" )
+
+// Abrir el Explorador de Windows en una carpeta
+ShellExecute( 0, "explore", "C:\data\" )
+
+// Imprimir un documento
+ShellExecute( 0, "print", "document.docx" )
+
+// Ejecutar como administrador
+ShellExecute( 0, "runas", "myapp.exe" )</code></pre>
+
+<h3>WinExec()</h3>
+<pre><code class="language-harbour">WinExec( cCommandLine [, nShowCmd ] ) --> nResult</code></pre>
+<p>
+Ejecutar un programa. Alternativa simple a ShellExecute para lanzar ejecutables.
+</p>
+<pre><code class="language-harbour">WinExec( "notepad.exe C:\data\log.txt" )
+WinExec( "calc.exe" )</code></pre>
+
+<!-- ===== SISTEMA DE ARCHIVOS ===== -->
+<h2 id="file-system">Funciones del Sistema de Archivos</h2>
+
+<h3>lIsDir()</h3>
+<pre><code class="language-harbour">lIsDir( cDirName ) --> lBoolean</code></pre>
+<p>
+Verifica si la ruta especificada es un directorio existente. Devuelve <code>.T.</code> si el directorio
+existe y es accesible.
+</p>
+<pre><code class="language-harbour">if ! lIsDir( "C:\data\backup" )
+   lMkDir( "C:\data\backup" )
+endif</code></pre>
+
+<h3>lMkDir()</h3>
+<pre><code class="language-harbour">lMkDir( cPath ) --> lSuccess</code></pre>
+<p>
+Crea un directorio. Devuelve <code>.T.</code> en caso de éxito. Crea directorios intermedios
+si es necesario (similar a mkdir -p).
+</p>
+<pre><code class="language-harbour">if lMkDir( "C:\data\reports\2026\may" )
+   ? "Directorio creado exitosamente"
+endif</code></pre>
+
+<h3>cFilePath()</h3>
+<pre><code class="language-harbour">cFilePath( cPathMask ) --> cPath</code></pre>
+<p>
+Extrae la porción de ruta de una ruta de archivo completa, excluyendo el nombre del archivo.
+Incluye la barra invertida final.
+</p>
+<pre><code class="language-harbour">? cFilePath( "C:\data\app\myfile.txt" )  // "C:\data\app\"</code></pre>
+
+<h3>cFileNoPath()</h3>
+<pre><code class="language-harbour">cFileNoPath( cPathMask ) --> cFileName</code></pre>
+<p>
+Extrae la porción del nombre de archivo de una ruta completa, excluyendo la ruta del directorio.
+La inversa de cFilePath().
+</p>
+<pre><code class="language-harbour">? cFileNoPath( "C:\data\app\myfile.txt" )  // "myfile.txt"</code></pre>
+
+<h3>cFileNoExt()</h3>
+<pre><code class="language-harbour">cFileNoExt( cPathMask ) --> cName</code></pre>
+<p>
+Devuelve el nombre del archivo sin su extensión. Elimina todo después del último punto.
+</p>
+<pre><code class="language-harbour">? cFileNoExt( "C:\data\app\myfile.txt" )  // "C:\data\app\myfile"</code></pre>
+
+<h3>cFileExt()</h3>
+<pre><code class="language-harbour">cFileExt( cPathMask ) --> cExt</code></pre>
+<p>
+Devuelve la extensión del archivo sin el punto. La inversa de cFileNoExt().
+</p>
+<pre><code class="language-harbour">? cFileExt( "myfile.txt" )  // "txt"
+? cFileExt( "C:\data\app\myfile.dbf" )  // "dbf"</code></pre>
+
+<h3>cNewFileName()</h3>
+<pre><code class="language-harbour">cNewFileName( cRootName, cExt ) --> cFileName</code></pre>
+<p>
+Genera un nombre de archivo único añadiendo un sufijo numérico si el archivo destino ya
+existe. Útil para rutinas de copia de seguridad y exportación.
+</p>
+<pre><code class="language-harbour">local cName := cNewFileName( "backup", "zip" )
+// Devuelve "backup.zip" o "backup_001.zip", "backup_002.zip", etc.</code></pre>
+
+<h3>cTempFile()</h3>
+<pre><code class="language-harbour">cTempFile( cPath, cExtension ) --> cFileName</code></pre>
+<p>
+Crea un archivo temporal con un nombre único en el directorio especificado. El archivo se
+crea en disco pero se deja vacío para que el llamador escriba.
+</p>
+<pre><code class="language-harbour">local cTmp := cTempFile( "C:\temp", "tmp" )
+? "Archivo temporal:", cTmp</code></pre>
+
+<h3>FSize()</h3>
+<pre><code class="language-harbour">FSize( cFile ) --> nFileSize</code></pre>
+<p>
+Devuelve el tamaño de un archivo en bytes. Devuelve -1 si el archivo no existe o
+no se puede acceder.
+</p>
+<pre><code class="language-harbour">local nBytes := FSize( "C:\data\largefile.dbf" )
+? "Tamaño del archivo:", nBytes, "bytes"
+? "En KB:", nBytes / 1024</code></pre>
+
+<h3>FDate()</h3>
+<pre><code class="language-harbour">FDate( cFile ) --> dFileDate</code></pre>
+<p>
+Devuelve la fecha de última modificación de un archivo como un valor de fecha de Harbour.
+</p>
+<pre><code class="language-harbour">local d := FDate( "C:\data\customer.dbf" )
+? "Última modificación:", d</code></pre>
+
+<h3>FTime()</h3>
+<pre><code class="language-harbour">FTime( cFile ) --> cFileTime</code></pre>
+<p>
+Devuelve la hora de última modificación de un archivo como una cadena de caracteres en formato "HH:MM:SS".
+</p>
+<pre><code class="language-harbour">local cTime := FTime( "C:\data\customer.dbf" )
+? "Última modificación a las:", cTime</code></pre>
+
+<h3>ADrives()</h3>
+<pre><code class="language-harbour">ADrives( nType ) --> aDrives</code></pre>
+<p>
+Devuelve un array de letras de unidad disponibles. El parámetro <code>nType</code> filtra por tipo de unidad:
+0 = todas las unidades, 1 = disqueteras, 2 = discos duros, 3 = unidades de red,
+4 = unidades CD/DVD, 5 = unidades RAM.
+</p>
+<pre><code class="language-harbour">local aHD := ADrives( 2 )  // solo discos duros
+? "Unidades fijas:"
+AEval( aHD, { |c| QOut( c ) } )</code></pre>
+
+<h3>FW_MEMOWRIT()</h3>
+<pre><code class="language-harbour">FW_MEMOWRIT( cFile, cText ) --> lSuccess</code></pre>
+<p>
+Escribe contenido de texto en un archivo, sobrescribiendo cualquier contenido existente. Devuelve <code>.T.</code> en caso de éxito.
+Un envoltorio simplificado alrededor de MemoWrit() de Harbour.
+</p>
+<pre><code class="language-harbour">if FW_MEMOWRIT( "C:\log\output.txt", "Proceso completado a las " + Time() )
+   ? "Archivo escrito exitosamente"
+endif</code></pre>
+
+<h3>aFindFile()</h3>
+<pre><code class="language-harbour">aFindFile( cFileName, cPath ) --> aFiles</code></pre>
+<p>
+Busca recursivamente archivos que coincidan con un patrón bajo la ruta de directorio especificada.
+Devuelve un array de rutas completas de archivos.
+</p>
+<pre><code class="language-harbour">local aPrgs := aFindFile( "*.prg", "C:\fwteam\source" )
+? "Encontrados " + LTrim( Str( Len( aPrgs ) ) ) + " archivos PRG"</code></pre>
+
+<!-- ===== COLORES ===== -->
+<h2 id="colors">Funciones de Color</h2>
+
+<h3>GetSysColor()</h3>
+<pre><code class="language-harbour">GetSysColor( nIndex ) --> nRGBColor</code></pre>
+<p>
+Obtener un color del sistema Windows. Índices comunes: COLOR_WINDOW (5), COLOR_WINDOWTEXT (8),
+COLOR_BTNFACE (15), COLOR_HIGHLIGHT (13), COLOR_HIGHLIGHTTEXT (14).
+</p>
+<pre><code class="language-harbour">local nBgColor := GetSysColor( 5 )  // Color de fondo de ventana</code></pre>
+
+<h3>nRGB()</h3>
+<pre><code class="language-harbour">nRGB( nRed, nGreen, nBlue ) --> nRGBColor</code></pre>
+<p>Crear un valor de color RGB a partir de componentes individuales (0-255 cada uno).</p>
+<pre><code class="language-harbour">local nRed   := nRGB( 255, 0, 0 )
+local nGreen := nRGB( 0, 128, 0 )
+local nBlue  := nRGB( 0, 0, 255 )
+local nCustom := nRGB( 45, 52, 64 )  // gris-azul oscuro</code></pre>
+
+<h3>Constantes CLR_*</h3>
+<pre><code class="language-harbour">CLR_BLACK, CLR_WHITE, CLR_RED, CLR_GREEN, CLR_BLUE,
+CLR_YELLOW, CLR_CYAN, CLR_MAGENTA, CLR_BROWN, CLR_GRAY,
+CLR_LIGHTGRAY, CLR_HGRAY, CLR_HRED, CLR_HGREEN, CLR_HBLUE,
+CLR_HCYAN, CLR_HMAGENTA</code></pre>
+
+<!-- ===== IMAGEN Y DIBUJO ===== -->
+<h2 id="image-drawing">Funciones de Imagen y Dibujo</h2>
+
+<h3>FW_ReadImage()</h3>
+<pre><code class="language-harbour">FW_ReadImage( oWnd, uSource, aResize ) --> aImageInfo</code></pre>
+<p>
+Carga una imagen desde una ruta de archivo, URL, identificador de recurso o buffer de memoria. Devuelve un
+array: { hBitmap, hPalette, nWidth, nHeight, lAlpha, cName }. Soporta los formatos BMP, PNG, JPG,
+GIF y TIFF a través de GDI+.
+</p>
+<pre><code class="language-harbour">local aImg := FW_ReadImage( oWnd, "logo.png" )
+if aImg[ 5 ]  // tiene canal alfa
+   oBmp:SetBitmap( aImg[ 1 ] )
+endif</code></pre>
+
+<h3>FW_DrawImage()</h3>
+<pre><code class="language-harbour">FW_DrawImage( oWnd, hBmp, aRect, lTransp, nResize, nAlpha, lGray, cAlign )</code></pre>
+<p>
+Dibuja una imagen en una ventana o contexto de dispositivo con redimensionamiento opcional, mezcla alfa,
+conversión a escala de grises y alineación (C = centro, T = superior, B = inferior, L = izquierda, R = derecha).
+</p>
+<pre><code class="language-harbour">// Dibujar imagen centrada y semitransparente
+FW_DrawImage( oWnd, hBmp, { 10, 10, 210, 210 }, .F., 0, 128, .F., "C" )</code></pre>
+
+<h3>FW_SaveImage()</h3>
+<pre><code class="language-harbour">FW_SaveImage( uImage, cFile, nJpegQuality )</code></pre>
+<p>
+Guarda una imagen (handle o array de imagen) en un archivo. El formato de salida está determinado por la
+extensión del archivo: BMP, PNG, JPG, GIF o TIFF. El parámetro <code>nJpegQuality</code> (1-100) controla
+la calidad de compresión JPEG.
+</p>
+<pre><code class="language-harbour">FW_SaveImage( hBitmap, "thumbnail.jpg", 85 )</code></pre>
+
+<h3>FW_SaveThumbNail()</h3>
+<pre><code class="language-harbour">FW_SaveThumbNail( cImage, cThumb, nWidth, nHeight ) --> lSuccess</code></pre>
+<p>
+Crea una imagen en miniatura a partir de un archivo de imagen fuente, guardándola en la ruta especificada.
+Mantiene la relación de aspecto mientras se ajusta a las dimensiones dadas.
+</p>
+<pre><code class="language-harbour">FW_SaveThumbNail( "photo.jpg", "thumb.jpg", 150, 150 )</code></pre>
+
+<h3>FW_ImageToBLOB()</h3>
+<pre><code class="language-harbour">FW_ImageToBLOB( uImage, cType, nQuality ) --> cBuffer</code></pre>
+<p>
+Convierte una imagen a un BLOB binario (buffer de memoria) adecuado para almacenar en un campo
+de base de datos. El parámetro <code>cType</code> especifica el formato de salida ("JPG", "PNG", "BMP", "GIF").
+</p>
+<pre><code class="language-harbour">local cBlob := FW_ImageToBLOB( hBmp, "JPG", 80 )
+oRs:Fields( "photo" ):Value := cBlob</code></pre>
+
+<h3>FW_TextToBitmap()</h3>
+<pre><code class="language-harbour">FW_TextToBitmap( cText, oFont, nClrText, nClrBack ) --> hBitmap</code></pre>
+<p>
+Renderiza texto en un handle de bitmap usando la fuente y colores especificados. Útil para crear
+etiquetas basadas en imágenes, marcas de agua o superposiciones de texto.
+</p>
+<pre><code class="language-harbour">local hBmp := FW_TextToBitmap( "Hello World", oFont, nRGB( 255,0,0 ), CLR_WHITE )</code></pre>
+
+<h3>FW_BarCodeBmp()</h3>
+<pre><code class="language-harbour">FW_BarCodeBmp( cText, cType, nWidth, nHeight ) --> hBitmap</code></pre>
+<p>
+Genera un bitmap de código de barras a partir de datos de texto. Los tipos de código de barras soportados
+incluyen "EAN13", "CODE128", "CODE39", "UPCA", "QR" y más.
+</p>
+<pre><code class="language-harbour">local hBmp := FW_BarCodeBmp( "123456789012", "EAN13", 200, 60 )
+oImage:SetBitmap( hBmp )</code></pre>
+
+<h3>FW_DrawShadow()</h3>
+<pre><code class="language-harbour">FW_DrawShadow( hDC, aRect, nSize, nAlpha )</code></pre>
+<p>
+Dibuja un efecto de sombra paralela alrededor de un rectángulo en el contexto de dispositivo dado.
+El parámetro <code>nSize</code> controla el ancho de la sombra y <code>nAlpha</code> (0-255) controla la opacidad.
+</p>
+<pre><code class="language-harbour">FW_DrawShadow( hDC, { 10, 10, 300, 200 }, 8, 80 )</code></pre>
+
+<h3>DrawProgressBar()</h3>
+<pre><code class="language-harbour">DrawProgressBar( hDC, aRect, nValue, nTotal, aColors )</code></pre>
+<p>
+Dibuja una barra de progreso personalizada en el contexto de dispositivo especificado. El array <code>aColors</code>
+puede especificar los colores de la barra y del fondo.
+</p>
+<pre><code class="language-harbour">DrawProgressBar( hDC, { 10, 10, 310, 30 }, 65, 100, { CLR_GREEN, CLR_GRAY } )</code></pre>
+
+<h3>FW_PieChart()</h3>
+<pre><code class="language-harbour">FW_PieChart( oWnd, aRect, aValues, aColors )</code></pre>
+<p>
+Dibuja un gráfico circular o de dona en la ventana especificada dentro del rectángulo dado.
+El array <code>aValues</code> contiene datos numéricos y <code>aColors</code> proporciona colores para los segmentos.
+</p>
+<pre><code class="language-harbour">FW_PieChart( oWnd, { 10, 10, 310, 310 }, { 30, 50, 20 }, ;
+             { CLR_RED, CLR_BLUE, CLR_GREEN } )</code></pre>
+
+<h3>GradientFill()</h3>
+<pre><code class="language-harbour">GradientFill( hDC, nTop, nLeft, nBottom, nRight, aGradInfo, lVert )</code></pre>
+<p>
+Rellena un área rectangular con un degradado. El parámetro <code>aGradInfo</code> especifica las paradas de color.
+Establezca <code>lVert</code> a <code>.T.</code> para degradado vertical o <code>.F.</code> para horizontal.
+</p>
+<pre><code class="language-harbour">GradientFill( hDC, 0, 0, 100, 300, { { CLR_BLUE, CLR_CYAN } }, .T. )</code></pre>
+
+<h3>FW_SayText()</h3>
+<pre><code class="language-harbour">FW_SayText( oWnd, cText, aRect, cAlign, oFont, nClrText, nClrBack )</code></pre>
+<p>
+Dibuja texto en una ventana o DC con control de alineación. El parámetro <code>cAlign</code> soporta
+"C" (centro), "L" (izquierda), "R" (derecha), "T" (superior), "B" (inferior), "W" (ajuste de línea),
+y combinaciones como "TL" o "CR". Soporta formato RTF básico.
+</p>
+<pre><code class="language-harbour">FW_SayText( oWnd, "Hello", { 10, 10, 200, 50 }, "CR", oFont, CLR_RED, CLR_WHITE )</code></pre>
+
+<h3>CalcTextWH()</h3>
+<pre><code class="language-harbour">CalcTextWH( oWnd, cText, hFont ) --> { nWidth, nHeight }</code></pre>
+<p>
+Calcula las dimensiones en píxeles de una cadena de texto cuando se renderiza con la fuente dada.
+Útil para cálculos de diseño antes de dibujar.
+</p>
+<pre><code class="language-harbour">local aSize := CalcTextWH( oWnd, "Sample Text", oFont:Handle() )
+? "Ancho del texto:", aSize[ 1 ], "Alto:", aSize[ 2 ]</code></pre>
+
+<!-- ===== RED ===== -->
+<h2 id="network">Funciones de Red e Internet</h2>
+
+<h3>IsInternet()</h3>
+<pre><code class="language-harbour">IsInternet() --> lYesNo</code></pre>
+<p>
+Detecta si hay acceso a Internet resolviendo "microsoft.com" vía DNS.
+Devuelve <code>.T.</code> si el nombre de host se resuelve a una IP válida.
+</p>
+<pre><code class="language-harbour">if IsInternet()
+   ? "Internet disponible"
+else
+   MsgAlert( "No se detectó conexión a Internet" )
+endif</code></pre>
+
+<h3>LocalIP()</h3>
+<pre><code class="language-harbour">LocalIP() --> cIP</code></pre>
+<p>
+Devuelve la dirección IP del equipo local resolviendo su nombre de host.
+</p>
+<pre><code class="language-harbour">? "IP Local:", LocalIP()  // ej. "192.168.1.10"</code></pre>
+
+<h3>PublicIP()</h3>
+<pre><code class="language-harbour">PublicIP() --> cIP</code></pre>
+<p>
+Devuelve la dirección IP pública consultando un servicio web externo.
+</p>
+<pre><code class="language-harbour">? "IP Pública:", PublicIP()  // ej. "203.0.113.45"</code></pre>
+
+<h3>IsLocalIP()</h3>
+<pre><code class="language-harbour">IsLocalIP( cIP ) --> lLocal</code></pre>
+<p>
+Verifica si una dirección IP pertenece a un rango privado o local.
+Reconoce direcciones clase A (10.x.x.x), clase B (172.16-31.x.x), clase C (192.168.x.x),
+loopback (127.x.x.x) y link-local (169.254.x.x).
+</p>
+<pre><code class="language-harbour">? IsLocalIP( "192.168.1.1" )   // .T.
+? IsLocalIP( "8.8.8.8" )       // .F.
+? IsLocalIP( "127.0.0.1" )     // .T.</code></pre>
+
+<h3>IsExternalIP()</h3>
+<pre><code class="language-harbour">IsExternalIP( cIP ) --> lExternal</code></pre>
+<p>
+Devuelve <code>.T.</code> si la dirección IP es válida y no local (pública).
+Combina validación de formato con IsLocalIP().
+</p>
+<pre><code class="language-harbour">? IsExternalIP( "8.8.8.8" )       // .T.
+? IsExternalIP( "192.168.1.1" )   // .F.</code></pre>
+
+<!-- ===== FORMATO Y CONVERSIÓN DE DATOS ===== -->
+<h2 id="data-format">Funciones de Formato y Conversión de Datos</h2>
+
+<h3>cValToStr()</h3>
+<pre><code class="language-harbour">cValToStr( uVal, cPic ) --> cString</code></pre>
+<p>
+Convierte cualquier valor Harbour a una cadena formateada. El parámetro <code>cPic</code> acepta
+máscaras de fecha/hora como "dd/mm/yyyy hh:mi:ss" y "dddd, mmmm dd, yyyy", lo que lo hace más
+flexible que cValToChar().
+</p>
+<pre><code class="language-harbour">? cValToStr( Date(), "dddd, mmmm dd, yyyy" )  // "Thursday, May 28, 2026"
+? cValToStr( 1234.56, "999,999.99" )            // "  1,234.56"
+? cValToStr( .T., "Yes/No" )                    // "Yes"</code></pre>
+
+<h3>FW_TRANSFORM()</h3>
+<pre><code class="language-harbour">FW_TRANSFORM( uVal, cPic ) --> cString</code></pre>
+<p>
+Versión mejorada de Transform() que soporta tokens de fecha (dd, mmm, yyyy, hh, mi, ss)
+en la cadena de formato. Convierte automáticamente valores de fecha y numéricos a su
+cadena formateada apropiada.
+</p>
+<pre><code class="language-harbour">? FW_TRANSFORM( Date(), "dd/mm/yyyy" )  // "28/05/2026"
+? FW_TRANSFORM( DateTime(), "dd-mm-yyyy hh:mi:ss" )</code></pre>
+
+<h3>uCharToVal()</h3>
+<pre><code class="language-harbour">uCharToVal( cText, cType ) --> uVal</code></pre>
+<p>
+Convierte una cadena a un valor tipado basado en el tipo especificado ("N", "D", "L", "C").
+Cuando se omite <code>cType</code>, detecta automáticamente el tipo a partir del contenido de la cadena.
+</p>
+<pre><code class="language-harbour">? uCharToVal( "123.45", "N" ) + 1        // 124.45
+? uCharToVal( "20260324", "D" )           // 03/24/2026 (formato Sett)
+? uCharToVal( ".T.", "L" )                // .T.
+? uCharToVal( "123.45" )                  // detectado automáticamente como numérico</code></pre>
+
+<h3>nStrToNum()</h3>
+<pre><code class="language-harbour">nStrToNum( cNum, lEuropean ) --> nValue</code></pre>
+<p>
+Analiza una cadena numérica que contiene separadores de miles y marcadores decimales.
+Cuando <code>lEuropean</code> es <code>.T.</code>, trata la coma como separador decimal y el punto como separador de miles.
+Cuando es <code>.F.</code> (predeterminado), usa la convención americana.
+</p>
+<pre><code class="language-harbour">? nStrToNum( "1,234.56", .F. )   // 1234.56 (Americano)
+? nStrToNum( "1.234,56", .T. )   // 1234.56 (Europeo)</code></pre>
+
+<h3>FWNumFormat()</h3>
+<pre><code class="language-harbour">FWNumFormat( cFormat, lThouSep ) --> aPrev</code></pre>
+<p>
+Establece u obtiene el formato numérico actual para visualización. El parámetro <code>cFormat</code> acepta
+"A" (Americano: 1,234.56), "E" (Europeo: 1.234,56), "B" (Británico: 1,234.56),
+"I" (Indio: 12,34,56.78). Devuelve la configuración de formato anterior.
+</p>
+<pre><code class="language-harbour">FWNumFormat( "E", .T. )       // Cambiar a formato europeo
+? Str( 1234567.89, 12, 2 )    // "1.234.567,89"</code></pre>
+
+<h3>FW_ValToCSV()</h3>
+<pre><code class="language-harbour">FW_ValToCSV( uVal ) --> cCSV</code></pre>
+<p>
+Convierte un valor único a su representación CSV. Maneja el entrecomillado y escape
+automáticamente según el tipo de valor.
+</p>
+<pre><code class="language-harbour">? FW_ValToCSV( "Smith, John" )  // '"Smith, John"' (entrecomillado por la coma)
+? FW_ValToCSV( 1234 )            // "1234"</code></pre>
+
+<h3>FW_ArrayToCSV()</h3>
+<pre><code class="language-harbour">FW_ArrayToCSV( aData, aHead ) --> cCSV</code></pre>
+<p>
+Convierte un array (típicamente de un browse o consulta) a formato CSV. El parámetro opcional
+<code>aHead</code> proporciona encabezados de columna. Devuelve el texto CSV completo.
+</p>
+<pre><code class="language-harbour">local aData := { { "John", 30 }, { "Jane", 25 } }
+local aHead := { "Name", "Age" }
+local cCSV  := FW_ArrayToCSV( aData, aHead )
+FW_MEMOWRIT( "export.csv", cCSV )</code></pre>
+
+<h3>FW_ValToJSON / FW_JsonDecode()</h3>
+<pre><code class="language-harbour">FW_ValToJSON( uVal [, lPretty ] ) --> cJson
+FW_JsonDecode( cJson ) --> uVal</code></pre>
+<p>
+Convierte un valor Harbour (array, hash o tipo simple) a cadena JSON y viceversa.
+La bandera <code>lPretty</code> habilita la salida indentada legible. Maneja estructuras anidadas,
+fechas y valores nil.
+</p>
+<pre><code class="language-harbour">local hData := { "name" => "John", "age" => 30 }
+local cJson := FW_ValToJSON( hData, .T. )
+// {
+//   "name": "John",
+//   "age": 30
+// }
+
+local hParsed := FW_JsonDecode( cJson )
+? hParsed[ "name" ]  // "John"</code></pre>
+
+<h3>FW_ArrayToHTML()</h3>
+<pre><code class="language-harbour">FW_ArrayToHTML( aData, aHead, cCaption ) --> cHTML</code></pre>
+<p>
+Convierte un array 2D a una tabla HTML con encabezados y título opcionales.
+Devuelve una cadena completa de elemento &lt;table&gt; lista para visualización web o correo electrónico.
+</p>
+<pre><code class="language-harbour">local aData := { { "Item A", 10.99 }, { "Item B", 25.50 } }
+local aHead := { "Product", "Price" }
+local cHTML := FW_ArrayToHTML( aData, aHead, "Product List" )
+// Devuelve una tabla HTML formateada</code></pre>
+
+<h3>FW_ProperCase()</h3>
+<pre><code class="language-harbour">FW_ProperCase( cText ) --> cString</code></pre>
+<p>
+Convierte una cadena a mayúsculas iniciales, capitalizando la primera letra de cada palabra
+y convirtiendo el resto a minúsculas. Maneja casos especiales como prefijos Mc- y O'-.
+</p>
+<pre><code class="language-harbour">? FW_ProperCase( "john doe" )            // "John Doe"
+? FW_ProperCase( "o'brien" )             // "O'Brien"
+? FW_ProperCase( "mccarthy" )            // "McCarthy"</code></pre>
+
+<h3>FW_UTF8LEFT / FW_UTF8RIGHT / FW_UTF8SUBSTR()</h3>
+<pre><code class="language-harbour">FW_UTF8LEFT( cText, nCount ) --> cText
+FW_UTF8RIGHT( cText, nCount ) --> cText
+FW_UTF8SUBSTR( cText, nStart [, nCount ] ) --> cText</code></pre>
+<p>
+Versiones seguras para UTF-8 de Left(), Right() y SubStr(). Estas funciones cuentan caracteres
+(no bytes), lo que las hace seguras para usar con texto UTF-8 multibyte que incluye caracteres
+acentuados, ideogramas CJK y emojis.
+</p>
+<pre><code class="language-harbour">? FW_UTF8LEFT( "Café", 3 )               // "Caf"
+? FW_UTF8SUBSTR( "Hello 世界", 7, 2 )    // "世界"
+? FW_UTF8RIGHT( "Olá mundo", 5 )          // "mundo"</code></pre>
+
+<h3>FW_ArrayAsList()</h3>
+<pre><code class="language-harbour">FW_ArrayAsList( aItems, cDelim ) --> cString</code></pre>
+<p>
+Une un array de cadenas en una sola cadena delimitada, similar a implode() de PHP.
+Cada elemento se convierte a su representación de cadena.
+</p>
+<pre><code class="language-harbour">local aItems := { "Red", "Green", "Blue" }
+? FW_ArrayAsList( aItems, ", " )  // "Red, Green, Blue"</code></pre>
+
+<h3>FW_ListAsArray()</h3>
+<pre><code class="language-harbour">FW_ListAsArray( cList, cDelim ) --> aArray</code></pre>
+<p>
+Divide una cadena delimitada en un array, la inversa de FW_ArrayAsList().
+Elimina espacios en blanco de cada elemento.
+</p>
+<pre><code class="language-harbour">local aColors := FW_ListAsArray( "Red, Green, Blue", "," )
+// { "Red", "Green", "Blue" }</code></pre>
+
+<h3>nRandom()</h3>
+<pre><code class="language-harbour">nRandom( nMin, nMax ) --> nRandom</code></pre>
+<p>
+Devuelve un entero aleatorio entre <code>nMin</code> y <code>nMax</code>, inclusive. Utiliza un generador
+aleatorio criptográficamente seguro cuando está disponible, recurriendo al RNG estándar de Harbour.
+</p>
+<pre><code class="language-harbour">local nDice := nRandom( 1, 6 )        // tirada de dado: 1-6
+local nPick := nRandom( 1, 100 )      // porcentaje aleatorio</code></pre>
+
+<h3>nHex()</h3>
+<pre><code class="language-harbour">nHex( nVal ) --> cHex</code></pre>
+<p>
+Convierte un valor numérico a su representación hexadecimal en cadena.
+Rellenado al menos a dos dígitos hexadecimales.
+</p>
+<pre><code class="language-harbour">? nHex( 255 )     // "FF"
+? nHex( 16 )      // "10"
+? nHex( 3735928559 )  // "DEADBEEF"</code></pre>
+
+<!-- ===== ADO ===== --><h2 id="ado">Funciones ADO y Base de Datos</h2>
+
+<h3>FW_OpenAdoConnection()</h3>
+<pre><code class="language-harbour">FW_OpenAdoConnection( cConnStr, lShowError, oErr, nTimeOut ) --> oCn</code></pre>
+<p>
+Abre una conexi&oacute;n ADO desde una especificaci&oacute;n compacta o una cadena de conexi&oacute;n completa.
+Devuelve el objeto de conexi&oacute;n o nil en caso de error.
+</p>
+
+<h3>FW_AdoReConnect()</h3>
+<pre><code class="language-harbour">FW_AdoReConnect( oCn, nTries, nTimeOut ) --> lSuccess</code></pre>
+<p>
+Reconecta una conexi&oacute;n ADO ca&iacute;da con reintentos autom&aacute;ticos. Devuelve .T. en &eacute;xito.
+</p>
+
+<h3>FW_RDBMSName()</h3>
+<pre><code class="language-harbour">FW_RDBMSName( oCn ) --> cRDBMS</code></pre>
+<p>
+Devuelve la cadena del tipo de RDBMS ('MYSQL', 'MSSQL', 'POSTGRE', 'SQLITE', 'ACCESS', 'ORACLE', etc.).
+</p>
+
+<h3>FW_OpenRecordSet()</h3>
+<pre><code class="language-harbour">FW_OpenRecordSet( oCn, cSql, nLockType, nCursorType, nMaxRecords ) --> oRs</code></pre>
+<p>
+Abre un recordset ADO desde un objeto de conexi&oacute;n y una sentencia SQL. Soporta par&aacute;metros
+de tipo de bloqueo, tipo de cursor y m&aacute;ximo de registros.
+</p>
+<pre><code class="language-harbour">local oRs := FW_OpenRecordSet( oCn, "SELECT * FROM customers" )
+if oRs != nil .and. ! oRs:Eof()
+   ? oRs:Fields( "name" ):Value
+end</code></pre>
+
+<h3>FW_OpenTRecSet()</h3>
+<pre><code class="language-harbour">FW_OpenTRecSet( cSql, oCn ) --> oTRecSet</code></pre>
+<p>
+Abre un recordset y devuelve un objeto envoltorio TRecSet para navegaci&oacute;n y acceso a datos m&aacute;s sencillos.
+</p>
+
+<h3>FW_RecSetHeaders()</h3>
+<pre><code class="language-harbour">FW_RecSetHeaders( oRs ) --> aHeaders</code></pre>
+<p>
+Devuelve un array de nombres de columnas (campos) de un recordset.
+</p>
+
+<h3>RsGetRows()</h3>
+<pre><code class="language-harbour">RsGetRows( oRs, nRows, nStart, aFields, cFormat ) --> uResult</code></pre>
+<p>
+Recupera m&uacute;ltiples filas de un recordset como un array, hash o cadena JSON dependiendo
+del par&aacute;metro de formato.
+</p>
+
+<h3>RsToHash()</h3>
+<pre><code class="language-harbour">RsToHash( oRs ) --> aHash</code></pre>
+<p>
+Convierte un recordset completo a un array de hashes, donde cada hash contiene
+pares nombre/valor de campo para una fila.
+</p>
+
+<h3>RsToJson()</h3>
+<pre><code class="language-harbour">RsToJson( oRs ) --> cJson</code></pre>
+<p>
+Convierte un recordset completo a una cadena JSON.
+</p>
+
+<h3>FWAdoLoadRecord()</h3>
+<pre><code class="language-harbour">FWAdoLoadRecord( oRs, lBlank ) --> aRecord</code></pre>
+<p>
+Carga el registro actual de un recordset en un array de pares { nombre, valor }.
+Pase .T. en lBlank para obtener una estructura de registro vac&iacute;a.
+</p>
+
+<h3>FWAdoSaveRecord()</h3>
+<pre><code class="language-harbour">FWAdoSaveRecord( oRs, aRecord ) --> lSaved</code></pre>
+<p>
+Guarda un array de pares { nombre, valor } de vuelta al registro actual en el recordset.
+</p>
+
+<h3>FWAdoAppendBlank()</h3>
+<pre><code class="language-harbour">FWAdoAppendBlank( oRs ) --> lAdded</code></pre>
+<p>
+A&ntilde;ade una fila en blanco al recordset con valores predeterminados.
+</p>
+
+<h3>FWAdoDelRecord()</h3>
+<pre><code class="language-harbour">FWAdoDelRecord( oRs ) --> lDeleted</code></pre>
+<p>
+Elimina el registro actual del recordset.
+</p>
+
+<h3>FWAdoStruct()</h3>
+<pre><code class="language-harbour">FWAdoStruct( oRs, lExt ) --> aStruct</code></pre>
+<p>
+Devuelve la estructura completa de campos de un recordset como un array compatible con DBFSTRUCT().
+Pase .T. en lExt para incluir atributos extendidos.
+</p>
+
+<h3>FWAdoFieldType()</h3>
+<pre><code class="language-harbour">FWAdoFieldType( oRs, n ) --> cType</code></pre>
+<p>
+Devuelve el car&aacute;cter de tipo compatible con DBF ('C', 'N', 'D', 'L', 'M', 'T') para un
+ordinal de campo dado en el recordset.
+</p>
+
+<h3>FWAdoCreateTable()</h3>
+<pre><code class="language-harbour">FWAdoCreateTable( cTable, aCols, oCn, lAddAutoInc ) --> lCreated</code></pre>
+<p>
+Crea una tabla SQL a partir de un array de definiciones de columna. Pase .T. en lAddAutoInc para
+incluir una columna de clave primaria auto-incremental.
+</p>
+<pre><code class="language-harbour">local aCols := { { "NAME", "C", 50, 0 }, { "AGE", "N", 3, 0 } }
+FWAdoCreateTable( "people", aCols, oCn, .T. )</code></pre>
+
+<h3>FW_AdoTableExists()</h3>
+<pre><code class="language-harbour">FW_AdoTableExists( cTable, oCn ) --> lExists</code></pre>
+<p>
+Comprueba si una tabla existe en la base de datos.
+</p>
+
+<h3>FW_AdoTables()</h3>
+<pre><code class="language-harbour">FW_AdoTables( oCn ) --> aTables</code></pre>
+<p>
+Devuelve un array de todos los nombres de tablas en la base de datos conectada.
+</p>
+
+<h3>FW_AdoPrimaryKey()</h3>
+<pre><code class="language-harbour">FW_AdoPrimaryKey( oCn, cTable ) --> cKeyCol</code></pre>
+<p>
+Devuelve el nombre de la columna de clave primaria para la tabla especificada.
+</p>
+
+<h3>FW_AdoImportFromDBF()</h3>
+<pre><code class="language-harbour">FW_AdoImportFromDBF( oCn, cDbf, cAdoTable ) --> lSuccess</code></pre>
+<p>
+Importa datos de un archivo DBF a una tabla ADO. Crea la tabla si no existe.
+</p>
+<pre><code class="language-harbour">FW_AdoImportFromDBF( oCn, "customers.dbf", "customers" )</code></pre>
+
+<h3>FW_AdoExportToDBF()</h3>
+<pre><code class="language-harbour">FW_AdoExportToDBF( oRs, cDbf ) --> lSuccess</code></pre>
+<p>
+Exporta el contenido de un recordset a un archivo DBF.
+</p>
+
+<h3>FW_AdoToExcel()</h3>
+<pre><code class="language-harbour">FW_AdoToExcel( cSql, cSaveAs, lShow ) --> oSheet</code></pre>
+<p>
+Ejecuta una consulta SQL y exporta los resultados a un libro de Excel. Pase .T. en lShow para
+abrir el libro despu&eacute;s de la creaci&oacute;n.
+</p>
+
+<h3>FW_AdoRsToCSV()</h3>
+<pre><code class="language-harbour">FW_AdoRsToCSV( oRs ) --> cCSV</code></pre>
+<p>
+Convierte los datos actuales del recordset a una cadena con formato CSV.
+</p>
+
+<h3>FW_DbfToArray()</h3>
+<pre><code class="language-harbour">FW_DbfToArray( cFieldList, bFor, bWhile ) --> aData</code></pre>
+<p>
+Copia registros del &aacute;rea de trabajo DBF actual a un array 2D usando la lista de campos especificada.
+Soporta filtrado mediante condiciones FOR y WHILE con bloques de c&oacute;digo.
+</p>
+
+<h3>FW_ArrayToDBF()</h3>
+<pre><code class="language-harbour">FW_ArrayToDBF( aData, cFieldList ) --> lSuccess</code></pre>
+<p>
+Escribe datos de un array 2D en un archivo DBF usando la lista de campos especificada.
+Crea o a&ntilde;ade al archivo DBF.
+</p>
+
+<h3>FW_DbfToExcel()</h3>
+<pre><code class="language-harbour">FW_DbfToExcel( cFieldList, cSaveTo, lShow ) --> oSheet</code></pre>
+<p>
+Exporta registros DBF a un libro de Excel. Pase .T. en lShow para abrir el libro
+despu&eacute;s de la creaci&oacute;n.
+</p>
+
+<h3>FW_ExcelToDbf()</h3>
+<pre><code class="language-harbour">FW_ExcelToDbf( oRange, cFieldList ) --> lSuccess</code></pre>
+<p>
+Importa datos de un rango de Excel a un archivo DBF.
+</p>
+
+<h3>FW_DbfLookup()</h3>
+<pre><code class="language-harbour">FW_DbfLookup( uSeek, cOrder, cRetExpr ) --> uResult</code></pre>
+<p>
+Realiza una b&uacute;squeda basada en seek en el &aacute;rea de trabajo actual y devuelve el valor de una
+expresi&oacute;n del registro encontrado.
+</p>
+
+<h3>FW_RecToHash()</h3>
+<pre><code class="language-harbour">FW_RecToHash( cFieldList ) --> hHash</code></pre>
+<p>
+Convierte el registro DBF actual a un hash (pares clave-valor) usando la lista de campos especificada.
+</p>
+
+<h3>FW_HashToRec()</h3>
+<pre><code class="language-harbour">FW_HashToRec( hRec ) --> lSaved</code></pre>
+<p>
+Escribe valores de un hash de vuelta al registro DBF actual.
+</p>
+
+<!-- ===== ARRAY Y DATOS ===== -->
+<h2 id="array-data">Funciones de Array y Datos</h2>
+
+<h3>FW_DbfToArray()</h3>
+<pre><code class="language-harbour">FW_DbfToArray( cAlias, bFor, bWhile, nNext, nRecNo, lRest ) --> aData</code></pre>
+<p>
+Copia registros de un área de trabajo DBF a un array 2D. Soporta filtrado de alcance mediante
+condiciones FOR/WHILE, NEXT n, número de registro o alcance REST (compatible con SET FILTER).
+Devuelve un array vacío si no hay registros que coincidan.
+</p>
+<pre><code class="language-harbour">use customer alias cust shared
+local aData := FW_DbfToArray( "cust", { || Cust->State = "CA" } )
+? "Clientes de California:", Len( aData )</code></pre>
+
+<h3>FW_ArrayToDBF()</h3>
+<pre><code class="language-harbour">FW_ArrayToDBF( aData, cAlias, lOverWrite )</code></pre>
+<p>
+Escribe datos de un array 2D en un archivo DBF. El parámetro <code>cAlias</code> especifica el alias
+y archivo de destino. Cuando <code>lOverWrite</code> es <code>.T.</code>, reemplaza los datos existentes; de lo contrario, añade.
+</p>
+<pre><code class="language-harbour">local aData := { { "John", "Doe", 30 }, { "Jane", "Smith", 25 } }
+FW_ArrayToDBF( aData, "newcust", .T. )</code></pre>
+
+<h3>FW_DbfToHash()</h3>
+<pre><code class="language-harbour">FW_DbfToHash( cAlias ) --> hHash</code></pre>
+<p>
+Convierte el registro actual de un DBF abierto a un hash/array asociativo, donde los nombres
+de campo se convierten en claves y los valores de campo en valores. Útil para serialización JSON
+y transferencia de registros.
+</p>
+<pre><code class="language-harbour">use customer alias cust shared
+go top
+local hRec := FW_DbfToHash( "cust" )
+? hRec[ "FIRST" ], hRec[ "LAST" ]</code></pre>
+
+<h3>FW_HashToRec()</h3>
+<pre><code class="language-harbour">FW_HashToRec( hHash )</code></pre>
+<p>
+Escribe pares clave/valor de un hash en el registro actual de un DBF abierto. Los nombres de campo
+en el hash deben coincidir con los nombres de campo del DBF. Mapeo de hash a registro, la inversa de FW_DbfToHash().
+</p>
+<pre><code class="language-harbour">local hData := { "FIRST" => "Alice", "LAST" => "Brown", "AGE" => 28 }
+FW_HashToRec( hData )</code></pre>
+
+<h3>FW_RecToJson()</h3>
+<pre><code class="language-harbour">FW_RecToJson( cAlias ) --> cJson</code></pre>
+<p>
+Convierte el registro actual de un DBF a una cadena JSON, combinando la funcionalidad de
+FW_DbfToHash() y FW_ValToJSON() en una sola llamada.
+</p>
+<pre><code class="language-harbour">use customer alias cust shared
+go top
+local cJson := FW_RecToJson( "cust" )
+// {"FIRST":"John","LAST":"Doe","AGE":30,"SALARY":50000.00}</code></pre>
+
+<h3>ArrTranspose()</h3>
+<pre><code class="language-harbour">ArrTranspose( aArray ) --> aArray</code></pre>
+<p>
+Transpone un array 2D, intercambiando filas y columnas. Útil para convertir datos orientados
+a filas a formato orientado a columnas (por ejemplo, para gráficos o visualización de tablas cruzadas).
+</p>
+<pre><code class="language-harbour">local aData := { { "Name", "John", "Jane" }, { "Age", 30, 25 } }
+local aT := ArrTranspose( aData )
+// { { "Name", "Age" }, { "John", 30 }, { "Jane", 25 } }</code></pre>
+
+<h3>FW_ArrSum()</h3>
+<pre><code class="language-harbour">FW_ArrSum( aArray, nCol ) --> nSum</code></pre>
+<p>
+Calcula la suma de una columna específica en un array 2D. Trata los valores no numéricos como cero.
+</p>
+<pre><code class="language-harbour">local aSales := { { "Jan", 100 }, { "Feb", 200 }, { "Mar", 150 } }
+? "Ventas totales:", FW_ArrSum( aSales, 2 )  // 450</code></pre>
+
+<h3>FW_ArrGroupSum()</h3>
+<pre><code class="language-harbour">FW_ArrGroupSum( aArray, nGrpCol, nValCol ) --> aResult</code></pre>
+<p>
+Agrupa filas en un array 2D por una columna clave y suma una columna de valor dentro de cada grupo.
+Devuelve un array resultante de pares { clave, suma }.
+</p>
+<pre><code class="language-harbour">local aData := { { "CA", 100 }, { "NY", 200 }, { "CA", 150 }, { "TX", 300 } }
+local aSum := FW_ArrGroupSum( aData, 1, 2 )
+// { { "CA", 250 }, { "NY", 200 }, { "TX", 300 } }</code></pre>
+
+<h3>ASHUFLE()</h3>
+<pre><code class="language-harbour">ASHUFLE( aArray ) --> aArray</code></pre>
+<p>
+Mezcla aleatoriamente los elementos de un array in-place usando el algoritmo Fisher-Yates.
+Devuelve la misma referencia del array, ahora reordenado.
+</p>
+<pre><code class="language-harbour">local aCards := { "Ace", "King", "Queen", "Jack", "Ten" }
+ASHUFLE( aCards )  // reordena el array aleatoriamente</code></pre>
+
+<h3>FW_AReverse()</h3>
+<pre><code class="language-harbour">FW_AReverse( aArray, nStart, nCount ) --> aArray</code></pre>
+<p>
+Invierte el orden de los elementos en un subconjunto de un array. Cuando se omiten <code>nStart</code> y <code>nCount</code>,
+invierte todo el array. Devuelve la misma referencia del array.
+</p>
+<pre><code class="language-harbour">local a := { 1, 2, 3, 4, 5 }
+FW_AReverse( a )            // { 5, 4, 3, 2, 1 }
+FW_AReverse( a, 2, 3 )      // invierte elementos 2-4: { 1, 4, 3, 2, 5 }</code></pre>
+
+<!-- ===== UTILIDADES ===== -->
+<h2 id="utility">Funciones de Utilidad</h2>
+
+<h3>LogFile()</h3>
+<pre><code class="language-harbour">LogFile( cFile, aData ) --> nil</code></pre>
+<p>Agregar una línea con marca de tiempo a un archivo de registro. Cada elemento de <code>aData</code> se separa por espacios.</p>
+<pre><code class="language-harbour">LogFile( "app.log", { "User login:", cUser, "at", Time() } )</code></pre>
+
+<h3>GetModuleFileName()</h3>
+<pre><code class="language-harbour">GetModuleFileName( hInstance ) --> cExePath</code></pre>
+<p>Devuelve la ruta completa del ejecutable en ejecución.</p>
+
+<h3>GetInstance()</h3>
+<pre><code class="language-harbour">GetInstance() --> hInstance</code></pre>
+<p>Devuelve el handle de instancia de la aplicación.</p>
+
+<h3>WndMain()</h3>
+<pre><code class="language-harbour">WndMain() --> oWnd</code></pre>
+<p>Devuelve el objeto de ventana principal de la aplicación.</p>
+
+<h3>SysRefresh()</h3>
+<pre><code class="language-harbour">SysRefresh() --> nil</code></pre>
+<p>
+Procesar mensajes de Windows pendientes. Llame a esta función en bucles de larga duración para mantener la UI responsiva.
+</p>
+<pre><code class="language-harbour">for n := 1 to 100000
+   ProcessRecord( n )
+   if n % 100 == 0
+      oMeter:Set( n )
+      SysRefresh()
+   endif
+next</code></pre>
+
+<h3>Funciones de Cadena de Clipper</h3>
+<pre><code class="language-harbour">nAt( cSearch, cString ) --> nPos          // Encontrar posición de subcadena
+SubStr( cString, nStart, nLen ) --> cSub  // Extraer subcadena
+Left( cString, nLen ) --> cLeft           // Porción izquierda
+Right( cString, nLen ) --> cRight         // Porción derecha
+AllTrim( cString ) --> cTrimmed           // Recortar ambos lados
+Replicate( cChar, nTimes ) --> cString    // Repetir un carácter
+StrTran( cString, cOld, cNew ) --> cNew   // Reemplazar subcadenas</code></pre>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TPager - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/texplorerbar.html">TExplorerBar</a>
+<a class="nav-item" href="../../en/ui/tmetropanel.html">TMetroPanel</a>
+<a class="nav-item" href="../../en/ui/tscrollpanel.html">TScrollPanel</a>
+<a class="nav-item active" href="../../en/ui/tpager.html">TPager</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TPager</h1>
+<p class="class-source">Source: <code>source/classes/tpager.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+
+<p>
+TPager is a wrapper for the Win32 SysPager common control. It provides scroll buttons
+(arrows) that allow the user to navigate through a child window that is larger than the
+visible area. Typically used with toolbar controls or other wide child windows that need
+horizontal or vertical scrolling without standard scrollbars.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>oChild</code></td><td>Object</td><td>The child window/control contained within the pager</td></tr>
+<tr><td><code>lHorz</code></td><td>Logical</td><td>Horizontal orientation (default .F. = vertical)</td></tr>
+<tr><td><code>lAutoScroll</code></td><td>Logical</td><td>Enable auto-scrolling when mouse hovers near edge</td></tr>
+<tr><td><code>lDragDrop</code></td><td>Logical</td><td>Enable drag-and-drop scrolling</td></tr>
+<tr><td><code>nBtnSize</code></td><td>Numeric</td><td>Size of the scroll arrow buttons (default 12)</td></tr>
+<tr><td><code>nBkColor</code></td><td>Numeric</td><td>Background color (default COLOR_BTNFACE)</td></tr>
+<tr><td><code>nBorder</code></td><td>Numeric</td><td>Border width in pixels (default 0)</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, oWnd, oChild, nW, nH, lPixel, lDesign, cMsg, bWhen, bChange, bGotFocus, bLostFocus, lHorz, lAutoScroll, lDragDrop, nBtnSize, nBkColor, nBorder )</code></td><td>Create a new TPager control</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cMsg, bWhen, bChange, bGotFocus, bLostFocus, nBtnSize, nBkColor, nBorder )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>SetChild( oChild )</code></td><td>Set or change the child window contained in the pager</td></tr>
+<tr><td><code>RecalcSize()</code></td><td>Recalculate pager size and scroll button visibility</td></tr>
+<tr><td><code>SetPos( nPos )</code></td><td>Set the current scroll position (offset)</td></tr>
+<tr><td><code>GetPos()</code></td><td>Retrieve the current scroll position</td></tr>
+<tr><td><code>SetButtonSize( nSize )</code></td><td>Set the size of the scroll arrow buttons</td></tr>
+<tr><td><code>GetButtonSize()</code></td><td>Retrieve the current button size</td></tr>
+<tr><td><code>GetButtonState( nButton )</code></td><td>Get the state of a scroll button (PGB_TOPORLEFT or PGB_BOTTOMORRIGHT)</td></tr>
+<tr><td><code>SetBkColor( nColor )</code></td><td>Set the background color</td></tr>
+<tr><td><code>GetBkColor()</code></td><td>Retrieve the background color</td></tr>
+<tr><td><code>SetBorder( nBorder )</code></td><td>Set the border width</td></tr>
+<tr><td><code>GetBorder()</code></td><td>Retrieve the border width</td></tr>
+<tr><td><code>ForwardMouse( lForward )</code></td><td>Forward mouse events to the child window</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Horizontal Pager with Toolbar</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oPager, oToolBar
+
+   DEFINE WINDOW oWnd TITLE "Pager Demo" SIZE 600, 100
+
+   // Create a toolbar with many buttons
+   DEFINE BUTTONBAR oToolBar OF oWnd SIZE 800, 30
+
+   DEFINE BUTTON OF oToolBar PROMPT "File"
+   DEFINE BUTTON OF oToolBar PROMPT "Edit"
+   DEFINE BUTTON OF oToolBar PROMPT "View"
+   DEFINE BUTTON OF oToolBar PROMPT "Tools"
+   DEFINE BUTTON OF oToolBar PROMPT "Format"
+   DEFINE BUTTON OF oToolBar PROMPT "Insert"
+   DEFINE BUTTON OF oToolBar PROMPT "Table"
+   DEFINE BUTTON OF oToolBar PROMPT "Help"
+
+   // Wrap toolbar in a horizontal pager
+   TPager():New( 10, 10, oWnd, oToolBar, 580, 30,,,, .T., .T., .F., 14 )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TPager wraps the Win32 <code>SysPager</code> common control. The pager provides arrow buttons that appear automatically when the child window exceeds the visible area.</li>
+<li>Set <code>lHorz := .T.</code> for horizontal paging (left/right arrows) or <code>.F.</code> for vertical (up/down arrows).</li>
+<li><code>lAutoScroll</code> enables automatic scrolling when the user hovers the mouse near the pager edge, without clicking the buttons.</li>
+<li><code>lDragDrop</code> allows the user to click and drag to scroll the child window.</li>
+<li>Call <code>RecalcSize()</code> after changing the child window dimensions to refresh the pager layout.</li>
+<li>The pager forwards mouse wheel messages to the child window when <code>ForwardMouse()</code> is enabled.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

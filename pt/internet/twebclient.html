@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TWebClient - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeiros Passos</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Classes Base</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acesso a Dados</div>
+<a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../pt/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impressão e Relatórios</div>
+<a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a>
+<a class="nav-item active" href="../../pt/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../pt/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referência</div>
+<a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+<a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a>
+<a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TWebClient</h1>
+<p class="class-source">Fonte: <code>source/classes/twebclie.prg</code></p>
+
+<p>
+TWebClient é a classe de cliente HTTP leve do FiveWin, construída diretamente sobre
+<a href="../../pt/internet/tsocket.html">TSocket</a>. Ela fornece uma interface simples para
+conectar a servidores web, buscar páginas e processar respostas HTTP. Para funcionalidades
+HTTP mais avançadas (HTTPS, POST com JSON, cabeçalhos personalizados), considere usar
+a biblioteca <code>hb_curl</code> diretamente ou as classes TOpenAI/AI como referência.
+</p>
+
+<h2 id="data">Membros DATA Principais</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>oSocket</code></td><td>TSocket</td><td>Socket TCP subjacente para a conexão HTTP</td></tr>
+<tr><td><code>bOnConnect</code></td><td>Block</td><td>Callback executado quando a conexão com o servidor é estabelecida</td></tr>
+<tr><td><code>bOnRead</code></td><td>Block</td><td>Callback executado quando dados chegam do servidor</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Métodos</h2>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>Criar um novo TWebClient. Cria e configura o TSocket subjacente com handlers padrão de leitura/conexão/fechamento.</td></tr>
+<tr><td><code>Connect( cIPAddress )</code></td><td>Conectar a um servidor web. Aceita hostname (ex.: "example.com") ou endereço IP. Resolve hostnames automaticamente.</td></tr>
+<tr><td><code>GetPage( cPageName )</code></td><td>Enviar uma solicitação HTTP GET para o caminho de página especificado. Suporta tanto URLs completas (http://...) quanto caminhos relativos.</td></tr>
+<tr><td><code>OnConnect()</code></td><td>Chamado internamente quando a conexão é estabelecida. Dispara o callback bOnConnect se definido.</td></tr>
+<tr><td><code>OnRead( cData )</code></td><td>Chamado internamente quando dados são recebidos. Dispara o callback bOnRead com os dados recebidos.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example-fetch">Exemplo: Buscar uma Página Web</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oClient, cResponse := ""
+
+   oClient := TWebClient():New()
+
+   oClient:bOnConnect := { ||
+      oClient:GetPage( "/" )
+   }
+
+   oClient:bOnRead := { |cData|
+      cResponse += cData
+   }
+
+   oClient:Connect( "www.example.com" )
+
+   // Wait for response
+   SysRefresh()
+   Inkey( 3 )
+
+   // Display the HTTP response
+   ? "Response received:", Len( cResponse ), "bytes"
+   ? SubStr( cResponse, 1, 500 )
+
+return nil</code></pre>
+
+<h2 id="example-rest">Exemplo: Chamada de API REST</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oClient, cResponse := ""
+   local cApiHost := "api.github.com"
+   local cEndpoint := "/repos/FiveTechSoft/FWH"
+
+   oClient := TWebClient():New()
+
+   oClient:bOnConnect := { ||
+      // Send a GET request to the GitHub API
+      oClient:GetPage( cEndpoint + ;
+        " HTTP/1.1" + CRLF + ;
+        "Host: " + cApiHost + CRLF + ;
+        "User-Agent: FWH-WebClient" + CRLF + ;
+        "Accept: application/vnd.github.v3+json" + CRLF + ;
+        "Connection: close" )
+   }
+
+   oClient:bOnRead := { |cData|
+      cResponse += cData
+   }
+
+   oClient:Connect( cApiHost )
+
+   // Wait for the async operation
+   SysRefresh()
+   Inkey( 5 )
+
+   // Display the response
+   if ! Empty( cResponse )
+      MemoWrit( "github_response.txt", cResponse )
+      ? "Response saved to github_response.txt"
+   endif
+
+return nil</code></pre>
+
+<h2 id="tips">Notas</h2>
+
+<ul>
+<li>TWebClient é um encapsulamento mínimo em torno de TSocket. Ele não analisa respostas HTTP nem lida com redirecionamentos automaticamente.</li>
+<li>O método <code>GetPage()</code> envia uma solicitação HTTP GET bruta. Quando uma URL completa começando com "http://" é fornecida, ele analisa o hostname e o caminho da URL e usa HTTP/1.1 com um cabeçalho Host. Caso contrário, envia uma solicitação HTTP/1.0 simples apenas com o caminho.</li>
+<li>Para conexões HTTPS, use a biblioteca <code>hb_curl</code> diretamente em vez de TWebClient, pois TSocket não suporta TLS/SSL nativamente.</li>
+<li>A classe reinicializa automaticamente o socket após uma conexão ser fechada (o handler <code>bClose</code> recria o socket).</li>
+<li>Como TWebClient usa eventos de socket assíncronos, <code>SysRefresh()</code> deve ser chamado para processar dados recebidos em aplicações modo console.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

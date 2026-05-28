@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Build - Documentação FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+    <span class="version">Version 26.03</span>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Primeiros Passos</div>
+    <a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
+    <a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
+    <a class="nav-item active" href="../../pt/getting-started/build-system.html">Sistema de Build</a>
+    <a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos &amp; Caminho de Aprendizado</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Classes Base</div>
+    <a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+    <a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+    <a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Controles UI</div>
+    <a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+    <a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a>
+    <a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a>
+    <a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a>
+    <a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a>
+    <a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a>
+    <a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Acesso a Dados</div>
+    <a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a>
+    <a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a>
+    <a class="nav-item" href="../../pt/data/todbc.html">TODBC</a>
+    <a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Impressão e Relatórios</div>
+    <a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
+    <a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Internet e IA</div>
+    <a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a>
+    <a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI / TChatGPT</a>
+    <a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Referência</div>
+    <a class="nav-item" href="../../pt/reference/commands.html">Comandos</a>
+    <a class="nav-item" href="../../pt/reference/functions.html">Funções</a>
+    <a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a>
+    <a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a>
+    <a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a>
+  </div>
+</nav>
+<main id="content">
+  <h1>Sistema de Build</h1>
+  <p>
+    As aplicações FiveWin seguem um pipeline de build em múltiplos estágios: o Harbour compila o código-fonte
+    <code>.prg</code> em código C, o compilador C produz arquivos objeto, e o linker monta o
+    <code>.exe</code> final. O FWH fornece diversas ferramentas de build para automatizar este processo.
+  </p>
+
+  <h2 id="build-pipeline">Pipeline de Build</h2>
+  <p>
+    Entender os estágios de build ajuda a diagnosticar erros. Cada estágio pode falhar independentemente,
+    e as mensagens de erro diferem entre o Harbour, o compilador C e o linker.
+  </p>
+  <div class="mermaid">
+flowchart LR
+    PRG[".prg<br/>Harbour Source"] -->|"harbour.exe<br/>-n -w"| C[".c<br/>Generated C"]
+    C -->|"bcc32 / cl / gcc<br/>compile"| OBJ[".obj<br/>Object File"]
+    RES[".rc<br/>Resource Script"] -->|"brc32 / rc<br/>compile"| RESO[".res<br/>Resource"]
+    OBJ -->|"ilink32 / link / gcc<br/>link"| EXE[".exe<br/>Application"]
+    RESO --> EXE
+    LIB["FiveWin .lib<br/>Harbour .lib<br/>C runtime .lib"] --> EXE
+  </div>
+
+  <h3 id="stage-harbour">Estágio 1: Compilação Harbour</h3>
+  <p>
+    O compilador Harbour lê os arquivos <code>.prg</code> e produz arquivos <code>.c</code>.
+    Flags típicas:
+  </p>
+  <pre><code>harbour myapp.prg -i%FWH%\include -i%HARBOURDIR%\include -n -w -es2</code></pre>
+  <table>
+    <thead>
+      <tr><th>Flag</th><th>Finalidade</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>-n</code></td><td>Não gerar procedimento de inicialização automático</td></tr>
+      <tr><td><code>-w</code></td><td>Habilitar avisos</td></tr>
+      <tr><td><code>-es2</code></td><td>Parar em caso de erros (código de saída 2)</td></tr>
+      <tr><td><code>-i&lt;path&gt;</code></td><td>Adicionar caminho de busca de includes</td></tr>
+      <tr><td><code>-d&lt;define&gt;</code></td><td>Definir símbolo do preprocessador</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="stage-c">Estágio 2: Compilação C</h3>
+  <p>
+    O arquivo <code>.c</code> gerado é compilado pelo compilador C em um arquivo objeto.
+    Cada compilador possui flags diferentes; os scripts de build do FWH tratam isso automaticamente.
+  </p>
+
+  <h3 id="stage-link">Estágio 3: Linkagem</h3>
+  <p>
+    O linker combina o arquivo objeto com a biblioteca FiveWin, as bibliotecas de runtime do Harbour,
+    as bibliotecas de sistema do Windows e quaisquer arquivos de recurso para produzir o executável final.
+  </p>
+
+  <h2 id="build-new">Usando o build_new.bat</h2>
+  <p>
+    O script <code>build_new.bat</code> é a ferramenta de build universal recomendada. Ele trata
+    todas as variantes de compilador com uma única sintaxe:
+  </p>
+  <pre><code>build_new.bat &lt;source.prg&gt; &lt;compiler_id&gt;</code></pre>
+
+  <h3 id="compiler-ids">IDs dos Compiladores</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Harbour</th>
+        <th>Compilador C</th>
+        <th>Arquitetura</th>
+        <th>Biblioteca Utilizada</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>hb32</code></td>
+        <td>Harbour</td>
+        <td>BCC 5.x (Borland)</td>
+        <td>32-bit</td>
+        <td><code>FiveH32.lib</code></td>
+      </tr>
+      <tr>
+        <td><code>hbc32c</code></td>
+        <td>Harbour</td>
+        <td>BCC32C (Clang)</td>
+        <td>32-bit</td>
+        <td><code>FiveHC32.lib</code></td>
+      </tr>
+      <tr>
+        <td><code>hm32</code></td>
+        <td>Harbour</td>
+        <td>MSVC</td>
+        <td>32-bit</td>
+        <td><code>FiveHM32.lib</code></td>
+      </tr>
+      <tr>
+        <td><code>hm64</code></td>
+        <td>Harbour</td>
+        <td>MSVC</td>
+        <td>64-bit</td>
+        <td><code>FiveH64.lib</code></td>
+      </tr>
+      <tr>
+        <td><code>hg32</code></td>
+        <td>Harbour</td>
+        <td>MinGW GCC</td>
+        <td>32-bit</td>
+        <td><code>FiveHG32.lib</code></td>
+      </tr>
+      <tr>
+        <td><code>hg64</code></td>
+        <td>Harbour</td>
+        <td>MinGW GCC</td>
+        <td>64-bit</td>
+        <td><code>FiveHG64.lib</code></td>
+      </tr>
+      <tr>
+        <td><code>xb32</code></td>
+        <td>xHarbour</td>
+        <td>BCC 5.x (Borland)</td>
+        <td>32-bit</td>
+        <td><code>FiveHx.lib</code></td>
+      </tr>
+      <tr>
+        <td><code>xm64</code></td>
+        <td>xHarbour</td>
+        <td>MSVC</td>
+        <td>64-bit</td>
+        <td><code>FiveHx64.lib</code></td>
+      </tr>
+      <tr>
+        <td><code>xhbc</code></td>
+        <td>xHarbour</td>
+        <td>BCC32C (Clang)</td>
+        <td>32-bit</td>
+        <td><code>FiveHxC32.lib</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 id="build-examples">Exemplos de Build</h3>
+  <pre><code>// Build with Borland BCC32 (classic, most common):
+build_new.bat myapp.prg hb32
+
+// Build with MSVC 64-bit (recommended for new projects):
+build_new.bat myapp.prg hm64
+
+// Build with GCC 64-bit:
+build_new.bat myapp.prg hg64
+
+// Build with xHarbour + BCC32:
+build_new.bat myapp.prg xb32
+
+// Build with BCC32C (Clang-based Borland):
+build_new.bat myapp.prg hbc32c</code></pre>
+
+  <h2 id="build-flow-detail">Fluxo de Build Detalhado</h2>
+  <p>
+    Este diagrama mostra exatamente o que o <code>build_new.bat</code> faz internamente para um build BCC32:
+  </p>
+  <div class="mermaid">
+sequenceDiagram
+    participant User
+    participant Script as build_new.bat
+    participant HRB as Harbour Compiler
+    participant BCC as BCC32 (C Compiler)
+    participant BRC as BRC32 (Resource Compiler)
+    participant LNK as ILink32 (Linker)
+
+    User->>Script: build_new.bat myapp.prg hb32
+    Script->>Script: Detect compiler paths
+    Script->>Script: Set include/lib paths
+    Script->>HRB: harbour myapp.prg -n -w -i...
+    HRB-->>Script: myapp.c
+    Script->>BCC: bcc32 -c -O2 myapp.c
+    BCC-->>Script: myapp.obj
+    alt Has .rc file
+        Script->>BRC: brc32 -r myapp.rc
+        BRC-->>Script: myapp.res
+    end
+    Script->>LNK: ilink32 myapp.obj + FiveH32.lib + harbour.lib ...
+    LNK-->>Script: myapp.exe
+    Script-->>User: Build complete!
+  </div>
+
+  <h2 id="hbmk2">Usando hbmk2 com Arquivos .hbp</h2>
+  <p>
+    Para projetos mais complexos com múltiplos arquivos-fonte, a ferramenta de build do Harbour
+    <code>hbmk2</code> oferece um fluxo de trabalho baseado em arquivo de projeto. Crie um arquivo <code>.hbp</code>
+    (Harbour Project) para definir seu build:
+  </p>
+  <h3 id="hbp-example">Exemplo: test.hbp</h3>
+  <pre><code># test.hbp - Harbour project file for FiveWin app
+
+# Compiler settings
+-gui
+-mt
+-w3
+-es2
+
+# Include paths
+-inc
+-i${FWH}/include
+
+# FiveWin library
+-l${FWH}/lib/FiveH64
+
+# Harbour libraries
+-lhbrtl
+-lhbvm
+-lhbmacro
+-lhblang
+-lhbrdd
+-lrddntx
+-lrddcdx
+-lrddfpt
+-lhbsix
+-lhbct
+-lhbwin
+-lhbcpage
+
+# Windows system libraries
+-luser32
+-lgdi32
+-lcomdlg32
+-lwinspool
+-lcomctl32
+-ladvapi32
+-lshell32
+-lole32
+-loleaut32
+-luuid
+-lws2_32
+-lwinmm
+-lmpr
+-lmsimg32
+
+# Source files
+test.prg
+module1.prg
+module2.prg
+
+# Resource file
+test.rc</code></pre>
+  <p>Depois basta compilar com um único comando:</p>
+  <pre><code>hbmk2 test.hbp</code></pre>
+  <p>
+    A ferramenta <code>hbmk2</code> detecta automaticamente o compilador C instalado, compila
+    todos os arquivos <code>.prg</code>, compila o código C, linka tudo e gerencia builds
+    incrementais (recompila apenas os arquivos alterados).
+  </p>
+
+  <h3 id="hbmk2-flags">Flags Úteis do hbmk2</h3>
+  <table>
+    <thead>
+      <tr><th>Flag</th><th>Finalidade</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>-gui</code></td><td>Compilar como aplicação GUI (Windows), não console</td></tr>
+      <tr><td><code>-mt</code></td><td>Habilitar suporte a multi-threading</td></tr>
+      <tr><td><code>-w3</code></td><td>Nível máximo de avisos</td></tr>
+      <tr><td><code>-es2</code></td><td>Parar em qualquer erro</td></tr>
+      <tr><td><code>-inc</code></td><td>Habilitar builds incrementais</td></tr>
+      <tr><td><code>-rebuild</code></td><td>Forçar recompilação completa</td></tr>
+      <tr><td><code>-comp=msvc64</code></td><td>Forçar compilador específico</td></tr>
+      <tr><td><code>-trace</code></td><td>Mostrar os comandos sendo executados</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="library-naming">Convenção de Nomes das Bibliotecas</h2>
+  <p>
+    As bibliotecas do FiveWin seguem uma convenção de nomes que codifica a variante do Harbour e o compilador:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Arquivo de Biblioteca</th>
+        <th>Harbour</th>
+        <th>Compilador</th>
+        <th>Bits</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>FiveH32.lib</code></td><td>Harbour</td><td>BCC 5.x</td><td>32</td></tr>
+      <tr><td><code>FiveHC32.lib</code></td><td>Harbour</td><td>BCC32C (Clang)</td><td>32</td></tr>
+      <tr><td><code>FiveHM32.lib</code></td><td>Harbour</td><td>MSVC</td><td>32</td></tr>
+      <tr><td><code>FiveH64.lib</code></td><td>Harbour</td><td>MSVC</td><td>64</td></tr>
+      <tr><td><code>FiveHG32.lib</code></td><td>Harbour</td><td>GCC / MinGW</td><td>32</td></tr>
+      <tr><td><code>FiveHG64.lib</code></td><td>Harbour</td><td>GCC / MinGW-w64</td><td>64</td></tr>
+      <tr><td><code>FiveHx.lib</code></td><td>xHarbour</td><td>BCC 5.x</td><td>32</td></tr>
+      <tr><td><code>FiveHx64.lib</code></td><td>xHarbour</td><td>MSVC</td><td>64</td></tr>
+      <tr><td><code>FiveHxC32.lib</code></td><td>xHarbour</td><td>BCC32C (Clang)</td><td>32</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="compiler-paths">Referência de Caminhos dos Compiladores</h2>
+  <p>
+    Caminhos padrão usados pelos scripts de build do FiveWin. Sobrescreva-os através de variáveis de ambiente
+    se sua instalação for diferente:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Variável</th>
+        <th>Caminho Padrão</th>
+        <th>Conteúdo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>BCCDIR</code></td>
+        <td><code>C:\BCC55</code></td>
+        <td>Binários, lib e includes do BCC 5.x</td>
+      </tr>
+      <tr>
+        <td><code>BCC32CDIR</code></td>
+        <td><code>C:\BCC32C</code></td>
+        <td>Binários, lib e includes do BCC32C (Clang)</td>
+      </tr>
+      <tr>
+        <td><code>VCDIR</code></td>
+        <td><code>C:\Program Files\Microsoft Visual Studio\2022\Community\VC</code></td>
+        <td>Compilador MSVC (cl.exe, link.exe)</td>
+      </tr>
+      <tr>
+        <td><code>MINGWDIR</code></td>
+        <td><code>C:\mingw64</code></td>
+        <td>Binários, lib e includes do MinGW GCC</td>
+      </tr>
+      <tr>
+        <td><code>HARBOURDIR</code></td>
+        <td><code>C:\harbour</code></td>
+        <td>Compilador Harbour, bibliotecas de runtime</td>
+      </tr>
+      <tr>
+        <td><code>FWH</code></td>
+        <td><code>C:\FWH</code></td>
+        <td>Raiz do FiveWin: include, lib, source, samples</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="multi-prg">Projetos com Múltiplos Arquivos</h2>
+  <p>
+    Aplicações reais consistem em múltiplos arquivos <code>.prg</code>. Existem duas abordagens principais:
+  </p>
+
+  <h3 id="approach-batch">Abordagem 1: Script Batch</h3>
+  <p>Compile cada arquivo individualmente e linke-os juntos:</p>
+  <pre><code>// compile.bat - Multi-file build with BCC32
+harbour main.prg    -i%FWH%\include -i%HARBOURDIR%\include -n -w
+harbour customers.prg -i%FWH%\include -i%HARBOURDIR%\include -n -w
+harbour reports.prg  -i%FWH%\include -i%HARBOURDIR%\include -n -w
+
+bcc32 -c -O2 main.c customers.c reports.c
+
+ilink32 -Gn -aa -Tpe c0w32.obj main.obj customers.obj reports.obj, ^
+  myapp.exe,, FiveH32.lib harbour.lib cw32.lib import32.lib,, myapp.res</code></pre>
+
+  <h3 id="approach-hbmk2">Abordagem 2: Arquivo de Projeto hbmk2</h3>
+  <p>
+    A abordagem mais simples e recomendada para projetos com múltiplos arquivos. Liste todos os arquivos <code>.prg</code>
+    no arquivo <code>.hbp</code> e deixe o <code>hbmk2</code> gerenciar o build:
+  </p>
+  <pre><code># myapp.hbp
+-gui
+-mt
+-w3
+-es2
+-inc
+-i${FWH}/include
+-l${FWH}/lib/FiveH64
+
+main.prg
+customers.prg
+reports.prg
+utils.prg
+
+myapp.rc</code></pre>
+  <pre><code>hbmk2 myapp.hbp</code></pre>
+
+  <h2 id="resources">Arquivos de Recurso (.rc)</h2>
+  <p>
+    Arquivos de recurso do Windows definem ícones, bitmaps, diálogos e tabelas de strings que são incorporados
+    ao executável. Aplicações FiveWin tipicamente possuem pelo menos um arquivo de recurso para o
+    ícone da aplicação:
+  </p>
+  <pre><code>// myapp.rc - Minimal resource file
+#include "FiveWin.rc"
+
+APPICON ICON "myapp.ico"</code></pre>
+  <p>
+    Para aplicações que definem diálogos em arquivos de recurso (em vez de criá-los em tempo de execução),
+    você pode usar o Designer Visual do FiveWin (<code>visual/visualfw.exe</code>) para criar
+    arquivos <code>.rc</code> graficamente.
+  </p>
+
+  <h2 id="build-tips">Dicas de Build</h2>
+  <ul>
+    <li><strong>Sempre limpe antes de trocar de compilador</strong> &mdash; arquivos objeto de um compilador
+      são incompatíveis com outro. Delete todos os arquivos <code>.obj</code>, <code>.c</code> (gerados)
+      e <code>.res</code> antes de trocar.</li>
+    <li><strong>Use a flag <code>-w</code></strong> &mdash; Os avisos do Harbour ajudam a detectar variáveis não declaradas
+      e erros de digitação precocemente.</li>
+    <li><strong>Verifique o arquivo .ppo</strong> &mdash; Quando um comando não funciona como esperado, examine
+      a saída do preprocessador (<code>.ppo</code>) para ver como os comandos do FiveWin se expandem.</li>
+    <li><strong>Considerações sobre 64-bit</strong> &mdash; Ao compilar para 64-bit, garanta que todas as bibliotecas
+      (FiveWin, Harbour, terceiros) também sejam 64-bit. Misturar bibliotecas 32-bit e 64-bit causará
+      erros de linkagem.</li>
+    <li><strong>Builds incrementais com hbmk2</strong> &mdash; A flag <code>-inc</code> pula a
+      recompilação de arquivos não alterados, acelerando significativamente os builds.</li>
+  </ul>
+
+  <h2 id="next-steps">Próximos Passos</h2>
+  <ul>
+    <li><a href="overview.html">Visão Geral</a> &mdash; Conheça a arquitetura e a hierarquia de classes do FiveWin</li>
+    <li><a href="installation.html">Instalação</a> &mdash; Configure seu ambiente de desenvolvimento</li>
+    <li><a href="../../pt/core/twindow.html">TWindow</a> &mdash; Comece a construir com a classe base de janela</li>
+    <li><a href="../../pt/ui/txbrowse.html">TXBrowse</a> &mdash; Construa grids de dados para suas aplicações</li>
+  </ul>
+</main>
+<aside id="toc">
+  <div id="toc-title">Nesta página</div>
+  <div id="toc-links"></div>
+</aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

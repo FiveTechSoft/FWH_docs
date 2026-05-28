@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TGraph - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item active" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TGraph</h1>
+<p class="class-source">Source: <code>source/classes/tgraph.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+
+<p>
+TGraph is FiveWin's charting control that supports bar, line, point, pie, and XY scatter charts.
+It provides a comprehensive set of graphing capabilities directly within FiveWin windows and dialogs,
+with support for multiple series, 3D rendering, legends, grid lines, and export to image or printer.
+</p>
+
+<h2 id="graph-types">Graph Types</h2>
+
+<p>TGraph supports the following chart types, defined as numeric constants:</p>
+
+<table>
+<thead>
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GRAPH_TYPE_BAR</code></td><td>1</td><td>Vertical bar chart (default)</td></tr>
+<tr><td><code>GRAPH_TYPE_LINE</code></td><td>2</td><td>Line chart connecting data points</td></tr>
+<tr><td><code>GRAPH_TYPE_POINT</code></td><td>3</td><td>Scatter/point chart</td></tr>
+<tr><td><code>GRAPH_TYPE_PIE</code></td><td>4</td><td>Pie chart</td></tr>
+<tr><td><code>GRAPH_TYPE_XY_LINES</code></td><td>6</td><td>XY scatter chart with connecting lines</td></tr>
+<tr><td><code>GRAPH_TYPE_XY_POINTS</code></td><td>7</td><td>XY scatter chart with points only</td></tr>
+</tbody>
+</table>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nType</code></td><td>Numeric</td><td>Graph type (GRAPH_TYPE_BAR, GRAPH_TYPE_LINE, etc.)</td></tr>
+<tr><td><code>aSeries</code></td><td>Array</td><td>Array of series definition objects</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>Chart data values</td></tr>
+<tr><td><code>l3D</code></td><td>Logical</td><td>Enable 3D rendering</td></tr>
+<tr><td><code>lxGrid</code></td><td>Logical</td><td>Show X-axis grid lines</td></tr>
+<tr><td><code>lyGrid</code></td><td>Logical</td><td>Show Y-axis grid lines</td></tr>
+<tr><td><code>lxVal</code></td><td>Logical</td><td>Show X-axis value labels</td></tr>
+<tr><td><code>lyVal</code></td><td>Logical</td><td>Show Y-axis value labels</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Main chart title</td></tr>
+<tr><td><code>cSubTit</code></td><td>Character</td><td>Chart subtitle</td></tr>
+<tr><td><code>cTitX</code></td><td>Character</td><td>X-axis title</td></tr>
+<tr><td><code>cTitY</code></td><td>Character</td><td>Y-axis title</td></tr>
+<tr><td><code>cPicture</code></td><td>Character</td><td>Picture mask for value formatting</td></tr>
+<tr><td><code>lViewVal</code></td><td>Logical</td><td>Show data values on chart</td></tr>
+<tr><td><code>lLegends</code></td><td>Logical</td><td>Show series legends</td></tr>
+<tr><td><code>nBarSep</code></td><td>Numeric</td><td>Bar separation gap</td></tr>
+<tr><td><code>nPoint</code></td><td>Numeric</td><td>Point marker type (POINT_TYPE_1..3)</td></tr>
+<tr><td><code>nMaxVal</code></td><td>Numeric</td><td>Maximum Y-axis value</td></tr>
+<tr><td><code>nMinVal</code></td><td>Numeric</td><td>Minimum Y-axis value</td></tr>
+<tr><td><code>nClrBack</code></td><td>Numeric</td><td>Background color</td></tr>
+<tr><td><code>cBitmap</code></td><td>Character</td><td>Background bitmap file</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, oWnd, nWidth, nHeight, cTitle, lDesign, lPixel, l3D, lxGrid, lyGrid, lxVal, lyVal, lPopUp, lLegends, nType )</code></td><td>Create a new TGraph control</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cTitle, l3D, lxGrid, lyGrid, lxVal, lyVal, lPopUp, lLegends, nType )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>AddSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine, cSRLegend )</code></td><td>Add a data series to the chart. Returns the series index.</td></tr>
+<tr><td><code>AddXYSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine, cSRLegend )</code></td><td>Add an XY scatter series (array of {x,y} pairs)</td></tr>
+<tr><td><code>SetYVals( aLabels )</code></td><td>Set Y-axis category labels (e.g., Q1, Q2, Q3, Q4)</td></tr>
+<tr><td><code>SelSerie( nSerie )</code></td><td>Select a specific series for display</td></tr>
+<tr><td><code>SelPeriod( nPeriod )</code></td><td>Select a specific period for display</td></tr>
+<tr><td><code>SaveAsImage( cFile )</code></td><td>Save chart as a bitmap image file</td></tr>
+<tr><td><code>Save2XLS( nTypeGraph )</code></td><td>Export chart data to Excel</td></tr>
+<tr><td><code>Print( oPrn, nTop, nLeft, nWidth, nHeight )</code></td><td>Print the chart on a printer device</td></tr>
+<tr><td><code>PrintGraph( lPrev, oPrn, nY, nX, cFile, nPorY, nPorX, lUser, lHoriz, nTypePage )</code></td><td>Advanced printing with preview and zoom options</td></tr>
+<tr><td><code>Copy2ClipBoard( lMsg )</code></td><td>Copy chart image to clipboard</td></tr>
+<tr><td><code>ResizeSerie( nNewSize )</code></td><td>Resize the number of series dynamically</td></tr>
+<tr><td><code>Default()</code></td><td>Apply default chart settings and fonts</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destroy the chart and free resources</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Bar Chart with Two Series</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oGraph
+
+   DEFINE WINDOW oWnd TITLE "Quarterly Sales" SIZE 600, 400
+
+   @ 10, 10 GRAPH oGraph SIZE 560, 340 OF oWnd TYPE GRAPH_TYPE_BAR ;
+      TITLE "Sales by Quarter"
+
+   oGraph:l3D      := .T.
+   oGraph:lxGrid   := .T.
+   oGraph:lyGrid   := .T.
+   oGraph:lxVal    := .T.
+   oGraph:lyVal    := .T.
+   oGraph:lLegends := .T.
+   oGraph:cPicture := "999,999.99"
+
+   // Set category labels
+   oGraph:SetYVals( { "Q1", "Q2", "Q3", "Q4" } )
+
+   // Add two series
+   oGraph:AddSerie( { 1200, 1500, 1100, 1800 }, "Product A", CLR_RED )
+   oGraph:AddSerie( { 900, 1300, 1600, 1400 }, "Product B", CLR_BLUE )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TGraph is a fully self-contained charting engine that does not rely on external ActiveX or OCX components. All rendering is done via GDI.</li>
+<li>Use <code>GRAPH</code> command syntax with <code>TYPE nType</code> to set the chart type at creation time.</li>
+<li>Colors for series are auto-assigned from an internal palette if not specified. The default palette cycles through METRO_AMBER, METRO_OLIVE, CLR_HMAGENTA, CLR_HBLUE, CLR_HRED, CLR_HGREEN, and standard colors.</li>
+<li>XY charts (types 6 and 7) expect data as arrays of <code>{ x, y }</code> coordinate pairs. Use <code>AddXYSerie()</code> to add XY series.</li>
+<li>Export to image uses <code>Save2Bmp()</code> internally. The chart can also be copied to clipboard for pasting into other applications.</li>
+<li>The popup menu (enabled via <code>lPopUp</code>) provides right-click access to chart type switching, grid toggles, and export options at runtime.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

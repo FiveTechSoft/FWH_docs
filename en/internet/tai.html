@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Classes - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item active" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>AI Classes</h1>
+<p class="class-source">Sources: <code>source/classes/topenai.prg</code>, <code>source/classes/tdeepseek.prg</code>, <code>source/classes/tgemini.prg</code>, <code>source/classes/tollama.prg</code></p>
+
+<p>
+FiveWin provides a unified set of AI/LLM classes that integrate with popular cloud AI
+providers and local models. All classes follow the same basic pattern: instantiate with
+an API key (or model name for local), send a prompt, and extract the response. They use
+Harbour's <code>hb_curl</code> library for HTTPS communication with the respective API endpoints.
+</p>
+
+<p>
+For the complete AI documentation including all class members and extended examples, see
+<a href="../../en/internet/topenai.html">TOpenAI / TChatGPT</a> &mdash; that page documents every AI class
+with full reference tables, code samples, and a comparison guide.
+</p>
+
+<h2 id="common-pattern">Common Pattern</h2>
+
+<p>
+All AI classes share this basic workflow:
+</p>
+
+<pre><code class="language-harbour">// 1. Create instance with API key (or model name for local)
+oAI := TSomeAI():New( cApiKey )
+
+// 2. Send a prompt
+oAI:Send( "Your question here" )
+
+// 3. Extract the response text
+cAnswer := oAI:GetValue()
+
+// 4. Clean up
+oAI:End()</code></pre>
+
+<h2 id="class-reference">Class Reference</h2>
+
+<h3>TOpenAI</h3>
+<p class="source-badge">Source: <code>source/classes/topenai.prg</code></p>
+<p>OpenAI ChatGPT integration. Supports text, vision (image analysis), and streaming responses.</p>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cKey</code></td><td>OPENAI_API_KEY env</td><td>OpenAI API key</td></tr>
+<tr><td><code>cModel</code></td><td>gpt-4o-mini</td><td>Model name (e.g. gpt-4o, gpt-4o-mini)</td></tr>
+<tr><td><code>nTemperature</code></td><td>0.5</td><td>Sampling temperature (0.0 to 2.0)</td></tr>
+<tr><td><code>cResponse</code></td><td></td><td>Raw JSON response from API</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>cKey, cModel</td><td>Constructor. Reads env var if cKey empty.</td></tr>
+<tr><td><code>Send()</code></td><td>cPrompt</td><td>Send text prompt, return raw JSON</td></tr>
+<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Streaming response via callback</td></tr>
+<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Vision: analyze a local image</td></tr>
+<tr><td><code>SendImageURL()</code></td><td>cImageUrl, cPrompt</td><td>Vision: analyze image from URL</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extract text from JSON response</td></tr>
+</tbody>
+</table>
+
+<h3>TDeepSeek</h3>
+<p class="source-badge">Source: <code>source/classes/tdeepseek.prg</code></p>
+<p>DeepSeek AI integration. Known for strong coding and reasoning capabilities.</p>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cKey</code></td><td>DEEPSEEK_API_KEY env</td><td>DeepSeek API key</td></tr>
+<tr><td><code>cModel</code></td><td>deepseek-chat</td><td>Model: deepseek-chat or deepseek-reasoner</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>cKey, cModel</td><td>Constructor</td></tr>
+<tr><td><code>Send()</code></td><td>cPrompt</td><td>Send prompt, return raw JSON</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extract text from JSON response</td></tr>
+</tbody>
+</table>
+
+<pre><code class="language-harbour">local oAI := TDeepSeek():New( "sk-deepseek-key" )
+oAI:Send( "Write a Harbour function for binary search" )
+MsgInfo( oAI:GetValue() )
+oAI:End()</code></pre>
+
+<h3>TGemini</h3>
+<p class="source-badge">Source: <code>source/classes/tgemini.prg</code></p>
+<p>Google Gemini integration. Supports text, images, file uploads, and streaming.</p>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cKey</code></td><td>GEMINI_API_KEY env</td><td>Google API key</td></tr>
+<tr><td><code>cModel</code></td><td>gemini-2.0-flash</td><td>Model name</td></tr>
+<tr><td><code>nTemperature</code></td><td>0</td><td>Response creativity (0-2)</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>cKey, cModel</td><td>Constructor</td></tr>
+<tr><td><code>Send()</code></td><td>uContent, cPrompt, bCallback</td><td>Send text, image file, or array of files with prompt</td></tr>
+<tr><td><code>UploadFile()</code></td><td>cFileName, lDeleteAfter</td><td>Upload file to Gemini for analysis</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extract text from JSON response</td></tr>
+</tbody>
+</table>
+
+<pre><code class="language-harbour">local oAI := TGemini():New( "google-api-key" )
+
+// Text prompt
+oAI:Send( "Explain quantum computing in simple terms" )
+MsgInfo( oAI:GetValue() )
+
+// Image analysis
+oAI:Send( "C:\photos\chart.png", "Describe this chart" )
+MsgInfo( oAI:GetValue() )
+
+oAI:End()</code></pre>
+
+<h3>TOLlama (Local AI)</h3>
+<p class="source-badge">Source: <code>source/classes/tollama.prg</code></p>
+<p>Local LLM integration via <a href="https://ollama.ai">Ollama</a>. No API key needed &mdash; runs models on your own machine. Default model: deepseek-r1:14b.</p>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cModel</code></td><td>deepseek-r1:14b</td><td>Ollama model name</td></tr>
+<tr><td><code>cUrl</code></td><td>http://localhost:11434/api/chat</td><td>Ollama server endpoint</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>cModel</td><td>Constructor. Default model: deepseek-r1:14b.</td></tr>
+<tr><td><code>Send()</code></td><td>cPrompt</td><td>Send prompt, return raw JSON</td></tr>
+<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Streaming response via callback</td></tr>
+<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Vision for multimodal models (e.g. llava)</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extract message content from JSON</td></tr>
+</tbody>
+</table>
+
+<pre><code class="language-harbour">// Local AI - no API key needed
+local oAI := TOLlama():New( "llama3" )
+oAI:Send( "What is FiveWin?" )
+MsgInfo( oAI:GetValue() )
+
+// Streaming response
+oAI:SendStream( "Write a poem", {|c| QOut(c)} )
+
+// Image analysis (vision model)
+oAI:SendImage( "photo.jpg", "What do you see?" )
+
+oAI:End()</code></pre>
+
+<h2 id="api-keys">API Key Configuration</h2>
+
+<p>
+Each cloud AI class reads its API key from a specific environment variable when no key is passed to <code>New()</code>:
+</p>
+
+<table>
+<thead>
+<tr><th>Class</th><th>Environment Variable</th><th>Base URL</th></tr>
+</thead>
+<tbody>
+<tr><td>TOpenAI</td><td><code>OPENAI_API_KEY</code></td><td>https://api.openai.com/v1</td></tr>
+<tr><td>TDeepSeek</td><td><code>DEEPSEEK_API_KEY</code></td><td>https://api.deepseek.com</td></tr>
+<tr><td>TGemini</td><td><code>GEMINI_API_KEY</code></td><td>https://generativelanguage.googleapis.com</td></tr>
+<tr><td>TOLlama</td><td>Not needed (local)</td><td>http://localhost:11434</td></tr>
+</tbody>
+</table>
+
+<h2 id="tips">Tips</h2>
+
+<ul>
+<li>All AI classes require the <code>hb_curl</code> library. Link with <code>#include "hbcurl.ch"</code> for curl constants.</li>
+<li>SSL verification is disabled by default (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) for broad compatibility.</li>
+<li>Use <code>GetValue()</code> to extract the text response from the raw JSON stored in <code>cResponse</code>.</li>
+<li>The <code>cResponse</code> DATA member always contains the raw JSON. Access it directly for debugging or custom parsing.</li>
+<li>For complete documentation including all methods, callback codeblocks, and advanced usage, see the <a href="../../en/internet/topenai.html">TOpenAI / TChatGPT</a> page.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

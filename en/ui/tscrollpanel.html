@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TScrollPanel - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/texplorerbar.html">TExplorerBar</a>
+<a class="nav-item" href="../../en/ui/tmetropanel.html">TMetroPanel</a>
+<a class="nav-item active" href="../../en/ui/tscrollpanel.html">TScrollPanel</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TScrollPanel</h1>
+<p class="class-source">Source: <code>source/classes/scrlpanl.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
+
+<p>
+TScrollPanel is a scrollable container panel with automatic vertical and horizontal scrollbars
+that track the extent of child controls. It supports mouse-wheel scrolling, click-and-drag scroll,
+touch panning via gesture handling, page-based navigation, and helper methods to bring any child
+control into view. Created by G.N. Rao.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>vStep</code></td><td>Numeric</td><td>Vertical scroll step in pixels (default 20)</td></tr>
+<tr><td><code>hStep</code></td><td>Numeric</td><td>Horizontal scroll step in pixels (default 20)</td></tr>
+<tr><td><code>nScrollRange</code></td><td>Numeric</td><td>Vertical scroll range calculated from child controls</td></tr>
+<tr><td><code>nHScrollRange</code></td><td>Numeric</td><td>Horizontal scroll range calculated from child controls</td></tr>
+<tr><td><code>aSays</code></td><td>Array</td><td>Array of static text rectangles scrolled with the panel</td></tr>
+<tr><td><code>aPages</code></td><td>Array</td><td>Array of { cPageName, nRow } bookmarks for page navigation</td></tr>
+<tr><td><code>lScrollDrag</code></td><td>Logical</td><td>Drag-to-scroll mode flag</td></tr>
+<tr><td><code>nRightMargin</code></td><td>Numeric</td><td>Right margin preserved when parent resizes</td></tr>
+<tr><td><code>nBottomMargin</code></td><td>Numeric</td><td>Bottom margin preserved when parent resizes</td></tr>
+<tr><td><code>oCtrlTop</code></td><td>Object</td><td>Topmost child control (for scroll range)</td></tr>
+<tr><td><code>oCtrlBot</code></td><td>Object</td><td>Bottommost child control (for scroll range)</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lNoBorder )</code></td><td>Create a new TScrollPanel</td></tr>
+<tr><td><code>SetRange()</code></td><td>Scan child controls and set scroll range. Call after adding all controls.</td></tr>
+<tr><td><code>ScrollBy( nV, nH )</code></td><td>Scroll the panel by nV pixels vertically and nH pixels horizontally</td></tr>
+<tr><td><code>GoTop()</code></td><td>Scroll to the top of the panel</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Scroll to the bottom of the panel</td></tr>
+<tr><td><code>GoLeft()</code></td><td>Scroll to the left edge</td></tr>
+<tr><td><code>GoRight()</code></td><td>Scroll to the right edge</td></tr>
+<tr><td><code>GoUp( nPix )</code></td><td>Scroll up by nPix pixels (default vStep)</td></tr>
+<tr><td><code>GoDown( nPix )</code></td><td>Scroll down by nPix pixels (default vStep)</td></tr>
+<tr><td><code>ControlIntoView( oControl )</code></td><td>Scroll the panel to ensure oControl is visible</td></tr>
+<tr><td><code>SetPage( cPage, nRow )</code></td><td>Bookmark the current row with a page name</td></tr>
+<tr><td><code>GoToPage( cPage )</code></td><td>Scroll to a previously bookmarked page</td></tr>
+<tr><td><code>AddText( nRow, nCol, nW, nH, cbText, oFont, nClrText )</code></td><td>Add scrolling text that moves with the panel content</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Scroll Panel with Controls</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oPanel, oGet, oBtn, cText := ""
+
+   DEFINE WINDOW oWnd TITLE "Scroll Panel" SIZE 400, 300
+
+   oPanel := TScrollPanel():New( 10, 10, 290, 390, oWnd )
+
+   @ 10, 10 GET oGet VAR cText OF oPanel SIZE 200, 20 PIXEL
+   @ 40, 10 BUTTON oBtn PROMPT "Button" OF oPanel SIZE 100, 30 PIXEL ;
+      ACTION MsgInfo( "Clicked" )
+
+   // Add more controls below the visible area to test scrolling
+   @ 400, 10 SAY "This is far down" OF oPanel SIZE 200, 20 PIXEL
+
+   oPanel:SetRange()   // Recalculate scroll range
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>Call <code>SetRange()</code> after adding all child controls to calculate the scroll range and enable the scrollbars.</li>
+<li>The panel creates both vertical and horizontal scrollbars automatically via <code>WS_VSCROLL</code> and <code>WS_HSCROLL</code> styles.</li>
+<li>Drag-to-scroll is enabled by holding the left mouse button and dragging. Touch panning is supported via <code>HandleGesture()</code> for WM_GESTURE messages.</li>
+<li>Use <code>ControlIntoView()</code> in <code>bGotFocus</code> blocks of child controls to automatically scroll the panel when tabbing through controls.</li>
+<li><code>AddText()</code> creates scrolling text labels that move with the panel content, unlike standard SAY controls which stay fixed unless scrolled manually.</li>
+<li>The <code>nRightMargin</code> and <code>nBottomMargin</code> DATA members allow the panel to auto-resize when its parent window is resized.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

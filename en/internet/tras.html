@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRas - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/tproxy.html">TProxy</a>
+<a class="nav-item" href="../../en/internet/tras.html">TRas</a>
+<a class="nav-item" href="../../en/internet/tmail.html">TMail</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tgrok.html">TGrok</a>
+<a class="nav-item" href="../../en/internet/tkimi.html">TKimi</a>
+<a class="nav-item" href="../../en/internet/tdeepseek.html">TDeepSeek</a>
+<a class="nav-item" href="../../en/internet/tembeddings.html">TEmbeddings</a>
+<a class="nav-item" href="../../en/internet/tneuralnet.html">TNeuralNetwork</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TRas</h1>
+<p class="class-source">Source: <code>source/classes/tras.prg</code></p>
+
+<p>
+TRas is FiveWin's Remote Access Service (RAS) class for managing dial-up connections
+on Windows. It wraps the Windows RAS API to initiate phone connections, monitor
+connection status, and hang up. TRas supports both manual and automatic (blocking)
+connection modes with timeout-based fail-safes.
+</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="mermaid">
+flowchart LR
+    subgraph "FiveWin Application"
+        A[TRas]
+        B[oWnd<br/>Window Handle]
+    end
+    subgraph "Windows RAS API"
+        C[RaDial]
+        D[RaGetConSt]
+        E[RaHangUp]
+        F[RaGetError]
+    end
+    subgraph "Phone Line / Modem"
+        G[Dial-up Connection]
+    end
+    A -->|"initiates call"| C
+    A -->|"polls status"| D
+    A -->|"terminates"| E
+    A -->|"error details"| F
+    C --> G
+    D --> A
+</div>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>hRas</code></td><td>Numeric</td><td><code>0</code></td><td>RAS connection handle returned by RaDial</td></tr>
+<tr><td><code>cPhone</code></td><td>Character</td><td><code>""</code></td><td>Phone number to dial</td></tr>
+<tr><td><code>cUser</code></td><td>Character</td><td><code>""</code></td><td>Username for authentication</td></tr>
+<tr><td><code>cPass</code></td><td>Character</td><td><code>""</code></td><td>Password for authentication</td></tr>
+<tr><td><code>cStatus</code></td><td>Character</td><td><code>""</code></td><td>Human-readable connection status string</td></tr>
+<tr><td><code>nStatus</code></td><td>Numeric</td><td><code>0</code></td><td>Numeric RAS connection status code</td></tr>
+<tr><td><code>nTimeout</code></td><td>Numeric</td><td><code>60</code></td><td>Timeout in seconds for auto-wait mode</td></tr>
+<tr><td><code>lOperation</code></td><td>Logical</td><td><code>.F.</code></td><td>Whether the last operation succeeded</td></tr>
+<tr><td><code>cError</code></td><td>Character</td><td><code>""</code></td><td>Last error message</td></tr>
+<tr><td><code>cDevType</code></td><td>Character</td><td><code>""</code></td><td>Device type (e.g. "modem")</td></tr>
+<tr><td><code>cDevName</code></td><td>Character</td><td><code>""</code></td><td>Device name</td></tr>
+<tr><td><code>bStatus</code></td><td>Block</td><td></td><td>Callback codeblock invoked on each status change</td></tr>
+<tr><td><code>aMsgStatus</code></td><td>Array</td><td></td><td>Internal mapping of RAS status codes to descriptive strings</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( oWnd, cPhone, cUser, cPass )</code></td><td>Create a RAS instance. Requires a valid window handle, phone number, username, and password. Validates all parameters on construction.</td></tr>
+<tr><td><code>Call( lMode, bStatus )</code></td><td>Initiate the dial-up connection. If <code>lMode</code> is <code>.T.</code> (auto-wait), blocks until connected or timeout. Optionally sets <code>bStatus</code> callback.</td></tr>
+<tr><td><code>Status()</code></td><td>Poll the current connection status and update all status DATA members. Invokes <code>bStatus</code> callback if set.</td></tr>
+<tr><td><code>HangUp()</code></td><td>Terminate the RAS connection. Calls <code>RaHangUp()</code> with the stored handle.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Dial-up with Auto-Wait</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oRas
+
+   DEFINE WINDOW oWnd TITLE "RAS Dial-up"
+
+   oRas := TRas():New( oWnd, "555-1234", "myuser", "mypass" )
+
+   if oRas:lOperation
+      // Auto-wait mode: blocks until connected (or timeout)
+      if oRas:Call( .T. )
+         MsgInfo( "Connected! Status: " + oRas:cStatus )
+         // ... use the connection ...
+         oRas:HangUp()
+      else
+         MsgStop( "Connection failed: " + oRas:cError )
+      endif
+   else
+      MsgStop( "RAS initialization failed" )
+   endif
+
+return nil</code></pre>
+
+<h2 id="status">Connection Status Values</h2>
+
+<table>
+<thead>
+<tr><th>Code</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>0</code></td><td>Opening communication port</td></tr>
+<tr><td><code>1</code></td><td>Port opened</td></tr>
+<tr><td><code>2</code></td><td>Connecting to device</td></tr>
+<tr><td><code>3</code></td><td>Device connected, placing call</td></tr>
+<tr><td><code>4</code></td><td>All devices connected</td></tr>
+<tr><td><code>5</code></td><td>Verifying username and password</td></tr>
+<tr><td><code>6</code></td><td>Username and password accepted</td></tr>
+<tr><td><code>7</code></td><td>Retrying authentication</td></tr>
+<tr><td><code>8</code></td><td>Authentication callback in progress</td></tr>
+<tr><td><code>14</code></td><td>Authenticated</td></tr>
+<tr><td><code>8192</code></td><td>Connected successfully</td></tr>
+<tr><td><code>8193</code></td><td>Disconnected</td></tr>
+</tbody>
+</table>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TRas requires a valid FiveWin window or dialog handle (<code>oWnd:hWnd</code>) for the RAS API to post connection status notifications.</li>
+<li>In auto-wait mode (<code>Call( .T. )</code>), the method polls the connection status in a loop until connected, the timeout expires, or <code>lPanic</code> is set to <code>.T.</code>.</li>
+<li>The <code>bStatus</code> callback codeblock is invoked on every status change, allowing UI updates during the connection process.</li>
+<li>Always check <code>lOperation</code> after construction and <code>Call()</code> to verify success.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

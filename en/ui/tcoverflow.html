@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCoverFlow - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/tactivex.html">TActiveX</a>
+<a class="nav-item" href="../../en/ui/tanimate.html">TAnimate</a>
+<a class="nav-item" href="../../en/ui/tcoverflow.html">TCoverFlow</a>
+<a class="nav-item" href="../../en/ui/toutlook.html">TOutLook</a>
+<a class="nav-item" href="../../en/ui/tradmenu.html">TRadMenu</a>
+<a class="nav-item" href="../../en/ui/trebar.html">TReBar</a>
+<a class="nav-item" href="../../en/ui/tsplitter.html">TSplitter</a>
+<a class="nav-item" href="../../en/ui/tstatusbar.html">TStatusBar</a>
+<a class="nav-item" href="../../en/ui/tmsgbar.html">TMsgBar</a>
+<a class="nav-item" href="../../en/ui/ttrayicon.html">TTrayIcon</a>
+<a class="nav-item" href="../../en/ui/turllink.html">TURLLink</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TCoverFlow</h1>
+<p class="class-source">Source: <code>source/classes/tcvrflow.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+
+<p>
+TCoverFlow is a cover-flow image browser control inspired by the iTunes / Apple Cover Flow
+user interface. It displays a horizontal row of images with the center item enlarged and
+the side items angled outward. Users can navigate left and right via mouse clicks, keyboard
+arrows, or programmatic calls.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aCovers</code></td><td>Array</td><td>Array of cover definitions (bitmap, text, color)</td></tr>
+<tr><td><code>nAt</code></td><td>Numeric</td><td>Index of the currently selected cover</td></tr>
+<tr><td><code>nAngle</code></td><td>Numeric</td><td>Angle (in degrees) applied to side covers</td></tr>
+<tr><td><code>nSeparation</code></td><td>Numeric</td><td>Pixel separation between covers</td></tr>
+<tr><td><code>nCoverWidth</code></td><td>Numeric</td><td>Width of each cover image</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block evaluated when a cover is selected</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd )</code></td><td>Create a new TCoverFlow control</td></tr>
+<tr><td><code>AddCover( cBmp, cText, nClrText )</code></td><td>Add a cover with bitmap, caption, and text color</td></tr>
+<tr><td><code>GoLeft()</code></td><td>Navigate one cover to the left</td></tr>
+<tr><td><code>GoRight()</code></td><td>Navigate one cover to the right</td></tr>
+<tr><td><code>GoTo( n )</code></td><td>Jump directly to the cover at index <code>n</code></td></tr>
+<tr><td><code>AtCover( nRow, nCol )</code></td><td>Return the cover index at the given pixel coordinates</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Album Browser</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oCover, aCovers := { "cover1.jpg", "cover2.jpg", "cover3.jpg" }
+
+   DEFINE WINDOW oWnd TITLE "Album Browser" SIZE 800, 400
+
+   @ 20, 20 COVERFLOW oCover ;
+      SIZE 760, 320 OF oWnd ;
+      ACTION ( MsgInfo( "Selected cover #" + Str( oCover:nAt ) ) )
+
+   oCover:AddCover( "cover1.jpg", "Album One",   CLR_WHITE )
+   oCover:AddCover( "cover2.jpg", "Album Two",   CLR_WHITE )
+   oCover:AddCover( "cover3.jpg", "Album Three", CLR_WHITE )
+
+   oCover:nAngle      := 20
+   oCover:nSeparation := 60
+   oCover:nCoverWidth := 200
+   oCover:GoTo( 1 )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>The <code>AddCover()</code> method expects a bitmap file path or a resource name for <code>cBmp</code>. Images are internally scaled to <code>nCoverWidth</code> while preserving aspect ratio.</li>
+<li>Navigation can be performed with mouse clicks on the left/right covers or by using left/right arrow keys when the control has focus.</li>
+<li>The <code>bAction</code> code block (or the <code>ACTION</code> clause in the <code>COVERFLOW</code> command) fires when the user double-clicks or presses Enter on the center cover.</li>
+<li>The <code>AtCover()</code> method is useful for hit-testing during custom mouse handling.</li>
+<li>Adjust <code>nAngle</code> and <code>nSeparation</code> to control the perspective and spacing of side covers.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

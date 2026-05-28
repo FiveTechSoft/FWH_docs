@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNeuralNetwork - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/tproxy.html">TProxy</a>
+<a class="nav-item" href="../../en/internet/tras.html">TRas</a>
+<a class="nav-item" href="../../en/internet/tmail.html">TMail</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tgrok.html">TGrok</a>
+<a class="nav-item" href="../../en/internet/tkimi.html">TKimi</a>
+<a class="nav-item" href="../../en/internet/tdeepseek.html">TDeepSeek</a>
+<a class="nav-item" href="../../en/internet/tembeddings.html">TEmbeddings</a>
+<a class="nav-item" href="../../en/internet/tneuralnet.html">TNeuralNetwork</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TNeuralNetwork</h1>
+<p class="class-source">Source: <code>source/classes/tneuralnet.prg</code></p>
+
+<p>
+TNeuralNetwork is FiveWin's feedforward neural network implemented in pure Harbour.
+It provides a multi-layer perceptron (MLP) with backpropagation training. The network
+consists of three layer types: an input layer, one or more hidden layers, and an output
+layer. Each neuron uses the sigmoid activation function. The class is ideal for simple
+pattern recognition tasks such as the XOR problem.
+</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="mermaid">
+flowchart LR
+    subgraph "TNeuralNetwork"
+        A[oInputLayer<br/>TNeuralLayer]
+        B[aHiddenLayers<br/>Array of TNeuralLayer]
+        C[oOutputLayer<br/>TNeuralLayer]
+    end
+    subgraph "TNeuralLayer"
+        D[aNeurons<br/>Array of TNeuron]
+    end
+    subgraph "TNeuron"
+        E[nBias]
+        F[aWeights]
+        G[nValue]
+        H[nDeltaError]
+    end
+    A --> D
+    B --> D
+    C --> D
+    D --> E
+    D --> F
+    D --> G
+    D --> H
+</div>
+
+<h2 id="data">Key DATA Members</h2>
+
+<h3>TNeuralNetwork</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>oInputLayer</code></td><td>Object</td><td></td><td>TNeuralLayer for the input layer</td></tr>
+<tr><td><code>aHiddenLayers</code></td><td>Array</td><td><code>{}</code></td><td>Array of TNeuralLayer objects (one or more hidden layers)</td></tr>
+<tr><td><code>oOutputLayer</code></td><td>Object</td><td></td><td>TNeuralLayer for the output layer</td></tr>
+<tr><td><code>nLearningRate</code></td><td>Numeric</td><td><code>0.1</code></td><td>Learning rate for backpropagation weight updates</td></tr>
+</tbody>
+</table>
+
+<h3>TNeuralLayer</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aNeurons</code></td><td>Array</td><td><code>{}</code></td><td>Array of TNeuron objects in this layer</td></tr>
+</tbody>
+</table>
+
+<h3>TNeuron</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nBias</code></td><td>Numeric</td><td><code>hb_Random()</code></td><td>Bias term for this neuron</td></tr>
+<tr><td><code>aWeights</code></td><td>Array</td><td></td><td>Array of connection weights from the previous layer, initialized randomly</td></tr>
+<tr><td><code>nValue</code></td><td>Numeric</td><td></td><td>Current activation value after forward propagation</td></tr>
+<tr><td><code>nDeltaError</code></td><td>Numeric</td><td></td><td>Error gradient computed during backpropagation</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nInputs, aHiddenLayers, nOutputs )</code></td><td>Create a neural network with <code>nInputs</code> input neurons, an array of hidden layer sizes (e.g. <code>{ 4, 3 }</code> for two hidden layers), and <code>nOutputs</code> output neurons.</td></tr>
+<tr><td><code>Learn( aInputs, aOutputs, lDebug )</code></td><td>Train the network on one sample: runs forward propagation, then backpropagation to adjust weights and biases.</td></tr>
+<tr><td><code>Propagation( aInputs )</code></td><td>Run forward propagation: compute activation values from input through hidden layers to output. Uses the sigmoid activation function.</td></tr>
+<tr><td><code>BackPropagation( aInputs, aOutputs )</code></td><td>Run backward propagation: compute error gradients and update all weights and biases based on the learning rate.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: XOR Training</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oNN, n
+
+   // Network: 2 inputs, hidden layer with 2 neurons, 1 output
+   oNN := TNeuralNetwork():New( 2, { 2 }, 1 )
+
+   // Train for 10000 iterations
+   for n = 1 to 10000
+      oNN:Learn( { 0, 0 }, { 0 } )
+      oNN:Learn( { 1, 0 }, { 1 } )
+      oNN:Learn( { 0, 1 }, { 1 } )
+      oNN:Learn( { 1, 1 }, { 0 } )
+   next
+
+   // Test the trained network
+   ? "XOR Truth Table:"
+   ? "0 XOR 0 =", oNN:Propagation( { 0, 0 } )[ 1 ]  // ~0.0
+   ? "1 XOR 0 =", oNN:Propagation( { 1, 0 } )[ 1 ]  // ~1.0
+   ? "0 XOR 1 =", oNN:Propagation( { 0, 1 } )[ 1 ]  // ~1.0
+   ? "1 XOR 1 =", oNN:Propagation( { 1, 1 } )[ 1 ]  // ~0.0
+
+return nil</code></pre>
+
+<h2 id="example-debug">Example: Training with Debug Output</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oNN := TNeuralNetwork():New( 2, { 4 }, 1 )
+
+   // Debug mode prints inputs, outputs, expected values, and errors
+   oNN:Learn( { 1, 0 }, { 1 }, .T. )
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>Weights and biases are initialized to random values using <code>hb_Random()</code>.</li>
+<li>The sigmoid activation function maps values to the range (0, 1). The derivative is used during backpropagation for gradient computation.</li>
+<li>The <code>nLearningRate</code> controls how much weights change during each update. Lower values (e.g. 0.01 - 0.1) provide more stable training, while higher values may converge faster but risk oscillation.</li>
+<li>Multiple hidden layers can be created by passing an array with multiple values: <code>{ 4, 3 }</code> creates two hidden layers with 4 and 3 neurons respectively.</li>
+<li>This is a pure Harbour implementation with no external dependencies. The <code>Math_E()</code> function is implemented via Harbour's C extension API.</li>
+<li>For more advanced neural network capabilities, see the <code>Transformer</code> class in <code>source/classes/transformer.prg</code>.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

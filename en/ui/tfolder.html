@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TFolder - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item active" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a><a class="nav-item" href="../../en/ui/more-controls.html">More Controls</a></div>
+<div class="nav-section"><div class="nav-section-title">Advanced UI</div><a class="nav-item" href="../../en/ui/tlistview.html">TListView</a><a class="nav-item" href="../../en/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../en/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../en/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Data Access</div><a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../en/data/todbc.html">TODBC</a><a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Printing &amp; Reports</div><a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../en/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div><a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../en/internet/tftp.html">TFtp</a><a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div><a class="nav-item" href="../../en/reference/commands.html">Commands</a><a class="nav-item" href="../../en/reference/functions.html">Functions</a><a class="nav-item" href="../../en/reference/errorsys.html">Error System</a><a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a><a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TFolder</h1>
+<p class="subtitle">Tab folder control for organizing complex dialogs into pages</p>
+
+<p><strong>Source:</strong> <code>source/classes/folder.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<h2 id="overview">Overview</h2>
+
+<p><code>TFolder</code> implements a Windows tab control. Each tab page is an independent <code>TDialog</code> object, so you can place any controls on each page using standard dialog syntax. The folder manages which page is visible when the user clicks a tab.</p>
+
+<p>Key features:</p>
+<ul>
+  <li>Each page is a full <code>TDialog</code> -- any control can be placed on it</li>
+  <li>Tab icons via <code>oImageList</code></li>
+  <li>Programmatic page switching via <code>nOption</code></li>
+  <li>Tabs at top or bottom</li>
+  <li>Dynamic page adding/removing at runtime</li>
+</ul>
+
+<h2 id="architecture">Page Composition</h2>
+
+<div class="mermaid">
+graph TD
+    PARENT["TDialog / TWindow<br/>(Parent)"] --> FOLDER["TFolder"]
+
+    FOLDER --> TAB1["Tab 1: General"]
+    FOLDER --> TAB2["Tab 2: Details"]
+    FOLDER --> TAB3["Tab 3: Notes"]
+
+    TAB1 --> DLG1["aDialogs[1]<br/>TDialog"]
+    TAB2 --> DLG2["aDialogs[2]<br/>TDialog"]
+    TAB3 --> DLG3["aDialogs[3]<br/>TDialog"]
+
+    DLG1 --> C1["TGet, TComboBox,<br/>TCheckBox, ..."]
+    DLG2 --> C2["TXBrowse, TButton, ..."]
+    DLG3 --> C3["TMGet (memo), ..."]
+
+    style FOLDER fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style DLG1 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style DLG2 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style DLG3 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+</div>
+
+<h2 id="properties">Key Properties</h2>
+
+<table>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of strings for each tab label (e.g. <code>{"General", "Details", "Notes"}</code>)</td></tr>
+<tr><td><code>aDialogs</code></td><td>Array</td><td>Array of <code>TDialog</code> objects, one per tab page</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Index of the currently selected tab (1-based). Set this to switch pages programmatically.</td></tr>
+<tr><td><code>oImageList</code></td><td>Object</td><td>Optional <code>TImageList</code> providing icons for each tab</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Code block executed when the user switches tabs</td></tr>
+<tr><td><code>lBottom</code></td><td>Logical</td><td>When <code>.T.</code>, tabs appear at the bottom instead of the top</td></tr>
+<tr><td><code>nTabHeight</code></td><td>Numeric</td><td>Height of the tab strip in pixels</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Key Methods</h2>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, oWnd, aPrompts, ... )</code></td><td>Constructor. Creates the folder with the given tab labels.</td></tr>
+<tr><td><code>AddPage( cPrompt, oDlg )</code></td><td>Add a new page at runtime.</td></tr>
+<tr><td><code>DelPage( nPage )</code></td><td>Remove a page at runtime.</td></tr>
+<tr><td><code>SetOption( n )</code></td><td>Switch to page <code>n</code> programmatically.</td></tr>
+<tr><td><code>GetPage( n )</code></td><td>Returns the <code>TDialog</code> for page <code>n</code>.</td></tr>
+</tbody>
+</table>
+
+<h2 id="command">Command Syntax</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol FOLDER oFld ;
+   OF oDlg ;
+   PROMPTS "Tab1", "Tab2", "Tab3" ;
+   DIALOGS oDlg1, oDlg2, oDlg3 ;
+   [ SIZE nWidth, nHeight ] ;
+   [ ON CHANGE bChange ] ;
+   [ BOTTOM ]</code></pre>
+
+<p>Each dialog variable (<code>oDlg1</code>, <code>oDlg2</code>, <code>oDlg3</code>) is automatically created as a child <code>TDialog</code>. You then place controls on each page dialog in the <code>ACTIVATE DIALOG</code> block.</p>
+
+<h2 id="tab-navigation">Tab Navigation Flow</h2>
+
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> Page1 : Folder created
+    Page1 --> Page2 : Click tab 2
+    Page2 --> Page3 : Click tab 3
+    Page3 --> Page1 : Click tab 1
+    Page1 --> PageN : SetOption(N)
+    PageN --> Page1 : SetOption(1)
+
+    state Page1 {
+        [*] --> DLG1_Visible
+        DLG1_Visible : aDialogs[1] shown
+        DLG1_Visible : Other pages hidden
+    }
+
+    state Page2 {
+        [*] --> DLG2_Visible
+        DLG2_Visible : aDialogs[2] shown
+        DLG2_Visible : Other pages hidden
+    }
+
+    state Page3 {
+        [*] --> DLG3_Visible
+        DLG3_Visible : aDialogs[3] shown
+        DLG3_Visible : Other pages hidden
+    }
+</div>
+
+<h2 id="examples">Code Examples</h2>
+
+<h3>Example 1: Customer Edit Dialog with Tabs</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION CustomerEdit()
+   LOCAL oDlg, oFld, oFont
+   LOCAL oDlg1, oDlg2, oDlg3
+   LOCAL cName   := "John Smith"
+   LOCAL cPhone  := "(555)123-4567"
+   LOCAL cEmail  := "john@example.com"
+   LOCAL cAddr   := "123 Main St"
+   LOCAL cCity   := "New York"
+   LOCAL cState  := "NY"
+   LOCAL cZip    := "10001"
+   LOCAL nCredit := 5000.00
+   LOCAL cNotes  := "VIP customer since 2015"
+   LOCAL lActive := .T.
+
+   DEFINE FONT oFont NAME "Segoe UI" SIZE 0, -14
+
+   DEFINE DIALOG oDlg TITLE "Edit Customer" ;
+      SIZE 520, 420 FONT oFont
+
+   // Create the folder with 3 tabs
+   @ 0.5, 0.5 FOLDER oFld ;
+      OF oDlg ;
+      PROMPTS "General", "Address", "Notes" ;
+      DIALOGS oDlg1, oDlg2, oDlg3 ;
+      SIZE 490, 310
+
+   // --- Page 1: General ---
+   @ 1.0, 1 SAY "Name:" OF oDlg1
+   @ 1.0, 5 GET cName OF oDlg1 SIZE 200, 22 PICTURE "@!"
+
+   @ 2.5, 1 SAY "Phone:" OF oDlg1
+   @ 2.5, 5 GET cPhone OF oDlg1 SIZE 140, 22 PICTURE "(999)999-9999"
+
+   @ 4.0, 1 SAY "Email:" OF oDlg1
+   @ 4.0, 5 GET cEmail OF oDlg1 SIZE 220, 22
+
+   @ 5.5, 1 SAY "Credit Limit:" OF oDlg1
+   @ 5.5, 5 GET nCredit OF oDlg1 SIZE 120, 22 PICTURE "@E 99,999.99"
+
+   @ 7.0, 1 CHECKBOX lActive PROMPT "Active Customer" OF oDlg1
+
+   // --- Page 2: Address ---
+   @ 1.0, 1 SAY "Street:" OF oDlg2
+   @ 1.0, 5 GET cAddr OF oDlg2 SIZE 280, 22
+
+   @ 2.5, 1 SAY "City:" OF oDlg2
+   @ 2.5, 5 GET cCity OF oDlg2 SIZE 180, 22
+
+   @ 4.0, 1 SAY "State:" OF oDlg2
+   @ 4.0, 5 GET cState OF oDlg2 SIZE 40, 22 PICTURE "!!"
+
+   @ 4.0, 9 SAY "ZIP:" OF oDlg2
+   @ 4.0, 11 GET cZip OF oDlg2 SIZE 80, 22 PICTURE "99999"
+
+   // --- Page 3: Notes ---
+   @ 0.5, 1 GET cNotes MEMO OF oDlg3 SIZE 440, 200
+
+   // Buttons below the folder
+   @ 24, 12 BUTTON "&Save"   OF oDlg SIZE 80, 25 ACTION oDlg:End() DEFAULT
+   @ 24, 22 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+   RELEASE FONT oFont
+RETURN NIL</code></pre>
+
+<h3>Example 2: Folder with Browse and Dynamic Page Switching</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "XBrowse.ch"
+
+FUNCTION DataViewer()
+   LOCAL oDlg, oFld, oBrw
+   LOCAL oDlg1, oDlg2
+   LOCAL aLog := { ;
+      { "2026-03-24 09:00", "Login",  "admin" }, ;
+      { "2026-03-24 09:15", "Edit",   "admin" }, ;
+      { "2026-03-24 10:00", "Export", "user1" }  ;
+   }
+
+   DEFINE DIALOG oDlg TITLE "Data Viewer" SIZE 600, 450
+
+   @ 0.2, 0.2 FOLDER oFld ;
+      OF oDlg ;
+      PROMPTS "Browse Data", "Activity Log" ;
+      DIALOGS oDlg1, oDlg2 ;
+      SIZE 570, 340
+
+   // Notify when tab changes
+   oFld:bChange := {|| MsgBeep() }
+
+   // --- Page 1: XBrowse of a DBF ---
+   USE Customer VIA "DBFCDX" NEW
+   oBrw := TXBrowse():New( oDlg1 )
+   oBrw:SetRDD()
+   oBrw:CreateFromCode()
+   oDlg1:oClient := oBrw
+
+   // --- Page 2: XBrowse of an array ---
+   LOCAL oBrw2 := TXBrowse():New( oDlg2 )
+   oBrw2:SetArray( aLog )
+   oBrw2:aCols := {}
+   oBrw2:AddColumn( "Timestamp", {|| aLog[ oBrw2:nArrayAt ][ 1 ] } )
+   oBrw2:AddColumn( "Action",    {|| aLog[ oBrw2:nArrayAt ][ 2 ] } )
+   oBrw2:AddColumn( "User",      {|| aLog[ oBrw2:nArrayAt ][ 3 ] } )
+   oBrw2:CreateFromCode()
+   oDlg2:oClient := oBrw2
+
+   // Buttons
+   @ 27, 18 BUTTON "&Close" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   // Jump to Activity Log tab programmatically
+   @ 27, 2 BUTTON "Show &Log" OF oDlg SIZE 100, 25 ;
+      ACTION oFld:SetOption( 2 )
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+   CLOSE Customer
+RETURN NIL</code></pre>
+
+<h2 id="tips">Tips</h2>
+
+<ul>
+  <li>Place controls on each page dialog (<code>oDlg1</code>, <code>oDlg2</code>, ...) -- <strong>not</strong> on the parent dialog <code>oDlg</code>.</li>
+  <li>Buttons that should remain visible on all tabs (Save, Cancel) go on the parent dialog, positioned below the folder.</li>
+  <li>Use <code>oFld:SetOption( n )</code> to switch tabs from code, for example in response to a button click.</li>
+  <li>Use <code>bChange</code> to refresh data when the user switches tabs (e.g. refresh a browse on a tab).</li>
+  <li>To add icons to tabs, create a <code>TImageList</code> and assign it to <code>oFld:oImageList</code> before activation.</li>
+  <li>Each page dialog inherits the font from the parent dialog, so set the font on the parent for consistency.</li>
+</ul>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+  <li><a href="../../en/core/tdialog.html">TDialog</a> -- each page is a TDialog</li>
+  <li><a href="../../en/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../en/ui/tget.html">TGet</a> -- commonly used inside folder pages</li>
+  <li><a href="../../en/ui/txbrowse.html">TXBrowse</a> -- data grids work well inside folder pages</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

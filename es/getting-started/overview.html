@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visión General del Framework - Documentación FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+    <span class="version">Version 26.03</span>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Primeros Pasos</div>
+    <a class="nav-item active" href="../../es/getting-started/overview.html">Visión General</a>
+    <a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+    <a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+    <a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Clases Base</div>
+    <a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+    <a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+    <a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Controles UI</div>
+    <a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+    <a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+    <a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+    <a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+    <a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+    <a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+    <a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Acceso a Datos</div>
+    <a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+    <a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+    <a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+    <a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Impresión e Informes</div>
+    <a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+    <a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Internet e IA</div>
+    <a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+    <a class="nav-item" href="../../es/internet/topenai.html">TOpenAI / TChatGPT</a>
+    <a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Referencia</div>
+    <a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+    <a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+    <a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+    <a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+    <a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+  </div>
+</nav>
+<main id="content">
+  <h1>Visión General</h1>
+  <p>
+    FiveWin for Harbour (FWH) es un framework completo para el desarrollo de aplicaciones Windows
+    que acerca el poder de la API Win32 a los lenguajes de programación <strong>Harbour</strong> y <strong>xHarbour</strong>.
+    Permite construir aplicaciones nativas de Windows profesionales utilizando un lenguaje de alto nivel
+    con sintaxis xBase, accediendo al mismo tiempo a toda la API de Windows por debajo.
+  </p>
+
+  <h2 id="what-is-fwh">¿Qué es FiveWin?</h2>
+  <p>
+    FiveWin proporciona una biblioteca de clases completamente orientada a objetos, un amplio conjunto de comandos xBase
+    e integración transparente con múltiples compiladores de C. En lugar de lidiar con llamadas directas a la API Win32,
+    se escribe código Harbour limpio con los comandos de FiveWin:
+  </p>
+  <ul>
+    <li><strong>Controles nativos de Windows</strong> &mdash; botones, campos de edición, listboxes, treeviews, grids y más</li>
+    <li><strong>Acceso a datos</strong> &mdash; DBF/CDX, ADO RecordSets, ODBC, MariaDB/MySQL, SQLite</li>
+    <li><strong>Impresión e informes</strong> &mdash; TPrinter, TReport con vista previa</li>
+    <li><strong>Internet e IA</strong> &mdash; WebView2, cliente/servidor HTTP, integración con OpenAI</li>
+    <li><strong>Interfaz multi-idioma</strong> &mdash; cambio de idioma en tiempo de ejecución mediante <code>FWString()</code></li>
+  </ul>
+
+  <h2 id="architecture">Arquitectura</h2>
+  <p>
+    FWH se sitúa entre el código de tu aplicación Harbour y el sistema operativo Windows. El compilador
+    Harbour traduce el código fuente <code>.prg</code> a C, que luego es compilado por el compilador C elegido
+    y enlazado con las bibliotecas de FiveWin.
+  </p>
+  <div class="mermaid">
+graph TB
+    subgraph "Your Application"
+        PRG["Your .prg Source Code"]
+    end
+    subgraph "FiveWin Layer"
+        CMD["FWH Commands<br/>(DEFINE WINDOW, DEFINE DIALOG...)"]
+        CLS["FWH Class Library<br/>(TWindow, TDialog, TXBrowse...)"]
+        API["FWH C API<br/>(Low-level Win32 wrappers)"]
+    end
+    subgraph "Compiler Toolchain"
+        HRB["Harbour / xHarbour Compiler"]
+        CC["C Compiler<br/>(BCC32, MSVC, GCC)"]
+        LNK["Linker"]
+    end
+    subgraph "Operating System"
+        WIN["Windows API (User32, GDI32, ComCtl32...)"]
+    end
+    PRG --> CMD
+    CMD --> CLS
+    CLS --> API
+    PRG --> HRB
+    HRB --> CC
+    CC --> LNK
+    API --> WIN
+    LNK --> |".exe"| WIN
+  </div>
+
+  <h2 id="compilers">Compiladores Soportados</h2>
+  <p>
+    FWH incluye bibliotecas precompiladas para todos los compiladores C compatibles con Harbour. Elige el
+    compilador que se adapte a los requisitos de tu proyecto:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Compilador</th>
+        <th>ID</th>
+        <th>Arquitectura</th>
+        <th>Archivo de Librería</th>
+        <th>Notas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Borland C++ 5.x</td>
+        <td><code>hb32</code></td>
+        <td>32-bit</td>
+        <td><code>FiveH32.lib</code></td>
+        <td>BCC32 clásico, el más utilizado</td>
+      </tr>
+      <tr>
+        <td>Borland Clang (BCC32C)</td>
+        <td><code>hbc32c</code></td>
+        <td>32-bit</td>
+        <td><code>FiveHC32.lib</code></td>
+        <td>BCC moderno basado en Clang</td>
+      </tr>
+      <tr>
+        <td>Microsoft Visual C++</td>
+        <td><code>hm32</code></td>
+        <td>32-bit</td>
+        <td><code>FiveHM32.lib</code></td>
+        <td>Compilaciones MSVC de 32 bits</td>
+      </tr>
+      <tr>
+        <td>Microsoft Visual C++</td>
+        <td><code>hm64</code></td>
+        <td>64-bit</td>
+        <td><code>FiveH64.lib</code></td>
+        <td>MSVC 64 bits, recomendado para proyectos nuevos</td>
+      </tr>
+      <tr>
+        <td>MinGW GCC</td>
+        <td><code>hg32</code></td>
+        <td>32-bit</td>
+        <td><code>FiveHG32.lib</code></td>
+        <td>GCC 32 bits vía MinGW</td>
+      </tr>
+      <tr>
+        <td>MinGW GCC</td>
+        <td><code>hg64</code></td>
+        <td>64-bit</td>
+        <td><code>FiveHG64.lib</code></td>
+        <td>GCC 64 bits vía MinGW-w64</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="class-hierarchy">Jerarquía de Clases</h2>
+  <p>
+    Todos los objetos visuales de FiveWin heredan de <code>TWindow</code>. Los controles heredan a través de
+    <code>TControl</code>, mientras que los diálogos y los marcos MDI heredan directamente de <code>TWindow</code>.
+  </p>
+  <div class="mermaid">
+classDiagram
+    TWindow <|-- TControl
+    TWindow <|-- TDialog
+    TWindow <|-- TMDIFrame
+    TWindow <|-- TMDIChild
+    TControl <|-- TButton
+    TControl <|-- TGet
+    TControl <|-- TSay
+    TControl <|-- TXBrowse
+    TControl <|-- TComboBox
+    TControl <|-- TCheckBox
+    TControl <|-- TRadio
+    TControl <|-- TFolder
+    TControl <|-- TTreeView
+    TControl <|-- TRichEdit
+    TControl <|-- TScrollBar
+
+    class TWindow {
+        +hWnd
+        +oWnd
+        +cTitle
+        +nTop, nLeft, nWidth, nHeight
+        +Activate()
+        +Center()
+        +End()
+    }
+    class TControl {
+        +oWnd
+        +bSetGet
+        +bWhen
+        +bValid
+        +Refresh()
+    }
+    class TDialog {
+        +lModal
+        +Activate()
+    }
+    class TXBrowse {
+        +oDbf / oRs
+        +aCols
+        +SetArray()
+        +SetRDD()
+    }
+  </div>
+
+  <h2 id="hello-world">Inicio Rápido: Hola Mundo</h2>
+  <p>
+    La aplicación FiveWin más sencilla crea una ventana y la muestra. Los comandos <code>DEFINE WINDOW</code>
+    y <code>ACTIVATE WINDOW</code> se encargan de todo el código Win32 repetitivo por ti:
+  </p>
+  <pre><code>#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd
+
+   DEFINE WINDOW oWnd TITLE "Hello World!" ;
+      SIZE 600, 400
+
+   ACTIVATE WINDOW oWnd CENTERED ;
+      ON INIT MsgInfo( "Welcome to FiveWin!" )
+
+return nil</code></pre>
+  <p>
+    Guarda esto como <code>hello.prg</code>, compílalo con cualquier compilador soportado (ver
+    <a href="build-system.html">Sistema de Construcción</a>), y tendrás una aplicación nativa de Windows.
+  </p>
+
+  <h2 id="dialog-example">Ejemplo de Diálogo Simple</h2>
+  <p>
+    Los diálogos son la forma principal de recopilar datos del usuario. Los diálogos de FiveWin soportan
+    sistemas de coordenadas basados tanto en texto como en píxeles. A continuación un diálogo típico de entrada de datos:
+  </p>
+  <pre><code>#include "FiveWin.ch"
+
+function CustomerDialog()
+
+   local oDlg, oGet1, oGet2, oBtnOk, oBtnCancel
+   local cName := Space( 40 )
+   local cCity := Space( 30 )
+
+   DEFINE DIALOG oDlg TITLE "Customer Entry" ;
+      SIZE 420, 220 PIXEL TRUEPIXEL
+
+   @ 20, 20 SAY "Name:" OF oDlg SIZE 60, 22 PIXEL
+   @ 20, 90 GET oGet1 VAR cName OF oDlg SIZE 300, 24 PIXEL
+
+   @ 55, 20 SAY "City:" OF oDlg SIZE 60, 22 PIXEL
+   @ 55, 90 GET oGet2 VAR cCity OF oDlg SIZE 300, 24 PIXEL
+
+   @ 100, 200 BUTTON oBtnOk PROMPT "&OK" OF oDlg ;
+      SIZE 80, 28 PIXEL ;
+      ACTION ( MsgInfo( "Name: " + AllTrim( cName ) ), oDlg:End() )
+
+   @ 100, 290 BUTTON oBtnCancel PROMPT "&Cancel" OF oDlg ;
+      SIZE 80, 28 PIXEL CANCEL ;
+      ACTION oDlg:End()
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+return nil</code></pre>
+
+  <h2 id="multilang">Soporte Multi-Idioma</h2>
+  <p>
+    FiveWin proporciona internacionalización integrada mediante la función <code>FWString()</code>. Se definen
+    tablas de cadenas para cada idioma y se cambia en tiempo de ejecución sin necesidad de recompilar:
+  </p>
+  <pre><code>#include "FiveWin.ch"
+
+function Main()
+
+   local oDlg
+
+   // Load language strings from resource or define inline
+   // English is the default; switch to Spanish:
+   FW_SetLanguage( "ES" )
+
+   DEFINE DIALOG oDlg TITLE FWString( "Customer Entry" ) ;
+      SIZE 400, 200 PIXEL TRUEPIXEL
+
+   @ 20, 20 SAY FWString( "Name" ) + ":" OF oDlg SIZE 80, 22 PIXEL
+   @ 20, 100 GET oGet VAR cName OF oDlg SIZE 260, 24 PIXEL
+
+   @ 70, 150 BUTTON oBtnOk PROMPT FWString( "Accept" ) OF oDlg ;
+      SIZE 80, 28 PIXEL ACTION oDlg:End()
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+return nil</code></pre>
+  <p>
+    Los idiomas soportados incluyen inglés, español, francés, alemán, italiano, portugués, vasco,
+    catalán, holandés, ruso, y muchos más. También se pueden agregar tablas de idioma personalizadas en tiempo de ejecución.
+  </p>
+
+  <h2 id="key-features">Resumen de Características Principales</h2>
+  <div class="mermaid">
+mindmap
+  root((FiveWin))
+    UI Controls
+      TXBrowse Grid
+      TDialog / TWindow
+      TButton / TBtnBmp
+      TGet / TComboBox
+      TFolder / TPages
+      TTreeView / TListView
+    Data Access
+      DBF / CDX / NTX
+      ADO RecordSet
+      ODBC
+      MariaDB / MySQL
+      SQLite
+    Printing
+      TPrinter
+      TReport
+      PDF export
+    Internet
+      TWebView2
+      THTTPClient
+      TWebServer
+      TOpenAI / TChatGPT
+    Build System
+      BCC32 / BCC32C
+      MSVC 32 and 64
+      GCC 32 and 64
+      hbmk2 integration
+  </div>
+
+  <h2 id="next-steps">Próximos Pasos</h2>
+  <ul>
+    <li><a href="installation.html">Instalación</a> &mdash; Configura FiveWin en tu equipo</li>
+    <li><a href="build-system.html">Sistema de Construcción</a> &mdash; Compila tu primera aplicación</li>
+    <li><a href="../../es/ui/txbrowse.html">TXBrowse</a> &mdash; El control grid más potente de FiveWin</li>
+    <li><a href="../../es/core/tdialog.html">TDialog</a> &mdash; Domina las interfaces basadas en diálogos</li>
+  </ul>
+</main>
+<aside id="toc">
+  <div id="toc-title">En esta página</div>
+  <div id="toc-links"></div>
+</aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

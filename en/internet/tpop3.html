@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TPop3 - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item active" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TPop3</h1>
+<p class="class-source">Source: <code>source/classes/tpop3.prg</code></p>
+
+<p>
+TPop3 is FiveWin's email retrieval class, implementing the POP3 protocol to receive
+messages from a mail server. It handles the full POP3 session lifecycle: connect,
+authenticate, list messages, retrieve content, optionally delete messages from the server,
+and quit. Like TSmtp, it is built on top of <a href="../../en/internet/tsocket.html">TSocket</a>.
+</p>
+
+<h2 id="protocol-flow">Protocol Flow</h2>
+
+<div class="mermaid">
+sequenceDiagram
+    participant App as FiveWin App
+    participant POP3 as TPop3
+    participant Server as POP3 Server
+
+    App->>POP3: GetMail()
+    POP3->>Server: USER username
+    Server-->>POP3: +OK
+    POP3->>Server: PASS password
+    Server-->>POP3: +OK
+    POP3->>Server: STAT
+    Server-->>POP3: +OK count size
+    loop For each message
+        POP3->>Server: RETR n
+        Server-->>POP3: [message content]
+        POP3->>Server: DELE n  (if lDelMsgs=.T.)
+        Server-->>POP3: +OK
+    end
+    POP3->>Server: QUIT
+    Server-->>POP3: +OK
+</div>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cIPServer</code></td><td>Character</td><td></td><td>POP3 server hostname or IP address</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td><code>110</code></td><td>POP3 server port</td></tr>
+<tr><td><code>User</code></td><td>Character</td><td></td><td>Username for authentication</td></tr>
+<tr><td><code>Pass</code></td><td>Character</td><td></td><td>Password for authentication</td></tr>
+<tr><td><code>aMsgs</code></td><td>Array</td><td></td><td>Array of retrieved email messages (raw POP3 format)</td></tr>
+<tr><td><code>nAtMsg</code></td><td>Numeric</td><td></td><td>Index of the message currently being retrieved</td></tr>
+<tr><td><code>lDelMsgs</code></td><td>Logical</td><td><code>.T.</code></td><td>Delete messages from server after retrieval</td></tr>
+<tr><td><code>lHeaderOnly</code></td><td>Logical</td><td><code>.F.</code></td><td>Retrieve only email headers (using TOP command)</td></tr>
+<tr><td><code>AllOk</code></td><td>Logical</td><td><code>.F.</code></td><td>Set to .T. when all operations complete successfully</td></tr>
+<tr><td><code>bConnecting</code></td><td>Block</td><td></td><td>Callback while connecting</td></tr>
+<tr><td><code>bConnected</code></td><td>Block</td><td></td><td>Callback when connected and authenticated</td></tr>
+<tr><td><code>bDone</code></td><td>Block</td><td></td><td>Callback when all messages have been retrieved</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cIPServer, nPort, User, Pass )</code></td><td>Create a new POP3 session. nPort defaults to 110.</td></tr>
+<tr><td><code>GetMail()</code></td><td>Connect to the server and begin the mail retrieval sequence. Messages are stored in aMsgs[].</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Check Inbox</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oPop3, n
+
+   oPop3 := TPop3():New( "mail.example.com", 110, ;
+                         "user@example.com", "password" )
+
+   oPop3:bConnected := { || MsgInfo( "Connected! Messages: " + ;
+                                     LTrim( Str( Len( oPop3:aMsgs ) ) ) ) }
+
+   oPop3:bDone := { ||
+      MsgInfo( "Retrieved " + LTrim( Str( Len( oPop3:aMsgs ) ) ) + ;
+               " messages." )
+   }
+
+   oPop3:GetMail()
+
+   // Wait for async operation to complete
+   while ! oPop3:AllOk
+      SysRefresh()
+   end
+
+   // Display messages
+   for n := 1 to Len( oPop3:aMsgs )
+      ? "Message", n, ":", SubStr( oPop3:aMsgs[ n ], 1, 200 )
+   next
+
+return nil</code></pre>
+
+<h2 id="example-headers">Example: Retrieve Headers Only</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oPop3, n
+
+   oPop3 := TPop3():New( "mail.example.com", 110, ;
+                         "user@example.com", "password" )
+
+   // Only retrieve headers (faster, less bandwidth)
+   oPop3:lHeaderOnly := .T.
+
+   // Keep messages on the server
+   oPop3:lDelMsgs := .F.
+
+   oPop3:GetMail()
+
+   while ! oPop3:AllOk
+      SysRefresh()
+   end
+
+   // Display headers
+   for n := 1 to Len( oPop3:aMsgs )
+      ? "--- Message", n, "---"
+      ? SubStr( oPop3:aMsgs[ n ], 1, 500 )
+   next
+
+return nil</code></pre>
+
+<h2 id="tips">Notes</h2>
+
+<ul>
+<li>TPop3 uses the asynchronous socket model. After calling <code>GetMail()</code>, the retrieval happens via the FiveWin message loop. Call <code>SysRefresh()</code> in a loop if using a console-style application without a window.</li>
+<li>By default, messages are deleted from the server after retrieval (<code>lDelMsgs := .T.</code>). Set to <code>.F.</code> to leave messages on the server.</li>
+<li>Set <code>lHeaderOnly := .T.</code> to retrieve only email headers using the POP3 TOP command. This is useful for quickly scanning inbox contents without downloading full messages.</li>
+<li>Messages in <code>aMsgs[]</code> are stored in raw POP3 format including all headers. Parsing them for subject, from, date, etc. requires string extraction from the raw content.</li>
+<li>Error details are logged to <code>MailErr.log</code> in the application directory when a POP3 error occurs.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

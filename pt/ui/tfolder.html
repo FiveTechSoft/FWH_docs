@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TFolder - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div><a class="nav-item" href="../../pt/core/twindow.html">TWindow</a><a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a><a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a><a class="nav-item active" href="../../pt/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../pt/ui/more-controls.html">Mais Controles</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Avançada</div><a class="nav-item" href="../../pt/ui/tlistview.html">TListView</a><a class="nav-item" href="../../pt/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../pt/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../pt/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Acesso a Dados</div><a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../pt/data/todbc.html">TODBC</a><a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Impressão e Relatórios</div><a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../pt/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a><a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../pt/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div><a class="nav-item" href="../../pt/reference/commands.html">Comandos</a><a class="nav-item" href="../../pt/reference/functions.html">Funções</a><a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a><a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TFolder</h1>
+<p class="subtitle">Controle de abas para organizar dialogos complexos em paginas</p>
+
+<p><strong>Fonte:</strong> <code>source/classes/folder.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<h2 id="overview">Visão Geral</h2>
+
+<p><code>TFolder</code> implementa um controle de abas do Windows. Cada pagina de aba e um objeto <code>TDialog</code> independente, permitindo colocar qualquer controle em cada pagina usando a sintaxe padrao de dialogos. O folder gerencia qual pagina esta visivel quando o usuario clica em uma aba.</p>
+
+<p>Recursos principais:</p>
+<ul>
+  <li>Cada pagina e um <code>TDialog</code> completo -- qualquer controle pode ser colocado nela</li>
+  <li>Icones nas abas via <code>oImageList</code></li>
+  <li>Troca de pagina programatica via <code>nOption</code></li>
+  <li>Abas no topo ou na parte inferior</li>
+  <li>Adicao/remocao dinamica de paginas em tempo de execucao</li>
+</ul>
+
+<h2 id="architecture">Composicao de Paginas</h2>
+
+<div class="mermaid">
+graph TD
+    PARENT["TDialog / TWindow<br/>(Parent)"] --> FOLDER["TFolder"]
+
+    FOLDER --> TAB1["Tab 1: General"]
+    FOLDER --> TAB2["Tab 2: Details"]
+    FOLDER --> TAB3["Tab 3: Notes"]
+
+    TAB1 --> DLG1["aDialogs[1]<br/>TDialog"]
+    TAB2 --> DLG2["aDialogs[2]<br/>TDialog"]
+    TAB3 --> DLG3["aDialogs[3]<br/>TDialog"]
+
+    DLG1 --> C1["TGet, TComboBox,<br/>TCheckBox, ..."]
+    DLG2 --> C2["TXBrowse, TButton, ..."]
+    DLG3 --> C3["TMGet (memo), ..."]
+
+    style FOLDER fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style DLG1 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style DLG2 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style DLG3 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+</div>
+
+<h2 id="properties">Propriedades Principais</h2>
+
+<table>
+<thead><tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array de strings para cada rotulo de aba (ex.: <code>{"Geral", "Detalhes", "Notas"}</code>)</td></tr>
+<tr><td><code>aDialogs</code></td><td>Array</td><td>Array de objetos <code>TDialog</code>, um por pagina de aba</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Indice da aba atualmente selecionada (base 1). Defina para trocar de pagina programaticamente.</td></tr>
+<tr><td><code>oImageList</code></td><td>Object</td><td><code>TImageList</code> opcional fornecendo icones para cada aba</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Bloco de codigo executado quando o usuario troca de aba</td></tr>
+<tr><td><code>lBottom</code></td><td>Logical</td><td>Quando <code>.T.</code>, as abas aparecem na parte inferior em vez do topo</td></tr>
+<tr><td><code>nTabHeight</code></td><td>Numeric</td><td>Altura da faixa de abas em pixels</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Metodos Principais</h2>
+
+<table>
+<thead><tr><th>Metodo</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, oWnd, aPrompts, ... )</code></td><td>Construtor. Cria o folder com os rotulos de aba fornecidos.</td></tr>
+<tr><td><code>AddPage( cPrompt, oDlg )</code></td><td>Adiciona uma nova pagina em tempo de execucao.</td></tr>
+<tr><td><code>DelPage( nPage )</code></td><td>Remove uma pagina em tempo de execucao.</td></tr>
+<tr><td><code>SetOption( n )</code></td><td>Troca para a pagina <code>n</code> programaticamente.</td></tr>
+<tr><td><code>GetPage( n )</code></td><td>Retorna o <code>TDialog</code> da pagina <code>n</code>.</td></tr>
+</tbody>
+</table>
+
+<h2 id="command">Sintaxe de Comandos</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol FOLDER oFld ;
+   OF oDlg ;
+   PROMPTS "Tab1", "Tab2", "Tab3" ;
+   DIALOGS oDlg1, oDlg2, oDlg3 ;
+   [ SIZE nWidth, nHeight ] ;
+   [ ON CHANGE bChange ] ;
+   [ BOTTOM ]</code></pre>
+
+<p>Cada variavel de dialogo (<code>oDlg1</code>, <code>oDlg2</code>, <code>oDlg3</code>) e criada automaticamente como um <code>TDialog</code> filho. Voce entao coloca os controles em cada dialogo de pagina no bloco <code>ACTIVATE DIALOG</code>.</p>
+
+<h2 id="tab-navigation">Fluxo de Navegacao entre Abas</h2>
+
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> Page1 : Folder created
+    Page1 --> Page2 : Click tab 2
+    Page2 --> Page3 : Click tab 3
+    Page3 --> Page1 : Click tab 1
+    Page1 --> PageN : SetOption(N)
+    PageN --> Page1 : SetOption(1)
+
+    state Page1 {
+        [*] --> DLG1_Visible
+        DLG1_Visible : aDialogs[1] shown
+        DLG1_Visible : Other pages hidden
+    }
+
+    state Page2 {
+        [*] --> DLG2_Visible
+        DLG2_Visible : aDialogs[2] shown
+        DLG2_Visible : Other pages hidden
+    }
+
+    state Page3 {
+        [*] --> DLG3_Visible
+        DLG3_Visible : aDialogs[3] shown
+        DLG3_Visible : Other pages hidden
+    }
+</div>
+
+<h2 id="examples">Exemplos de Codigo</h2>
+
+<h3>Exemplo 1: Dialogo de Edicao de Cliente com Abas</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION CustomerEdit()
+   LOCAL oDlg, oFld, oFont
+   LOCAL oDlg1, oDlg2, oDlg3
+   LOCAL cName   := "John Smith"
+   LOCAL cPhone  := "(555)123-4567"
+   LOCAL cEmail  := "john@example.com"
+   LOCAL cAddr   := "123 Main St"
+   LOCAL cCity   := "New York"
+   LOCAL cState  := "NY"
+   LOCAL cZip    := "10001"
+   LOCAL nCredit := 5000.00
+   LOCAL cNotes  := "VIP customer since 2015"
+   LOCAL lActive := .T.
+
+   DEFINE FONT oFont NAME "Segoe UI" SIZE 0, -14
+
+   DEFINE DIALOG oDlg TITLE "Edit Customer" ;
+      SIZE 520, 420 FONT oFont
+
+   // Create the folder with 3 tabs
+   @ 0.5, 0.5 FOLDER oFld ;
+      OF oDlg ;
+      PROMPTS "General", "Address", "Notes" ;
+      DIALOGS oDlg1, oDlg2, oDlg3 ;
+      SIZE 490, 310
+
+   // --- Page 1: General ---
+   @ 1.0, 1 SAY "Name:" OF oDlg1
+   @ 1.0, 5 GET cName OF oDlg1 SIZE 200, 22 PICTURE "@!"
+
+   @ 2.5, 1 SAY "Phone:" OF oDlg1
+   @ 2.5, 5 GET cPhone OF oDlg1 SIZE 140, 22 PICTURE "(999)999-9999"
+
+   @ 4.0, 1 SAY "Email:" OF oDlg1
+   @ 4.0, 5 GET cEmail OF oDlg1 SIZE 220, 22
+
+   @ 5.5, 1 SAY "Credit Limit:" OF oDlg1
+   @ 5.5, 5 GET nCredit OF oDlg1 SIZE 120, 22 PICTURE "@E 99,999.99"
+
+   @ 7.0, 1 CHECKBOX lActive PROMPT "Active Customer" OF oDlg1
+
+   // --- Page 2: Address ---
+   @ 1.0, 1 SAY "Street:" OF oDlg2
+   @ 1.0, 5 GET cAddr OF oDlg2 SIZE 280, 22
+
+   @ 2.5, 1 SAY "City:" OF oDlg2
+   @ 2.5, 5 GET cCity OF oDlg2 SIZE 180, 22
+
+   @ 4.0, 1 SAY "State:" OF oDlg2
+   @ 4.0, 5 GET cState OF oDlg2 SIZE 40, 22 PICTURE "!!"
+
+   @ 4.0, 9 SAY "ZIP:" OF oDlg2
+   @ 4.0, 11 GET cZip OF oDlg2 SIZE 80, 22 PICTURE "99999"
+
+   // --- Page 3: Notes ---
+   @ 0.5, 1 GET cNotes MEMO OF oDlg3 SIZE 440, 200
+
+   // Buttons below the folder
+   @ 24, 12 BUTTON "&Save"   OF oDlg SIZE 80, 25 ACTION oDlg:End() DEFAULT
+   @ 24, 22 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+   RELEASE FONT oFont
+RETURN NIL</code></pre>
+
+<h3>Exemplo 2: Folder com Browse e Troca Dinamica de Paginas</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "XBrowse.ch"
+
+FUNCTION DataViewer()
+   LOCAL oDlg, oFld, oBrw
+   LOCAL oDlg1, oDlg2
+   LOCAL aLog := { ;
+      { "2026-03-24 09:00", "Login",  "admin" }, ;
+      { "2026-03-24 09:15", "Edit",   "admin" }, ;
+      { "2026-03-24 10:00", "Export", "user1" }  ;
+   }
+
+   DEFINE DIALOG oDlg TITLE "Data Viewer" SIZE 600, 450
+
+   @ 0.2, 0.2 FOLDER oFld ;
+      OF oDlg ;
+      PROMPTS "Browse Data", "Activity Log" ;
+      DIALOGS oDlg1, oDlg2 ;
+      SIZE 570, 340
+
+   // Notify when tab changes
+   oFld:bChange := {|| MsgBeep() }
+
+   // --- Page 1: XBrowse of a DBF ---
+   USE Customer VIA "DBFCDX" NEW
+   oBrw := TXBrowse():New( oDlg1 )
+   oBrw:SetRDD()
+   oBrw:CreateFromCode()
+   oDlg1:oClient := oBrw
+
+   // --- Page 2: XBrowse of an array ---
+   LOCAL oBrw2 := TXBrowse():New( oDlg2 )
+   oBrw2:SetArray( aLog )
+   oBrw2:aCols := {}
+   oBrw2:AddColumn( "Timestamp", {|| aLog[ oBrw2:nArrayAt ][ 1 ] } )
+   oBrw2:AddColumn( "Action",    {|| aLog[ oBrw2:nArrayAt ][ 2 ] } )
+   oBrw2:AddColumn( "User",      {|| aLog[ oBrw2:nArrayAt ][ 3 ] } )
+   oBrw2:CreateFromCode()
+   oDlg2:oClient := oBrw2
+
+   // Buttons
+   @ 27, 18 BUTTON "&Close" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   // Jump to Activity Log tab programmatically
+   @ 27, 2 BUTTON "Show &Log" OF oDlg SIZE 100, 25 ;
+      ACTION oFld:SetOption( 2 )
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+   CLOSE Customer
+RETURN NIL</code></pre>
+
+<h2 id="tips">Dicas</h2>
+
+<ul>
+  <li>Coloque os controles em cada dialogo de pagina (<code>oDlg1</code>, <code>oDlg2</code>, ...) -- <strong>nao</strong> no dialogo pai <code>oDlg</code>.</li>
+  <li>Botoes que devem permanecer visiveis em todas as abas (Salvar, Cancelar) vao no dialogo pai, posicionados abaixo do folder.</li>
+  <li>Use <code>oFld:SetOption( n )</code> para trocar de aba via codigo, por exemplo em resposta a um clique de botao.</li>
+  <li>Use <code>bChange</code> para atualizar dados quando o usuario troca de aba (ex.: atualizar um browse em uma aba).</li>
+  <li>Para adicionar icones nas abas, crie um <code>TImageList</code> e atribua a <code>oFld:oImageList</code> antes da ativacao.</li>
+  <li>Cada dialogo de pagina herda a fonte do dialogo pai, portanto defina a fonte no pai para manter a consistencia.</li>
+</ul>
+
+<h2 id="see-also">Veja Também</h2>
+<ul>
+  <li><a href="../../pt/core/tdialog.html">TDialog</a> -- cada pagina e um TDialog</li>
+  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- classe pai</li>
+  <li><a href="../../pt/ui/tget.html">TGet</a> -- comumente usado dentro de paginas do folder</li>
+  <li><a href="../../pt/ui/txbrowse.html">TXBrowse</a> -- grids de dados funcionam bem dentro de paginas do folder</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

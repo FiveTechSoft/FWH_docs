@@ -1,0 +1,270 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TButton / TBtnBmp - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item active" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a><a class="nav-item" href="../../en/ui/more-controls.html">More Controls</a></div>
+<div class="nav-section"><div class="nav-section-title">Advanced UI</div><a class="nav-item" href="../../en/ui/tlistview.html">TListView</a><a class="nav-item" href="../../en/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../en/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../en/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Data Access</div><a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../en/data/todbc.html">TODBC</a><a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Printing &amp; Reports</div><a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../en/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div><a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../en/internet/tftp.html">TFtp</a><a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div><a class="nav-item" href="../../en/reference/commands.html">Commands</a><a class="nav-item" href="../../en/reference/functions.html">Functions</a><a class="nav-item" href="../../en/reference/errorsys.html">Error System</a><a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a><a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TButton / TBtnBmp</h1>
+<p class="subtitle">Standard push buttons and bitmap buttons for dialogs and toolbars</p>
+
+<h2 id="tbutton">TButton</h2>
+
+<p><strong>Source:</strong> <code>source/classes/button.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TButton</code> wraps the standard Windows push button control. It is the most basic interactive element -- a labeled rectangle that executes an action when clicked. Buttons can be designated as the <em>default</em> button (activated by Enter) or the <em>cancel</em> button (activated by Escape).</p>
+
+<h3 id="tbutton-hierarchy">Class Hierarchy</h3>
+
+<div class="mermaid">
+graph TD
+    TWindow --> TControl
+    TControl --> TButton
+    TControl --> TBtnBmp
+
+    subgraph "Button Family"
+        TButton
+        TBtnBmp
+    end
+
+    subgraph "Containers"
+        TDialog -- "contains" --> TButton
+        TDialog -- "contains" --> TBtnBmp
+        TWindow -- "contains" --> TButton
+        TButtonBar -- "contains" --> TBtnBmp
+    end
+
+    style TButton fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style TBtnBmp fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+</div>
+
+<h3 id="tbutton-properties">TButton Properties</h3>
+
+<table>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed when the button is clicked</td></tr>
+<tr><td><code>lDefault</code></td><td>Logical</td><td>If <code>.T.</code>, this is the default button (Enter key activates it)</td></tr>
+<tr><td><code>lCancel</code></td><td>Logical</td><td>If <code>.T.</code>, this is the cancel button (Escape key activates it)</td></tr>
+<tr><td><code>cCaption</code></td><td>String</td><td>Text displayed on the button face</td></tr>
+<tr><td><code>lProcessing</code></td><td>Logical</td><td>Internal reentrancy guard -- prevents double-clicks from firing the action twice</td></tr>
+</tbody>
+</table>
+
+<h3 id="tbutton-methods">TButton Methods</h3>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, cCaption, oWnd, bAction, nWidth, nHeight, ... )</code></td><td>Constructor. Creates a new button at the given position.</td></tr>
+<tr><td><code>ReDefine( nId, bAction, oWnd, ... )</code></td><td>Redefine a button from a dialog resource (RC file).</td></tr>
+<tr><td><code>Click()</code></td><td>Programmatically trigger the button's action.</td></tr>
+<tr><td><code>SetFocus()</code></td><td>Move keyboard focus to this button.</td></tr>
+</tbody>
+</table>
+
+<h3 id="tbutton-command">TButton Command Syntax</h3>
+
+<pre><code class="language-harbour">@ nRow, nCol BUTTON oBtn PROMPT "text" ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ ACTION codeblock ] ;
+   [ DEFAULT ] ;
+   [ CANCEL ] ;
+   [ FONT oFont ] ;
+   [ WHEN bWhen ]</code></pre>
+
+<h3 id="tbutton-states">Button State Machine</h3>
+
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> Normal
+    Normal --> Focused : Tab / SetFocus()
+    Focused --> Pressed : Click / Space / Enter(default)
+    Pressed --> ActionExecuted : bAction fires
+    ActionExecuted --> Normal : Action complete
+    Focused --> Normal : Tab away
+
+    note right of Pressed
+        lProcessing = .T.
+        Prevents re-entrancy
+    end note
+</div>
+
+<h2 id="tbtnbmp">TBtnBmp</h2>
+
+<p><strong>Source:</strong> <code>source/classes/btnbmp.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TBtnBmp</code> is an owner-drawn bitmap button that supports multiple visual states (normal, pressed, mouse-over, disabled). It is the button type used in toolbars (<code>TButtonBar</code>) and anywhere you need graphical buttons with icons.</p>
+
+<h3 id="tbtnbmp-properties">TBtnBmp Properties</h3>
+
+<table>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>cResName</code></td><td>String</td><td>Resource name for the button bitmap</td></tr>
+<tr><td><code>cBmpFile</code></td><td>String</td><td>Path to an external BMP/PNG file for the button image</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on click</td></tr>
+<tr><td><code>lBtnUp</code></td><td>Logical</td><td>Current pressed state (internal)</td></tr>
+<tr><td><code>lGroup</code></td><td>Logical</td><td>If <code>.T.</code>, starts a new group of toolbar buttons</td></tr>
+<tr><td><code>lPressed</code></td><td>Logical</td><td>For toggle-style buttons, indicates the toggled-on state</td></tr>
+<tr><td><code>cToolTip</code></td><td>String</td><td>Tooltip text shown on mouse hover</td></tr>
+<tr><td><code>lFlat</code></td><td>Logical</td><td>Flat appearance (border only on hover)</td></tr>
+</tbody>
+</table>
+
+<h3 id="tbtnbmp-command">TBtnBmp Command Syntax</h3>
+
+<pre><code class="language-harbour">@ nRow, nCol BTNBMP oBtn ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ ACTION codeblock ] ;
+   [ FILENAME cBmpFile | RESOURCE cResName ] ;
+   [ TOOLTIP cText ] ;
+   [ FLAT ] ;
+   [ PROMPT cText ] ;
+   [ WHEN bWhen ]</code></pre>
+
+<h2 id="buttonbar">BUTTONBAR (Toolbar)</h2>
+
+<p>The <code>DEFINE BUTTONBAR</code> command creates a <code>TButtonBar</code> container that hosts <code>TBtnBmp</code> buttons as a toolbar at the top of a window.</p>
+
+<pre><code class="language-harbour">DEFINE BUTTONBAR oBar OF oWnd SIZE nBtnW, nBtnH [ 2007 | 2010 | 2013 | 2015 ]
+
+DEFINE BUTTON oBtn1 OF oBar ;
+   RESOURCE "NEW" ;
+   TOOLTIP "New record" ;
+   ACTION NewRecord()
+
+DEFINE BUTTON oBtn2 OF oBar ;
+   RESOURCE "EDIT" ;
+   TOOLTIP "Edit record" ;
+   ACTION EditRecord()
+
+DEFINE BUTTON oBtn3 OF oBar ;
+   RESOURCE "PRINT" ;
+   TOOLTIP "Print report" ;
+   ACTION PrintReport() ;
+   GROUP                      // visual separator before this button</code></pre>
+
+<h2 id="examples">Code Examples</h2>
+
+<h3>Example 1: Standard Dialog Buttons</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION TestButtons()
+   LOCAL oDlg, oBtn1, oBtn2
+
+   DEFINE DIALOG oDlg TITLE "Button Demo" SIZE 400, 250
+
+   @ 2, 2 BUTTON oBtn1 PROMPT "&Save" ;
+      OF oDlg SIZE 80, 25 ;
+      ACTION ( MsgInfo( "Saved!" ), oDlg:End() ) ;
+      DEFAULT
+
+   @ 2, 12 BUTTON oBtn2 PROMPT "&Cancel" ;
+      OF oDlg SIZE 80, 25 ;
+      ACTION oDlg:End() ;
+      CANCEL
+
+   // A button with a WHEN clause -- disabled until data is valid
+   @ 4, 2 BUTTON PROMPT "&Delete" ;
+      OF oDlg SIZE 80, 25 ;
+      ACTION DeleteRecord() ;
+      WHEN ( !Empty( cRecId ) )
+
+   ACTIVATE DIALOG oDlg CENTERED
+RETURN NIL</code></pre>
+
+<h3>Example 2: Bitmap Buttons</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION TestBmpButtons()
+   LOCAL oWnd, oBtn
+
+   DEFINE WINDOW oWnd TITLE "Bitmap Button Demo"
+
+   // Bitmap button from a file
+   @ 2, 2 BTNBMP oBtn OF oWnd ;
+      SIZE 120, 40 ;
+      FILENAME "..\bitmaps\save.bmp" ;
+      PROMPT "Save" ;
+      ACTION MsgInfo( "Saving..." ) ;
+      FLAT
+
+   // Bitmap button from a resource
+   @ 5, 2 BTNBMP OF oWnd ;
+      SIZE 120, 40 ;
+      RESOURCE "PRINT" ;
+      PROMPT "Print" ;
+      ACTION PrintReport() ;
+      TOOLTIP "Print current report"
+
+   ACTIVATE WINDOW oWnd
+RETURN NIL</code></pre>
+
+<h3>Example 3: Complete Toolbar</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION Main()
+   LOCAL oWnd, oBar
+
+   DEFINE WINDOW oWnd TITLE "Application with Toolbar"
+
+   DEFINE BUTTONBAR oBar OF oWnd SIZE 56, 56 2015
+
+   DEFINE BUTTON OF oBar ;
+      RESOURCE "NEW"   TOOLTIP "New"   ACTION NewDoc()
+   DEFINE BUTTON OF oBar ;
+      RESOURCE "OPEN"  TOOLTIP "Open"  ACTION OpenDoc()
+   DEFINE BUTTON OF oBar ;
+      RESOURCE "SAVE"  TOOLTIP "Save"  ACTION SaveDoc()
+
+   DEFINE BUTTON OF oBar ;
+      RESOURCE "PRINT" TOOLTIP "Print" ACTION PrintDoc() GROUP
+
+   DEFINE BUTTON OF oBar ;
+      RESOURCE "HELP"  TOOLTIP "Help"  ACTION HelpDoc() GROUP
+
+   SET MESSAGE OF oWnd TO "Ready" CENTERED
+
+   ACTIVATE WINDOW oWnd
+RETURN NIL</code></pre>
+
+<h2 id="tips">Tips</h2>
+
+<ul>
+  <li>Use <code>&amp;</code> in the PROMPT to define an accelerator key: <code>"&amp;Save"</code> makes Alt+S activate the button.</li>
+  <li>Only one button per dialog should be <code>DEFAULT</code> and one should be <code>CANCEL</code>.</li>
+  <li>For modern toolbar looks, use the <code>2015</code> style on <code>DEFINE BUTTONBAR</code>.</li>
+  <li>TBtnBmp supports PNG files with alpha transparency for high-quality icons.</li>
+  <li>Use the <code>GROUP</code> clause to insert a visual separator between logical groups of toolbar buttons.</li>
+</ul>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+  <li><a href="../../en/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../en/ui/tmenu.html">TMenu</a> -- menus often paired with toolbars</li>
+  <li><a href="../../en/core/tdialog.html">TDialog</a> -- typical container for TButton</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

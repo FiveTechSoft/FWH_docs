@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clases de IA - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../es/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../es/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../es/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../es/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../es/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../es/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../es/ui/tscintilla.html">TScintilla</a>
+<a class="nav-item" href="../../es/ui/tswitch.html">TSwitch</a>
+<a class="nav-item" href="../../es/ui/tcalendar.html">TCalendar</a>
+<a class="nav-item" href="../../es/ui/tdtpicker.html">TDatePick</a>
+<a class="nav-item" href="../../es/ui/ttmpicker.html">TTimePick</a>
+<a class="nav-item" href="../../es/ui/tslider.html">TSlider</a>
+<a class="nav-item" href="../../es/ui/timagelist.html">TImageList</a>
+<a class="nav-item" href="../../es/ui/texplorerbar.html">TExplorerBar</a>
+<a class="nav-item" href="../../es/ui/tmetropanel.html">TMetroPanel</a>
+<a class="nav-item" href="../../es/ui/tscrollpanel.html">TScrollPanel</a>
+<a class="nav-item" href="../../es/ui/tpager.html">TPager</a>
+<a class="nav-item" href="../../es/ui/theader.html">THeader</a>
+<a class="nav-item" href="../../es/ui/tbartabs.html">TBarTabs</a>
+<a class="nav-item" href="../../es/ui/tprogresswheel.html">TProgressWheel</a>
+<a class="nav-item" href="../../es/ui/ttagcloud.html">TTagCloud</a>
+<a class="nav-item" href="../../es/ui/tscrollmsg.html">TScrollMsg</a>
+<a class="nav-item" href="../../es/ui/tnavigator.html">TNavigator</a>
+<a class="nav-item" href="../../es/ui/tmytitle.html">TMyTitle</a>
+<a class="nav-item" href="../../es/ui/tskinbutton.html">TSkinButton</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresión e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item active" href="../../es/internet/topenai.html">TOpenAI / TChatGPT</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TOpenAI / TChatGPT</h1>
+<p class="class-source">Fuente: <code>source/classes/topenai.prg</code> (TOpenAI), <code>source/classes/chatgpt.prg</code> (TChatGPT)</p>
+
+<p>
+FiveWin proporciona dos clases para integración con la API de OpenAI: <strong>TOpenAI</strong> (completa,
+con visión, streaming y soporte de imágenes) y <strong>TChatGPT</strong> (envoltorio más simple para completaciones
+de chat básicas). Ambas usan la biblioteca <code>hb_curl</code> de Harbour para comunicación HTTPS.
+</p>
+
+<h2 id="architecture">Arquitectura</h2>
+
+<div class="mermaid">
+flowchart LR
+    subgraph "Aplicación FiveWin"
+        A[TOpenAI]
+        B[TChatGPT]
+    end
+    subgraph "libcurl"
+        C[hb_curl<br/>HTTPS]
+    end
+    subgraph "API de OpenAI"
+        D["/v1/chat/completions"]
+        E[API de Visión]
+    end
+    A --> C
+    B --> C
+    C --> D
+    C --> E
+</div>
+
+<h2 id="topenai">Clase TOpenAI</h2>
+
+<h3>Miembros DATA</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Por Defecto</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cKey</code></td><td>Character</td><td><code>""</code></td><td>Clave API de OpenAI</td></tr>
+<tr><td><code>cModel</code></td><td>Character</td><td><code>"gpt-4o-mini"</code></td><td>Modelo a utilizar</td></tr>
+<tr><td><code>cPrompt</code></td><td>Character</td><td></td><td>Último prompt enviado</td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Respuesta JSON cruda de la API</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td></td><td>URL del endpoint de la API</td></tr>
+<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>Handle easy de libcurl</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>Código de error curl (0 = éxito)</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>Código de estado de respuesta HTTP</td></tr>
+<tr><td><code>nTemperature</code></td><td>Numeric</td><td><code>0.5</code></td><td>Temperatura de muestreo (0.0 - 2.0)</td></tr>
+</tbody>
+</table>
+
+<h3>Métodos</h3>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cKey, cModel )</code></td><td>Crear instancia. Si cKey está vacío, lee la variable de entorno OPENAI_API_KEY.</td></tr>
+<tr><td><code>Send( cPrompt )</code></td><td>Enviar un prompt de texto, devuelve respuesta JSON cruda</td></tr>
+<tr><td><code>SendStream( cPrompt, bCallback )</code></td><td>Enviar prompt con streaming; bCallback recibe fragmentos</td></tr>
+<tr><td><code>SendImage( cImageFileName, cPrompt )</code></td><td>Enviar un archivo de imagen local con un prompt (API de Visión)</td></tr>
+<tr><td><code>SendImageURL( cImageUrl, cPrompt )</code></td><td>Enviar una URL de imagen con un prompt (API de Visión)</td></tr>
+<tr><td><code>GetValue()</code></td><td>Extraer la respuesta de texto del JSON de cResponse</td></tr>
+<tr><td><code>End()</code></td><td>Limpiar el handle de curl</td></tr>
+</tbody>
+</table>
+
+<h2 id="tchatgpt">Clase TChatGPT</h2>
+
+<p>
+TChatGPT es una alternativa más simple con menos funciones, adecuada para interacciones básicas de prompt/respuesta.
+</p>
+
+<h3>Miembros DATA</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Por Defecto</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cKey</code></td><td>Character</td><td><code>""</code></td><td>Clave API de OpenAI</td></tr>
+<tr><td><code>cModel</code></td><td>Character</td><td><code>"gpt-4o-mini"</code></td><td>Nombre del modelo</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td><code>"https://api.openai.com/v1/chat/completions"</code></td><td>Endpoint de la API</td></tr>
+<tr><td><code>cPrompt</code></td><td>Character</td><td></td><td>Texto del prompt a enviar</td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Respuesta JSON cruda</td></tr>
+<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>Handle de libcurl</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>Código de error curl</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td></td><td>Código de estado HTTP</td></tr>
+</tbody>
+</table>
+
+<h3>Métodos</h3>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cKey )</code></td><td>Crear instancia con clave API</td></tr>
+<tr><td><code>Send()</code></td><td>Enviar cPrompt, almacenar respuesta en cResponse</td></tr>
+<tr><td><code>GetValue( cKey1, cKey2, ... )</code></td><td>Navegar la respuesta JSON por ruta de claves. Argumentos variables.</td></tr>
+<tr><td><code>Reset()</code></td><td>Reiniciar estado de curl para la siguiente solicitud</td></tr>
+<tr><td><code>End()</code></td><td>Limpiar el handle de curl</td></tr>
+</tbody>
+</table>
+
+<h2 id="example-basic">Ejemplo: Prompt/Respuesta Básico (TOpenAI)</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oAI, cAnswer
+
+   // Clave API desde la variable de entorno OPENAI_API_KEY
+   oAI := TOpenAI():New()
+
+   // O con clave y modelo explícitos:
+   // oAI := TOpenAI():New( "sk-...", "gpt-4o" )
+
+   oAI:Send( "What is the capital of France? Answer in one word." )
+
+   if oAI:nError == 0 .and. oAI:nHttpCode == 200
+      cAnswer := oAI:GetValue()
+      MsgInfo( cAnswer )   // "Paris"
+   else
+      MsgStop( "Error: " + oAI:cResponse )
+   endif
+
+   oAI:End()
+
+return nil</code></pre>
+
+<h2 id="example-stream">Ejemplo: Respuesta en Streaming</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oAI, cBuffer := ""
+
+   oAI := TOpenAI():New()
+   oAI:cModel := "gpt-4o"
+
+   // El callback de streaming recibe fragmentos de datos a medida que llegan
+   oAI:SendStream( "Write a short poem about coding.", ;
+      { |cChunk| cBuffer += cChunk, QOut( cChunk ) } )
+
+   if oAI:nError == 0
+      MsgInfo( "Respuesta completa:" + CRLF + cBuffer )
+   endif
+
+   oAI:End()
+
+return nil</code></pre>
+
+<h2 id="example-vision">Ejemplo: Visión (Analizar una Imagen)</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oAI
+
+   oAI := TOpenAI():New( , "gpt-4o" )
+
+   // Enviar un archivo de imagen local
+   oAI:SendImage( "C:\photos\chart.png", "Describe what you see in this image." )
+
+   if oAI:nError == 0
+      MsgInfo( oAI:GetValue() )
+   endif
+
+   // Enviar una imagen por URL
+   oAI:SendImageURL( ;
+      "https://example.com/photo.jpg", ;
+      "What objects are in this photo?" )
+
+   if oAI:nError == 0
+      MsgInfo( oAI:GetValue() )
+   endif
+
+   oAI:End()
+
+return nil</code></pre>
+
+<h2 id="example-chatgpt">Ejemplo: TChatGPT (Envoltorio Simple)</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oChat
+
+   oChat := TChatGPT():New( "sk-your-api-key-here" )
+
+   // Establecer el prompt y enviar
+   oChat:cPrompt := "Translate 'Hello, how are you?' to Spanish"
+   oChat:Send()
+
+   if oChat:nError == 0
+      // Navegar la respuesta JSON
+      ? oChat:GetValue( "choices", "message", "content" )
+      // Salida: "Hola, como estas?"
+   endif
+
+   // Enviar otro prompt (reiniciar primero)
+   oChat:Reset()
+   oChat:cPrompt := "Now translate it to French"
+   oChat:Send()
+
+   if oChat:nError == 0
+      ? oChat:GetValue( "choices", "message", "content" )
+   endif
+
+   oChat:End()
+
+return nil</code></pre>
+
+<h2 id="example-temperature">Ejemplo: Ajustar la Temperatura</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oAI
+
+   oAI := TOpenAI():New()
+
+   // Temperatura baja = más determinista
+   oAI:nTemperature := 0.1
+   oAI:Send( "What is 2 + 2?" )
+   ? "Preciso:", oAI:GetValue()
+
+   // Temperatura alta = más creativo
+   oAI:nTemperature := 1.5
+   oAI:Send( "Write a creative product name for a new coffee brand" )
+   ? "Creativo:", oAI:GetValue()
+
+   oAI:End()
+
+return nil</code></pre>
+
+<h2 id="models">Modelos Soportados</h2>
+
+<table>
+<thead>
+<tr><th>Modelo</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>gpt-4o</code></td><td>Modelo más capaz, soporta texto + visión</td></tr>
+<tr><td><code>gpt-4o-mini</code></td><td>Rápido, económico (predeterminado en FWH)</td></tr>
+<tr><td><code>gpt-4-turbo</code></td><td>GPT-4 Turbo con ventana de contexto grande</td></tr>
+<tr><td><code>gpt-3.5-turbo</code></td><td>Modelo rápido heredado</td></tr>
+</tbody>
+</table>
+
+<h2 id="tips">Consejos</h2>
+
+<ul>
+<li>Almacene su clave API en la variable de entorno <code>OPENAI_API_KEY</code> en lugar de codificarla directamente.</li>
+<li>TOpenAI:New() lee automáticamente del entorno si no se pasa ninguna clave.</li>
+<li>La biblioteca <code>hb_curl</code> debe estar enlazada. Use <code>#include "hbcurl.ch"</code> para las constantes.</li>
+<li>La verificación SSL está deshabilitada por defecto (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) por compatibilidad.</li>
+<li>Use <code>SendStream()</code> para respuestas largas para obtener salida en tiempo real en lugar de esperar la respuesta completa.</li>
+<li>El método <code>GetValue()</code> maneja el análisis JSON internamente. Para TOpenAI devuelve <code>choices[1].message.content</code>. Para TChatGPT, pase la ruta de claves como argumentos.</li>
+</ul>
+
+<h2 id="ollama">TOLlama (IA Local)</h2>
+<p class="source-badge">Fuente: <code>source/classes/tollama.prg</code></p>
+<p><span class="badge badge-green">IA Local</span> Se conecta a un servidor <a href="https://ollama.ai">Ollama</a> local. No necesita clave API - ejecuta modelos de IA en su propia máquina.</p>
+
+<table>
+<tr><th>DATA</th><th>Por Defecto</th><th>Descripción</th></tr>
+<tr><td><code>cModel</code></td><td></td><td>Nombre del modelo (ej. "llama3", "mistral", "codellama")</td></tr>
+<tr><td><code>cUrl</code></td><td>"http://localhost:11434"</td><td>URL del servidor Ollama</td></tr>
+<tr><td><code>cPrompt</code></td><td></td><td>Prompt actual</td></tr>
+<tr><td><code>cResponse</code></td><td></td><td>Respuesta de la API</td></tr>
+<tr><td><code>aAgents</code></td><td></td><td>Array de definiciones de agentes</td></tr>
+</table>
+
+<table>
+<tr><th>Método</th><th>Parámetros</th><th>Descripción</th></tr>
+<tr><td><code>New()</code></td><td>cModel</td><td>Constructor. Establece el nombre del modelo.</td></tr>
+<tr><td><code>Send()</code></td><td>cPrompt</td><td>Enviar prompt y esperar respuesta completa</td></tr>
+<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Enviar con streaming - bCallback recibe fragmentos en tiempo real</td></tr>
+<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Enviar imagen + prompt (para modelos de visión como llava)</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extraer texto de respuesta del JSON</td></tr>
+<tr><td><code>End()</code></td><td></td><td>Limpiar handle CURL</td></tr>
+</table>
+
+<pre><code>local oAI := TOLlama():New( "llama3" )
+
+oAI:Send( "Explain what FiveWin is in one paragraph" )
+MsgInfo( oAI:GetValue() )
+
+// Respuesta en streaming
+oAI:SendStream( "Write a Harbour function", ;
+   {| cChunk | QOut( cChunk ) } )
+
+oAI:End()</code></pre>
+
+<h2 id="deepseek">TDeepSeek</h2>
+<p class="source-badge">Fuente: <code>source/classes/tdeepseek.prg</code></p>
+<p><span class="badge badge-blue">IA en la Nube</span> Cliente API de DeepSeek. Conocido por sus fuertes capacidades de codificación y razonamiento.</p>
+
+<table>
+<tr><th>DATA</th><th>Por Defecto</th><th>Descripción</th></tr>
+<tr><td><code>cKey</code></td><td>""</td><td>Clave API de DeepSeek</td></tr>
+<tr><td><code>cModel</code></td><td>"deepseek-chat"</td><td>Modelo: "deepseek-chat" o "deepseek-reasoner"</td></tr>
+<tr><td><code>cUrl</code></td><td></td><td>Endpoint de la API</td></tr>
+</table>
+
+<pre><code>local oAI := TDeepSeek():New( "your-api-key" )
+oAI:Send( "Write a Harbour function to calculate factorial" )
+MsgInfo( oAI:GetValue() )
+oAI:End()</code></pre>
+
+<h2 id="gemini">TGemini (Google)</h2>
+<p class="source-badge">Fuente: <code>source/classes/tgemini.prg</code></p>
+<p><span class="badge badge-blue">IA en la Nube</span> Cliente API de Google Gemini. Soporta texto, imágenes y carga de archivos.</p>
+
+<table>
+<tr><th>DATA</th><th>Por Defecto</th><th>Descripción</th></tr>
+<tr><td><code>cKey</code></td><td>""</td><td>Clave API de Google</td></tr>
+<tr><td><code>cModel</code></td><td>"gemini-2.0-flash"</td><td>Nombre del modelo</td></tr>
+<tr><td><code>cUrl</code></td><td>googleapis.com/v1beta/models</td><td>Endpoint de la API</td></tr>
+<tr><td><code>cUploadUrl</code></td><td>googleapis.com/upload/v1beta/files</td><td>Endpoint de carga de archivos</td></tr>
+<tr><td><code>nTemperature</code></td><td>0</td><td>Creatividad de la respuesta (0-2)</td></tr>
+</table>
+
+<table>
+<tr><th>Método</th><th>Parámetros</th><th>Descripción</th></tr>
+<tr><td><code>New()</code></td><td>cKey, cModel</td><td>Constructor</td></tr>
+<tr><td><code>Send()</code></td><td>uContent, cPrompt, bCallback</td><td>Enviar texto, imagen o archivo con prompt</td></tr>
+<tr><td><code>UploadFile()</code></td><td>cFileName, lDeleteAfter</td><td>Cargar archivo a Gemini para análisis</td></tr>
+<tr><td><code>GetTokens()</code></td><td>cBuffer</td><td>Contar tokens en el texto</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extraer texto de respuesta</td></tr>
+</table>
+
+<pre><code>local oAI := TGemini():New( "your-google-api-key" )
+oAI:Send( "Analyze this image", "photo.jpg" )
+MsgInfo( oAI:GetValue() )
+oAI:End()</code></pre>
+
+<h2 id="grok">TGrok (xAI)</h2>
+<p class="source-badge">Fuente: <code>source/classes/tgrok.prg</code></p>
+<p><span class="badge badge-blue">IA en la Nube</span> Cliente API de xAI Grok. Soporta texto, imágenes y streaming.</p>
+
+<table>
+<tr><th>DATA</th><th>Por Defecto</th><th>Descripción</th></tr>
+<tr><td><code>cKey</code></td><td>""</td><td>Clave API de xAI</td></tr>
+<tr><td><code>cModel</code></td><td>"grok-3-latest"</td><td>Nombre del modelo</td></tr>
+<tr><td><code>nTemperature</code></td><td>0.5</td><td>Creatividad de la respuesta</td></tr>
+</table>
+
+<table>
+<tr><th>Método</th><th>Parámetros</th><th>Descripción</th></tr>
+<tr><td><code>Send()</code></td><td>cPrompt</td><td>Enviar prompt de texto</td></tr>
+<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Respuesta en streaming</td></tr>
+<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Enviar archivo de imagen + prompt</td></tr>
+<tr><td><code>SendImageURL()</code></td><td>cImageUrl, cPrompt</td><td>Enviar URL de imagen + prompt</td></tr>
+</table>
+
+<pre><code>local oAI := TGrok():New( "your-xai-key" )
+oAI:Send( "What are the benefits of Harbour language?" )
+MsgInfo( oAI:GetValue() )
+oAI:End()</code></pre>
+
+<h2 id="kimi">TKimi (Moonshot)</h2>
+<p class="source-badge">Fuente: <code>source/classes/tkimi.prg</code></p>
+<p><span class="badge badge-blue">IA en la Nube</span> Cliente API de Moonshot Kimi. Fuertes capacidades multilingües.</p>
+
+<table>
+<tr><th>DATA</th><th>Por Defecto</th><th>Descripción</th></tr>
+<tr><td><code>cKey</code></td><td>""</td><td>Clave API de Moonshot</td></tr>
+<tr><td><code>cModel</code></td><td>"moonshot-v1-8k"</td><td>Modelo: moonshot-v1-8k, -32k, -128k</td></tr>
+<tr><td><code>nTemperature</code></td><td>0.5</td><td>Creatividad de la respuesta</td></tr>
+</table>
+
+<pre><code>local oAI := TKimi():New( "your-moonshot-key" )
+oAI:Send( "Translate this to Chinese: Hello World" )
+MsgInfo( oAI:GetValue() )
+oAI:End()</code></pre>
+
+<h2 id="ai-comparison">Comparación de Clases de IA</h2>
+<table>
+<tr><th>Clase</th><th>Proveedor</th><th>Local/Nube</th><th>Visión</th><th>Streaming</th><th>Modelo por Defecto</th></tr>
+<tr><td><code>TOpenAI</code></td><td>OpenAI</td><td>Nube</td><td>Sí</td><td>Sí</td><td>gpt-4o-mini</td></tr>
+<tr><td><code>TChatGPT</code></td><td>OpenAI</td><td>Nube</td><td>No</td><td>No</td><td>gpt-4o-mini</td></tr>
+<tr><td><code>TOLlama</code></td><td>Local (Ollama)</td><td>Local</td><td>Sí</td><td>Sí</td><td>(elección del usuario)</td></tr>
+<tr><td><code>TDeepSeek</code></td><td>DeepSeek</td><td>Nube</td><td>No</td><td>No</td><td>deepseek-chat</td></tr>
+<tr><td><code>TGemini</code></td><td>Google</td><td>Nube</td><td>Sí</td><td>Sí</td><td>gemini-2.0-flash</td></tr>
+<tr><td><code>TGrok</code></td><td>xAI</td><td>Nube</td><td>Sí</td><td>Sí</td><td>grok-3-latest</td></tr>
+<tr><td><code>TKimi</code></td><td>Moonshot</td><td>Nube</td><td>No</td><td>No</td><td>moonshot-v1-8k</td></tr>
+</table>
+
+<div class="mermaid">
+graph TD
+    A[Su Aplicación FWH] --> B{Elegir Proveedor de IA}
+    B -->|Local, Gratis| C[TOLlama<br/>llama3, mistral, codellama]
+    B -->|OpenAI| D[TOpenAI / TChatGPT<br/>gpt-4o, gpt-4o-mini]
+    B -->|Google| E[TGemini<br/>gemini-2.0-flash]
+    B -->|xAI| F[TGrok<br/>grok-3]
+    B -->|DeepSeek| G[TDeepSeek<br/>deepseek-chat]
+    B -->|Moonshot| H[TKimi<br/>moonshot-v1]
+
+    style C fill:#238636,stroke:#3fb950,color:#fff
+    style D fill:#1f6feb,stroke:#58a6ff,color:#fff
+    style E fill:#d29922,stroke:#e3b341,color:#000
+    style F fill:#6e40c9,stroke:#bc8cff,color:#fff
+    style G fill:#da3633,stroke:#f85149,color:#fff
+    style H fill:#bf8700,stroke:#d29922,color:#fff
+</div>
+
+<h2 id="transformer">Transformer (Red Neuronal en Harbour)</h2>
+<p class="source-badge">Fuente: <code>source/classes/transformer.prg</code></p>
+<p><span class="badge badge-purple">Avanzado</span> Una red neuronal Transformer completa implementada en Harbour puro. Soporta entrenamiento, propagación hacia adelante/atrás, atención multi-cabeza y predicción de texto.</p>
+
+<table>
+<tr><th>DATA</th><th>Descripción</th></tr>
+<tr><td><code>d_model</code></td><td>Dimensión del modelo (tamaño del embedding)</td></tr>
+<tr><td><code>n_heads</code></td><td>Número de cabezas de atención</td></tr>
+<tr><td><code>num_layers</code></td><td>Número de capas del transformer</td></tr>
+<tr><td><code>vocab_size</code></td><td>Tamaño del vocabulario</td></tr>
+<tr><td><code>max_seq_len</code></td><td>Longitud máxima de secuencia</td></tr>
+<tr><td><code>aVocab</code></td><td>Array de vocabulario (palabras)</td></tr>
+<tr><td><code>Embedding, Positional</code></td><td>Matrices de embedding y codificación posicional</td></tr>
+</table>
+
+<table>
+<tr><th>Método</th><th>Descripción</th></tr>
+<tr><td><code>New()</code></td><td>Constructor: num_layers, d_model, n_heads, vocab_size, max_seq_len, hEmbeddings, aVocab</td></tr>
+<tr><td><code>Forward()</code></td><td>Propagación hacia adelante: src_indices, pos_indices &rarr; salida</td></tr>
+<tr><td><code>Backward()</code></td><td>Propagación hacia atrás: calcular gradientes para entrenamiento</td></tr>
+<tr><td><code>zero_grad()</code></td><td>Reiniciar todos los gradientes a cero</td></tr>
+</table>
+
+<h3 id="transf-nextword">Ejemplo: Predicción de Siguiente Palabra (transf1.prg)</h3>
+<pre><code>local vocab := { "hola", "mundo", "adios", "gato", "perro" }
+local oT := Transformer():New( 1, 6, 2, Len(vocab), 8,, vocab )
+
+// Entrenar con secuencias
+for e = 1 to 60
+   for i = 1 to Len(train_src)
+      output := oT:Forward( train_src[i], train_pos[i] )
+      oT:Backward( output, train_tgt[i], train_src[i], train_pos[i] )
+   next
+next
+
+// Predecir siguiente palabra
+output := oT:Forward( { 1, 2 }, { 1, 2 } )  // "hola mundo" -> ?</code></pre>
+
+<h3 id="transf-sentiment">Ejemplo: Clasificación de Sentimiento (transf2.prg)</h3>
+<pre><code>// Clasificar frases como Positivas o Negativas
+local vocab := { "buen", "dia", "malo", "trabajo", "feliz", "triste", "excelente", "horrible" }
+local oT := TransformerClassifier():New( 1, 6, 2, 2, vocab )
+
+// Entrenar: "buen dia" -> Positivo, "malo trabajo" -> Negativo
+// Después del entrenamiento, clasificar nuevas frases</code></pre>
+
+<h2 id="neural">TNeuralNetwork (Red Neuronal Clásica)</h2>
+<p class="source-badge">Fuente: <code>source/classes/tneuralnet.prg</code></p>
+<p>Red neuronal feedforward clásica con retropropagación. Buena para reconocimiento de patrones simples.</p>
+
+<pre><code>// Ejemplo de entrenamiento XOR
+local oNN := TNeuralNetwork():New( 2, { 2 }, 1 )  // 2 entradas, 1 capa oculta con 2 neuronas, 1 salida
+
+for n = 1 to 30000
+   oNN:Learn( { 0, 0 }, { 0 }, .F. )
+   oNN:Learn( { 1, 0 }, { 1 }, .F. )
+   oNN:Learn( { 0, 1 }, { 1 }, .F. )
+   oNN:Learn( { 1, 1 }, { 0 }, .F. )
+next
+
+? oNN:Predict( { 1, 0 } )  // -> ~1.0
+? oNN:Predict( { 1, 1 } )  // -> ~0.0</code></pre>
+
+<h2 id="embeddings">TEmbeddings (Similitud Semántica)</h2>
+<p class="source-badge">Fuente: <code>source/classes/tembeddings.prg</code></p>
+<p>Embeddings de texto para comparación de similitud semántica. Usa APIs de HuggingFace u OpenAI.</p>
+
+<pre><code>local oE1 := TEmbeddings():New()
+local oE2 := TEmbeddings():New()
+local oE3 := TEmbeddings():New()
+
+oE1:GetEmbeddings( "I feel very well" )
+oE2:GetEmbeddings( "How are you?" )
+oE3:GetEmbeddings( "I saw Peter" )
+
+? oE1 - oE2   // Alta similitud (ambos sobre sentimientos)
+? oE1 - oE3   // Baja similitud (temas diferentes)</code></pre>
+
+<h2 id="agents">Agentes de IA (TOLlama + TAgent)</h2>
+<p>Los agentes de IA combinan LLMs con herramientas (funciones) que la IA puede invocar. La IA decide qué herramienta usar según la solicitud del usuario.</p>
+
+<pre><code>local oLlama := TOLlama():New()
+local oAgent
+
+// Agente para fecha/hora
+oAgent := TAgent():New( "datetime", { ;
+   { "get_time", {|hParams| GetCurrentTime(hParams) } }, ;
+   { "get_date", {|hParams| GetDate(hParams) } } } )
+AAdd( oLlama:aAgents, oAgent )
+
+// Agente para sistema de archivos
+oAgent := TAgent():New( "filesystem", { ;
+   { "create_folder", {|hParams| CreateFolder(hParams) } }, ;
+   { "create_file",   {|hParams| CreateFile(hParams) } } } )
+AAdd( oLlama:aAgents, oAgent )
+
+// La IA decide qué herramienta usar
+oLlama:Send( "What time is it?" )       // -> llama a get_time
+oLlama:Send( "Create a folder test" )   // -> llama a create_folder</code></pre>
+
+<h2 id="samples-list">Referencia de Ejemplos de IA</h2>
+<p>Todos los ejemplos de IA están en la carpeta <code>samples/ai/</code>:</p>
+
+<table>
+<tr><th>Ejemplo</th><th>Descripción</th><th>Clase IA</th></tr>
+<tr><td><code>ollama1.prg</code> - <code>ollama5.prg</code></td><td>IA local: chat básico, streaming, análisis de imágenes</td><td>TOLlama</td></tr>
+<tr><td><code>openai1.prg</code>, <code>openai2.prg</code></td><td>OpenAI: prompts de texto e imagen</td><td>TOpenAI</td></tr>
+<tr><td><code>chatgpt.prg</code></td><td>Diálogo interactivo ChatGPT con voz</td><td>TChatGPT</td></tr>
+<tr><td><code>deepseek1.prg</code></td><td>DeepSeek: generación de código SQL</td><td>TDeepSeek</td></tr>
+<tr><td><code>gemini1.prg</code> - <code>gemini6.prg</code></td><td>Google Gemini: texto, imágenes, archivos, tokens</td><td>TGemini</td></tr>
+<tr><td><code>grok1.prg</code></td><td>xAI Grok: prompt básico</td><td>TGrok</td></tr>
+<tr><td><code>kimi1.prg</code></td><td>Moonshot Kimi: multilingüe</td><td>TKimi</td></tr>
+<tr><td><code>ai.prg</code></td><td>Diálogo de IA interactivo con síntesis de voz (64 bits)</td><td>TOpenAI</td></tr>
+<tr><td><code>vision.prg</code></td><td>IDE visual de formularios con IA</td><td>Múltiples</td></tr>
+<tr><td><code>agents.prg</code></td><td>Agentes de IA con llamada a herramientas</td><td>TOLlama + TAgent</td></tr>
+<tr><td><code>agentdb.prg</code>, <code>agentdb2.prg</code></td><td>Agentes de IA para operaciones de base de datos</td><td>TOLlama + TAgent</td></tr>
+<tr><td><code>agentdoc.prg</code>, <code>agentdoc2.prg</code></td><td>Agentes de IA para creación de documentos</td><td>TOLlama + TAgent</td></tr>
+<tr><td><code>agentweb.prg</code></td><td>Agente de IA para operaciones web</td><td>TOLlama + TAgent</td></tr>
+<tr><td><code>autogpt.prg</code></td><td>Ejecución autónoma de tareas con IA</td><td>TOpenAI</td></tr>
+<tr><td><code>transf1.prg</code> - <code>transf5.prg</code></td><td>Transformer: siguiente palabra, sentimiento, entrenamiento</td><td>Transformer</td></tr>
+<tr><td><code>transformer.prg</code></td><td>Demo completa de transformer</td><td>Transformer</td></tr>
+<tr><td><code>neural.prg</code></td><td>Red neuronal: entrenamiento XOR</td><td>TNeuralNetwork</td></tr>
+<tr><td><code>neuralnet.prg</code></td><td>Visualización de red neuronal</td><td>TNet</td></tr>
+<tr><td><code>nn.prg</code> - <code>nn4c.prg</code></td><td>Varios ejemplos de redes neuronales</td><td>TNeuralNetwork</td></tr>
+<tr><td><code>perceptron.prg</code></td><td>Perceptrón básico</td><td>Personalizado</td></tr>
+<tr><td><code>embeddings1.prg</code>, <code>embeddings2.prg</code></td><td>Similitud de texto con embeddings</td><td>TEmbeddings</td></tr>
+<tr><td><code>llm.prg</code></td><td>Ejemplo de integración LLM</td><td>TOLlama</td></tr>
+<tr><td><code>llama3.prg</code></td><td>Características específicas de Llama 3</td><td>TOLlama</td></tr>
+<tr><td><code>llava.prg</code></td><td>Modelo de visión LLaVA</td><td>TOLlama</td></tr>
+<tr><td><code>phi4.prg</code></td><td>Modelo Microsoft Phi-4</td><td>TOLlama</td></tr>
+</table>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>More Controls - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeros Pasos</div><a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a><a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a><a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a><a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Clases Base</div><a class="nav-item" href="../../es/core/twindow.html">TWindow</a><a class="nav-item" href="../../es/core/tdialog.html">TDialog</a><a class="nav-item" href="../../es/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item active" href="../../es/ui/more-controls.html">Más Controles</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Avanzada</div><a class="nav-item" href="../../es/ui/tlistview.html">TListView</a><a class="nav-item" href="../../es/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../es/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../es/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Acceso a Datos</div><a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../es/data/todbc.html">TODBC</a><a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Impresión e Informes</div><a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../es/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../es/internet/tftp.html">TFtp</a><a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../es/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Referencia</div><a class="nav-item" href="../../es/reference/commands.html">Comandos</a><a class="nav-item" href="../../es/reference/functions.html">Funciones</a><a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a><a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a></div>
+</nav>
+<main id="content">
+
+<h1>Más Controles</h1>
+<p class="subtitle">Controles UI adicionales de FiveWin para etiquetas, progreso, diseño, temporizadores y más</p>
+
+<div class="mermaid">
+graph TD
+    TControl --> TSay
+    TControl --> TMeter
+    TControl --> TProgress
+    TControl --> TSlider
+    TControl --> TScrollBar
+    TControl --> TSplitter
+    TControl --> TPanel
+
+    subgraph "Display"
+        TSay
+        TMeter
+        TProgress
+        TSlider
+    end
+
+    subgraph "Layout"
+        TPanel
+        TSplitter
+        TScrollBar
+        TReBar
+    end
+
+    TWindow --> TTimer
+    TWindow --> TTrayIcon
+    TWindow --> TToast
+
+    subgraph "Utility"
+        TTimer
+        TTrayIcon
+        TToast
+    end
+
+    style TSay fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style TMeter fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style TPanel fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style TTimer fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+</div>
+
+<!-- ================================================================== -->
+<h2 id="tsay">TSay -- Static Text</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/say.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TSay</code> muestra una etiqueta de texto estático. Soporta estilos centrado, alineado a la derecha, con borde, sombreado 3D y transparente. El texto puede enlazarse a datos mediante un bloque de código y refrescarse automáticamente.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>bGet</code></td><td>Block</td><td>Code block returning the text to display. Re-evaluated on <code>Refresh()</code>.</td></tr>
+<tr><td><code>cPicture</code></td><td>String</td><td>Format picture string (e.g. <code>"999,999.99"</code>)</td></tr>
+<tr><td><code>l3D</code></td><td>Logical</td><td>3D appearance (shaded, raised, or boxed)</td></tr>
+<tr><td><code>lAdjust</code></td><td>Logical</td><td>Auto-adjust width to text content</td></tr>
+<tr><td><code>lWantClick</code></td><td>Logical</td><td>If <code>.T.</code>, the label responds to click events</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Custom border color (overrides standard border)</td></tr>
+<tr><td><code>bClrText</code></td><td>Block</td><td>Dynamic text color block, re-evaluated on <code>Refresh()</code></td></tr>
+</tbody>
+</table>
+
+<h3>Command Syntax</h3>
+<pre><code class="language-harbour">@ nRow, nCol SAY [ oSay PROMPT ] cText ;
+   [ OF oWnd ] ;
+   [ PICTURE cPicture ] ;
+   [ FONT oFont ] ;
+   [ CENTERED | RIGHT ] ;
+   [ BORDER ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ COLOR nClrText, nClrBack ] ;
+   [ SHADED | BOX | RAISED ] ;
+   [ TRANSPARENT ] ;
+   [ ADJUST ]</code></pre>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">@ 1, 1 SAY oSay PROMPT "Total:" OF oDlg ;
+   FONT oBold COLOR CLR_BLUE, CLR_WHITE
+
+@ 1, 10 SAY oTotal PROMPT nTotal OF oDlg ;
+   PICTURE "999,999.99" UPDATE</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tmeter">TMeter / TMeterEx -- Progress Meter</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/meter.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TMeter</code> muestra una barra de progreso con texto de porcentaje opcional. Soporta barras lineales estándar, medidores circulares y estilos de array de bitmaps. La variante <code>TMeterEx</code> agrega efectos visuales mejorados con bitmaps personalizados.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>nTotal</code></td><td>Numeric</td><td>Maximum value of the meter</td></tr>
+<tr><td><code>nClrBar</code></td><td>Numeric</td><td>Color of the filled portion (default <code>CLR_HBLUE</code>)</td></tr>
+<tr><td><code>nClrBText</code></td><td>Numeric</td><td>Text color over the filled bar (default <code>CLR_WHITE</code>)</td></tr>
+<tr><td><code>nClrBlank</code></td><td>Numeric</td><td>Color of the unfilled portion</td></tr>
+<tr><td><code>lPercentage</code></td><td>Logical</td><td>Show percentage text on the meter</td></tr>
+<tr><td><code>cText</code></td><td>String</td><td>Custom text displayed on the meter instead of percentage</td></tr>
+<tr><td><code>cStyle</code></td><td>String</td><td>Style: <code>nil</code> (linear), <code>"CIRCULAR"</code>, or <code>"BMPARRAY"</code></td></tr>
+<tr><td><code>nClrFill</code></td><td>Numeric</td><td>Fill color for circular meter</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Border color</td></tr>
+</tbody>
+</table>
+
+<h3>Key Methods</h3>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>Set( nActual )</code></td><td>Set the current meter value and repaint</td></tr>
+<tr><td><code>SetTotal( nTotal )</code></td><td>Change the total and refresh</td></tr>
+</tbody>
+</table>
+
+<h3>Command Syntax</h3>
+<pre><code class="language-harbour">@ nRow, nCol METER [ oMeter VAR ] nActual ;
+   TOTAL nTotal ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ FONT oFont ] ;
+   [ PROMPT cText ] ;
+   [ NOPERCENTAGE ] ;
+   [ COLOR nClrPane, nClrText ] ;
+   [ BARCOLOR nClrBar, nClrBText ] ;
+   [ PIXEL ] ;
+   [ UPDATE ] ;
+   [ CIRCULAR [ INNERDIA nInnerDia ] ] ;
+   [ FILLCOLOR nClrFill ] ;
+   [ BORDERCOLOR nClrBorder ]</code></pre>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">LOCAL oMeter, nProgress := 0
+
+@ 5, 2 METER oMeter VAR nProgress TOTAL 100 OF oDlg ;
+   SIZE 200, 20 PIXEL BARCOLOR CLR_GREEN, CLR_WHITE
+
+// Update during processing
+FOR n := 1 TO 100
+   nProgress := n
+   oMeter:Refresh()
+   SysRefresh()
+NEXT</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tprogress">TProgress -- Progress Bar</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/progress.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TProgress</code> envuelve la barra de progreso del control común de Windows (<code>msctls_progress32</code>). Proporciona un indicador de progreso con aspecto nativo y actualizaciones escalonadas opcionales.</p>
+
+<h3>Command Syntax</h3>
+<pre><code class="language-harbour">@ nRow, nCol PROGRESS oPrg ;
+   [ OF oWnd ] ;
+   [ POS nPos ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ PIXEL ]
+
+REDEFINE PROGRESS oPrg ID nId OF oWnd</code></pre>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">@ 3, 1 PROGRESS oPrg OF oDlg POS 0 SIZE 200, 18 PIXEL
+
+// Step through progress
+oPrg:SetRange( 0, 100 )
+oPrg:SetStep( 1 )
+FOR n := 1 TO 100
+   oPrg:StepIt()
+   SysRefresh()
+NEXT</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tslider">TSlider / TTrackBar -- Slider Control</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/slider.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TSlider</code> es una barra de seguimiento dibujada por el propietario para seleccionar un valor numérico dentro de un rango arrastrando un control deslizante. Soporta orientación horizontal/vertical, marcas de graduación y un estilo visual delgado.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum value of the range</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum value of the range</td></tr>
+<tr><td><code>lHorizontal</code></td><td>Logical</td><td>Horizontal orientation (default) vs vertical</td></tr>
+<tr><td><code>nMarks</code></td><td>Numeric</td><td>Number of tick marks</td></tr>
+<tr><td><code>lExact</code></td><td>Logical</td><td>Snap to tick marks</td></tr>
+<tr><td><code>nClrBtn</code></td><td>Numeric</td><td>Thumb button color</td></tr>
+<tr><td><code>nClrMarks</code></td><td>Numeric</td><td>Tick mark color</td></tr>
+<tr><td><code>bPos</code></td><td>Block</td><td>Code block fired when thumb position changes</td></tr>
+<tr><td><code>lSlimStyle</code></td><td>Logical</td><td>Slim visual style</td></tr>
+</tbody>
+</table>
+
+<h3>Key Methods</h3>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>Set( nVal )</code></td><td>Programmatically set the slider value</td></tr>
+<tr><td><code>Change()</code></td><td>Called internally when value changes; fires <code>bChange</code></td></tr>
+</tbody>
+</table>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">LOCAL nVolume := 50
+
+@ 3, 2 SLIDER oSlider VAR nVolume ;
+   HORIZONTAL OF oDlg ;
+   RANGE 0, 100 MARKS 10 ;
+   SIZE 200, 30 PIXEL ;
+   ON CHANGE UpdateVolume( nVolume )</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tscrollbar">TScrollBar -- Scroll Bar</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/scrllbar.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TScrollBar</code> crea un control de barra de desplazamiento independiente o se enlaza a la barra de desplazamiento incorporada de una ventana (via <code>WinNew()</code>). It supports vertical and horizontal orientations with page stepping, thumb tracking, and navigation callbacks.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>lVertical</code></td><td>Logical</td><td>Vertical (<code>.T.</code>) or horizontal (<code>.F.</code>) orientation</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum scroll position</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum scroll position</td></tr>
+<tr><td><code>nPgStep</code></td><td>Numeric</td><td>Page step increment</td></tr>
+<tr><td><code>bGoUp</code></td><td>Block</td><td>Action for scroll-up / scroll-left</td></tr>
+<tr><td><code>bGoDown</code></td><td>Block</td><td>Action for scroll-down / scroll-right</td></tr>
+<tr><td><code>bPageUp</code></td><td>Block</td><td>Action for page-up</td></tr>
+<tr><td><code>bPageDown</code></td><td>Block</td><td>Action for page-down</td></tr>
+<tr><td><code>bPos</code></td><td>Block</td><td>Action when thumb is positioned</td></tr>
+<tr><td><code>bTrack</code></td><td>Block</td><td>Action during thumb tracking (live drag)</td></tr>
+</tbody>
+</table>
+
+<h3>Key Methods</h3>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>GetPos()</code></td><td>Returns the current scroll position</td></tr>
+<tr><td><code>SetPos( nPos )</code></td><td>Sets the thumb to the given position</td></tr>
+<tr><td><code>SetRange( nMin, nMax )</code></td><td>Sets the scroll range</td></tr>
+<tr><td><code>SetPage( nSize )</code></td><td>Sets the page size</td></tr>
+<tr><td><code>GoUp() / GoDown()</code></td><td>Single step scroll and fire callback</td></tr>
+<tr><td><code>PageUp() / PageDown()</code></td><td>Page scroll and fire callback</td></tr>
+<tr><td><code>GoTop() / GoBottom()</code></td><td>Jump to min/max position</td></tr>
+</tbody>
+</table>
+
+<h3>Command Syntax</h3>
+<pre><code class="language-harbour">// Standalone scrollbar control
+@ nRow, nCol SCROLLBAR [ oSbr ] ;
+   [ RANGE nMin, nMax ] ;
+   [ PAGESTEP nPgStep ] ;
+   [ VERTICAL | HORIZONTAL ] ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ UP ACTION bUp ] [ DOWN ACTION bDown ] ;
+   [ PAGEUP bPgUp ] [ PAGEDOWN bPgDown ] ;
+   [ ON THUMBPOS bPos ] ;
+   [ PIXEL ]
+
+// Window-attached scrollbar
+DEFINE SCROLLBAR [ oSbr ] ;
+   [ VERTICAL | HORIZONTAL ] ;
+   OF oWnd ;
+   [ RANGE nMin, nMax ] ;
+   [ PAGESTEP nPgStep ] ;
+   [ UP ACTION bUp ] [ DOWN ACTION bDown ] ;
+   [ PAGEUP bPgUp ] [ PAGEDOWN bPgDown ] ;
+   [ ON THUMBPOS bPos ]</code></pre>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">DEFINE SCROLLBAR oScroll VERTICAL OF oWnd ;
+   RANGE 1, 100 PAGESTEP 10 ;
+   UP ACTION GoUp() ;
+   DOWN ACTION GoDown() ;
+   ON THUMBPOS { |nPos| GoToPos( nPos ) }</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tsplitter">TSplitter -- Draggable Splitter</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/splitter.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TSplitter</code> proporciona un divisor arrastrable entre dos grupos de controles. Cuando el usuario arrastra el divisor, redimensiona los controles a cada lado. Soporta orientaciones vertical y horizontal, restricciones de margen y pintura con degradado.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>lVertical</code></td><td>Logical</td><td>Vertical splitter bar (divides left/right)</td></tr>
+<tr><td><code>aPrevCtrols</code></td><td>Array</td><td>Controls on the "before" side (left or top)</td></tr>
+<tr><td><code>aHindCtrols</code></td><td>Array</td><td>Controls on the "after" side (right or bottom)</td></tr>
+<tr><td><code>lStatic</code></td><td>Logical</td><td>If <code>.T.</code>, splitter is immovable</td></tr>
+<tr><td><code>l3D</code></td><td>Logical</td><td>3D raised appearance</td></tr>
+<tr><td><code>lStyle</code></td><td>Logical</td><td>Modern style with gradient painting</td></tr>
+<tr><td><code>aGradient</code></td><td>Array</td><td>Normal gradient definition</td></tr>
+<tr><td><code>aGradientOver</code></td><td>Array</td><td>Mouse-over gradient definition</td></tr>
+<tr><td><code>bFirstMargin</code></td><td>Block</td><td>Minimum position constraint (top/left margin)</td></tr>
+<tr><td><code>bLastMargin</code></td><td>Block</td><td>Maximum position constraint (bottom/right margin)</td></tr>
+</tbody>
+</table>
+
+<h3>Key Methods</h3>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>SetPosition( nPos )</code></td><td>Move splitter to an absolute position</td></tr>
+<tr><td><code>AdjClient()</code></td><td>Auto-adjust to fill the client area</td></tr>
+<tr><td><code>AdjTop() / AdjBottom()</code></td><td>Dock to top or bottom</td></tr>
+<tr><td><code>AdjLeft() / AdjRight()</code></td><td>Dock to left or right</td></tr>
+</tbody>
+</table>
+
+<h3>Command Syntax</h3>
+<pre><code class="language-harbour">@ nRow, nCol SPLITTER [ oSplit ] ;
+   [ VERTICAL | HORIZONTAL ] ;
+   PREVIOUS CONTROLS oPrev1, oPrev2 [ NO ADJUST ] ;
+   HINDS CONTROLS oHind1, oHind2 [ NO ADJUST ] ;
+   [ TOP MARGIN nMargin1 ] ;
+   [ BOTTOM MARGIN nMargin2 ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ OF oWnd ] ;
+   [ ON CHANGE bChange ] ;
+   [ 3D ] ;
+   [ STYLE ] ;
+   [ PIXEL ]</code></pre>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">// Left panel and right panel with vertical splitter
+@ 0, 0 PANEL oPnlLeft OF oWnd SIZE 200, 400
+
+@ 0, 204 PANEL oPnlRight OF oWnd SIZE 400, 400
+
+@ 0, 200 SPLITTER oSplit VERTICAL ;
+   PREVIOUS CONTROLS oPnlLeft ;
+   HINDS CONTROLS oPnlRight ;
+   SIZE 4, 400 PIXEL OF oWnd ;
+   LEFT MARGIN 100 RIGHT MARGIN 100 ;
+   STYLE</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tpanel">TPanel -- Container Panel</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/tpanel.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TPanel</code> es un control contenedor ligero usado principalmente para alineación de diseño. Child controls placed on a panel move and resize with it, making it the foundation for split-panel layouts and dockable regions.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>nOpacity</code></td><td>Numeric</td><td>Alpha transparency (0-255, default 255 = opaque)</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Background color</td></tr>
+</tbody>
+</table>
+
+<h3>Key Methods</h3>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lDesign, cVarName, lBorder )</code></td><td>Constructor</td></tr>
+<tr><td><code>Redefine( nId, oWnd, lDesign, cVarName, lBorder )</code></td><td>Redefine from resource</td></tr>
+<tr><td><code>GoNextCtrl( hCtrl )</code></td><td>Tab-navigate to next child control</td></tr>
+<tr><td><code>GoPrevCtrl( hCtrl )</code></td><td>Tab-navigate to previous child control</td></tr>
+</tbody>
+</table>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">// Panel aligned to fill the client area
+@ 0, 0 PANEL oPanel OF oWnd SIZE 400, 300 BORDER
+
+// Place controls inside the panel
+@ 2, 2 SAY "Name:" OF oPanel
+@ 2, 8 GET oGet VAR cName OF oPanel SIZE 150, 22 PIXEL</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tscrollpanel">TScrollPanel -- Scrollable Panel</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/tscrlpnl.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TPanel</code></p>
+
+<p><code>TScrollPanel</code> extiende <code>TPanel</code> con soporte incorporado de barras de desplazamiento. Es útil cuando el área de contenido excede el área visible -- el panel muestra automáticamente barras de desplazamiento y permite al usuario desplazarse por todos los controles hijos.</p>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">// A scrollable form with many fields
+oScrlPanel := TScrollPanel():New( 0, 0, 300, 400, oDlg )
+oScrlPanel:SetVirtualSize( 300, 800 )  // virtual height > visible height
+
+// Place many controls inside
+FOR n := 1 TO 20
+   @ n * 22, 10 SAY "Field " + Str(n) OF oScrlPanel PIXEL
+NEXT</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="trebar">TReBar -- Rebar / CoolBar</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/rebar.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TReBar</code> envuelve el control común <code>ReBarWindow32</code> de Windows. Crea un contenedor para bandas de barra de herramientas acoplables que el usuario puede reorganizar arrastrando. Cada banda puede contener una barra de herramientas, combobox u otro control.</p>
+
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( oWnd )</code></td><td>Constructor. Docks to the top of the parent window.</td></tr>
+<tr><td><code>InsertBand( oControl, cText )</code></td><td>Add a control as a new rebar band with a label</td></tr>
+</tbody>
+</table>
+
+<h3>Command Syntax</h3>
+<pre><code class="language-harbour">DEFINE REBAR oReBar OF oWnd</code></pre>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">DEFINE REBAR oReBar OF oWnd
+
+DEFINE BUTTONBAR oBar1 OF oReBar SIZE 32, 32
+DEFINE BUTTON OF oBar1 RESOURCE "NEW"  TOOLTIP "New"  ACTION NewDoc()
+DEFINE BUTTON OF oBar1 RESOURCE "OPEN" TOOLTIP "Open" ACTION OpenDoc()
+
+oReBar:InsertBand( oBar1, "File" )</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tpager">TPager -- Pager Control</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/tpager.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<p><code>TPager</code> envuelve el control común Pager de Windows. Crea un contenedor desplazable para un control hijo (típicamente una barra de herramientas) que es demasiado ancho para mostrarse en el espacio disponible. Botones de flecha aparecen en los bordes para desplazar el contenido.</p>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">oPager := TPager():New( oWnd )
+// Add a wide toolbar as the contained control
+oPager:SetChild( oToolBar )</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="ttimer">TTimer -- Timer</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/timer.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> none (standalone)</p>
+
+<p><code>TTimer</code> proporciona ejecución periódica de callbacks usando temporizadores de Windows. No es un control visual -- se ejecuta en segundo plano y dispara su bloque <code>bAction</code> a intervalos regulares.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>nInterval</code></td><td>Numeric</td><td>Timer interval in milliseconds (default 18 ms)</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on each timer tick</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>Whether the timer is currently running</td></tr>
+<tr><td><code>hWndOwner</code></td><td>Handle</td><td>Window that owns this timer</td></tr>
+<tr><td><code>nId</code></td><td>Numeric</td><td>Unique timer identifier</td></tr>
+</tbody>
+</table>
+
+<h3>Key Methods</h3>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( nInterval, bAction, oWnd )</code></td><td>Constructor. Creates the timer but does not start it.</td></tr>
+<tr><td><code>Activate()</code></td><td>Start the timer. It begins firing <code>bAction</code> every <code>nInterval</code> ms.</td></tr>
+<tr><td><code>DeActivate()</code></td><td>Stop the timer.</td></tr>
+<tr><td><code>End()</code></td><td>Stop and destroy the timer.</td></tr>
+</tbody>
+</table>
+
+<h3>Command Syntax</h3>
+<pre><code class="language-harbour">DEFINE TIMER [ oTimer ] ;
+   INTERVAL nMilliseconds ;
+   ACTION uAction ;
+   [ OF oWnd ]
+
+ACTIVATE TIMER oTimer</code></pre>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">LOCAL oTimer
+
+DEFINE TIMER oTimer ;
+   INTERVAL 1000 ;
+   ACTION UpdateClock( oSayClock ) ;
+   OF oWnd
+
+ACTIVATE TIMER oTimer
+
+// Later, to stop:
+oTimer:DeActivate()
+
+// To destroy:
+oTimer:End()</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="ttrayicon">TTrayIcon -- System Tray Icon</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/ttray.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> none (standalone)</p>
+
+<p><code>TTrayIcon</code> coloca un icono en el área de notificación del sistema de Windows (bandeja del sistema). It handles left-click, right-click, double-click, and mouse-move events, making it ideal for background applications and minimize-to-tray functionality.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Hidden helper window that receives tray messages</td></tr>
+<tr><td><code>oIcon</code></td><td>Object</td><td>Icon displayed in the tray</td></tr>
+<tr><td><code>cCaption</code></td><td>String</td><td>Tooltip text</td></tr>
+<tr><td><code>bLClicked</code></td><td>Block</td><td>Left-click action</td></tr>
+<tr><td><code>bRClicked</code></td><td>Block</td><td>Right-click action (typically shows a popup menu)</td></tr>
+<tr><td><code>bLDblClick</code></td><td>Block</td><td>Left double-click action (typically restores the window)</td></tr>
+<tr><td><code>bMMoved</code></td><td>Block</td><td>Mouse-move action</td></tr>
+</tbody>
+</table>
+
+<h3>Key Methods</h3>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( oWnd, oIcon, cTip, uLClick, uRClick, uMMoved, uLDblClick )</code></td><td>Constructor. Creates and shows the tray icon.</td></tr>
+<tr><td><code>SetIcon( oIcon, cToolTip )</code></td><td>Change the tray icon and tooltip at runtime</td></tr>
+<tr><td><code>SetText( cTitle )</code></td><td>Change the tooltip text</td></tr>
+<tr><td><code>Refresh( oIcon, cTip, lAdd )</code></td><td>Update the tray icon via <code>Shell_NotifyIcon</code></td></tr>
+<tr><td><code>End()</code></td><td>Remove the tray icon</td></tr>
+</tbody>
+</table>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">LOCAL oTray
+
+oTray := TTrayIcon():New( oWnd, oIcon, "My Application",;
+   { || oWnd:Show(), oWnd:SetFocus() },;   // Left click: restore
+   { || ShowTrayMenu( oTray ) },;            // Right click: popup menu
+   ,;                                         // Mouse move
+   { || oWnd:Show(), oWnd:SetFocus() } )     // Double click: restore
+
+// Minimize to tray
+oWnd:bMinimize := { || oWnd:Hide(), .F. }
+
+// Cleanup
+oWnd:bEnd := { || oTray:End() }</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="ttoast">TToast -- Toast Notifications</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/ttoast.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TWindow</code></p>
+
+<p><code>TToast</code> crea ventanas de notificación emergentes (similares a las notificaciones toast de Windows 10/11) que aparecen brevemente y se descartan automáticamente. They support a header, body, footer, icons, custom fonts, rounded corners, and optional alert sounds.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>cHeader</code></td><td>String</td><td>Header text</td></tr>
+<tr><td><code>cBody</code></td><td>String</td><td>Body message text</td></tr>
+<tr><td><code>cFoot</code></td><td>String</td><td>Footer text</td></tr>
+<tr><td><code>cBmpLeft</code></td><td>String</td><td>Left-side bitmap (icon)</td></tr>
+<tr><td><code>cBmpFoot</code></td><td>String</td><td>Footer bitmap</td></tr>
+<tr><td><code>nClrTextHeader</code></td><td>Numeric</td><td>Header text color</td></tr>
+<tr><td><code>nClrTextBody</code></td><td>Numeric</td><td>Body text color</td></tr>
+<tr><td><code>nClrTextFoot</code></td><td>Numeric</td><td>Footer text color</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Border color</td></tr>
+<tr><td><code>lAlert</code></td><td>Logical</td><td>Play alert sound on show</td></tr>
+<tr><td><code>lBtnClose</code></td><td>Logical</td><td>Show close button (default <code>.T.</code>)</td></tr>
+<tr><td><code>nTimer</code></td><td>Numeric</td><td>Auto-dismiss time in milliseconds</td></tr>
+<tr><td><code>nWRadio</code></td><td>Numeric</td><td>Rounded corner width radius</td></tr>
+<tr><td><code>nHRadio</code></td><td>Numeric</td><td>Rounded corner height radius</td></tr>
+<tr><td><code>lUpPos</code></td><td>Logical</td><td>Slide up from bottom</td></tr>
+<tr><td><code>lLeftPos</code></td><td>Logical</td><td>Appear from left side</td></tr>
+<tr><td><code>nLevel</code></td><td>Numeric</td><td>Opacity level (0-255)</td></tr>
+</tbody>
+</table>
+
+<h3>Key Methods</h3>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, ... )</code></td><td>Constructor with full layout control</td></tr>
+<tr><td><code>NewToast( nType, cText, cBmp, nWidth, nHeight, oWnd, ... )</code></td><td>Quick constructor for common toast types</td></tr>
+<tr><td><code>ActivaAlert()</code></td><td>Show the toast with animation</td></tr>
+</tbody>
+</table>
+
+<h3>Ejemplo</h3>
+<pre><code class="language-harbour">LOCAL oToast
+
+oToast := TToast():New( , , 320, 120, oWnd, , ;
+   CLR_WHITE, RGB( 240, 240, 240 ), CLR_BLACK, ;
+   10, 10, 220, .T., .T., 5000 )
+oToast:cHeader := "Notification"
+oToast:cBody   := "Record saved successfully!"
+oToast:cBmpLeft := "bitmaps/check.bmp"
+oToast:ActivaAlert()</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tratingurlmisc">TRating, TTagCloud, TUrlLink, TSysLink</h2>
+
+<h3 id="trating">TRating -- Star Rating</h3>
+<p><strong>Fuente:</strong> <code>source/classes/trating.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p>Muestra un widget de calificación por estrellas clicable (típicamente 1-5 estrellas). El usuario hace clic para establecer un valor de calificación.</p>
+<pre><code class="language-harbour">oRating := TRating():New( nRow, nCol, oWnd, nStars, bChange )</code></pre>
+
+<h3 id="ttagcloud">TTagCloud -- Tag Cloud</h3>
+<p><strong>Fuente:</strong> <code>source/classes/ttagclou.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p>Muestra un conjunto de etiquetas de texto clicables con tamaños de fuente variables según peso/frecuencia. Haga clic en una etiqueta para ejecutar su acción.</p>
+
+<h3 id="turllink">TUrlLink -- URL Hyperlink</h3>
+<p><strong>Fuente:</strong> <code>source/classes/urllink.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p>Una etiqueta de hipervínculo clicable que abre el navegador del sistema al hacer clic. Cambia el cursor a una mano y subraya al pasar el ratón.</p>
+<pre><code class="language-harbour">@ 5, 2 URLLINK oLink PROMPT "Visit FiveTech" ;
+   URL "https://www.fivetechsoft.com" OF oDlg</code></pre>
+
+<h3 id="tsyslink">TSysLink -- System Link</h3>
+<p><strong>Fuente:</strong> <code>source/classes/tsyslink.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p>Envuelve el control común <code>SysLink</code> de Windows. Soporta múltiples hipervínculos incrustados dentro del texto usando sintaxis similar a HTML <code>&lt;a href="..."&gt;</code>.</p>
+
+<!-- ================================================================== -->
+<h2 id="tupdown">TUpDown, THotKey, TAnimate, TIPAddress</h2>
+
+<h3 id="tupdown">TUpDown -- Spinner Control</h3>
+<p><strong>Fuente:</strong> <code>source/classes/updown.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p>Un control giratorio arriba/abajo emparejado con un <code>TGet</code> para incrementar y decrementar un valor numérico dentro de un rango.</p>
+<pre><code class="language-harbour">@ 2, 10 GET oGet VAR nValue OF oDlg SIZE 60, 22 PIXEL SPINNER MIN 0 MAX 100</code></pre>
+
+<h3 id="thotkey">THotKey -- Hotkey Input</h3>
+<p><strong>Fuente:</strong> <code>source/classes/hotkey.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p>Envuelve el control común HotKey de Windows. Permite al usuario presionar una combinación de teclas que se captura y almacena para uso posterior como atajo de aplicación.</p>
+
+<h3 id="tanimate">TAnimate -- Animation Control</h3>
+<p><strong>Fuente:</strong> <code>source/classes/animate.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p>Envuelve el control común Animate de Windows para reproducir clips AVI (sin sonido). Útil para mostrar animaciones de progreso.</p>
+<pre><code class="language-harbour">@ 1, 1 ANIMATE oAnim OF oDlg FILE "progress.avi" SIZE 100, 80 PIXEL
+oAnim:Play()</code></pre>
+
+<h3 id="tipaddress">TIPAddress -- IP Address Input</h3>
+<p><strong>Fuente:</strong> <code>source/classes/ipaddr.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p>Envuelve el control común de Dirección IP de Windows. Proporciona una entrada de cuatro campos para ingresar direcciones IPv4 con validación automática de campos y navegación por tabulación entre octetos.</p>
+
+<!-- ================================================================== -->
+<h2 id="tactivex">TActiveX -- ActiveX Container</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/activex.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p><code>TActiveX</code> aloja controles ActiveX/COM dentro de una ventana de FiveWin. Puede incrustar Internet Explorer, reproductores multimedia, visores de PDF y cualquier componente ActiveX registrado.</p>
+<pre><code class="language-harbour">oActiveX := TActiveX():New( oWnd, "Shell.Explorer.2" )
+oActiveX:Do( "Navigate2", "https://www.google.com" )</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="tdatepicker">TDatePicker / TTimePicker</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/dtpick.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+<p><code>TDatePicker</code> envuelve el control común selector de fecha y hora de Windows, proporcionando un calendario desplegable para selección de fecha. <code>TTimePicker</code> usa el mismo control con modo de selección de hora.</p>
+<pre><code class="language-harbour">@ 3, 2 DTPICKER oDate VAR dDate OF oDlg SIZE 120, 22 PIXEL
+
+// Time picker
+@ 3, 16 TIMEPICKER oTime VAR cTime OF oDlg SIZE 100, 22 PIXEL</code></pre>
+
+<!-- ================================================================== -->
+<h2 id="see-also">Ver También</h2>
+<ul>
+  <li><a href="../../es/core/tcontrol.html">TControl</a> -- parent class for most controls</li>
+  <li><a href="../../es/ui/tbutton.html">TButton / TBtnBmp</a> -- buttons and toolbars</li>
+  <li><a href="../../es/ui/tget.html">TGet / TMGet</a> -- text input controls</li>
+  <li><a href="../../es/ui/tlistview.html">TListView</a> -- list view with icons and columns</li>
+  <li><a href="../../es/ui/ttreeview.html">TTreeView</a> -- hierarchical tree control</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEmbeddings - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/tproxy.html">TProxy</a>
+<a class="nav-item" href="../../en/internet/tras.html">TRas</a>
+<a class="nav-item" href="../../en/internet/tmail.html">TMail</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tgrok.html">TGrok</a>
+<a class="nav-item" href="../../en/internet/tkimi.html">TKimi</a>
+<a class="nav-item" href="../../en/internet/tdeepseek.html">TDeepSeek</a>
+<a class="nav-item" href="../../en/internet/tembeddings.html">TEmbeddings</a>
+<a class="nav-item" href="../../en/internet/tneuralnet.html">TNeuralNetwork</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TEmbeddings</h1>
+<p class="class-source">Source: <code>source/classes/tembeddings.prg</code></p>
+
+<p>
+TEmbeddings is FiveWin's class for generating and comparing text embeddings (vector
+representations of text). It supports both <strong>HuggingFace</strong> (via the Inference API
+feature-extraction pipeline) and <strong>OpenAI</strong> embeddings API. Embeddings convert text
+into high-dimensional vectors that capture semantic meaning, enabling operations like
+semantic similarity search, clustering, and classification.
+</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="mermaid">
+flowchart LR
+    subgraph "FiveWin Application"
+        A[TEmbeddings]
+        B[Distance Calculation]
+    end
+    subgraph "Provider"
+        C[HuggingFace<br/>Inference API]
+        D[OpenAI<br/>Embeddings API]
+    end
+    A -->|"HuggingFace model"| C
+    A -->|"OpenAI model"| D
+    A --> B
+</div>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cModel</code></td><td>Character</td><td><code>"sentence-transformers/all-MiniLM-L6-v2"</code></td><td>Embeddings model name. HuggingFace model ID or OpenAI embedding model.</td></tr>
+<tr><td><code>cKey</code></td><td>Character</td><td></td><td>API key. Reads <code>HF_API_KEY</code> first, then <code>OPENAI_API_KEY</code>.</td></tr>
+<tr><td><code>aEmbeddings</code></td><td>Array</td><td></td><td>The embedding vector returned by the API (array of numeric values)</td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Raw JSON response from the API</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td></td><td>API endpoint URL (auto-set based on model prefix)</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>curl error code</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>HTTP response status code</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cModel, cKey )</code></td><td>Create a TEmbeddings instance. Defaults to HuggingFace MiniLM model. Reads API key from <code>HF_API_KEY</code> then <code>OPENAI_API_KEY</code> env vars if not provided.</td></tr>
+<tr><td><code>GetEmbeddings( cText )</code></td><td>Generate embeddings for the given text. Stores the vector in <code>aEmbeddings</code>. Returns the raw vector array.</td></tr>
+<tr><td><code>Distance( aVector, lCosine )</code></td><td>Compute distance between <code>aEmbeddings</code> and another vector. Default uses cosine distance. Set <code>lCosine := .F.</code> for Euclidean distance.</td></tr>
+<tr><td><code>DistanceFrom( oEmbeddings )</code></td><td>Compute distance to another TEmbeddings object by comparing their <code>aEmbeddings</code> vectors.</td></tr>
+<tr><td><code>End()</code></td><td>Clean up the libcurl handle.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Semantic Similarity</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oE1 := TEmbeddings():New()
+   local oE2 := TEmbeddings():New()
+   local oE3 := TEmbeddings():New()
+   local nSimilarity1, nSimilarity2
+
+   // Generate embeddings for three phrases
+   oE1:GetEmbeddings( "I feel very well" )
+   oE2:GetEmbeddings( "How are you?" )
+   oE3:GetEmbeddings( "I saw Peter" )
+
+   // Cosine distance: lower = more similar
+   nSimilarity1 := oE1:DistanceFrom( oE2 )  // Low distance (similar topic)
+   nSimilarity2 := oE1:DistanceFrom( oE3 )  // High distance (different topic)
+
+   QOut( "Similarity between 'feel well' and 'How are you':", nSimilarity1 )
+   QOut( "Similarity between 'feel well' and 'saw Peter':", nSimilarity2 )
+
+   // Using the OPERATOR "-" syntax (equivalent to DistanceFrom)
+   ? oE1 - oE2   // Same as oE1:DistanceFrom( oE2 )
+   ? oE1 - oE3   // Same as oE1:DistanceFrom( oE3 )
+
+   oE1:End()
+   oE2:End()
+   oE3:End()
+
+return nil</code></pre>
+
+<h2 id="example-euclidean">Example: Euclidean Distance</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oE1 := TEmbeddings():New()
+   local oE2 := TEmbeddings():New()
+
+   oE1:GetEmbeddings( "Machine learning is fascinating" )
+   oE2:GetEmbeddings( "Deep learning and AI are interesting" )
+
+   // Euclidean distance instead of cosine
+   ? "Euclidean distance:", oE1:Distance( oE2:aEmbeddings, .F. )
+
+   oE1:End()
+   oE2:End()
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>The default model is <code>sentence-transformers/all-MiniLM-L6-v2</code> from HuggingFace. Changing the model name switches between providers automatically: if the model name contains <code>"openai"</code> or <code>"text-embedding-"</code>, it uses the OpenAI endpoint; otherwise it uses HuggingFace.</li>
+<li>When using HuggingFace, set the <code>HF_API_KEY</code> environment variable. When using OpenAI, set <code>OPENAI_API_KEY</code>.</li>
+<li>The <code>Distance()</code> method supports two metrics: cosine distance (default) ranges from 0 (identical) to 1 (completely different); Euclidean distance measures the straight-line distance between vectors.</li>
+<li>The <code>OPERATOR "-"</code> allows intuitive syntax: <code>oE1 - oE2</code> computes the distance between two TEmbeddings objects. This is equivalent to calling <code>oE1:DistanceFrom( oE2 )</code>.</li>
+<li>Both vectors must have the same length. The <code>Distance()</code> method returns <code>-1</code> on error.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TComboBox - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeros Pasos</div><a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a><a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a><a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a><a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Clases Base</div><a class="nav-item" href="../../es/core/twindow.html">TWindow</a><a class="nav-item" href="../../es/core/tdialog.html">TDialog</a><a class="nav-item" href="../../es/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a><a class="nav-item active" href="../../es/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../es/ui/more-controls.html">Más Controles</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Avanzada</div><a class="nav-item" href="../../es/ui/tlistview.html">TListView</a><a class="nav-item" href="../../es/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../es/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../es/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Acceso a Datos</div><a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../es/data/todbc.html">TODBC</a><a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Impresión e Informes</div><a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../es/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../es/internet/tftp.html">TFtp</a><a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../es/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Referencia</div><a class="nav-item" href="../../es/reference/commands.html">Comandos</a><a class="nav-item" href="../../es/reference/functions.html">Funciones</a><a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a><a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a></div>
+</nav>
+<main id="content">
+
+<h1>TComboBox</h1>
+<p class="subtitle">Control de selección desplegable con múltiples estilos y enlace de datos</p>
+
+<p><strong>Fuente:</strong> <code>source/classes/combobox.prg</code> &nbsp;|&nbsp; <strong>Padre:</strong> <code>TControl</code></p>
+
+<h2 id="overview">Visión General</h2>
+
+<p><code>TComboBox</code> envuelve el control ComboBox de Windows, proporcionando una lista desplegable de la cual el usuario selecciona un elemento. Soporta tres estilos:</p>
+
+<ul>
+  <li><strong>CBS_DROPDOWN</strong> (predeterminado) -- campo de texto editable con lista desplegable</li>
+  <li><strong>CBS_DROPDOWNLIST</strong> -- no editable; el usuario solo puede seleccionar de la lista</li>
+  <li><strong>CBS_SIMPLE</strong> -- campo de texto editable con una lista siempre visible</li>
+</ul>
+
+<p>El combo puede enlazarse a una <em>variable de cadena</em> (el texto del elemento seleccionado) o a una <em>variable numérica</em> (el índice del elemento seleccionado). Soporta búsqueda incremental, dibujo personalizado y listas de elementos basadas en datos.</p>
+
+<h2 id="styles">Estilos de ComboBox</h2>
+
+<div class="mermaid">
+graph LR
+    subgraph "CBS_DROPDOWN"
+        DD_TEXT["Campo de texto editable"]
+        DD_BTN["Botón desplegable"]
+        DD_LIST["Lista aparece al hacer clic"]
+    end
+
+    subgraph "CBS_DROPDOWNLIST"
+        DDL_TEXT["Visualización solo lectura"]
+        DDL_BTN["Botón desplegable"]
+        DDL_LIST["Selección solo desde la lista"]
+    end
+
+    subgraph "CBS_SIMPLE"
+        S_TEXT["Campo de texto editable"]
+        S_LIST["Lista siempre visible"]
+    end
+
+    style DD_TEXT fill:#1c2129,stroke:#58a6ff,color:#e6edf3
+    style DDL_TEXT fill:#1c2129,stroke:#3fb950,color:#e6edf3
+    style S_TEXT fill:#1c2129,stroke:#d29922,color:#e6edf3
+</div>
+
+<h2 id="properties">Propiedades Clave</h2>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array de cadenas mostradas en la lista desplegable</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloque de enlace de datos. Para combos de cadena: lee/escribe el texto seleccionado. Para combos numéricos: lee/escribe el índice seleccionado.</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Bloque de código ejecutado cuando cambia la selección</td></tr>
+<tr><td><code>nAt</code></td><td>Numeric</td><td>Índice del elemento seleccionado actualmente (basado en 1)</td></tr>
+<tr><td><code>lIncSearch</code></td><td>Logical</td><td>Habilitar búsqueda incremental mientras el usuario escribe</td></tr>
+<tr><td><code>lOwnerDraw</code></td><td>Logical</td><td>Habilitar dibujo personalizado de elementos mediante <code>bDrawItem</code></td></tr>
+<tr><td><code>bDrawItem</code></td><td>Block</td><td>Bloque de dibujo personalizado para el modo owner-draw</td></tr>
+<tr><td><code>cCueText</code></td><td>String</td><td>Texto de marcador de posición cuando no hay nada seleccionado</td></tr>
+<tr><td><code>nDropWidth</code></td><td>Numeric</td><td>Ancho de la lista desplegable (puede ser más ancho que el control mismo)</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Métodos Clave</h2>
+
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, bSetGet, aItems, ... )</code></td><td>Constructor. Crea un nuevo combo en la posición indicada.</td></tr>
+<tr><td><code>ReDefine( nId, bSetGet, aItems, oWnd, ... )</code></td><td>Redefinir desde un recurso de diálogo.</td></tr>
+<tr><td><code>Set( cText )</code></td><td>Establecer el elemento seleccionado por su texto.</td></tr>
+<tr><td><code>Select( n )</code></td><td>Establecer el elemento seleccionado por su índice.</td></tr>
+<tr><td><code>Add( cItem )</code></td><td>Agregar un elemento a la lista en tiempo de ejecución.</td></tr>
+<tr><td><code>Del( n )</code></td><td>Eliminar el elemento en el índice <code>n</code>.</td></tr>
+<tr><td><code>Reset()</code></td><td>Borrar todos los elementos de la lista.</td></tr>
+<tr><td><code>Refresh()</code></td><td>Repoblar la lista desde <code>aItems</code> y restaurar la selección.</td></tr>
+</tbody>
+</table>
+
+<h2 id="commands">Sintaxis de Comandos</h2>
+
+<h3>ComboBox enlazado a cadena</h3>
+<pre><code class="language-harbour">@ nRow, nCol COMBOBOX oCombo VAR cVar ;
+   ITEMS aItems ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ ON CHANGE bChange ] ;
+   [ VALID bValid ] ;
+   [ STYLE CBS_DROPDOWNLIST ] ;
+   [ FONT oFont ]</code></pre>
+
+<h3>ComboBox enlazado a numérico (índice)</h3>
+<pre><code class="language-harbour">@ nRow, nCol COMBOBOX oCombo VAR nIndex ;
+   ITEMS aItems ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ ON CHANGE bChange ]</code></pre>
+
+<h2 id="binding">Diagrama de Enlace de Datos</h2>
+
+<div class="mermaid">
+sequenceDiagram
+    participant Usuario
+    participant Combo as TComboBox
+    participant Var as Variable Enlazada
+
+    Usuario->>Combo: Selecciona "Opción B"
+    Combo->>Combo: nAt = 2
+    alt Enlace por cadena
+        Combo->>Var: Eval(bSetGet, "Opción B")
+    else Enlace numérico
+        Combo->>Var: Eval(bSetGet, 2)
+    end
+    Combo->>Combo: Eval(bChange)
+
+    Note over Combo,Var: Al activar el diálogo, el Combo lee<br/>Eval(bSetGet) para establecer la selección inicial
+</div>
+
+<h2 id="examples">Ejemplos de Código</h2>
+
+<h3>Ejemplo 1: Selecciones Simples con ComboBox</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION ComboDemo()
+   LOCAL oDlg, oFont
+   LOCAL cCountry := "USA"
+   LOCAL nPriority := 2
+   LOCAL aCountries := { "USA", "Canada", "Mexico", "Brazil", "UK", "France", "Germany", "Spain" }
+   LOCAL aPriority  := { "Low", "Medium", "High", "Critical" }
+
+   DEFINE FONT oFont NAME "Segoe UI" SIZE 0, -14
+   DEFINE DIALOG oDlg TITLE "ComboBox Demo" SIZE 400, 300 FONT oFont
+
+   // Combo enlazado a cadena -- cCountry contiene el texto seleccionado
+   @ 1.0, 1 SAY "Country:" OF oDlg
+   @ 1.0, 6 COMBOBOX cCountry ;
+      ITEMS aCountries ;
+      OF oDlg SIZE 180, 200 ;
+      STYLE CBS_DROPDOWNLIST
+
+   // Combo enlazado a numérico -- nPriority contiene el índice seleccionado
+   @ 3.0, 1 SAY "Priority:" OF oDlg
+   @ 3.0, 6 COMBOBOX nPriority ;
+      ITEMS aPriority ;
+      OF oDlg SIZE 140, 200 ;
+      ON CHANGE ( MsgInfo( "Priority changed to: " + aPriority[ nPriority ] ) )
+
+   @ 5.5, 6 BUTTON "&OK" OF oDlg SIZE 80, 25 ;
+      ACTION ( MsgInfo( "Country: " + cCountry + CRLF + ;
+                        "Priority: " + aPriority[ nPriority ] ), ;
+               oDlg:End() ) DEFAULT
+
+   @ 5.5, 16 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+   RELEASE FONT oFont
+RETURN NIL</code></pre>
+
+<h3>Ejemplo 2: ComboBox basado en Base de Datos</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION DBCombo()
+   LOCAL oDlg, oCmb
+   LOCAL cCategory := ""
+   LOCAL aCategories := {}
+
+   // Construir el array de elementos desde una tabla de base de datos
+   USE Categories VIA "DBFCDX" NEW
+   Categories->( DbGoTop() )
+   DO WHILE !Categories->( Eof() )
+      AAdd( aCategories, AllTrim( Categories->CATNAME ) )
+      Categories->( DbSkip() )
+   ENDDO
+
+   DEFINE DIALOG oDlg TITLE "Select Category" SIZE 400, 200
+
+   @ 1.5, 1 SAY "Category:" OF oDlg
+   @ 1.5, 6 COMBOBOX oCmb VAR cCategory ;
+      ITEMS aCategories ;
+      OF oDlg SIZE 200, 200 ;
+      STYLE CBS_DROPDOWN ;
+      VALID ( !Empty( cCategory ) ) ;
+      CUETEXT "Type or select a category"
+
+   @ 4.0, 6 BUTTON "&Select" OF oDlg SIZE 90, 25 ;
+      ACTION ( MsgInfo( "Selected: " + cCategory ), oDlg:End() ) DEFAULT
+
+   @ 4.0, 16 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+
+   CLOSE Categories
+RETURN NIL</code></pre>
+
+<h3>Ejemplo 3: ComboBoxes Dependientes (País/Ciudad)</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION DependentCombos()
+   LOCAL oDlg
+   LOCAL cCountry := "USA"
+   LOCAL cCity    := ""
+   LOCAL oCmbCountry, oCmbCity
+   LOCAL aCountries := { "USA", "Canada", "UK" }
+   LOCAL aCities    := {}
+
+   DEFINE DIALOG oDlg TITLE "Dependent Combos" SIZE 400, 250
+
+   @ 1, 1 SAY "Country:" OF oDlg
+   @ 1, 6 COMBOBOX oCmbCountry VAR cCountry ;
+      ITEMS aCountries OF oDlg SIZE 160, 200 ;
+      STYLE CBS_DROPDOWNLIST ;
+      ON CHANGE ( UpdateCities( cCountry, @aCities, oCmbCity ) )
+
+   @ 3, 1 SAY "City:" OF oDlg
+   @ 3, 6 COMBOBOX oCmbCity VAR cCity ;
+      ITEMS aCities OF oDlg SIZE 160, 200 ;
+      STYLE CBS_DROPDOWNLIST
+
+   // Inicializar ciudades para el país predeterminado
+   UpdateCities( cCountry, @aCities, oCmbCity )
+
+   @ 5.5, 6  BUTTON "&OK"     OF oDlg SIZE 80, 25 ACTION oDlg:End() DEFAULT
+   @ 5.5, 16 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
+
+   ACTIVATE DIALOG oDlg CENTERED
+RETURN NIL
+
+STATIC FUNCTION UpdateCities( cCountry, aCities, oCmbCity )
+   DO CASE
+   CASE cCountry == "USA"
+      aCities := { "New York", "Los Angeles", "Chicago", "Houston" }
+   CASE cCountry == "Canada"
+      aCities := { "Toronto", "Montreal", "Vancouver", "Calgary" }
+   CASE cCountry == "UK"
+      aCities := { "London", "Manchester", "Birmingham", "Glasgow" }
+   OTHERWISE
+      aCities := {}
+   ENDCASE
+
+   IF oCmbCity != NIL
+      oCmbCity:aItems := aCities
+      oCmbCity:Reset()
+      oCmbCity:Refresh()
+      IF Len( aCities ) > 0
+         oCmbCity:Select( 1 )
+      ENDIF
+   ENDIF
+RETURN NIL</code></pre>
+
+<h2 id="tips">Consejos</h2>
+
+<ul>
+  <li>Use <code>CBS_DROPDOWNLIST</code> cuando el usuario deba elegir solo de la lista. Use <code>CBS_DROPDOWN</code> cuando también se acepte texto libre.</li>
+  <li>El parámetro de altura en SIZE controla la altura de la <em>lista desplegable</em>, no del control en sí. Hágalo lo suficientemente grande para mostrar varios elementos.</li>
+  <li>Para listas de elementos grandes, habilite <code>lIncSearch</code> para que los usuarios puedan escribir para filtrar.</li>
+  <li>Use <code>bChange</code> para combos en cascada (cambiar un combo actualiza otro).</li>
+  <li>Para actualizar los elementos de un combo en tiempo de ejecución, actualice <code>aItems</code>, llame a <code>Reset()</code> y luego a <code>Refresh()</code>.</li>
+  <li>Para combos enlazados a un campo DBF, use <code>FieldWBlock()</code> como <code>bSetGet</code>.</li>
+</ul>
+
+<h2 id="see-also">Ver También</h2>
+<ul>
+  <li><a href="../../es/core/tcontrol.html">TControl</a> -- clase padre</li>
+  <li><a href="../../es/ui/tget.html">TGet</a> -- alternativa de entrada de texto</li>
+  <li><a href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a> -- otros controles de selección</li>
+  <li><a href="../../es/ui/txbrowse.html">TXBrowse</a> -- los combos se usan como editores de celdas en columnas de browse</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

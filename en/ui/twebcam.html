@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TWebcam - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+<a class="nav-item active" href="../../en/ui/twebcam.html">TWebcam</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TWebcam</h1>
+<p class="class-source">Source: <code>source/classes/twebcam.prg</code></p>
+<p class="class-hierarchy">Hierarchy: <strong>TWebcam</strong> &rarr; <strong>TControl</strong></p>
+
+<p>
+TWebcam provides live webcam preview and capture functionality using the Video for Windows (VFW)
+API. It is a visual control that displays the camera feed within a FiveWin window and supports
+snapshot capture, video format dialogs, and video source configuration.
+</p>
+
+<h2 id="command">WEBCAM Command</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol WEBCAM oCam OF oWnd SIZE nW, nH INIT lInit</code></pre>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>hWebcam</code></td><td>Numeric</td><td></td><td>Handle to the VFW capture window</td></tr>
+<tr><td><code>cName</code></td><td>Character</td><td></td><td>Webcam driver description</td></tr>
+<tr><td><code>cVersion</code></td><td>Character</td><td></td><td>Webcam driver version string</td></tr>
+<tr><td><code>nRateRefresh</code></td><td>Numeric</td><td><code>66</code></td><td>Preview refresh rate in milliseconds</td></tr>
+<tr><td><code>isScale</code></td><td>Logical</td><td><code>.T.</code></td><td>Scale preview to control size (640x480 when disabled)</td></tr>
+<tr><td><code>isConnected</code></td><td>Logical</td><td><code>.F.</code></td><td>Whether preview is currently active</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( oWnd, nTop, nLeft, nWidth, nHeight, lInit, lAdjust, nRate, bError )</code></td><td>Constructor. Creates the VFW capture window and optionally starts preview.</td></tr>
+<tr><td><code>Initialize()</code></td><td>Connect the webcam driver and start the live preview.</td></tr>
+<tr><td><code>Finalize()</code></td><td>Disconnect the webcam driver and stop the preview.</td></tr>
+<tr><td><code>SaveFile( cFileName )</code></td><td>Capture the current frame to a BMP file. Defaults to a timestamp-based filename.</td></tr>
+<tr><td><code>VideoControl()</code></td><td>Open the video source property dialog (brightness, contrast, etc.).</td></tr>
+<tr><td><code>VideoFormat()</code></td><td>Open the video format dialog (resolution, color depth).</td></tr>
+<tr><td><code>StartCapture( cFile )</code></td><td>Begin streaming capture to a video file.</td></tr>
+<tr><td><code>StopCapture()</code></td><td>Stop any ongoing video capture.</td></tr>
+<tr><td><code>GetWidth()</code></td><td>Return the current preview image width in pixels.</td></tr>
+<tr><td><code>GetHeight()</code></td><td>Return the current preview image height in pixels.</td></tr>
+<tr><td><code>SetRate( nRate )</code></td><td>Set the preview refresh rate in milliseconds.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Live Preview with Capture</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oCam, lInit := .T.
+
+   DEFINE WINDOW oWnd TITLE "Webcam Capture" ;
+      SIZE 800, 600
+
+   @ 10, 10 WEBCAM oCam OF oWnd SIZE 640, 480 INIT lInit
+
+   @ 500, 10 BUTTON "&Snapshot" SIZE 60, 25 ;
+      ACTION oCam:SaveFile( "snap.bmp" )
+
+   @ 500, 80 BUTTON "&Format" SIZE 60, 25 ;
+      ACTION oCam:VideoFormat()
+
+   @ 500, 150 BUTTON "&Controls" SIZE 60, 25 ;
+      ACTION oCam:VideoControl()
+
+   @ 500, 220 BUTTON "&Close" SIZE 60, 25 ;
+      ACTION oWnd:End()
+
+   ACTIVATE WINDOW oWnd ;
+      ON INIT oCam:Initialize() ;
+      VALID ( oCam:Finalize(), .T. )
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TWebcam relies on the legacy VFW (Video for Windows) API. It works on all 32-bit and 64-bit Windows versions through the <code>avicap32.dll</code> and <code>msvfw32.dll</code> system libraries.</li>
+<li>The control must be created before the parent window is activated; use the <code>INIT</code> clause or call <code>Initialize()</code> manually from <code>ON INIT</code>.</li>
+<li>Snapshots are saved as 24-bit BMP files by default.</li>
+<li>Use <code>GetVideoCapDriver()</code> (a utility function in twebcam.prg) to enumerate available webcam devices.</li>
+<li>Error events are routed through the <code>bError</code> codeblock. The default handler shows a <code>MsgAlert</code> dialog.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

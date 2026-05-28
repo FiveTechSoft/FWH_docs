@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TGraph - Documentaci&oacute;n FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentaci&oacute;n FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visi&oacute;n General del Framework</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalaci&oacute;n</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Compilaci&oacute;n</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item active" href="../../es/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../es/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../es/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../es/ui/trating.html">TRating</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresi&oacute;n e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../es/internet/tai.html">Clases de IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">M&aacute;s Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TGraph</h1>
+<p class="class-source">Fuente: <code>source/classes/tgraph.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+
+<p>
+TGraph es el control de gr&aacute;ficos de FiveWin que soporta gr&aacute;ficos de barras, l&iacute;neas, puntos, circulares y de dispersi&oacute;n XY.
+Proporciona un conjunto completo de capacidades de graficaci&oacute;n directamente dentro de ventanas y di&aacute;logos de FiveWin,
+con soporte para m&uacute;ltiples series, renderizado 3D, leyendas, l&iacute;neas de cuadr&iacute;cula y exportaci&oacute;n a imagen o impresora.
+</p>
+
+<h2 id="graph-types">Tipos de Gr&aacute;fico</h2>
+
+<p>TGraph soporta los siguientes tipos de gr&aacute;fico, definidos como constantes num&eacute;ricas:</p>
+
+<table>
+<thead>
+<tr><th>Constante</th><th>Valor</th><th>Descripci&oacute;n</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GRAPH_TYPE_BAR</code></td><td>1</td><td>Gr&aacute;fico de barras vertical (predeterminado)</td></tr>
+<tr><td><code>GRAPH_TYPE_LINE</code></td><td>2</td><td>Gr&aacute;fico de l&iacute;neas conectando puntos de datos</td></tr>
+<tr><td><code>GRAPH_TYPE_POINT</code></td><td>3</td><td>Gr&aacute;fico de puntos/dispersi&oacute;n</td></tr>
+<tr><td><code>GRAPH_TYPE_PIE</code></td><td>4</td><td>Gr&aacute;fico circular</td></tr>
+<tr><td><code>GRAPH_TYPE_XY_LINES</code></td><td>6</td><td>Gr&aacute;fico de dispersi&oacute;n XY con l&iacute;neas conectoras</td></tr>
+<tr><td><code>GRAPH_TYPE_XY_POINTS</code></td><td>7</td><td>Gr&aacute;fico de dispersi&oacute;n XY solo con puntos</td></tr>
+</tbody>
+</table>
+
+<h2 id="data">Miembros DATA Principales</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nType</code></td><td>Num&eacute;rico</td><td>Tipo de gr&aacute;fico (GRAPH_TYPE_BAR, GRAPH_TYPE_LINE, etc.)</td></tr>
+<tr><td><code>aSeries</code></td><td>Array</td><td>Array de objetos de definici&oacute;n de series</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>Valores de datos del gr&aacute;fico</td></tr>
+<tr><td><code>l3D</code></td><td>L&oacute;gico</td><td>Habilitar renderizado 3D</td></tr>
+<tr><td><code>lxGrid</code></td><td>L&oacute;gico</td><td>Mostrar l&iacute;neas de cuadr&iacute;cula del eje X</td></tr>
+<tr><td><code>lyGrid</code></td><td>L&oacute;gico</td><td>Mostrar l&iacute;neas de cuadr&iacute;cula del eje Y</td></tr>
+<tr><td><code>lxVal</code></td><td>L&oacute;gico</td><td>Mostrar etiquetas de valores del eje X</td></tr>
+<tr><td><code>lyVal</code></td><td>L&oacute;gico</td><td>Mostrar etiquetas de valores del eje Y</td></tr>
+<tr><td><code>cTitle</code></td><td>Car&aacute;cter</td><td>T&iacute;tulo principal del gr&aacute;fico</td></tr>
+<tr><td><code>cSubTit</code></td><td>Car&aacute;cter</td><td>Subt&iacute;tulo del gr&aacute;fico</td></tr>
+<tr><td><code>cTitX</code></td><td>Car&aacute;cter</td><td>T&iacute;tulo del eje X</td></tr>
+<tr><td><code>cTitY</code></td><td>Car&aacute;cter</td><td>T&iacute;tulo del eje Y</td></tr>
+<tr><td><code>cPicture</code></td><td>Car&aacute;cter</td><td>M&aacute;scara de picture para formato de valores</td></tr>
+<tr><td><code>lViewVal</code></td><td>L&oacute;gico</td><td>Mostrar valores de datos en el gr&aacute;fico</td></tr>
+<tr><td><code>lLegends</code></td><td>L&oacute;gico</td><td>Mostrar leyendas de series</td></tr>
+<tr><td><code>nBarSep</code></td><td>Num&eacute;rico</td><td>Espacio de separaci&oacute;n entre barras</td></tr>
+<tr><td><code>nPoint</code></td><td>Num&eacute;rico</td><td>Tipo de marcador de punto (POINT_TYPE_1..3)</td></tr>
+<tr><td><code>nMaxVal</code></td><td>Num&eacute;rico</td><td>Valor m&aacute;ximo del eje Y</td></tr>
+<tr><td><code>nMinVal</code></td><td>Num&eacute;rico</td><td>Valor m&iacute;nimo del eje Y</td></tr>
+<tr><td><code>nClrBack</code></td><td>Num&eacute;rico</td><td>Color de fondo</td></tr>
+<tr><td><code>cBitmap</code></td><td>Car&aacute;cter</td><td>Archivo de mapa de bits de fondo</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">M&eacute;todos Principales</h2>
+
+<table>
+<thead>
+<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, oWnd, nWidth, nHeight, cTitle, lDesign, lPixel, l3D, lxGrid, lyGrid, lxVal, lyVal, lPopUp, lLegends, nType )</code></td><td>Crear un nuevo control TGraph</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cTitle, l3D, lxGrid, lyGrid, lxVal, lyVal, lPopUp, lLegends, nType )</code></td><td>Redefinir desde recurso de di&aacute;logo</td></tr>
+<tr><td><code>AddSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine, cSRLegend )</code></td><td>A&ntilde;adir una serie de datos al gr&aacute;fico. Devuelve el &iacute;ndice de la serie.</td></tr>
+<tr><td><code>AddXYSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine, cSRLegend )</code></td><td>A&ntilde;adir una serie de dispersi&oacute;n XY (array de pares {x,y})</td></tr>
+<tr><td><code>SetYVals( aLabels )</code></td><td>Establecer etiquetas de categor&iacute;a del eje Y (ej., Q1, Q2, Q3, Q4)</td></tr>
+<tr><td><code>SelSerie( nSerie )</code></td><td>Seleccionar una serie espec&iacute;fica para mostrar</td></tr>
+<tr><td><code>SelPeriod( nPeriod )</code></td><td>Seleccionar un per&iacute;odo espec&iacute;fico para mostrar</td></tr>
+<tr><td><code>SaveAsImage( cFile )</code></td><td>Guardar el gr&aacute;fico como archivo de imagen BMP</td></tr>
+<tr><td><code>Save2XLS( nTypeGraph )</code></td><td>Exportar datos del gr&aacute;fico a Excel</td></tr>
+<tr><td><code>Print( oPrn, nTop, nLeft, nWidth, nHeight )</code></td><td>Imprimir el gr&aacute;fico en un dispositivo de impresi&oacute;n</td></tr>
+<tr><td><code>PrintGraph( lPrev, oPrn, nY, nX, cFile, nPorY, nPorX, lUser, lHoriz, nTypePage )</code></td><td>Impresi&oacute;n avanzada con vista previa y opciones de zoom</td></tr>
+<tr><td><code>Copy2ClipBoard( lMsg )</code></td><td>Copiar imagen del gr&aacute;fico al portapapeles</td></tr>
+<tr><td><code>ResizeSerie( nNewSize )</code></td><td>Redimensionar din&aacute;micamente el n&uacute;mero de series</td></tr>
+<tr><td><code>Default()</code></td><td>Aplicar configuraci&oacute;n y fuentes predeterminadas del gr&aacute;fico</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destruir el gr&aacute;fico y liberar recursos</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Ejemplo: Gr&aacute;fico de Barras con Dos Series</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oGraph
+
+   DEFINE WINDOW oWnd TITLE "Quarterly Sales" SIZE 600, 400
+
+   @ 10, 10 GRAPH oGraph SIZE 560, 340 OF oWnd TYPE GRAPH_TYPE_BAR ;
+      TITLE "Sales by Quarter"
+
+   oGraph:l3D      := .T.
+   oGraph:lxGrid   := .T.
+   oGraph:lyGrid   := .T.
+   oGraph:lxVal    := .T.
+   oGraph:lyVal    := .T.
+   oGraph:lLegends := .T.
+   oGraph:cPicture := "999,999.99"
+
+   // Set category labels
+   oGraph:SetYVals( { "Q1", "Q2", "Q3", "Q4" } )
+
+   // Add two series
+   oGraph:AddSerie( { 1200, 1500, 1100, 1800 }, "Product A", CLR_RED )
+   oGraph:AddSerie( { 900, 1300, 1600, 1400 }, "Product B", CLR_BLUE )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notas</h2>
+
+<ul>
+<li>TGraph es un motor de gr&aacute;ficos completamente aut&oacute;nomo que no depende de componentes ActiveX o OCX externos. Todo el renderizado se realiza mediante GDI.</li>
+<li>Use la sintaxis del comando <code>GRAPH</code> con <code>TYPE nType</code> para establecer el tipo de gr&aacute;fico en el momento de la creaci&oacute;n.</li>
+<li>Los colores para las series se asignan autom&aacute;ticamente desde una paleta interna si no se especifican. La paleta predeterminada recorre METRO_AMBER, METRO_OLIVE, CLR_HMAGENTA, CLR_HBLUE, CLR_HRED, CLR_HGREEN y colores est&aacute;ndar.</li>
+<li>Los gr&aacute;ficos XY (tipos 6 y 7) esperan datos como arrays de pares de coordenadas <code>{ x, y }</code>. Use <code>AddXYSerie()</code> para a&ntilde;adir series XY.</li>
+<li>La exportaci&oacute;n a imagen usa <code>Save2Bmp()</code> internamente. El gr&aacute;fico tambi&eacute;n se puede copiar al portapapeles para pegarlo en otras aplicaciones.</li>
+<li>El men&uacute; emergente (habilitado mediante <code>lPopUp</code>) proporciona acceso con clic derecho para cambiar el tipo de gr&aacute;fico, alternar cuadr&iacute;culas y opciones de exportaci&oacute;n en tiempo de ejecuci&oacute;n.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

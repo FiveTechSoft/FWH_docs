@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MariaDB / MySQL - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+<a class="nav-item" href="../../en/ui/tswitch.html">TSwitch</a>
+<a class="nav-item" href="../../en/ui/tcalendar.html">TCalendar</a>
+<a class="nav-item" href="../../en/ui/tdtpicker.html">TDatePick</a>
+<a class="nav-item" href="../../en/ui/ttmpicker.html">TTimePick</a>
+<a class="nav-item" href="../../en/ui/tslider.html">TSlider</a>
+<a class="nav-item" href="../../en/ui/timagelist.html">TImageList</a>
+<a class="nav-item" href="../../en/ui/texplorerbar.html">TExplorerBar</a>
+<a class="nav-item" href="../../en/ui/tmetropanel.html">TMetroPanel</a>
+<a class="nav-item" href="../../en/ui/tscrollpanel.html">TScrollPanel</a>
+<a class="nav-item" href="../../en/ui/tpager.html">TPager</a>
+<a class="nav-item" href="../../en/ui/theader.html">THeader</a>
+<a class="nav-item" href="../../en/ui/tbartabs.html">TBarTabs</a>
+<a class="nav-item" href="../../en/ui/tprogresswheel.html">TProgressWheel</a>
+<a class="nav-item" href="../../en/ui/ttagcloud.html">TTagCloud</a>
+<a class="nav-item" href="../../en/ui/tscrollmsg.html">TScrollMsg</a>
+<a class="nav-item" href="../../en/ui/tnavigator.html">TNavigator</a>
+<a class="nav-item" href="../../en/ui/tmytitle.html">TMyTitle</a>
+<a class="nav-item" href="../../en/ui/tskinbutton.html">TSkinButton</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item active" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+<a class="nav-item" href="../../en/printing/tpreview.html">TPreview</a>
+<a class="nav-item" href="../../en/printing/tpdf.html">TPdf</a>
+<a class="nav-item" href="../../en/printing/tfwpdf.html">FWPdf</a>
+<a class="nav-item" href="../../en/printing/tvrd.html">VRD</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>MariaDB / MySQL</h1>
+<p class="class-source">Source: <code>source/classes/mariarec.prg</code> (FWMariaRecord), <code>source/classes/mariadb.prg</code> (FWMariaConnection)</p>
+
+<p>
+FiveWin provides native MariaDB/MySQL support through the <code>libmariadb.dll</code> (32-bit) or
+<code>libmariadb64.dll</code> (64-bit) client library. The two primary classes are
+<code>FWMariaConnection</code> (manages the TCP/IP connection and SQL execution) and
+<code>FWMariaRecord</code> (extends TDataRow for single-record CRUD operations with automatic Upsert support).
+</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="mermaid">
+flowchart TB
+    subgraph "Application"
+        A[FWMariaConnection]
+        B[FWMariaRecord]
+        C[XBrowse / UI]
+    end
+    subgraph "Native Library"
+        D["libmariadb.dll<br/>(C API)"]
+    end
+    subgraph "Server"
+        E[MariaDB / MySQL Server]
+        F[(Database)]
+    end
+    B --> A
+    C --> A
+    A --> D
+    D -->|"TCP/IP"| E
+    E --> F
+</div>
+
+<h2 id="connection">FWMariaConnection</h2>
+
+<p>
+The connection class manages the link to the MariaDB/MySQL server. Key operations:
+</p>
+
+<table>
+<thead>
+<tr><th>Method / DATA</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cServer, cUser, cPassword, cDatabase, nPort )</code></td><td>Create and open a connection</td></tr>
+<tr><td><code>Execute( cSql )</code></td><td>Execute SQL and return results (field structure)</td></tr>
+<tr><td><code>QueryResult( cSql )</code></td><td>Execute SELECT and return array of values</td></tr>
+<tr><td><code>Insert( cTable, aFields, aValues )</code></td><td>INSERT a new row</td></tr>
+<tr><td><code>Update( cTable, aFields, aValues, cWhere )</code></td><td>UPDATE existing rows</td></tr>
+<tr><td><code>Upsert( cTable, aFields, aValues )</code></td><td>INSERT or UPDATE (auto-detect via primary key)</td></tr>
+<tr><td><code>TableExists( cTable )</code></td><td>Check if a table exists</td></tr>
+<tr><td><code>TableStructure( cTable )</code></td><td>Get table structure array</td></tr>
+<tr><td><code>Last_Insert_id</code></td><td>ACCESS: last auto-increment value after INSERT</td></tr>
+<tr><td><code>nError</code></td><td>Last error code (0 = success)</td></tr>
+<tr><td><code>ShowError()</code></td><td>Display last error message</td></tr>
+<tr><td><code>lUnicode</code></td><td>Unicode mode (UTF-8 charset)</td></tr>
+<tr><td><code>ValToSql( uValue )</code></td><td>Convert Harbour value to SQL-safe string</td></tr>
+<tr><td><code>Close()</code></td><td>Close the connection</td></tr>
+</tbody>
+</table>
+
+<h2 id="fwmariarecord">FWMariaRecord</h2>
+
+<p>
+FWMariaRecord extends <code>TDataRow</code> to provide single-record access to a MariaDB table.
+It handles loading, editing, and saving individual records with automatic primary key detection.
+</p>
+
+<h3>Key DATA Members</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>oCn</code></td><td>Object</td><td>FWMariaConnection object</td></tr>
+<tr><td><code>cTable</code></td><td>Character</td><td>Table name</td></tr>
+<tr><td><code>cWhere</code></td><td>Character</td><td>WHERE clause identifying the current record</td></tr>
+<tr><td><code>aStruct</code></td><td>Array</td><td>Table structure (columns, types, lengths, decimals, flags)</td></tr>
+<tr><td><code>aBlank</code></td><td>Array</td><td>Blank values array for new records</td></tr>
+<tr><td><code>aPrimary</code></td><td>Array</td><td>Indices of primary key columns</td></tr>
+<tr><td><code>nAutoIncFld</code></td><td>Numeric</td><td>Position of auto-increment field (0 if none)</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( oCn, cTable, cWhere )</code></td><td>Create and load a record. If cWhere is nil, loads blank.</td></tr>
+<tr><td><code>Load( lBlank )</code></td><td>Load record from server (or blank template)</td></tr>
+<tr><td><code>Read( cWhere )</code></td><td>Load a specific record by WHERE clause</td></tr>
+<tr><td><code>Blank()</code></td><td>Reset to blank record (for new entry)</td></tr>
+<tr><td><code>Save()</code></td><td>Save changes (auto Upsert: INSERT if new, UPDATE if existing)</td></tr>
+<tr><td><code>MakePrimaryWhere()</code></td><td>Build WHERE clause from primary key values</td></tr>
+</tbody>
+</table>
+
+<h2 id="data-flow">Data Flow: Save Operation</h2>
+
+<div class="mermaid">
+sequenceDiagram
+    participant App as Application
+    participant Rec as FWMariaRecord
+    participant Cn as FWMariaConnection
+    participant DB as MariaDB Server
+
+    App->>Rec: oRec:Save()
+    Rec->>Cn: oCn:Upsert(cTable, nil, aVals)
+    Cn->>DB: INSERT ... ON DUPLICATE KEY UPDATE
+    DB-->>Cn: OK (nError=0)
+
+    alt New Record (auto-increment)
+        Cn-->>Rec: Last_Insert_id
+        Rec->>Rec: Update aData with new ID
+    end
+
+    Rec->>Rec: MakePrimaryWhere()
+    Rec->>Rec: Load() -- refresh from server
+    Rec-->>App: lSaved = .T.
+</div>
+
+<h2 id="example-connect">Example: Connection Setup</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oCn
+
+   // Connect to MariaDB server
+   oCn := FWMariaConnection():New( ;
+      "localhost",     ;  // server
+      "root",          ;  // user
+      "mypassword",    ;  // password
+      "mydb",          ;  // database
+      3306             )  // port (default: 3306)
+
+   if oCn:nError != 0
+      MsgStop( "Connection failed" )
+      return nil
+   endif
+
+   ? "Connected to MariaDB"
+   ? "Tables:", oCn:GetTables()
+
+   oCn:Close()
+
+return nil</code></pre>
+
+<h2 id="example-query">Example: Execute Queries</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oCn, aResult, aRow
+
+   oCn := FWMariaConnection():New( "localhost", "root", "pass", "mydb" )
+
+   // Simple query - returns array of row arrays
+   aResult := oCn:QueryResult( ;
+      "SELECT id, name, email FROM customers WHERE active = 1 ORDER BY name" )
+
+   if oCn:nError == 0
+      for each aRow in aResult
+         ? aRow[ 1 ], aRow[ 2 ], aRow[ 3 ]   // id, name, email
+      next
+   endif
+
+   // Execute DDL/DML commands
+   oCn:Execute( "CREATE TABLE IF NOT EXISTS logs (" + ;
+      "id INT AUTO_INCREMENT PRIMARY KEY, " + ;
+      "message VARCHAR(255), " + ;
+      "created_at DATETIME DEFAULT CURRENT_TIMESTAMP)" )
+
+   oCn:Execute( "INSERT INTO logs (message) VALUES ('Application started')" )
+   ? "Inserted ID:", oCn:Last_Insert_id
+
+   oCn:Close()
+
+return nil</code></pre>
+
+<h2 id="example-crud">Example: CRUD with FWMariaRecord</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oCn, oRec
+
+   oCn := FWMariaConnection():New( "localhost", "root", "pass", "mydb" )
+
+   // --- CREATE (Insert) ---
+   oRec := FWMariaRecord():New( oCn, "customers" )
+   // oRec starts as a blank record
+
+   oRec:FieldPut( "name",  "John Smith" )
+   oRec:FieldPut( "email", "john@example.com" )
+   oRec:FieldPut( "phone", "555-1234" )
+
+   if oRec:Save()
+      ? "Created customer ID:", oRec:FieldGet( "id" )
+   endif
+
+   // --- READ ---
+   oRec := FWMariaRecord():New( oCn, "customers", "`id` = 1" )
+   ? oRec:FieldGet( "name" )    // "John Smith"
+   ? oRec:FieldGet( "email" )   // "john@example.com"
+
+   // --- UPDATE ---
+   oRec:FieldPut( "phone", "555-9999" )
+   oRec:Save()   // auto-detects UPDATE via primary key
+
+   // --- DELETE ---
+   oCn:Execute( "DELETE FROM customers WHERE id = 1" )
+
+   // --- Read a different record ---
+   oRec:Read( "`email` = 'jane@example.com'" )
+   if oRec:lValidData
+      ? "Found:", oRec:FieldGet( "name" )
+   endif
+
+   oCn:Close()
+
+return nil</code></pre>
+
+<h2 id="example-xbrowse">Example: XBrowse with MariaDB</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oCn, oWnd, oBrw, cSql
+
+   oCn := FWMariaConnection():New( "localhost", "root", "pass", "mydb" )
+
+   cSql := "SELECT id, name, email, phone, city FROM customers ORDER BY name"
+
+   DEFINE WINDOW oWnd TITLE "MariaDB Customers"
+
+   @ 0, 0 XBROWSE oBrw OF oWnd
+
+   oCn:SetXBrowse( oBrw, cSql )
+   oBrw:CreateFromCode()
+
+   ACTIVATE WINDOW oWnd MAXIMIZED
+
+   oCn:Close()
+
+return nil</code></pre>
+
+<h2 id="dll-setup">DLL Setup</h2>
+
+<p>
+FiveWin's MariaDB support requires the native client library:
+</p>
+
+<ul>
+<li><strong>32-bit applications:</strong> <code>libmariadb.dll</code></li>
+<li><strong>64-bit applications:</strong> <code>libmariadb64.dll</code></li>
+</ul>
+
+<p>
+Place the appropriate DLL in your application directory or in the system PATH. You can download
+the MariaDB Connector/C from <a href="https://mariadb.com/downloads/connectors/" target="_blank">mariadb.com</a>.
+The same connector works for connecting to MySQL servers.
+</p>
+
+<h2 id="tips">Tips</h2>
+
+<ul>
+<li>FWMariaRecord automatically detects primary keys using column flags from the table structure.
+    This enables the <code>Upsert()</code> mechanism to decide between INSERT and UPDATE.</li>
+<li>The <code>nAutoIncFld</code> DATA tracks the auto-increment column position. After an INSERT,
+    the new auto-increment value is automatically assigned to the record.</li>
+<li>Character fields are padded to their defined length when <code>lUnicode</code> is .T.,
+    using UTF-8 aware string functions.</li>
+<li>Use <code>oCn:ValToSql()</code> to safely escape values for SQL strings, preventing SQL injection.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRating - Documentaci&oacute;n FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentaci&oacute;n FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visi&oacute;n General del Framework</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalaci&oacute;n</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Compilaci&oacute;n</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../es/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../es/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../es/ui/ttoast.html">TToast</a>
+<a class="nav-item active" href="../../es/ui/trating.html">TRating</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresi&oacute;n e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../es/internet/tai.html">Clases de IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">M&aacute;s Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TRating</h1>
+<p class="class-source">Fuente: <code>source/classes/trating.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+
+<p>
+TRating es un control interactivo de valoraci&oacute;n por estrellas que permite a los usuarios seleccionar un valor
+haciendo clic en im&aacute;genes de estrellas. Soporta vista previa al pasar el rat&oacute;n, selecci&oacute;n por clic,
+visualizaci&oacute;n de medias estrellas y valores m&aacute;ximos configurables. El control usa tres estados de imagen
+(vac&iacute;a, media, llena) para representar la valoraci&oacute;n visual.
+</p>
+
+<h2 id="data">Miembros DATA Principales</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nImages</code></td><td>Num&eacute;rico</td><td><code>5</code></td><td>N&uacute;mero de im&aacute;genes/estrellas de valoraci&oacute;n a mostrar</td></tr>
+<tr><td><code>nCurrentValue</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>Valor actual de vista previa/al pasar el rat&oacute;n</td></tr>
+<tr><td><code>nSelectedValue</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>&Uacute;ltimo valor seleccionado (confirmado)</td></tr>
+<tr><td><code>nPercentual</code></td><td>Num&eacute;rico</td><td><code>100</code></td><td>Valor m&aacute;ximo para c&aacute;lculo de porcentaje</td></tr>
+<tr><td><code>bChanged</code></td><td>Block</td><td></td><td>Bloque de c&oacute;digo ejecutado cuando cambia la valoraci&oacute;n (recibe el nuevo valor)</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td></td><td>Bloque de c&oacute;digo SetGet para enlace de variable (lectura/escritura)</td></tr>
+<tr><td><code>lBorder</code></td><td>L&oacute;gico</td><td><code>.F.</code></td><td>Mostrar borde alrededor del control</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Num&eacute;rico</td><td></td><td>Color del borde</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">M&eacute;todos Principales</h2>
+
+<table>
+<thead>
+<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, oWnd, nWidth, nHeight, nRating, cEmptyImg, cHalfImg, cFullImg, lBorder, nClrBorder, nBackColor, lDesign, nInitialValue, nMaxValue, bChanged, bSetGet )</code></td><td>Crear un nuevo control TRating</td></tr>
+<tr><td><code>SetValue( x )</code></td><td>Establecer el valor de valoraci&oacute;n mediante programa. Si x se omite, reinicia a 0.</td></tr>
+<tr><td><code>Reset()</code></td><td>Reiniciar la valoraci&oacute;n a 0 (llama a SetValue() sin argumento)</td></tr>
+<tr><td><code>Display()</code></td><td>Iniciar pintado, renderizar, finalizar pintado</td></tr>
+<tr><td><code>Paint()</code></td><td>Renderizar las estrellas de valoraci&oacute;n seg&uacute;n los valores actual y seleccionado</td></tr>
+<tr><td><code>MouseMove( nRow, nCol, nKeyFlags )</code></td><td>Manejar el paso del rat&oacute;n: actualizar <code>nCurrentValue</code> para vista previa visual</td></tr>
+<tr><td><code>MouseLeave( nRow, nCol, nKeyFlags )</code></td><td>Manejar la salida del rat&oacute;n: restaurar la visualizaci&oacute;n al valor confirmado</td></tr>
+<tr><td><code>LButtonUp( nRow, nCol, nKeyFlags, lTouch )</code></td><td>Manejar clic: confirmar el valor se&ntilde;alado y disparar <code>bChanged</code></td></tr>
+<tr><td><code>Destroy()</code></td><td>Destruir el control y liberar los manejadores de im&aacute;genes</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Ejemplo: Control de Valoraci&oacute;n de 5 Estrellas</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oRating, nRating := 0
+
+   DEFINE WINDOW oWnd TITLE "Rate this App" SIZE 400, 250
+
+   @ 60, 40 RATING oRating ;
+      RATING 5 ;
+      EMPTY   "star_empty.bmp" ;
+      HALF    "star_half.bmp"  ;
+      FULL    "star_full.bmp"  ;
+      OF oWnd ;
+      MAX 100 ;
+      INITIAL 0 ;
+      CHANGE ( nRating := oRating:nSelectedValue, ;
+               oWnd:SetText( "Rating: " + Str( nRating ) ) )
+
+   @ 140, 40 SAY "Click a star to rate" ;
+      SIZE 200, 20 OF oWnd
+
+   @ 180, 40 BUTTON "Reset" SIZE 60, 25 OF oWnd ;
+      ACTION oRating:Reset()
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notas</h2>
+
+<ul>
+<li>El comando RATING requiere tres im&aacute;genes de mapa de bits para los tres estados visuales: <code>EMPTY</code> (no seleccionada), <code>HALF</code> (medio llena) y <code>FULL</code> (completamente seleccionada).</li>
+<li><code>nRating</code> especifica el n&uacute;mero de im&aacute;genes de estrella mostradas (ej., 5 para una valoraci&oacute;n de 5 estrellas). <code>MAX</code> establece el valor num&eacute;rico m&aacute;ximo (predeterminado 100), y el control mapea la posici&oacute;n visual a un valor proporcional.</li>
+<li>El bloque de c&oacute;digo <code>CHANGE</code> no recibe par&aacute;metro; lea <code>oRating:nSelectedValue</code> dentro del bloque para obtener la valoraci&oacute;n actual.</li>
+<li>Use <code>bSetGet</code> para enlazar la valoraci&oacute;n a una variable o campo de base de datos. El bloque de c&oacute;digo se eval&uacute;a en la creaci&oacute;n para leer el valor inicial y al hacer clic para escribir el nuevo valor.</li>
+<li>El comportamiento de vista previa se maneja autom&aacute;ticamente: <code>MouseMove</code> actualiza <code>nCurrentValue</code> para retroalimentaci&oacute;n visual en tiempo real, y <code>MouseLeave</code> restaura la visualizaci&oacute;n a <code>nSelectedValue</code>.</li>
+<li>El miembro de datos <code>nPercentual</code> controla el factor de escala. Con el valor predeterminado de 100, al hacer clic en la &uacute;ltima estrella se establece el valor en 100. Aj&uacute;stelo para diferentes escalas de valoraci&oacute;n.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

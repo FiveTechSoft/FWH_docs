@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCalendar - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item active" href="../../en/ui/tcalendar.html">TCalendar</a>
+<a class="nav-item" href="../../en/ui/tdtpicker.html">TDatePick</a>
+<a class="nav-item" href="../../en/ui/timagelist.html">TImageList</a>
+<a class="nav-item" href="../../en/ui/tslider.html">TSlider</a>
+<a class="nav-item" href="../../en/ui/tswitch.html">TSwitch</a>
+<a class="nav-item" href="../../en/ui/ttmpicker.html">TTimePick</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TCalendar</h1>
+<p class="class-source">Source: <code>source/classes/tcalenda.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+
+<p>
+TCalendar wraps the Windows month calendar common control for date selection.
+It supports single and multi-select date ranges, week number display, day state highlighting,
+today indicator suppression, and extensive color customization of all calendar elements.
+</p>
+
+<h2 id="command">Command Syntax</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol CALENDAR oCal VAR dDate OF oWnd SIZE nW, nH ON CHANGE bBlock</code></pre>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>dDate</code></td><td>Date</td><td>Currently selected date</td></tr>
+<tr><td><code>dDateEnd</code></td><td>Date</td><td>End date in multi-select mode</td></tr>
+<tr><td><code>lMultiselect</code></td><td>Logical</td><td>Enable multiple date selection</td></tr>
+<tr><td><code>lWeekNumbers</code></td><td>Logical</td><td>Show week number column</td></tr>
+<tr><td><code>lNoToday</code></td><td>Logical</td><td>Hide the "Today" date footer</td></tr>
+<tr><td><code>lNoTodayCircle</code></td><td>Logical</td><td>Hide the circle around today's date</td></tr>
+<tr><td><code>bAction</code></td><td>Code block</td><td>Executed on double-click</td></tr>
+<tr><td><code>bLDblClick</code></td><td>Code block</td><td>Left double-click handler</td></tr>
+<tr><td><code>aDayState</code></td><td>Array</td><td>Array of day state bitmaps for bold/highlight</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, bSetGet, bSetGet2, oWnd, nWidth, nHeight, bValid, nClrFore, nClrBack, oFont, lDesign, oCursor, lPixel, cMsg, lUpdate, lMultiselect, bWhen, bChange, nHelpId, bAction, bLDblClick, lWeekNumbers, lNoTodayCircle, lNoToday, lDayState )</code></td><td>Create a new TCalendar control</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, bSetGet, bSetGet2, oWnd, nHelpId, nClrFore, nClrBack, oFont, oCursor, cMsg, lUpdate, lMultiselect, bWhen, bValid, bChanged, bAction, bLDblClick )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>GetDate()</code></td><td>Retrieve the currently selected date</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the calendar to a specific date</td></tr>
+<tr><td><code>SetRange( dDateStart, dDateEnd, nFlags )</code></td><td>Restrict selectable date range</td></tr>
+<tr><td><code>GetDateRange()</code></td><td>Retrieve the selected start/end dates in multi-select mode</td></tr>
+<tr><td><code>GetRange()</code></td><td>Retrieve the current minimum and maximum allowed dates</td></tr>
+<tr><td><code>SetColor( nFlag, nColor )</code></td><td>Set color of a calendar element (MCSC_BACKGROUND, MCSC_TEXT, etc.)</td></tr>
+<tr><td><code>SetFirstDayOfWeek( nDay )</code></td><td>Set the first day of the week (0=Monday..6=Sunday)</td></tr>
+<tr><td><code>SetWeekNumbers( lOnOff )</code></td><td>Show or hide week number column</td></tr>
+<tr><td><code>SetArrayDayState( nMonth, nDay )</code></td><td>Set day state flags for a specific month and day</td></tr>
+<tr><td><code>SetBackGround( nColor )</code></td><td>Set the calendar background color</td></tr>
+<tr><td><code>SetTextClr( nColor )</code></td><td>Set the calendar text color</td></tr>
+<tr><td><code>SetTitleBk( nColor )</code></td><td>Set the title bar background color</td></tr>
+<tr><td><code>SetTitleText( nColor )</code></td><td>Set the title bar text color</td></tr>
+<tr><td><code>SetToday( dDate )</code></td><td>Set the "today" date programmatically</td></tr>
+<tr><td><code>GetToday()</code></td><td>Retrieve the current "today" date</td></tr>
+<tr><td><code>SetMaxSelCount( nDays )</code></td><td>Set maximum selectable days in multi-select mode</td></tr>
+<tr><td><code>SetCurrentView( nId )</code></td><td>Set the current view (monthly, yearly, etc.)</td></tr>
+<tr><td><code>GetCurrentView()</code></td><td>Get the current view identifier</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Calendar with Change Callback</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oCal, dDate := Date()
+
+   DEFINE WINDOW oWnd TITLE "Calendar Demo" SIZE 400, 350
+
+   @ 20, 20 CALENDAR oCal VAR dDate OF oWnd SIZE 350, 250 ;
+      ON CHANGE MsgInfo( DToC( dDate ), "Date Selected" )
+
+   oCal:lWeekNumbers := .T.
+   oCal:SetColor( MCSC_TITLEBK, CLR_BLUE )
+   oCal:SetColor( MCSC_TITLETEXT, CLR_WHITE )
+   oCal:SetFirstDayOfWeek( 1 )  // Monday
+
+   @ 300, 20 BUTTON "&amp;OK" SIZE 60, 25 PIXEL OF oWnd ;
+      ACTION ( MsgInfo( DToC( dDate ) ), oWnd:End() )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TCalendar wraps the Win32 <code>SysMonthCal32</code> common control. The control automatically adjusts its minimum size based on the font and number of visible months.</li>
+<li>In multi-select mode (<code>lMultiselect := .T.</code>), use <code>bSetGet2</code> to bind the end date variable and <code>GetDateRange()</code> to retrieve both start and end dates.</li>
+<li>Day states allow individual days to be rendered in bold (grayed = GRAY, bold = BOLD). Use <code>SetArrayDayState()</code> to configure states per month.</li>
+<li>The <code>MCSC_*</code> constants for color customization are: <code>MCSC_BACKGROUND</code> (0), <code>MCSC_TEXT</code> (1), <code>MCSC_TITLEBK</code> (2), <code>MCSC_TITLETEXT</code> (3), <code>MCSC_MONTHBK</code> (4), <code>MCSC_TRAILINGTEXT</code> (5).</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

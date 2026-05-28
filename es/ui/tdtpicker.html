@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TDatePick - Documentación FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Introducción</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General del Framework</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Compilación</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Principales</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles de UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../es/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../es/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../es/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../es/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../es/ui/tcalendar.html">TCalendar</a>
+<a class="nav-item active" href="../../es/ui/tdtpicker.html">TDatePick</a>
+<a class="nav-item" href="../../es/ui/timagelist.html">TImageList</a>
+<a class="nav-item" href="../../es/ui/tslider.html">TSlider</a>
+<a class="nav-item" href="../../es/ui/tswitch.html">TSwitch</a>
+<a class="nav-item" href="../../es/ui/ttmpicker.html">TTimePick</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresión e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../es/internet/tai.html">Clases de IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TDatePick</h1>
+<p class="class-source">Fuente: <code>source/classes/tdtpicke.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+
+<p>
+TDatePick envuelve el control común de selector de fecha y hora de Windows (<code>SysDateTimePick32</code>).
+Proporciona un calendario desplegable para selección de fechas y admite modos de solo fecha y fecha-hora
+con formatos de visualización configurables, restricciones de rango y capacidad de selección múltiple.
+</p>
+
+<h2 id="command">Sintaxis del Comando</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol DTPICKER oDtp VAR dDate SIZE nW, nH PIXEL OF oWnd ;
+   PICTURE cFmt ON CHANGE bBlock</code></pre>
+
+<h2 id="data">Miembros DATA Principales</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>lDateTime</code></td><td>Logical</td><td>Enable date-time mode (T value) instead of date-only</td></tr>
+<tr><td><code>cPicture</code></td><td>Character</td><td>Display format picture (e.g., "dd/mm/yyyy")</td></tr>
+<tr><td><code>lMultiSelect</code></td><td>Logical</td><td>Enable multi-date selection in the drop-down calendar</td></tr>
+<tr><td><code>lNoToday</code></td><td>Logical</td><td>Hide the "Today" button at the bottom of the drop-down</td></tr>
+<tr><td><code>nMaxSelDays</code></td><td>Numeric</td><td>Maximum number of selectable days in multi-select mode</td></tr>
+<tr><td><code>lWeekNumbers</code></td><td>Logical</td><td>Show week numbers in the drop-down calendar</td></tr>
+<tr><td><code>lNoTodayCircle</code></td><td>Logical</td><td>Hide the circle around today's date in the drop-down</td></tr>
+<tr><td><code>lNoTrailingDates</code></td><td>Logical</td><td>Hide dates from previous/next months</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Métodos</h2>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, bSetGet, oWnd, nWidth, nHeight, bValid, nClrFore, nClrBack, oFont, lDesign, oCursor, lPixel, cMsg, lUpdate, bWhen, bChange, nHelpId, cPic, nStyle )</code></td><td>Create a new TDatePick control</td></tr>
+<tr><td><code>ReDefine( nId, bSetGet, oWnd, nHelpId, nClrFore, nClrBack, oFont, oCursor, cMsg, lUpdate, bWhen, bValid, bChanged, cPic )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>SetDate( dDate, lEmpty )</code></td><td>Set the picker to a specific date (optionally allow empty)</td></tr>
+<tr><td><code>GetDate()</code></td><td>Retrieve the currently selected date or datetime value</td></tr>
+<tr><td><code>SetRange( dFrom, dUpto )</code></td><td>Restrict the selectable date range</td></tr>
+<tr><td><code>GetRange()</code></td><td>Retrieve the current minimum and maximum date range</td></tr>
+<tr><td><code>Open()</code></td><td>Programmatically open the drop-down calendar</td></tr>
+<tr><td><code>cText( uVal )</code></td><td>Get or set the formatted text value (SETGET)</td></tr>
+<tr><td><code>Refresh()</code></td><td>Refresh the control from the bound variable</td></tr>
+<tr><td><code>Change()</code></td><td>Execute the bChange code block</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Ejemplos</h2>
+
+<h3>Selector de Fecha con Formato</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oDtp, dDate := Date()
+
+   DEFINE WINDOW oWnd TITLE "Date Picker Demo" SIZE 350, 200
+
+   @ 40, 30 DTPICKER oDtp VAR dDate SIZE 120, 22 PIXEL OF oWnd ;
+      PICTURE "dd/mm/yyyy" ;
+      ON CHANGE MsgInfo( DToC( dDate ), "Date Changed" )
+
+   oDtp:SetRange( Date() - 365, Date() + 365 )
+
+   @ 100, 30 BUTTON "&amp;Get Date" SIZE 80, 25 PIXEL OF oWnd ;
+      ACTION MsgInfo( DToC( oDtp:GetDate() ) )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h3>Selector de Fecha-Hora</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oDtp, tDateTime := DateTime()
+
+   DEFINE WINDOW oWnd TITLE "DateTime Picker" SIZE 350, 200
+
+   @ 40, 30 DTPICKER oDtp VAR tDateTime SIZE 180, 22 PIXEL OF oWnd ;
+      PICTURE "dd/mm/yyyy HH:MM:SS"
+
+   @ 100, 30 BUTTON "&amp;Show" SIZE 80, 25 PIXEL OF oWnd ;
+      ACTION MsgInfo( DToC( oDtp:GetDate() ), "Selected" )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notas</h2>
+
+<ul>
+<li>Cuando la variable vinculada es de tipo <code>T</code> (DateTime), el control cambia autom
+<li>La cl
+<li>Use <code>SetRange()</code> para restringir el rango de fechas que el usuario puede seleccionar. El calendario desplegable atenuar
+<li>El m
+<li>Las opciones de selecci
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

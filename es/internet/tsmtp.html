@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSmtp - Documentación FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresión e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item active" href="../../es/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../es/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TSmtp</h1>
+<p class="class-source">Fuente: <code>source/classes/tsmtp.prg</code></p>
+
+<p>
+TSmtp es la clase de envío de correo electrónico de FiveWin. Implementa el protocolo SMTP para enviar
+mensajes a través de un servidor de correo, con soporte para autenticación (AUTH LOGIN),
+contenido HTML, archivos adjuntos, destinatarios CC/BCC y acuses de recibo.
+Está construida sobre <a href="../../es/internet/tsocket.html">TSocket</a> y utiliza el
+modelo de eventos asíncronos para la comunicación.
+</p>
+
+<h2 id="data">Miembros DATA Principales</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Default</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cIPServer</code></td><td>Character</td><td></td><td>Nombre del servidor SMTP o dirección IP</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td><code>25</code></td><td>Puerto del servidor SMTP</td></tr>
+<tr><td><code>cFrom</code></td><td>Character</td><td></td><td>Dirección de correo del remitente</td></tr>
+<tr><td><code>aTo</code></td><td>Array</td><td><code>{}</code></td><td>Array de direcciones de correo de destinatarios</td></tr>
+<tr><td><code>aCC</code></td><td>Array</td><td><code>{}</code></td><td>Array de direcciones de destinatarios en CC</td></tr>
+<tr><td><code>aBCC</code></td><td>Array</td><td><code>{}</code></td><td>Array de direcciones de destinatarios en BCC</td></tr>
+<tr><td><code>cSubject</code></td><td>Character</td><td><code>"[no subject]"</code></td><td>Línea de asunto del correo</td></tr>
+<tr><td><code>cMsg</code></td><td>Character</td><td><code>""</code></td><td>Cuerpo del mensaje en texto plano</td></tr>
+<tr><td><code>cHTML</code></td><td>Character</td><td><code>""</code></td><td>Cuerpo del mensaje en HTML (alternativa al texto plano)</td></tr>
+<tr><td><code>aFiles</code></td><td>Array</td><td><code>{}</code></td><td>Array de rutas de archivos para adjuntar</td></tr>
+<tr><td><code>cPriority</code></td><td>Character</td><td><code>"Normal"</code></td><td>Prioridad del mensaje: Normal, High o Low</td></tr>
+<tr><td><code>cUser</code></td><td>Character</td><td><code>""</code></td><td>Nombre de usuario para autenticación SMTP</td></tr>
+<tr><td><code>cPassword</code></td><td>Character</td><td><code>""</code></td><td>Contraseña para autenticación SMTP</td></tr>
+<tr><td><code>lDoAuth</code></td><td>Logical</td><td><code>.F.</code></td><td>Habilitar autenticación SMTP (AUTH LOGIN)</td></tr>
+<tr><td><code>cReplyTo</code></td><td>Character</td><td></td><td>Dirección de correo Reply-To</td></tr>
+<tr><td><code>lReceipt</code></td><td>Logical</td><td><code>.F.</code></td><td>Solicitar acuse de recibo (Disposition-Notification-To)</td></tr>
+<tr><td><code>cMailer</code></td><td>Character</td><td><code>"FiveWin Mailer"</code></td><td>Valor de la cabecera X-Mailer</td></tr>
+<tr><td><code>cError</code></td><td>Character</td><td><code>""</code></td><td>Descripción del error si el envío falla</td></tr>
+<tr><td><code>bConnecting</code></td><td>Block</td><td></td><td>Callback durante la conexión</td></tr>
+<tr><td><code>bConnected</code></td><td>Block</td><td></td><td>Callback cuando se conecta al servidor</td></tr>
+<tr><td><code>bDone</code></td><td>Block</td><td></td><td>Callback cuando el mensaje se envía correctamente</td></tr>
+<tr><td><code>bFailure</code></td><td>Block</td><td></td><td>Callback cuando ocurre un error</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Métodos</h2>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cIPServer, nPort, lAuth, cUser, cPassword )</code></td><td>Crear una nueva sesión SMTP. nPort predeterminado es 25. Resuelve el nombre del servidor a IP si es necesario.</td></tr>
+<tr><td><code>SendMail( cFrom, aTo, cMsg, cSubject, aFiles, aCC, aBCC, lReceipt, cHTML )</code></td><td>Redactar y enviar un correo electrónico. Todos los parámetros después de aTo son opcionales.</td></tr>
+<tr><td><code>End()</code></td><td>Cerrar el socket subyacente y limpiar</td></tr>
+<tr><td><code>Priority()</code></td><td>Devuelve la prioridad numérica: 1=High, 3=Normal, 5=Low</td></tr>
+</tbody>
+</table>
+
+<h2 id="example-basic">Ejemplo: Enviar un Correo Simple</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oSmtp
+
+   oSmtp := TSmtp():New( "mail.example.com" )
+
+   oSmtp:SendMail( "sender@example.com", ;
+                   { "recipient@example.com" }, ;
+                   "Hello, this is a test message.", ;
+                   "Test Subject" )
+
+return nil</code></pre>
+
+<h2 id="example-auth">Ejemplo: SMTP Autenticado con Adjunto</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oSmtp
+
+   // Gmail SMTP with authentication
+   oSmtp := TSmtp():New( "smtp.gmail.com", 587, .T., ;
+                         "user@gmail.com", "password" )
+
+   oSmtp:bConnecting := { || MsgInfo( "Connecting to SMTP server..." ) }
+   oSmtp:bDone       := { || MsgInfo( "Email sent successfully!" ) }
+   oSmtp:bFailure    := { |o,n,c| MsgStop( "Error: " + oSmtp:cError ) }
+
+   oSmtp:SendMail( "user@gmail.com", ;
+                   { "recipient@example.com" }, ;
+                   "Please find the attached report.", ;
+                   "Monthly Report", ;
+                   { "C:\reports\report.pdf" } )
+
+return nil</code></pre>
+
+<h2 id="example-html">Ejemplo: Correo HTML con CC</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oSmtp, cHtml
+
+   TEXT INTO cHtml
+   &lt;html&gt;
+   &lt;body style="font-family: Arial; color: #333;"&gt;
+      &lt;h1&gt;Welcome!&lt;/h1&gt;
+      &lt;p&gt;This is an &lt;b&gt;HTML email&lt;/b&gt; sent from FiveWin.&lt;/p&gt;
+      &lt;hr&gt;
+      &lt;p&gt;Regards,&lt;br&gt;The FiveWin Team&lt;/p&gt;
+   &lt;/body&gt;
+   &lt;/html&gt;
+   ENDTEXT
+
+   oSmtp := TSmtp():New( "mail.example.com" )
+
+   oSmtp:SendMail( "sender@example.com", ;
+                   { "alice@example.com" }, ;
+                   "Plain text fallback message.", ;
+                   "HTML Email Test", , ;
+                   { "bob@example.com" }, ;   // CC
+                   .F., cHtml )
+
+return nil</code></pre>
+
+<h2 id="tips">Notas</h2>
+
+<ul>
+<li>TSmtp soporta el método de autenticación AUTH LOGIN. Para servidores que requieran PLAIN o MD5, se necesita implementación adicional.</li>
+<li>El nombre del servidor (<code>cIPServer</code>) puede ser un nombre amigable (ej. "smtp.gmail.com") o una dirección IP. TSmtp lo resuelve automáticamente.</li>
+<li>Los archivos adjuntos se codifican como base64 para archivos binarios o quoted-printable para archivos de texto. Los nombres de archivo conservan su mayúsculas/minúsculas original.</li>
+<li>Los correos HTML incluyen una estructura multipart/alternative: se envía un texto plano de respaldo junto con el contenido HTML.</li>
+<li>Si el servidor agota el tiempo de espera después de enviar archivos adjuntos grandes, incremente el DATA miembro <code>nDelay</code> en uno para añadir demora entre envíos.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

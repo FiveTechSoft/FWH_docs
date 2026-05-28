@@ -1,0 +1,646 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>File, Text &amp; Data Classes - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div><a class="nav-item" href="../../pt/core/twindow.html">TWindow</a><a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a><a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../pt/ui/tgraph.html">TGraph</a><a class="nav-item" href="../../pt/ui/tgantt.html">TGantt</a><a class="nav-item" href="../../pt/ui/ttoast.html">TToast</a><a class="nav-item" href="../../pt/ui/trating.html">TRating</a><a class="nav-item" href="../../pt/ui/twebcam.html">TWebcam</a><a class="nav-item" href="../../pt/ui/tgif.html">TGif</a><a class="nav-item" href="../../pt/ui/tscintilla.html">TScintilla</a><a class="nav-item" href="../../pt/ui/tswitch.html">TSwitch</a><a class="nav-item" href="../../pt/ui/tcalendar.html">TCalendar</a><a class="nav-item" href="../../pt/ui/tdtpicker.html">TDatePick</a><a class="nav-item" href="../../pt/ui/ttmpicker.html">TTimePick</a><a class="nav-item" href="../../pt/ui/tslider.html">TSlider</a><a class="nav-item" href="../../pt/ui/timagelist.html">TImageList</a><a class="nav-item" href="../../pt/ui/texplorerbar.html">TExplorerBar</a><a class="nav-item" href="../../pt/ui/tmetropanel.html">TMetroPanel</a><a class="nav-item" href="../../pt/ui/tscrollpanel.html">TScrollPanel</a><a class="nav-item" href="../../pt/ui/tpager.html">TPager</a><a class="nav-item" href="../../pt/ui/theader.html">THeader</a><a class="nav-item" href="../../pt/ui/tbartabs.html">TBarTabs</a><a class="nav-item" href="../../pt/ui/tprogresswheel.html">TProgressWheel</a><a class="nav-item" href="../../pt/ui/ttagcloud.html">TTagCloud</a><a class="nav-item" href="../../pt/ui/tscrollmsg.html">TScrollMsg</a><a class="nav-item" href="../../pt/ui/tnavigator.html">TNavigator</a><a class="nav-item" href="../../pt/ui/tmytitle.html">TMyTitle</a><a class="nav-item" href="../../pt/ui/tskinbutton.html">TSkinButton</a></div>
+<div class="nav-section"><div class="nav-section-title">Acesso a Dados</div><a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../pt/data/todbc.html">TODBC</a><a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Impressão e Relatórios</div><a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../pt/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../pt/internet/topenai.html">AI Classes</a><a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div><a class="nav-item" href="../../pt/reference/commands.html">Comandos</a><a class="nav-item" href="../../pt/reference/functions.html">Funções</a><a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a><a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>File, Text &amp; Data Classes</h1>
+<p>FiveWin provides a rich set of classes for file I/O, text editing, INI configuration, Windows registry access, clipboard operations, C structure interop, and data dictionary management. These classes wrap low-level OS facilities into clean object-oriented interfaces.</p>
+
+<div class="mermaid">
+classDiagram
+    TFile <|-- TTxtFile
+    TControl <|-- TTxtEdit
+    class TFile {
+        +cName
+        +hFile
+        +nLen
+        +New(cFileName, nMode)
+        +Create(cFileName, nMode)
+        +Open()
+        +Close()
+        +GoTop()
+        +GoBottom()
+        +Seek(cStr)
+        +PutStr(cStr)
+        +cGetStr(nLen)
+    }
+    class TTxtFile {
+        +cLine
+        +nLine
+        +nTLines
+        +ReadLine()
+        +Add(cLine)
+        +DelLine()
+        +Skip(nSkip)
+    }
+    class TIni {
+        +cIniFile
+        +New(cIniFile)
+        +Get(cSection, cEntry, uDefault)
+        +Set(cSection, cEntry, uValue)
+        +Sections()
+        +DelSection(cSection)
+        +DelEntry(cSection, cEntry)
+    }
+    class TReg32 {
+        +nHandle
+        +nKey
+        +New(nKey, cRegKey)
+        +Create(nKey, cRegKey)
+        +Get(cSubKey, uVar)
+        +Set(cSubKey, uVar)
+        +Close()
+    }
+    class TClipBoard {
+        +nFormat
+        +New(nFormat, oWnd)
+        +SetText(cText)
+        +GetText()
+        +SetBitmap(oBitmap)
+        +GetBitmap()
+    }
+</div>
+
+<!-- ================================================================ -->
+<h2 id="tfile">TFile - Binary File Operations</h2>
+<p>TFile is the base class for binary file manipulation. It wraps Harbour's low-level FOpen/FCreate/FRead/FWrite functions into an object that tracks the file handle, length, and current position. TTxtFile inherits from TFile to add line-based access.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>cName</code></td><td>Character</td><td>File name (path) passed to constructor</td></tr>
+<tr><td><code>hFile</code></td><td>Numeric</td><td>OS file handle returned by FOpen/FCreate</td></tr>
+<tr><td><code>nLen</code></td><td>Numeric</td><td>Total file length in bytes</td></tr>
+<tr><td><code>nBufferLen</code></td><td>Numeric</td><td>Read buffer size (default 2048)</td></tr>
+<tr><td><code>nMode</code></td><td>Numeric</td><td>Open mode (FO_READWRITE, FC_NORMAL, etc.)</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cFileName, nMode )</code></td><td>Opens existing file or creates new. If file exists, opens with nMode (default FO_READWRITE). If not, creates with FC_NORMAL.</td></tr>
+<tr><td><code>Create( cFileName, nMode )</code></td><td>Erases existing file then calls New() to create a fresh file.</td></tr>
+<tr><td><code>Open()</code></td><td>Returns .T. if file handle is valid (hFile > 0).</td></tr>
+<tr><td><code>Close()</code></td><td>Closes the file handle via FClose().</td></tr>
+<tr><td><code>End()</code></td><td>Alias for Close().</td></tr>
+<tr><td><code>GoTop()</code></td><td>Seeks to byte position 0 (beginning of file).</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Seeks to end of file, updates nLen.</td></tr>
+<tr><td><code>GoTo( nRecno )</code></td><td>Seeks to absolute byte position nRecno.</td></tr>
+<tr><td><code>Skip( nBytes )</code></td><td>Moves file pointer forward/backward by nBytes relative to current position.</td></tr>
+<tr><td><code>nRecNo()</code></td><td>Returns current byte position in file.</td></tr>
+<tr><td><code>lEoF()</code></td><td>Returns .T. if current position >= nLen.</td></tr>
+<tr><td><code>lBoF()</code></td><td>Returns .T. if current position == 0.</td></tr>
+<tr><td><code>nGetByte()</code></td><td>Reads and returns one byte as numeric (Asc value), or -1 on failure.</td></tr>
+<tr><td><code>nGetWord()</code></td><td>Reads and returns a 16-bit word (2 bytes) via Bin2I(), or -1 on failure.</td></tr>
+<tr><td><code>cGetStr( nLen )</code></td><td>Reads nLen bytes and returns as string.</td></tr>
+<tr><td><code>PutByte( nByte )</code></td><td>Writes one byte at current position.</td></tr>
+<tr><td><code>PutWord( nWord )</code></td><td>Writes a 16-bit word at current position via I2Bin().</td></tr>
+<tr><td><code>PutStr( cStr )</code></td><td>Writes a string at current position via FWrite().</td></tr>
+<tr><td><code>AppByte( nByte )</code></td><td>Appends one byte at end of file, increments nLen.</td></tr>
+<tr><td><code>AppWord( nWord )</code></td><td>Appends a 16-bit word at end of file.</td></tr>
+<tr><td><code>AppStr( cStr )</code></td><td>Appends a string at end of file.</td></tr>
+<tr><td><code>Count( cStr )</code></td><td>Counts occurrences of cStr in the entire file (default CRLF).</td></tr>
+<tr><td><code>Seek( cStr, nDirection, nCase )</code></td><td>Searches for cStr from current position. nDirection: 0=forward, 1=backward. nCase: 0=nocase, 1=upper, 2=lower.</td></tr>
+<tr><td><code>DelBytes( nLen )</code></td><td>Deletes nLen bytes at current position.</td></tr>
+<tr><td><code>InsBytes( nLen )</code></td><td>Inserts nLen empty bytes at current position.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Reading a Binary File</h3>
+<pre><code class="language-harbour">local oFile := TFile():New( "data.bin" )
+
+if oFile:Open()
+   oFile:GoTop()
+   ? "File size:", oFile:nLen, "bytes"
+
+   // Read header: 2-byte signature + 4-byte length
+   local nSig  := oFile:nGetWord()
+   local cData := oFile:cGetStr( 256 )
+
+   ? "Signature:", nSig
+   ? "First 256 bytes:", cData
+
+   // Search for a pattern
+   oFile:GoTop()
+   if oFile:Seek( "MARKER" )
+      ? "Found MARKER at position:", oFile:nRecNo()
+   endif
+
+   oFile:Close()
+endif</code></pre>
+
+<h3>Example: Creating and Writing a Binary File</h3>
+<pre><code class="language-harbour">local oFile := TFile():Create( "output.dat" )
+
+oFile:PutWord( 0x4657 )           // 2-byte signature "FW"
+oFile:PutStr( "Hello World" )     // string data
+oFile:AppStr( CRLF + "Line 2" )  // append at end
+
+? "Bytes written:", oFile:nLen
+oFile:Close()</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="ttxtfile">TTxtFile - Text File Line Access</h2>
+<p>TTxtFile inherits from TFile and adds line-by-line navigation. It counts CRLF line endings on open and provides Skip/GoTo/ReadLine methods that work with line numbers rather than byte offsets. Ideal for reading log files, CSV data, or configuration files.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>cLine</code></td><td>Character</td><td>Contents of the current line after ReadLine()</td></tr>
+<tr><td><code>nLine</code></td><td>Numeric</td><td>Current line number (1-based)</td></tr>
+<tr><td><code>nTLines</code></td><td>Numeric</td><td>Total number of lines in the file</td></tr>
+<tr><td><code>nMaxLineLength</code></td><td>Numeric</td><td>Maximum expected line length (default 1024)</td></tr>
+<tr><td><code>nOffset</code></td><td>Numeric</td><td>Byte offset of current line start</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cFileName, nMode )</code></td><td>Opens file, counts lines (CRLF), reads first line.</td></tr>
+<tr><td><code>ReadLine()</code></td><td>Reads the current line into ::cLine from current byte offset.</td></tr>
+<tr><td><code>ReadLn()</code></td><td>Alias for ReadLine() (backward compatibility).</td></tr>
+<tr><td><code>GoTo( nLine )</code></td><td>Seeks to line number nLine and reads it.</td></tr>
+<tr><td><code>GoTop()</code></td><td>Goes to line 1, resets offset to 0, reads first line.</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Goes to last line.</td></tr>
+<tr><td><code>Skip( nSkip )</code></td><td>Moves forward or backward by nSkip lines.</td></tr>
+<tr><td><code>Advance()</code></td><td>Moves to the next line (seeks next CRLF). Returns .F. at EOF.</td></tr>
+<tr><td><code>Add( cLine )</code></td><td>Appends a new line at the end of the file.</td></tr>
+<tr><td><code>InsLine( cLine )</code></td><td>Inserts a new line at current position.</td></tr>
+<tr><td><code>DelLine()</code></td><td>Deletes the current line.</td></tr>
+<tr><td><code>RepLine( cLine )</code></td><td>Replaces current line (DelLine + InsLine).</td></tr>
+<tr><td><code>AppendLn( cLine )</code></td><td>Appends a line with CRLF terminator.</td></tr>
+<tr><td><code>RecCount()</code></td><td>Returns total line count (same as nTLines).</td></tr>
+<tr><td><code>RecNo()</code></td><td>Returns current line number.</td></tr>
+<tr><td><code>LastRec()</code></td><td>Returns total line count.</td></tr>
+<tr><td><code>Skipper( nRecs )</code></td><td>TBrowse-compatible skipper method.</td></tr>
+<tr><td><code>GetValue( cSection, cKeyword, xDefVal )</code></td><td>Reads a value from INI-style sections in the text file.</td></tr>
+<tr><td><code>SetValue( cSection, cKeyword, xValue )</code></td><td>Writes a value to INI-style sections.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Processing a Text File Line by Line</h3>
+<pre><code class="language-harbour">local oTxt := TTxtFile():New( "logfile.txt", FO_READ )
+
+if oTxt:Open()
+   ? "Total lines:", oTxt:RecCount()
+
+   oTxt:GoTop()
+   while ! oTxt:Eof()
+      if "ERROR" $ Upper( oTxt:cLine )
+         ? "Line", oTxt:nLine, ":", oTxt:cLine
+      endif
+      oTxt:Skip( 1 )
+   end
+
+   oTxt:Close()
+endif</code></pre>
+
+<h3>Example: Building a Text File</h3>
+<pre><code class="language-harbour">local oTxt := TTxtFile():New( "report.csv" )
+
+oTxt:Add( "Name,Age,City" )
+oTxt:Add( "John,30,New York" )
+oTxt:Add( "Maria,25,Madrid" )
+oTxt:Add( "Hans,40,Berlin" )
+
+? "Written", oTxt:RecCount(), "lines"
+oTxt:Close()</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="ttxtedit">TTxtEdit - Multiline Text Editor Control</h2>
+<p>TTxtEdit is a full-featured text editor control with syntax highlighting, undo/redo, block selection, find/replace, line numbering, and clipboard support. It inherits from TControl and can be placed in any window or dialog. Used internally by FiveWin's code editor and is suitable for building IDE-like interfaces.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>aLines</code></td><td>Array</td><td>Array containing all text lines</td></tr>
+<tr><td><code>aDelLines</code></td><td>Array</td><td>Deleted lines storage (for undo)</td></tr>
+<tr><td><code>nDelLines</code></td><td>Numeric</td><td>Max number of deleted lines to store</td></tr>
+<tr><td><code>nVisLines</code></td><td>Numeric</td><td>Number of visible lines on screen</td></tr>
+<tr><td><code>nLineTop</code></td><td>Numeric</td><td>First visible line number</td></tr>
+<tr><td><code>lInsert</code></td><td>Logical</td><td>Insert mode (.T.) or overwrite mode (.F.)</td></tr>
+<tr><td><code>lChanged</code></td><td>Logical</td><td>.T. if text has been modified</td></tr>
+<tr><td><code>cFileName</code></td><td>Character</td><td>Associated file name</td></tr>
+<tr><td><code>nRow, nCol</code></td><td>Numeric</td><td>Physical cursor row and column</td></tr>
+<tr><td><code>nLineRow, nLineCol</code></td><td>Numeric</td><td>Logical cursor row and column</td></tr>
+<tr><td><code>cTokens1, cTokens2, cTokens3</code></td><td>Character</td><td>Keyword token lists for syntax highlighting (space-separated)</td></tr>
+<tr><td><code>nClrTok1, nClrTok2, nClrTok3</code></td><td>Numeric</td><td>Colors for each token group</td></tr>
+<tr><td><code>nClrNumber</code></td><td>Numeric</td><td>Color for numeric literals</td></tr>
+<tr><td><code>nClrString</code></td><td>Numeric</td><td>Color for string literals</td></tr>
+<tr><td><code>nClrOperator</code></td><td>Numeric</td><td>Color for operators</td></tr>
+<tr><td><code>nClrLineNumber</code></td><td>Numeric</td><td>Color for line number gutter</td></tr>
+<tr><td><code>nClrBBlock, nClrFBlock</code></td><td>Numeric</td><td>Background/foreground colors for selected block</td></tr>
+<tr><td><code>lLineNumber</code></td><td>Logical</td><td>Show line numbers in the gutter</td></tr>
+<tr><td><code>nTabLen</code></td><td>Numeric</td><td>Tab stop width in characters</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>If .T., editing is disabled (default .F.)</td></tr>
+<tr><td><code>lBackUp</code></td><td>Logical</td><td>Automatically create .BAK files</td></tr>
+<tr><td><code>lUndo, lRedo</code></td><td>Logical</td><td>Undo/Redo availability flags</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd )</code></td><td>Creates the text editor control at given coordinates.</td></tr>
+<tr><td><code>Redefine( nId, oWnd )</code></td><td>Redefines from a dialog resource.</td></tr>
+<tr><td><code>AddLine( cLine )</code></td><td>Appends a line to the text buffer.</td></tr>
+<tr><td><code>Copy()</code></td><td>Copies selected block to clipboard.</td></tr>
+<tr><td><code>Cut()</code></td><td>Cuts selected block to clipboard (Copy + DelBlock).</td></tr>
+<tr><td><code>DelBlock()</code></td><td>Deletes the currently selected block.</td></tr>
+<tr><td><code>DelLine( nLine )</code></td><td>Deletes a specific line by number.</td></tr>
+<tr><td><code>DupLine()</code></td><td>Duplicates the current line.</td></tr>
+<tr><td><code>Find( cText, nFromLine, lBackward )</code></td><td>Searches for text from a given line.</td></tr>
+<tr><td><code>DlgFind()</code></td><td>Shows a find dialog.</td></tr>
+<tr><td><code>DlgGoLine()</code></td><td>Shows a "Go to line" dialog.</td></tr>
+<tr><td><code>DrawLine( nLine, nRow, nClrBack )</code></td><td>Draws a single line with syntax highlighting.</td></tr>
+<tr><td><code>AddUndo( cOperation, cText, nLine, nColumn )</code></td><td>Records an undo operation.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Code Editor with Syntax Highlighting</h3>
+<pre><code class="language-harbour">local oWnd, oEdit
+
+DEFINE WINDOW oWnd TITLE "Code Editor"
+
+oEdit := TTxtEdit():New( 0, 0, oWnd:nWidth(), oWnd:nHeight(), oWnd )
+oEdit:lLineNumber := .T.
+oEdit:nTabLen     := 3
+
+// Harbour keywords for syntax highlighting
+oEdit:cTokens1 := "function return local static if else endif do while end " + ;
+                   "for next class endclass method data"
+oEdit:nClrTok1 := CLR_BLUE
+
+oEdit:cTokens2 := "nil .t. .f. .and. .or. .not."
+oEdit:nClrTok2 := CLR_RED
+
+oEdit:nClrString  := CLR_HGREEN
+oEdit:nClrNumber  := CLR_MAGENTA
+oEdit:nClrComment := RGB( 0, 128, 0 )
+
+// Load a file
+oEdit:aLines := HB_ATokens( MemoRead( "myapp.prg" ), CRLF )
+
+ACTIVATE WINDOW oWnd</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tini">TIni - INI File Access</h2>
+<p>TIni provides read/write access to Windows-style INI files. It wraps the Windows API functions GetPrivateProfileString/WritePrivateProfileString. When no file is specified, it reads from/writes to WIN.INI. The <code>lAutoSet</code> flag (default .T.) automatically writes default values if a key is not found.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>cIniFile</code></td><td>Character</td><td>Path to the INI file. Empty string means WIN.INI.</td></tr>
+<tr><td><code>lAutoSet</code></td><td>Logical</td><td>If .T. (default), writes default values when key not found on Get().</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cIniFile )</code></td><td>Creates TIni object. Appends ".ini" extension if no dot in filename.</td></tr>
+<tr><td><code>Get( cSection, cEntry, uDefault, uVar )</code></td><td>Reads a value. Type is determined by uDefault: numeric returns integer, date returns CToD(), logical returns .T./.F. comparison, otherwise string.</td></tr>
+<tr><td><code>Set( cSection, cEntry, uValue )</code></td><td>Writes a value (converted to string via cValToChar).</td></tr>
+<tr><td><code>Sections()</code></td><td>Returns an array of all section names in the INI file.</td></tr>
+<tr><td><code>DelSection( cSection )</code></td><td>Deletes an entire section from the INI file.</td></tr>
+<tr><td><code>DelEntry( cSection, cEntry )</code></td><td>Deletes a single entry from a section.</td></tr>
+</tbody>
+</table>
+
+<h3>Command Syntax</h3>
+<pre><code class="language-harbour">// FiveWin provides INI command wrappers:
+INI oIni FILENAME "myapp.ini"
+
+   GET cServer  SECTION "Database" ENTRY "Server"  DEFAULT "localhost" OF oIni
+   GET nPort    SECTION "Database" ENTRY "Port"    DEFAULT 3306        OF oIni
+   GET lDebug   SECTION "App"      ENTRY "Debug"   DEFAULT .F.         OF oIni
+
+   SET SECTION "App" ENTRY "LastRun" TO DToC( Date() ) OF oIni
+
+ENDINI</code></pre>
+
+<h3>Example: Application Settings</h3>
+<pre><code class="language-harbour">function LoadSettings()
+   local oIni := TIni():New( "myapp.ini" )
+   local cServer, nPort, cUser
+
+   cServer := oIni:Get( "Database", "Server", "localhost" )
+   nPort   := oIni:Get( "Database", "Port",   3306 )
+   cUser   := oIni:Get( "Database", "User",   "admin" )
+
+   // List all sections
+   local aSections := oIni:Sections()
+   AEval( aSections, {|c| QOut( "Section:", c ) } )
+
+return nil
+
+function SaveSettings( cServer, nPort )
+   local oIni := TIni():New( "myapp.ini" )
+
+   oIni:Set( "Database", "Server", cServer )
+   oIni:Set( "Database", "Port",   nPort )
+   oIni:Set( "App",      "LastRun", DToC( Date() ) )
+
+return nil</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="treg32">TReg32 - Windows Registry Access</h2>
+<p>TReg32 provides object-oriented access to the Windows Registry. It supports reading and writing string (REG_SZ), numeric (REG_DWORD), and binary (REG_BINARY) values under any registry hive. On 32-bit applications running on 64-bit Windows, it automatically adds KEY_WOW64_64KEY for correct registry view access.</p>
+
+<h3>HKEY Constants</h3>
+<table>
+<thead><tr><th>Constant</th><th>Value</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>HKEY_CLASSES_ROOT</code></td><td>0x80000000</td><td>File type associations and COM registrations</td></tr>
+<tr><td><code>HKEY_CURRENT_USER</code></td><td>0x80000001</td><td>Current user preferences and settings</td></tr>
+<tr><td><code>HKEY_LOCAL_MACHINE</code></td><td>0x80000002</td><td>Machine-wide configuration data</td></tr>
+<tr><td><code>HKEY_USERS</code></td><td>0x80000003</td><td>All user profiles on the machine</td></tr>
+<tr><td><code>HKEY_CURRENT_CONFIG</code></td><td>0x80000005</td><td>Current hardware profile</td></tr>
+</tbody>
+</table>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>cRegKey</code></td><td>Character</td><td>Registry key path (e.g. "Software\\MyApp")</td></tr>
+<tr><td><code>nKey</code></td><td>Numeric</td><td>Root HKEY constant</td></tr>
+<tr><td><code>nHandle</code></td><td>Numeric</td><td>Handle to the opened registry key</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td>Last error code (0 = ERROR_SUCCESS)</td></tr>
+<tr><td><code>lError</code></td><td>Logical</td><td>Error flag</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( nKey, cRegKey )</code></td><td>Opens an existing registry key. Tries KEY_ALL_ACCESS first, falls back to KEY_READ.</td></tr>
+<tr><td><code>Create( nKey, cRegKey )</code></td><td>Creates a new registry key (or opens if it already exists).</td></tr>
+<tr><td><code>Get( cSubKey, uVar )</code></td><td>Reads a value. Returns string for REG_SZ, numeric for REG_DWORD.</td></tr>
+<tr><td><code>GetBinary( cSubKey )</code></td><td>Reads a binary value as raw string.</td></tr>
+<tr><td><code>Set( cSubKey, uVar, nType )</code></td><td>Writes a value. nType defaults to REG_SZ for strings, REG_DWORD for numerics.</td></tr>
+<tr><td><code>Delete( cSubKey )</code></td><td>Deletes a sub-key.</td></tr>
+<tr><td><code>Close()</code></td><td>Closes the registry key handle.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Reading and Writing Registry Values</h3>
+<pre><code class="language-harbour">#define HKEY_CURRENT_USER  2147483649
+
+function ReadAppSettings()
+   local oReg, cValue := "", nValue := 0
+
+   oReg := TReg32():New( HKEY_CURRENT_USER, "Software\MyCompany\MyApp" )
+
+   if oReg:nError == 0
+      oReg:Get( "InstallPath", @cValue )
+      ? "Install path:", cValue
+
+      oReg:Get( "RunCount", @nValue )
+      ? "Run count:", nValue
+
+      // Increment run counter
+      oReg:Set( "RunCount", nValue + 1 )
+   endif
+
+   oReg:Close()
+return nil
+
+function CreateAppKey()
+   local oReg
+
+   oReg := TReg32():Create( HKEY_CURRENT_USER, "Software\MyCompany\MyApp" )
+   oReg:Set( "Version", "26.03" )
+   oReg:Set( "InstallDate", DToC( Date() ) )
+   oReg:Set( "RunCount", 0 )
+   oReg:Close()
+return nil</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tclipboard">TClipBoard - Clipboard Access</h2>
+<p>TClipBoard provides access to the Windows clipboard for reading and writing text, bitmaps, metafiles, and dropped files. It handles Unicode text automatically when FW_SetUnicode() is active, converting between UTF-8 and UTF-16 as needed.</p>
+
+<h3>Clipboard Format Constants</h3>
+<table>
+<thead><tr><th>Constant</th><th>Value</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>CF_TEXT</code></td><td>1</td><td>ANSI text</td></tr>
+<tr><td><code>CF_BITMAP</code></td><td>2</td><td>Bitmap (HBITMAP)</td></tr>
+<tr><td><code>CF_OEMTEXT</code></td><td>7</td><td>OEM text</td></tr>
+<tr><td><code>CF_UNICODETEXT</code></td><td>13</td><td>Unicode text (UTF-16)</td></tr>
+<tr><td><code>CF_ENHMETAFILE</code></td><td>14</td><td>Enhanced metafile</td></tr>
+<tr><td><code>CF_HDROP</code></td><td>15</td><td>Dropped files list</td></tr>
+</tbody>
+</table>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>nFormat</code></td><td>Numeric</td><td>Default clipboard format (CF_TEXT)</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Owner window for clipboard operations</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( nFormat, oWnd )</code></td><td>Creates clipboard object with given format. Default CF_TEXT.</td></tr>
+<tr><td><code>Open()</code></td><td>Opens the clipboard (required before read/write).</td></tr>
+<tr><td><code>Close()</code></td><td>Closes the clipboard.</td></tr>
+<tr><td><code>Empty()</code></td><td>Empties the clipboard contents.</td></tr>
+<tr><td><code>Clear()</code></td><td>Opens, empties, and closes in one step.</td></tr>
+<tr><td><code>IsEmpty()</code></td><td>Returns .T. if clipboard has no data in current format.</td></tr>
+<tr><td><code>SetText( cText )</code></td><td>Writes text. Auto-detects UTF-8 and converts to UTF-16 if needed.</td></tr>
+<tr><td><code>GetText()</code></td><td>Reads text from clipboard.</td></tr>
+<tr><td><code>SetWideText( cText )</code></td><td>Writes text explicitly as Unicode (CF_UNICODETEXT).</td></tr>
+<tr><td><code>GetUnicodeText()</code></td><td>Reads Unicode text from clipboard.</td></tr>
+<tr><td><code>SetBitmap( oBitmap )</code></td><td>Writes a bitmap to clipboard (accepts TBitmap object or hBitmap handle).</td></tr>
+<tr><td><code>GetBitmap()</code></td><td>Reads a bitmap from clipboard.</td></tr>
+<tr><td><code>SetMetaFile( oMetaFile )</code></td><td>Writes an enhanced metafile to clipboard.</td></tr>
+<tr><td><code>GetMetaFile()</code></td><td>Reads an enhanced metafile from clipboard.</td></tr>
+<tr><td><code>GetFiles()</code></td><td>Returns array of file paths from CF_HDROP (drag-and-drop).</td></tr>
+<tr><td><code>SetData( uData )</code></td><td>Low-level: sets raw clipboard data in current format.</td></tr>
+<tr><td><code>GetData()</code></td><td>Low-level: gets raw clipboard data in current format.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Clipboard Text Operations</h3>
+<pre><code class="language-harbour">local oClip := TClipBoard():New()
+
+// Write text to clipboard
+oClip:SetText( "Hello from FiveWin!" )
+
+// Read text from clipboard
+local cText := oClip:GetText()
+? "Clipboard contains:", cText
+
+// Clear the clipboard
+oClip:Clear()</code></pre>
+
+<h3>Example: Clipboard Bitmap</h3>
+<pre><code class="language-harbour">local oClip := TClipBoard():New()
+local oBmp
+
+// Copy a bitmap to clipboard
+DEFINE BITMAP oBmp FILENAME "logo.bmp"
+oClip:SetBitmap( oBmp )
+oBmp:End()
+
+// Retrieve bitmap from clipboard
+local hBmp := oClip:GetBitmap()
+if hBmp != 0
+   ? "Bitmap retrieved from clipboard"
+endif</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tstruct">TStruct - C Structure Interop</h2>
+<p>TStruct allows defining and manipulating C language structures from Harbour/xHarbour code. Members are defined with name, type, and optional length. Once defined, members can be accessed as properties using Harbour's error handler mechanism. The internal buffer (<code>cBuffer</code>) is a binary string compatible with Windows API STRUCT parameters.</p>
+
+<h3>Supported Type Constants</h3>
+<table>
+<thead><tr><th>Type</th><th>Size (bytes)</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>BYTE</code> / <code>CHAR</code></td><td>1</td><td>8-bit value</td></tr>
+<tr><td><code>WORD</code> / <code>_INT</code> / <code>BOOL</code></td><td>2</td><td>16-bit value</td></tr>
+<tr><td><code>LONG</code> / <code>DWORD</code> / <code>PTR</code> / <code>LPSTR</code></td><td>4</td><td>32-bit value or pointer</td></tr>
+<tr><td><code>LONGLONG</code></td><td>8</td><td>64-bit value</td></tr>
+</tbody>
+</table>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>cBuffer</code></td><td>Character</td><td>Raw binary buffer holding the structure data</td></tr>
+<tr><td><code>aMembers</code></td><td>Array</td><td>Array of { cName, nType, nLen, nOffset } for each member</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New()</code></td><td>Creates an empty structure with blank buffer.</td></tr>
+<tr><td><code>AddMember( cName, nType, nLen )</code></td><td>Adds a named member. nLen auto-determined from nType if omitted.</td></tr>
+<tr><td><code>SetMember( nMember, uData )</code></td><td>Sets value of member by index.</td></tr>
+<tr><td><code>GetMember( nMember )</code></td><td>Gets value of member by index.</td></tr>
+<tr><td><code>SizeOf()</code></td><td>Returns total structure size in bytes (Len of cBuffer).</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Defining and Using a POINT Structure</h3>
+<pre><code class="language-harbour">#include "Struct.ch"
+
+local oPoint := TStruct():New()
+oPoint:AddMember( "x", LONG )
+oPoint:AddMember( "y", LONG )
+
+// Set via property access (uses OnError handler)
+oPoint:x := 100
+oPoint:y := 200
+
+? "Point:", oPoint:x, oPoint:y
+? "Size:", oPoint:SizeOf(), "bytes"    // 8 bytes
+
+// Pass cBuffer to Windows API functions expecting LPPOINT
+// GetCursorPos( oPoint:cBuffer )</code></pre>
+
+<h3>Example: RECT Structure for API Calls</h3>
+<pre><code class="language-harbour">#include "Struct.ch"
+
+local oRect := TStruct():New()
+oRect:AddMember( "left",   LONG )
+oRect:AddMember( "top",    LONG )
+oRect:AddMember( "right",  LONG )
+oRect:AddMember( "bottom", LONG )
+
+oRect:left   := 10
+oRect:top    := 20
+oRect:right  := 300
+oRect:bottom := 200
+
+? "Width:", oRect:right - oRect:left     // 290
+? "Height:", oRect:bottom - oRect:top    // 180</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tdict">TDict - Application Data Dictionary</h2>
+<p>TDict is a data dictionary manager for FiveWin applications. It creates and manages a set of DBF tables (in a "system" folder by default) that describe your application's structure: scripts, databases, tables, browses, columns, forms, menus, help texts, and language translations. It provides methods to auto-build UI from metadata, load menus dynamically, and generate web-based browse/edit views.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>cPath</code></td><td>Character</td><td>Path to the dictionary folder (default "system")</td></tr>
+<tr><td><code>lAutoBuild</code></td><td>Logical</td><td>Auto-build tables if missing (default .T.)</td></tr>
+<tr><td><code>lCheckFiles</code></td><td>Logical</td><td>Check file existence on startup (default .F.)</td></tr>
+<tr><td><code>oScripts</code></td><td>Object</td><td>Scripts table workarea</td></tr>
+<tr><td><code>oApplication</code></td><td>Object</td><td>Application settings workarea</td></tr>
+<tr><td><code>oBrowses</code></td><td>Object</td><td>Browse definitions workarea</td></tr>
+<tr><td><code>oBrwCols</code></td><td>Object</td><td>Browse column definitions workarea</td></tr>
+<tr><td><code>oForms</code></td><td>Object</td><td>Form definitions workarea</td></tr>
+<tr><td><code>oLangs</code></td><td>Object</td><td>Language translations workarea</td></tr>
+<tr><td><code>oMenus</code></td><td>Object</td><td>Menu definitions workarea</td></tr>
+<tr><td><code>oHelp</code></td><td>Object</td><td>Help text workarea</td></tr>
+<tr><td><code>oTables</code></td><td>Object</td><td>Table definitions workarea</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cPath )</code></td><td>Creates/opens dictionary in cPath folder. Auto-creates all required DBF tables and indexes.</td></tr>
+<tr><td><code>Activate()</code></td><td>Activates the dictionary (opens all tables).</td></tr>
+<tr><td><code>End()</code></td><td>Closes all dictionary tables.</td></tr>
+<tr><td><code>OpenDataBase( cDbName, lInternet )</code></td><td>Opens a database registered in the dictionary.</td></tr>
+<tr><td><code>CloseDataBase( cDbName )</code></td><td>Closes a registered database.</td></tr>
+<tr><td><code>OpenTable( cTblName )</code></td><td>Opens a specific table from the dictionary.</td></tr>
+<tr><td><code>CreateTable( cTblName )</code></td><td>Creates a new table definition.</td></tr>
+<tr><td><code>LoadMenu( cMenuName )</code></td><td>Loads a menu definition from the dictionary.</td></tr>
+<tr><td><code>BuildSubMenu()</code></td><td>Builds sub-menus from dictionary data.</td></tr>
+<tr><td><code>Report( cReportName )</code></td><td>Generates a report from dictionary definitions.</td></tr>
+<tr><td><code>Import( cMask, bOnEachFile )</code></td><td>Imports external data files into the dictionary.</td></tr>
+<tr><td><code>LoadWebBrowse( cParams )</code></td><td>Generates HTML browse from dictionary metadata.</td></tr>
+<tr><td><code>LoadWebEdit( cParams )</code></td><td>Generates HTML edit form from dictionary metadata.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Using the Data Dictionary</h3>
+<pre><code class="language-harbour">local oDict := TDict():New( "c:\myapp\system" )
+
+oDict:Activate()
+
+// Open a registered database
+oDict:OpenDataBase( "customers" )
+
+// Load a menu from dictionary
+oDict:LoadMenu( "MainMenu" )
+
+// Generate a report
+oDict:Report( "CustomerList" )
+
+oDict:End()</code></pre>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

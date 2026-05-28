@@ -1,0 +1,732 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Miscellaneous Classes - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div><a class="nav-item" href="../../pt/core/twindow.html">TWindow</a><a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a><a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../pt/ui/tgraph.html">TGraph</a><a class="nav-item" href="../../pt/ui/tgantt.html">TGantt</a><a class="nav-item" href="../../pt/ui/ttoast.html">TToast</a><a class="nav-item" href="../../pt/ui/trating.html">TRating</a><a class="nav-item" href="../../pt/ui/twebcam.html">TWebcam</a><a class="nav-item" href="../../pt/ui/tgif.html">TGif</a><a class="nav-item" href="../../pt/ui/tscintilla.html">TScintilla</a><a class="nav-item" href="../../pt/ui/tswitch.html">TSwitch</a><a class="nav-item" href="../../pt/ui/tcalendar.html">TCalendar</a><a class="nav-item" href="../../pt/ui/tdtpicker.html">TDatePick</a><a class="nav-item" href="../../pt/ui/ttmpicker.html">TTimePick</a><a class="nav-item" href="../../pt/ui/tslider.html">TSlider</a><a class="nav-item" href="../../pt/ui/timagelist.html">TImageList</a><a class="nav-item" href="../../pt/ui/texplorerbar.html">TExplorerBar</a><a class="nav-item" href="../../pt/ui/tmetropanel.html">TMetroPanel</a><a class="nav-item" href="../../pt/ui/tscrollpanel.html">TScrollPanel</a><a class="nav-item" href="../../pt/ui/tpager.html">TPager</a><a class="nav-item" href="../../pt/ui/theader.html">THeader</a><a class="nav-item" href="../../pt/ui/tbartabs.html">TBarTabs</a><a class="nav-item" href="../../pt/ui/tprogresswheel.html">TProgressWheel</a><a class="nav-item" href="../../pt/ui/ttagcloud.html">TTagCloud</a><a class="nav-item" href="../../pt/ui/tscrollmsg.html">TScrollMsg</a><a class="nav-item" href="../../pt/ui/tnavigator.html">TNavigator</a><a class="nav-item" href="../../pt/ui/tmytitle.html">TMyTitle</a><a class="nav-item" href="../../pt/ui/tskinbutton.html">TSkinButton</a></div>
+<div class="nav-section"><div class="nav-section-title">Acesso a Dados</div><a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../pt/data/todbc.html">TODBC</a><a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Impressão e Relatórios</div><a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../pt/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../pt/internet/topenai.html">AI Classes</a><a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div><a class="nav-item" href="../../pt/reference/commands.html">Comandos</a><a class="nav-item" href="../../pt/reference/functions.html">Funções</a><a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a><a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>Miscellaneous Classes</h1>
+<p>FiveWin includes a wide variety of utility classes covering timers, time manipulation, rectangles, GDI pens, layout management, internet protocols (FTP, SMTP, POP3), email, expression parsing, and charting. This page documents each of these classes with their DATA members, methods, and practical examples.</p>
+
+<div class="mermaid">
+graph LR
+    subgraph System
+        TTimer
+        TTime
+        TRect
+        TPen
+        TLayout
+    end
+    subgraph Internet
+        TFTP
+        TFtpClient
+        TSmtp
+        TPop3
+        TMail
+    end
+    subgraph Visualization
+        TGraph
+        TParser
+    end
+</div>
+
+<!-- ================================================================ -->
+<h2 id="ttimer">TTimer - Periodic Timer Actions</h2>
+<p>TTimer wraps the Windows SetTimer/KillTimer API to execute a codeblock at regular intervals. Timers are managed in a static array and dispatched through the TimerEvent() function. Multiple timers can be active simultaneously, each with different intervals and actions.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>nInterval</code></td><td>Numeric</td><td>Timer interval in milliseconds (default 18)</td></tr>
+<tr><td><code>bAction</code></td><td>Codeblock</td><td>Codeblock to execute on each tick</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>.T. when timer is running</td></tr>
+<tr><td><code>nId</code></td><td>Numeric</td><td>Unique timer ID (auto-assigned)</td></tr>
+<tr><td><code>hWndOwner</code></td><td>Numeric</td><td>Handle of owner window</td></tr>
+<tr><td><code>Cargo</code></td><td>Any</td><td>User-defined cargo data</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( nInterval, bAction, oWnd )</code></td><td>Creates a new timer. Does NOT start it -- call Activate() to start.</td></tr>
+<tr><td><code>Activate()</code></td><td>Starts the timer via Windows SetTimer(). Sets lActive to .T.</td></tr>
+<tr><td><code>DeActivate()</code></td><td>Stops the timer via KillTimer(). Sets lActive to .F.</td></tr>
+<tr><td><code>End()</code></td><td>Deactivates and removes the timer from the internal timer array.</td></tr>
+</tbody>
+</table>
+
+<h3>Command Syntax</h3>
+<pre><code class="language-harbour">// FiveWin command:
+DEFINE TIMER oTimer INTERVAL 1000 ACTION UpdateClock() OF oWnd
+ACTIVATE TIMER oTimer
+
+// Deactivate later:
+DEACTIVATE TIMER oTimer
+// or
+oTimer:End()</code></pre>
+
+<h3>Example: Clock Display with Auto-Refresh</h3>
+<pre><code class="language-harbour">local oWnd, oTimer, oSay
+
+DEFINE WINDOW oWnd TITLE "Timer Demo"
+
+@ 2, 2 SAY oSay PROMPT Time() OF oWnd SIZE 200, 30
+
+// Update the clock every second (1000 ms)
+DEFINE TIMER oTimer INTERVAL 1000 ;
+   ACTION ( oSay:SetText( Time() ) ) OF oWnd
+ACTIVATE TIMER oTimer
+
+ACTIVATE WINDOW oWnd ;
+   VALID ( oTimer:End(), .T. )</code></pre>
+
+<h3>Example: Auto-Save with Timer</h3>
+<pre><code class="language-harbour">// Save data every 5 minutes
+local oAutoSave := TTimer():New( 300000, {|| SaveAllData() }, oWnd )
+oAutoSave:Activate()
+
+// Temporarily pause auto-save
+oAutoSave:DeActivate()
+
+// Resume
+oAutoSave:Activate()
+
+// Cleanup on exit
+oAutoSave:End()</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="ttime">TTime - Time Manipulation</h2>
+<p>TTime stores time as total seconds since midnight (0-86399) and provides methods for arithmetic and formatting. It can be constructed from hours/minutes/seconds or initialized from the system clock.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>nTime</code></td><td>Numeric</td><td>Time stored as total seconds since midnight (0-86399)</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( nHours, nMinutes, nSeconds )</code></td><td>Creates TTime from components. Wraps at 86400 (24 hours).</td></tr>
+<tr><td><code>System()</code></td><td>Constructor: creates TTime from current system time.</td></tr>
+<tr><td><code>AddHours( nHours )</code></td><td>Adds hours to current time.</td></tr>
+<tr><td><code>AddMinutes( nMinutes )</code></td><td>Adds minutes to current time.</td></tr>
+<tr><td><code>AddSeconds( nSeconds )</code></td><td>Adds seconds to current time.</td></tr>
+<tr><td><code>cAdd( nHours, nMinutes, nSeconds )</code></td><td>Adds time components and returns formatted string "HH:MM:SS".</td></tr>
+<tr><td><code>cSub( nHours, nMinutes, nSeconds )</code></td><td>Subtracts time and returns formatted string. Can also accept a TTime object.</td></tr>
+<tr><td><code>cGetTime()</code></td><td>Returns formatted time string "HH:MM:SS".</td></tr>
+<tr><td><code>SysChange()</code></td><td>Sets the system time to the stored nTime value.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Time Calculations</h3>
+<pre><code class="language-harbour">// Create from components
+local oStart := TTime():New( 9, 30, 0 )    // 09:30:00
+local oEnd   := TTime():New( 17, 45, 0 )    // 17:45:00
+
+? "Start:", oStart:cGetTime()   // "09:30:00"
+? "End:",   oEnd:cGetTime()     // "17:45:00"
+
+// Calculate duration
+local oDuration := TTime():New( 0, 0, oEnd:nTime - oStart:nTime )
+? "Duration:", oDuration:cGetTime()  // "08:15:00"
+
+// Add 1.5 hours to start
+oStart:AddHours( 1 )
+oStart:AddMinutes( 30 )
+? "Break ends:", oStart:cGetTime()   // "11:00:00"
+
+// From system clock
+local oNow := TTime():System()
+? "Current time:", oNow:cGetTime()</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="trect">TRect - Rectangle Object</h2>
+<p>TRect represents a rectangle with nTop, nLeft, nBottom, nRight coordinates. It supports ACCESS/ASSIGN for computed properties (nWidth, nHeight, CenterPt), operator overloading for arithmetic (+, -, *, /), and utility methods for moving, resizing, and fitting rectangles. It can also convert to/from the Windows RECT binary structure format.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>aRect</code></td><td>Array</td><td>{ nTop, nLeft, nBottom, nRight }</td></tr>
+<tr><td><code>lWinRect</code></td><td>Logical</td><td>If .T. (default), uses Windows convention for width/height calculation</td></tr>
+</tbody>
+</table>
+
+<h3>ACCESS/ASSIGN Properties</h3>
+<table>
+<thead><tr><th>Property</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>nTop</code></td><td>Top coordinate (read/write)</td></tr>
+<tr><td><code>nLeft</code></td><td>Left coordinate (read/write)</td></tr>
+<tr><td><code>nBottom</code></td><td>Bottom coordinate (read/write)</td></tr>
+<tr><td><code>nRight</code></td><td>Right coordinate (read/write)</td></tr>
+<tr><td><code>nWidth</code></td><td>Computed width (read/write -- setting adjusts nRight)</td></tr>
+<tr><td><code>nHeight</code></td><td>Computed height (read/write -- setting adjusts nBottom)</td></tr>
+<tr><td><code>CenterPt</code></td><td>Center point as { nRow, nCol } (read/write -- setting moves the rect)</td></tr>
+<tr><td><code>cRect</code></td><td>Binary RECT structure for Windows API (read/write)</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight )</code></td><td>Creates from coordinates. Also accepts an array or binary RECT string.</td></tr>
+<tr><td><code>MoveBy( nRows, nCols )</code></td><td>Moves rectangle by offset (preserving size).</td></tr>
+<tr><td><code>MoveTo( nNewTop, nNewLeft )</code></td><td>Moves rectangle to absolute position (preserving size).</td></tr>
+<tr><td><code>Contains( aRect )</code></td><td>Returns .T. if aRect is fully inside this rectangle.</td></tr>
+<tr><td><code>Resize( nRatio, aPoint )</code></td><td>Resizes rectangle by ratio around a point.</td></tr>
+<tr><td><code>FitInside( oRect, nResizeType, cAlign, nEnlarge )</code></td><td>Fits this rectangle inside oRect maintaining aspect ratio.</td></tr>
+<tr><td><code>AsSquare( lOuter, cAlign )</code></td><td>Converts rectangle to a square (inner or outer).</td></tr>
+<tr><td><code>Modify( ... )</code></td><td>Modifies multiple properties at once.</td></tr>
+</tbody>
+</table>
+
+<h3>Operator Overloading</h3>
+<pre><code class="language-harbour">local oRect1 := TRect():New( 10, 20, 100, 200 )
+local oRect2 := oRect1 + { 5, 5, 5, 5 }    // expand by 5 on all sides
+local oRect3 := oRect1 * 2                   // double all coordinates
+
+? oRect1 == oRect2    // .F. (comparison operator)</code></pre>
+
+<h3>Example: Working with Rectangles</h3>
+<pre><code class="language-harbour">local oRect := TRect():New( 10, 20, 110, 220 )
+
+? "Position:", oRect:nTop, oRect:nLeft
+? "Size:", oRect:nWidth, "x", oRect:nHeight
+? "Center:", oRect:CenterPt[ 1 ], oRect:CenterPt[ 2 ]
+
+// Move to a new position
+oRect:MoveTo( 50, 100 )
+? "New position:", oRect:nTop, oRect:nLeft    // 50, 100
+? "Size unchanged:", oRect:nWidth, "x", oRect:nHeight
+
+// Fit inside another rectangle
+local oContainer := TRect():New( 0, 0, 400, 600 )
+oRect:FitInside( oContainer )</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tpen">TPen - GDI Pen Object</h2>
+<p>TPen wraps a Windows GDI pen for drawing lines and borders. It encapsulates the pen style, width, and color, and manages the GDI handle lifecycle. When associated with a printer device, it automatically scales the pen width based on the device's DPI.</p>
+
+<h3>Pen Style Constants</h3>
+<table>
+<thead><tr><th>Constant</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>PS_SOLID</code></td><td>Solid line (default)</td></tr>
+<tr><td><code>PS_DASH</code></td><td>Dashed line</td></tr>
+<tr><td><code>PS_DOT</code></td><td>Dotted line</td></tr>
+<tr><td><code>PS_DASHDOT</code></td><td>Dash-dot alternating</td></tr>
+<tr><td><code>PS_DASHDOTDOT</code></td><td>Dash-dot-dot pattern</td></tr>
+<tr><td><code>PS_NULL</code></td><td>Invisible pen (no drawing)</td></tr>
+</tbody>
+</table>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>hPen</code></td><td>Numeric</td><td>GDI pen handle (HPEN)</td></tr>
+<tr><td><code>nStyle</code></td><td>Numeric</td><td>Pen style (PS_SOLID, PS_DASH, etc.)</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Pen width in pixels (scaled for device DPI)</td></tr>
+<tr><td><code>nInpWidth</code></td><td>Numeric</td><td>Original input width before DPI scaling</td></tr>
+<tr><td><code>nColor</code></td><td>Numeric</td><td>Pen color (RGB value)</td></tr>
+<tr><td><code>oDevice</code></td><td>Object</td><td>Associated device (printer) for DPI scaling</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( nStyle, nWidth, nColor, oDevice )</code></td><td>Creates pen. Defaults: PS_SOLID, width 1, CLR_BLACK. Auto-scales width for printer DPI.</td></tr>
+<tr><td><code>Release()</code></td><td>Deletes the GDI pen handle.</td></tr>
+<tr><td><code>End()</code></td><td>Alias for Release().</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Drawing with Pens</h3>
+<pre><code class="language-harbour">local oPenRed, oPenBlue, oPenDash
+
+// Create different pens
+oPenRed  := TPen():New( PS_SOLID, 2, CLR_RED )
+oPenBlue := TPen():New( PS_SOLID, 3, CLR_BLUE )
+oPenDash := TPen():New( PS_DASH,  1, CLR_BLACK )
+
+// Use in a Paint handler
+oWnd:bPainted := {| hDC |  ;
+   local hOldPen := SelectObject( hDC, oPenRed:hPen ), ;
+   LineTo( hDC, 100, 100 ), ;
+   SelectObject( hDC, oPenBlue:hPen ), ;
+   LineTo( hDC, 200, 100 ), ;
+   SelectObject( hDC, hOldPen ) ;
+}
+
+// For printing (auto-scales to printer DPI)
+local oPrnPen := TPen():New( PS_SOLID, 1, CLR_BLACK, oPrinter )
+
+// Always release when done
+oPenRed:End()
+oPenBlue:End()
+oPenDash:End()</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tlayout">TLayout - Layout Manager</h2>
+<p>TLayout inherits from TPanel and provides automatic arrangement of child controls when the parent window is resized. It supports horizontal and vertical layouts with fixed or proportional sizing. Layouts can be nested to create complex arrangements.</p>
+
+<h3>Layout Types</h3>
+<table>
+<thead><tr><th>Constant</th><th>Value</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>LAYOUT_TYPE_MAIN</code></td><td>0</td><td>Top-level layout (attached to window)</td></tr>
+<tr><td><code>LAYOUT_TYPE_HORIZONTAL</code></td><td>1</td><td>Horizontal subdivision</td></tr>
+<tr><td><code>LAYOUT_TYPE_VERTICAL</code></td><td>2</td><td>Vertical subdivision</td></tr>
+</tbody>
+</table>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>aHLayout</code></td><td>Array</td><td>Array of horizontal child layouts</td></tr>
+<tr><td><code>aVLayout</code></td><td>Array</td><td>Array of vertical child layouts</td></tr>
+<tr><td><code>nType</code></td><td>Numeric</td><td>Layout type (MAIN, HORIZONTAL, VERTICAL)</td></tr>
+<tr><td><code>lFixed</code></td><td>Logical</td><td>If .T., this pane has fixed size; if .F., it stretches proportionally</td></tr>
+<tr><td><code>bOnResize</code></td><td>Codeblock</td><td>Previous resize handler (chained)</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( oWnd )</code></td><td>Creates main layout attached to oWnd. Captures bResized for auto-layout.</td></tr>
+<tr><td><code>AddHLayout( nWidth )</code></td><td>Adds a horizontal child pane. nWidth > 0 = fixed pixels; 0 = proportional.</td></tr>
+<tr><td><code>AddVLayout( nHeight )</code></td><td>Adds a vertical child pane. nHeight > 0 = fixed pixels; 0 = proportional.</td></tr>
+<tr><td><code>onResized( nType, nWidth, nHeight )</code></td><td>Internal: recalculates all child pane positions on resize.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Two-Panel Layout with Fixed Sidebar</h3>
+<pre><code class="language-harbour">local oWnd, oLayout, oLeft, oRight
+
+DEFINE WINDOW oWnd TITLE "Layout Demo" SIZE 800, 600
+
+oLayout := TLayout():New( oWnd )
+
+// Left panel: fixed 250px wide sidebar
+oLeft := oLayout:AddHLayout( 250 )
+
+// Right panel: fills remaining space
+oRight := oLayout:AddHLayout( 0 )
+
+// Add controls to each panel
+@ 1, 1 LISTBOX oLbx VAR cItem ITEMS { "Option 1", "Option 2", "Option 3" } ;
+   OF oLeft SIZE oLeft:nWidth - 10, oLeft:nHeight - 20
+
+@ 1, 1 SAY "Content area" OF oRight
+
+ACTIVATE WINDOW oWnd</code></pre>
+
+<h3>Example: Nested Vertical + Horizontal Layout</h3>
+<pre><code class="language-harbour">local oWnd, oLayout, oTop, oBottom, oBottomLeft, oBottomRight
+
+DEFINE WINDOW oWnd TITLE "Nested Layout" SIZE 800, 600
+
+oLayout := TLayout():New( oWnd )
+
+// Top: fixed 40px toolbar area
+oTop := oLayout:AddVLayout( 40 )
+
+// Bottom: fills remaining space
+oBottom := oLayout:AddVLayout( 0 )
+
+// Split bottom into left/right
+oBottomLeft  := oBottom:AddHLayout( 0 )   // 50% each
+oBottomRight := oBottom:AddHLayout( 0 )
+
+ACTIVATE WINDOW oWnd</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tftp">TFTP / TFtpClient - FTP File Transfer</h2>
+<p>FiveWin provides two FTP classes: <strong>TFTP</strong> uses the WinINet API for simple, high-level FTP operations, while <strong>TFtpClient</strong> uses raw sockets for low-level FTP protocol control. TFTP is recommended for most use cases.</p>
+
+<h3>TFTP DATA Members (WinINet-based)</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>oInternet</code></td><td>Object</td><td>TInternet container object</td></tr>
+<tr><td><code>cSite</code></td><td>Character</td><td>FTP server URL/hostname</td></tr>
+<tr><td><code>hFTP</code></td><td>Numeric</td><td>FTP connection handle</td></tr>
+<tr><td><code>cUserName</code></td><td>Character</td><td>Login username</td></tr>
+<tr><td><code>cPassword</code></td><td>Character</td><td>Login password</td></tr>
+</tbody>
+</table>
+
+<h3>TFTP METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cFTPSite, oInternet, cUserName, cPassword )</code></td><td>Connects to FTP server via WinINet InternetConnect().</td></tr>
+<tr><td><code>End()</code></td><td>Closes the FTP connection handle.</td></tr>
+<tr><td><code>DeleteFile( cFileName )</code></td><td>Deletes a remote file.</td></tr>
+<tr><td><code>Directory( cMask )</code></td><td>Lists remote directory (like Clipper's Directory() function).</td></tr>
+<tr><td><code>RenameFile( cOldName, cNewName )</code></td><td>Renames a remote file.</td></tr>
+<tr><td><code>SetCurrentDirectory( cDirName )</code></td><td>Changes the remote working directory.</td></tr>
+<tr><td><code>CreateDirectory( cDirName )</code></td><td>Creates a remote directory.</td></tr>
+</tbody>
+</table>
+
+<h3>TFtpClient METHOD Reference (Socket-based)</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cIPServer, nPort, User, Pass )</code></td><td>Creates socket connection to FTP server (default port 21).</td></tr>
+<tr><td><code>PWD()</code></td><td>Returns current remote directory path.</td></tr>
+<tr><td><code>CWD( cDirName )</code></td><td>Changes remote directory.</td></tr>
+<tr><td><code>MKD( cDirName )</code></td><td>Creates remote directory.</td></tr>
+<tr><td><code>DELE( cFileName )</code></td><td>Deletes remote file.</td></tr>
+<tr><td><code>STOR( cFileName, bBlock )</code></td><td>Uploads a file. bBlock receives progress updates.</td></tr>
+<tr><td><code>RETR( cFileName )</code></td><td>Downloads a file.</td></tr>
+<tr><td><code>TYPE( cType )</code></td><td>Sets transfer type: "A" for ASCII, "I" for binary.</td></tr>
+<tr><td><code>QUIT()</code></td><td>Disconnects from FTP server.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: FTP Upload with WinINet</h3>
+<pre><code class="language-harbour">local oInternet, oFtp
+
+oInternet := TInternet():New()
+oFtp := TFTP():New( "ftp.myserver.com", oInternet, "user", "password" )
+
+if oFtp:hFTP != nil
+   // Upload a file
+   FtpPutFile( oFtp:hFTP, "c:\local\report.pdf", "/remote/report.pdf", 0, 0 )
+
+   // List remote directory
+   local aFiles := oFtp:Directory( "*.pdf" )
+   AEval( aFiles, {|a| QOut( a[ 1 ], a[ 2 ] ) } )
+
+   // Create directory and navigate
+   oFtp:CreateDirectory( "/remote/backup" )
+   oFtp:SetCurrentDirectory( "/remote/backup" )
+
+   oFtp:End()
+endif
+
+oInternet:End()</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tsmtp">TSmtp - Send Email via SMTP</h2>
+<p>TSmtp sends email via the SMTP protocol using FiveWin's TSocket class. It supports authentication (LOGIN method), HTML content, file attachments, CC/BCC recipients, delivery receipts, and priority settings. Communication is asynchronous through socket event callbacks.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>oSocket</code></td><td>Object</td><td>TSocket used for the SMTP session</td></tr>
+<tr><td><code>cIPServer</code></td><td>Character</td><td>SMTP server IP or hostname</td></tr>
+<tr><td><code>cFrom</code></td><td>Character</td><td>Sender email address</td></tr>
+<tr><td><code>aTo</code></td><td>Array</td><td>Array of recipient email addresses</td></tr>
+<tr><td><code>aCC</code></td><td>Array</td><td>CC recipients</td></tr>
+<tr><td><code>aBCC</code></td><td>Array</td><td>BCC recipients</td></tr>
+<tr><td><code>cReplyTo</code></td><td>Character</td><td>Reply-to address</td></tr>
+<tr><td><code>cSubject</code></td><td>Character</td><td>Email subject</td></tr>
+<tr><td><code>cMsg</code></td><td>Character</td><td>Plain text message body</td></tr>
+<tr><td><code>cHTML</code></td><td>Character</td><td>HTML message body</td></tr>
+<tr><td><code>aFiles</code></td><td>Array</td><td>Array of file paths to attach</td></tr>
+<tr><td><code>cPriority</code></td><td>Character</td><td>Message priority: "normal", "high", "low"</td></tr>
+<tr><td><code>lReceipt</code></td><td>Logical</td><td>Request delivery receipt</td></tr>
+<tr><td><code>cUser</code></td><td>Character</td><td>SMTP authentication username</td></tr>
+<tr><td><code>cPassword</code></td><td>Character</td><td>SMTP authentication password</td></tr>
+<tr><td><code>lDoAuth</code></td><td>Logical</td><td>Enable SMTP authentication</td></tr>
+<tr><td><code>bConnecting</code></td><td>Codeblock</td><td>Action while connecting</td></tr>
+<tr><td><code>bConnected</code></td><td>Codeblock</td><td>Action when connected</td></tr>
+<tr><td><code>bDone</code></td><td>Codeblock</td><td>Action when email sent successfully</td></tr>
+<tr><td><code>bFailure</code></td><td>Codeblock</td><td>Action on failure</td></tr>
+<tr><td><code>cError</code></td><td>Character</td><td>Last error message</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Send Email</h3>
+<pre><code class="language-harbour">function SendEmail()
+   local oSmtp
+
+   oSmtp := TSmtp():New( "smtp.myserver.com", 25, .T., "user@myserver.com", "password" )
+
+   oSmtp:cFrom    := "sender@myserver.com"
+   oSmtp:aTo      := { "recipient@example.com" }
+   oSmtp:aCC      := { "cc@example.com" }
+   oSmtp:cSubject := "Test Email from FiveWin"
+   oSmtp:cMsg     := "This is a plain text email."
+   oSmtp:cHTML    := "&lt;h1&gt;Hello!&lt;/h1&gt;&lt;p&gt;This is an &lt;b&gt;HTML&lt;/b&gt; email.&lt;/p&gt;"
+   oSmtp:aFiles   := { "c:\docs\report.pdf" }
+   oSmtp:cPriority := "high"
+
+   oSmtp:bDone    := {|| MsgInfo( "Email sent successfully!" ) }
+   oSmtp:bFailure := {|| MsgAlert( "Failed: " + oSmtp:cError ) }
+
+   oSmtp:SendMail()
+
+return nil</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tpop3">TPop3 - Receive Email via POP3</h2>
+<p>TPop3 retrieves email messages from a POP3 mail server using FiveWin's TSocket class. It connects, authenticates, and downloads messages into an array of TMail-compatible objects. Supports header-only retrieval and message deletion.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>oSocket</code></td><td>Object</td><td>TSocket for POP3 communication</td></tr>
+<tr><td><code>cIPServer</code></td><td>Character</td><td>POP3 server hostname</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td>Port number (default 110)</td></tr>
+<tr><td><code>User</code></td><td>Character</td><td>POP3 username</td></tr>
+<tr><td><code>Pass</code></td><td>Character</td><td>POP3 password</td></tr>
+<tr><td><code>aMsgs</code></td><td>Array</td><td>Array of retrieved messages</td></tr>
+<tr><td><code>lDelMsgs</code></td><td>Logical</td><td>Delete messages after retrieval (default .T.)</td></tr>
+<tr><td><code>lHeaderOnly</code></td><td>Logical</td><td>Retrieve headers only (default .F.)</td></tr>
+<tr><td><code>bConnecting</code></td><td>Codeblock</td><td>Action while connecting</td></tr>
+<tr><td><code>bConnected</code></td><td>Codeblock</td><td>Action when connected</td></tr>
+<tr><td><code>bDone</code></td><td>Codeblock</td><td>Action when all messages retrieved</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Retrieve Email</h3>
+<pre><code class="language-harbour">function CheckMail()
+   local oPop3
+
+   oPop3 := TPop3():New( "pop3.myserver.com", 110, "user@myserver.com", "password" )
+   oPop3:lDelMsgs    := .F.   // Don't delete after download
+   oPop3:lHeaderOnly := .F.   // Get full messages
+
+   oPop3:bDone := {|| ShowMessages( oPop3:aMsgs ) }
+   oPop3:GetMail()
+
+return nil
+
+function ShowMessages( aMsgs )
+   local n
+   for n := 1 to Len( aMsgs )
+      ? "Subject:", aMsgs[ n ]:cSubject
+      ? "From:",    aMsgs[ n ]:cFrom
+      ? "Date:",    aMsgs[ n ]:dDate
+      ? "---"
+   next
+return nil</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tmail">TMail - MAPI Email Message</h2>
+<p>TMail uses the Windows MAPI (Messaging Application Programming Interface) to compose and send email through the default mail client (typically Outlook). It provides a simpler approach than TSmtp when the user has a MAPI-compatible client installed.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>cSubject</code></td><td>Character</td><td>Email subject</td></tr>
+<tr><td><code>cNoteText</code></td><td>Character</td><td>Email body text</td></tr>
+<tr><td><code>cMsgType</code></td><td>Character</td><td>Message type</td></tr>
+<tr><td><code>dDate</code></td><td>Date</td><td>Message date</td></tr>
+<tr><td><code>cTime</code></td><td>Character</td><td>Message time</td></tr>
+<tr><td><code>lReceipt</code></td><td>Logical</td><td>Request read receipt</td></tr>
+<tr><td><code>lFromUser</code></td><td>Logical</td><td>Show compose dialog for user editing (default .T.)</td></tr>
+<tr><td><code>aOrigin</code></td><td>Array</td><td>Sender information</td></tr>
+<tr><td><code>aRecipients</code></td><td>Array</td><td>Array of recipient arrays: { cName, cAddress }</td></tr>
+<tr><td><code>aFiles</code></td><td>Array</td><td>Array of file paths to attach</td></tr>
+<tr><td><code>nRetCode</code></td><td>Numeric</td><td>MAPI return code (0 = SUCCESS_SUCCESS)</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Send via Default Mail Client</h3>
+<pre><code class="language-harbour">local oMail := TMail():New( ;
+   "Monthly Report",  ;                   // Subject
+   "Please find the report attached.",  ;  // Body
+   ,, ;                                    // MsgType, ConversationID
+   Date(), Time(),  ;                      // Date, Time
+   .F., .T.,  ;                            // Receipt, FromUser
+   {},  ;                                  // Origin
+   { { "John Doe", "john@example.com" } },  ; // Recipients
+   { "c:\reports\monthly.pdf" } )           // Attachments
+
+oMail:Activate()   // Opens default mail client with pre-filled fields
+
+if oMail:nRetCode == 0
+   ? "Email sent or queued successfully"
+endif
+
+oMail:End()</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tparser">TParser - Expression Parsing</h2>
+<p>TParser provides a simple rule-based parser engine. You define grammar rules as non-terminal symbols with token sequences and associated action codeblocks. It maintains parser states for building more complex grammars.</p>
+
+<h3>DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>aRules</code></td><td>Array</td><td>Array of parsing rules: { cNonTerminal, aTokens, bAction }</td></tr>
+<tr><td><code>aStates</code></td><td>Array</td><td>Parser state machine states</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New()</code></td><td>Creates an empty parser.</td></tr>
+<tr><td><code>Add( cNonTerminal, aTokens, bAction )</code></td><td>Adds a grammar rule. cNonTerminal is the rule name, aTokens defines the expected token sequence, bAction is executed when the rule matches.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Simple Expression Parser</h3>
+<pre><code class="language-harbour">local oParser := TParser():New()
+
+// Define rules: expression -> number operator number
+oParser:Add( "expr", { "number", "operator", "number" }, ;
+   {|aTokens| Eval( aTokens ) } )
+
+oParser:Add( "number", { "digit" }, ;
+   {|aTokens| Val( aTokens[ 1 ] ) } )</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tgraph">TGraph - Charts and Graphs</h2>
+<p>TGraph inherits from TControl and renders bar charts, line charts, point charts, pie charts, and XY scatter plots directly in a window or dialog. It supports 3D effects, grid lines, legends, multiple series, value display, custom fonts, colors, and can export to BMP or clipboard.</p>
+
+<h3>Graph Type Constants</h3>
+<table>
+<thead><tr><th>Constant</th><th>Value</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>GRAPH_TYPE_BAR</code></td><td>1</td><td>Bar chart</td></tr>
+<tr><td><code>GRAPH_TYPE_LINE</code></td><td>2</td><td>Line chart</td></tr>
+<tr><td><code>GRAPH_TYPE_POINT</code></td><td>3</td><td>Point/scatter chart</td></tr>
+<tr><td><code>GRAPH_TYPE_PIE</code></td><td>4</td><td>Pie chart</td></tr>
+<tr><td><code>GRAPH_TYPE_ALL</code></td><td>5</td><td>Combined bar + line + point</td></tr>
+<tr><td><code>GRAPH_TYPE_XY_LINES</code></td><td>6</td><td>XY scatter with lines</td></tr>
+<tr><td><code>GRAPH_TYPE_XY_POINTS</code></td><td>7</td><td>XY scatter with points only</td></tr>
+</tbody>
+</table>
+
+<h3>Key DATA Members</h3>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>nType</code></td><td>Numeric</td><td>Graph type (see constants above)</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Graph title text</td></tr>
+<tr><td><code>cSubTit</code></td><td>Character</td><td>Subtitle text</td></tr>
+<tr><td><code>cTitX, cTitY</code></td><td>Character</td><td>X-axis and Y-axis titles</td></tr>
+<tr><td><code>l3D</code></td><td>Logical</td><td>Enable 3D rendering</td></tr>
+<tr><td><code>lxGrid, lyGrid</code></td><td>Logical</td><td>Show X/Y grid lines</td></tr>
+<tr><td><code>lxVal, lyVal</code></td><td>Logical</td><td>Show X/Y axis values</td></tr>
+<tr><td><code>lLegends</code></td><td>Logical</td><td>Show legend</td></tr>
+<tr><td><code>lTitle</code></td><td>Logical</td><td>Show title</td></tr>
+<tr><td><code>lDotted</code></td><td>Logical</td><td>Use dotted grid lines</td></tr>
+<tr><td><code>lPopUp</code></td><td>Logical</td><td>Enable right-click popup menu</td></tr>
+<tr><td><code>aSeries</code></td><td>Array</td><td>Series labels</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>Data values array</td></tr>
+<tr><td><code>nBarD</code></td><td>Numeric</td><td>3D bar depth in pixels</td></tr>
+<tr><td><code>nBarSep</code></td><td>Numeric</td><td>Bar separator width</td></tr>
+<tr><td><code>nPenWidth</code></td><td>Numeric</td><td>Line chart pen width</td></tr>
+<tr><td><code>nClrGrid</code></td><td>Numeric</td><td>Grid color</td></tr>
+<tr><td><code>nClrBack</code></td><td>Numeric</td><td>Background color</td></tr>
+<tr><td><code>nLanguage</code></td><td>Numeric</td><td>Language for labels (1=English, 2=Spanish, etc.)</td></tr>
+<tr><td><code>cPicture</code></td><td>Character</td><td>Number format mask for values</td></tr>
+<tr><td><code>lFlat</code></td><td>Logical</td><td>Flat style (no 3D effects, default .F.)</td></tr>
+</tbody>
+</table>
+
+<h3>METHOD Reference</h3>
+<table>
+<thead><tr><th>Method</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, oWnd, nWidth, nHeight, cTitle, ... )</code></td><td>Creates a graph control in oWnd.</td></tr>
+<tr><td><code>AddSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine )</code></td><td>Adds a data series with label, color, and optional overrides.</td></tr>
+<tr><td><code>AddXYSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine )</code></td><td>Adds an XY scatter series. aDat is array of { x, y } pairs.</td></tr>
+<tr><td><code>SetYVals( aTextos )</code></td><td>Sets custom Y-axis value labels.</td></tr>
+<tr><td><code>SelSerie( nSerie )</code></td><td>Selects/highlights a specific series.</td></tr>
+<tr><td><code>SelPeriod( nPeriod )</code></td><td>Selects a specific period (data column).</td></tr>
+<tr><td><code>SetFonts( aFonts )</code></td><td>Sets fonts: { oTitleFont, oXFont, oYFont, oLegendFont }.</td></tr>
+<tr><td><code>SaveAsImage( cFile )</code></td><td>Saves graph as BMP image file.</td></tr>
+<tr><td><code>Save2Bmp( cFile )</code></td><td>Saves graph as BMP (alias for SaveAsImage).</td></tr>
+<tr><td><code>Copy2ClipBoard( lMsg )</code></td><td>Copies graph to clipboard as bitmap.</td></tr>
+<tr><td><code>End()</code></td><td>Destroys the graph control.</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Bar Chart</h3>
+<pre><code class="language-harbour">local oDlg, oGraph
+
+DEFINE DIALOG oDlg TITLE "Sales Report" SIZE 700, 500
+
+oGraph := TGraph():New( 10, 10, oDlg, 680, 450, "Quarterly Sales" )
+oGraph:nType   := GRAPH_TYPE_BAR
+oGraph:l3D     := .T.
+oGraph:lxGrid  := .T.
+oGraph:lyGrid  := .T.
+oGraph:lxVal   := .T.
+oGraph:lyVal   := .T.
+oGraph:lLegends := .T.
+
+// Period labels
+oGraph:aSeries := { "Q1", "Q2", "Q3", "Q4" }
+
+// Data series (one array per product)
+oGraph:AddSerie( { 15000, 22000, 18000, 25000 }, "Product A", CLR_BLUE )
+oGraph:AddSerie( { 12000, 19000, 24000, 21000 }, "Product B", CLR_RED )
+oGraph:AddSerie( {  8000, 11000, 13000, 17000 }, "Product C", CLR_GREEN )
+
+ACTIVATE DIALOG oDlg CENTER</code></pre>
+
+<h3>Example: Pie Chart</h3>
+<pre><code class="language-harbour">local oDlg, oGraph
+
+DEFINE DIALOG oDlg TITLE "Market Share" SIZE 500, 450
+
+oGraph := TGraph():New( 10, 10, oDlg, 480, 400, "Market Share 2026" )
+oGraph:nType    := GRAPH_TYPE_PIE
+oGraph:l3D      := .T.
+oGraph:lLegends := .T.
+
+oGraph:aSeries := { "Company A", "Company B", "Company C", "Others" }
+oGraph:AddSerie( { 45, 25, 20, 10 }, "Share %" )
+
+ACTIVATE DIALOG oDlg CENTER</code></pre>
+
+<h3>Example: Line Chart with Export</h3>
+<pre><code class="language-harbour">local oDlg, oGraph
+
+DEFINE DIALOG oDlg TITLE "Temperature Trends" SIZE 700, 400
+
+oGraph := TGraph():New( 10, 10, oDlg, 680, 350, "Monthly Temperatures" )
+oGraph:nType     := GRAPH_TYPE_LINE
+oGraph:lxGrid    := .T.
+oGraph:lyGrid    := .T.
+oGraph:nPenWidth := 2
+oGraph:cTitX     := "Month"
+oGraph:cTitY     := "Degrees C"
+
+oGraph:aSeries := { "Jan","Feb","Mar","Apr","May","Jun", ;
+                     "Jul","Aug","Sep","Oct","Nov","Dec" }
+
+oGraph:AddSerie( { 5, 7, 12, 18, 23, 28, 31, 30, 25, 18, 11, 6 }, ;
+                 "Madrid", CLR_RED, GRAPH_TYPE_LINE )
+oGraph:AddSerie( { 2, 3, 8, 14, 19, 24, 27, 26, 21, 14, 8, 3 }, ;
+                 "Berlin", CLR_BLUE, GRAPH_TYPE_LINE )
+
+ACTIVATE DIALOG oDlg CENTER ;
+   ON INIT ( oGraph:SaveAsImage( "c:\temp\temperatures.bmp" ) )</code></pre>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

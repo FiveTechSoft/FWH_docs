@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSocket - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item active" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TSocket</h1>
+<p class="class-source">Source: <code>source/classes/tsocket.prg</code></p>
+
+<p>
+TSocket is FiveWin's low-level TCP/IP socket class, wrapping the Windows Winsock API.
+It provides both client and server socket functionality through an asynchronous,
+event-driven model that integrates naturally with FiveWin's message loop.
+TSocket is the foundation for TWebServer, TSmtp, TPop3, TFtpClient, and TWebClient.
+</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="mermaid">
+flowchart LR
+    subgraph "FiveWin Application"
+        A[TSocket]
+        B[oWnd<br/>Message Loop]
+    end
+    subgraph "Event Callbacks"
+        C[bAccept<br/>bRead<br/>bWrite]
+        D[bClose<br/>bConnect<br/>bOOB]
+    end
+    subgraph "Winsock API"
+        E[WSASocket]
+        F[bind / listen]
+        G[accept / connect]
+        H[send / recv]
+    end
+    A -->|"WSAAsyncSelect"| B
+    A --> C
+    A --> D
+    A --> E
+    E --> F
+    F --> G
+    G --> H
+</div>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nPort</code></td><td>Numeric</td><td><code>0</code></td><td>Socket port number</td></tr>
+<tr><td><code>cIPAddr</code></td><td>Character</td><td><code>""</code></td><td>Local IP address (auto-detected on creation)</td></tr>
+<tr><td><code>nSocket</code></td><td>Numeric</td><td><code>-1</code></td><td>Winsock socket handle</td></tr>
+<tr><td><code>nTimeOut</code></td><td>Numeric</td><td><code>30</code></td><td>Timeout in seconds for operations</td></tr>
+<tr><td><code>nBackLog</code></td><td>Numeric</td><td><code>5</code></td><td>Maximum pending connections for listening</td></tr>
+<tr><td><code>bAccept</code></td><td>Block</td><td></td><td>Callback when a new connection is accepted (server mode)</td></tr>
+<tr><td><code>bRead</code></td><td>Block</td><td></td><td>Callback when data is available to read</td></tr>
+<tr><td><code>bWrite</code></td><td>Block</td><td></td><td>Callback when the socket is ready to write</td></tr>
+<tr><td><code>bClose</code></td><td>Block</td><td></td><td>Callback when the remote end closes the connection</td></tr>
+<tr><td><code>bConnect</code></td><td>Block</td><td></td><td>Callback with connection result (client mode)</td></tr>
+<tr><td><code>bOOB</code></td><td>Block</td><td></td><td>Callback for out-of-band data</td></tr>
+<tr><td><code>lDebug</code></td><td>Logical</td><td></td><td>Enable debug logging</td></tr>
+<tr><td><code>cLogFile</code></td><td>Character</td><td></td><td>Path for debug log file</td></tr>
+<tr><td><code>aBuffer</code></td><td>Array</td><td><code>{}</code></td><td>Internal buffer for queued outgoing data</td></tr>
+<tr><td><code>lSending</code></td><td>Logical</td><td></td><td>Whether a send operation is in progress</td></tr>
+<tr><td><code>aSockets</code></td><td>Array (Class)</td><td><code>{}</code></td><td>Class-level array tracking all active sockets</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nPort, oWnd, cIp )</code></td><td>Create a socket and bind to port. Calls WSAStartup on first socket. Registers with oWnd for async events.</td></tr>
+<tr><td><code>Listen()</code></td><td>Start listening for incoming connections on the bound port</td></tr>
+<tr><td><code>Accept( nSocket, oWnd )</code></td><td>Accept an incoming connection. Returns a new TSocket for the client session.</td></tr>
+<tr><td><code>Connect( cIPAddr, nPort )</code></td><td>Connect to a remote server as a client</td></tr>
+<tr><td><code>GetData()</code></td><td>Read available data from the socket. Returns a character string.</td></tr>
+<tr><td><code>SendData( cData )</code></td><td>Send character data. Buffers data if a previous send is in progress.</td></tr>
+<tr><td><code>SendFile( cFileName, nBlockSize )</code></td><td>Send a file in blocks. Default block size is 30,000 bytes.</td></tr>
+<tr><td><code>SendChunk( nBlockSize )</code></td><td>Send the next block from an open file handle (used internally by SendFile)</td></tr>
+<tr><td><code>ClientIP()</code></td><td>Get the IP address of the connected remote peer</td></tr>
+<tr><td><code>Refresh()</code></td><td>Force the socket to re-register for async events</td></tr>
+<tr><td><code>Close()</code></td><td>Close the socket handle. Waits for pending sends to complete.</td></tr>
+<tr><td><code>End()</code></td><td>Close the socket and remove from the class-level socket list. Calls WSACleanup when last socket.</td></tr>
+</tbody>
+</table>
+
+<h2 id="callbacks">Event Callbacks</h2>
+
+<p>
+TSocket uses <code>WSAAsyncSelect</code> to register for Windows socket events. When an event occurs,
+the FiveWin message loop routes it to <code>HandleEvent()</code>, which dispatches to the appropriate
+callback method. Set the corresponding codeblock to handle the event:
+</p>
+
+<table>
+<thead>
+<tr><th>Codeblock</th><th>Event</th><th>Callback Method</th></tr>
+</thead>
+<tbody>
+<tr><td><code>bAccept</code></td><td>Incoming connection</td><td><code>OnAccept()</code></td></tr>
+<tr><td><code>bRead</code></td><td>Data available</td><td><code>OnRead()</code></td></tr>
+<tr><td><code>bWrite</code></td><td>Ready to send</td><td><code>OnWrite()</code></td></tr>
+<tr><td><code>bClose</code></td><td>Remote closed</td><td><code>OnClose()</code></td></tr>
+<tr><td><code>bConnect</code></td><td>Connection result</td><td><code>OnConnect( nErrorCode )</code></td></tr>
+<tr><td><code>bOOB</code></td><td>OOB data</td><td><code>OnOOB()</code></td></tr>
+</tbody>
+</table>
+
+<h2 id="example-client">Example: TCP Client</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oSocket, cResponse := ""
+
+   DEFINE WINDOW oWnd TITLE "TCP Client"
+
+   oSocket := TSocket():New( 0, oWnd )
+
+   oSocket:bRead := { |oSock|
+      cResponse += oSock:GetData()
+      oWnd:SetText( "Received: " + cResponse )
+   }
+
+   oSocket:bClose := { |oSock|
+      MsgInfo( "Connection closed" )
+      oSock:End()
+   }
+
+   // Connect to a remote server
+   oSocket:Connect( "93.184.216.34", 80 )
+
+   // Send HTTP request
+   oSocket:SendData( "GET / HTTP/1.1" + CRLF + ;
+                     "Host: example.com" + CRLF + ;
+                     "Connection: close" + CRLF + CRLF )
+
+   ACTIVATE WINDOW oWnd ;
+      ON INIT SysRefresh() ;
+      VALID ( oSocket:End(), .T. )
+
+return nil</code></pre>
+
+<h2 id="example-server">Example: Chat Server</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+static aClients := {}
+
+function Main()
+
+   local oWnd, oSocket
+
+   DEFINE WINDOW oWnd TITLE "Chat Server - Port 9000"
+
+   oSocket := TSocket():New( 9000, oWnd )
+   oSocket:Listen()
+
+   oSocket:bAccept := { ||
+      local oClient := TSocket():Accept( oSocket:nSocket, oWnd )
+      AAdd( aClients, oClient )
+
+      oClient:bRead := { |oSock|
+         local cMsg := oSock:GetData()
+         AEval( aClients, { |o| o:SendData( cMsg ) } )
+      }
+
+      oClient:bClose := { |oSock|
+         local nAt := AScan( aClients, ;
+            { |o| o:nSocket == oSock:nSocket } )
+         if nAt > 0
+            ADel( aClients, nAt, .T. )
+         endif
+         oSock:End()
+      }
+   }
+
+   ACTIVATE WINDOW oWnd VALID ( oSocket:End(), .T. )
+
+return nil</code></pre>
+
+<h2 id="tips">Notes</h2>
+
+<ul>
+<li>TSocket requires a FiveWin window (or dialog) for its async event model. The window's message loop dispatches Winsock events via <code>WSAAsyncSelect</code>.</li>
+<li>The class-level <code>aSockets</code> array tracks all live sockets. <code>HandleEvent()</code> searches this array by socket handle to dispatch events to the correct object.</li>
+<li><code>WSAStartup()</code> is called when the first TSocket is created. <code>WSACleanup()</code> is called when the last socket is destroyed.</li>
+<li>The <code>SendData()</code> method handles partial sends and buffers data automatically. Large sends are transparently split across multiple TCP segments.</li>
+<li>Use <code>ShowIP()</code> (a utility function in tsocket.prg) to quickly get the local machine's IP address.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

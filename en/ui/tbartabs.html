@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TBarTabs - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/texplorerbar.html">TExplorerBar</a>
+<a class="nav-item" href="../../en/ui/tmetropanel.html">TMetroPanel</a>
+<a class="nav-item" href="../../en/ui/tscrollpanel.html">TScrollPanel</a>
+<a class="nav-item" href="../../en/ui/tpager.html">TPager</a>
+<a class="nav-item" href="../../en/ui/theader.html">THeader</a>
+<a class="nav-item active" href="../../en/ui/tbartabs.html">TBarTabs</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TBarTabs</h1>
+<p class="class-source">Source: <code>source/classes/bartabs.prg</code></p>
+<p class="class-hierarchy">Standalone class (not descendant of TControl)</p>
+
+<p>
+TBarTabs combines TTabs with TBar to create a ribbon-like tabbed toolbar interface.
+Each tab is associated with a separate toolbar that becomes visible when the tab is selected.
+This provides a compact way to organize toolbar buttons into functional groups, similar to
+the ribbon pattern found in modern desktop applications.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aBars</code></td><td>Array</td><td>Array of TBar objects, one per tab</td></tr>
+<tr><td><code>oTabs</code></td><td>Object</td><td>TTabs control for switching between toolbars</td></tr>
+<tr><td><code>oPanel</code></td><td>Object</td><td>TPanel container holding the tabs and buttons</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Parent window</td></tr>
+<tr><td><code>nBar</code></td><td>Numeric</td><td>Index of the currently active toolbar tab</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( oWnd, nBtnWidth, nBtnHeight, aPrompts, acBitmaps, nOption, l3D, l2007 )</code></td><td>Create a new TBarTabs control with initial tabs</td></tr>
+<tr><td><code>AddBar( cPrompt, cBitmap )</code></td><td>Add a new tab with its associated toolbar. Returns the TBar object.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Three-Tab Toolbar</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oBarTabs, oBar
+   local aPrompts := { "Home", "Insert", "View" }
+   local acBitmaps := {}
+
+   DEFINE WINDOW oWnd TITLE "BarTabs Demo" SIZE 600, 200
+
+   oBarTabs := TBarTabs():New( oWnd, 64, 32, aPrompts, acBitmaps, 1, .F., .T. )
+
+   // Home tab buttons
+   oBar := oBarTabs:aBars[ 1 ]
+   DEFINE BUTTON OF oBar PROMPT "Cut"
+   DEFINE BUTTON OF oBar PROMPT "Copy"
+   DEFINE BUTTON OF oBar PROMPT "Paste"
+
+   // Insert tab buttons
+   oBar := oBarTabs:aBars[ 2 ]
+   DEFINE BUTTON OF oBar PROMPT "Table"
+   DEFINE BUTTON OF oBar PROMPT "Image"
+
+   // View tab buttons
+   oBar := oBarTabs:aBars[ 3 ]
+   DEFINE BUTTON OF oBar PROMPT "Zoom In"
+   DEFINE BUTTON OF oBar PROMPT "Zoom Out"
+
+   oBarTabs:oPanel:ReSize()
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TBarTabs is a standalone class that does not inherit from TControl. It manages a TPanel container that holds a TTabs control and multiple TBar toolbars.</li>
+<li>The constructor creates one toolbar per prompt. Use <code>AddBar()</code> to add toolbars dynamically after construction.</li>
+<li>Set <code>l3D := .T.</code> for a classic 3D button look, or <code>l2007 := .T.</code> (default) for the Office 2007-style gradient appearance.</li>
+<li>The panel is positioned as <code>oWnd:oTop</code>, meaning it attaches to the top of the parent window. Call <code>oBarTabs:oPanel:ReSize()</code> after adding buttons to ensure correct layout.</li>
+<li>Only the toolbar corresponding to the selected tab is visible; switching tabs automatically hides the previous toolbar and shows the new one.</li>
+<li>Bitmaps for tab headers can be provided via the <code>acBitmaps</code> array parameter, which is passed directly to the TTabs control.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

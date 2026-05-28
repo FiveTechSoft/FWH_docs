@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TMetroPanel - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/texplorerbar.html">TExplorerBar</a>
+<a class="nav-item active" href="../../en/ui/tmetropanel.html">TMetroPanel</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TMetroPanel</h1>
+<p class="class-source">Source: <code>source/classes/metropnl.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
+
+<p>
+TMetroPanel implements a Windows 8-style Metro start panel with tile groups that scroll
+horizontally. It arranges TMetroBtn tiles into groups and rows, providing a touch-friendly
+interface with drag-to-scroll, mouse-wheel support, and a custom scrollbar. Each tile can be
+a large or small button with an image, caption, and action.
+
+TMetroBtn (child class from TBtnBmp) represents an individual Metro tile with configurable
+alignment, text overlay, and group membership.
+</p>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aButtons</code></td><td>Array</td><td>Array of TMetroBtn tile objects</td></tr>
+<tr><td><code>nOffset</code></td><td>Numeric</td><td>Current horizontal scroll offset in pixels</td></tr>
+<tr><td><code>nBtnSize</code></td><td>Numeric</td><td>Base tile size in pixels (default 132)</td></tr>
+<tr><td><code>nMetroRows</code></td><td>Numeric</td><td>Number of tile rows based on screen height</td></tr>
+<tr><td><code>nGroups</code></td><td>Numeric</td><td>Number of tile groups (auto-calculated from buttons)</td></tr>
+<tr><td><code>nScrollRange</code></td><td>Numeric</td><td>Maximum horizontal scroll extent</td></tr>
+<tr><td><code>nScrollRatio</code></td><td>Numeric</td><td>Ratio for thumb-to-content scroll mapping</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Panel title displayed at the top</td></tr>
+<tr><td><code>lDesignMode</code></td><td>Logical</td><td>Enable design-time interaction</td></tr>
+<tr><td><code>lArranged</code></td><td>Logical</td><td>Whether tiles have been positioned</td></tr>
+<tr><td><code>nClrScroll</code></td><td>Numeric</td><td>Scrollbar track color</td></tr>
+<tr><td><code>nClrThumb</code></td><td>Numeric</td><td>Scrollbar thumb color</td></tr>
+</tbody>
+</table>
+
+<h2 id="metrobtn">TMetroBtn Class (Child of TMetroPanel)</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nGroup</code></td><td>Numeric</td><td>Group index to which this tile belongs (default 1)</td></tr>
+<tr><td><code>lLarge</code></td><td>Logical</td><td>If .T., tile spans 2 column widths (double-wide)</td></tr>
+<tr><td><code>cCaption</code></td><td>Character</td><td>Main caption displayed on the tile</td></tr>
+<tr><td><code>cText</code></td><td>Character</td><td>Secondary text displayed below the caption</td></tr>
+<tr><td><code>nCapAlign</code></td><td>Numeric</td><td>Caption text alignment (default DT_TOP + DT_RIGHT)</td></tr>
+<tr><td><code>nBmpAlign</code></td><td>Numeric</td><td>Bitmap alignment (default DT_BOTTOM + DT_LEFT)</td></tr>
+<tr><td><code>nClrCaption</code></td><td>Numeric</td><td>Caption text color</td></tr>
+<tr><td><code>bOnMove</code></td><td>Block</td><td>Code block executed when tile is moved</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( oWnd, cTitle, nClrText, nClrPane, bLClicked, nBtnSize, nClrThumb, nClrScroll )</code></td><td>Create a new Metro panel</td></tr>
+<tr><td><code>AddButton( lLarge, nGroup, cCaption, bAction, nClrText, nClrPane, cImgName, oFont, nAlign, nBmpAlign, nBmpW, nBmpH, cText, nTextAlign, oTextFont, oSubMetro, cBackImage, cAction, cSub )</code></td><td>Add a TMetroBtn tile to the panel. Returns the button object.</td></tr>
+<tr><td><code>Arrange( lReArrange )</code></td><td>Position all tiles into rows and groups. Set lReArrange=.T. to force re-layout.</td></tr>
+<tr><td><code>Slide( nPixels )</code></td><td>Slide the panel horizontally by nPixels. Negative values scroll right.</td></tr>
+<tr><td><code>SwitchTo( oNext )</code></td><td>Animate switch to a different Metro panel</td></tr>
+<tr><td><code>MoveBtn( oBtnDrag, oBtnOver )</code></td><td>Move a tile from one position to another within the panel</td></tr>
+<tr><td><code>ProgramCode( lShow )</code></td><td>Generate source code for the current panel design</td></tr>
+<tr><td><code>MouseWheel( nKey, nDelta, nXPos, nYPos )</code></td><td>Handle mouse wheel scrolling</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Metro Panel with Two Groups</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oMetro
+
+   DEFINE WINDOW oWnd TITLE "Metro Panel" SIZE 800, 600
+
+   DEFINE METROPANEL oMetro OF oWnd TITLE "Start" ;
+      COLOR CLR_WHITE, RGB( 30, 30, 120 ) ;
+      ON CLICK oWnd:End()
+
+   // Group 1: Communication tiles
+   oMetro:AddButton( .T., 1, "Email", { || MsgInfo( "Email" ) }, ;
+                     CLR_WHITE, RGB( 0, 120, 200 ),, , , , 64, 64 )
+
+   oMetro:AddButton( .F., 1, "Calendar", { || MsgInfo( "Calendar" ) }, ;
+                     CLR_WHITE, RGB( 200, 50, 50 ) )
+
+   // Group 2: Productivity tiles
+   oMetro:AddButton( .T., 2, "Documents", { || MsgInfo( "Docs" ) }, ;
+                     CLR_WHITE, RGB( 50, 150, 50 ),, , , , 64, 64 )
+
+   oMetro:AddButton( .F., 2, "Settings", { || MsgInfo( "Settings" ) }, ;
+                     CLR_WHITE, RGB( 80, 80, 80 ) )
+
+   ACTIVATE WINDOW oWnd MAXIMIZED
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TMetroPanel requires the <code>DEFINE METROPANEL</code> command and uses "Segoe UI Light" fonts for the Metro aesthetic.</li>
+<li>Tiles are arranged into groups separated by a 32-pixel gap. Each group flows tiles into rows based on <code>nMetroRows</code> (calculated from screen height).</li>
+<li>Large tiles (<code>lLarge := .T.</code>) span two column positions, allowing a mix of large and small tiles in the same group.</li>
+<li>Horizontal scrolling is handled by a custom-drawn scrollbar at the bottom. Drag-to-scroll and mouse-wheel are supported.</li>
+<li>Use <code>lDesignMode := .T.</code> to enable design-time features such as tile repositioning via <code>MoveBtn()</code>.</li>
+<li>TMetroBtn inherits from TBtnBmp and supports image loading from file or resource, with configurable bitmap alignment and sizing.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

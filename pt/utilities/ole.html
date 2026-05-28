@@ -1,0 +1,550 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>OLE, COM, ActiveX &amp; .NET - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div><a class="nav-item" href="../../pt/core/twindow.html">TWindow</a><a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a><a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../pt/ui/tgraph.html">TGraph</a><a class="nav-item" href="../../pt/ui/tgantt.html">TGantt</a><a class="nav-item" href="../../pt/ui/ttoast.html">TToast</a><a class="nav-item" href="../../pt/ui/trating.html">TRating</a><a class="nav-item" href="../../pt/ui/twebcam.html">TWebcam</a><a class="nav-item" href="../../pt/ui/tgif.html">TGif</a><a class="nav-item" href="../../pt/ui/tscintilla.html">TScintilla</a><a class="nav-item" href="../../pt/ui/tswitch.html">TSwitch</a><a class="nav-item" href="../../pt/ui/tcalendar.html">TCalendar</a><a class="nav-item" href="../../pt/ui/tdtpicker.html">TDatePick</a><a class="nav-item" href="../../pt/ui/ttmpicker.html">TTimePick</a><a class="nav-item" href="../../pt/ui/tslider.html">TSlider</a><a class="nav-item" href="../../pt/ui/timagelist.html">TImageList</a><a class="nav-item" href="../../pt/ui/texplorerbar.html">TExplorerBar</a><a class="nav-item" href="../../pt/ui/tmetropanel.html">TMetroPanel</a><a class="nav-item" href="../../pt/ui/tscrollpanel.html">TScrollPanel</a><a class="nav-item" href="../../pt/ui/tpager.html">TPager</a><a class="nav-item" href="../../pt/ui/theader.html">THeader</a><a class="nav-item" href="../../pt/ui/tbartabs.html">TBarTabs</a><a class="nav-item" href="../../pt/ui/tprogresswheel.html">TProgressWheel</a><a class="nav-item" href="../../pt/ui/ttagcloud.html">TTagCloud</a><a class="nav-item" href="../../pt/ui/tscrollmsg.html">TScrollMsg</a><a class="nav-item" href="../../pt/ui/tnavigator.html">TNavigator</a><a class="nav-item" href="../../pt/ui/tmytitle.html">TMyTitle</a><a class="nav-item" href="../../pt/ui/tskinbutton.html">TSkinButton</a></div>
+<div class="nav-section"><div class="nav-section-title">Acesso a Dados</div><a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../pt/data/todbc.html">TODBC</a><a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Impressão e Relatórios</div><a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../pt/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../pt/internet/topenai.html">AI Classes</a><a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div><a class="nav-item" href="../../pt/reference/commands.html">Comandos</a><a class="nav-item" href="../../pt/reference/functions.html">Funções</a><a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a><a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>Interoperabilidade OLE, COM, ActiveX &amp; .NET</h1>
+<p>O FiveWin oferece suporte abrangente para automação COM/OLE do Windows, incorporação de ActiveX e APIs modernas de e-mail baseadas em nuvem. Essas classes permitem automatizar aplicações do Microsoft Office, incorporar controles ActiveX em diálogos, interagir com assemblies .NET e enviar e-mail através das APIs do Gmail e Outlook.</p>
+
+<div class="mermaid">
+classDiagram
+    class TOleAuto {
+        +hObj
+        +New(cClassName)
+        +End()
+        +property access via OnError
+    }
+    class TComObject {
+        +nIDispatch
+        +New(cClassName)
+        +Invoke(cMethod, params...)
+        +End()
+    }
+    TControl <|-- TActiveX
+    class TActiveX {
+        +hActiveX
+        +cProgID
+        +oOleAuto
+        +New(oWnd, cProgID, ...)
+        +Do(...)
+        +GetProp(cName)
+        +SetProp(cName, uVal)
+        +bOnEvent
+    }
+    TOAuth <|-- TGmail
+    TOAuth <|-- TOutlookMail
+    class TGmail {
+        +cToken
+        +send(cTo, cSubject, cMessage)
+        +auth()
+        +me()
+    }
+    class TOutlookMail {
+        +cToken
+        +send(aTo, cSubject, cMessage)
+        +auth()
+        +me()
+    }
+</div>
+
+<!-- ================================================================ -->
+<h2 id="toleauto">TOleAuto - Automação OLE</h2>
+<p>TOleAuto é a classe principal do FiveWin para automação OLE/COM. Ela encapsula a funcionalidade <code>win_oleAuto</code> do Harbour, permitindo criar e controlar objetos OLE como Microsoft Word, Excel, Outlook, Internet Explorer e qualquer outro servidor de automação. Propriedades e métodos do objeto OLE são acessados de forma transparente através do manipulador de erros do Harbour -- você os chama como se fossem membros nativos da classe.</p>
+
+<h3>Como Funciona</h3>
+<p>Quando você chama <code>TOleAuto():New("Word.Application")</code>, o FiveWin chama <code>CreateOleObject()</code> que invoca <code>CoCreateInstance()</code> internamente para criar o objeto COM. O ponteiro IDispatch retornado é armazenado no DATA <code>hObj</code>. Qualquer acesso a método ou propriedade que não esteja definido na classe é interceptado pelo manipulador <code>OnError</code>, que o encaminha através de <code>OleInvoke()</code> ou <code>OleGetProperty()/OleSetProperty()</code>.</p>
+
+<h3>Membros DATA</h3>
+<table>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>hObj</code></td><td>Pointer/Numeric</td><td>Ponteiro IDispatch para o objeto de automação OLE</td></tr>
+</tbody>
+</table>
+
+<h3>Referência de METHODs</h3>
+<table>
+<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cClassName )</code></td><td>Cria um objeto de automação OLE pelo ProgID (ex.: "Excel.Application", "Word.Application").</td></tr>
+<tr><td><code>End()</code></td><td>Libera o objeto COM e chama OleUninitialize().</td></tr>
+<tr><td><code>(qualquer propriedade)</code></td><td>Obtém/Define qualquer propriedade OLE via manipulador OnError. Ex.: <code>oExcel:Visible := .T.</code></td></tr>
+<tr><td><code>(qualquer método)</code></td><td>Invoca qualquer método OLE de forma transparente. Ex.: <code>oWord:Documents:Add()</code></td></tr>
+</tbody>
+</table>
+
+<h3>Exemplo: Criar um Documento Word</h3>
+<pre><code class="language-harbour">function CreateWordDoc()
+   local oWord, oDoc, oSelection
+
+   // Create Word application
+   oWord := TOleAuto():New( "Word.Application" )
+   oWord:Visible := .T.
+
+   // Add a new document
+   oDoc := oWord:Documents:Add()
+
+   // Get the selection (cursor) and type text
+   oSelection := oWord:Selection
+   oSelection:Font:Name := "Arial"
+   oSelection:Font:Size := 14
+   oSelection:Font:Bold := .T.
+   oSelection:TypeText( "FiveWin Report" )
+   oSelection:TypeParagraph()
+
+   oSelection:Font:Size := 11
+   oSelection:Font:Bold := .F.
+   oSelection:TypeText( "Generated on " + DToC( Date() ) + " at " + Time() )
+   oSelection:TypeParagraph()
+   oSelection:TypeParagraph()
+   oSelection:TypeText( "This document was created from a Harbour/FiveWin application." )
+
+   // Save and close
+   oDoc:SaveAs( "c:\temp\report.docx" )
+
+   MsgInfo( "Word document created successfully!" )
+
+   // Don't quit Word - let user review the document
+   // oWord:Quit()
+
+return nil</code></pre>
+
+<h3>Exemplo: Criar uma Planilha Excel</h3>
+<pre><code class="language-harbour">function CreateExcel()
+   local oExcel, oBook, oSheet, n
+
+   oExcel := TOleAuto():New( "Excel.Application" )
+   oExcel:Visible := .T.
+
+   oBook  := oExcel:WorkBooks:Add()
+   oSheet := oExcel:ActiveSheet
+
+   // Column headers
+   oSheet:Cells( 1, 1 ):Value := "Product"
+   oSheet:Cells( 1, 2 ):Value := "Quantity"
+   oSheet:Cells( 1, 3 ):Value := "Price"
+   oSheet:Cells( 1, 4 ):Value := "Total"
+
+   // Bold headers
+   oSheet:Range( "A1:D1" ):Font:Bold := .T.
+   oSheet:Range( "A1:D1" ):Interior:Color := RGB( 200, 220, 255 )
+
+   // Data rows
+   local aData := { ;
+      { "Widget A", 100, 9.99 }, ;
+      { "Widget B",  50, 19.99 }, ;
+      { "Widget C", 200, 4.99 }, ;
+      { "Widget D",  75, 29.99 } }
+
+   for n := 1 to Len( aData )
+      oSheet:Cells( n + 1, 1 ):Value := aData[ n ][ 1 ]
+      oSheet:Cells( n + 1, 2 ):Value := aData[ n ][ 2 ]
+      oSheet:Cells( n + 1, 3 ):Value := aData[ n ][ 3 ]
+      oSheet:Cells( n + 1, 4 ):Formula := "=B" + AllTrim( Str( n + 1 ) ) + ;
+                                            "*C" + AllTrim( Str( n + 1 ) )
+   next
+
+   // Total formula
+   oSheet:Cells( 6, 3 ):Value := "Grand Total:"
+   oSheet:Cells( 6, 3 ):Font:Bold := .T.
+   oSheet:Cells( 6, 4 ):Formula := "=SUM(D2:D5)"
+   oSheet:Cells( 6, 4 ):Font:Bold := .T.
+
+   // Auto-fit columns
+   oSheet:Columns( "A:D" ):AutoFit()
+
+   oBook:SaveAs( "c:\temp\products.xlsx" )
+   MsgInfo( "Excel file created!" )
+
+return nil</code></pre>
+
+<h3>Exemplo: Enviar E-mail via Outlook</h3>
+<pre><code class="language-harbour">function SendOutlookEmail()
+   local oOutlook, oMail
+
+   oOutlook := TOleAuto():New( "Outlook.Application" )
+
+   // Create a new mail item (olMailItem = 0)
+   oMail := oOutlook:CreateItem( 0 )
+
+   oMail:To      := "customer@example.com"
+   oMail:CC      := "manager@example.com"
+   oMail:Subject := "Monthly Report - " + CMonth( Date() )
+   oMail:Body    := "Dear Customer," + CRLF + CRLF + ;
+                     "Please find attached the monthly report." + CRLF + CRLF + ;
+                     "Best regards," + CRLF + "Support Team"
+
+   // Attach a file
+   oMail:Attachments:Add( "c:\reports\monthly.pdf" )
+
+   // Display for review (use :Send() to send directly)
+   oMail:Display()
+
+   MsgInfo( "Email composed in Outlook" )
+
+return nil</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tcomobject">TComObject - Interface COM de Baixo Nível</h2>
+<p>TComObject é uma alternativa de mais baixo nível ao TOleAuto para interoperabilidade COM. Ele armazena o ponteiro IDispatch como valor numérico e fornece chamadas Invoke() explícitas. Propriedades são acessadas via manipulador OnError, que encaminha através de OleGetProperty/OleSetProperty. Quando um método retorna outro objeto COM, TComObject automaticamente o encapsula.</p>
+
+<h3>Membros DATA</h3>
+<table>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>nIDispatch</code></td><td>Numeric</td><td>Ponteiro IDispatch bruto para o objeto COM</td></tr>
+</tbody>
+</table>
+
+<h3>Referência de METHODs</h3>
+<table>
+<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cClassName )</code></td><td>Cria objeto COM pela string ProgID, ou encapsula um IDispatch existente se um valor numérico for passado.</td></tr>
+<tr><td><code>Invoke( cMethodName, uParam1, uParam2, uParam3 )</code></td><td>Invoca explicitamente um método. Retorna um novo TComObject se o resultado for um IDispatch.</td></tr>
+<tr><td><code>ClassName()</code></td><td>Retorna o nome da classe do objeto COM via OleGetProperty.</td></tr>
+<tr><td><code>End()</code></td><td>Chama OleUninitialize() para liberar o objeto COM.</td></tr>
+</tbody>
+</table>
+
+<h3>Exemplo: Usando TComObject</h3>
+<pre><code class="language-harbour">local oCom := TComObject():New( "Scripting.FileSystemObject" )
+
+if oCom:nIDispatch != 0
+   ? "Drives available:"
+
+   local oDrives := oCom:Drives
+   ? "Total drives:", oDrives:Count
+
+   // Check if C: drive exists
+   if oCom:DriveExists( "C:" )
+      local oDrive := oCom:GetDrive( "C:" )
+      ? "C: Drive - Total:", oDrive:TotalSize, "Free:", oDrive:FreeSpace
+   endif
+
+   oCom:End()
+endif</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tactivex">TActiveX - Controles ActiveX Incorporados</h2>
+<p>TActiveX herda de TControl e permite incorporar qualquer controle ActiveX/OCX dentro de uma janela ou diálogo do FiveWin. Ele cria o contêiner ActiveX usando incorporação OLE do Windows, e então expõe os métodos e propriedades do controle através de um objeto TOleAuto interno. Eventos do controle ActiveX podem ser capturados via o codeblock <code>bOnEvent</code>.</p>
+
+<h3>Membros DATA</h3>
+<table>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>hActiveX</code></td><td>Numeric</td><td>Handle para o contêiner ActiveX</td></tr>
+<tr><td><code>cProgID</code></td><td>Character</td><td>ProgID do controle ActiveX (ex.: "Shell.Explorer.2")</td></tr>
+<tr><td><code>cString</code></td><td>Character</td><td>String de exibição para o controle ActiveX</td></tr>
+<tr><td><code>oOleAuto</code></td><td>Object</td><td>Wrapper TOleAuto interno para o IDispatch do controle</td></tr>
+<tr><td><code>aProperties</code></td><td>Array</td><td>Propriedades disponíveis (preenchido por ReadTypes)</td></tr>
+<tr><td><code>aMethods</code></td><td>Array</td><td>Métodos disponíveis (preenchido por ReadTypes)</td></tr>
+<tr><td><code>aEvents</code></td><td>Array</td><td>Eventos disponíveis (preenchido por ReadTypes)</td></tr>
+<tr><td><code>bOnEvent</code></td><td>Codeblock</td><td>Manipulador de eventos: {|nEvent, aParams, pParams| ... }</td></tr>
+</tbody>
+</table>
+
+<h3>Referência de METHODs</h3>
+<table>
+<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( oWnd, cProgID, nRow, nCol, nWidth, nHeight )</code></td><td>Cria controle ActiveX em oWnd na posição informada.</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cProgID )</code></td><td>Redefine a partir de um ID de controle de recurso de diálogo.</td></tr>
+<tr><td><code>Do( ... )</code></td><td>Invoca um método no objeto OLE subjacente. Passe o nome do método e os parâmetros.</td></tr>
+<tr><td><code>GetProp( cPropName )</code></td><td>Obtém o valor de uma propriedade do controle ActiveX.</td></tr>
+<tr><td><code>SetProp( cPropName, uValue )</code></td><td>Define o valor de uma propriedade do controle ActiveX.</td></tr>
+<tr><td><code>ReadTypes()</code></td><td>Lê informações de tipo (propriedades, métodos, eventos) do controle.</td></tr>
+<tr><td><code>OnEvent( nEvent, aParams, pParams )</code></td><td>Despachante de eventos interno. Sobrescreva bOnEvent para tratamento personalizado.</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destrói o contêiner ActiveX e libera os recursos.</td></tr>
+</tbody>
+</table>
+
+<h3>Exemplo: Incorporar um Navegador Web</h3>
+<pre><code class="language-harbour">function EmbedBrowser()
+   local oDlg, oActiveX
+
+   DEFINE DIALOG oDlg TITLE "Embedded Browser" SIZE 800, 600
+
+   // Shell.Explorer.2 is Internet Explorer's ActiveX ProgID
+   oActiveX := TActiveX():New( oDlg, "Shell.Explorer.2", 0, 0, 800, 600 )
+
+   // Handle navigation events
+   oActiveX:bOnEvent := {| nEvent, aParams |  ;
+      If( nEvent == 252, ( MsgInfo( "Navigating to: " + aParams[ 2 ] ) ), ) }
+
+   ACTIVATE DIALOG oDlg CENTER ;
+      ON INIT ( oActiveX:Navigate( "https://www.fivetechsoft.com" ) )
+
+return nil</code></pre>
+
+<h3>Exemplo: Incorporar um Visualizador de PDF</h3>
+<pre><code class="language-harbour">function ShowPDF( cPdfFile )
+   local oDlg, oActiveX
+
+   DEFINE DIALOG oDlg TITLE "PDF Viewer" SIZE 800, 600
+
+   // Adobe Acrobat Reader ActiveX
+   oActiveX := TActiveX():New( oDlg, "AcroPDF.PDF.1", 0, 0, 800, 600 )
+
+   ACTIVATE DIALOG oDlg CENTER ;
+      ON INIT ( oActiveX:LoadFile( cPdfFile ), ;
+                oActiveX:SetView( "FitH" ) )
+
+return nil</code></pre>
+
+<h3>Exemplo: Incorporar o Windows Media Player</h3>
+<pre><code class="language-harbour">function PlayMedia( cMediaFile )
+   local oDlg, oWMP
+
+   DEFINE DIALOG oDlg TITLE "Media Player" SIZE 640, 480
+
+   oWMP := TActiveX():New( oDlg, "WMPlayer.OCX", 0, 0, 640, 480 )
+
+   ACTIVATE DIALOG oDlg CENTER ;
+      ON INIT ( oWMP:URL := cMediaFile )
+
+return nil</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tdotnet">TDotNet - Interoperabilidade com .NET</h2>
+<p>O FiveWin suporta a chamada de assemblies .NET a partir do Harbour através de interoperabilidade COM. Embora não exista uma classe TDotNet dedicada no código-fonte, componentes .NET que expõem interfaces COM podem ser instanciados via TOleAuto. Para assemblies .NET personalizados, você pode registrá-los para interoperabilidade COM usando <code>regasm</code> e então criá-los como qualquer outro objeto COM.</p>
+
+<h3>Abordagem: Usando .NET via Interoperabilidade COM</h3>
+<div class="mermaid">
+sequenceDiagram
+    participant Harbour as Harbour/FiveWin
+    participant COM as Runtime COM
+    participant CLR as .NET CLR
+    participant Assembly as Assembly .NET
+    Harbour->>COM: CreateOleObject("MyLib.MyClass")
+    COM->>CLR: Carregar Host CLR
+    CLR->>Assembly: Instanciar classe
+    Assembly-->>COM: Ponteiro IDispatch
+    COM-->>Harbour: Objeto TOleAuto
+    Harbour->>COM: Chamadas de Propriedade/Método
+    COM->>Assembly: Invocar via IDispatch
+</div>
+
+<h3>Exemplo: Chamando .NET via COM</h3>
+<pre><code class="language-harbour">// Step 1: Register .NET assembly for COM interop (run once from command line):
+//   regasm MyLibrary.dll /tlb:MyLibrary.tlb /codebase
+
+// Step 2: Use from Harbour/FiveWin
+function UseDotNet()
+   local oDotNet
+
+   TRY
+      oDotNet := TOleAuto():New( "MyLibrary.MyClass" )
+      ? oDotNet:MyMethod( "Hello from Harbour!" )
+      ? oDotNet:MyProperty
+      oDotNet:End()
+   CATCH
+      MsgAlert( ".NET component not registered or not available" )
+   END
+
+return nil</code></pre>
+
+<h3>Exemplo: Usando Bibliotecas do Sistema .NET</h3>
+<pre><code class="language-harbour">// The .NET mscorlib types exposed via COM can be accessed directly
+function DotNetExample()
+   local oNet
+
+   // Create a .NET StringBuilder via COM
+   TRY
+      oNet := TOleAuto():New( "System.Text.StringBuilder" )
+      oNet:Append( "Hello" )
+      oNet:Append( " World" )
+      ? oNet:ToString()
+   CATCH
+      // .NET COM interop may not be available on all systems
+      MsgAlert( "Requires .NET COM registration" )
+   END
+
+return nil</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tgmail">TGmail - Integração com a API do Gmail</h2>
+<p>TGmail herda de TOAuth e fornece acesso autenticado via OAuth2 à API do Gmail. Utiliza libcurl para comunicação HTTP e suporta envio de e-mails com conteúdo HTML e anexos de arquivo. A autenticação é tratada através do fluxo OAuth2 do Google com tokens de atualização (refresh tokens).</p>
+
+<h3>Membros DATA</h3>
+<table>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>cToken</code></td><td>Character</td><td>Token de atualização OAuth2 (refresh token)</td></tr>
+<tr><td><code>hToken</code></td><td>Hash</td><td>Resposta de token parseada (access_token, etc.)</td></tr>
+<tr><td><code>hConfig</code></td><td>Hash</td><td>Configuração OAuth: client_id, client_secret, redirect_uri</td></tr>
+</tbody>
+</table>
+
+<h3>Referência de METHODs</h3>
+<table>
+<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cToken )</code></td><td>Cria instância TGmail com refresh token opcional.</td></tr>
+<tr><td><code>SetConfig( hConfig )</code></td><td>Define o hash de configuração OAuth2 com client_id, client_secret, redirect_uri.</td></tr>
+<tr><td><code>SetToken( cToken )</code></td><td>Define o refresh token.</td></tr>
+<tr><td><code>Auth()</code></td><td>Inicia o fluxo de autorização OAuth2. Abre o navegador para consentimento do usuário.</td></tr>
+<tr><td><code>IsAuth()</code></td><td>Verifica se o token atual é válido (valida contra o endpoint de informações de token do Google).</td></tr>
+<tr><td><code>GetToken( cCode )</code></td><td>Troca o código de autorização por um token de acesso.</td></tr>
+<tr><td><code>Me()</code></td><td>Retorna as informações de perfil do usuário autenticado.</td></tr>
+<tr><td><code>Send( cTo, cSubject, cMessage, lHTML, aAttachment )</code></td><td>Envia um e-mail. lHTML: .T. para corpo HTML. aAttachment: array de caminhos de arquivo.</td></tr>
+<tr><td><code>Revoke()</code></td><td>Revoga o token OAuth2.</td></tr>
+</tbody>
+</table>
+
+<h3>Exemplo: Enviar E-mail via Gmail</h3>
+<pre><code class="language-harbour">function SendGmail()
+   local oGmail := TGmail():New()
+
+   // Configure OAuth2 credentials (from Google Cloud Console)
+   oGmail:SetConfig( { ;
+      "client_id"     => "your-client-id.apps.googleusercontent.com", ;
+      "client_secret" => "your-client-secret", ;
+      "redirect_uri"  => "http://localhost:8888" ;
+   } )
+
+   // First-time authentication (opens browser)
+   if ! oGmail:IsAuth()
+      oGmail:Auth()
+   endif
+
+   if oGmail:IsAuth()
+      // Send a plain text email
+      oGmail:Send( "recipient@example.com", ;
+                   "Hello from FiveWin", ;
+                   "This email was sent using TGmail class.", ;
+                   .F. )   // .F. = plain text
+
+      // Send HTML email with attachment
+      oGmail:Send( "recipient@example.com", ;
+                   "Monthly Report", ;
+                   "&lt;h1&gt;Report&lt;/h1&gt;&lt;p&gt;Please see attached.&lt;/p&gt;", ;
+                   .T., ;   // .T. = HTML
+                   { "c:\reports\monthly.pdf" } )
+
+      MsgInfo( "Emails sent successfully!" )
+   else
+      MsgAlert( "Gmail authentication failed" )
+   endif
+
+return nil</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="toutlookmail">TOutlookMail - API de E-mail do Outlook</h2>
+<p>TOutlookMail herda de TOAuth e fornece acesso autenticado via OAuth2 à API do Microsoft Graph para envio de e-mail através do Outlook/Office 365. Assim como TGmail, utiliza libcurl e suporta conteúdo HTML, anexos de arquivo, destinatários CC e BCC. Trata automaticamente a rotação de refresh tokens quando a Microsoft os rotaciona.</p>
+
+<h3>Membros DATA</h3>
+<table>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>cToken</code></td><td>Character</td><td>Token de atualização OAuth2 (refresh token)</td></tr>
+<tr><td><code>hToken</code></td><td>Hash</td><td>Resposta de token parseada (access_token, refresh_token, etc.)</td></tr>
+<tr><td><code>hConfig</code></td><td>Hash</td><td>Configuração OAuth: client_id, client_secret, redirect_uri, tenant</td></tr>
+<tr><td><code>hUser</code></td><td>Hash</td><td>Informações do perfil do usuário autenticado</td></tr>
+</tbody>
+</table>
+
+<h3>Referência de METHODs</h3>
+<table>
+<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cToken )</code></td><td>Cria instância com refresh token opcional.</td></tr>
+<tr><td><code>SetConfig( hConfig )</code></td><td>Define configuração OAuth2: client_id, client_secret, redirect_uri (com porta para servidor local).</td></tr>
+<tr><td><code>SetToken( cToken )</code></td><td>Define o refresh token.</td></tr>
+<tr><td><code>Auth()</code></td><td>Inicia o fluxo de autorização OAuth2 da Microsoft.</td></tr>
+<tr><td><code>IsAuth()</code></td><td>Valida o token, atualiza automaticamente se expirado. Atualiza o refresh_token se rotacionado.</td></tr>
+<tr><td><code>GetToken( cCode )</code></td><td>Troca o código de autorização por tokens de acesso/atualização.</td></tr>
+<tr><td><code>Me( cPhoto )</code></td><td>Retorna perfil do usuário. Opcionalmente salva foto do perfil no caminho cPhoto.</td></tr>
+<tr><td><code>Send( aTo, cSubject, cMessage, lHTML, aAttachment, aBCC, aCC )</code></td><td>Envia e-mail. aTo/aBCC/aCC são arrays de endereços de e-mail.</td></tr>
+<tr><td><code>Revoke()</code></td><td>Revoga o token OAuth2.</td></tr>
+</tbody>
+</table>
+
+<h3>Exemplo: Enviar E-mail via Outlook/Office 365</h3>
+<pre><code class="language-harbour">function SendOutlookAPI()
+   local oMail := TOutlookMail():New()
+
+   // Configure Azure AD app credentials
+   oMail:SetConfig( { ;
+      "client_id"     => "your-azure-app-client-id", ;
+      "client_secret" => "your-azure-client-secret", ;
+      "redirect_uri"  => "http://localhost:9090", ;
+      "tenant"        => "common" ;
+   } )
+
+   // Authenticate (opens browser for Microsoft login)
+   if ! oMail:IsAuth()
+      oMail:Auth()
+   endif
+
+   if oMail:IsAuth()
+      // Get user info
+      local hUser := oMail:Me()
+      ? "Sending as:", hUser[ "displayName" ], hUser[ "mail" ]
+
+      // Send email with CC and BCC
+      oMail:Send( ;
+         { "recipient@example.com", "another@example.com" }, ;  // To
+         "Project Update", ;                                      // Subject
+         "&lt;h2&gt;Weekly Update&lt;/h2&gt;&lt;p&gt;All tasks completed.&lt;/p&gt;", ; // Body
+         .T., ;                                                   // HTML
+         { "c:\docs\status.pdf" }, ;                             // Attachments
+         { "boss@example.com" }, ;                                // BCC
+         { "team@example.com" } )                                 // CC
+
+      MsgInfo( "Email sent via Outlook API!" )
+   endif
+
+return nil</code></pre>
+
+<!-- ================================================================ -->
+<h2 id="tips">Dicas e Boas Práticas</h2>
+
+<h3>Tratamento de Erros OLE</h3>
+<pre><code class="language-harbour">// Always wrap OLE calls in TRY/CATCH
+TRY
+   local oExcel := TOleAuto():New( "Excel.Application" )
+   // ... work with Excel
+   oExcel:Quit()
+CATCH oErr
+   MsgAlert( "OLE Error: " + oErr:Description + CRLF + ;
+             "Make sure the application is installed." )
+END</code></pre>
+
+<h3>Padrão de Tratamento de Eventos ActiveX</h3>
+<pre><code class="language-harbour">// The bOnEvent codeblock receives:
+//   nEvent  - numeric event ID
+//   aParams - array of event parameters
+//   pParams - raw parameter pointers
+
+oActiveX:bOnEvent := {| nEvent, aParams, pParams |  ;
+   do case ;
+   case nEvent == 250 ;   // BeforeNavigate2
+      ? "Navigating to:", aParams[ 2 ] ;
+   case nEvent == 252 ;   // DocumentComplete
+      ? "Page loaded" ;
+   case nEvent == 259 ;   // NewWindow3
+      ? "Popup blocked" ;
+   endcase ;
+}</code></pre>
+
+<h3>Liberando Objetos COM</h3>
+<p>Sempre libere os objetos COM quando terminar. Para aplicações do Office, chame <code>Quit()</code> antes de liberar, ou o processo pode permanecer na memória:</p>
+<pre><code class="language-harbour">// Correct cleanup order for Excel:
+oSheet := nil
+oBook:Close( .F. )    // .F. = don't save
+oBook  := nil
+oExcel:Quit()
+oExcel := nil
+SysRefresh()           // Allow COM cleanup</code></pre>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

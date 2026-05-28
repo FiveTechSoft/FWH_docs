@@ -1,0 +1,301 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TTreeView - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeros Pasos</div><a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a><a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a><a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a><a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Clases Base</div><a class="nav-item" href="../../es/core/twindow.html">TWindow</a><a class="nav-item" href="../../es/core/tdialog.html">TDialog</a><a class="nav-item" href="../../es/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../es/ui/more-controls.html">Más Controles</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Avanzada</div><a class="nav-item" href="../../es/ui/tlistview.html">TListView</a><a class="nav-item" href="../../es/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item active" href="../../es/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../es/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Acceso a Datos</div><a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../es/data/todbc.html">TODBC</a><a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Impresión e Informes</div><a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../es/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../es/internet/tftp.html">TFtp</a><a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../es/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Referencia</div><a class="nav-item" href="../../es/reference/commands.html">Comandos</a><a class="nav-item" href="../../es/reference/functions.html">Funciones</a><a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a><a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a></div>
+</nav>
+<main id="content">
+
+<h1>TTreeView</h1>
+<p class="subtitle">Control de árbol jerárquico con expandir/contraer, casillas de verificación, arrastrar y soltar, y edición de etiquetas</p>
+
+<p><strong>Fuente:</strong> <code>source/classes/ttreevie.prg</code>, <code>source/classes/treeitem.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
+
+<h2 id="overview">Visión General</h2>
+
+<p><code>TTreeView</code> envuelve el control común <code>SysTreeView32</code> de Windows. Muestra datos en una estructura de árbol jerárquico donde cada nodo puede tener nodos hijos. Los nodos pueden expandirse/contraerse, soportan iconos mediante listas de imágenes, casillas de verificación opcionales, edición de etiquetas in situ y reordenamiento mediante arrastrar y soltar.</p>
+
+<h2 id="architecture">Arquitectura</h2>
+
+<div class="mermaid">
+graph TD
+    TV["TTreeView<br/>(SysTreeView32)"]
+
+    TV --> ITEMS["aItems[]<br/>Top-level TVItem nodes"]
+    TV --> IMGLIST["oImageList<br/>Node icons"]
+
+    ITEMS --> I1["TVItem: Project"]
+    ITEMS --> I2["TVItem: Libraries"]
+
+    I1 --> I1A["TVItem: Source"]
+    I1 --> I1B["TVItem: Resources"]
+    I1A --> I1A1["TVItem: main.prg"]
+    I1A --> I1A2["TVItem: utils.prg"]
+
+    I2 --> I2A["TVItem: fiveh.lib"]
+    I2 --> I2B["TVItem: fivehc.lib"]
+
+    style TV fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style I1 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style I2 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+</div>
+
+<h2 id="tvitem">TVItem -- Tree Node</h2>
+
+<p><strong>Fuente:</strong> <code>source/classes/treeitem.prg</code></p>
+
+<p>Each node in the tree is a <code>TVItem</code> object (internally called <code>TTreeItem</code> in the Win32 version). Items form a linked list with <code>oPrev</code>/<code>oNext</code> pointers and can contain a sub-tree of children.</p>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>cPrompt</code></td><td>String</td><td>Text label displayed for this node</td></tr>
+<tr><td><code>hItem</code></td><td>Handle</td><td>Win32 handle for this tree item</td></tr>
+<tr><td><code>nLevel</code></td><td>Numeric</td><td>Depth level in the tree (root = 0 or 1)</td></tr>
+<tr><td><code>lOpened</code></td><td>Logical</td><td>Whether the node is expanded</td></tr>
+<tr><td><code>oTree</code></td><td>Object</td><td>Sub-tree object (children container)</td></tr>
+<tr><td><code>oPrev / oNext</code></td><td>Object</td><td>Previous and next sibling items</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Action when this item is activated</td></tr>
+<tr><td><code>Cargo</code></td><td>Any</td><td>User data attached to the item</td></tr>
+<tr><td><code>Value</code></td><td>Any</td><td>Item value (via ACCESS/ASSIGN, uses bSetGet)</td></tr>
+<tr><td><code>hBmpOpen / hBmpClose</code></td><td>Handle</td><td>Bitmap handles for expanded/collapsed states</td></tr>
+</tbody>
+</table>
+
+<h3>TVItem Methods</h3>
+
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>Open() / Close()</code></td><td>Expand or collapse this node</td></tr>
+<tr><td><code>Toggle()</code></td><td>Toggle expand/collapse state</td></tr>
+<tr><td><code>SetText( cPrompt )</code></td><td>Change the item label</td></tr>
+<tr><td><code>GetNext() / GetPrev()</code></td><td>Navigate to next/previous visible item</td></tr>
+<tr><td><code>Add( cPrompt )</code></td><td>Add a sibling item after this one</td></tr>
+<tr><td><code>AddChild( ocItem, lFirst )</code></td><td>Add a child item to this node</td></tr>
+<tr><td><code>Delete( oRoot )</code></td><td>Remove this item from the tree</td></tr>
+<tr><td><code>Skip( n )</code></td><td>Navigate n items forward or backward</td></tr>
+<tr><td><code>MakeVisible()</code></td><td>Scroll the tree so this item is visible</td></tr>
+<tr><td><code>MoveUp( oRoot ) / MoveDown( oRoot )</code></td><td>Reorder this item among its siblings</td></tr>
+<tr><td><code>Promote() / Demote()</code></td><td>Change item level (outdent/indent)</td></tr>
+<tr><td><code>Sort( oRoot, lAsc, lRecurs )</code></td><td>Sort children alphabetically</td></tr>
+<tr><td><code>Parent( nParent )</code></td><td>Get the parent item at a specific level</td></tr>
+<tr><td><code>IsVisible()</code></td><td>Whether the item is currently visible in the tree</td></tr>
+</tbody>
+</table>
+
+<h2 id="treeview-properties">TTreeView Properties</h2>
+
+<table>
+<thead><tr><th>Propiedad</th><th>Type</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array of top-level <code>TVItem</code> objects</td></tr>
+<tr><td><code>oImageList</code></td><td>Object</td><td>Image list for node icons</td></tr>
+<tr><td><code>bChanged</code></td><td>Block</td><td>Code block executed when the selected node changes</td></tr>
+<tr><td><code>bExpanded</code></td><td>Block</td><td>Code block executed when a node is expanded</td></tr>
+<tr><td><code>hEdit</code></td><td>Handle</td><td>Handle of the in-place edit control during label editing</td></tr>
+</tbody>
+</table>
+
+<h2 id="treeview-methods">TTreeView Methods</h2>
+
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, oWnd, nClrFore, nClrBack, lPixel, lDesign, nWidth, nHeight, cMsg, lCheckBoxes, bChange, lEditable )</code></td><td>Constructor</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, nClrFore, nClrBack, lDesign, cMsg, bChange )</code></td><td>Redefine from resource</td></tr>
+<tr><td><code>Add( cPrompt, nImage, nValue )</code></td><td>Add a top-level item with optional image and value</td></tr>
+<tr><td><code>InsertAfter( oItem, cPrompt, nImage, nValue )</code></td><td>Insert an item after a specific node</td></tr>
+<tr><td><code>GetSelected()</code></td><td>Returns the currently selected <code>TVItem</code></td></tr>
+<tr><td><code>GetSelText()</code></td><td>Returns the text of the selected item</td></tr>
+<tr><td><code>Select( oItem )</code></td><td>Programmatically select an item</td></tr>
+<tr><td><code>SetSelText( cText )</code></td><td>Change the text of the selected item</td></tr>
+<tr><td><code>DeleteAll()</code></td><td>Remove all items from the tree</td></tr>
+<tr><td><code>GoTop() / GoBottom()</code></td><td>Select the first or last item</td></tr>
+<tr><td><code>GoNext() / GoPrev()</code></td><td>Select the next or previous visible item</td></tr>
+<tr><td><code>Expand()</code></td><td>Expand all top-level items</td></tr>
+<tr><td><code>ExpandAll( oItem )</code></td><td>Recursively expand all items</td></tr>
+<tr><td><code>CollapseAll( oItem )</code></td><td>Recursively collapse all items</td></tr>
+<tr><td><code>ExpandBranch( oItem )</code></td><td>Expand a specific branch and its children</td></tr>
+<tr><td><code>CollapseBranch( oItem )</code></td><td>Collapse a specific branch</td></tr>
+<tr><td><code>Toggle()</code></td><td>Toggle expand/collapse of all top-level items</td></tr>
+<tr><td><code>ToggleAll( oItem )</code></td><td>Toggle all items recursively</td></tr>
+<tr><td><code>EditLabel( oItem )</code></td><td>Start in-place label editing on an item</td></tr>
+<tr><td><code>SetImageList( oImageList )</code></td><td>Assign an image list for node icons</td></tr>
+<tr><td><code>SetColor( nClrText, nClrPane )</code></td><td>Set tree text and background colors</td></tr>
+<tr><td><code>SetItemImage( oItem, nImage )</code></td><td>Change the image of a specific item</td></tr>
+<tr><td><code>SetItemHeight( nHeight )</code></td><td>Set the height of tree items</td></tr>
+<tr><td><code>GetCheck( oItem )</code></td><td>Get the checkbox state of an item (requires <code>CHECKBOXES</code>)</td></tr>
+<tr><td><code>SetCheck( oItem, lOnOff )</code></td><td>Set the checkbox state of an item</td></tr>
+<tr><td><code>HitTest( nRow, nCol )</code></td><td>Determine which item is at screen coordinates</td></tr>
+<tr><td><code>SetItems( aItems )</code></td><td>Populate the tree from an array</td></tr>
+<tr><td><code>Scan( bAction )</code></td><td>Execute a code block for every item in the tree</td></tr>
+<tr><td><code>Count()</code></td><td>Total number of items (including children)</td></tr>
+<tr><td><code>Len()</code></td><td>Number of top-level items</td></tr>
+<tr><td><code>SwapUp() / SwapDown()</code></td><td>Swap the selected item with its sibling</td></tr>
+<tr><td><code>Rebuild()</code></td><td>Rebuild the Win32 tree from the internal item array</td></tr>
+<tr><td><code>GenMenu( lPopup )</code></td><td>Generate a menu from the tree structure</td></tr>
+<tr><td><code>LoadFromMenu( oMenu )</code></td><td>Populate the tree from a menu object</td></tr>
+</tbody>
+</table>
+
+<h2 id="command">Sintaxis de Comandos</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol TREEVIEW [ oTV ] ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ COLOR nClrFore, nClrBack ] ;
+   [ PIXEL ] ;
+   [ ON CHANGE bChange ] ;
+   [ CHECKBOXES ] ;
+   [ EDITABLE ]
+
+REDEFINE TREEVIEW [ oTV ] ;
+   ID nId ;
+   [ OF oWnd ] ;
+   [ COLOR nClrFore, nClrBack ] ;
+   [ ON CHANGE bChange ]</code></pre>
+
+<h2 id="tree-navigation">Flujo de Navegación del Árbol</h2>
+
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> Root : Tree created
+    Root --> Expanded : User clicks [+]
+    Expanded --> ChildSelected : User clicks child
+    ChildSelected --> Expanded : User clicks [+] on child
+    Expanded --> Collapsed : User clicks [-]
+    Collapsed --> Root : All collapsed
+
+    ChildSelected --> Editing : EditLabel()
+    Editing --> ChildSelected : Enter / Escape
+
+    note right of Editing
+        hEdit control active
+        TVN_BEGINLABELEDIT
+        TVN_ENDLABELEDIT
+    end note
+</div>
+
+<h2 id="examples">Ejemplos de Código</h2>
+
+<h3>Ejemplo 1: Árbol de Exploración de Archivos</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION FileTreeDemo()
+   LOCAL oDlg, oTV, oImgList
+   LOCAL oRoot, oSrc, oRes
+
+   DEFINE DIALOG oDlg TITLE "Project Explorer" SIZE 400, 500
+
+   // Image list: folder and file icons
+   DEFINE IMAGELIST oImgList SIZE 16, 16
+   IMAGELIST ADD BITMAP oImgList NAME "FOLDER", "FILE"
+
+   @ 0.5, 0.5 TREEVIEW oTV OF oDlg ;
+      SIZE 190, 220 PIXEL ;
+      ON CHANGE { || ShowItemInfo( oTV ) }
+
+   oTV:SetImageList( oImgList )
+
+   // Build the tree
+   oRoot := oTV:Add( "MyProject", 0 )         // folder icon = 0
+
+   oSrc := oRoot:AddItem( "Source", 0 )
+   oSrc:AddItem( "main.prg", 1 )              // file icon = 1
+   oSrc:AddItem( "utils.prg", 1 )
+   oSrc:AddItem( "database.prg", 1 )
+
+   oRes := oRoot:AddItem( "Resources", 0 )
+   oRes:AddItem( "main.rc", 1 )
+   oRes:AddItem( "icons.rc", 1 )
+
+   oTV:Add( "Libraries", 0 )
+
+   // Start expanded
+   oTV:ExpandAll()
+
+   @ 11, 1 BUTTON "Expand All"   OF oDlg SIZE 60, 14 ;
+      ACTION oTV:ExpandAll()
+   @ 11, 7 BUTTON "Collapse All" OF oDlg SIZE 60, 14 ;
+      ACTION oTV:CollapseAll()
+
+   ACTIVATE DIALOG oDlg CENTERED
+RETURN NIL
+
+STATIC FUNCTION ShowItemInfo( oTV )
+   LOCAL oItem := oTV:GetSelected()
+   IF oItem != NIL
+      // oItem:cPrompt has the label
+      // oItem:Cargo can hold custom data
+      SayStatus( "Selected: " + oItem:cPrompt )
+   ENDIF
+RETURN NIL</code></pre>
+
+<h3>Ejemplo 2: Árbol con Casillas de Verificación</h3>
+
+<pre><code class="language-harbour">@ 0.5, 0.5 TREEVIEW oTV OF oDlg ;
+   SIZE 190, 220 PIXEL ;
+   CHECKBOXES
+
+oTV:Add( "Option A" )
+oTV:Add( "Option B" )
+oTV:Add( "Option C" )
+
+// Later, check which items are selected:
+FOR n := 1 TO Len( oTV:aItems )
+   IF oTV:GetCheck( oTV:aItems[ n ] )
+      ? "Checked:", oTV:aItems[ n ]:cPrompt
+   ENDIF
+NEXT</code></pre>
+
+<h3>Ejemplo 3: Árbol Editable con Reordenamiento</h3>
+
+<pre><code class="language-harbour">@ 0.5, 0.5 TREEVIEW oTV OF oDlg ;
+   SIZE 190, 220 PIXEL ;
+   EDITABLE ;
+   ON CHANGE { || UpdatePreview( oTV ) }
+
+// Populate tree
+oTV:Add( "Chapter 1" )
+oTV:Add( "Chapter 2" )
+oTV:Add( "Chapter 3" )
+
+// Edit label of selected item
+@ 11, 1 BUTTON "Rename" OF oDlg SIZE 50, 14 ;
+   ACTION oTV:EditLabel()
+
+// Reorder items
+@ 11, 5.5 BUTTON "Move Up" OF oDlg SIZE 50, 14 ;
+   ACTION oTV:SwapUp()
+@ 11, 10 BUTTON "Move Down" OF oDlg SIZE 55, 14 ;
+   ACTION oTV:SwapDown()</code></pre>
+
+<h2 id="tips">Consejos</h2>
+
+<ul>
+  <li>Use <code>Cargo</code> on each <code>TVItem</code> to store associated data (record IDs, file paths, etc.).</li>
+  <li>The <code>CHECKBOXES</code> clause enables checkboxes on all items. Use <code>GetCheck()</code>/<code>SetCheck()</code> to manage state.</li>
+  <li>For large trees, populate children lazily in the <code>bExpanded</code> callback instead of loading everything at startup.</li>
+  <li>Call <code>Rebuild()</code> after programmatic item manipulation (move, promote, demote) to sync the Win32 tree.</li>
+  <li><code>Scan( bAction )</code> traverses every item recursively -- useful for searching or collecting checked items.</li>
+  <li>Use <code>SetItemHeight()</code> for larger touch-friendly tree items.</li>
+</ul>
+
+<h2 id="see-also">Ver También</h2>
+<ul>
+  <li><a href="../../es/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../es/ui/tlistview.html">TListView</a> -- flat list with icons</li>
+  <li><a href="../../es/ui/tmenu.html">TMenu</a> -- can be generated from/loaded into tree</li>
+  <li><a href="../../es/reference/resources.html">Recursos (GDI)</a> -- TImageList for node icons</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

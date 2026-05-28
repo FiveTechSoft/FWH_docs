@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TWhatsApp - Documentaci&oacute;n FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentaci&oacute;n FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeros Pasos</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visi&oacute;n General del Framework</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Instalaci&oacute;n</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Compilaci&oacute;n</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Clases Base</div>
+<a class="nav-item" href="../../es/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../es/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../es/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../es/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../es/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../es/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../es/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../es/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../es/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acceso a Datos</div>
+<a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../es/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../es/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impresi&oacute;n e Informes</div>
+<a class="nav-item" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../es/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../es/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../es/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../es/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
+<a class="nav-item active" href="../../es/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../es/internet/tai.html">Clases de IA</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referencia</div>
+<a class="nav-item" href="../../es/reference/commands.html">Comandos</a>
+<a class="nav-item" href="../../es/reference/functions.html">Funciones</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Sistema de Errores</a>
+<a class="nav-item" href="../../es/reference/resources.html">Recursos (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">M&aacute;s Clases</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TWhatsApp</h1>
+<p class="class-source">Fuente: <code>source/classes/twhatsapp.prg</code></p>
+<p class="class-hierarchy">Jerarqu&iacute;a: <strong>TWhatsApp</strong> (clase independiente, sin herencia)</p>
+
+<p>
+TWhatsApp es un cliente de la API Cloud de WhatsApp que se comunica con la Plataforma de Negocios de Meta
+mediante solicitudes HTTPS usando la biblioteca cURL. Requiere una Cuenta de Negocios de Meta, un ID de
+n&uacute;mero de tel&eacute;fono registrado y un token de acceso de sistema permanente generado desde el Panel de Aplicaciones de Meta.
+Todos los tipos de mensajes se env&iacute;an como cargas JSON a trav&eacute;s de la API Graph.
+</p>
+
+<h2 id="data">Miembros DATA Principales</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cToken</code></td><td>Car&aacute;cter</td><td></td><td>Token de acceso Bearer para autenticaci&oacute;n de API</td></tr>
+<tr><td><code>cPhoneId</code></td><td>Car&aacute;cter</td><td></td><td>ID del n&uacute;mero de tel&eacute;fono remitente (ID num&eacute;rico de Meta, no el n&uacute;mero de tel&eacute;fono)</td></tr>
+<tr><td><code>cVersion</code></td><td>Car&aacute;cter</td><td><code>"v18.0"</code></td><td>Cadena de versi&oacute;n de la API Graph</td></tr>
+<tr><td><code>cBaseUrl</code></td><td>Car&aacute;cter</td><td><code>"https://graph.facebook.com"</code></td><td>URL base para todas las llamadas a la API</td></tr>
+<tr><td><code>cResponse</code></td><td>Car&aacute;cter</td><td></td><td>Respuesta JSON cruda de la &uacute;ltima llamada a la API</td></tr>
+<tr><td><code>nError</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>C&oacute;digo de error cURL de la &uacute;ltima operaci&oacute;n</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>C&oacute;digo de estado HTTP de la &uacute;ltima respuesta</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">M&eacute;todos Principales</h2>
+
+<table>
+<thead>
+<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cToken, cPhoneId, cVersion )</code></td><td>Constructor. Inicializa el manejador cURL y almacena las credenciales. Opcionalmente establece la versi&oacute;n de la API.</td></tr>
+<tr><td><code>End()</code></td><td>Limpiar el manejador cURL. Llamar cuando se termine con el objeto.</td></tr>
+<tr><td><code>SendText( cTo, cMsg, lPreviewUrl )</code></td><td>Enviar un mensaje de texto plano. <code>lPreviewUrl</code> habilita la generaci&oacute;n de vista previa de enlaces.</td></tr>
+<tr><td><code>SendTemplate( cTo, cName, cLang, aBodyParams )</code></td><td>Enviar una plantilla de mensaje pre-aprobada con valores de par&aacute;metros de cuerpo opcionales.</td></tr>
+<tr><td><code>SendImage( cTo, cLinkOrId, cCaption )</code></td><td>Enviar una imagen por URL o ID de medio previamente subido.</td></tr>
+<tr><td><code>SendDocument( cTo, cLinkOrId, cFilename, cCaption )</code></td><td>Enviar un documento por URL o ID de medio con nombre de archivo y pie opcionales.</td></tr>
+<tr><td><code>SendAudio( cTo, cLinkOrId )</code></td><td>Enviar un archivo de audio por URL o ID de medio.</td></tr>
+<tr><td><code>SendVideo( cTo, cLinkOrId, cCaption )</code></td><td>Enviar un video por URL o ID de medio con pie opcional.</td></tr>
+<tr><td><code>SendLocation( cTo, nLat, nLong, cName, cAddress )</code></td><td>Enviar un pin de ubicaci&oacute;n con latitud, longitud y nombre/direcci&oacute;n opcionales.</td></tr>
+<tr><td><code>UploadMedia( cFileName, cMimeType )</code></td><td>Subir un archivo de medio a los servidores de WhatsApp. Devuelve la cadena del ID de medio, o nil en caso de error.</td></tr>
+<tr><td><code>DownloadMedia( cMediaId, cTargetFile )</code></td><td>Descargar un archivo de medio desde los servidores de WhatsApp y guardarlo en disco. Devuelve .T. en caso de &eacute;xito.</td></tr>
+<tr><td><code>GetMessageId()</code></td><td>Extraer el ID del mensaje de la &uacute;ltima respuesta de la API. Devuelve cadena vac&iacute;a en caso de error.</td></tr>
+<tr><td><code>GetError()</code></td><td>Extraer el mensaje de error de la &uacute;ltima respuesta de la API. Devuelve cadena vac&iacute;a si no hay error.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Ejemplo: Enviar Mensaje de Texto</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWA := TWhatsApp():New( "EAAx...token", "123456789", "v18.0" )
+   local cResp, cMsgId
+
+   // Send a simple text message
+   cResp := oWA:SendText( "5215512345678", "Hello from FiveWin!" )
+
+   cMsgId := oWA:GetMessageId()
+   if ! Empty( cMsgId )
+      MsgInfo( "Message sent. ID: " + cMsgId )
+   else
+      MsgInfo( "Error: " + oWA:GetError() )
+   endif
+
+   oWA:End()
+
+return nil</code></pre>
+
+<h2 id="example-template">Ejemplo: Mensaje de Plantilla</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function SendTemplate()
+
+   local oWA  := TWhatsApp():New( "EAAx...token", "123456789" )
+   local aParams := { "John", "FWH 26.03", "Monday" }
+
+   // "welcome_message" must be pre-approved by Meta
+   oWA:SendTemplate( "5215512345678", "welcome_message", "en_US", aParams )
+   oWA:End()
+
+return nil</code></pre>
+
+<h2 id="notes">Notas</h2>
+
+<ul>
+<li>Se requiere una Cuenta de Negocios de Meta y un n&uacute;mero de tel&eacute;fono registrado. El ID del n&uacute;mero de tel&eacute;fono es un identificador num&eacute;rico asignado por Meta, no el n&uacute;mero de tel&eacute;fono en s&iacute;.</li>
+<li>Use un token de acceso de sistema permanente desde el Panel de Aplicaciones de Meta. Los tokens de usuario temporales caducan.</li>
+<li><code>SendImage</code>, <code>SendDocument</code>, <code>SendAudio</code> y <code>SendVideo</code> aceptan una URL p&uacute;blica o un ID de medio previamente subido. Las URLs deben comenzar con <code>http</code> (sin distinci&oacute;n de may&uacute;sculas/min&uacute;sculas).</li>
+<li>Los nombres de plantilla deben coincidir con plantillas pre-aprobadas en la cuenta de Negocios de Meta. Los par&aacute;metros del cuerpo se insertan posicionalmente.</li>
+<li>Todos los m&eacute;todos de env&iacute;o devuelven la respuesta JSON cruda en <code>cResponse</code>. Llame a <code>GetMessageId()</code> o <code>GetError()</code> para analizar el resultado.</li>
+<li>La clase usa <code>hbcurl.ch</code> y requiere que la biblioteca cURL est&eacute; enlazada en la aplicaci&oacute;n.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TExplorerBar - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeiros Passos</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Classes Principais</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles de Interface</div>
+<a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../pt/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../pt/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../pt/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../pt/ui/trating.html">TRating</a>
+<a class="nav-item active" href="../../pt/ui/texplorerbar.html">TExplorerBar</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acesso a Dados</div>
+<a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../pt/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impressão e Relatórios</div>
+<a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../pt/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referência</div>
+<a class="nav-item" href="../../pt/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../pt/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../pt/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../pt/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TExplorerBar</h1>
+<p class="class-source">Fonte: <code>source/classes/texplbar.prg</code></p>
+<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+
+<p>
+TExplorerBar is an Outlook-style vertical task panel with collapsible sections and gradient headers.
+Each section is represented by a TTaskPanel child object that can be expanded or collapsed by clicking
+its title bar. The panel supports vertical scrolling when content exceeds the visible area, making
+it suitable for navigation menus, task lists, and property groups.
+</p>
+
+<h2 id="command">Sintaxe do Comando</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol EXPLORERBAR oBar OF oWnd SIZE nW, nH</code></pre>
+
+<h2 id="data">Principais Membros DATA</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aPanels</code></td><td>Array</td><td>Matriz de objetos TTaskPanel adicionados à barra</td></tr>
+<tr><td><code>nTopColor</code></td><td>Numeric</td><td>Cor gradiente superior para o fundo da barra (padrão RGB(122,161,230))</td></tr>
+<tr><td><code>nBottomColor</code></td><td>Numeric</td><td>Cor gradiente inferior para o fundo da barra (padrão RGB(99,117,214))</td></tr>
+<tr><td><code>oVScroll</code></td><td>Object</td><td>Controle de barra de rolagem vertical para o conteúdo do painel</td></tr>
+<tr><td><code>nVPos</code></td><td>Numeric</td><td>Posição atual da rolagem vertical</td></tr>
+<tr><td><code>nVirtualHeight</code></td><td>Numeric</td><td>Altura virtual total de todos os painéis combinados</td></tr>
+<tr><td><code>nVirtualTop</code></td><td>Numeric</td><td>Deslocamento atual da rolagem a partir do topo</td></tr>
+<tr><td><code>lSBVisible</code></td><td>Logical</td><td>Indicador de visibilidade da barra de rolagem</td></tr>
+<tr><td><code>aGradient</code></td><td>Array</td><td>Definição de gradiente personalizada para cabeçalhos de painéis</td></tr>
+<tr><td><code>bClrGrad</code></td><td>Block</td><td>Bloco de código que retorna cores gradientes personalizadas</td></tr>
+</tbody>
+</table>
+
+<h2 id="ttaskpanel">TTaskPanel Class (Child of TExplorerBar)</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Título da seção do painel exibido no cabeçalho</td></tr>
+<tr><td><code>nTitleHeight</code></td><td>Numeric</td><td>Altura da barra de título clicável (padrão 25)</td></tr>
+<tr><td><code>nBodyHeight</code></td><td>Numeric</td><td>Altura da área do corpo quando expandida (padrão 50)</td></tr>
+<tr><td><code>lCollapsed</code></td><td>Logical</td><td>Se o painel está atualmente recolhido</td></tr>
+<tr><td><code>aLinks</code></td><td>Array</td><td>Matriz de controles TUrlLink adicionados via AddLink()</td></tr>
+<tr><td><code>aGradient</code></td><td>Array</td><td>Cores gradientes para a barra de título</td></tr>
+<tr><td><code>nRound</code></td><td>Numeric</td><td>Raio de arredondamento de cantos para o painel (padrão 6)</td></tr>
+<tr><td><code>bOnCollapse</code></td><td>Block</td><td>Bloco de código executado quando o painel é recolhido/expandido</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Métodos</h2>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, nClrFore, nClrBack, oBrush, l2007, l2010, l2013, l2015 )</code></td><td>Criar um novo controle TExplorerBar</td></tr>
+<tr><td><code>Redefine( nId, oDlg )</code></td><td>Redefinir a partir de recurso de diálogo</td></tr>
+<tr><td><code>AddPanel( cName, cBmpName, nBodyHeight, nTitleH, nRound, aGrad, oFnt, nClrT, nClrP )</code></td><td>Adicionar uma nova seção TTaskPanel. Retorna o objeto do painel.</td></tr>
+<tr><td><code>CloseAll( nExcept )</code></td><td>Recolher todos os painéis exceto o do índice nExcept (padrão 1)</td></tr>
+<tr><td><code>CheckScroll()</code></td><td>Recalcular o intervalo da barra de rolagem com base nas alturas dos painéis</td></tr>
+<tr><td><code>VScrollSetPos( nPos )</code></td><td>Definir a posição da rolagem vertical e atualizar as posições dos painéis</td></tr>
+<tr><td><code>VScrollSkip( nSkip )</code></td><td>Rolar verticalmente por nSkip pixels</td></tr>
+</tbody>
+</table>
+
+<h3>TTaskPanel Methods</h3>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>AddLink( cPrompt, bAction, cBitmap, oFnt, nClrT, nClrP, nClrO, cMsg, cTooltip )</code></td><td>Adicionar um link clicável ao corpo do painel. Retorna o objeto TUrlLink.</td></tr>
+<tr><td><code>LoadBitmaps( nType, cnBitmap )</code></td><td>Carregar bitmaps de seta de expandir/recolher ou um bitmap de painel personalizado</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Exemplo: Barra Explorer com Dois Painéis</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oBar, oPanel
+
+   DEFINE WINDOW oWnd TITLE "Explorer Bar Demo" SIZE 300, 500
+
+   @ 0, 0 EXPLORERBAR oBar OF oWnd SIZE 300, 500
+
+   // "Documents" panel with 2 links
+   oPanel = oBar:AddPanel( "Documents",, 60, 25 )
+   oPanel:AddLink( "Open Recent", { || MsgInfo( "Recent docs" ) }, "fileopen.bmp" )
+   oPanel:AddLink( "Browse Folders", { || MsgInfo( "Browse" ) }, "folders.bmp" )
+
+   // "Tools" panel with 2 links
+   oPanel = oBar:AddPanel( "Tools",, 60, 25 )
+   oPanel:AddLink( "Settings", { || MsgInfo( "Settings" ) }, "settings.bmp" )
+   oPanel:AddLink( "Help", { || MsgInfo( "Help" ) }, "help.bmp" )
+
+   ACTIVATE WINDOW oWnd CENTERED
+
+return nil</code></pre>
+
+<h2 id="notes">Observações</h2>
+
+<ul>
+<li>Use a sintaxe de comando <code>EXPLORERBAR</code> para criar a barra; os painéis são adicionados programaticamente com <code>AddPanel()</code>.</li>
+<li>Clicar na barra de título de um painel alterna seu estado recolhido. O método <code>CloseAll()</code> recolhe todos os painéis exceto o especificado.</li>
+<li>Cada painel pode exibir um bitmap em sua área de cabeçalho (especificado via <code>cBmpName</code> em <code>AddPanel()</code>).</li>
+<li>Os links dentro dos painéis são controles <code>TUrlLink</code> que suportam efeitos de passagem do mouse, dicas de ferramenta e cores personalizadas.</li>
+<li>A barra gerencia automaticamente a rolagem vertical quando os painéis se estendem além da área visível.</li>
+<li>Os estilos visuais (l2007, l2010, l2013, l2015) ajustam a aparência padrão para corresponder à estética da versão do Windows.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

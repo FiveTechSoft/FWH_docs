@@ -1,0 +1,390 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TXBrowse - Documentação FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Version 26.03</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos &amp; Caminho de Aprendizado</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div><a class="nav-item" href="../../pt/core/twindow.html">TWindow</a><a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a><a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Controles UI</div><a class="nav-item active" href="../../pt/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a><a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a><a class="nav-item" href="../../pt/ui/more-controls.html">Mais Controles</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Avançada</div><a class="nav-item" href="../../pt/ui/tlistview.html">TListView</a><a class="nav-item" href="../../pt/ui/trichedit.html">TRichEdit / TScintilla</a><a class="nav-item" href="../../pt/ui/ttreeview.html">TTreeView</a><a class="nav-item" href="../../pt/ui/tribbon.html">TRibbonBar</a></div>
+<div class="nav-section"><div class="nav-section-title">Acesso a Dados</div><a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../pt/data/todbc.html">TODBC</a><a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a></div>
+<div class="nav-section"><div class="nav-section-title">Impressão e Relatórios</div><a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../pt/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a><a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a><a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a><a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a><a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a><a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a><a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a><a class="nav-item" href="../../pt/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div><a class="nav-item" href="../../pt/reference/commands.html">Comandos</a><a class="nav-item" href="../../pt/reference/functions.html">Funções</a><a class="nav-item" href="../../pt/reference/errorsys.html">Sistema de Erros</a><a class="nav-item" href="../../pt/reference/resources.html">Recursos (GDI)</a><a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>TXBrowse</h1>
+<p class="subtitle">O controle grid de dados mais poderoso e versátil do FiveWin</p>
+
+<p><strong>Fonte:</strong> <code>source/classes/xbrowse.prg</code> &nbsp;|&nbsp; <strong>Pai:</strong> <code>TControl</code> &nbsp;|&nbsp; <strong>Cabeçalho:</strong> <code>XBrowse.ch</code></p>
+
+<h2 id="overview">Visão Geral</h2>
+
+<p><code>TXBrowse</code> é o principal controle grid de dados do FiveWin. Ele renderiza dados tabulares de praticamente qualquer fonte -- tabelas DBF, arrays em memória, ADO RecordSets, cursores ODBC ou dados personalizados -- através de uma arquitetura unificada de navegação baseada em blocos. Ele virtualiza a renderização para que apenas as linhas visíveis sejam processadas, permitindo manipular milhões de registros sem consumo excessivo de memória.</p>
+
+<p>As principais capacidades incluem:</p>
+<ul>
+  <li><strong>Abstração de fonte de dados</strong> -- um controle, muitos back-ends (DBF/RDD, Array, ADO, ODBC, personalizado)</li>
+  <li><strong>Objetos de coluna ricos</strong> -- cada coluna (<code>TXBrwCol</code>) controla seu próprio cabeçalho, formatação de dados, cores, edição e largura</li>
+  <li><strong>Edição na célula</strong> -- editores GET, ComboBox, CheckBox, DatePicker e Spinner por coluna</li>
+  <li><strong>Busca/filtro incremental</strong> -- barra de busca <code>lIncrFilter</code> integrada com pesquisa por coluna</li>
+  <li><strong>Multi-seleção, congelamento de colunas, seletor de registro, estilos de marcação</strong></li>
+  <li><strong>Exportação</strong> para Excel, CSV, área de transferência e impressora</li>
+</ul>
+
+<h2 id="architecture">Arquitetura</h2>
+
+<p>TXBrowse desacopla o grid visual dos dados subjacentes através de um conjunto de <em>blocos de código de navegação</em>. Métodos auxiliares como <code>SetRDD()</code>, <code>SetArray()</code> e <code>SetAdo()</code> simplesmente preenchem estes blocos com a lógica apropriada para cada tipo de fonte de dados.</p>
+
+<div class="mermaid">
+graph TD
+    subgraph DataSources["Data Sources"]
+        DBF["DBF / RDD<br/>(SetRDD)"]
+        ARR["Array<br/>(SetArray)"]
+        ADO["ADO RecordSet<br/>(SetAdo)"]
+        ODBC["ODBC Cursor<br/>(SetODBC)"]
+        CUSTOM["Custom<br/>(manual blocks)"]
+    end
+
+    subgraph NavBlocks["Navigation Blocks"]
+        bGoTop
+        bGoBottom
+        bSkip
+        bBof
+        bEof
+        bKeyNo
+        bKeyCount
+        bBookMark
+        bSeek
+    end
+
+    subgraph TXBrowseObj["TXBrowse Object"]
+        GRID["Grid Engine<br/>paint, scroll, keys"]
+        COLS["aCols&lt;br/&gt;TXBrwCol array"]
+        GRID --- COLS
+    end
+
+    DBF --> bGoTop
+    ARR --> bGoTop
+    ADO --> bGoTop
+    ODBC --> bGoTop
+    CUSTOM --> bGoTop
+
+    bGoTop --> GRID
+    bGoBottom --> GRID
+    bSkip --> GRID
+    bKeyCount --> GRID
+    bBookMark --> GRID
+
+    style TXBrowseObj fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
+    style NavBlocks fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
+    style DataSources fill:#1c2129,stroke:#d29922,stroke-width:1px,color:#e6edf3
+</div>
+
+<h2 id="column-structure">Objeto de Coluna: TXBrwCol</h2>
+
+<p>Cada coluna do navegador de dados é um objeto <code>TXBrwCol</code> armazenado no array <code>aCols</code>. As colunas definem <em>quais</em> dados exibir e <em>como</em> exibi-los.</p>
+
+<div class="mermaid">
+classDiagram
+    class TXBrwCol {
+        +cHeader : String
+        +bEditValue : Block
+        +bStrData : Block
+        +nWidth : Numeric
+        +cDataType : String
+        +lEdit : Logical
+        +nEditType : Numeric
+        +bClrStd : Block
+        +bClrEdit : Block
+        +cPicture : String
+        +nHeadStrAlign : Numeric
+        +nDataStrAlign : Numeric
+        +AddResource(cBmp)
+        +SetCheck(cResYes, cResNo)
+    }
+
+    class TXBrowse {
+        +aCols : Array of TXBrwCol
+        +nFreeze : Numeric
+        +lRecordSelector : Logical
+        +nMarqueeStyle : Numeric
+        +lFastEdit : Logical
+        +lIncrFilter : Logical
+        +AddColumn()
+        +SetRDD()
+        +SetArray()
+        +SetAdo()
+        +CreateFromCode()
+        +Refresh()
+    }
+
+    TXBrowse "1" *-- "many" TXBrwCol : aCols
+</div>
+
+<h2 id="key-properties">Principais Propriedades (DATA)</h2>
+
+<table>
+<thead><tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>aCols</code></td><td>Array</td><td>Array de objetos <code>TXBrwCol</code> de coluna que define cada coluna no grid</td></tr>
+<tr><td><code>cAlias</code></td><td>String</td><td>Alias da área de trabalho ao usar <code>SetRDD()</code></td></tr>
+<tr><td><code>nFreeze</code></td><td>Numeric</td><td>Número de colunas à esquerda que permanecem congeladas durante a rolagem horizontal</td></tr>
+<tr><td><code>lRecordSelector</code></td><td>Logical</td><td>Quando <code>.T.</code>, exibe uma coluna indicadora de linha na borda esquerda</td></tr>
+<tr><td><code>nMarqueeStyle</code></td><td>Numeric</td><td>Estilo visual do destaque de seleção (veja constantes em <code>XBrowse.ch</code>: <code>MARQSTYLE_HIGHLROW</code>, <code>MARQSTYLE_HIGHLCELL</code>, <code>MARQSTYLE_DOTEDCELL</code>, etc.)</td></tr>
+<tr><td><code>lFastEdit</code></td><td>Logical</td><td>Quando <code>.T.</code>, digitar um caractere abre imediatamente o editor da célula -- sem necessidade da tecla Enter. <strong>Cuidado:</strong> isto desabilita atalhos de navegação por tecla única.</td></tr>
+<tr><td><code>lIncrFilter</code></td><td>Logical</td><td>Quando <code>.T.</code>, uma barra de busca/filtro aparece abaixo dos cabeçalhos para pesquisa incremental por coluna</td></tr>
+<tr><td><code>nDataType</code></td><td>Numeric</td><td>Flag interna indicando o tipo de fonte de dados (RDD, Array, ADO, etc.)</td></tr>
+<tr><td><code>lMultiSelect</code></td><td>Logical</td><td>Habilita seleção de múltiplas linhas com Ctrl+Click e Shift+Click</td></tr>
+<tr><td><code>nArrayAt</code></td><td>Numeric</td><td>Índice da linha atual ao navegar uma fonte de dados array</td></tr>
+<tr><td><code>nRowHeight</code></td><td>Numeric</td><td>Altura em pixels de cada linha de dados</td></tr>
+<tr><td><code>nHeaderHeight</code></td><td>Numeric</td><td>Altura em pixels da linha de cabeçalho das colunas</td></tr>
+</tbody>
+</table>
+
+<h2 id="navigation-blocks">Blocos de Navegação</h2>
+
+<p>Estes blocos de código formam a camada de abstração de dados. Eles são definidos automaticamente por <code>SetRDD()</code>, <code>SetArray()</code>, <code>SetAdo()</code>, etc., mas você pode fornecer blocos personalizados para fontes de dados especializadas.</p>
+
+<table>
+<thead><tr><th>Bloco</th><th>Assinatura</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>bGoTop</code></td><td><code>{|| ... }</code></td><td>Posiciona a fonte de dados no primeiro registro</td></tr>
+<tr><td><code>bGoBottom</code></td><td><code>{|| ... }</code></td><td>Posiciona a fonte de dados no último registro</td></tr>
+<tr><td><code>bSkip</code></td><td><code>{|n| ... }</code></td><td>Move <code>n</code> registros (positivo=avançar, negativo=retroceder). Retorna registros efetivamente movidos.</td></tr>
+<tr><td><code>bBof</code></td><td><code>{|| ... }</code></td><td>Retorna <code>.T.</code> se antes do primeiro registro</td></tr>
+<tr><td><code>bEof</code></td><td><code>{|| ... }</code></td><td>Retorna <code>.T.</code> se após o último registro</td></tr>
+<tr><td><code>bKeyNo</code></td><td><code>{|n| ... }</code></td><td>Obtém/define a posição lógica atual (para barra de rolagem)</td></tr>
+<tr><td><code>bKeyCount</code></td><td><code>{|| ... }</code></td><td>Retorna o número total de registros (para barra de rolagem)</td></tr>
+<tr><td><code>bBookMark</code></td><td><code>{|u| ... }</code></td><td>Se <code>u</code> for NIL, retorna um marcador para a linha atual. Caso contrário, reposiciona para o marcador <code>u</code>.</td></tr>
+<tr><td><code>bSeek</code></td><td><code>{|c| ... }</code></td><td>Busca incremental -- encontra o primeiro registro que corresponda à string <code>c</code></td></tr>
+</tbody>
+</table>
+
+<h2 id="key-methods">Principais Métodos</h2>
+
+<table>
+<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( oWnd )</code></td><td>Construtor. Cria uma instância de TXBrowse associada à janela/diálogo pai <code>oWnd</code>.</td></tr>
+<tr><td><code>SetRDD( [cAlias] )</code></td><td>Configura os blocos de navegação para uma área de trabalho DBF/RDD.</td></tr>
+<tr><td><code>SetArray( aData, [lAutoCol] )</code></td><td>Configura os blocos de navegação para um array em memória.</td></tr>
+<tr><td><code>SetAdo( oRs )</code></td><td>Configura os blocos de navegação para um objeto ADO RecordSet.</td></tr>
+<tr><td><code>SetODBC( oQry )</code></td><td>Configura os blocos de navegação para um conjunto de resultados ODBC.</td></tr>
+<tr><td><code>AddColumn( cHead, bData, [cPict], ... )</code></td><td>Adiciona uma coluna com cabeçalho, bloco de dados, picture opcional e mais.</td></tr>
+<tr><td><code>CreateFromCode()</code></td><td>Finaliza a criação do controle após configurar fonte de dados e colunas.</td></tr>
+<tr><td><code>Adjust()</code></td><td>Recalcula dimensões de cabeçalho, linhas e rodapé. Às vezes necessário após mudanças de fonte.</td></tr>
+<tr><td><code>Refresh()</code></td><td>Repinta todas as linhas visíveis.</td></tr>
+<tr><td><code>SelectedCol()</code></td><td>Retorna o objeto <code>TXBrwCol</code> da coluna atualmente selecionada.</td></tr>
+<tr><td><code>Report( [cTitle] )</code></td><td>Impressão rápida do conteúdo do browse via motor de impressão do FWH.</td></tr>
+<tr><td><code>ToExcel()</code></td><td>Exporta os dados visíveis para o Microsoft Excel.</td></tr>
+<tr><td><code>ToClip()</code></td><td>Copia os dados visíveis para a área de transferência.</td></tr>
+</tbody>
+</table>
+
+<h2 id="commands">Comandos (XBrowse.ch)</h2>
+
+<p>O FiveWin fornece dois estilos de comando para criar controles TXBrowse:</p>
+
+<h3>Comando Posicionado</h3>
+<pre><code class="language-harbour">@ nRow, nCol XBROWSE oBrw ;
+   [ OF oWnd ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ COLUMNS cCol1, cCol2, ... ] ;
+   [ HEADERS cHead1, cHead2, ... ] ;
+   [ ALIAS cAlias ] ;
+   [ ON DBLCLICK bAction ] ;
+   [ FONT oFont ] ;
+   [ NOBORDER ]</code></pre>
+
+<h3>Comando de Navegação Rápida</h3>
+<pre><code class="language-harbour">XBROWSER &lt;cAlias&gt;       // browse a DBF alias
+XBROWSER &lt;aArray&gt;       // browse an array
+XBROWSER &lt;oRs&gt;          // browse an ADO RecordSet</code></pre>
+
+<h2 id="examples">Exemplos de Código</h2>
+
+<h3>Exemplo 1: Navegando uma Tabela DBF</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "XBrowse.ch"
+
+FUNCTION Main()
+   LOCAL oWnd, oBrw
+
+   USE Customer VIA "DBFCDX" NEW
+
+   DEFINE WINDOW oWnd TITLE "Customers" FROM 1, 1 TO 24, 80
+
+   oBrw := TXBrowse():New( oWnd )
+   oBrw:nTop    := 0
+   oBrw:nLeft   := 0
+   oBrw:nRight  := -1   // stretch to right edge
+   oBrw:nBottom := -1   // stretch to bottom edge
+
+   oBrw:SetRDD()        // bind to current work area
+
+   // Configure individual columns
+   WITH OBJECT oBrw:AddColumn( "ID", FieldBlock( "CUST_ID" ), "99999" )
+      :nWidth       := 80
+      :nDataStrAlign := AL_RIGHT
+   END
+
+   WITH OBJECT oBrw:AddColumn( "First Name", FieldBlock( "FIRSTNAME" ), "@!" )
+      :nWidth := 140
+      :lEdit  := .T.    // allow in-cell editing
+   END
+
+   oBrw:AddColumn( "Last Name",  FieldBlock( "LASTNAME" ),  "@!" )
+   oBrw:AddColumn( "City",       FieldBlock( "CITY" ) )
+   oBrw:AddColumn( "Balance",    FieldBlock( "BALANCE" ),    "@E 999,999.99" )
+
+   oBrw:nFreeze         := 1       // freeze ID column
+   oBrw:lRecordSelector := .T.     // show row indicator
+   oBrw:nMarqueeStyle   := MARQSTYLE_HIGHLROW
+
+   oBrw:CreateFromCode()
+
+   oWnd:oClient := oBrw            // fill the window client area
+   ACTIVATE WINDOW oWnd
+
+   CLOSE Customer
+RETURN NIL</code></pre>
+
+<h3>Exemplo 2: Navegando um Array</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "XBrowse.ch"
+
+FUNCTION Main()
+   LOCAL oWnd, oBrw
+   LOCAL aData := { ;
+      { "Alice",   "Smith",    28, .T. }, ;
+      { "Bob",     "Johnson",  34, .F. }, ;
+      { "Charlie", "Williams", 45, .T. }, ;
+      { "Diana",   "Brown",    31, .T. }, ;
+      { "Edward",  "Jones",    52, .F. }  ;
+   }
+
+   DEFINE WINDOW oWnd TITLE "Array Browse" FROM 2, 2 TO 20, 70
+
+   oBrw := TXBrowse():New( oWnd )
+   oBrw:SetArray( aData, .F. )   // .F. = do not auto-create columns
+
+   oBrw:aCols := {}
+   oBrw:AddColumn( "First",  {|| aData[ oBrw:nArrayAt ][ 1 ] } )
+   oBrw:AddColumn( "Last",   {|| aData[ oBrw:nArrayAt ][ 2 ] } )
+   oBrw:AddColumn( "Age",    {|| aData[ oBrw:nArrayAt ][ 3 ] }, "999" )
+   oBrw:AddColumn( "Active", {|| aData[ oBrw:nArrayAt ][ 4 ] } )
+
+   // Make "Active" column render as a checkbox
+   oBrw:aCols[ 4 ]:SetCheck( "CHECK1", "UNCHECK1" )
+
+   oBrw:nMarqueeStyle := MARQSTYLE_HIGHLCELL
+   oBrw:CreateFromCode()
+
+   oWnd:oClient := oBrw
+   ACTIVATE WINDOW oWnd
+RETURN NIL</code></pre>
+
+<h3>Exemplo 3: Browse Editável com Configuração de Colunas</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "XBrowse.ch"
+
+FUNCTION Main()
+   LOCAL oWnd, oBrw, oCol
+
+   USE Invoices VIA "DBFCDX" NEW
+
+   DEFINE WINDOW oWnd TITLE "Editable Invoices"
+
+   @ 0, 0 XBROWSE oBrw OF oWnd ;
+      COLUMNS "INVNO", "CUSTNAME", "AMOUNT", "INVDATE", "PAID" ;
+      HEADERS "Invoice #", "Customer", "Amount", "Date", "Paid?"
+
+   oBrw:SetRDD()
+
+   // Configure the Amount column
+   oCol := oBrw:aCols[ 3 ]
+   oCol:cPicture  := "@E 999,999.99"
+   oCol:lEdit     := .T.
+   oCol:nEditType := EDIT_GET             // edit with a GET control
+   oCol:bClrStd   := {|| { CLR_BLACK, CLR_WHITE } }
+
+   // Configure the Date column with a date picker editor
+   oCol := oBrw:aCols[ 4 ]
+   oCol:lEdit     := .T.
+   oCol:nEditType := EDIT_DATE
+
+   // Configure the Paid column as a checkbox
+   oCol := oBrw:aCols[ 5 ]
+   oCol:SetCheck( "CHECK1", "UNCHECK1" )
+   oCol:lEdit := .T.
+
+   oBrw:lFastEdit := .T.   // typing goes straight to edit mode
+   oBrw:CreateFromCode()
+
+   oWnd:oClient := oBrw
+   ACTIVATE WINDOW oWnd
+
+   CLOSE Invoices
+RETURN NIL</code></pre>
+
+<h3>Exemplo 4: Barra de Busca/Filtro Incremental</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "XBrowse.ch"
+
+FUNCTION Main()
+   LOCAL oWnd, oBrw
+
+   USE Customer INDEX Customer VIA "DBFCDX" NEW
+
+   DEFINE WINDOW oWnd TITLE "Customer Search"
+
+   oBrw := TXBrowse():New( oWnd )
+   oBrw:SetRDD()
+
+   oBrw:AddColumn( "Name",    FieldBlock( "NAME" ) )
+   oBrw:AddColumn( "City",    FieldBlock( "CITY" ) )
+   oBrw:AddColumn( "Phone",   FieldBlock( "PHONE" ) )
+   oBrw:AddColumn( "Balance", FieldBlock( "BALANCE" ), "@E 999,999.99" )
+
+   // Enable the incremental filter bar
+   oBrw:lIncrFilter := .T.
+
+   // Custom seek block -- performs an indexed seek on the NAME field
+   oBrw:bSeek := {|cSeek| ( oBrw:cAlias )->( DbSeek( cSeek, .T. ) ) }
+
+   oBrw:nMarqueeStyle   := MARQSTYLE_HIGHLROW
+   oBrw:lRecordSelector := .T.
+
+   oBrw:CreateFromCode()
+   oWnd:oClient := oBrw
+   ACTIVATE WINDOW oWnd
+
+   CLOSE Customer
+RETURN NIL</code></pre>
+
+<h2 id="tips">Dicas e Boas Práticas</h2>
+
+<ul>
+  <li><strong>Sempre chame <code>CreateFromCode()</code></strong> após configurar fonte de dados, colunas e propriedades visuais.</li>
+  <li><strong>Use <code>oWnd:oClient := oBrw</code></strong> para fazer o browse redimensionar automaticamente com a janela.</li>
+  <li><strong>Evite <code>lFastEdit</code> em UIs com muita navegação</strong> -- ele intercepta teclas de caractere que normalmente disparariam buscas ou atalhos de teclado.</li>
+  <li><strong>Para busca incremental em um DBF</strong>, garanta que a tabela tenha um índice ativo na coluna que você está pesquisando.</li>
+  <li><strong><code>bClrEdit</code> da coluna</strong> controla as cores da célula enquanto está sendo editada (bloco de primeiro plano/fundo). Isto é separado de <code>bClrStd</code> que controla as cores no modo de exibição.</li>
+  <li><strong>Pintura com buffer duplo</strong>: TXBrowse pinta em um bitmap fora da tela e depois transfere para a tela. Isso elimina tremulação mas significa que você deve chamar <code>Refresh()</code> -- não <code>Invalidate()</code> -- para forçar uma repintura.</li>
+  <li><strong>Para arrays muito grandes</strong>, considere usar <code>SetRDD()</code> com um DBF temporário, pois a navegação em arrays não virtualiza buscas.</li>
+</ul>
+
+<h2 id="see-also">Veja Também</h2>
+<ul>
+  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- classe pai</li>
+  <li><a href="../../pt/data/tdatabase.html">TDatabase</a> -- wrapper de alto nível para DBF frequentemente usado com TXBrowse</li>
+  <li><a href="../../pt/data/trecset.html">TRecordSet (ADO)</a> -- fonte de dados ADO para <code>SetAdo()</code></li>
+  <li><a href="../../pt/ui/tget.html">TGet</a> -- usado internamente para edição de células</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script></body></html>

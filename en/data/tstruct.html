@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TStruct / TField / TIndex - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item" href="../../en/ui/twebcam.html">TWebcam</a>
+<a class="nav-item" href="../../en/ui/tgif.html">TGif</a>
+<a class="nav-item" href="../../en/ui/tscintilla.html">TScintilla</a>
+<a class="nav-item" href="../../en/ui/tswitch.html">TSwitch</a>
+<a class="nav-item" href="../../en/ui/tcalendar.html">TCalendar</a>
+<a class="nav-item" href="../../en/ui/tdtpicker.html">TDatePick</a>
+<a class="nav-item" href="../../en/ui/ttmpicker.html">TTimePick</a>
+<a class="nav-item" href="../../en/ui/tslider.html">TSlider</a>
+<a class="nav-item" href="../../en/ui/timagelist.html">TImageList</a>
+<a class="nav-item" href="../../en/ui/texplorerbar.html">TExplorerBar</a>
+<a class="nav-item" href="../../en/ui/tmetropanel.html">TMetroPanel</a>
+<a class="nav-item" href="../../en/ui/tscrollpanel.html">TScrollPanel</a>
+<a class="nav-item" href="../../en/ui/tpager.html">TPager</a>
+<a class="nav-item" href="../../en/ui/theader.html">THeader</a>
+<a class="nav-item" href="../../en/ui/tbartabs.html">TBarTabs</a>
+<a class="nav-item" href="../../en/ui/tprogresswheel.html">TProgressWheel</a>
+<a class="nav-item" href="../../en/ui/ttagcloud.html">TTagCloud</a>
+<a class="nav-item" href="../../en/ui/tscrollmsg.html">TScrollMsg</a>
+<a class="nav-item" href="../../en/ui/tnavigator.html">TNavigator</a>
+<a class="nav-item" href="../../en/ui/tmytitle.html">TMyTitle</a>
+<a class="nav-item" href="../../en/ui/tskinbutton.html">TSkinButton</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecSet (ADO)</a>
+<a class="nav-item" href="../../en/data/tarraydata.html">TArrayData</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/tdbodbc.html">TDbOdbc</a>
+<a class="nav-item active" href="../../en/data/tstruct.html">TStruct / TField / TIndex</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+<a class="nav-item" href="../../en/printing/tpreview.html">TPreview</a>
+<a class="nav-item" href="../../en/printing/tpdf.html">TPdf</a>
+<a class="nav-item" href="../../en/printing/tfwpdf.html">FWPdf</a>
+<a class="nav-item" href="../../en/printing/tvrd.html">VRD</a>
+<a class="nav-item" href="../../en/printing/easyreport.html">EasyReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TStruct / TField / TIndex</h1>
+<p class="class-source">
+Source: <code>source/classes/tstruct.prg</code>, <code>source/classes/tfield.prg</code>, <code>source/classes/tindex.prg</code>
+</p>
+
+<p>
+These three utility classes provide object-oriented representations for C-style memory structures
+(TStruct), DBF field definitions (TField), and DBF index definitions (TIndex). They are used
+when working with low-level data structures, defining DBF schemas programmatically, or creating
+index files from Harbour code.
+</p>
+
+<h2 id="tstruct">TStruct - C Structure Builder</h2>
+
+<p>
+TStruct models a C-language structure in Harbour memory. It maintains a binary buffer and a
+list of member definitions, allowing members to be added and accessed by name or position.
+</p>
+
+<h3>DATA Members</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cBuffer</code></td><td>Character</td><td>Binary raw memory buffer</td></tr>
+<tr><td><code>aMembers</code></td><td>Array</td><td>Array of <code>{ cName, nType, nLen, nOffset }</code></td></tr>
+</tbody>
+</table>
+
+<h3>Type Constants</h3>
+
+<table>
+<thead>
+<tr><th>Constant</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>BYTE</code> / <code>CHAR</code></td><td>1-byte unsigned integer</td></tr>
+<tr><td><code>WORD</code> / <code>INT</code> / <code>BOOL</code></td><td>2-byte signed integer</td></tr>
+<tr><td><code>LONG</code> / <code>DWORD</code> / <code>PTR</code> / <code>LPSTR</code></td><td>4-byte signed integer or pointer</td></tr>
+<tr><td><code>LONGLONG</code></td><td>8-byte signed integer</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>Create empty structure</td></tr>
+<tr><td><code>AddMember( cName, nType, nLen )</code></td><td>Add a member with type and optional length</td></tr>
+<tr><td><code>SetMember( nMember, uData )</code></td><td>Set member value by index</td></tr>
+<tr><td><code>GetMember( nMember )</code></td><td>Get member value by index</td></tr>
+<tr><td><code>SizeOf()</code></td><td>Return total buffer length in bytes</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Define and Use a C Structure</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "Struct.ch"
+
+function Main()
+
+   local oStru := TStruct():New()
+
+   // Add members: name, type, length
+   oStru:AddMember( "nId",   LONG,    4 )
+   oStru:AddMember( "cName", CHAR,   20 )
+   oStru:AddMember( "nAge",  BYTE      )   // defaults to 1 byte
+
+   ? "Size:", oStru:SizeOf()               // 25
+
+   // Set values
+   oStru:SetMember( 1, 12345 )
+   oStru:SetMember( 2, "John Smith" )
+
+   // Read them back
+   ? oStru:GetMember( 1 )                  // 12345
+   ? oStru:GetMember( 2 )                  // "John Smith"
+
+return nil</code></pre>
+
+<h2 id="tfield">TField - DBF Field Definition</h2>
+
+<p>
+TField is a simple data container representing a single DBF field. It stores all properties
+needed to define a field in a DBF file structure.
+</p>
+
+<h3>DATA Members</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cDbfName</code></td><td>Character</td><td>Name of the DBF file</td></tr>
+<tr><td><code>nOrder</code></td><td>Numeric</td><td>Field position (1-based)</td></tr>
+<tr><td><code>lIndexed</code></td><td>Logical</td><td>Whether the field is indexed</td></tr>
+<tr><td><code>cName</code></td><td>Character</td><td>Field name</td></tr>
+<tr><td><code>cType</code></td><td>Character</td><td>Field type (C, N, D, L, M)</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Field width</td></tr>
+<tr><td><code>nDecimal</code></td><td>Numeric</td><td>Decimal places for numeric fields</td></tr>
+<tr><td><code>cComments</code></td><td>Character</td><td>Optional field description</td></tr>
+</tbody>
+</table>
+
+<h3>Method</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cDbfName, nOrder, lIndexed, cName, cType, nWidth, nDecimal, cComments )</code></td><td>Create a field definition</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Define a DBF Field</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oFld
+
+   oFld := TField():New( "CUSTOMER.DBF", 1, .F., "CODE", "C", 5, 0, "Customer code" )
+
+   ? oFld:cName     // "CODE"
+   ? oFld:cType     // "C"
+   ? oFld:nWidth    // 5
+
+return nil</code></pre>
+
+<h2 id="tindex">TIndex - DBF Index Definition</h2>
+
+<p>
+TIndex represents an index definition for a DBF file. It can create the actual index file
+on disk (CDX or NTX format) from the definition properties.
+</p>
+
+<h3>DATA Members</h3>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cDbfName</code></td><td>Character</td><td>Name of the DBF file to index</td></tr>
+<tr><td><code>cName</code></td><td>Character</td><td>Index file name (without extension)</td></tr>
+<tr><td><code>cTag</code></td><td>Character</td><td>Tag name for CDX indexes</td></tr>
+<tr><td><code>cExpression</code></td><td>Character</td><td>Index key expression</td></tr>
+<tr><td><code>lUnique</code></td><td>Logical</td><td>Unique index flag</td></tr>
+<tr><td><code>lDescending</code></td><td>Logical</td><td>Descending order flag</td></tr>
+<tr><td><code>cComments</code></td><td>Character</td><td>Optional comments</td></tr>
+<tr><td><code>cType</code></td><td>Character</td><td>Index type (<code>"CDX"</code> default, or <code>"NTX"</code>)</td></tr>
+</tbody>
+</table>
+
+<h3>Methods</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cDbfName, cName, cTag, cExpression, lUnique, lDescending, cComments )</code></td><td>Create an index definition</td></tr>
+<tr><td><code>Create( cPath )</code></td><td>Create the index file on disk at the given path</td></tr>
+</tbody>
+</table>
+
+<h3>Example: Create an Index</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oIdx
+
+   // Define an index on CUSTOMER.DBF by the CODE field
+   oIdx := TIndex():New( "CUSTOMER.DBF", "CODE_IDX", "CODE", "CODE", .F., .F., "Index by code" )
+
+   // Create the index file
+   oIdx:Create( "C:\data\" )
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+<li>TStruct uses Harbour's <code>NumToBin()</code> / <code>BinToNum()</code> internally for buffer serialization. It supports member access by both numeric index and name (via error handler).</li>
+<li>TField is primarily a data container and does not modify the DBF file itself. It is useful for programmatic schema construction and metadata management.</li>
+<li>TIndex:Create() opens the DBF, executes the INDEX command, and closes the file. It supports both CDX (default) and NTX formats based on the <code>cType</code> member.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TGif - Documentação FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a>
+<span class="version">Version 26.03</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Primeiros Passos</div>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../pt/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../pt/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../pt/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Classes Base</div>
+<a class="nav-item" href="../../pt/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Controles UI</div>
+<a class="nav-item" href="../../pt/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../pt/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../pt/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../pt/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../pt/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../pt/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../pt/ui/twebcam.html">TWebcam</a>
+<a class="nav-item active" href="../../pt/ui/tgif.html">TGif</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Acesso a Dados</div>
+<a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../pt/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../pt/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Impressão e Relatórios</div>
+<a class="nav-item" href="../../pt/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../pt/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet e IA</div>
+<a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../pt/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../pt/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../pt/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../pt/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../pt/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../pt/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../pt/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../pt/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../pt/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Referência</div>
+<a class="nav-item" href="../../pt/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../pt/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../pt/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../pt/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../pt/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TGif</h1>
+<p class="class-source">Fonte: <code>source/classes/tgif.prg</code></p>
+<p class="class-hierarchy">Hierarquia: <strong>TGif</strong> &rarr; <strong>TControl</strong></p>
+
+<p>
+TGif é um controle para exibir imagens GIF animadas dentro de janelas e diálogos FiveWin.
+Ele suporta operações de reproduzir, parar, reiniciar e três modos de redimensionamento para controlar como
+os quadros do GIF se ajustam ao retângulo delimitador do controle. O controle pode carregar GIFs de
+arquivos ou de recursos incorporados.
+</p>
+
+<h2 id="command">Comando GIF</h2>
+
+<pre><code class="language-harbour">@ nRow, nCol GIF oGif FILE cGifFile SIZE nW, nH OF oWnd</code></pre>
+
+<h2 id="data">Principais Membros DATA</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>hGif</code></td><td>Numérico</td><td></td><td>Identificador da janela de animação GIF interna</td></tr>
+<tr><td><code>cFilename</code></td><td>Caractere</td><td></td><td>Caminho para o arquivo GIF (ou nome do recurso)</td></tr>
+<tr><td><code>lAdjust</code></td><td>Lógico</td><td><code>.F.</code></td><td>Esticar GIF para preencher as dimensões do controle quando <code>.T.</code></td></tr>
+<tr><td><code>nSizingType</code></td><td>Numérico</td><td><code>FWGIF_SIZING_FILE</code></td><td>Um de <code>FWGIF_SIZING_FILE</code>, <code>FWGIF_SIZING_CLIP</code> ou <code>FWGIF_SIZING_STRETCH</code></td></tr>
+</tbody>
+</table>
+
+<h2 id="sizing">Modos de Redimensionamento</h2>
+
+<table>
+<thead>
+<tr><th>Constante</th><th>Valor</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>FWGIF_SIZING_FILE</code></td><td>Padrão</td><td>Usar as dimensões naturais do GIF. O controle se redimensiona automaticamente para corresponder.</td></tr>
+<tr><td><code>FWGIF_SIZING_CLIP</code></td><td></td><td>Recortar o GIF para caber no retângulo delimitador do controle em seu tamanho natural.</td></tr>
+<tr><td><code>FWGIF_SIZING_STRETCH</code></td><td></td><td>Esticar o GIF para preencher as dimensões do controle (mesmo que <code>lAdjust := .T.</code>).</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Métodos Principais</h2>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descrição</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( oWnd, cGifFile, nRow, nCol, nHeight, nWidth, oCursor, lAdjust, bAction )</code></td><td>Construtor. Cria o controle GIF e inicia a animação.</td></tr>
+<tr><td><code>Play()</code></td><td>Iniciar ou retomar a animação do GIF.</td></tr>
+<tr><td><code>Stop()</code></td><td>Pausar a animação do GIF no quadro atual.</td></tr>
+<tr><td><code>Restart()</code></td><td>Reiniciar a animação do primeiro quadro.</td></tr>
+<tr><td><code>IsRunning()</code></td><td>Retornar <code>.T.</code> se a animação está sendo reproduzida no momento.</td></tr>
+<tr><td><code>SetFile( cFile )</code></td><td>Carregar um novo arquivo GIF no controle.</td></tr>
+<tr><td><code>SetSizing( nType )</code></td><td>Alterar o modo de redimensionamento em tempo de execução.</td></tr>
+<tr><td><code>GetData()</code></td><td>Retornar um array com metadados do GIF (dimensões, número de quadros, etc.).</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Exemplo: Spinner de Carregamento</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oGif, lPlaying := .T.
+
+   DEFINE WINDOW oWnd TITLE "Animated GIF" ;
+      SIZE 400, 350
+
+   @ 30, 100 GIF oGif FILE "spinner.gif" ;
+      SIZE 64, 64 OF oWnd
+
+   @ 250, 80 BUTTON "&Play / Pause" SIZE 80, 25 ;
+      ACTION ( If( oGif:IsRunning(), oGif:Stop(), oGif:Play() ),;
+               lPlaying := !lPlaying )
+
+   @ 250, 170 BUTTON "&Restart" SIZE 70, 25 ;
+      ACTION oGif:Restart()
+
+   @ 250, 250 BUTTON "&Close" SIZE 60, 25 ;
+      ACTION oWnd:End()
+
+   ACTIVATE WINDOW oWnd
+
+return nil</code></pre>
+
+<h2 id="notes">Notas</h2>
+
+<ul>
+<li>Arquivos GIF podem ser carregados do disco ou de recursos incorporados (tipo de recurso 10 / <code>RT_RCDATA</code>). Quando um nome de recurso é passado, o controle o extrai para um arquivo temporário para exibição.</li>
+<li>Quando nenhuma largura/altura explícita é fornecida, o controle se redimensiona automaticamente para as dimensões naturais do GIF.</li>
+<li>A flag <code>lAdjust</code> é uma propriedade de conveniência que internamente define o modo de redimensionamento para <code>FWGIF_SIZING_STRETCH</code>.</li>
+<li>Múltiplos controles TGif podem coexistir na mesma janela; cada um gerencia sua própria animação independentemente.</li>
+<li>O controle requer o mecanismo GIF interno do FWH (vinculado de <code>source/function/</code>).</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>
