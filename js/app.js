@@ -287,3 +287,30 @@ function highlightHarbour(code) {
 
   return code;
 }
+
+// Mobile responsive menu toggle
+(function() {
+  var btn = document.createElement('button');
+  btn.id = 'menu-toggle';
+  btn.innerHTML = '☰';
+  btn.title = 'Menu';
+  btn.onclick = function() {
+    var sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('open');
+    document.body.classList.toggle('sidebar-open');
+    btn.innerHTML = sidebar.classList.contains('open') ? '✕' : '☰';
+  };
+  document.body.appendChild(btn);
+
+  // Close sidebar when clicking a nav link on mobile
+  var sidebar = document.getElementById('sidebar');
+  if (sidebar) {
+    sidebar.addEventListener('click', function(e) {
+      if (e.target.classList.contains('nav-item') && window.innerWidth <= 1024) {
+        sidebar.classList.remove('open');
+        document.body.classList.remove('sidebar-open');
+        btn.innerHTML = '☰';
+      }
+    });
+  }
+})();
