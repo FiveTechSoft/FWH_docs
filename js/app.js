@@ -101,6 +101,7 @@ var searchIndex = [
 if (typeof mermaid !== 'undefined') {
   mermaid.initialize({
     startOnLoad: true,
+    securityLevel: 'loose',
     theme: 'dark',
     themeVariables: {
       primaryColor: '#1f6feb',
