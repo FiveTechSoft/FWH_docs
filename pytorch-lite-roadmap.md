@@ -128,7 +128,7 @@ That is the most direct path to a headline feature.
 - [x] `TFWLanguageModel` wrapper (sample; port to lib pending)
 - [x] GPT-2 safetensors read + float32 decode spike (`samples/ai/gpt2spike.prg`)
 - [x] (Track A demo) train on real Shakespeare text (`samples/ai/shakegpt.prg`): overfit a line exactly + loss drops on a real slice. Added `HB_MatrixSeed()` for reproducible init.
-- [~] Phase 1: `FW_Tensor` — **foundation done** (`source/function/fwtensor.c`): flat float32 GC tensor, create/get/set/shape, FromArray/ToArray, MatMul, safetensors float32 loader (`samples/ai/fwtensortest.prg`, 4/4). Remaining: full op set on tensors (add, softmax, layernorm, GELU), strides/views.
+- [x] Phase 1: `FW_Tensor` (`source/function/fwtensor.c`): flat float32 GC tensor with create/get/set/shape, FromArray/ToArray, MatMul, safetensors float32 loader, **plus the forward-pass op set**: Add, Scale, AddBias, GELU, row-wise Softmax, row-wise LayerNorm, Transpose. All tested in `samples/ai/fwtensortest.prg` (9/9). Remaining nice-to-haves for Phase 3: row-gather (embedding/positional lookup), causal-mask add, head slicing/views — these compose from the above.
 - [ ] Phase 2: BLAS
 - [ ] Phase 3: `GPT2Model` inference (load real GPT-2 weights via FWT_LoadSafe + header parse, pre-norm/GELU/learned-pos/QKV-bias/weight-tying)
 - [ ] Phase 4: autograd / GPU

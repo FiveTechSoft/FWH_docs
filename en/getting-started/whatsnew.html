@@ -92,6 +92,34 @@ from the main repo via GitHub Actions.
 
 <h2 id="new-classes">New Classes</h2>
 
+<h3>FW_Tensor &amp; TFWLanguageModel &mdash; toward local transformers (AI)</h3>
+<p>
+Two steps toward running real transformer models inside FWH apps.
+<strong>FW_Tensor</strong> (<code>source/function/fwtensor.c</code>) is a flat,
+garbage-collected <em>float32</em> tensor: it stores data as a contiguous buffer
+instead of Harbour nested arrays, so large weight sets fit in reasonable memory
+and can be read straight from a <code>safetensors</code> file
+(<code>FWT_New</code>, <code>FWT_FromArray</code>, <code>FWT_ToArray</code>,
+<code>FWT_Shape</code>, <code>FWT_Size</code>, <code>FWT_Get/Set</code>,
+<code>FWT_MatMul</code>, <code>FWT_LoadSafe</code>). This is Phase 1 of the
+<em>PyTorch-lite</em> effort &mdash; see <code>docs/pytorch-lite-roadmap.md</code>
+for why each step is needed.
+</p>
+<p>
+<strong>TFWLanguageModel</strong> (<code>source/classes/fwlangmodel.prg</code>) is
+a one-line autoregressive language model: it wraps
+<a href="../../en/ai/hftokenizer.html">HFTokenizer</a> +
+<a href="../../en/ai/ttransformer.html">Transformer</a> and a compact vocabulary
+built from your corpus, with chunked training over longer text:
+</p>
+<pre><code class="language-harbour">oLM := TFWLanguageModel():New( "gpt2.tokenizer.json", 2, 64, 2, 64 )
+oLM:Train( cCorpus, 100, 0.01 )
+? oLM:Generate( "To be", 12, 0.8, 20 )</code></pre>
+<p>
+Demo training on real Shakespeare text: <code>samples/ai/shakegpt.prg</code>.
+Also new: <code>hb_MatrixSeed( n )</code> for reproducible weight initialization.
+</p>
+
 <h3>HFTokenizer &mdash; HuggingFace BPE Tokenizer (AI)</h3>
 <p>
 The goal of the FWH AI classes is to bring the power of transformers into your

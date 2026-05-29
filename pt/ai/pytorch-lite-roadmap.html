@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PyTorch-lite no FWH - Roteiro - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Versão 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a></div>
+<div class="nav-section"><div class="nav-section-title">Classes Base</div><a class="nav-item" href="../../pt/core/twindow.html">TWindow</a><a class="nav-item" href="../../pt/core/tdialog.html">TDialog</a><a class="nav-item" href="../../pt/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">Acesso a Dados</div><a class="nav-item" href="../../pt/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../pt/data/trecset.html">TRecordSet (ADO)</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../pt/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../pt/internet/tai.html">Classes IA</a></div>
+<div class="nav-section"><div class="nav-section-title">IA e ML</div><a class="nav-item" href="../../pt/ai/ttransformer.html">Transformer</a><a class="nav-item" href="../../pt/ai/hftokenizer.html">HFTokenizer</a><a class="nav-item active" href="../../pt/ai/pytorch-lite-roadmap.html">Roteiro PyTorch-lite</a></div>
+<div class="nav-section"><div class="nav-section-title">Referência</div><a class="nav-item" href="../../pt/reference/functions.html">Funções</a><a class="nav-item" href="../../pt/reference/more-classes.html">Mais Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>"PyTorch-lite no FWH" &mdash; Roteiro</h1>
+<p class="class-source">Notas fonte: <code>docs/pytorch-lite-roadmap.md</code></p>
+
+<p>
+O esforço para levar a potência real dos transformers às apps FiveWin/Harbour
+reutilizando recursos da HuggingFace. Esta página explica <strong>por quê</strong>
+cada passo é necessário e a ordem em que chegam. É um plano vivo &mdash; veja as
+páginas <a href="../../pt/ai/ttransformer.html">Transformer</a> e
+<a href="../../pt/ai/hftokenizer.html">HFTokenizer</a> para o que já está disponível.
+</p>
+
+<h2 id="premise">Premissa</h2>
+<p>
+Harbour-a-linguagem <strong>não</strong> é inferior ao Python para isso. O PyTorch
+é uma camada fina de Python sobre um núcleo C++/CUDA. O FWH já inclui extensões C
+(<code>source/function/matrixes.c</code>). A lacuna a fechar é esse <em>núcleo C</em>,
+não a linguagem.
+</p>
+
+<h2 id="tracks">Duas trilhas</h2>
+<p>Mantê-las distintas para definir expectativas honestas:</p>
+<ul>
+<li><strong>Trilha A &mdash; Transformer local do zero.</strong> Escala
+brinquedo/educacional, CPU, <code>d_model</code> pequeno. Nicho: modelos
+minúsculos embarcados/offline, classificação com poucos dados, ensino. Não
+igualará o PyTorch.</li>
+<li><strong>Trilha B &mdash; HuggingFace como potência remota (Inference API).</strong>
+Já parcial: <code>tembeddings.prg</code>, <code>tollama.prg</code>,
+<code>chatgpt.prg</code>, <code>gemini*.prg</code>. Muito mais capaz hoje, sem
+treinamento local.</li>
+</ul>
+<p>Este roteiro trata de elevar o teto da Trilha A rumo a "executar/servir modelos reais localmente".</p>
+
+<h2 id="spike">Spike de carregamento de pesos do GPT-2 (achados)</h2>
+<p>
+O exemplo <code>samples/ai/gpt2spike.prg</code> provou que o Harbour puro
+<em>pode</em> ler um <code>model.safetensors</code> real do GPT-2: parseou o
+cabeçalho (160 tensores, 137.022.720 params), validou shapes
+(<code>wte[50257,768]</code>, <code>wpe[1024,768]</code>) e decodificou um peso
+float32 real &mdash; baixando apenas o cabeçalho de 16&nbsp;KB via HTTP range, não
+o arquivo de 500&nbsp;MB.
+</p>
+<p>
+<strong>Bloqueio encontrado:</strong> 137M params como arrays aninhados de Harbour
+(<code>array de array de double</code>, ~16&ndash;24 bytes/elemento) são ~2&ndash;3&nbsp;GB
+de RAM e lento. O backend de matrizes atual não escala &mdash; daí a Fase 1. O
+GPT-2 real ainda precisa de uma arquitetura exata (pre-norm, GELU, posicional
+aprendida, QKV combinado com bias, <code>lm_head</code> com weight-tying).
+</p>
+
+<h2 id="needs">O que o FWH precisa, por prioridade &mdash; e por quê</h2>
+<table>
+<thead><tr><th>#</th><th>Necessidade</th><th>Por que é necessária</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><strong>Tensor plano em C</strong> (<code>FW_Tensor</code>)</td>
+<td>Hoje uma matriz é array-de-arrays-de-double; 137M params assim ≈ 2&ndash;3&nbsp;GB e hostil ao cache. Os mesmos dados como buffer float32 plano são ~523&nbsp;MB, contíguos e legíveis com <code>fread</code> direto do safetensors. Desbloqueia tudo.</td></tr>
+<tr><td>2</td><td><strong>matmul BLAS/SIMD</strong></td>
+<td><code>hb_MatrixMultiply</code> é um triplo laço ingênuo. Um transformer é sobretudo matmuls grandes; BLAS afinado usa SIMD, blocking e todos os núcleos para 10&ndash;100&times; &mdash; a fronteira entre "segundos por token" e "minutos por token".</td></tr>
+<tr><td>3</td><td><strong>Autograd</strong> (tape)</td>
+<td>A killer feature do PyTorch. Hoje cada backward é derivado à mão por camada &mdash; sujeito a erros e uma barreira contra novas arquiteturas. Um tape dá os gradientes a partir do forward de graça. Necessário para treinar, não para inferir.</td></tr>
+<tr><td>4</td><td><strong>float32 / bf16 / fp16</strong></td>
+<td>Calculamos em double de 64 bits. Tipos menores reduzem pela metade/quarto memória e largura de banda &mdash; e a banda, não os flops, é o gargalo usual em CPU.</td></tr>
+<tr><td>5</td><td><strong>Backend GPU</strong> (cuBLAS/OpenCL)</td>
+<td>CPUs chegam a centenas de GFLOP/s; GPUs alcançam 10&ndash;100 TFLOP/s. Onde vive a potência de modelos grandes e o treinamento em escala. Opcional para inferência pequena/média.</td></tr>
+<tr><td>6</td><td><strong>Zoo de kernels</strong></td>
+<td>A atenção ingênua materializa a matriz completa seq&times;seq (memória O(n&sup2;)); kernels fundidos/flash evitam isso. Um conjunto amplo e correto permite construir muitos modelos, não um.</td></tr>
+<tr><td>7</td><td><strong>IO de modelos</strong> (safetensors, GGUF, ONNX)</td>
+<td>Como reutilizar os pesos pré-treinados do mundo em vez de treinar do zero. A leitura de safetensors está provada; GGUF abre o ecossistema quantizado/llama.cpp; ONNX abre modelos multi-framework.</td></tr>
+<tr><td>8</td><td><strong>Ecossistema</strong> (tokenizers, datasets, Hub)</td>
+<td>Um modelo é inútil sem seu tokenizer exato (ids bit a bit), dados e forma de baixar pesos. <code>HFTokenizer</code> fecha a metade do tokenizer.</td></tr>
+</tbody>
+</table>
+
+<h2 id="phases">Fases pragmáticas</h2>
+<table>
+<thead><tr><th>Fase</th><th>Entregável</th><th>Notas</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Tipo plano <code>FW_Tensor</code> + ops sobre ele</td><td>Remove o bloqueio de memória (<strong>foundation entregue</strong>: tensor, MatMul, loader safetensors)</td></tr>
+<tr><td>2</td><td>Backend BLAS para matmul</td><td>Aceleração 10&ndash;100&times;</td></tr>
+<tr><td>3</td><td><code>GPT2Model</code> <strong>somente inferência</strong> carregando safetensors</td><td>A demo de destaque: GPT-2 real pré-treinado gerando texto no FWH/CPU. ~1&ndash;5 tok/s com BLAS. Só precisa de Fase 1+3.</td></tr>
+<tr><td>4 (opc)</td><td>Autograd tape para treinar; backend GPU</td><td>Rumo a treinar modelos reais</td></tr>
+</tbody>
+</table>
+
+<p><strong>Ideia-chave:</strong> a <em>inferência</em> do GPT-2 não precisa de autograd
+&mdash; só Fase&nbsp;1&nbsp;+&nbsp;Fase&nbsp;3. É o caminho mais direto para uma funcionalidade de destaque.</p>
+
+<h3>Por que esta ordem</h3>
+<ul>
+<li><strong>Fase 1 primeiro</strong> porque é dependência dura de todo o resto &mdash; não dá para guardar, carregar nem computar eficientemente sobre pesos reais enquanto os dados vivem em arrays aninhados. Além disso compensa de imediato (carregar safetensors).</li>
+<li><strong>Fase 2 antes da 3</strong> porque um forward correto-mas-lento (matmul ingênuo) pode ser lento demais para demo; BLAS o torna usável. A Fase 3 pode começar com matmul ingênuo e acelerar quando a Fase 2 chegar.</li>
+<li><strong>Fase 3 antes da 4</strong> porque a inferência entrega o resultado de destaque com a menor maquinaria (sem autograd, sem GPU). Treinar é estritamente mais trabalho e pode vir depois.</li>
+<li>Cada fase é entregável de forma independente e deixa a biblioteca em estado funcional.</li>
+</ul>
+
+<h2 id="status">Status</h2>
+<ul>
+<li>&#10003; <a href="../../pt/ai/hftokenizer.html">HFTokenizer</a> (BPE do GPT-2), bit a bit &mdash; na lib</li>
+<li>&#10003; Ponte Tokenizer &rarr; Transformer (vocab compacto) + wrapper <code>TFWLanguageModel</code></li>
+<li>&#10003; Spike de leitura safetensors + decode float32 do GPT-2</li>
+<li>&#10003; Trilha A: treinar com texto real de Shakespeare (overfit de um verso; loss cai num slice)</li>
+<li>&#9632; <strong>Foundation Fase 1</strong>: <code>FW_Tensor</code> (float32 plano, MatMul, loader safetensors). Pendente: op set completo (add, softmax, layernorm, GELU), strides/views.</li>
+<li>&#9633; Fase 2: BLAS</li>
+<li>&#9633; Fase 3: inferência <code>GPT2Model</code></li>
+<li>&#9633; Fase 4: autograd / GPU</li>
+<li>&#9633; Trilha A: amostragem top-p / nucleus + penalização por repetição</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

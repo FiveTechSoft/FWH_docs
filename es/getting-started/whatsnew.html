@@ -92,6 +92,35 @@ autom&aacute;ticamente desde el repositorio principal mediante GitHub Actions.
 
 <h2 id="new-classes">Nuevas Clases</h2>
 
+<h3>FW_Tensor y TFWLanguageModel &mdash; hacia transformers locales (IA)</h3>
+<p>
+Dos pasos hacia ejecutar modelos transformer reales dentro de apps FWH.
+<strong>FW_Tensor</strong> (<code>source/function/fwtensor.c</code>) es un tensor
+<em>float32</em> plano con recolecci&oacute;n de basura: guarda los datos como un
+buffer contiguo en vez de arrays anidados de Harbour, de modo que grandes
+conjuntos de pesos caben en memoria razonable y se pueden leer directamente de un
+archivo <code>safetensors</code> (<code>FWT_New</code>, <code>FWT_FromArray</code>,
+<code>FWT_ToArray</code>, <code>FWT_Shape</code>, <code>FWT_Size</code>,
+<code>FWT_Get/Set</code>, <code>FWT_MatMul</code>, <code>FWT_LoadSafe</code>). Es
+la Fase 1 del esfuerzo <em>PyTorch-lite</em> &mdash; ver
+<code>docs/pytorch-lite-roadmap.md</code> para el porqu&eacute; de cada paso.
+</p>
+<p>
+<strong>TFWLanguageModel</strong> (<code>source/classes/fwlangmodel.prg</code>) es
+un modelo de lenguaje autorregresivo en una l&iacute;nea: envuelve
+<a href="../../es/ai/hftokenizer.html">HFTokenizer</a> +
+<a href="../../es/ai/ttransformer.html">Transformer</a> y un vocabulario compacto
+construido desde tu corpus, con entrenamiento por bloques sobre texto largo:
+</p>
+<pre><code class="language-harbour">oLM := TFWLanguageModel():New( "gpt2.tokenizer.json", 2, 64, 2, 64 )
+oLM:Train( cCorpus, 100, 0.01 )
+? oLM:Generate( "To be", 12, 0.8, 20 )</code></pre>
+<p>
+Demo entrenando con texto real de Shakespeare: <code>samples/ai/shakegpt.prg</code>.
+Tambi&eacute;n nuevo: <code>hb_MatrixSeed( n )</code> para inicializaci&oacute;n de
+pesos reproducible.
+</p>
+
 <h3>HFTokenizer &mdash; Tokenizador BPE de HuggingFace (IA)</h3>
 <p>
 El objetivo de las clases de IA de FWH es ofrecer la potencia de los transformers
