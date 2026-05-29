@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Glossary - FWH Docs</title>
+<title>Glosario - FWH Docs</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -21,7 +21,7 @@
 <a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
 <a class="nav-item" href="../../es/getting-started/tlocalization.html">Localización</a>
 <a class="nav-item" href="../../es/getting-started/whatsnew.html">Novedades</a>
-<a class="nav-item active" href="../../es/getting-started/tglossary.html">Glossary</a>
+<a class="nav-item active" href="../../es/getting-started/tglossary.html">Glosario</a>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Clases Base</div>
@@ -62,7 +62,7 @@
 <a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
 <a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a>
 <a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
-<a class="nav-item" href="../../es/internet/tai.html">Clases IA</a>
+<a class="nav-item" href="../../es/internet/tai.html">Clases de IA</a>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Referencia</div>
@@ -75,148 +75,148 @@
 </nav>
 <main id="content">
 
-<h1>FWH Glossary</h1>
+<h1>Glosario FWH</h1>
 
 <p>
-Definitions for FiveWin-specific terms, covering framework architecture, Harbour/xHarbour language features,
-UI control concepts, database connectivity, character encodings, and programming paradigms used throughout
-the FWH codebase. Terms are organized alphabetically.
+Definiciones de términos específicos de FiveWin, que abarcan la arquitectura del framework, las características del lenguaje
+Harbour/xHarbour, los conceptos de controles de interfaz de usuario, la conectividad a bases de datos, las codificaciones de
+caracteres y los paradigmas de programación utilizados a lo largo del código de FWH. Los términos están organizados alfabéticamente.
 </p>
 
 <h3 id="access-assign">ACCESS / ASSIGN</h3>
-<p>Harbour class property accessors. <code>ACCESS</code> defines a read-only getter method; <code>ASSIGN</code> defines a writeable setter method. They are used alongside <code>DATA</code> to control how class member variables are read and written externally, enabling validation and computed properties.</p>
+<p>Accesores de propiedades de clase de Harbour. <code>ACCESS</code> define un método de lectura (getter) de solo lectura; <code>ASSIGN</code> define un método de escritura (setter). Se usan junto con <code>DATA</code> para controlar cómo se leen y escriben externamente las variables miembro de una clase, permitiendo validación y propiedades calculadas.</p>
 
 <h3 id="ado">ADO (ActiveX Data Objects)</h3>
-<p>Microsoft's COM-based data access framework. FWH's <code>TRecordSet</code> class wraps ADO to provide client-server database access (SQL Server, Access, etc.) with cursor-style navigation and SQL execution.</p>
+<p>El framework de acceso a datos de Microsoft basado en COM. La clase <code>TRecordSet</code> de FWH encapsula ADO para ofrecer acceso a bases de datos cliente-servidor (SQL Server, Access, etc.) con navegación tipo cursor y ejecución de SQL.</p>
 
-<h3 id="align">ALIGN clause</h3>
-<p>A FiveWin clause in control definitions that specifies text or content alignment within the control area. Values include <code>ALIGN LEFT</code>, <code>ALIGN CENTER</code>, and <code>ALIGN RIGHT</code>, commonly used with SAY and BUTTON controls.</p>
+<h3 id="align">cláusula ALIGN</h3>
+<p>Una cláusula de FiveWin en las definiciones de controles que especifica la alineación del texto o contenido dentro del área del control. Los valores incluyen <code>ALIGN LEFT</code>, <code>ALIGN CENTER</code> y <code>ALIGN RIGHT</code>, usados habitualmente con controles SAY y BUTTON.</p>
 
 <h3 id="ansi">ANSI (Windows-1252)</h3>
-<p>The default Windows code page (Latin-1, CP-1252). FWH uses <code>CP_ACP</code> (which maps to ANSI) for dialog template text conversion in <code>dlg2chr.c</code> and <code>ctrl2chr.c</code>. See also OEM and Unicode entries in this glossary.</p>
+<p>La página de códigos predeterminada de Windows (Latin-1, CP-1252). FWH usa <code>CP_ACP</code> (que corresponde a ANSI) para la conversión del texto de las plantillas de diálogo en <code>dlg2chr.c</code> y <code>ctrl2chr.c</code>. Consulte también las entradas OEM y Unicode de este glosario.</p>
 
-<h3 id="bitmap">BITMAP / IMAGE resources</h3>
-<p>A resource type embedded in compiled executables via <code>.res</code> / <code>.rc</code> files. FWH controls reference them by name or integer ID, e.g., <code>RESOURCE "MYBITMAP"</code>. Supported formats include BMP, ICO, PNG, and JPEG depending on the rendering context.</p>
+<h3 id="bitmap">recursos BITMAP / IMAGE</h3>
+<p>Un tipo de recurso incrustado en los ejecutables compilados mediante archivos <code>.res</code> / <code>.rc</code>. Los controles de FWH los referencian por nombre o por ID entero, p. ej., <code>RESOURCE "MYBITMAP"</code>. Los formatos admitidos incluyen BMP, ICO, PNG y JPEG según el contexto de renderizado.</p>
 
 <h3 id="bom">BOM (Byte Order Mark)</h3>
-<p>The Unicode character U+FEFF, placed at the start of UTF-16 or UTF-8 text files to indicate encoding. In FWH contexts, the BOM is relevant when reading or writing Unicode text files, particularly in Harbour file I/O operations and HTML content generation.</p>
+<p>El carácter Unicode U+FEFF, colocado al inicio de los archivos de texto UTF-16 o UTF-8 para indicar la codificación. En el contexto de FWH, el BOM es relevante al leer o escribir archivos de texto Unicode, especialmente en las operaciones de E/S de archivos de Harbour y en la generación de contenido HTML.</p>
 
 <h3 id="buffer">Buffer (aOrg / aData)</h3>
-<p>FWH's record-editing mechanism in <code>TDataRow</code> and <code>TDataBase</code>. Two parallel arrays track changes: <code>aOrg</code> stores the original values loaded from disk, <code>aData</code> holds pending user modifications. Changes are committed to the database only when the record is explicitly saved.</p>
+<p>El mecanismo de edición de registros de FWH en <code>TDataRow</code> y <code>TDataBase</code>. Dos arrays paralelos rastrean los cambios: <code>aOrg</code> almacena los valores originales cargados desde disco y <code>aData</code> contiene las modificaciones pendientes del usuario. Los cambios se confirman en la base de datos únicamente cuando el registro se guarda de forma explícita.</p>
 
 <h3 id="bwcc">BWCC (Borland Windows Custom Controls)</h3>
-<p>A legacy UI library from Borland providing chiseled frames, dithered-gray backgrounds, and custom controls (BorBtn, BorCheck, BorRadio, BorStatic, BorShade). FWH includes a 64-bit clean-room reimplementation in <code>dll/bwcc64.dll</code> for 64-bit applications.</p>
+<p>Una biblioteca de interfaz de usuario heredada de Borland que ofrece marcos cincelados, fondos en gris difuminado y controles personalizados (BorBtn, BorCheck, BorRadio, BorStatic, BorShade). FWH incluye una reimplementación de sala limpia de 64 bits en <code>dll/bwcc64.dll</code> para aplicaciones de 64 bits.</p>
 
 <h3 id="classdata">CLASSDATA</h3>
-<p>A Harbour keyword declaring class-level (static) data members shared across all instances of a class. Unlike <code>DATA</code> (which creates per-instance copies), <code>CLASSDATA</code> stores one value for the entire class hierarchy.</p>
+<p>Una palabra clave de Harbour que declara miembros de datos a nivel de clase (estáticos) compartidos entre todas las instancias de una clase. A diferencia de <code>DATA</code> (que crea copias por instancia), <code>CLASSDATA</code> almacena un único valor para toda la jerarquía de la clase.</p>
 
-<h3 id="codeblock">Codeblock</h3>
-<p>An anonymous, compilable chunk of Harbour code delimited by <code>{ |params| ... }</code>. Codeblocks are the foundation of FWH's event and callback system. Properties like <code>bAction</code>, <code>bChange</code>, <code>bWhen</code>, and <code>bValid</code> are all codeblock references.</p>
+<h3 id="codeblock">Bloque de Código</h3>
+<p>Un fragmento de código Harbour anónimo y compilable, delimitado por <code>{ |params| ... }</code>. Los bloques de código son la base del sistema de eventos y retrollamadas (callbacks) de FWH. Propiedades como <code>bAction</code>, <code>bChange</code>, <code>bWhen</code> y <code>bValid</code> son todas referencias a bloques de código.</p>
 
 <h3 id="com">COM (Component Object Model)</h3>
-<p>Microsoft's inter-process communication and object technology. FWH uses COM through <code>TActiveX</code> for embedding ActiveX controls and <code>TComObject</code> for OLE/COM automation, such as interacting with Excel or ADO.</p>
+<p>La tecnología de objetos y comunicación entre procesos de Microsoft. FWH usa COM a través de <code>TActiveX</code> para incrustar controles ActiveX y de <code>TComObject</code> para la automatización OLE/COM, como la interacción con Excel o ADO.</p>
 
-<h3 id="connection-object">Connection Object</h3>
-<p>In FWH's MariaDB/MySQL integration, an instance of <code>FWMariaConnection</code> (created by <code>maria_Connect()</code>) that manages the TCP connection, authentication, and query session to a MariaDB or MySQL server.</p>
+<h3 id="connection-object">Objeto de Conexión</h3>
+<p>En la integración MariaDB/MySQL de FWH, una instancia de <code>FWMariaConnection</code> (creada por <code>maria_Connect()</code>) que gestiona la conexión TCP, la autenticación y la sesión de consultas con un servidor MariaDB o MySQL.</p>
 
 <h3 id="cue-text">Cue Text / Cue Banner</h3>
-<p>Placeholder text displayed inside a <code>TGet</code> control when it is empty and does not have focus. Set via <code>TGet:cCueText</code>. Implemented using the Windows <code>EM_SETCUEBANNER</code> message (0x1501).</p>
+<p>Texto de marcador de posición que se muestra dentro de un control <code>TGet</code> cuando está vacío y no tiene el foco. Se establece mediante <code>TGet:cCueText</code>. Se implementa usando el mensaje de Windows <code>EM_SETCUEBANNER</code> (0x1501).</p>
 
-<h3 id="data">DATA (class instance variable)</h3>
-<p>A Harbour keyword that declares per-instance variables in a class definition. Each object maintains its own copy. Example: <code>DATA nValue</code> in a class definition creates an <code>nValue</code> member for every instance.</p>
+<h3 id="data">DATA (variable de instancia de clase)</h3>
+<p>Una palabra clave de Harbour que declara variables por instancia en la definición de una clase. Cada objeto mantiene su propia copia. Ejemplo: <code>DATA nValue</code> en la definición de una clase crea un miembro <code>nValue</code> para cada instancia.</p>
 
-<h3 id="design-mode">Design Mode</h3>
-<p>A runtime state (<code>TWindow:lDesign := .T.</code>) where controls can be moved and resized interactively. Used by the Visual IDE (<code>visualfw.exe</code>) for drag-and-drop form layout at development time.</p>
+<h3 id="design-mode">Modo de Diseño</h3>
+<p>Un estado en tiempo de ejecución (<code>TWindow:lDesign := .T.</code>) en el que los controles se pueden mover y redimensionar de forma interactiva. Lo usa el IDE Visual (<code>visualfw.exe</code>) para el diseño de formularios mediante arrastrar y soltar durante el desarrollo.</p>
 
 <h3 id="dsn">DSN (Data Source Name)</h3>
-<p>A Windows ODBC configuration entry specifying which database driver, server address, and authentication to use for a connection. FWH's <code>TODBC</code> class can connect using a predefined DSN or a DSN-less connection string.</p>
+<p>Una entrada de configuración ODBC de Windows que especifica qué controlador de base de datos, dirección de servidor y autenticación usar para una conexión. La clase <code>TODBC</code> de FWH puede conectarse usando un DSN predefinido o una cadena de conexión sin DSN.</p>
 
-<h3 id="error-handler">Error Handler (ON ERROR)</h3>
-<p>Harbour's error recovery mechanism, triggered by <code>ON ERROR</code> or through the <code>ErrorBlock()</code> function. FWH's default error handler (<code>source/function/errsysw.prg</code>) provides a visual dialog with stack trace and variable inspection for debugging.</p>
+<h3 id="error-handler">Manejador de Errores (ON ERROR)</h3>
+<p>El mecanismo de recuperación de errores de Harbour, activado por <code>ON ERROR</code> o a través de la función <code>ErrorBlock()</code>. El manejador de errores predeterminado de FWH (<code>source/function/errsysw.prg</code>) ofrece un diálogo visual con traza de pila e inspección de variables para la depuración.</p>
 
 <h3 id="fivewin-ch">FiveWin.ch</h3>
-<p>The master header file for FWH applications. Defines all <code>#xcommand</code> and <code>#xtranslate</code> preprocessor translations that enable the natural-language syntax (<code>DEFINE WINDOW</code>, <code>@ ... SAY</code>, <code>@ ... GET</code>, etc.). Every FWH application includes this file.</p>
+<p>El archivo de cabecera principal para las aplicaciones FWH. Define todas las traducciones del preprocesador <code>#xcommand</code> y <code>#xtranslate</code> que habilitan la sintaxis de lenguaje natural (<code>DEFINE WINDOW</code>, <code>@ ... SAY</code>, <code>@ ... GET</code>, etc.). Toda aplicación FWH incluye este archivo.</p>
 
-<h3 id="fw-prefix">FW_ prefix convention</h3>
-<p>FWH prefixes its global functions and constants with <code>FW_</code> (e.g., <code>FW_ReadImage()</code>, <code>FW_JsonDecode()</code>) to avoid naming collisions with user code and Harbour/xHarbour runtime functions.</p>
+<h3 id="fw-prefix">convención del prefijo FW_</h3>
+<p>FWH antepone el prefijo <code>FW_</code> a sus funciones y constantes globales (p. ej., <code>FW_ReadImage()</code>, <code>FW_JsonDecode()</code>) para evitar colisiones de nombres con el código del usuario y las funciones del runtime de Harbour/xHarbour.</p>
 
-<h3 id="fwh">FWH abbreviation</h3>
-<p>"FiveWin for Harbour" (also "FiveWin for xHarbour"). A GUI framework that wraps the Windows API into a Clipper/xBase object-oriented programming environment, providing classes for windows, dialogs, controls, printing, database access, and AI integration.</p>
+<h3 id="fwh">abreviatura FWH</h3>
+<p>"FiveWin for Harbour" (también "FiveWin for xHarbour"). Un framework de interfaz gráfica que encapsula la API de Windows en un entorno de programación orientada a objetos Clipper/xBase, proporcionando clases para ventanas, diálogos, controles, impresión, acceso a bases de datos e integración con IA.</p>
 
 <h3 id="gdi">GDI / GDI+ (Graphics Device Interface)</h3>
-<p>Windows graphics subsystems. GDI handles basic 2D drawing (lines, shapes, text). GDI+ (accessed via <code>gdipfwh.cpp</code>) adds alpha blending, anti-aliasing, JPEG/PNG support, and gradient fills. FWH uses GDI+ for modern rendering in <code>TBtnBmp</code>, <code>TImage</code>, and print preview.</p>
+<p>Subsistemas gráficos de Windows. GDI gestiona el dibujo 2D básico (líneas, formas, texto). GDI+ (al que se accede a través de <code>gdipfwh.cpp</code>) añade mezcla alfa (alpha blending), suavizado de bordes (anti-aliasing), soporte JPEG/PNG y rellenos con degradado. FWH usa GDI+ para el renderizado moderno en <code>TBtnBmp</code>, <code>TImage</code> y la vista previa de impresión.</p>
 
 <h3 id="harbour-xharbour">Harbour vs xHarbour</h3>
-<p>Two open-source Clipper/xBase compilers. Harbour is the modern, actively maintained implementation used by most FWH users. xHarbour is an older fork supported for legacy compatibility; it requires a compatibility header (<code>fwhxhb.h</code>) for 64-bit builds.</p>
+<p>Dos compiladores Clipper/xBase de código abierto. Harbour es la implementación moderna, mantenida activamente y usada por la mayoría de los usuarios de FWH. xHarbour es una bifurcación más antigua que se mantiene por compatibilidad heredada; requiere una cabecera de compatibilidad (<code>fwhxhb.h</code>) para las compilaciones de 64 bits.</p>
 
 <h3 id="hbcompat">hbcompat.ch</h3>
-<p>A Harbour compatibility header mapping xHarbour-specific functions and commands to Harbour equivalents. It is deliberately <em>not</em> included automatically by <code>fivewin.ch</code>, because its <code>IN</code> to <code>$</code> translation would break code using patterns like <code>BOEK->IN</code>.</p>
+<p>Una cabecera de compatibilidad de Harbour que mapea funciones y comandos específicos de xHarbour a sus equivalentes en Harbour. Deliberadamente <em>no</em> se incluye de forma automática en <code>fivewin.ch</code>, porque su traducción de <code>IN</code> a <code>$</code> rompería el código que usa patrones como <code>BOEK->IN</code>.</p>
 
-<h3 id="infield">Infield Styling</h3>
-<p>A <code>TGet</code> display mode (<code>lInfield := .T.</code>) where the field caption or label is rendered inside the edit control area, overlapping or alongside the value text. Used for compact, label-less UI layouts.</p>
+<h3 id="infield">Estilo Infield</h3>
+<p>Un modo de visualización de <code>TGet</code> (<code>lInfield := .T.</code>) en el que el título o etiqueta del campo se dibuja dentro del área del control de edición, superpuesto o junto al texto del valor. Se usa para diseños de interfaz compactos y sin etiquetas independientes.</p>
 
-<h3 id="marquee">Marquee Style (XBrowse)</h3>
-<p>A <code>TXBrowse</code> property (<code>nMarqueeStyle</code>) controlling how the current row selection is visually highlighted. Common values: <code>MARQSTYLE_HIGHLROW</code> (solid single-row), <code>MARQSTYLE_HIGHLROWMS</code> (multiple row selection).</p>
+<h3 id="marquee">Estilo Marquee (XBrowse)</h3>
+<p>Una propiedad de <code>TXBrowse</code> (<code>nMarqueeStyle</code>) que controla cómo se resalta visualmente la selección de la fila actual. Valores habituales: <code>MARQSTYLE_HIGHLROW</code> (fila única sólida), <code>MARQSTYLE_HIGHLROWMS</code> (selección de varias filas).</p>
 
 <h3 id="mdi">MDI (Multiple Document Interface)</h3>
-<p>A windowing paradigm where child document windows are confined within a single parent MDI frame. FWH supports MDI via <code>TMDIFrame</code> and <code>TChild</code> classes, with automatic window arrangement and menu merging.</p>
+<p>Un paradigma de ventanas en el que las ventanas de documentos hijos quedan confinadas dentro de un único marco MDI padre. FWH soporta MDI mediante las clases <code>TMDIFrame</code> y <code>TChild</code>, con disposición automática de ventanas y fusión de menús.</p>
 
 <h3 id="method">METHOD</h3>
-<p>A Harbour keyword that defines a function belonging to a class. Methods receive the implicit <code>Self</code> parameter referencing the object instance. FWH methods are defined as <code>METHOD Name()</code> inside the class definition and implemented later.</p>
+<p>Una palabra clave de Harbour que define una función perteneciente a una clase. Los métodos reciben el parámetro implícito <code>Self</code>, que referencia la instancia del objeto. Los métodos de FWH se declaran como <code>METHOD Name()</code> dentro de la definición de la clase y se implementan después.</p>
 
 <h3 id="odbc">ODBC (Open Database Connectivity)</h3>
-<p>A standardized C API for database access. FWH provides <code>TODBC</code> for ODBC-based connections using either a named DSN or a DSN-less connection string.</p>
+<p>Una API en C estandarizada para el acceso a bases de datos. FWH proporciona <code>TODBC</code> para conexiones basadas en ODBC, usando ya sea un DSN con nombre o una cadena de conexión sin DSN.</p>
 
-<h3 id="oem">OEM (Code Page 437/850)</h3>
-<p>The character encoding used by the MS-DOS console and Windows OEM font. In FWH's Unicode support code (<code>fwunicode.c</code>), OEM codepages (values below 1250) are skipped when <code>bAnsiOnly</code> is TRUE, preventing CP437/CP850 text from being mis-converted.</p>
+<h3 id="oem">OEM (Página de Códigos 437/850)</h3>
+<p>La codificación de caracteres utilizada por la consola MS-DOS y la fuente OEM de Windows. En el código de soporte Unicode de FWH (<code>fwunicode.c</code>), las páginas de códigos OEM (valores inferiores a 1250) se omiten cuando <code>bAnsiOnly</code> es TRUE, evitando que el texto CP437/CP850 se convierta incorrectamente.</p>
 
 <h3 id="oledb">OLEDB</h3>
-<p>Microsoft's COM-based successor to ODBC for universal data access. FWH's <code>TRecordSet</code> can use OLEDB providers for database connectivity, providing an alternative to DSN-based ODBC connections.</p>
+<p>El sucesor de ODBC de Microsoft, basado en COM, para el acceso universal a datos. El <code>TRecordSet</code> de FWH puede usar proveedores OLEDB para la conectividad a bases de datos, ofreciendo una alternativa a las conexiones ODBC basadas en DSN.</p>
 
-<h3 id="oop">OOP vs traditional xBase</h3>
-<p>FiveWin brings full object-oriented programming (classes, inheritance, encapsulation, polymorphism) to the Clipper/xBase world. Traditional xBase uses procedural functions and work areas (<code>USE</code>, <code>SELECT</code>), while FWH code defines and instantiates objects with methods and data.</p>
+<h3 id="oop">OOP vs xBase tradicional</h3>
+<p>FiveWin lleva la programación orientada a objetos completa (clases, herencia, encapsulación, polimorfismo) al mundo Clipper/xBase. El xBase tradicional usa funciones procedimentales y áreas de trabajo (<code>USE</code>, <code>SELECT</code>), mientras que el código FWH define e instancia objetos con métodos y datos.</p>
 
-<h3 id="pixel">PIXEL clause</h3>
-<p>A clause in control definitions (<code>@ nRow, nCol ... PIXEL</code>) that interprets coordinates in pixels rather than the default character-based grid. Essential for precise positioning, especially with <code>DEFINE WINDOW</code> (as opposed to <code>DEFINE DIALOG</code>) in pure PRG layouts.</p>
+<h3 id="pixel">cláusula PIXEL</h3>
+<p>Una cláusula en las definiciones de controles (<code>@ nRow, nCol ... PIXEL</code>) que interpreta las coordenadas en píxeles en lugar de la cuadrícula basada en caracteres predeterminada. Es esencial para un posicionamiento preciso, especialmente con <code>DEFINE WINDOW</code> (a diferencia de <code>DEFINE DIALOG</code>) en diseños puramente en PRG.</p>
 
-<h3 id="pragma-b">#pragma /b+ (debugger)</h3>
-<p>A Harbour compiler directive enabling the embedded debugger. Placing <code>#pragma /b+</code> at the top of a source file activates the HB_DBG engine, allowing breakpoints, variable inspection, and step-through debugging.</p>
+<h3 id="pragma-b">#pragma /b+ (depurador)</h3>
+<p>Una directiva del compilador de Harbour que habilita el depurador integrado. Colocar <code>#pragma /b+</code> al inicio de un archivo fuente activa el motor HB_DBG, permitiendo puntos de interrupción, inspección de variables y depuración paso a paso.</p>
 
 <h3 id="pragma-begindump">#pragma BEGINDUMP</h3>
-<p>A Harbour directive that transitions the compiler from Harbour syntax to C syntax within the same source file. Used in <code>.prg</code> files to embed inline C code that is compiled by the C compiler, enabling low-level Windows API calls without a separate <code>.c</code> file.</p>
+<p>Una directiva de Harbour que hace que el compilador pase de la sintaxis Harbour a la sintaxis C dentro del mismo archivo fuente. Se usa en archivos <code>.prg</code> para incrustar código C en línea que es compilado por el compilador de C, permitiendo llamadas de bajo nivel a la API de Windows sin un archivo <code>.c</code> aparte.</p>
 
 <h3 id="rdd">RDD (Replaceable Database Driver)</h3>
-<p>An abstraction layer in Harbour/xHarbour allowing the same code to work with different database file formats. Common RDDs: <code>DBFNTX</code> (Clipper-compatible), <code>DBFCDX</code> (FoxPro indexes), <code>DBFDBT</code> (memo fields). All FWH database classes sit on top of the RDD layer.</p>
+<p>Una capa de abstracción en Harbour/xHarbour que permite que el mismo código funcione con distintos formatos de archivo de base de datos. RDD habituales: <code>DBFNTX</code> (compatible con Clipper), <code>DBFCDX</code> (índices de FoxPro), <code>DBFDBT</code> (campos memo). Todas las clases de base de datos de FWH se asientan sobre la capa RDD.</p>
 
 <h3 id="redefine">REDEFINE</h3>
-<p>A FiveWin command syntax for binding a class instance to an existing control in a dialog resource (<code>.rc</code> file). Example: <code>REDEFINE GET oVar ID 101 OF oDlg</code> connects a <code>TGet</code> object to a dialog control by its resource ID.</p>
+<p>Una sintaxis de comando de FiveWin para vincular una instancia de clase a un control existente en un recurso de diálogo (archivo <code>.rc</code>). Ejemplo: <code>REDEFINE GET oVar ID 101 OF oDlg</code> conecta un objeto <code>TGet</code> con un control de diálogo a través de su ID de recurso.</p>
 
 <h3 id="rowset">RowSet</h3>
-<p>An in-memory representation of a SQL query result, specifically in FWH's MariaDB/MySQL integration. Created by <code>mysql_RowSet()</code>, it provides cursor-style navigation, lazy fetching through a linked-list structure, and supports <code>bOnMove</code> for row-change events.</p>
+<p>Una representación en memoria del resultado de una consulta SQL, específicamente en la integración MariaDB/MySQL de FWH. Creado por <code>mysql_RowSet()</code>, ofrece navegación tipo cursor, obtención perezosa (lazy fetching) mediante una estructura de lista enlazada y soporta <code>bOnMove</code> para eventos de cambio de fila.</p>
 
 <h3 id="sdi">SDI (Single Document Interface)</h3>
-<p>The modern windowing paradigm where each document or view has its own independent top-level window, as opposed to MDI where children are confined within a parent frame. Most contemporary FWH applications use SDI.</p>
+<p>El paradigma de ventanas moderno en el que cada documento o vista tiene su propia ventana de nivel superior independiente, a diferencia de MDI, donde los hijos quedan confinados dentro de un marco padre. La mayoría de las aplicaciones FWH contemporáneas usan SDI.</p>
 
-<h3 id="seekbar">SeekBar (incremental search)</h3>
-<p>An integrated UI element in <code>TXBrowse</code> (<code>TXBrowse:oSeek</code>) that displays a floating edit field. Users type filter criteria incrementally, and the browse automatically scrolls to matching rows as they type. Enabled via <code>bSeek</code> codeblock.</p>
+<h3 id="seekbar">SeekBar (búsqueda incremental)</h3>
+<p>Un elemento de interfaz integrado en <code>TXBrowse</code> (<code>TXBrowse:oSeek</code>) que muestra un campo de edición flotante. Los usuarios escriben criterios de filtrado de forma incremental, y el browse se desplaza automáticamente a las filas coincidentes a medida que escriben. Se habilita mediante el bloque de código <code>bSeek</code>.</p>
 
-<h3 id="t-prefix">T-prefix class naming</h3>
-<p>FWH's convention of prefixing all class names with <code>T</code> (e.g., <code>TWindow</code>, <code>TButton</code>, <code>TXBrowse</code>, <code>TGet</code>). This distinguishes class types from traditional xBase function names and provides a consistent, recognizable naming pattern.</p>
+<h3 id="t-prefix">Nomenclatura de clases con prefijo T</h3>
+<p>La convención de FWH de anteponer el prefijo <code>T</code> a todos los nombres de clase (p. ej., <code>TWindow</code>, <code>TButton</code>, <code>TXBrowse</code>, <code>TGet</code>). Esto distingue los tipos de clase de los nombres de función tradicionales de xBase y proporciona un patrón de nomenclatura coherente y reconocible.</p>
 
-<h3 id="themed">Themed Controls</h3>
-<p>FWH support for Windows visual styles, controlled by DATA members like <code>TBtnBmp:lThemed</code>, <code>TBtnBmp:l2007</code>, <code>TBtnBmp:l2010</code>, <code>TBtnBmp:l2013</code>, and <code>TBtnBmp:l2015</code>. Themed controls automatically adapt their appearance to the user's current Windows theme.</p>
+<h3 id="themed">Controles con Tema (Themed)</h3>
+<p>El soporte de FWH para los estilos visuales de Windows, controlado por miembros DATA como <code>TBtnBmp:lThemed</code>, <code>TBtnBmp:l2007</code>, <code>TBtnBmp:l2010</code>, <code>TBtnBmp:l2013</code> y <code>TBtnBmp:l2015</code>. Los controles con tema adaptan automáticamente su aspecto al tema actual de Windows del usuario.</p>
 
-<h3 id="transparent">TRANSPARENT clause</h3>
-<p>A clause that sets the <code>WS_EX_TRANSPARENT</code> extended style on a control, making it transparent to mouse clicks and allowing parent window controls to show through the background. Used in layered UI designs.</p>
+<h3 id="transparent">cláusula TRANSPARENT</h3>
+<p>Una cláusula que establece el estilo extendido <code>WS_EX_TRANSPARENT</code> en un control, haciéndolo transparente a los clics del ratón y permitiendo que los controles de la ventana padre se vean a través del fondo. Se usa en diseños de interfaz por capas.</p>
 
 <h3 id="unicode">Unicode (UTF-8 / UTF-16)</h3>
-<p>Universal character encoding standards. Windows uses UTF-16 internally; FWH converts between Harbour strings (typically ANSI or OEM) and UTF-16 for Windows API calls. UTF-8 is used for JSON communication, REST API payloads (AI classes), and the HTML documentation.</p>
+<p>Estándares universales de codificación de caracteres. Windows usa UTF-16 internamente; FWH convierte entre las cadenas de Harbour (normalmente ANSI u OEM) y UTF-16 para las llamadas a la API de Windows. UTF-8 se usa para la comunicación JSON, las cargas útiles (payloads) de las API REST (clases de IA) y la documentación HTML.</p>
 
 <h3 id="wysiwyg">WYSIWYG</h3>
-<p>"What You See Is What You Get." FWH's report and print preview systems (<code>TReport</code>, <code>TPreview</code>) provide WYSIWYG display, showing on screen exactly how output will appear on paper, including fonts, margins, and graphics placement.</p>
+<p>"What You See Is What You Get" (lo que ves es lo que obtienes). Los sistemas de informes y vista previa de impresión de FWH (<code>TReport</code>, <code>TPreview</code>) ofrecen una visualización WYSIWYG, mostrando en pantalla exactamente cómo aparecerá la salida en papel, incluyendo fuentes, márgenes y la ubicación de los gráficos.</p>
 
 <h3 id="xcommand">#xcommand / #xtranslate</h3>
-<p>Harbour preprocessor directives that define pattern-based text translations. FWH's <code>FiveWin.ch</code> uses these extensively to create the natural-language domain-specific language (DSL) for defining windows, dialogs, controls, and menus with intuitive syntax.</p>
+<p>Directivas del preprocesador de Harbour que definen traducciones de texto basadas en patrones. El <code>FiveWin.ch</code> de FWH las usa intensamente para crear el lenguaje específico de dominio (DSL) de lenguaje natural que permite definir ventanas, diálogos, controles y menús con una sintaxis intuitiva.</p>
 
 </main>
 <aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
