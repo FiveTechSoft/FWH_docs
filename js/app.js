@@ -345,7 +345,7 @@ function highlightHarbour(code) {
       var btn = document.createElement("button");
       btn.className = "mermaid-max";
       btn.innerHTML = "⛶";
-      btn.title = "Maximize diagram";
+      btn.title = "Click to maximize";
       btn.onclick = function(e) {
         e.stopPropagation();
         var overlay = document.createElement("div");
