@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>GPT2Model - Inferencia GPT-2 preentrenado en FWH - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a><span class="version">Versión 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">IA y ML</div><a class="nav-item" href="../../es/ai/ttransformer.html">Transformer</a><a class="nav-item" href="../../es/ai/hftokenizer.html">HFTokenizer</a><a class="nav-item" href="../../es/ai/tsemanticindex.html">TSemanticIndex</a><a class="nav-item active" href="../../es/ai/gpt2model.html">GPT2Model</a><a class="nav-item" href="../../es/ai/thftask.html">THFTask / TChatAgent</a><a class="nav-item" href="../../es/ai/pytorch-lite-roadmap.html">Hoja de Ruta PyTorch-lite</a></div>
+</nav>
+<main id="content">
+
+<h1>GPT2Model - Inferencia de GPT-2 preentrenado en FWH</h1>
+<p class="class-source">Fuente: <code>source/classes/gpt2model.prg</code> (sobre <code>FW_Tensor</code>, <code>source/function/fwtensor.c</code>)</p>
+
+<p>
+<code>GPT2Model</code> ejecuta <strong>GPT-2 preentrenado real</strong> enteramente
+en FWH/Harbour en la CPU. Carga los pesos reales de GPT-2 desde un
+<code>model.safetensors</code> de HuggingFace y corre el forward pass completo
+&mdash; embeddings de token + posición, pre-norm, atención causal multi-cabeza,
+MLP GELU, residuales, norm final y cabeza de salida con pesos atados &mdash; todo
+sobre el backend plano <a href="../../es/ai/pytorch-lite-roadmap.html">FW_Tensor</a>.
+Es la Fase&nbsp;3 de la hoja de ruta PyTorch-lite, verificada numéricamente contra
+una referencia (<em>"The capital of France is"</em> &rarr; <code>" the"</code>,
+token 262).
+</p>
+
+<h2 id="weights">Obtener los pesos</h2>
+<p>
+Descarga GPT-2 small del Hub de HuggingFace (no se distribuye con FWH):
+<code>https://huggingface.co/gpt2/resolve/main/model.safetensors</code> (~500&nbsp;MB,
+124M params) más <code>tokenizer.json</code> para
+<a href="../../es/ai/hftokenizer.html">HFTokenizer</a>. Los pesos se leen un tensor
+a la vez con <code>FWT_LoadSafe</code> (sin cargar todo el archivo), así el pico de
+memoria son los pesos float32 (~500&nbsp;MB), que caben en un proceso de 32 bits.
+</p>
+
+<h2 id="methods">Métodos</h2>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( n_layer, n_head, n_embd, vocab, n_ctx )</code></td><td>Configura la arquitectura. Por defecto GPT-2 small (12, 12, 768, 50257, 1024).</td></tr>
+<tr><td><code>LoadSafetensors( cFile )</code></td><td>Parsea la cabecera safetensors y carga cada tensor de pesos en FW_Tensors.</td></tr>
+<tr><td><code>Forward( aTok )</code></td><td>Ejecuta el forward para una secuencia de tokens (ids de gather base 1). Devuelve logits <code>[seq, vocab]</code>.</td></tr>
+<tr><td><code>Generate( aTok, nNew, nTemp, nTopK )</code></td><td>Generación autorregresiva (greedy / temperatura / top-k). Devuelve la secuencia completa de ids base 1.</td></tr>
+</tbody>
+</table>
+<p>
+Los ids son base 1 para el gather (id base 0 de HuggingFace + 1); reconvierte con
+<code>id - 1</code> antes de decodificar.
+</p>
+
+<h2 id="example">Ejemplo</h2>
+<pre><code class="language-harbour">oTok := HFTokenizer():New( "gpt2.tokenizer.json" )
+oM   := GPT2Model():New()                       // por defecto GPT-2 small
+oM:LoadSafetensors( "model.safetensors" )
+
+aIds := oTok:Encode( "The capital of France is" )   // ids HF base 0
+aTok := {} ; AEval( aIds, { |n| AAdd( aTok, n + 1 ) } )
+
+aOut := oM:Generate( aTok, 8, 0.0001, 1 )            // greedy, 8 tokens
+aHF  := {} ; AEval( aOut, { |n| AAdd( aHF, n - 1 ) } )
+? oTok:Decode( aHF )    // "The capital of France is the capital of the French Republic, and"</code></pre>
+
+<h2 id="notes">Notas</h2>
+<ul>
+<li>Sólo inferencia (sin entrenamiento) &mdash; no necesita autograd.</li>
+<li>La velocidad la limita el matmul ingenuo; un backend BLAS (Fase&nbsp;2 de la hoja de ruta) haría rápidas las generaciones largas. Aún no hay KV cache, así que cada paso recomputa la ventana (O(n&sup2;)).</li>
+<li>Para modelos mayores/cuantizados, la vía pragmática es bindear llama.cpp (Pista C de la hoja de ruta) en vez de escalar este camino desde cero.</li>
+<li>Test/demo: <code>samples/ai/gpt2test.prg</code>.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

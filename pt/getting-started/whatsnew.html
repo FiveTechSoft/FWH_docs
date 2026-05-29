@@ -92,6 +92,25 @@ automaticamente a partir do reposit&oacute;rio principal via GitHub Actions.
 
 <h2 id="new-classes">Novas Classes</h2>
 
+<h3>THFTask e TChatAgent &mdash; utilidades FWAI (IA)</h3>
+<p>
+Mais duas classes utilit&aacute;rias "FWAI". <strong>THFTask</strong>
+(<code>source/classes/thftask.prg</code>) &eacute; uma classe fina sobre a Inference
+API da HuggingFace para as tarefas NLP comuns &mdash; <code>Classify</code>,
+<code>ZeroShot</code>, <code>NER</code>, <code>Summarize</code>,
+<code>Translate</code>, <code>Sentiment</code> &mdash; cada uma retornando valores
+Harbour normais; o transporte &eacute; inject&aacute;vel (<code>::bSender</code>)
+para testes ou uma camada HTTP pr&oacute;pria. <strong>TChatAgent</strong>
+(<code>source/classes/tchatagent.prg</code>) &eacute; um agente m&iacute;nimo de
+"chat sobre seus dados" com tool-calling: <code>New( bChat, bTool )</code> recebe um
+codeblock LLM e um codeblock de consulta, e o LLM responde
+<code>TOOL &lt;consulta&gt;</code> ou <code>ANSWER &lt;texto&gt;</code> at&eacute;
+responder. Ambas documentadas em <a href="../../pt/ai/thftask.html">THFTask / TChatAgent</a>.
+Al&eacute;m disso: <a href="../../pt/ai/gpt2model.html">GPT2Model</a> (infer&ecirc;ncia
+de GPT-2 pr&eacute;-treinado) agora &eacute; uma classe de biblioteca. Testes:
+<code>samples/ai/thftasktest.prg</code>, <code>samples/ai/chatagenttest.prg</code>.
+</p>
+
 <h3>TSemanticIndex &mdash; busca sem&acirc;ntica sobre DBF/SQL (IA)</h3>
 <p>
 A primeira das classes utilit&aacute;rias "FWAI" (<code>source/classes/tsemanticindex.prg</code>):

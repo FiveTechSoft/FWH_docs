@@ -92,6 +92,24 @@ from the main repo via GitHub Actions.
 
 <h2 id="new-classes">New Classes</h2>
 
+<h3>THFTask &amp; TChatAgent &mdash; FWAI utilities (AI)</h3>
+<p>
+Two more "FWAI" utility classes. <strong>THFTask</strong>
+(<code>source/classes/thftask.prg</code>) is one thin class over the HuggingFace
+Inference API for the common NLP tasks &mdash; <code>Classify</code>,
+<code>ZeroShot</code>, <code>NER</code>, <code>Summarize</code>,
+<code>Translate</code>, <code>Sentiment</code> &mdash; each returning plain Harbour
+values; transport is injectable (<code>::bSender</code>) for tests or a custom HTTP
+layer. <strong>TChatAgent</strong> (<code>source/classes/tchatagent.prg</code>) is a
+minimal "chat over your data" agent with tool-calling: <code>New( bChat, bTool )</code>
+takes an LLM codeblock and a data-query codeblock, and the LLM replies
+<code>TOOL &lt;query&gt;</code> or <code>ANSWER &lt;text&gt;</code> until answered.
+Both are documented at <a href="../../en/ai/thftask.html">THFTask / TChatAgent</a>.
+Also: <a href="../../en/ai/gpt2model.html">GPT2Model</a> (pretrained GPT-2 inference)
+is now a library class. Tests: <code>samples/ai/thftasktest.prg</code>,
+<code>samples/ai/chatagenttest.prg</code>.
+</p>
+
 <h3>TSemanticIndex &mdash; semantic search over DBF/SQL (AI)</h3>
 <p>
 The first of the "FWAI" utility classes (<code>source/classes/tsemanticindex.prg</code>):

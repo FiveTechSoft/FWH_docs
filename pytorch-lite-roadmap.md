@@ -178,11 +178,14 @@ that data.
    `:Search(cText)` returns records by cosine similarity. The killer feature for
    data apps; reuses `tembeddings`. In lib (`source/classes/tsemanticindex.prg`);
    test `samples/ai/semindextest.prg`; docs `docs/{en,es,pt}/ai/tsemanticindex.html`.
-2. **`TChatAgent`** — chat over the app's data (simple function-calling: the LLM
-   asks for queries, the app returns rows). Backend llama.cpp (local) or API.
-3. **`THFTask`** — thin base + `:Classify / :NER / :Summarize / :Translate /
-   :Sentiment` over the Inference API (each ~20 lines of curl, like `tembeddings`).
-   Covers five utilities at once.
+2. **`TChatAgent`** ✅ DONE — chat over the app's data (function-calling: the LLM
+   asks for queries, the app returns rows). Backend-agnostic (`bChat`/`bTool`
+   codeblocks). In lib (`source/classes/tchatagent.prg`); test
+   `samples/ai/chatagenttest.prg`; docs `ai/thftask.html`.
+3. **`THFTask`** ✅ DONE — `:Classify / :ZeroShot / :NER / :Summarize / :Translate /
+   :Sentiment` over the HF Inference API; injectable transport for offline tests.
+   In lib (`source/classes/thftask.prg`); test `samples/ai/thftasktest.prg`; docs
+   `ai/thftask.html`. Covers five utilities at once.
 4. **`TWhisperCpp`** — binding to whisper.cpp for offline dictation → GET text.
 5. **GET autocomplete with local GPT-2** — everything needed already exists.
 
