@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TKnob - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a>
+<span class="version">Version 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../en/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Core Classes</div>
+<a class="nav-item" href="../../en/core/twindow.html">TWindow</a>
+<a class="nav-item" href="../../en/core/tdialog.html">TDialog</a>
+<a class="nav-item" href="../../en/core/tcontrol.html">TControl</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">UI Controls</div>
+<a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a>
+<a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a>
+<a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a>
+<a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a>
+<a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a>
+<a class="nav-item" href="../../en/ui/tcombobox.html">TComboBox</a>
+<a class="nav-item" href="../../en/ui/tcheckbox.html">TCheckBox / TRadio</a>
+<a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a>
+<a class="nav-item" href="../../en/ui/tgantt.html">TGantt</a>
+<a class="nav-item" href="../../en/ui/ttoast.html">TToast</a>
+<a class="nav-item" href="../../en/ui/trating.html">TRating</a>
+<a class="nav-item active" href="../../en/ui/tknob.html">TKnob</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Data Access</div>
+<a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a>
+<a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a>
+<a class="nav-item" href="../../en/data/todbc.html">TODBC</a>
+<a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../en/printing/treport.html">TReport</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Internet &amp; AI</div>
+<a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a>
+<a class="nav-item" href="../../en/internet/twebclient.html">TWebClient</a>
+<a class="nav-item" href="../../en/internet/twebserver.html">TWebServer</a>
+<a class="nav-item" href="../../en/internet/tsocket.html">TSocket</a>
+<a class="nav-item" href="../../en/internet/tsmtp.html">TSmtp</a>
+<a class="nav-item" href="../../en/internet/tpop3.html">TPop3</a>
+<a class="nav-item" href="../../en/internet/tftp.html">TFtp</a>
+<a class="nav-item" href="../../en/internet/twhatsapp.html">TWhatsApp</a>
+<a class="nav-item" href="../../en/internet/topenai.html">TOpenAI</a>
+<a class="nav-item" href="../../en/internet/tai.html">AI Classes</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../en/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../en/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../en/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../en/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>TKnob</h1>
+<p class="class-source">Source: <code>source/classes/tknob.prg</code> &nbsp;|&nbsp; Command: <code>include/tknob.ch</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p style="opacity:.8">Contributed by Silvio Falconi.</p>
+
+<p>
+TKnob is a modern custom rotary knob control for FiveWin / Harbour, designed for audio,
+MIDI and synthesizer style applications (mixers, drum machines, VST-like interfaces and
+touch screens). It is a pure Harbour/FiveWin implementation built on <code>TControl</code> &mdash;
+all drawing is done with GDI primitives, so no extra DLL is required.
+</p>
+
+<h2 id="features">Features</h2>
+<ul>
+<li>Modern rotary knob design with compact control area and correct clipping.</li>
+<li>Transparent / themed background support (<code>IsAppThemed()</code>).</li>
+<li>Two indicator modes: <strong>LED</strong> (dot) or <strong>LINE</strong>.</li>
+<li>External illuminated ring with soft glow, plus optional external ticks (<code>lTicks</code>).</li>
+<li><strong>Unipolar</strong> mode (0..127) and <strong>Bipolar</strong> mode (-30..+30, shows signed value).</li>
+<li>Mouse drag (vertical) and mouse wheel control; hold <kbd>CTRL</kbd> for a finer wheel step.</li>
+<li>Double click resets to the default value.</li>
+<li>Enable / disable state with dimmed visual feedback (<code>Toggle()</code>).</li>
+<li>Internal value display and external label, with separate fonts (<code>oFontInner</code> / <code>oFont</code>).</li>
+<li><code>bSetGet</code> variable binding, <code>bChanged</code> and <code>bAction</code> callbacks.</li>
+</ul>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nValue</code></td><td>Numeric</td><td><code>64</code></td><td>Current value (clamped to nMin..nMax)</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td><code>0</code></td><td>Minimum value</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td><code>127</code></td><td>Maximum value</td></tr>
+<tr><td><code>nDefault</code></td><td>Numeric</td><td><code>64</code></td><td>Value restored on double click</td></tr>
+<tr><td><code>cIndicator</code></td><td>Char</td><td><code>"LED"</code></td><td>Indicator style: <code>"LED"</code> or <code>"LINE"</code></td></tr>
+<tr><td><code>cMode</code></td><td>Char</td><td><code>"UNIPOLAR"</code></td><td>Range mode: <code>"UNIPOLAR"</code> or <code>"BIPOLAR"</code></td></tr>
+<tr><td><code>lTicks</code></td><td>Logical</td><td><code>.F.</code></td><td>Draw external tick marks around the ring</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td><code>.T.</code></td><td>Enabled state (dimmed when .F.)</td></tr>
+<tr><td><code>nWheelStep</code> / <code>nCtrlStep</code></td><td>Numeric</td><td><code>1</code></td><td>Wheel step, and finer step while CTRL is held</td></tr>
+<tr><td><code>oFont</code> / <code>oFontInner</code></td><td>Object</td><td></td><td>Fonts for the external label and the inner value text</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td></td><td>SetGet codeblock for variable binding (read/write)</td></tr>
+<tr><td><code>bChanged</code></td><td>Block</td><td></td><td>Fired when the value changes; receives <code>( Self, nValue )</code></td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td></td><td>Fired on toggle; receives <code>( Self, lActive )</code></td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, bSetGet, oWnd, nWidth, nHeight, cMsg, nMin, nMax, cIndicator, cMode, lTicks, bAction, lDesign, oFont, oFontInner )</code></td><td>Create a new knob control</td></tr>
+<tr><td><code>SetValue( nValue )</code></td><td>Set the value (clamped), fire bSetGet/bChanged and repaint</td></tr>
+<tr><td><code>GetValue()</code></td><td>Return the current <code>nValue</code></td></tr>
+<tr><td><code>SetMode( cMode )</code></td><td>Switch between <code>"UNIPOLAR"</code> (0..127) and <code>"BIPOLAR"</code> (-30..+30) and reset range/default</td></tr>
+<tr><td><code>Toggle()</code></td><td>Flip the enabled state and fire <code>bAction</code></td></tr>
+<tr><td><code>Display()</code> / <code>Paint()</code></td><td>Render the knob (ring, glow arc, body, indicator, value, label)</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destroy the control</td></tr>
+</tbody>
+</table>
+
+<h2 id="command">The @ ... KNOB Command</h2>
+<p>Include <code>tknob.ch</code> to use the declarative command:</p>
+<pre><code class="language-harbour">@ &lt;nRow&gt;, &lt;nCol&gt; KNOB &lt;oKnob&gt;            ;
+   VAR &lt;nVar&gt;                            ;
+   OF &lt;oWnd&gt;                             ;
+   SIZE &lt;nWidth&gt;, &lt;nHeight&gt;              ;
+   LABEL &lt;cMsg&gt;                          ;
+   MIN &lt;nMin&gt; MAX &lt;nMax&gt;                 ;
+   [ LED | LINE ]                        ;
+   [ UNIPOLAR | BIPOLAR ]                ;
+   [ TICKS | NOTICKS ]                   ;
+   FONT &lt;oFont&gt; FONTINNER &lt;oFontInner&gt;   ;
+   [ ON CHANGE &lt;uChange&gt; ]               ;
+   [ ACTION &lt;uAction&gt; ]</code></pre>
+
+<h2 id="example">Example: Volume &amp; Modulation Knobs</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "tknob.ch"
+
+function Main()
+
+   local oDlg, oFont, oFontInner
+   local oKnobVol, oKnobMod, oSayVol, oSayMod
+   local nVol := 0, nMod := 64
+
+   DEFINE FONT oFont      NAME "Segoe UI" SIZE 0, -11 BOLD
+   DEFINE FONT oFontInner NAME "Segoe UI" SIZE 0, -14 BOLD
+
+   DEFINE DIALOG oDlg TITLE "TKnob" SIZE 780, 280 PIXEL
+
+   @ 35, 150 SAY oSayVol PROMPT "VOL: " + AllTrim( Str( nVol ) ) ;
+      SIZE 40, 10 PIXEL OF oDlg
+
+   @ 35, 40 KNOB oKnobVol VAR nVol OF oDlg SIZE 76, 86 ;
+      LABEL "VOL" MIN -30 MAX 30 LED BIPOLAR NOTICKS ;
+      FONT oFont FONTINNER oFontInner ;
+      ON CHANGE { |o,n| oSayVol:SetText( "VOL: " + AllTrim( Str( n ) ) ) }
+
+   @ 35, 370 SAY oSayMod PROMPT "MOD: " + AllTrim( Str( nMod ) ) ;
+      SIZE 50, 10 PIXEL OF oDlg
+
+   @ 35, 200 KNOB oKnobMod VAR nMod OF oDlg SIZE 76, 86 ;
+      LABEL "MOD" MIN 0 MAX 200 LINE UNIPOLAR TICKS ;
+      FONT oFont FONTINNER oFontInner ;
+      ON CHANGE { |o,n| oSayMod:SetText( "MOD: " + AllTrim( Str( n ) ) ) }
+
+   ACTIVATE DIALOG oDlg CENTERED ;
+      VALID ( oFont:End(), oFontInner:End(), .T. )
+
+return nil</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Drag the knob vertically to change the value; the mouse wheel also works, and holding <kbd>CTRL</kbd> uses the finer <code>nCtrlStep</code>.</li>
+<li>A single click (no drag) toggles the enabled state via <code>Toggle()</code>; a double click resets to <code>nDefault</code>.</li>
+<li>In <code>BIPOLAR</code> mode the inner value is shown signed (e.g. <code>+12</code>) and the green arc starts from the center (zero) position.</li>
+<li>Bind a variable with <code>VAR</code> (the command wraps it in a <code>bSetGet</code> block) or set <code>bSetGet</code> manually; use <code>ON CHANGE</code> for UI updates.</li>
+<li>Demos: <code>samples/knobtst1.prg</code> (direct <code>New</code>) and <code>samples/knobtst2.prg</code> (command syntax).</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

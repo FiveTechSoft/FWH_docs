@@ -53,6 +53,7 @@ var searchIndex = [
   { k: "tprogress progress bar marquee step range position percent msctls_progress32", t: "TProgress", u: "../../en/reference/tprogress.html", s: "Reference" },
   { k: "ticon icon ico resource load display clickable extracticon", t: "TIcon", u: "../../en/reference/ticon.html", s: "Reference" },
   // Additional UI
+  { k: "tknob knob rotary dial audio midi synth synthesizer led line ring glow ticks unipolar bipolar wheel drag silvio falconi", t: "TKnob", u: "../../en/ui/tknob.html", s: "UI Controls" },
   { k: "tsay tmeter tprogress tslider tsplitter tpanel tscrollpanel trebar tpager ttimer ttray ttoast trating turllink tanimate tactivex tdatepicker tipaddress thotkey tupdown", t: "More Controls", u: "../../en/ui/more-controls.html", s: "UI Controls" },
   { k: "tlistview listview icon details groups columns", t: "TListView", u: "../../en/ui/tlistview.html", s: "Advanced UI" },
   { k: "trichedit tscintilla richedit rich text editor syntax highlighting code", t: "TRichEdit / TScintilla", u: "../../en/ui/trichedit.html", s: "Advanced UI" },
