@@ -335,3 +335,29 @@ function highlightHarbour(code) {
     });
   }
 })();
+
+// Mermaid diagram maximize button
+(function() {
+  function addMaxButtons() {
+    var diagrams = document.querySelectorAll(".mermaid");
+    diagrams.forEach(function(d) {
+      if (d.querySelector(".mermaid-max")) return;
+      var btn = document.createElement("button");
+      btn.className = "mermaid-max";
+      btn.innerHTML = "⛶";
+      btn.title = "Maximize diagram";
+      btn.onclick = function(e) {
+        e.stopPropagation();
+        var overlay = document.createElement("div");
+        overlay.className = "mermaid-overlay";
+        overlay.innerHTML = "<button class=\"mermaid-close\">✕</button><div class=\"mermaid-full\">" + d.innerHTML + "</div>";
+        overlay.querySelector(".mermaid-close").onclick = function() { overlay.remove(); };
+        overlay.onclick = function(ev) { if (ev.target === overlay) overlay.remove(); };
+        document.body.appendChild(overlay);
+      };
+      d.appendChild(btn);
+    });
+  }
+  setTimeout(addMaxButtons, 800);
+  setTimeout(addMaxButtons, 2500);
+})();
