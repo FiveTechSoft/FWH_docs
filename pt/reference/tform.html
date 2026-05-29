@@ -45,7 +45,7 @@
 <p class="class-hierarchy">Herda de: <code>TWindow</code></p>
 
 <p>
-TForm is a visual form container that loads its control layout from a .ffm resource (Forms File Memory). It is used by the Visual FiveWin IDE to design and run forms at runtime. The form serializes child controls, their properties, and database bindings.
+TForm é um contêiner visual de formulário que carrega o layout de seus controles a partir de um recurso .ffm (Forms File Memory). É utilizado pela IDE Visual FiveWin para projetar e executar formulários em tempo de execução. O formulário serializa os controles filhos, suas propriedades e os vínculos com bancos de dados.
 </p>
 
 <h2 id="data">Principais Membros DATA</h2>
@@ -55,13 +55,13 @@ TForm is a visual form container that loads its control layout from a .ffm resou
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nBorderStyle</code></td><td>Numeric</td><td>Window border style (default 3 = sizable)</td></tr>
-<tr><td><code>nPosition</code></td><td>Numeric</td><td>Startup position: 0=normal, 1=maximized, 2=minimized</td></tr>
-<tr><td><code>cDescription</code></td><td>Character</td><td>Description visible in the Visual Project manager</td></tr>
-<tr><td><code>cClassName</code></td><td>Character</td><td>Class name used as default resource name for loading .ffm</td></tr>
-<tr><td><code>oInspector</code></td><td>Object</td><td>Property inspector object for design mode</td></tr>
-<tr><td><code>aProperties</code></td><td>Array</td><td>Class DATA array listing all serializable properties</td></tr>
-<tr><td><code>lDesign</code></td><td>Logical</td><td>Enables design mode with drag-and-drop for child controls</td></tr>
+<tr><td><code>nBorderStyle</code></td><td>Numeric</td><td>Estilo de borda da janela (padrão 3 = redimensionável)</td></tr>
+<tr><td><code>nPosition</code></td><td>Numeric</td><td>Posição inicial: 0=normal, 1=maximizada, 2=minimizada</td></tr>
+<tr><td><code>cDescription</code></td><td>Character</td><td>Descrição visível no gerenciador de Projeto Visual</td></tr>
+<tr><td><code>cClassName</code></td><td>Character</td><td>Nome da classe usado como nome de recurso padrão para carregar o .ffm</td></tr>
+<tr><td><code>oInspector</code></td><td>Object</td><td>Objeto inspetor de propriedades para o modo de design</td></tr>
+<tr><td><code>aProperties</code></td><td>Array</td><td>Array DATA de classe que lista todas as propriedades serializáveis</td></tr>
+<tr><td><code>lDesign</code></td><td>Logical</td><td>Ativa o modo de design com arrastar e soltar para os controles filhos</td></tr>
 </tbody>
 </table>
 
@@ -72,15 +72,15 @@ TForm is a visual form container that loads its control layout from a .ffm resou
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Create a new form with default settings and load .ffm resource</td></tr>
-<tr><td><code>LoadRes( cResName, cResType )</code></td><td>Load form definition from a resource (default "FORMS" type)</td></tr>
-<tr><td><code>ShowModal()</code></td><td>Show the form as a modal dialog, respecting nPosition</td></tr>
-<tr><td><code>Initiate()</code></td><td>Initialize controls: creates child windows, resolves aliases, sets up database bindings</td></tr>
-<tr><td><code>Default()</code></td><td>Set default values for border style, position, scrollbars</td></tr>
+<tr><td><code>New()</code></td><td>Cria um novo formulário com configurações padrão e carrega o recurso .ffm</td></tr>
+<tr><td><code>LoadRes( cResName, cResType )</code></td><td>Carrega a definição do formulário a partir de um recurso (tipo "FORMS" por padrão)</td></tr>
+<tr><td><code>ShowModal()</code></td><td>Exibe o formulário como um diálogo modal, respeitando nPosition</td></tr>
+<tr><td><code>Initiate()</code></td><td>Inicializa os controles: cria janelas filhas, resolve aliases e configura os vínculos com bancos de dados</td></tr>
+<tr><td><code>Default()</code></td><td>Define os valores padrão para estilo de borda, posição e barras de rolagem</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Load and Show Form</h2>
+<h2 id="example">Exemplo: Carregar e Exibir o Formulário</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -88,7 +88,7 @@ function Main()
 
    local oForm := TForm():New()
 
-   oForm:cTitle     := "My Form"
+   oForm:cTitle     := "Meu Formulário"
    oForm:nWidth     := 600
    oForm:nHeight    := 400
    oForm:nPosition  := 0   // normal
@@ -100,10 +100,10 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>TForm loads its control layout from a binary .ffm resource stored under the "FORMS" resource type, keyed by the class name.</li>
-<li><code>Initiate()</code> processes database components (TDataBaseComp) before other controls so that aliases are available for TXBrowse and similar controls.</li>
-<li>Design mode is toggled via <code>lDesign</code>, which enables drag-and-drop repositioning of all child controls.</li>
-<li>Controls without existing hWnd are created from their stored properties; coordinates are normalized if negative.</li>
+<li>TForm carrega o layout de seus controles a partir de um recurso binário .ffm armazenado sob o tipo de recurso "FORMS", indexado pelo nome da classe.</li>
+<li><code>Initiate()</code> processa os componentes de banco de dados (TDataBaseComp) antes dos demais controles, de modo que os aliases estejam disponíveis para TXBrowse e controles semelhantes.</li>
+<li>O modo de design é alternado por meio de <code>lDesign</code>, que permite reposicionar todos os controles filhos com arrastar e soltar.</li>
+<li>Controles sem um hWnd existente são criados a partir de suas propriedades armazenadas; as coordenadas são normalizadas se forem negativas.</li>
 </ul>
 
 </main>

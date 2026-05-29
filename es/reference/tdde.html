@@ -58,14 +58,14 @@
 <main id="content">
 
 <h1>TDde / TDdeClient / TDdeServer</h1>
-<p class="class-source">Sources: <code>source/classes/dde.prg</code>, <code>source/classes/ddeclien.prg</code>, <code>source/classes/ddeserv.prg</code></p>
-<p class="class-hierarchy">Standalone classes (not control-based)</p>
+<p class="class-source">Fuentes: <code>source/classes/dde.prg</code>, <code>source/classes/ddeclien.prg</code>, <code>source/classes/ddeserv.prg</code></p>
+<p class="class-hierarchy">Clases independientes (no basadas en controles)</p>
 
 <p>
-These three classes implement Dynamic Data Exchange (DDE) communication between Windows applications. TDde is a simplified DDE wrapper, while TDdeClient and TDdeServer provide a more complete client-server implementation with support for Execute, Request, Poke, and acknowledgment handling.
+Estas tres clases implementan la comunicación de Intercambio Dinámico de Datos (DDE) entre aplicaciones Windows. TDde es una envoltura DDE simplificada, mientras que TDdeClient y TDdeServer proporcionan una implementación cliente-servidor más completa con soporte para Execute, Request, Poke y manejo de confirmaciones (acknowledgment).
 </p>
 
-<h2 id="tdde">TDde (Simple DDE)</h2>
+<h2 id="tdde">TDde (DDE Simple)</h2>
 
 <h3>Miembros DATA Principales</h3>
 <table>
@@ -73,10 +73,10 @@ These three classes implement Dynamic Data Exchange (DDE) communication between 
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nService</code></td><td>Numeric</td><td>Global atom for the service name</td></tr>
-<tr><td><code>nTopic</code></td><td>Numeric</td><td>Global atom for the topic name</td></tr>
-<tr><td><code>oWndServer</code></td><td>Object</td><td>Server window object after connection</td></tr>
-<tr><td><code>lActive</code></td><td>Logical</td><td>.T. when DDE conversation is active</td></tr>
+<tr><td><code>nService</code></td><td>Numeric</td><td>Átomo global para el nombre del servicio</td></tr>
+<tr><td><code>nTopic</code></td><td>Numeric</td><td>Átomo global para el nombre del tópico</td></tr>
+<tr><td><code>oWndServer</code></td><td>Object</td><td>Objeto ventana del servidor tras la conexión</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>.T. cuando la conversación DDE está activa</td></tr>
 </tbody>
 </table>
 
@@ -86,14 +86,14 @@ These three classes implement Dynamic Data Exchange (DDE) communication between 
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cService, cTopic, cItem, bAction, bEnd )</code></td><td>Create a DDE object with service, topic, item atoms and action/end code blocks</td></tr>
-<tr><td><code>Activate()</code></td><td>Broadcast WM_DDE_INITIATE to all top-level windows</td></tr>
-<tr><td><code>Execute( cCommand )</code></td><td>Send a DDE execute command to the server</td></tr>
-<tr><td><code>End()</code></td><td>Terminate the DDE conversation and delete atoms</td></tr>
+<tr><td><code>New( cService, cTopic, cItem, bAction, bEnd )</code></td><td>Crea un objeto DDE con los átomos de servicio, tópico e ítem y los bloques de código de acción/fin</td></tr>
+<tr><td><code>Activate()</code></td><td>Difunde WM_DDE_INITIATE a todas las ventanas de nivel superior</td></tr>
+<tr><td><code>Execute( cCommand )</code></td><td>Envía un comando de ejecución DDE al servidor</td></tr>
+<tr><td><code>End()</code></td><td>Termina la conversación DDE y elimina los átomos</td></tr>
 </tbody>
 </table>
 
-<h2 id="tddecli">TDdeClient (Full Client)</h2>
+<h2 id="tddecli">TDdeClient (Cliente Completo)</h2>
 
 <h3>Miembros DATA Principales</h3>
 <table>
@@ -101,12 +101,12 @@ These three classes implement Dynamic Data Exchange (DDE) communication between 
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oWnd</code></td><td>Object</td><td>Main window object for message handling</td></tr>
-<tr><td><code>cService</code></td><td>Character</td><td>Service name (converted to atom)</td></tr>
-<tr><td><code>cTopic</code></td><td>Character</td><td>Topic name (converted to atom)</td></tr>
-<tr><td><code>lActive</code></td><td>Logical</td><td>.T. when DDE conversation is active</td></tr>
-<tr><td><code>nAck</code></td><td>Numeric</td><td>ACK status: 0=OK, 1=Busy, 2=NotSupported, 3=Timeout</td></tr>
-<tr><td><code>cData</code></td><td>Character</td><td>Holds data received from a Request call</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Objeto ventana principal para el manejo de mensajes</td></tr>
+<tr><td><code>cService</code></td><td>Character</td><td>Nombre del servicio (convertido a átomo)</td></tr>
+<tr><td><code>cTopic</code></td><td>Character</td><td>Nombre del tópico (convertido a átomo)</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>.T. cuando la conversación DDE está activa</td></tr>
+<tr><td><code>nAck</code></td><td>Numeric</td><td>Estado ACK: 0=OK, 1=Ocupado, 2=NoSoportado, 3=Tiempo agotado</td></tr>
+<tr><td><code>cData</code></td><td>Character</td><td>Contiene los datos recibidos de una llamada Request</td></tr>
 </tbody>
 </table>
 
@@ -116,16 +116,16 @@ These three classes implement Dynamic Data Exchange (DDE) communication between 
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cService, cTopic )</code></td><td>Create client; wires bDDE_ACK and bDDE_DATA to the window</td></tr>
-<tr><td><code>Activate( nWait )</code></td><td>Send WM_DDE_INITIATE; optionally wait nWait seconds for ACK</td></tr>
-<tr><td><code>Execute( cCommand, nWaitOK )</code></td><td>Send a command string and optionally wait for confirmation</td></tr>
-<tr><td><code>Request( nType, cCommand, nWaitOK )</code></td><td>Request data from the server (CF_TEXT default); result in ::cData</td></tr>
-<tr><td><code>Poke( nType, cItem, cData, nWaitOK )</code></td><td>Send data to the server identified by cItem</td></tr>
-<tr><td><code>End()</code></td><td>Terminate conversation and delete atoms</td></tr>
+<tr><td><code>New( oWnd, cService, cTopic )</code></td><td>Crea el cliente; conecta bDDE_ACK y bDDE_DATA a la ventana</td></tr>
+<tr><td><code>Activate( nWait )</code></td><td>Envía WM_DDE_INITIATE; opcionalmente espera nWait segundos por el ACK</td></tr>
+<tr><td><code>Execute( cCommand, nWaitOK )</code></td><td>Envía una cadena de comando y opcionalmente espera la confirmación</td></tr>
+<tr><td><code>Request( nType, cCommand, nWaitOK )</code></td><td>Solicita datos al servidor (CF_TEXT por defecto); resultado en ::cData</td></tr>
+<tr><td><code>Poke( nType, cItem, cData, nWaitOK )</code></td><td>Envía datos al servidor identificados por cItem</td></tr>
+<tr><td><code>End()</code></td><td>Termina la conversación y elimina los átomos</td></tr>
 </tbody>
 </table>
 
-<h2 id="tddesrv">TDdeServer (Full Server)</h2>
+<h2 id="tddesrv">TDdeServer (Servidor Completo)</h2>
 
 <h3>Miembros DATA Principales</h3>
 <table>
@@ -133,13 +133,13 @@ These three classes implement Dynamic Data Exchange (DDE) communication between 
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oWnd</code></td><td>Object</td><td>Main window object for message handling</td></tr>
-<tr><td><code>cService</code></td><td>Character</td><td>Service name to respond to</td></tr>
-<tr><td><code>cTopic</code></td><td>Character</td><td>Topic name to respond to</td></tr>
-<tr><td><code>bInit</code></td><td>Block</td><td>Code block executed on DDE initiate (return .F. to reject)</td></tr>
-<tr><td><code>bExecute</code></td><td>Block</td><td>Code block executed on DDE_EXECUTE</td></tr>
-<tr><td><code>bRequest</code></td><td>Block</td><td>Code block executed on DDE_REQUEST (return data string)</td></tr>
-<tr><td><code>bPoke</code></td><td>Block</td><td>Code block executed on DDE_POKE</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Objeto ventana principal para el manejo de mensajes</td></tr>
+<tr><td><code>cService</code></td><td>Character</td><td>Nombre del servicio al que responder</td></tr>
+<tr><td><code>cTopic</code></td><td>Character</td><td>Nombre del tópico al que responder</td></tr>
+<tr><td><code>bInit</code></td><td>Block</td><td>Bloque de código ejecutado al iniciar el DDE (devuelve .F. para rechazar)</td></tr>
+<tr><td><code>bExecute</code></td><td>Block</td><td>Bloque de código ejecutado en DDE_EXECUTE</td></tr>
+<tr><td><code>bRequest</code></td><td>Block</td><td>Bloque de código ejecutado en DDE_REQUEST (devuelve la cadena de datos)</td></tr>
+<tr><td><code>bPoke</code></td><td>Block</td><td>Bloque de código ejecutado en DDE_POKE</td></tr>
 </tbody>
 </table>
 
@@ -149,12 +149,12 @@ These three classes implement Dynamic Data Exchange (DDE) communication between 
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cService, cTopic, bInit, bExecute, bRequest, bPoke, bTerminate )</code></td><td>Create server and wire DDE message handlers to window</td></tr>
-<tr><td><code>End()</code></td><td>Remove message handlers and mark inactive</td></tr>
+<tr><td><code>New( oWnd, cService, cTopic, bInit, bExecute, bRequest, bPoke, bTerminate )</code></td><td>Crea el servidor y conecta los manejadores de mensajes DDE a la ventana</td></tr>
+<tr><td><code>End()</code></td><td>Elimina los manejadores de mensajes y marca como inactivo</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: DDE Client</h2>
+<h2 id="example">Ejemplo: Cliente DDE</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -162,11 +162,11 @@ function DDEClientDemo()
 
    local oClient := TDdeClient():New( oWnd, "MyService", "MyTopic" )
 
-   // Activate with 5-second timeout
+   // Activar con un tiempo de espera de 5 segundos
    if oClient:Activate( 5 )
-      // Execute a command
+      // Ejecutar un comando
       oClient:Execute( "OPEN_FILE|C:\data.txt" )
-      // Request data
+      // Solicitar datos
       oClient:Request( 1, "GET_STATUS" )
       MsgInfo( oClient:cData )
       oClient:End()
@@ -174,7 +174,7 @@ function DDEClientDemo()
 
 return nil</code></pre>
 
-<h2 id="example2">Example: DDE Server</h2>
+<h2 id="example2">Ejemplo: Servidor DDE</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -190,10 +190,10 @@ return nil</code></pre>
 
 <h2 id="notes">Notas</h2>
 <ul>
-<li>DDE uses Windows messaging (WM_DDE_*) and global atoms for service/topic identification.</li>
-<li>The server window must remain alive for the conversation to stay active. Server activation happens automatically when <code>New()</code> wires the handlers.</li>
-<li>ACK codes are: 0=OK, 1=Busy, 2=NotSupported, 3=Timeout. Check <code>::nAck</code> after each operation.</li>
-<li>For <code>Request()</code>, the returned data is stored in <code>::cData</code>. Only CF_TEXT is supported.</li>
+<li>DDE utiliza la mensajería de Windows (WM_DDE_*) y átomos globales para la identificación de servicio/tópico.</li>
+<li>La ventana del servidor debe permanecer viva para que la conversación siga activa. La activación del servidor ocurre automáticamente cuando <code>New()</code> conecta los manejadores.</li>
+<li>Los códigos ACK son: 0=OK, 1=Ocupado, 2=NoSoportado, 3=Tiempo agotado. Comprueba <code>::nAck</code> después de cada operación.</li>
+<li>Para <code>Request()</code>, los datos devueltos se almacenan en <code>::cData</code>. Solo se soporta CF_TEXT.</li>
 </ul>
 
 </main>

@@ -80,93 +80,93 @@
 </nav>
 <main id="content">
 
-<h1>Renderização Gráfica Funções</h1>
+<h1>Funções de Renderização Gráfica</h1>
 <p class="class-source">Fonte: <code>source/function/imgtxtio.prg</code>, <code>source/winapi/gdipfwh.cpp</code></p>
 
 <p>
-FiveWin's graphics rendering functions provide the core drawing primitives for all visual output across windows, dialogs, printers, and PDF documents. They abstract Windows GDI and GDI+ operations, handling resource conversion, alpha blending, gradient fills, and coordinate transformations. The middleware layer in <code>imgtxtio.prg</code> converts Harbour data types (colors, arrays, objects) into low-level GDI handles.
+As funções de renderização gráfica do FiveWin fornecem as primitivas de desenho fundamentais para toda saída visual em janelas, diálogos, impressoras e documentos PDF. Elas abstraem as operações Windows GDI e GDI+, tratando da conversão de recursos, mesclagem alfa, preenchimentos com gradiente e transformações de coordenadas. A camada intermediária em <code>imgtxtio.prg</code> converte tipos de dados Harbour (cores, arrays, objetos) em handles GDI de baixo nível.
 </p>
 
-<h2 id="fw_box">FW_Box() - Shape Rendering</h2>
+<h2 id="fw_box">FW_Box() - Renderização de Formas</h2>
 <pre><code class="language-harbour">FW_Box( hDC, aRect, uPen, uBrush, aText, nShape )</code></pre>
-<p>Draws rectangles, rounded rectangles, or ellipses with customizable pens and brushes. Supports gradient fills, alpha blending, and optional text inside the shape.</p>
+<p>Desenha retângulos, retângulos arredondados ou elipses com canetas e pincéis personalizáveis. Suporta preenchimentos com gradiente, mesclagem alfa e texto opcional dentro da forma.</p>
 
 <table>
 <thead>
-<tr><th>Parameter</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hDC</code></td><td>Handle / Object</td><td>Device context handle, TWindow, TDialog, or TPrinter object</td></tr>
-<tr><td><code>aRect</code></td><td>Array</td><td><code>{ nTop, nLeft, nBottom, nRight }</code> in pixels</td></tr>
-<tr><td><code>uPen</code></td><td>Various</td><td>Pen color (numeric), <code>{ color, nWidth }</code> array, TPen object, or handle</td></tr>
-<tr><td><code>uBrush</code></td><td>Various</td><td>Brush color, gradient array, TBrush object, or image handle</td></tr>
-<tr><td><code>aText</code></td><td>Array / Nil</td><td>Optional <code>{ cText, oFont, nClrText, cAlign }</code> to draw inside the shape</td></tr>
-<tr><td><code>nShape</code></td><td>Numeric</td><td>Shape constant: 0 = Rectangle, 1 = RoundRect, 2 = Ellipse</td></tr>
+<tr><td><code>hDC</code></td><td>Handle / Objeto</td><td>Handle do contexto de dispositivo, objeto TWindow, TDialog ou TPrinter</td></tr>
+<tr><td><code>aRect</code></td><td>Array</td><td><code>{ nTop, nLeft, nBottom, nRight }</code> em pixels</td></tr>
+<tr><td><code>uPen</code></td><td>Vários</td><td>Cor da caneta (numérica), array <code>{ color, nWidth }</code>, objeto TPen ou handle</td></tr>
+<tr><td><code>uBrush</code></td><td>Vários</td><td>Cor do pincel, array de gradiente, objeto TBrush ou handle de imagem</td></tr>
+<tr><td><code>aText</code></td><td>Array / Nil</td><td>Opcional <code>{ cText, oFont, nClrText, cAlign }</code> para desenhar dentro da forma</td></tr>
+<tr><td><code>nShape</code></td><td>Numérico</td><td>Constante de forma: 0 = Retângulo, 1 = RoundRect, 2 = Elipse</td></tr>
 </tbody>
 </table>
 
-<h2 id="fw_saytext">FW_SayText() - Text Rendering</h2>
+<h2 id="fw_saytext">FW_SayText() - Renderização de Texto</h2>
 <pre><code class="language-harbour">FW_SayText( oWnd, cText, aRect, cAlign, oFont, nClrText, nClrBack, lBorder, nAddStyle )</code></pre>
-<p>Draws text with full alignment control, word wrapping, and optional background fill. Supports GDI+ rendering for alpha colors and basic RTF formatting.</p>
+<p>Desenha texto com controle total de alinhamento, quebra de linha e preenchimento de fundo opcional. Suporta renderização GDI+ para cores alfa e formatação RTF básica.</p>
 
 <table>
 <thead>
-<tr><th>Flag</th><th>Meaning</th></tr>
+<tr><th>Flag</th><th>Significado</th></tr>
 </thead>
 <tbody>
-<tr><td><code>C</code></td><td>Center horizontally</td></tr>
-<tr><td><code>L</code></td><td>Left-align</td></tr>
-<tr><td><code>R</code></td><td>Right-align</td></tr>
-<tr><td><code>T</code></td><td>Top-align vertically</td></tr>
-<tr><td><code>B</code></td><td>Bottom-align vertically</td></tr>
-<tr><td><code>W</code></td><td>Word-wrap</td></tr>
+<tr><td><code>C</code></td><td>Centralizar horizontalmente</td></tr>
+<tr><td><code>L</code></td><td>Alinhar à esquerda</td></tr>
+<tr><td><code>R</code></td><td>Alinhar à direita</td></tr>
+<tr><td><code>T</code></td><td>Alinhar ao topo verticalmente</td></tr>
+<tr><td><code>B</code></td><td>Alinhar à base verticalmente</td></tr>
+<tr><td><code>W</code></td><td>Quebra de linha</td></tr>
 </tbody>
 </table>
-<p>Alignment flags combine freely: <code>"CR"</code> = center-right, <code>"TL"</code> = top-left, <code>"CB"</code> = center-bottom.</p>
+<p>Os flags de alinhamento combinam livremente: <code>"CR"</code> = centro-direita, <code>"TL"</code> = topo-esquerda, <code>"CB"</code> = centro-base.</p>
 
-<h3 id="saytext-variants">Text Variants</h3>
+<h3 id="saytext-variants">Variantes de Texto</h3>
 <ul>
-<li><code>FW_SayHollow( hDC, cText, aRect, cAlign, oFont, nClrText, nClrBack )</code> - Renders text as hollow (outline only) using GDI or GDI+.</li>
-<li><code>FW_SayTextHilite( oWnd, cText, aRect, cAlign, oFont, nClrText, nClrBack, aHilite, aFonts, aClrs )</code> - Renders text with specific words highlighted in different fonts and colors.</li>
-<li><code>FW_SayTextSpread( hDC, cText, aRect, oFont, nClrText, nClrBack, nAngle )</code> - Distributes characters evenly across the full width of the target rectangle.</li>
+<li><code>FW_SayHollow( hDC, cText, aRect, cAlign, oFont, nClrText, nClrBack )</code> - Renderiza o texto como vazado (apenas contorno) usando GDI ou GDI+.</li>
+<li><code>FW_SayTextHilite( oWnd, cText, aRect, cAlign, oFont, nClrText, nClrBack, aHilite, aFonts, aClrs )</code> - Renderiza o texto com palavras específicas destacadas em diferentes fontes e cores.</li>
+<li><code>FW_SayTextSpread( hDC, cText, aRect, oFont, nClrText, nClrBack, nAngle )</code> - Distribui os caracteres uniformemente por toda a largura do retângulo de destino.</li>
 </ul>
 
-<h2 id="fw_drawimage">FW_DrawImage() - Image Rendering</h2>
+<h2 id="fw_drawimage">FW_DrawImage() - Renderização de Imagem</h2>
 <pre><code class="language-harbour">FW_DrawImage( oWnd, hBmp, aRect, lTransp, nResize, nAlpha, lGray, cAlign, aColorMap )</code></pre>
-<p>Draws a bitmap on a window or device context with support for resize modes, alpha blending, grayscale, and color mapping.</p>
+<p>Desenha um bitmap em uma janela ou contexto de dispositivo com suporte a modos de redimensionamento, mesclagem alfa, escala de cinza e mapeamento de cores.</p>
 
 <table>
 <thead>
-<tr><th>nResize</th><th>Constant</th><th>Behavior</th></tr>
+<tr><th>nResize</th><th>Constante</th><th>Comportamento</th></tr>
 </thead>
 <tbody>
-<tr><td>0</td><td><code>FIT_CENTER</code></td><td>Center at original size, no scaling</td></tr>
-<tr><td>1</td><td><code>FIT_WIDTH</code></td><td>Scale to match rectangle width, maintain aspect ratio</td></tr>
-<tr><td>2</td><td><code>FIT_HEIGHT</code></td><td>Scale to match rectangle height, maintain aspect ratio</td></tr>
-<tr><td>3</td><td><code>FIT_RECT</code></td><td>Stretch to fill the target rectangle (may distort)</td></tr>
-<tr><td>4</td><td><code>FIT_ORGL</code></td><td>Display at original pixel size, clipped if larger</td></tr>
+<tr><td>0</td><td><code>FIT_CENTER</code></td><td>Centraliza no tamanho original, sem escalonamento</td></tr>
+<tr><td>1</td><td><code>FIT_WIDTH</code></td><td>Escala para corresponder à largura do retângulo, mantendo a proporção</td></tr>
+<tr><td>2</td><td><code>FIT_HEIGHT</code></td><td>Escala para corresponder à altura do retângulo, mantendo a proporção</td></tr>
+<tr><td>3</td><td><code>FIT_RECT</code></td><td>Estica para preencher o retângulo de destino (pode distorcer)</td></tr>
+<tr><td>4</td><td><code>FIT_ORGL</code></td><td>Exibe no tamanho original em pixels, recortado se maior</td></tr>
 </tbody>
 </table>
-<p>Set <code>nAlpha</code> to a value between 0 (invisible) and 255 (opaque) for semi-transparent rendering. Set <code>lGray</code> to <code>.T.</code> for grayscale conversion. <code>aColorMap</code> is an optional array of <code>{ nFrom, nTo }</code> color replacements.</p>
+<p>Defina <code>nAlpha</code> com um valor entre 0 (invisível) e 255 (opaco) para renderização semitransparente. Defina <code>lGray</code> como <code>.T.</code> para conversão em escala de cinza. <code>aColorMap</code> é um array opcional de substituições de cor <code>{ nFrom, nTo }</code>.</p>
 
 <h2 id="fw_drawshadow">FW_DrawShadow()</h2>
 <pre><code class="language-harbour">FW_DrawShadow( hDC, aRect, nSize, nAlpha )</code></pre>
-<p>Draws a drop shadow effect around a rectangle. <code>nSize</code> controls the shadow width in pixels (typically 4-12), and <code>nAlpha</code> (0-255) controls the opacity. The shadow fades from opaque at the edge to transparent outward.</p>
+<p>Desenha um efeito de sombra projetada ao redor de um retângulo. <code>nSize</code> controla a largura da sombra em pixels (tipicamente 4-12), e <code>nAlpha</code> (0-255) controla a opacidade. A sombra esmaece de opaca na borda até transparente para fora.</p>
 
 <h2 id="gradientfill">GradientFill()</h2>
 <pre><code class="language-harbour">GradientFill( hDC, nTop, nLeft, nBottom, nRight, aGradInfo, lVert )</code></pre>
-<p>Fills a rectangular region with a multi-stop gradient. <code>aGradInfo</code> is an array of <code>{ nColor }</code> stops; two stops give a simple blend, three or more create multi-step transitions. Set <code>lVert</code> to <code>.T.</code> for a vertical gradient (top-to-bottom) or <code>.F.</code> for horizontal (left-to-right).</p>
+<p>Preenche uma região retangular com um gradiente de múltiplas paradas. <code>aGradInfo</code> é um array de paradas <code>{ nColor }</code>; duas paradas produzem uma mesclagem simples, três ou mais criam transições em múltiplas etapas. Defina <code>lVert</code> como <code>.T.</code> para um gradiente vertical (de cima para baixo) ou <code>.F.</code> para horizontal (da esquerda para a direita).</p>
 
-<h2 id="additional-functions">Additional Drawing Funções</h2>
+<h2 id="additional-functions">Funções de Desenho Adicionais</h2>
 
 <ul>
-<li><code>FW_DrawShapes( oWnd, aShapes, aRect )</code> - Batch-draws multiple shapes (rect, roundrect, ellipse, line, polygon) from an array of <code>{ nShape, aRect, uPen, uBrush }</code> descriptors.</li>
-<li><code>FW_PieChart( oWnd, aRect, aValues, aColors )</code> - Draws a pie/donut chart from numeric data and color arrays.</li>
-<li><code>FillRectEx( hDC, aRect, nClr )</code> - Solid-color rectangle fill without brush creation overhead.</li>
-<li><code>RingGradientFill( hDC, nTop, nLeft, nBottom, nRight, aGradInfo, nAngle )</code> - Radial/ring gradient fill for glossy effects and custom backgrounds.</li>
+<li><code>FW_DrawShapes( oWnd, aShapes, aRect )</code> - Desenha em lote múltiplas formas (retângulo, retângulo arredondado, elipse, linha, polígono) a partir de um array de descritores <code>{ nShape, aRect, uPen, uBrush }</code>.</li>
+<li><code>FW_PieChart( oWnd, aRect, aValues, aColors )</code> - Desenha um gráfico de pizza/rosca a partir de arrays de dados numéricos e cores.</li>
+<li><code>FillRectEx( hDC, aRect, nClr )</code> - Preenchimento de retângulo com cor sólida sem o custo de criação de um pincel.</li>
+<li><code>RingGradientFill( hDC, nTop, nLeft, nBottom, nRight, aGradInfo, nAngle )</code> - Preenchimento com gradiente radial/anular para efeitos brilhantes e fundos personalizados.</li>
 </ul>
 
-<h2 id="example">Example: Box with Text and Shadow</h2>
+<h2 id="example">Exemplo: Caixa com Texto e Sombra</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -175,10 +175,10 @@ function DrawSample( hDC, oWnd )
    local aRect := { 50, 50, 350, 250 }
    local oFont := TFont():New( "Segoe UI", 0, -18 )
 
-   // Draw drop shadow first
+   // Desenha primeiro a sombra projetada
    FW_DrawShadow( hDC, aRect, 8, 80 )
 
-   // Draw a rounded rectangle with gradient fill
+   // Desenha um retângulo arredondado com preenchimento em gradiente
    FW_Box( hDC, aRect, CLR_BLUE, ;
            { CLR_WHITE, CLR_HBLUE }, ;
            { "Hello FWH Graphics", oFont, CLR_BLACK, "CR" }, ;

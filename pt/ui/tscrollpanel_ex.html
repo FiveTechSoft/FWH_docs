@@ -100,56 +100,56 @@
 <main id="content">
 
 <h1>TScrollPanelEx</h1>
-<p class="class-source">Source: <code>source/classes/scrollex.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
+<p class="class-source">Fonte: <code>source/classes/scrollex.prg</code></p>
+<p class="class-hierarchy">Herda de: <code>TPanel</code></p>
 
 <p>
-TScrollPanelEx is an enhanced scrollable panel that supports horizontal scrolling of child controls with keyboard, mouse wheel, scroll bar, and gesture (touch/pan) input. It tracks the leftmost and rightmost child controls to compute the scroll range and provides automatic scrollbar management. The panel is commonly used for toolbars, ribbon-style layouts, and overflow containers.
+TScrollPanelEx é um painel rolável aprimorado que suporta rolagem horizontal de controles filhos com entrada via teclado, roda do mouse, barra de rolagem e gestos (toque/pan). Ele rastreia os controles filhos mais à esquerda e mais à direita para calcular a faixa de rolagem e fornece gerenciamento automático da barra de rolagem. O painel é comumente usado para barras de ferramentas, layouts estilo ribbon e contêineres de overflow.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Membros DATA Principais</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hStep</code></td><td>Numeric</td><td>Horizontal scroll step in pixels (default 20)</td></tr>
-<tr><td><code>nScrollRange</code></td><td>Numeric</td><td>Computed scroll range based on child control positions</td></tr>
-<tr><td><code>oCtrlLeft</code></td><td>Object</td><td>Leftmost child control (used for scroll boundary)</td></tr>
-<tr><td><code>oCtrlRight</code></td><td>Object</td><td>Rightmost child control</td></tr>
-<tr><td><code>nRightMargin</code></td><td>Numeric</td><td>Right margin for auto-resize</td></tr>
-<tr><td><code>nBottomMargin</code></td><td>Numeric</td><td>Bottom margin for auto-resize</td></tr>
-<tr><td><code>aPages</code></td><td>Array</td><td>Named page positions for GoToPage navigation</td></tr>
-<tr><td><code>lScrollDrag</code></td><td>Logical</td><td>Drag-to-scroll mode flag</td></tr>
+<tr><td><code>hStep</code></td><td>Numérico</td><td>Passo de rolagem horizontal em pixels (padrão 20)</td></tr>
+<tr><td><code>nScrollRange</code></td><td>Numérico</td><td>Faixa de rolagem calculada com base nas posições dos controles filhos</td></tr>
+<tr><td><code>oCtrlLeft</code></td><td>Objeto</td><td>Controle filho mais à esquerda (usado como limite de rolagem)</td></tr>
+<tr><td><code>oCtrlRight</code></td><td>Objeto</td><td>Controle filho mais à direita</td></tr>
+<tr><td><code>nRightMargin</code></td><td>Numérico</td><td>Margem direita para redimensionamento automático</td></tr>
+<tr><td><code>nBottomMargin</code></td><td>Numérico</td><td>Margem inferior para redimensionamento automático</td></tr>
+<tr><td><code>aPages</code></td><td>Array</td><td>Posições de páginas nomeadas para navegação GoToPage</td></tr>
+<tr><td><code>lScrollDrag</code></td><td>Lógico</td><td>Sinalizador do modo arrastar-para-rolar</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lNoBorder )</code></td><td>Create a scrollable panel. Pass <code>lNoBorder := .T.</code> to omit the border</td></tr>
-<tr><td><code>Redefine( nId, oWnd, lNoBorder )</code></td><td>Redefine from a dialog resource</td></tr>
-<tr><td><code>SetRange()</code></td><td>Scan child controls and set the scroll range</td></tr>
-<tr><td><code>ScrollBy( nPix )</code></td><td>Scroll content horizontally by the given pixel offset</td></tr>
-<tr><td><code>GoLeft() / GoRight()</code></td><td>Scroll to the extreme left or right</td></tr>
-<tr><td><code>GoLeftPix( nPix ) / GoRightPix( nPix )</code></td><td>Scroll by a specific pixel amount</td></tr>
-<tr><td><code>PageLeft() / PageRight()</code></td><td>Scroll by two step sizes (page-style)</td></tr>
-<tr><td><code>GoToPos( nPos )</code></td><td>Scroll to an absolute scrollbar position</td></tr>
-<tr><td><code>GoToPage( cPage )</code></td><td>Scroll to a named page (registered via SetPage)</td></tr>
-<tr><td><code>SetPage( cPage, nCol )</code></td><td>Register a named page at a given column position</td></tr>
-<tr><td><code>ControlIntoView( oControl )</code></td><td>Scroll to ensure a specific control is visible</td></tr>
-<tr><td><code>hScroll( nWParam, nLParam )</code></td><td>Handle horizontal scroll bar messages</td></tr>
-<tr><td><code>MouseWheel( nKeys, nDelta, nXPos, nYPos )</code></td><td>Handle mouse wheel for horizontal scrolling</td></tr>
-<tr><td><code>HandleGesture( nGesture, nLParam )</code></td><td>Handle touch pan gestures (kinetic scrolling)</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lNoBorder )</code></td><td>Cria um painel rolável. Passe <code>lNoBorder := .T.</code> para omitir a borda</td></tr>
+<tr><td><code>Redefine( nId, oWnd, lNoBorder )</code></td><td>Redefine a partir de um recurso de diálogo</td></tr>
+<tr><td><code>SetRange()</code></td><td>Varre os controles filhos e define a faixa de rolagem</td></tr>
+<tr><td><code>ScrollBy( nPix )</code></td><td>Rola o conteúdo horizontalmente pelo deslocamento em pixels informado</td></tr>
+<tr><td><code>GoLeft() / GoRight()</code></td><td>Rola para o extremo esquerdo ou direito</td></tr>
+<tr><td><code>GoLeftPix( nPix ) / GoRightPix( nPix )</code></td><td>Rola por uma quantidade específica de pixels</td></tr>
+<tr><td><code>PageLeft() / PageRight()</code></td><td>Rola por dois tamanhos de passo (estilo página)</td></tr>
+<tr><td><code>GoToPos( nPos )</code></td><td>Rola para uma posição absoluta da barra de rolagem</td></tr>
+<tr><td><code>GoToPage( cPage )</code></td><td>Rola para uma página nomeada (registrada via SetPage)</td></tr>
+<tr><td><code>SetPage( cPage, nCol )</code></td><td>Registra uma página nomeada em uma dada posição de coluna</td></tr>
+<tr><td><code>ControlIntoView( oControl )</code></td><td>Rola para garantir que um controle específico fique visível</td></tr>
+<tr><td><code>hScroll( nWParam, nLParam )</code></td><td>Trata as mensagens da barra de rolagem horizontal</td></tr>
+<tr><td><code>MouseWheel( nKeys, nDelta, nXPos, nYPos )</code></td><td>Trata a roda do mouse para rolagem horizontal</td></tr>
+<tr><td><code>HandleGesture( nGesture, nLParam )</code></td><td>Trata gestos de toque (pan) para rolagem cinética</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Smooth Scroll Panel with Child Controls</h2>
+<h2 id="example">Exemplo: Painel de Rolagem Suave com Controles Filhos</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -172,13 +172,13 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>Call <code>SetRange()</code> after adding all child controls to compute the scroll boundaries and attach focus-tracking for auto-scroll into view.</li>
-<li>Use <code>SetPage( cName, nCol )</code> with <code>GoToPage( cName )</code> for named-section navigation.</li>
-<li>Drag scrolling is enabled by holding the left mouse button and dragging horizontally on the panel background.</li>
-<li>Touch gestures (pan) are supported on devices with touch input via the <code>HandleGesture</code> method (GID_PAN).</li>
+<li>Chame <code>SetRange()</code> após adicionar todos os controles filhos para calcular os limites de rolagem e anexar o rastreamento de foco para rolagem automática até a visualização.</li>
+<li>Use <code>SetPage( cName, nCol )</code> com <code>GoToPage( cName )</code> para navegação por seções nomeadas.</li>
+<li>A rolagem por arraste é habilitada ao manter pressionado o botão esquerdo do mouse e arrastar horizontalmente sobre o fundo do painel.</li>
+<li>Gestos de toque (pan) são suportados em dispositivos com entrada por toque através do método <code>HandleGesture</code> (GID_PAN).</li>
 </ul>
 
 </main>

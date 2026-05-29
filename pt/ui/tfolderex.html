@@ -92,65 +92,65 @@
 <main id="content">
 
 <h1>TFolderEx</h1>
-<p class="class-source">Source: <code>source/classes/tfoldex.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fonte: <code>source/classes/tfoldex.prg</code></p>
+<p class="class-hierarchy">Herda de: <code>TControl</code></p>
 
 <p>
-TFolderEx is an extended tabbed folder control that supports multiple tab layouts (top, left, bottom, right), gradient rendering, bitmaps per tab, animation, drag-reordering, per-tab enable/disable/hide, and multi-line tabs. It is the primary tab control used in modern FWH applications, offering a rich alternative to the standard TFolder.
+TFolderEx é um controle de pasta com abas estendido que suporta múltiplos layouts de abas (superior, esquerda, inferior, direita), renderização com gradiente, bitmaps por aba, animação, reordenação por arraste, habilitar/desabilitar/ocultar por aba e abas em múltiplas linhas. É o principal controle de abas usado em aplicações FWH modernas, oferecendo uma alternativa rica ao TFolder padrão.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Principais Membros DATA</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aDialogs</code></td><td>Array</td><td>Array of child dialog objects for each tab page</td></tr>
-<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of tab caption strings</td></tr>
-<tr><td><code>aEnable</code></td><td>Array</td><td>Array of logical values: enabled state per tab</td></tr>
-<tr><td><code>aBitmaps</code></td><td>Array</td><td>Array of bitmap handles for each tab icon</td></tr>
-<tr><td><code>aAlign</code></td><td>Array</td><td>Per-tab text alignment: AL_LEFT, AL_RIGHT, AL_CENTER</td></tr>
-<tr><td><code>nLayOut</code></td><td>Numeric</td><td>Tab position: TOP (1), LEFT (2), BOTTOM (3), RIGHT (4)</td></tr>
-<tr><td><code>nOption</code></td><td>Numeric</td><td>Currently selected tab index (1-based)</td></tr>
-<tr><td><code>nOver</code></td><td>Numeric</td><td>Tab index that the mouse is currently hovering over</td></tr>
-<tr><td><code>nSeparator</code></td><td>Numeric</td><td>Pixel gap between adjacent tabs</td></tr>
-<tr><td><code>nRound</code></td><td>Numeric</td><td>Corner radius for tab backgrounds</td></tr>
-<tr><td><code>aGradSel</code></td><td>Array</td><td>Gradient for the selected tab</td></tr>
-<tr><td><code>aGradUnsel</code></td><td>Array</td><td>Gradient for unselected tabs</td></tr>
-<tr><td><code>aGradOver</code></td><td>Array</td><td>Gradient for the hovered tab</td></tr>
-<tr><td><code>aGradDis</code></td><td>Array</td><td>Gradient for disabled tabs</td></tr>
-<tr><td><code>lAnimation</code></td><td>Logical</td><td>Enable animated transition when switching tabs</td></tr>
-<tr><td><code>lMultiLine</code></td><td>Logical</td><td>Allow tabs to wrap to multiple rows</td></tr>
-<tr><td><code>lStretch</code></td><td>Logical</td><td>Stretch tabs to fill the available width</td></tr>
+<tr><td><code>aDialogs</code></td><td>Array</td><td>Array de objetos de diálogo filho para cada página de aba</td></tr>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array de strings de legenda das abas</td></tr>
+<tr><td><code>aEnable</code></td><td>Array</td><td>Array de valores lógicos: estado habilitado por aba</td></tr>
+<tr><td><code>aBitmaps</code></td><td>Array</td><td>Array de handles de bitmap para cada ícone de aba</td></tr>
+<tr><td><code>aAlign</code></td><td>Array</td><td>Alinhamento de texto por aba: AL_LEFT, AL_RIGHT, AL_CENTER</td></tr>
+<tr><td><code>nLayOut</code></td><td>Numeric</td><td>Posição da aba: TOP (1), LEFT (2), BOTTOM (3), RIGHT (4)</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Índice da aba atualmente selecionada (base 1)</td></tr>
+<tr><td><code>nOver</code></td><td>Numeric</td><td>Índice da aba sobre a qual o mouse está atualmente posicionado</td></tr>
+<tr><td><code>nSeparator</code></td><td>Numeric</td><td>Espaçamento em pixels entre abas adjacentes</td></tr>
+<tr><td><code>nRound</code></td><td>Numeric</td><td>Raio dos cantos para os fundos das abas</td></tr>
+<tr><td><code>aGradSel</code></td><td>Array</td><td>Gradiente para a aba selecionada</td></tr>
+<tr><td><code>aGradUnsel</code></td><td>Array</td><td>Gradiente para abas não selecionadas</td></tr>
+<tr><td><code>aGradOver</code></td><td>Array</td><td>Gradiente para a aba sob o cursor</td></tr>
+<tr><td><code>aGradDis</code></td><td>Array</td><td>Gradiente para abas desabilitadas</td></tr>
+<tr><td><code>lAnimation</code></td><td>Logical</td><td>Habilita transição animada ao trocar de abas</td></tr>
+<tr><td><code>lMultiLine</code></td><td>Logical</td><td>Permite que as abas se distribuam em múltiplas linhas</td></tr>
+<tr><td><code>lStretch</code></td><td>Logical</td><td>Estica as abas para preencher a largura disponível</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, oWnd, aBitmaps, lPixel, lDesign, aPrompts, nFolH, nLayOut, ... )</code></td><td>Create an extended folder with prompts, bitmaps, layout direction and gradients</td></tr>
-<tr><td><code>SetOption( nOption )</code></td><td>Activate a tab by its 1-based index</td></tr>
-<tr><td><code>AddItem( cPrompt, cBmp, oDlg )</code></td><td>Add a new tab with prompt, optional bitmap and dialog page</td></tr>
-<tr><td><code>DelItem( nOption )</code></td><td>Remove a tab and its associated dialog page</td></tr>
-<tr><td><code>MoveTab( nNewPos )</code></td><td>Move a tab to a new position (drag reorder support)</td></tr>
-<tr><td><code>DisableTab( nOption )</code></td><td>Disable a specific tab</td></tr>
-<tr><td><code>EnableTab( nOption )</code></td><td>Enable a previously disabled tab</td></tr>
-<tr><td><code>HideTab( nOption )</code></td><td>Hide a specific tab</td></tr>
-<tr><td><code>ShowTab( nOption )</code></td><td>Show a previously hidden tab</td></tr>
-<tr><td><code>AnimateOpt( nOption, nOldOption )</code></td><td>Play the animated transition between old and new tab</td></tr>
-<tr><td><code>ChangeOrder()</code></td><td>Apply the current order array (<code>aOrder</code>) to rearrange tabs</td></tr>
-<tr><td><code>SetBitmap( cBmp, nOption )</code></td><td>Change the bitmap for a specific tab</td></tr>
-<tr><td><code>SetLayOut( nLayOut, ... )</code></td><td>Change the tab layout direction (TOP/LEFT/BOTTOM/RIGHT) and update gradients</td></tr>
-<tr><td><code>SetDefColors( aGradSel, aGradUnsel, aGradOver, aGradDis )</code></td><td>Set default gradient arrays for all tab states</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, oWnd, aBitmaps, lPixel, lDesign, aPrompts, nFolH, nLayOut, ... )</code></td><td>Cria uma pasta estendida com legendas, bitmaps, direção do layout e gradientes</td></tr>
+<tr><td><code>SetOption( nOption )</code></td><td>Ativa uma aba pelo seu índice de base 1</td></tr>
+<tr><td><code>AddItem( cPrompt, cBmp, oDlg )</code></td><td>Adiciona uma nova aba com legenda, bitmap opcional e página de diálogo</td></tr>
+<tr><td><code>DelItem( nOption )</code></td><td>Remove uma aba e sua página de diálogo associada</td></tr>
+<tr><td><code>MoveTab( nNewPos )</code></td><td>Move uma aba para uma nova posição (suporte a reordenação por arraste)</td></tr>
+<tr><td><code>DisableTab( nOption )</code></td><td>Desabilita uma aba específica</td></tr>
+<tr><td><code>EnableTab( nOption )</code></td><td>Habilita uma aba previamente desabilitada</td></tr>
+<tr><td><code>HideTab( nOption )</code></td><td>Oculta uma aba específica</td></tr>
+<tr><td><code>ShowTab( nOption )</code></td><td>Exibe uma aba previamente oculta</td></tr>
+<tr><td><code>AnimateOpt( nOption, nOldOption )</code></td><td>Reproduz a transição animada entre a aba antiga e a nova</td></tr>
+<tr><td><code>ChangeOrder()</code></td><td>Aplica o array de ordem atual (<code>aOrder</code>) para reorganizar as abas</td></tr>
+<tr><td><code>SetBitmap( cBmp, nOption )</code></td><td>Altera o bitmap de uma aba específica</td></tr>
+<tr><td><code>SetLayOut( nLayOut, ... )</code></td><td>Altera a direção do layout das abas (TOP/LEFT/BOTTOM/RIGHT) e atualiza os gradientes</td></tr>
+<tr><td><code>SetDefColors( aGradSel, aGradUnsel, aGradOver, aGradDis )</code></td><td>Define os arrays de gradiente padrão para todos os estados de aba</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: 3-Tab Folder with Icons</h2>
+<h2 id="example">Exemplo: Pasta com 3 Abas e Ícones</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -174,15 +174,15 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TFolderEx supports four tab layouts via <code>nLayOut</code>: TOP (1), LEFT (2), BOTTOM (3), RIGHT (4). The tab strip is drawn accordingly and child dialogs are positioned to fill the remaining area.</li>
-<li>Per-tab state arrays (<code>aEnable</code>, <code>aVisible</code>, <code>aAlign</code>, <code>aBitmaps</code>) are maintained in parallel with <code>aPrompts</code>.</li>
-<li>When <code>lAnimation</code> is true, tab switching triggers a slide transition controlled by <code>nSpeed</code>.</li>
-<li>The tab rendering is split into two internal methods: <code>PaintLR()</code> for left/right layouts and <code>PaintTB()</code> for top/bottom layouts.</li>
-<li>Right-click on a tab fires <code>bPopup</code> if assigned, allowing context menus per tab.</li>
-<li>Tab reordering is supported via <code>aOrder</code> — set the array to the desired tab index sequence and call <code>ChangeOrder()</code>.</li>
+<li>TFolderEx suporta quatro layouts de abas via <code>nLayOut</code>: TOP (1), LEFT (2), BOTTOM (3), RIGHT (4). A faixa de abas é desenhada de acordo e os diálogos filhos são posicionados para preencher a área restante.</li>
+<li>Os arrays de estado por aba (<code>aEnable</code>, <code>aVisible</code>, <code>aAlign</code>, <code>aBitmaps</code>) são mantidos em paralelo com <code>aPrompts</code>.</li>
+<li>Quando <code>lAnimation</code> é verdadeiro, a troca de abas dispara uma transição deslizante controlada por <code>nSpeed</code>.</li>
+<li>A renderização das abas é dividida em dois métodos internos: <code>PaintLR()</code> para layouts esquerda/direita e <code>PaintTB()</code> para layouts superior/inferior.</li>
+<li>O clique com o botão direito em uma aba dispara <code>bPopup</code> se atribuído, permitindo menus de contexto por aba.</li>
+<li>A reordenação de abas é suportada via <code>aOrder</code> — defina o array com a sequência de índices de aba desejada e chame <code>ChangeOrder()</code>.</li>
 </ul>
 
 </main>

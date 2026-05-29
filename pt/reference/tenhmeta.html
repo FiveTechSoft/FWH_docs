@@ -91,10 +91,11 @@
 <p class="class-hierarchy">Herda de: <code>TControl</code></p>
 
 <p>
-TEnhMetaFile displays Windows Enhanced Metafiles (EMF) inside FiveWin windows and dialogs.
-It is a full TControl subclass supporting sizing, positioning, zoom in/out, shadow effects,
-and resource cleanup. EMF files contain vector graphics that scale without quality loss,
-making them ideal for diagrams, logos, and print-preview content.
+TEnhMetaFile exibe Enhanced Metafiles (EMF) do Windows dentro de janelas e diálogos FiveWin.
+É uma subclasse completa de TControl com suporte a dimensionamento, posicionamento, zoom para
+aproximar/afastar, efeitos de sombra e liberação de recursos. Os arquivos EMF contêm gráficos
+vetoriais que escalam sem perda de qualidade, tornando-os ideais para diagramas, logotipos e
+conteúdo de pré-visualização de impressão.
 </p>
 
 <h2 id="data">Principais Membros DATA</h2>
@@ -104,15 +105,15 @@ making them ideal for diagrams, logos, and print-preview content.
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hMeta</code></td><td>Numeric (Handle)</td><td>Enhanced metafile handle (HENHMETAFILE)</td></tr>
-<tr><td><code>nWidth</code></td><td>Numeric</td><td>Logical width of the metafile</td></tr>
-<tr><td><code>nHeight</code></td><td>Numeric</td><td>Logical height of the metafile</td></tr>
-<tr><td><code>nXZoom</code></td><td>Numeric</td><td>X-axis zoom factor (default 2)</td></tr>
-<tr><td><code>nYZoom</code></td><td>Numeric</td><td>Y-axis zoom factor (default 4)</td></tr>
-<tr><td><code>nXorig</code></td><td>Numeric</td><td>X-axis scroll origin offset</td></tr>
-<tr><td><code>nYorig</code></td><td>Numeric</td><td>Y-axis scroll origin offset</td></tr>
-<tr><td><code>lZoom</code></td><td>Logical</td><td>Whether zoom mode is currently active</td></tr>
-<tr><td><code>lShadow</code></td><td>Logical</td><td>Show shadow effect around the control (default .T.)</td></tr>
+<tr><td><code>hMeta</code></td><td>Numérico (Handle)</td><td>Handle do enhanced metafile (HENHMETAFILE)</td></tr>
+<tr><td><code>nWidth</code></td><td>Numérico</td><td>Largura lógica do metafile</td></tr>
+<tr><td><code>nHeight</code></td><td>Numérico</td><td>Altura lógica do metafile</td></tr>
+<tr><td><code>nXZoom</code></td><td>Numérico</td><td>Fator de zoom no eixo X (padrão 2)</td></tr>
+<tr><td><code>nYZoom</code></td><td>Numérico</td><td>Fator de zoom no eixo Y (padrão 4)</td></tr>
+<tr><td><code>nXorig</code></td><td>Numérico</td><td>Deslocamento da origem de rolagem no eixo X</td></tr>
+<tr><td><code>nYorig</code></td><td>Numérico</td><td>Deslocamento da origem de rolagem no eixo Y</td></tr>
+<tr><td><code>lZoom</code></td><td>Lógico</td><td>Indica se o modo de zoom está atualmente ativo</td></tr>
+<tr><td><code>lShadow</code></td><td>Lógico</td><td>Exibe o efeito de sombra ao redor do controle (padrão .T.)</td></tr>
 </tbody>
 </table>
 
@@ -123,20 +124,20 @@ making them ideal for diagrams, logos, and print-preview content.
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nW, nH, cFile, oWnd )</code></td><td>Create a new TEnhMetaFile control that loads and displays an EMF file</td></tr>
-<tr><td><code>Redefine( nId, cFile, oWnd )</code></td><td>Redefine from a dialog resource template</td></tr>
-<tr><td><code>SetFile( cFile )</code></td><td>Load a new EMF file, replacing the current one</td></tr>
-<tr><td><code>ZoomIn()</code></td><td>Zoom into the metafile (divides nWidth/nHeight by nXZoom/nYZoom)</td></tr>
-<tr><td><code>ZoomOut()</code></td><td>Zoom out of the metafile (restores original dimensions)</td></tr>
-<tr><td><code>SetZoomFactor( nX, nY )</code></td><td>Change the zoom factor and adjust the current zoom state</td></tr>
-<tr><td><code>SetOrg( nX, nY )</code></td><td>Set the scroll origin for panning the metafile view</td></tr>
-<tr><td><code>End()</code></td><td>Release the metafile handle and call the superclass End()</td></tr>
+<tr><td><code>New( nTop, nLeft, nW, nH, cFile, oWnd )</code></td><td>Cria um novo controle TEnhMetaFile que carrega e exibe um arquivo EMF</td></tr>
+<tr><td><code>Redefine( nId, cFile, oWnd )</code></td><td>Redefine a partir de um template de recurso de diálogo</td></tr>
+<tr><td><code>SetFile( cFile )</code></td><td>Carrega um novo arquivo EMF, substituindo o atual</td></tr>
+<tr><td><code>ZoomIn()</code></td><td>Aproxima o zoom no metafile (divide nWidth/nHeight por nXZoom/nYZoom)</td></tr>
+<tr><td><code>ZoomOut()</code></td><td>Afasta o zoom do metafile (restaura as dimensões originais)</td></tr>
+<tr><td><code>SetZoomFactor( nX, nY )</code></td><td>Altera o fator de zoom e ajusta o estado de zoom atual</td></tr>
+<tr><td><code>SetOrg( nX, nY )</code></td><td>Define a origem de rolagem para deslocar a visualização do metafile</td></tr>
+<tr><td><code>End()</code></td><td>Libera o handle do metafile e chama o End() da superclasse</td></tr>
 </tbody>
 </table>
 
-<h2 id="command">EMF Command</h2>
+<h2 id="command">Comando EMF</h2>
 
-<p>TEnhMetaFile can be created directly using the <code>EMF</code> command syntax:</p>
+<p>TEnhMetaFile pode ser criado diretamente usando a sintaxe do comando <code>EMF</code>:</p>
 
 <pre><code class="language-harbour">@ nRow, nCol EMF oEmf FILE cFile OF oWnd SIZE nW, nH</code></pre>
 
@@ -148,13 +149,13 @@ function Main()
 
    local oWnd, oEmf
 
-   DEFINE WINDOW oWnd TITLE "EMF Viewer" SIZE 600, 500
+   DEFINE WINDOW oWnd TITLE "Visualizador EMF" SIZE 600, 500
 
    @ 10, 10 EMF oEmf FILE "diagram.emf" OF oWnd SIZE 560, 400
 
    oEmf:lShadow := .T.
 
-   // Button to zoom in
+   // Botão para aproximar o zoom
    @ 420, 10 BUTTON "Zoom In" OF oWnd SIZE 80, 25 ;
       ACTION oEmf:ZoomIn()
 
@@ -168,10 +169,10 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>TEnhMetaFile handles only Enhanced Metafiles (.emf). For WMF files with automatic conversion, use TMetaFile instead.</li>
-<li>The ZoomIn/ZoomOut methods toggle between zoomed and non-zoomed states. The zoom factor is set via <code>nXZoom</code> (default 2) and <code>nYZoom</code> (default 4).</li>
-<li>The shadow effect draws a 3D-like border shadow using a TPen. Disable by setting <code>lShadow := .F.</code>.</li>
-<li>Metafiles are loaded from file on first paint. Use <code>SetFile()</code> to change the displayed file at runtime, which releases the previous metafile handle.</li>
+<li>TEnhMetaFile manipula apenas Enhanced Metafiles (.emf). Para arquivos WMF com conversão automática, use TMetaFile.</li>
+<li>Os métodos ZoomIn/ZoomOut alternam entre os estados com e sem zoom. O fator de zoom é definido via <code>nXZoom</code> (padrão 2) e <code>nYZoom</code> (padrão 4).</li>
+<li>O efeito de sombra desenha uma borda com sombra estilo 3D usando um TPen. Desative definindo <code>lShadow := .F.</code>.</li>
+<li>Os metafiles são carregados do arquivo na primeira pintura. Use <code>SetFile()</code> para alterar o arquivo exibido em tempo de execução, o que libera o handle do metafile anterior.</li>
 </ul>
 
 </main>

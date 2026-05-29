@@ -108,10 +108,10 @@
 
 <h1>TBlockChain</h1>
 <p class="class-source">Fonte: <code>source/internal/TBlockChain.prg</code></p>
-<p class="class-hierarchy">Classe independente class</p>
+<p class="class-hierarchy">Classe independente</p>
 
 <p>
-TBlockChain is a pure Harbour blockchain implementation with SHA-256 hashing, proof-of-work mining, and block validation. It uses a CLASSDATA hash (<code>aBlocks</code>) so all instances share the same chain, enabling multi-window applications to operate on the same data. The chain stores an array of hashed blocks, each containing a timestamp, data payload, once (nonce), and the previous block's hash. Mining iterates through nonce values until the hash matches the difficulty prefix.
+TBlockChain é uma implementação de blockchain em Harbour puro com hashing SHA-256, mineração proof-of-work e validação de blocos. Ela usa um hash CLASSDATA (<code>aBlocks</code>) para que todas as instâncias compartilhem a mesma cadeia, permitindo que aplicações multi-janela operem sobre os mesmos dados. A cadeia armazena um array de blocos com hash, cada um contendo um timestamp, uma carga de dados, um once (nonce) e o hash do bloco anterior. A mineração itera pelos valores de nonce até que o hash coincida com o prefixo de dificuldade.
 </p>
 
 <h2 id="data">Principais Membros DATA</h2>
@@ -121,13 +121,13 @@ TBlockChain is a pure Harbour blockchain implementation with SHA-256 hashing, pr
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aBlocks</code></td><td>Hash (CLASSDATA)</td><td>All blocks in the chain, shared across all instances</td></tr>
-<tr><td><code>cJson</code></td><td>Character</td><td>JSON representation of the entire chain</td></tr>
-<tr><td><code>uDifficulty</code></td><td>Character</td><td>Mining difficulty prefix (default: "0000")</td></tr>
-<tr><td><code>nIterations</code></td><td>Numeric</td><td>Total mining iterations performed</td></tr>
-<tr><td><code>cPrivateKey</code></td><td>Character</td><td>Private key for signing blocks</td></tr>
-<tr><td><code>cPublicKey</code></td><td>Character</td><td>Public key for signature verification</td></tr>
-<tr><td><code>cSignature</code></td><td>Character</td><td>Block signature string</td></tr>
+<tr><td><code>aBlocks</code></td><td>Hash (CLASSDATA)</td><td>Todos os blocos da cadeia, compartilhados entre todas as instâncias</td></tr>
+<tr><td><code>cJson</code></td><td>Character</td><td>Representação JSON de toda a cadeia</td></tr>
+<tr><td><code>uDifficulty</code></td><td>Character</td><td>Prefixo de dificuldade de mineração (padrão: "0000")</td></tr>
+<tr><td><code>nIterations</code></td><td>Numeric</td><td>Total de iterações de mineração realizadas</td></tr>
+<tr><td><code>cPrivateKey</code></td><td>Character</td><td>Chave privada para assinar blocos</td></tr>
+<tr><td><code>cPublicKey</code></td><td>Character</td><td>Chave pública para verificação de assinatura</td></tr>
+<tr><td><code>cSignature</code></td><td>Character</td><td>String de assinatura do bloco</td></tr>
 </tbody>
 </table>
 
@@ -138,18 +138,18 @@ TBlockChain is a pure Harbour blockchain implementation with SHA-256 hashing, pr
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cKey )</code></td><td>Create a new blockchain with genesis block, keyed by cKey</td></tr>
-<tr><td><code>AddNewBlock( uOnce, cData )</code></td><td>Add a new block with optional nonce and data string</td></tr>
-<tr><td><code>BlockToHash( nIdx, uOnce, cData )</code></td><td>Compute the hash for a given block index and data</td></tr>
-<tr><td><code>MineBlock( nIdx )</code></td><td>Mine block nIdx by iterating nonces until hash matches difficulty</td></tr>
-<tr><td><code>IsValidHash( nIdx )</code></td><td>Check whether block nIdx has a valid hash matching difficulty</td></tr>
-<tr><td><code>IsValidBlock( nIdx, cHash )</code></td><td>Validate block nIdx against the provided hash</td></tr>
-<tr><td><code>CountBlocks()</code></td><td>Return the total number of blocks in the chain</td></tr>
-<tr><td><code>UpdateAllBlocks()</code></td><td>Recompute hashes for all blocks in the chain</td></tr>
+<tr><td><code>New( cKey )</code></td><td>Cria uma nova blockchain com bloco gênesis, indexada por cKey</td></tr>
+<tr><td><code>AddNewBlock( uOnce, cData )</code></td><td>Adiciona um novo bloco com nonce e string de dados opcionais</td></tr>
+<tr><td><code>BlockToHash( nIdx, uOnce, cData )</code></td><td>Calcula o hash para um determinado índice de bloco e dados</td></tr>
+<tr><td><code>MineBlock( nIdx )</code></td><td>Minera o bloco nIdx iterando os nonces até o hash coincidir com a dificuldade</td></tr>
+<tr><td><code>IsValidHash( nIdx )</code></td><td>Verifica se o bloco nIdx tem um hash válido que coincide com a dificuldade</td></tr>
+<tr><td><code>IsValidBlock( nIdx, cHash )</code></td><td>Valida o bloco nIdx contra o hash fornecido</td></tr>
+<tr><td><code>CountBlocks()</code></td><td>Retorna o número total de blocos na cadeia</td></tr>
+<tr><td><code>UpdateAllBlocks()</code></td><td>Recalcula os hashes de todos os blocos da cadeia</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Creating a Chain</h2>
+<h2 id="example">Exemplo: Criando uma Cadeia</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -157,21 +157,21 @@ function Main()
 
    local oChain := TBlockChain():New( "myapp" )
 
-   // Add blocks with data
+   // Adiciona blocos com dados
    oChain:AddNewBlock( , "Genesis: Base record" )
    oChain:AddNewBlock( , "Block 2: Transaction data" )
    oChain:AddNewBlock( , "Block 3: Verification record" )
 
-   // Mine the second block
+   // Minera o segundo bloco
    oChain:MineBlock( 2 )
 
-   // Validate
+   // Valida
    if oChain:IsValidHash( 2 )
       MsgInfo( "Block 2 is valid. Total blocks: " + ;
                Str( oChain:CountBlocks() ) )
    endif
 
-   // Output chain as JSON
+   // Exporta a cadeia como JSON
    if ! Empty( oChain:cJson )
       MemoWrit( "chain.json", oChain:cJson )
    endif
@@ -183,10 +183,10 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>The <code>aBlocks</code> data member is marked CLASSDATA and stored as a hash keyed by the cKey parameter passed to New(). All instances using the same key share the same chain data.</li>
-<li>The default difficulty (<code>uDifficulty</code>) is "0000", requiring the first four hex digits of the SHA-256 hash to be zero. Increase the string length (e.g. "000000") to make mining exponentially harder.</li>
-<li><code>MineBlock()</code> increments the nonce and re-hashes until the hash matches the difficulty prefix. The number of iterations is accumulated in <code>nIterations</code>.</li>
-<li>Written by Cristobal Navarro.</li>
+<li>O membro de dados <code>aBlocks</code> é marcado como CLASSDATA e armazenado como um hash indexado pelo parâmetro cKey passado a New(). Todas as instâncias que usam a mesma chave compartilham os mesmos dados da cadeia.</li>
+<li>A dificuldade padrão (<code>uDifficulty</code>) é "0000", exigindo que os quatro primeiros dígitos hexadecimais do hash SHA-256 sejam zero. Aumente o comprimento da string (por exemplo, "000000") para tornar a mineração exponencialmente mais difícil.</li>
+<li><code>MineBlock()</code> incrementa o nonce e refaz o hash até que ele coincida com o prefixo de dificuldade. O número de iterações é acumulado em <code>nIterations</code>.</li>
+<li>Escrito por Cristobal Navarro.</li>
 </ul>
 
 </main>

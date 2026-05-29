@@ -107,10 +107,10 @@
 
 <h1>TFont</h1>
 <p class="class-source">Fuente: <code>source/classes/font.prg</code></p>
-<p class="class-hierarchy">Clase independiente (no inheritance)</p>
+<p class="class-hierarchy">Clase independiente (sin herencia)</p>
 
 <p>
-TFont manages Windows GDI font objects. It encapsulates the creation, selection, and destruction of logical fonts, providing a high-level interface for typeface name, size, weight, style (bold, italic, underline, strikeout), character set, escapement, and orientation. TFont is used throughout the FiveWin framework by every control and window that renders text. Fonts must be explicitly released with <code>End()</code> when no longer needed to avoid GDI resource leaks.
+TFont gestiona los objetos de fuente GDI de Windows. Encapsula la creación, selección y destrucción de fuentes lógicas, proporcionando una interfaz de alto nivel para el nombre del tipo de letra, el tamaño, el peso, el estilo (negrita, cursiva, subrayado, tachado), el conjunto de caracteres, la inclinación (escapement) y la orientación. TFont es utilizada en todo el framework FiveWin por cada control y ventana que dibuja texto. Las fuentes deben liberarse explícitamente con <code>End()</code> cuando ya no se necesitan, para evitar fugas de recursos GDI.
 </p>
 
 <h2 id="data">Miembros DATA Principales</h2>
@@ -118,23 +118,24 @@ TFont manages Windows GDI font objects. It encapsulates the creation, selection,
 <table>
 <thead>
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+
 </thead>
 <tbody>
-<tr><td><code>hFont</code></td><td>Numeric (Handle)</td><td>Windows GDI font handle. Created by <code>New()</code>, used when activating onto a DC.</td></tr>
-<tr><td><code>cFaceName</code></td><td>Character</td><td>Typeface name (e.g. "Arial", "Segoe UI", "Courier New").</td></tr>
-<tr><td><code>nInpHeight</code></td><td>Numeric</td><td>Nominal font height in logical units. Negative values indicate character height (em-height); positive values indicate cell height.</td></tr>
-<tr><td><code>nInpWidth</code></td><td>Numeric</td><td>Average character width. Zero lets Windows choose a proportional width.</td></tr>
-<tr><td><code>nWeight</code></td><td>Numeric</td><td>Font weight: 0=default, 400=normal, 700=bold. Set automatically when <code>lBold</code> is <code>.T.</code>.</td></tr>
-<tr><td><code>nEscapement</code></td><td>Numeric</td><td>Angle of the base text line in tenths of degrees (0 = horizontal, 900 = vertical upward).</td></tr>
-<tr><td><code>nOrientation</code></td><td>Numeric</td><td>Angle of each character in tenths of degrees.</td></tr>
-<tr><td><code>nCharSet</code></td><td>Numeric</td><td>Character set identifier: 0=ANSI, 1=DEFAULT, 204=RUSSIAN, 238=EASTEUROPE, 255=OEM.</td></tr>
-<tr><td><code>lBold</code></td><td>Logical</td><td>If <code>.T.</code>, the font is created with bold weight (700).</td></tr>
-<tr><td><code>lItalic</code></td><td>Logical</td><td>If <code>.T.</code>, the font is created with italic style.</td></tr>
-<tr><td><code>lUnderline</code></td><td>Logical</td><td>If <code>.T.</code>, the font is created with underline.</td></tr>
-<tr><td><code>lStrikeOut</code></td><td>Logical</td><td>If <code>.T.</code>, the font is created with strikeout.</td></tr>
-<tr><td><code>lSubstitute</code></td><td>Logical</td><td>If <code>.T.</code>, the font name is substituted through the font substitution table (<code>FWFontSubst()</code>).</td></tr>
-<tr><td><code>lQuality</code></td><td>Logical</td><td>If <code>.T.</code>, anti-aliased (CLEARTYPE) quality is requested when available.</td></tr>
-<tr><td><code>Cargo</code></td><td>Any</td><td>General-purpose user data slot.</td></tr>
+<tr><td><code>hFont</code></td><td>Numérico (Handle)</td><td>Handle de fuente GDI de Windows. Creado por <code>New()</code>, se usa al activarla sobre un DC.</td></tr>
+<tr><td><code>cFaceName</code></td><td>Carácter</td><td>Nombre del tipo de letra (p. ej. "Arial", "Segoe UI", "Courier New").</td></tr>
+<tr><td><code>nInpHeight</code></td><td>Numérico</td><td>Altura nominal de la fuente en unidades lógicas. Los valores negativos indican altura de carácter (altura em); los positivos indican altura de celda.</td></tr>
+<tr><td><code>nInpWidth</code></td><td>Numérico</td><td>Ancho medio de carácter. Cero permite que Windows elija un ancho proporcional.</td></tr>
+<tr><td><code>nWeight</code></td><td>Numérico</td><td>Peso de la fuente: 0=por defecto, 400=normal, 700=negrita. Se establece automáticamente cuando <code>lBold</code> es <code>.T.</code>.</td></tr>
+<tr><td><code>nEscapement</code></td><td>Numérico</td><td>Ángulo de la línea base del texto en décimas de grado (0 = horizontal, 900 = vertical hacia arriba).</td></tr>
+<tr><td><code>nOrientation</code></td><td>Numérico</td><td>Ángulo de cada carácter en décimas de grado.</td></tr>
+<tr><td><code>nCharSet</code></td><td>Numérico</td><td>Identificador del conjunto de caracteres: 0=ANSI, 1=DEFAULT, 204=RUSSIAN, 238=EASTEUROPE, 255=OEM.</td></tr>
+<tr><td><code>lBold</code></td><td>Lógico</td><td>Si es <code>.T.</code>, la fuente se crea con peso negrita (700).</td></tr>
+<tr><td><code>lItalic</code></td><td>Lógico</td><td>Si es <code>.T.</code>, la fuente se crea con estilo cursiva.</td></tr>
+<tr><td><code>lUnderline</code></td><td>Lógico</td><td>Si es <code>.T.</code>, la fuente se crea con subrayado.</td></tr>
+<tr><td><code>lStrikeOut</code></td><td>Lógico</td><td>Si es <code>.T.</code>, la fuente se crea con tachado.</td></tr>
+<tr><td><code>lSubstitute</code></td><td>Lógico</td><td>Si es <code>.T.</code>, el nombre de la fuente se sustituye a través de la tabla de sustitución de fuentes (<code>FWFontSubst()</code>).</td></tr>
+<tr><td><code>lQuality</code></td><td>Lógico</td><td>Si es <code>.T.</code>, se solicita calidad suavizada (CLEARTYPE) cuando está disponible.</td></tr>
+<tr><td><code>Cargo</code></td><td>Cualquiera</td><td>Espacio de datos de usuario de propósito general.</td></tr>
 </tbody>
 </table>
 
@@ -143,25 +144,26 @@ TFont manages Windows GDI font objects. It encapsulates the creation, selection,
 <table>
 <thead>
 <tr><th>Método</th><th>Descripción</th></tr>
+
 </thead>
 <tbody>
-<tr><td><code>New( cFace, nW, nH, lBold, lItalic, lUnder, lStrike, nEscap, nOrient, nWeight, nCharSet, lQuality, lSubst )</code></td><td>Create a new font object. Negative <code>nH</code> specifies character height; positive specifies cell height. <code>nW</code> of 0 selects proportional width. The font handle <code>hFont</code> is created immediately.</td></tr>
-<tr><td><code>End()</code></td><td>Release the GDI font handle (<code>DeleteObject( ::hFont )</code>) and free the object. Must be called when the font is no longer needed.</td></tr>
-<tr><td><code>Activate( hDC )</code></td><td>Select the font into a device context. Returns the previous font handle. Use <code>DeActivate()</code> to restore.</td></tr>
-<tr><td><code>DeActivate( hDC, hOldFont )</code></td><td>Restore the previous font handle into the device context. Call after <code>Activate()</code> to clean up.</td></tr>
-<tr><td><code>Modify( nH, lBold, lItalic, lUnder, lStrike, cFace, nW, nEscap, nOrient, nWeight, nCharSet, lQuality )</code></td><td>Change font attributes and recreate the GDI font handle. The old handle is destroyed.</td></tr>
-<tr><td><code>Choose( nRGB )</code></td><td>Open the standard Windows font selection dialog. The optional <code>nRGB</code> parameter presets the color. Returns the chosen RGB color or nil if cancelled. The font object is updated to the selection.</td></tr>
-<tr><td><code>Clone()</code></td><td>Create an independent copy of the font with a new GDI handle. Useful when the same logical font is needed by different owners.</td></tr>
-<tr><td><code>nSize()</code></td><td>Return the font height as a negative value (character height convention).</td></tr>
-<tr><td><code>Rotate( nDeg )</code></td><td>Create a rotated version of the font. <code>nDeg</code> is the rotation angle in degrees (not tenths). Sets both escapement and orientation.</td></tr>
-<tr><td><code>Release()</code></td><td>Alias for <code>End()</code>. Releases the GDI font handle.</td></tr>
-<tr><td><code>lChanged()</code></td><td>Returns <code>.T.</code> if the font attributes have been modified since creation.</td></tr>
+<tr><td><code>New( cFace, nW, nH, lBold, lItalic, lUnder, lStrike, nEscap, nOrient, nWeight, nCharSet, lQuality, lSubst )</code></td><td>Crea un nuevo objeto de fuente. Un <code>nH</code> negativo especifica la altura de carácter; uno positivo especifica la altura de celda. Un <code>nW</code> de 0 selecciona ancho proporcional. El handle de fuente <code>hFont</code> se crea de inmediato.</td></tr>
+<tr><td><code>End()</code></td><td>Libera el handle de fuente GDI (<code>DeleteObject( ::hFont )</code>) y libera el objeto. Debe llamarse cuando la fuente ya no se necesita.</td></tr>
+<tr><td><code>Activate( hDC )</code></td><td>Selecciona la fuente en un contexto de dispositivo. Devuelve el handle de la fuente anterior. Use <code>DeActivate()</code> para restaurar.</td></tr>
+<tr><td><code>DeActivate( hDC, hOldFont )</code></td><td>Restaura el handle de la fuente anterior en el contexto de dispositivo. Llámelo después de <code>Activate()</code> para limpiar.</td></tr>
+<tr><td><code>Modify( nH, lBold, lItalic, lUnder, lStrike, cFace, nW, nEscap, nOrient, nWeight, nCharSet, lQuality )</code></td><td>Cambia los atributos de la fuente y recrea el handle de fuente GDI. El handle anterior se destruye.</td></tr>
+<tr><td><code>Choose( nRGB )</code></td><td>Abre el cuadro de diálogo estándar de selección de fuentes de Windows. El parámetro opcional <code>nRGB</code> preestablece el color. Devuelve el color RGB elegido o nil si se cancela. El objeto de fuente se actualiza con la selección.</td></tr>
+<tr><td><code>Clone()</code></td><td>Crea una copia independiente de la fuente con un nuevo handle GDI. Útil cuando la misma fuente lógica es necesaria para distintos propietarios.</td></tr>
+<tr><td><code>nSize()</code></td><td>Devuelve la altura de la fuente como un valor negativo (convención de altura de carácter).</td></tr>
+<tr><td><code>Rotate( nDeg )</code></td><td>Crea una versión rotada de la fuente. <code>nDeg</code> es el ángulo de rotación en grados (no décimas). Establece tanto la inclinación (escapement) como la orientación.</td></tr>
+<tr><td><code>Release()</code></td><td>Alias de <code>End()</code>. Libera el handle de fuente GDI.</td></tr>
+<tr><td><code>lChanged()</code></td><td>Devuelve <code>.T.</code> si los atributos de la fuente se han modificado desde su creación.</td></tr>
 </tbody>
 </table>
 
 <h2 id="commands">Comandos: DEFINE FONT</h2>
 
-<p>FiveWin provides a preprocessor command for convenient font creation:</p>
+<p>FiveWin proporciona un comando de preprocesador para crear fuentes cómodamente:</p>
 
 <pre><code>DEFINE FONT oFont ;
    NAME cFaceName ;
@@ -173,9 +175,9 @@ TFont manages Windows GDI font objects. It encapsulates the creation, selection,
    [ WEIGHT nWeight ] ;
    [ QUALITY ]</code></pre>
 
-<p>The <code>SIZE</code> clause takes width and height. Using a negative height (e.g. <code>0, -14</code>) specifies character height in points; positive specifies cell height in logical units. Width of 0 lets Windows choose proportionally.</p>
+<p>La cláusula <code>SIZE</code> toma el ancho y la altura. Usar una altura negativa (p. ej. <code>0, -14</code>) especifica la altura de carácter en puntos; una positiva especifica la altura de celda en unidades lógicas. Un ancho de 0 permite que Windows elija proporcionalmente.</p>
 
-<h2 id="example">Example: Create Font and Use on a Device Context</h2>
+<h2 id="example">Ejemplo: Crear una Fuente y Usarla en un Contexto de Dispositivo</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -185,7 +187,7 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "TFont Demo" SIZE 500, 300
 
-   // Create a bold italic font
+   // Crea una fuente en negrita y cursiva
    DEFINE FONT oFont NAME "Arial" SIZE 0, -24 BOLD ITALIC
 
    ACTIVATE WINDOW oWnd CENTERED ;
@@ -202,13 +204,13 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>TFont is a standalone class — it does not inherit from TWindow or TControl.</li>
-<li>Every TFont object must be paired with an <code>End()</code> call. GDI font handles are a limited system resource; failure to release them causes visible degradation in all running applications.</li>
-<li>The <code>Activate()</code> / <code>DeActivate()</code> pair should bracket any custom drawing that uses the font. Never leave a font selected into a DC after drawing is complete.</li>
-<li>Use the <code>Choose()</code> method to let users pick fonts interactively. The font dialog shows all installed fonts on the system.</li>
-<li>Font substitution (controlled by <code>lSubstitute</code>) allows mapping unavailable font names to alternatives through the <code>FWFontSubst()</code> table.</li>
-<li>To use a font with a control, assign it via the <code>oFont</code> DATA (e.g. <code>oSay:oFont := oFont</code>) rather than manually activating on a DC.</li>
-<li>For high-DPI awareness, specify font sizes in points using negative height values (e.g. <code>-14</code> for 10-point text).</li>
+<li>TFont es una clase independiente: no hereda de TWindow ni de TControl.</li>
+<li>Cada objeto TFont debe ir acompañado de una llamada a <code>End()</code>. Los handles de fuente GDI son un recurso del sistema limitado; no liberarlos provoca una degradación visible en todas las aplicaciones en ejecución.</li>
+<li>El par <code>Activate()</code> / <code>DeActivate()</code> debe enmarcar cualquier dibujo personalizado que use la fuente. Nunca deje una fuente seleccionada en un DC después de finalizar el dibujo.</li>
+<li>Use el método <code>Choose()</code> para permitir que los usuarios elijan fuentes de forma interactiva. El diálogo de fuentes muestra todas las fuentes instaladas en el sistema.</li>
+<li>La sustitución de fuentes (controlada por <code>lSubstitute</code>) permite mapear nombres de fuentes no disponibles a alternativas a través de la tabla <code>FWFontSubst()</code>.</li>
+<li>Para usar una fuente con un control, asígnela mediante el DATA <code>oFont</code> (p. ej. <code>oSay:oFont := oFont</code>) en lugar de activarla manualmente en un DC.</li>
+<li>Para compatibilidad con alta DPI, especifique los tamaños de fuente en puntos usando valores de altura negativos (p. ej. <code>-14</code> para texto de 10 puntos).</li>
 </ul>
 
 </main>

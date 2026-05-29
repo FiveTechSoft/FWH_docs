@@ -11,135 +11,135 @@
 <main id="content">
 
 <h1>FWMariaConnection + FRecSet</h1>
-<p class="class-source">Source: <code>source/internal/fwmaria.prg</code></p>
+<p class="class-source">Fuente: <code>source/internal/fwmaria.prg</code></p>
 
 <p>
-FWMariaConnection provides a comprehensive native connection to MariaDB and MySQL
-servers through the <code>libmariadb.dll</code> C client library. The companion FRecSet
-class wraps SQL result sets with navigation, paging, sorting, and editing capabilities.
-Together they form the backbone of FiveWin's MariaDB/MySQL data access layer.
+FWMariaConnection proporciona una conexión nativa y completa a servidores MariaDB y MySQL
+a través de la biblioteca cliente C <code>libmariadb.dll</code>. La clase complementaria FRecSet
+envuelve los conjuntos de resultados SQL con capacidades de navegación, paginación, ordenación y edición.
+Juntas forman la columna vertebral de la capa de acceso a datos MariaDB/MySQL de FiveWin.
 </p>
 
 <h2 id="connection">FWMariaConnection</h2>
 
 <p>
-The connection class manages TCP/IP connections to MariaDB/MySQL servers. It supports
-connection pooling, automatic reconnection, prepared statements, transactions, backup/restore,
-and full DDL/DML execution.
+La clase de conexión gestiona las conexiones TCP/IP a servidores MariaDB/MySQL. Admite
+agrupación de conexiones, reconexión automática, sentencias preparadas, transacciones, copia de seguridad/restauración,
+y ejecución completa de DDL/DML.
 </p>
 
-<h3>Key DATA Members</h3>
+<h3>Miembros DATA Principales</h3>
 
 <table>
-<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>pMySql</code></td><td>Pointer</td><td>Internal C library connection handle (read-only)</td></tr>
-<tr><td><code>cServer</code></td><td>Character</td><td>Server hostname or IP address</td></tr>
-<tr><td><code>cDB</code></td><td>Character</td><td>Current database name</td></tr>
-<tr><td><code>cUser</code></td><td>Character</td><td>Database user name</td></tr>
-<tr><td><code>nPort</code></td><td>Numeric</td><td>TCP port (default 3306)</td></tr>
-<tr><td><code>lUnicode</code></td><td>Logical</td><td>Unicode mode (UTF-8 charset)</td></tr>
-<tr><td><code>nError</code></td><td>Numeric</td><td>Last error code (0 = success)</td></tr>
-<tr><td><code>cError</code></td><td>Character</td><td>Last error message text</td></tr>
-<tr><td><code>lOpen</code></td><td>Logical</td><td>ACCESS: .T. if connection handle is valid</td></tr>
-<tr><td><code>lConnected</code></td><td>Logical</td><td>ACCESS: .T. if connected and not disconnected</td></tr>
-<tr><td><code>cServerInfo</code></td><td>Character</td><td>Server version string (read-only)</td></tr>
-<tr><td><code>IsMariaDB</code></td><td>Logical</td><td>ACCESS: .T. if server is MariaDB</td></tr>
-<tr><td><code>IsMySQL</code></td><td>Logical</td><td>ACCESS: .T. if server is MySQL</td></tr>
-<tr><td><code>nLastPing</code></td><td>Numeric</td><td>Timestamp of last successful ping</td></tr>
+<tr><td><code>pMySql</code></td><td>Puntero</td><td>Manejador interno de conexión de la biblioteca C (solo lectura)</td></tr>
+<tr><td><code>cServer</code></td><td>Carácter</td><td>Nombre de host o dirección IP del servidor</td></tr>
+<tr><td><code>cDB</code></td><td>Carácter</td><td>Nombre de la base de datos actual</td></tr>
+<tr><td><code>cUser</code></td><td>Carácter</td><td>Nombre de usuario de la base de datos</td></tr>
+<tr><td><code>nPort</code></td><td>Numérico</td><td>Puerto TCP (predeterminado 3306)</td></tr>
+<tr><td><code>lUnicode</code></td><td>Lógico</td><td>Modo Unicode (juego de caracteres UTF-8)</td></tr>
+<tr><td><code>nError</code></td><td>Numérico</td><td>Último código de error (0 = éxito)</td></tr>
+<tr><td><code>cError</code></td><td>Carácter</td><td>Texto del último mensaje de error</td></tr>
+<tr><td><code>lOpen</code></td><td>Lógico</td><td>ACCESS: .T. si el manejador de conexión es válido</td></tr>
+<tr><td><code>lConnected</code></td><td>Lógico</td><td>ACCESS: .T. si está conectado y no desconectado</td></tr>
+<tr><td><code>cServerInfo</code></td><td>Carácter</td><td>Cadena de versión del servidor (solo lectura)</td></tr>
+<tr><td><code>IsMariaDB</code></td><td>Lógico</td><td>ACCESS: .T. si el servidor es MariaDB</td></tr>
+<tr><td><code>IsMySQL</code></td><td>Lógico</td><td>ACCESS: .T. si el servidor es MySQL</td></tr>
+<tr><td><code>nLastPing</code></td><td>Numérico</td><td>Marca de tiempo del último ping exitoso</td></tr>
 </tbody>
 </table>
 
-<h3>Methods</h3>
+<h3>Métodos</h3>
 
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>New( cServer, cDB, cUser, cPassword, nPort, nFlags, chr_set, cMsgLang, cLocale )</code></td><td>Create and open a connection to the server</td></tr>
-<tr><td><code>Connect( lShowErr )</code></td><td>Establish (or re-establish) the TCP/IP connection</td></tr>
-<tr><td><code>QueryResult( cSql, aParams )</code></td><td>Execute SELECT and return array of row arrays</td></tr>
-<tr><td><code>RowSet( cSql, aParams, nLimit, lReadOnly )</code></td><td>Execute query and return an FRecSet object</td></tr>
-<tr><td><code>Query( cSql, aParams )</code></td><td>Alias for RowSet()</td></tr>
-<tr><td><code>Execute( cSql, aParams )</code></td><td>Execute DDL/DML and return result structure</td></tr>
-<tr><td><code>TableExists( cTableName, cDbName, cTableType )</code></td><td>Check if a table exists</td></tr>
-<tr><td><code>TableStructure( cTable, lByteWidth )</code></td><td>Get table column structure as an array</td></tr>
-<tr><td><code>ListTables( cMask )</code></td><td>Return array of table names matching mask</td></tr>
-<tr><td><code>Insert( cTable, aFields, aValues, lUpdate, aBinary )</code></td><td>Insert a row (with optional upsert via lUpdate)</td></tr>
-<tr><td><code>Update( cTable, aFields, aValues, cWhere )</code></td><td>Update rows matching the WHERE clause</td></tr>
-<tr><td><code>Upsert( cTable, acFields, aValues )</code></td><td>Insert or update (INSERT ... ON DUPLICATE KEY UPDATE)</td></tr>
-<tr><td><code>ValToSQL( uVal, lEmptyAsDefault, lNoExcept, lBinary, lUtf8 )</code></td><td>Convert Harbour value to SQL-safe string</td></tr>
-<tr><td><code>Last_Insert_ID()</code></td><td>Return the last auto-increment value inserted</td></tr>
-<tr><td><code>CreateTable( cTable, aStruct, lAddAutoInc, char_set )</code></td><td>Create a new table from structure array</td></tr>
-<tr><td><code>DropTable( cTable )</code></td><td>Drop a table from the database</td></tr>
-<tr><td><code>BeginTransaction()</code></td><td>Start a SQL transaction</td></tr>
-<tr><td><code>CommitTransaction( cSP )</code></td><td>Commit the current transaction</td></tr>
-<tr><td><code>RollBack( cSP )</code></td><td>Roll back the current transaction</td></tr>
-<tr><td><code>ShowError( cTitle )</code></td><td>Display the last error in a message box</td></tr>
-<tr><td><code>Close()</code></td><td>Close the connection and free resources</td></tr>
-<tr><td><code>End()</code></td><td>Alias for Close()</td></tr>
+<tr><td><code>New( cServer, cDB, cUser, cPassword, nPort, nFlags, chr_set, cMsgLang, cLocale )</code></td><td>Crea y abre una conexión al servidor</td></tr>
+<tr><td><code>Connect( lShowErr )</code></td><td>Establece (o restablece) la conexión TCP/IP</td></tr>
+<tr><td><code>QueryResult( cSql, aParams )</code></td><td>Ejecuta SELECT y devuelve un array de arrays de filas</td></tr>
+<tr><td><code>RowSet( cSql, aParams, nLimit, lReadOnly )</code></td><td>Ejecuta la consulta y devuelve un objeto FRecSet</td></tr>
+<tr><td><code>Query( cSql, aParams )</code></td><td>Alias de RowSet()</td></tr>
+<tr><td><code>Execute( cSql, aParams )</code></td><td>Ejecuta DDL/DML y devuelve la estructura de resultado</td></tr>
+<tr><td><code>TableExists( cTableName, cDbName, cTableType )</code></td><td>Comprueba si existe una tabla</td></tr>
+<tr><td><code>TableStructure( cTable, lByteWidth )</code></td><td>Obtiene la estructura de columnas de la tabla como un array</td></tr>
+<tr><td><code>ListTables( cMask )</code></td><td>Devuelve un array de nombres de tablas que coinciden con la máscara</td></tr>
+<tr><td><code>Insert( cTable, aFields, aValues, lUpdate, aBinary )</code></td><td>Inserta una fila (con upsert opcional mediante lUpdate)</td></tr>
+<tr><td><code>Update( cTable, aFields, aValues, cWhere )</code></td><td>Actualiza las filas que coinciden con la cláusula WHERE</td></tr>
+<tr><td><code>Upsert( cTable, acFields, aValues )</code></td><td>Inserta o actualiza (INSERT ... ON DUPLICATE KEY UPDATE)</td></tr>
+<tr><td><code>ValToSQL( uVal, lEmptyAsDefault, lNoExcept, lBinary, lUtf8 )</code></td><td>Convierte un valor Harbour en una cadena segura para SQL</td></tr>
+<tr><td><code>Last_Insert_ID()</code></td><td>Devuelve el último valor auto-incremental insertado</td></tr>
+<tr><td><code>CreateTable( cTable, aStruct, lAddAutoInc, char_set )</code></td><td>Crea una nueva tabla a partir de un array de estructura</td></tr>
+<tr><td><code>DropTable( cTable )</code></td><td>Elimina una tabla de la base de datos</td></tr>
+<tr><td><code>BeginTransaction()</code></td><td>Inicia una transacción SQL</td></tr>
+<tr><td><code>CommitTransaction( cSP )</code></td><td>Confirma la transacción actual</td></tr>
+<tr><td><code>RollBack( cSP )</code></td><td>Revierte la transacción actual</td></tr>
+<tr><td><code>ShowError( cTitle )</code></td><td>Muestra el último error en un cuadro de mensaje</td></tr>
+<tr><td><code>Close()</code></td><td>Cierra la conexión y libera los recursos</td></tr>
+<tr><td><code>End()</code></td><td>Alias de Close()</td></tr>
 </tbody>
 </table>
 
 <!-- ================================================================ -->
-<h2 id="frecset">FRecSet - MariaDB Result Set</h2>
+<h2 id="frecset">FRecSet - Conjunto de Resultados MariaDB</h2>
 
 <p>
-FRecSet provides record-oriented navigation over a MariaDB/MySQL result set.
-It supports paging (controlled by <code>nPageSize</code>), field-level access,
-sorting, editing, and integration with XBrowse for grid display.
+FRecSet proporciona navegación orientada a registros sobre un conjunto de resultados MariaDB/MySQL.
+Admite paginación (controlada por <code>nPageSize</code>), acceso a nivel de campo,
+ordenación, edición e integración con XBrowse para su visualización en rejilla.
 </p>
 
-<h3>Key DATA Members</h3>
+<h3>Miembros DATA Principales</h3>
 
 <table>
-<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>aData</code></td><td>Array</td><td>Current page of row data (array of arrays)</td></tr>
-<tr><td><code>aStruct</code></td><td>Array</td><td>Field structure (name, type, length, decimals, flags)</td></tr>
-<tr><td><code>nAt</code></td><td>Numeric</td><td>Current position within the current page</td></tr>
-<tr><td><code>nPageSize</code></td><td>Numeric</td><td>Number of rows per page (default 1000)</td></tr>
-<tr><td><code>nLastRec</code></td><td>Numeric</td><td>Total record count</td></tr>
-<tr><td><code>nFields</code></td><td>Numeric</td><td>Number of fields in the result set</td></tr>
-<tr><td><code>oCn</code></td><td>Object</td><td>Parent FWMariaConnection (read-only)</td></tr>
-<tr><td><code>lReadOnly</code></td><td>Logical</td><td>.T. prevents modifications</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>Página actual de datos de filas (array de arrays)</td></tr>
+<tr><td><code>aStruct</code></td><td>Array</td><td>Estructura de campos (nombre, tipo, longitud, decimales, banderas)</td></tr>
+<tr><td><code>nAt</code></td><td>Numérico</td><td>Posición actual dentro de la página actual</td></tr>
+<tr><td><code>nPageSize</code></td><td>Numérico</td><td>Número de filas por página (predeterminado 1000)</td></tr>
+<tr><td><code>nLastRec</code></td><td>Numérico</td><td>Recuento total de registros</td></tr>
+<tr><td><code>nFields</code></td><td>Numérico</td><td>Número de campos en el conjunto de resultados</td></tr>
+<tr><td><code>oCn</code></td><td>Objeto</td><td>FWMariaConnection padre (solo lectura)</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Lógico</td><td>.T. impide modificaciones</td></tr>
 </tbody>
 </table>
 
-<h3>Methods</h3>
+<h3>Métodos</h3>
 
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>New( oCn, result, cSql, aParams, aCols, cTable )</code></td><td>Create a result set from a SQL query</td></tr>
-<tr><td><code>GoTo( nRec )</code></td><td>Navigate to record number nRec</td></tr>
-<tr><td><code>Skip( n )</code></td><td>Move forward or backward by n records</td></tr>
-<tr><td><code>GoTop()</code></td><td>Navigate to the first record (same as GoTo(1))</td></tr>
-<tr><td><code>GoBottom()</code></td><td>Navigate to the last record</td></tr>
-<tr><td><code>RecNo()</code></td><td>Return current record number</td></tr>
-<tr><td><code>RecCount()</code></td><td>Return total record count</td></tr>
-<tr><td><code>FieldGet( n )</code></td><td>Get field value by position (1-based) or name</td></tr>
-<tr><td><code>FieldPut( n, uVal )</code></td><td>Set field value by position (1-based) or name</td></tr>
-<tr><td><code>FieldPos( cnFld )</code></td><td>Return field position by name</td></tr>
-<tr><td><code>FieldName( n )</code></td><td>Return field name at position n</td></tr>
-<tr><td><code>Save()</code></td><td>Save pending changes to the database</td></tr>
-<tr><td><code>SetOrder( cSort, u, lDesc )</code></td><td>Set sort order (re-queries with ORDER BY)</td></tr>
-<tr><td><code>SetXBrowse( oBrw, aCols, lAutoSort, lAutoCols )</code></td><td>Bind to an XBrowse control for display</td></tr>
-<tr><td><code>ReadAll()</code></td><td>Read entire result set into memory (bypasses paging)</td></tr>
-<tr><td><code>Close()</code></td><td>Close the result set and free resources</td></tr>
+<tr><td><code>New( oCn, result, cSql, aParams, aCols, cTable )</code></td><td>Crea un conjunto de resultados a partir de una consulta SQL</td></tr>
+<tr><td><code>GoTo( nRec )</code></td><td>Navega al registro número nRec</td></tr>
+<tr><td><code>Skip( n )</code></td><td>Avanza o retrocede n registros</td></tr>
+<tr><td><code>GoTop()</code></td><td>Navega al primer registro (igual que GoTo(1))</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Navega al último registro</td></tr>
+<tr><td><code>RecNo()</code></td><td>Devuelve el número de registro actual</td></tr>
+<tr><td><code>RecCount()</code></td><td>Devuelve el recuento total de registros</td></tr>
+<tr><td><code>FieldGet( n )</code></td><td>Obtiene el valor del campo por posición (base 1) o nombre</td></tr>
+<tr><td><code>FieldPut( n, uVal )</code></td><td>Asigna el valor del campo por posición (base 1) o nombre</td></tr>
+<tr><td><code>FieldPos( cnFld )</code></td><td>Devuelve la posición del campo por nombre</td></tr>
+<tr><td><code>FieldName( n )</code></td><td>Devuelve el nombre del campo en la posición n</td></tr>
+<tr><td><code>Save()</code></td><td>Guarda los cambios pendientes en la base de datos</td></tr>
+<tr><td><code>SetOrder( cSort, u, lDesc )</code></td><td>Establece el orden de clasificación (reconsulta con ORDER BY)</td></tr>
+<tr><td><code>SetXBrowse( oBrw, aCols, lAutoSort, lAutoCols )</code></td><td>Vincula a un control XBrowse para su visualización</td></tr>
+<tr><td><code>ReadAll()</code></td><td>Lee todo el conjunto de resultados en memoria (omite la paginación)</td></tr>
+<tr><td><code>Close()</code></td><td>Cierra el conjunto de resultados y libera los recursos</td></tr>
 </tbody>
 </table>
 
 <!-- ================================================================ -->
-<h2 id="functions">Free Funciones</h2>
+<h2 id="functions">Funciones Libres</h2>
 
 <table>
-<thead><tr><th>Function</th><th>Description</th></tr></thead>
+<thead><tr><th>Función</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>maria_Connect( cHost, cDB, cUser, cPass [, nPort, nFlags, chr_set, cMsgLang, cLocale ] )</code></td><td>Quick-connect helper. Returns an <code>FWMariaConnection</code> object or nil on failure.</td></tr>
+<tr><td><code>maria_Connect( cHost, cDB, cUser, cPass [, nPort, nFlags, chr_set, cMsgLang, cLocale ] )</code></td><td>Ayudante de conexión rápida. Devuelve un objeto <code>FWMariaConnection</code> o nil en caso de fallo.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example-connect">Example: Connect and Browse</h2>
+<h2 id="example-connect">Ejemplo: Conectar y Navegar</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -147,30 +147,30 @@ function Main()
 
    local oCn, oRs, oWnd, oBrw
 
-   // Connect to MariaDB
+   // Conectar a MariaDB
    oCn := FWMariaConnection():New( ;
-      "localhost", ;     // server
-      "mydb", ;          // database
-      "root", ;          // user
-      "password", ;      // password
-      3306 )             // port
+      "localhost", ;     // servidor
+      "mydb", ;          // base de datos
+      "root", ;          // usuario
+      "password", ;      // contraseña
+      3306 )             // puerto
 
    if oCn:nError != 0
       MsgStop( "Connection failed: " + oCn:cError )
       return nil
    endif
 
-   // Open a result set
+   // Abrir un conjunto de resultados
    oRs := oCn:RowSet( "SELECT id, name, email, city FROM customers ORDER BY name" )
 
-   // Navigate records
+   // Navegar por los registros
    oRs:GoTop()
    while !oRs:Eof()
       ? oRs:FieldGet( "id" ), oRs:FieldGet( "name" ), oRs:FieldGet( "email" )
       oRs:Skip( 1 )
    end
 
-   // Display in XBrowse
+   // Mostrar en XBrowse
    DEFINE WINDOW oWnd TITLE "Customers"
 
    @ 0, 0 XBROWSE oBrw OF oWnd
@@ -184,14 +184,14 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>FWMariaConnection uses the MariaDB Connector/C native library (<code>libmariadb.dll</code> or <code>libmariadb64.dll</code>). The DLL must be available in the application path or system PATH.</li>
-<li>FRecSet uses automatic paging with the default page size of 1000 rows. Set <code>nPageSize</code> to adjust memory usage for large result sets.</li>
-<li>The <code>SetOrder()</code> method re-issues the query with an ORDER BY clause, preserving the WHERE conditions and pagination.</li>
-<li>Use <code>oCn:ValToSQL()</code> to safely escape values in dynamic SQL strings, preventing SQL injection.</li>
-<li>Transaction support requires InnoDB (or other transactional) tables. Use <code>BeginTransaction()</code>, <code>CommitTransaction()</code>, and <code>RollBack()</code>.</li>
+<li>FWMariaConnection utiliza la biblioteca nativa MariaDB Connector/C (<code>libmariadb.dll</code> o <code>libmariadb64.dll</code>). La DLL debe estar disponible en la ruta de la aplicación o en el PATH del sistema.</li>
+<li>FRecSet utiliza paginación automática con un tamaño de página predeterminado de 1000 filas. Establezca <code>nPageSize</code> para ajustar el uso de memoria en conjuntos de resultados grandes.</li>
+<li>El método <code>SetOrder()</code> reemite la consulta con una cláusula ORDER BY, preservando las condiciones WHERE y la paginación.</li>
+<li>Utilice <code>oCn:ValToSQL()</code> para escapar de forma segura los valores en cadenas SQL dinámicas, evitando la inyección SQL.</li>
+<li>El soporte de transacciones requiere tablas InnoDB (u otras transaccionales). Utilice <code>BeginTransaction()</code>, <code>CommitTransaction()</code> y <code>RollBack()</code>.</li>
 </ul>
 
 </main>

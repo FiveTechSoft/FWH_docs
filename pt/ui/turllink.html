@@ -88,44 +88,44 @@
 <main id="content">
 
 <h1>TURLLink</h1>
-<p class="class-source">Source: <code>source/classes/urllink.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fonte: <code>source/classes/urllink.prg</code></p>
+<p class="class-hierarchy">Herda de: <code>TControl</code></p>
 
 <p>
-TURLLink displays a clickable hyperlink text control. When clicked, it
-launches the default web browser with the specified URL. The control supports
-custom colors for normal, hover, and visited states, transparent backgrounds,
-and a custom <code>bAction</code> code block to override the default navigation behavior.
+TURLLink exibe um controle de texto de hiperlink clicável. Ao ser clicado, ele
+inicia o navegador web padrão com a URL especificada. O controle suporta
+cores personalizadas para os estados normal, sobre (hover) e visitado, fundos transparentes
+e um code block <code>bAction</code> personalizado para substituir o comportamento de navegação padrão.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Principais Membros DATA</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cURL</code></td><td>Character</td><td>The target URL to open on click</td></tr>
-<tr><td><code>nClrInit</code></td><td>Numeric</td><td>Text color in the normal (unvisited) state</td></tr>
-<tr><td><code>nClrOver</code></td><td>Numeric</td><td>Text color when the mouse hovers over the link</td></tr>
-<tr><td><code>nClrVisit</code></td><td>Numeric</td><td>Text color after the link has been clicked (visited)</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Custom action block overriding default URL launch</td></tr>
+<tr><td><code>cURL</code></td><td>Caractere</td><td>A URL de destino a abrir ao clicar</td></tr>
+<tr><td><code>nClrInit</code></td><td>Numérico</td><td>Cor do texto no estado normal (não visitado)</td></tr>
+<tr><td><code>nClrOver</code></td><td>Numérico</td><td>Cor do texto quando o mouse passa sobre o link</td></tr>
+<tr><td><code>nClrVisit</code></td><td>Numérico</td><td>Cor do texto após o link ter sido clicado (visitado)</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block de ação personalizada que substitui a abertura padrão da URL</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, oWnd, lPixel, lDesign, oFont, cMsg, cURL, cToolTip, nClrInit, nClrOver, nClrVisit, lTransp )</code></td><td>Create a new TURLLink control</td></tr>
-<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>New( nTop, nLeft, oWnd, lPixel, lDesign, oFont, cMsg, cURL, cToolTip, nClrInit, nClrOver, nClrVisit, lTransp )</code></td><td>Cria um novo controle TURLLink</td></tr>
+<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine a partir de um recurso de diálogo</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: URL Link with Custom Action</h2>
+<h2 id="example">Exemplo: Link de URL com Ação Personalizada</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -142,22 +142,22 @@ function Main()
       TOOLTIP "Click to open website" ;
       OF oWnd
 
-   // Override default browser launch with a custom action
+   // Substitui a abertura padrão do navegador por uma ação personalizada
    oLink:bAction := {|| MsgInfo( "Navigating to: " + oLink:cURL ) }
 
    ACTIVATE WINDOW oWnd CENTERED
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>By default, clicking the link launches <code>ShellExecute( "open", cURL )</code> to open the URL in the system default browser.</li>
-<li>Set <code>bAction</code> to override the default behavior entirely. The code block receives the TURLLink object as <code>Self</code>.</li>
-<li>The three color states (<code>nClrInit</code>, <code>nClrOver</code>, <code>nClrVisit</code>) enable visual feedback as the user interacts with the link. <code>nClrOver</code> is typically a brighter or underlined variant.</li>
-<li>The cursor automatically changes to a hand pointer when hovering over the link text.</li>
-<li>Use <code>ReDefine()</code> to bind to a static text control defined in a .rc dialog resource, converting it into a clickable link at runtime.</li>
-<li>Set <code>lTransp</code> to <code>.T.</code> for a transparent background, allowing the link to blend into any dialog or window backdrop.</li>
+<li>Por padrão, clicar no link executa <code>ShellExecute( "open", cURL )</code> para abrir a URL no navegador padrão do sistema.</li>
+<li>Defina <code>bAction</code> para substituir completamente o comportamento padrão. O code block recebe o objeto TURLLink como <code>Self</code>.</li>
+<li>Os três estados de cor (<code>nClrInit</code>, <code>nClrOver</code>, <code>nClrVisit</code>) permitem feedback visual conforme o usuário interage com o link. <code>nClrOver</code> é tipicamente uma variante mais clara ou sublinhada.</li>
+<li>O cursor muda automaticamente para um ponteiro em forma de mão ao passar sobre o texto do link.</li>
+<li>Use <code>ReDefine()</code> para vincular a um controle de texto estático definido em um recurso de diálogo .rc, convertendo-o em um link clicável em tempo de execução.</li>
+<li>Defina <code>lTransp</code> como <code>.T.</code> para um fundo transparente, permitindo que o link se misture a qualquer fundo de diálogo ou janela.</li>
 </ul>
 
 </main>

@@ -107,10 +107,10 @@
 
 <h1>TBrush</h1>
 <p class="class-source">Fuente: <code>source/classes/brush.prg</code></p>
-<p class="class-hierarchy">Clase independiente (no inheritance)</p>
+<p class="class-hierarchy">Clase independiente (sin herencia)</p>
 
 <p>
-TBrush manages Windows GDI brush objects used to fill areas with solid colors, hatch patterns, or bitmap images. A brush is required whenever you need to paint a background (window pane, control face, custom-drawn shapes). TBrush supports solid-color brushes, predefined hatch styles, gradient patterns (via an internal bitmap), image-based brushes from files or resources, and NULL brushes that suppress filling. Every TBrush must be released with <code>End()</code> to avoid GDI resource leaks.
+TBrush gestiona los objetos de pincel (brush) GDI de Windows utilizados para rellenar áreas con colores sólidos, patrones de trama o imágenes de mapa de bits. Se necesita un pincel siempre que haya que pintar un fondo (panel de ventana, cara de un control, formas dibujadas a medida). TBrush admite pinceles de color sólido, estilos de trama predefinidos, patrones de degradado (mediante un mapa de bits interno), pinceles basados en imágenes desde archivos o recursos, y pinceles NULL que suprimen el relleno. Todo TBrush debe liberarse con <code>End()</code> para evitar fugas de recursos GDI.
 </p>
 
 <h2 id="data">Miembros DATA Principales</h2>
@@ -120,36 +120,36 @@ TBrush manages Windows GDI brush objects used to fill areas with solid colors, h
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hBrush</code></td><td>Numeric (Handle)</td><td>Windows GDI brush handle. Created by <code>New()</code>.</td></tr>
-<tr><td><code>hBitmap</code></td><td>Numeric (Handle)</td><td>Handle to the bitmap backing image-based and gradient brushes. <code>nil</code> for solid and hatch brushes.</td></tr>
-<tr><td><code>cStyle</code></td><td>Character</td><td>Hatch style name: <code>"HORIZONTAL"</code>, <code>"VERTICAL"</code>, <code>"CROSS"</code>, <code>"DIAGCROSS"</code>, <code>"BORLAND"</code>, <code>"BRICKS"</code>, <code>"TILED"</code>, <code>"TABS"</code>, or <code>"NULL"</code>.</td></tr>
-<tr><td><code>nRGBColor</code></td><td>Numeric</td><td>RGB color value for solid and hatch brushes.</td></tr>
-<tr><td><code>aGrad</code></td><td>Array</td><td>Gradient definition array for gradient brushes: <code>{ { nPercent, nRGB1, nRGB2 }, ... }</code>.</td></tr>
-<tr><td><code>cBmpFile</code></td><td>Character</td><td>File path to the bitmap used for image-based brushes.</td></tr>
-<tr><td><code>cBmpRes</code></td><td>Character</td><td>Resource name of the bitmap used for resource-based brushes.</td></tr>
-<tr><td><code>nBmpHandle</code></td><td>Numeric</td><td>Direct bitmap handle used for image-based brushes (alternative to file/resource).</td></tr>
-<tr><td><code>cResizeMode</code></td><td>Character</td><td>Resize mode for bitmap brushes: <code>"T"</code> = tile, <code>"S"</code> = stretch.</td></tr>
-<tr><td><code>lVertical</code></td><td>Logical</td><td>If <code>.T.</code>, gradient is vertical; if <code>.F.</code>, horizontal.</td></tr>
-<tr><td><code>Cargo</code></td><td>Any</td><td>General-purpose user data slot.</td></tr>
+<tr><td><code>hBrush</code></td><td>Numérico (Handle)</td><td>Handle del pincel GDI de Windows. Creado por <code>New()</code>.</td></tr>
+<tr><td><code>hBitmap</code></td><td>Numérico (Handle)</td><td>Handle del mapa de bits que respalda los pinceles basados en imagen y de degradado. <code>nil</code> para pinceles sólidos y de trama.</td></tr>
+<tr><td><code>cStyle</code></td><td>Carácter</td><td>Nombre del estilo de trama: <code>"HORIZONTAL"</code>, <code>"VERTICAL"</code>, <code>"CROSS"</code>, <code>"DIAGCROSS"</code>, <code>"BORLAND"</code>, <code>"BRICKS"</code>, <code>"TILED"</code>, <code>"TABS"</code> o <code>"NULL"</code>.</td></tr>
+<tr><td><code>nRGBColor</code></td><td>Numérico</td><td>Valor de color RGB para pinceles sólidos y de trama.</td></tr>
+<tr><td><code>aGrad</code></td><td>Array</td><td>Array de definición de degradado para pinceles de degradado: <code>{ { nPercent, nRGB1, nRGB2 }, ... }</code>.</td></tr>
+<tr><td><code>cBmpFile</code></td><td>Carácter</td><td>Ruta del archivo del mapa de bits usado en pinceles basados en imagen.</td></tr>
+<tr><td><code>cBmpRes</code></td><td>Carácter</td><td>Nombre del recurso del mapa de bits usado en pinceles basados en recursos.</td></tr>
+<tr><td><code>nBmpHandle</code></td><td>Numérico</td><td>Handle directo del mapa de bits usado en pinceles basados en imagen (alternativa a archivo/recurso).</td></tr>
+<tr><td><code>cResizeMode</code></td><td>Carácter</td><td>Modo de redimensionado para pinceles de mapa de bits: <code>"T"</code> = mosaico, <code>"S"</code> = estirar.</td></tr>
+<tr><td><code>lVertical</code></td><td>Lógico</td><td>Si es <code>.T.</code>, el degradado es vertical; si es <code>.F.</code>, horizontal.</td></tr>
+<tr><td><code>Cargo</code></td><td>Cualquiera</td><td>Espacio de datos de usuario de propósito general.</td></tr>
 </tbody>
 </table>
 
-<h2 id="styles">Brush Styles</h2>
+<h2 id="styles">Estilos de Pincel</h2>
 
 <table>
 <thead>
-<tr><th>Style</th><th>Descripción</th></tr>
+<tr><th>Estilo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>"HORIZONTAL"</code></td><td>Horizontal hatch lines</td></tr>
-<tr><td><code>"VERTICAL"</code></td><td>Vertical hatch lines</td></tr>
-<tr><td><code>"CROSS"</code></td><td>Cross-hatch (horizontal + vertical)</td></tr>
-<tr><td><code>"DIAGCROSS"</code></td><td>Diagonal cross-hatch</td></tr>
-<tr><td><code>"BORLAND"</code></td><td>Borland-style diagonal pattern</td></tr>
-<tr><td><code>"BRICKS"</code></td><td>Brick-wall pattern</td></tr>
-<tr><td><code>"TILED"</code></td><td>Bitmap tiled across the fill area</td></tr>
-<tr><td><code>"TABS"</code></td><td>Tab-like pattern</td></tr>
-<tr><td><code>"NULL"</code></td><td>NULL brush (no fill). Used to prevent GDI from filling a region.</td></tr>
+<tr><td><code>"HORIZONTAL"</code></td><td>Líneas de trama horizontales</td></tr>
+<tr><td><code>"VERTICAL"</code></td><td>Líneas de trama verticales</td></tr>
+<tr><td><code>"CROSS"</code></td><td>Trama cruzada (horizontal + vertical)</td></tr>
+<tr><td><code>"DIAGCROSS"</code></td><td>Trama cruzada diagonal</td></tr>
+<tr><td><code>"BORLAND"</code></td><td>Patrón diagonal estilo Borland</td></tr>
+<tr><td><code>"BRICKS"</code></td><td>Patrón de muro de ladrillos</td></tr>
+<tr><td><code>"TILED"</code></td><td>Mapa de bits en mosaico sobre el área de relleno</td></tr>
+<tr><td><code>"TABS"</code></td><td>Patrón tipo pestañas</td></tr>
+<tr><td><code>"NULL"</code></td><td>Pincel NULL (sin relleno). Se usa para evitar que GDI rellene una región.</td></tr>
 </tbody>
 </table>
 
@@ -160,16 +160,16 @@ TBrush manages Windows GDI brush objects used to fill areas with solid colors, h
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cStyle, nRGB, cBmpFile, cBmpRes, nBmpHandle, cResizeMode )</code></td><td>Create a brush. With no arguments, creates a solid <code>COLOR_BTNFACE</code> brush. <code>cStyle</code> selects hatch or NULL style. When <code>cBmpFile</code> or <code>cBmpRes</code> is provided, creates an image-based brush.</td></tr>
-<tr><td><code>End()</code></td><td>Delete the GDI brush (and backing bitmap if present) via <code>DeleteObject()</code>. Must be called when the brush is no longer needed.</td></tr>
-<tr><td><code>Resized( x, y, nMode )</code></td><td>Create a resized version of a bitmap brush. <code>x</code> and <code>y</code> are the new dimensions; <code>nMode</code> is the stretch mode (default: <code>COLORONCOLOR</code>).</td></tr>
-<tr><td><code>Cropped( oWnd, oRect )</code></td><td>Crop the brush bitmap to a specified rectangle. Useful for creating region-specific brushes.</td></tr>
-<tr><td><code>Resize( oWnd )</code></td><td>Resize the brush bitmap to match a window dimensions. The brush is recreated with the scaled bitmap.</td></tr>
-<tr><td><code>Copy()</code></td><td>Create an independent copy of the brush with a new GDI handle.</td></tr>
-<tr><td><code>GdiBrush()</code></td><td>Return the GDI brush handle (<code>hBrush</code>). Used internally when selecting brushes into DCs.</td></tr>
-<tr><td><code>SameAs( oB )</code></td><td>Compare two brushes by their attributes (style, color, bitmap). Returns <code>.T.</code> if they are equivalent.</td></tr>
-<tr><td><code>SetColor( nRGB )</code></td><td>Change the brush color. Recreates the GDI brush handle with the new color.</td></tr>
-<tr><td><code>SetStyle( cStyle )</code></td><td>Change the brush style. Recreates the GDI brush handle with the new style.</td></tr>
+<tr><td><code>New( cStyle, nRGB, cBmpFile, cBmpRes, nBmpHandle, cResizeMode )</code></td><td>Crea un pincel. Sin argumentos, crea un pincel sólido <code>COLOR_BTNFACE</code>. <code>cStyle</code> selecciona un estilo de trama o NULL. Cuando se proporciona <code>cBmpFile</code> o <code>cBmpRes</code>, crea un pincel basado en imagen.</td></tr>
+<tr><td><code>End()</code></td><td>Elimina el pincel GDI (y el mapa de bits de respaldo, si lo hay) mediante <code>DeleteObject()</code>. Debe llamarse cuando el pincel ya no se necesita.</td></tr>
+<tr><td><code>Resized( x, y, nMode )</code></td><td>Crea una versión redimensionada de un pincel de mapa de bits. <code>x</code> e <code>y</code> son las nuevas dimensiones; <code>nMode</code> es el modo de estirado (por defecto: <code>COLORONCOLOR</code>).</td></tr>
+<tr><td><code>Cropped( oWnd, oRect )</code></td><td>Recorta el mapa de bits del pincel a un rectángulo especificado. Útil para crear pinceles específicos de una región.</td></tr>
+<tr><td><code>Resize( oWnd )</code></td><td>Redimensiona el mapa de bits del pincel para ajustarse a las dimensiones de una ventana. El pincel se recrea con el mapa de bits escalado.</td></tr>
+<tr><td><code>Copy()</code></td><td>Crea una copia independiente del pincel con un nuevo handle GDI.</td></tr>
+<tr><td><code>GdiBrush()</code></td><td>Devuelve el handle del pincel GDI (<code>hBrush</code>). Se usa internamente al seleccionar pinceles en los DC.</td></tr>
+<tr><td><code>SameAs( oB )</code></td><td>Compara dos pinceles por sus atributos (estilo, color, mapa de bits). Devuelve <code>.T.</code> si son equivalentes.</td></tr>
+<tr><td><code>SetColor( nRGB )</code></td><td>Cambia el color del pincel. Recrea el handle del pincel GDI con el nuevo color.</td></tr>
+<tr><td><code>SetStyle( cStyle )</code></td><td>Cambia el estilo del pincel. Recrea el handle del pincel GDI con el nuevo estilo.</td></tr>
 </tbody>
 </table>
 
@@ -182,7 +182,7 @@ TBrush manages Windows GDI brush objects used to fill areas with solid colors, h
    [ RESOURCE cBmpRes ] ;
    [ RESIZE nWidth, nHeight ]</code></pre>
 
-<h2 id="example">Example: Solid, Hatch, Gradient, and Bitmap Brushes</h2>
+<h2 id="example">Ejemplo: Pinceles Sólido, de Trama, de Degradado y de Mapa de Bits</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -192,13 +192,13 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "TBrush Demo" SIZE 600, 400
 
-   // Solid blue brush
+   // Pincel azul sólido
    DEFINE BRUSH oBrush1 COLOR CLR_BLUE
 
-   // Cross-hatch red brush
+   // Pincel rojo de trama cruzada
    DEFINE BRUSH oBrush2 COLOR CLR_RED STYLE "CROSS"
 
-   // Gradient brush (vertical)
+   // Pincel de degradado (vertical)
    oBrush3 := TBrush():New( , , , , , , .T. )
    oBrush3:aGrad := { { 1.0, nRGB( 40, 80, 140 ), nRGB( 20, 40, 70 ) } }
 
@@ -215,12 +215,12 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>TBrush is a standalone class — it does not inherit from TWindow or TControl.</li>
-<li>Every TBrush must be paired with an <code>End()</code> call. GDI brushes are a limited resource; leaking them degrades system performance.</li>
-<li>To assign a brush to a window's background, use <code>oWnd:SetBrush( oBrush )</code> or <code>oWnd:oBrush := oBrush</code>. The window takes ownership: set <code>oWnd:lTransparent := .F.</code> for the brush to take effect.</li>
-<li>Gradient brushes generate a temporary bitmap internally. The <code>aGrad</code> array specifies segments: each entry is <code>{ nPercent, nColorTopLeft, nColorBottomRight }</code>.</li>
-<li>Bitmap brushes can be tiled (default) or stretched by setting <code>cResizeMode</code> to <code>"S"</code>.</li>
-<li>The <code>"NULL"</code> style creates a hollow brush that does not fill. Use it when you need the outline of a shape without filling the interior.</li>
+<li>TBrush es una clase independiente: no hereda de TWindow ni de TControl.</li>
+<li>Todo TBrush debe ir acompañado de una llamada a <code>End()</code>. Los pinceles GDI son un recurso limitado; dejar fugas degrada el rendimiento del sistema.</li>
+<li>Para asignar un pincel al fondo de una ventana, use <code>oWnd:SetBrush( oBrush )</code> o <code>oWnd:oBrush := oBrush</code>. La ventana asume la propiedad: establezca <code>oWnd:lTransparent := .F.</code> para que el pincel surta efecto.</li>
+<li>Los pinceles de degradado generan internamente un mapa de bits temporal. El array <code>aGrad</code> especifica segmentos: cada entrada es <code>{ nPercent, nColorTopLeft, nColorBottomRight }</code>.</li>
+<li>Los pinceles de mapa de bits pueden mostrarse en mosaico (por defecto) o estirarse estableciendo <code>cResizeMode</code> en <code>"S"</code>.</li>
+<li>El estilo <code>"NULL"</code> crea un pincel hueco que no rellena. Úselo cuando necesite el contorno de una forma sin rellenar su interior.</li>
 </ul>
 
 </main>

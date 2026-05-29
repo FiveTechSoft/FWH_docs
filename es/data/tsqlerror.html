@@ -93,50 +93,51 @@
 <main id="content">
 
 <h1>TSqlError</h1>
-<p class="class-source">Source: <code>source/classes/sqlerror.prg</code></p>
-<p class="class-hierarchy">Standalone class</p>
+<p class="class-source">Fuente: <code>source/classes/sqlerror.prg</code></p>
+<p class="class-hierarchy">Clase independiente</p>
 
 <p>
-TSqlError encapsulates ODBC SQL error information. It captures error details at the
-environment, connection, and statement handle levels, providing structured access to
-native SQL state codes, error messages, and error types. It is used internally by
-the TODBC class and can be used directly for custom error handling.
+TSqlError encapsula la información de errores SQL de ODBC. Captura los detalles del error
+a nivel de los manejadores de entorno, conexión y sentencia, proporcionando acceso
+estructurado a los códigos nativos de estado SQL, los mensajes de error y los tipos de error.
+Se utiliza internamente en la clase TODBC y puede usarse directamente para el manejo
+personalizado de errores.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Miembros DATA Clave</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hErrEnv</code></td><td>Handle</td><td>ODBC environment handle where the error occurred</td></tr>
-<tr><td><code>hErrDbc</code></td><td>Handle</td><td>ODBC connection handle where the error occurred</td></tr>
-<tr><td><code>hErrStmt</code></td><td>Handle</td><td>ODBC statement handle where the error occurred</td></tr>
-<tr><td><code>cClassError</code></td><td>Character</td><td>SQL state class code (e.g., "42S02" for table not found)</td></tr>
-<tr><td><code>nType</code></td><td>Numeric</td><td>Error type numeric code</td></tr>
-<tr><td><code>cMsgError</code></td><td>Character</td><td>Human-readable error message</td></tr>
+<tr><td><code>hErrEnv</code></td><td>Manejador</td><td>Manejador de entorno ODBC donde ocurrió el error</td></tr>
+<tr><td><code>hErrDbc</code></td><td>Manejador</td><td>Manejador de conexión ODBC donde ocurrió el error</td></tr>
+<tr><td><code>hErrStmt</code></td><td>Manejador</td><td>Manejador de sentencia ODBC donde ocurrió el error</td></tr>
+<tr><td><code>cClassError</code></td><td>Carácter</td><td>Código de clase de estado SQL (p. ej., "42S02" para tabla no encontrada)</td></tr>
+<tr><td><code>nType</code></td><td>Numérico</td><td>Código numérico del tipo de error</td></tr>
+<tr><td><code>cMsgError</code></td><td>Carácter</td><td>Mensaje de error legible por humanos</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( hEnv, hDbc )</code></td><td>Create a new TSqlError object; captures errors from environment and connection handles</td></tr>
-<tr><td><code>Init()</code></td><td>Initialize the error object and retrieve diagnostic records</td></tr>
-<tr><td><code>GenerateError( hStmt )</code></td><td>Capture error details from a statement handle after a failed SQL operation</td></tr>
-<tr><td><code>CreateError( cClass, nType, cMsg )</code></td><td>Create a synthetic error with explicit class, type, and message</td></tr>
-<tr><td><code>ClassError()</code></td><td>Return the SQL state class code</td></tr>
-<tr><td><code>Type()</code></td><td>Return the error type numeric code</td></tr>
-<tr><td><code>MsgError()</code></td><td>Return the human-readable error message</td></tr>
+<tr><td><code>New( hEnv, hDbc )</code></td><td>Crea un nuevo objeto TSqlError; captura los errores de los manejadores de entorno y conexión</td></tr>
+<tr><td><code>Init()</code></td><td>Inicializa el objeto de error y recupera los registros de diagnóstico</td></tr>
+<tr><td><code>GenerateError( hStmt )</code></td><td>Captura los detalles del error desde un manejador de sentencia tras una operación SQL fallida</td></tr>
+<tr><td><code>CreateError( cClass, nType, cMsg )</code></td><td>Crea un error sintético con clase, tipo y mensaje explícitos</td></tr>
+<tr><td><code>ClassError()</code></td><td>Devuelve el código de clase de estado SQL</td></tr>
+<tr><td><code>Type()</code></td><td>Devuelve el código numérico del tipo de error</td></tr>
+<tr><td><code>MsgError()</code></td><td>Devuelve el mensaje de error legible por humanos</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Detect and Display SQL Error</h2>
+<h2 id="example">Ejemplo: Detectar y Mostrar un Error SQL</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -147,7 +148,7 @@ function Main()
    oOdbc := TODBC():New( "MyDSN", "user", "pass" )
 
    if ! oOdbc:lSuccess
-      // Create and display the error
+      // Crear y mostrar el error
       oErr := TSqlError():New( oOdbc:hEnv, oOdbc:hDbc )
       oErr:Init()
 
@@ -161,13 +162,13 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TSqlError uses <code>SQLError()</code> / <code>SQLGetDiagRec()</code> ODBC API calls to retrieve diagnostic information from the various handles involved in a failed operation.</li>
-<li>The <code>cClassError</code> contains the standard SQLSTATE code (5-character string) defined by the ODBC and SQL standards.</li>
-<li><code>GenerateError( hStmt )</code> should be called immediately after the SQL statement fails, before any other ODBC calls that might overwrite the diagnostic information.</li>
-<li>Use <code>CreateError()</code> to raise custom TSqlError objects with application-defined error messages for non-ODBC error scenarios.</li>
+<li>TSqlError utiliza las llamadas a la API ODBC <code>SQLError()</code> / <code>SQLGetDiagRec()</code> para recuperar la información de diagnóstico de los distintos manejadores involucrados en una operación fallida.</li>
+<li>El <code>cClassError</code> contiene el código SQLSTATE estándar (cadena de 5 caracteres) definido por los estándares ODBC y SQL.</li>
+<li><code>GenerateError( hStmt )</code> debe llamarse inmediatamente después de que falle la sentencia SQL, antes de cualquier otra llamada ODBC que pudiera sobrescribir la información de diagnóstico.</li>
+<li>Utilice <code>CreateError()</code> para generar objetos TSqlError personalizados con mensajes de error definidos por la aplicación en escenarios de error ajenos a ODBC.</li>
 </ul>
 
 </main>

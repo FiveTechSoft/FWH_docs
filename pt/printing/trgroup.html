@@ -93,56 +93,56 @@
 <main id="content">
 
 <h1>TRGroup</h1>
-<p class="class-source">Source: <code>source/classes/rgroup.prg</code></p>
-<p class="class-hierarchy">Standalone class</p>
+<p class="class-source">Fonte: <code>source/classes/rgroup.prg</code></p>
+<p class="class-hierarchy">Classe independente</p>
 
 <p>
-TRGroup defines a group break within a TReport. Groups enable hierarchical reports with
-group headers, footers, and automatic subtotals. When a group break occurs (detected by a
-change in the group expression value), the group footer is printed, totals are reset,
-and the group header for the new group is printed on the next page or following line.
+TRGroup define uma quebra de grupo dentro de um TReport. Os grupos permitem relatórios hierárquicos com
+cabeçalhos de grupo, rodapés e subtotais automáticos. Quando ocorre uma quebra de grupo (detectada por uma
+mudança no valor da expressão do grupo), o rodapé do grupo é impresso, os totais são reiniciados,
+e o cabeçalho do grupo para o novo grupo é impresso na próxima página ou na linha seguinte.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Membros DATA Principais</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oReport</code></td><td>Object</td><td>Parent TReport object</td></tr>
-<tr><td><code>aTotal</code></td><td>Array</td><td>Array of accumulated subtotal values per column</td></tr>
-<tr><td><code>bGroup</code></td><td>Codeblock</td><td>Group expression; evaluated each row to detect breaks</td></tr>
-<tr><td><code>bHeader</code></td><td>Codeblock</td><td>Header text codeblock, printed when a new group starts</td></tr>
-<tr><td><code>bFooter</code></td><td>Codeblock</td><td>Footer text codeblock, printed when a group ends</td></tr>
-<tr><td><code>cValue</code></td><td>Character</td><td>Current group value</td></tr>
-<tr><td><code>cOldValue</code></td><td>Character</td><td>Previous group value, used for break detection</td></tr>
-<tr><td><code>nCounter</code></td><td>Numeric</td><td>Row count within the current group</td></tr>
-<tr><td><code>lEject</code></td><td>Logical</td><td>Eject page when group breaks</td></tr>
-<tr><td><code>lHeader</code></td><td>Logical</td><td>Has a header to print</td></tr>
-<tr><td><code>lFooter</code></td><td>Logical</td><td>Has a footer to print</td></tr>
+<tr><td><code>oReport</code></td><td>Objeto</td><td>Objeto TReport pai</td></tr>
+<tr><td><code>aTotal</code></td><td>Array</td><td>Array de valores de subtotal acumulados por coluna</td></tr>
+<tr><td><code>bGroup</code></td><td>Codeblock</td><td>Expressão do grupo; avaliada a cada linha para detectar quebras</td></tr>
+<tr><td><code>bHeader</code></td><td>Codeblock</td><td>Codeblock do texto do cabeçalho, impresso quando um novo grupo começa</td></tr>
+<tr><td><code>bFooter</code></td><td>Codeblock</td><td>Codeblock do texto do rodapé, impresso quando um grupo termina</td></tr>
+<tr><td><code>cValue</code></td><td>Caractere</td><td>Valor atual do grupo</td></tr>
+<tr><td><code>cOldValue</code></td><td>Caractere</td><td>Valor anterior do grupo, usado para detecção de quebra</td></tr>
+<tr><td><code>nCounter</code></td><td>Numérico</td><td>Contagem de linhas dentro do grupo atual</td></tr>
+<tr><td><code>lEject</code></td><td>Lógico</td><td>Ejeta a página quando o grupo quebra</td></tr>
+<tr><td><code>lHeader</code></td><td>Lógico</td><td>Tem um cabeçalho para imprimir</td></tr>
+<tr><td><code>lFooter</code></td><td>Lógico</td><td>Tem um rodapé para imprimir</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( bGroup, bHeader, bFooter, bFont, lEject, oReport )</code></td><td>Create a new TRGroup definition</td></tr>
-<tr><td><code>Header( nRow )</code></td><td>Render the group header at the specified row</td></tr>
-<tr><td><code>Footer( nRow )</code></td><td>Render the group footer at the specified row</td></tr>
-<tr><td><code>Total( nRow )</code></td><td>Render column subtotals at the specified row</td></tr>
-<tr><td><code>Check()</code></td><td>Returns <code>.T.</code> if the group value has changed (break occurred)</td></tr>
-<tr><td><code>Evaluate()</code></td><td>Increment the group row counter</td></tr>
-<tr><td><code>Reset()</code></td><td>Reset totals, counter, and current/old values</td></tr>
-<tr><td><code>Stabilize( nOrder )</code></td><td>Calculate header/footer dimensions</td></tr>
+<tr><td><code>New( bGroup, bHeader, bFooter, bFont, lEject, oReport )</code></td><td>Cria uma nova definição de TRGroup</td></tr>
+<tr><td><code>Header( nRow )</code></td><td>Renderiza o cabeçalho do grupo na linha especificada</td></tr>
+<tr><td><code>Footer( nRow )</code></td><td>Renderiza o rodapé do grupo na linha especificada</td></tr>
+<tr><td><code>Total( nRow )</code></td><td>Renderiza os subtotais das colunas na linha especificada</td></tr>
+<tr><td><code>Check()</code></td><td>Retorna <code>.T.</code> se o valor do grupo mudou (ocorreu uma quebra)</td></tr>
+<tr><td><code>Evaluate()</code></td><td>Incrementa o contador de linhas do grupo</td></tr>
+<tr><td><code>Reset()</code></td><td>Reinicia os totais, o contador e os valores atual/anterior</td></tr>
+<tr><td><code>Stabilize( nOrder )</code></td><td>Calcula as dimensões do cabeçalho/rodapé</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Group by State with Subtotals</h2>
+<h2 id="example">Exemplo: Agrupar por Estado com Subtotais</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "report.ch"
@@ -169,14 +169,14 @@ function GroupedReport()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>Use the <code>GROUP ON</code> command inside a <code>REPORT</code> block to define group breaks declaratively.</li>
-<li>Group breaks are detected automatically by comparing the current <code>bGroup</code> evaluation against the previous value.</li>
-<li>Set <code>lEject := .T.</code> to force a page break each time the group value changes.</li>
-<li>The <code>aTotal</code> array accumulates subtotals for columns that have <code>lTotal := .T.</code>.</li>
-<li>Multiple group levels can be nested by defining multiple TRGroup objects in sequence.</li>
+<li>Use o comando <code>GROUP ON</code> dentro de um bloco <code>REPORT</code> para definir quebras de grupo de forma declarativa.</li>
+<li>As quebras de grupo são detectadas automaticamente comparando a avaliação atual de <code>bGroup</code> com o valor anterior.</li>
+<li>Defina <code>lEject := .T.</code> para forçar uma quebra de página sempre que o valor do grupo mudar.</li>
+<li>O array <code>aTotal</code> acumula subtotais para colunas que têm <code>lTotal := .T.</code>.</li>
+<li>Vários níveis de grupo podem ser aninhados definindo múltiplos objetos TRGroup em sequência.</li>
 </ul>
 
 </main>

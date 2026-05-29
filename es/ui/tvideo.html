@@ -89,43 +89,43 @@
 <main id="content">
 
 <h1>TVideo</h1>
-<p class="class-source">Source: <code>source/classes/video.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fuente: <code>source/classes/video.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
 
 <p>
-TVideo is a media playback control that uses the Windows MCI (Media Control Interface) to play video files. It supports AVI and other MCI-compatible video formats. The control displays the video in a rectangular area within a FiveWin window or dialog, with optional borderless rendering.
+TVideo es un control de reproducción multimedia que utiliza la interfaz MCI (Media Control Interface) de Windows para reproducir archivos de vídeo. Admite AVI y otros formatos de vídeo compatibles con MCI. El control muestra el vídeo en un área rectangular dentro de una ventana o diálogo de FiveWin, con renderizado sin borde opcional.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Miembros DATA Principales</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oMci</code></td><td>Object</td><td>Internal MCI device object managing playback</td></tr>
-<tr><td><code>cAviFile</code></td><td>Character</td><td>Path to the AVI (or other video) file</td></tr>
-<tr><td><code>cType</code></td><td>Character</td><td>MCI device type string (e.g., "AVIVideo")</td></tr>
+<tr><td><code>oMci</code></td><td>Objeto</td><td>Objeto interno del dispositivo MCI que gestiona la reproducción</td></tr>
+<tr><td><code>cAviFile</code></td><td>Carácter</td><td>Ruta al archivo AVI (u otro vídeo)</td></tr>
+<tr><td><code>cType</code></td><td>Carácter</td><td>Cadena del tipo de dispositivo MCI (p. ej., "AVIVideo")</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, cFile, oWnd, lNoBorder, cType )</code></td><td>Create a new video playback control</td></tr>
-<tr><td><code>Play( nFrom, nTo )</code></td><td>Play the video from frame <code>nFrom</code> to <code>nTo</code>. If omitted, play the entire video.</td></tr>
-<tr><td><code>PlayFull()</code></td><td>Play the video in full-screen mode</td></tr>
-<tr><td><code>Position()</code></td><td>Return the current playback position in frames</td></tr>
-<tr><td><code>Length()</code></td><td>Return the total number of frames in the video</td></tr>
-<tr><td><code>End()</code></td><td>Stop playback and close the MCI device</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, cFile, oWnd, lNoBorder, cType )</code></td><td>Crea un nuevo control de reproducción de vídeo</td></tr>
+<tr><td><code>Play( nFrom, nTo )</code></td><td>Reproduce el vídeo desde el fotograma <code>nFrom</code> hasta <code>nTo</code>. Si se omite, reproduce el vídeo completo.</td></tr>
+<tr><td><code>PlayFull()</code></td><td>Reproduce el vídeo en modo pantalla completa</td></tr>
+<tr><td><code>Position()</code></td><td>Devuelve la posición de reproducción actual en fotogramas</td></tr>
+<tr><td><code>Length()</code></td><td>Devuelve el número total de fotogramas del vídeo</td></tr>
+<tr><td><code>End()</code></td><td>Detiene la reproducción y cierra el dispositivo MCI</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Play AVI File</h2>
+<h2 id="example">Ejemplo: Reproducir un archivo AVI</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -133,7 +133,7 @@ function Main()
 
    local oWnd, oVideo
 
-   DEFINE WINDOW oWnd TITLE "Video Player" SIZE 640, 520
+   DEFINE WINDOW oWnd TITLE "Reproductor de Vídeo" SIZE 640, 520
 
    @ 10, 10 VIDEO oVideo FILE "sample.avi" ;
       SIZE 600, 450 OF oWnd
@@ -144,13 +144,13 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TVideo wraps the Windows MCI API (<code>mciSendString</code>) for video playback. Ensure the appropriate MCI drivers are installed on the target system.</li>
-<li>Use the <code>lNoBorder</code> parameter in <code>New()</code> to remove the border around the video display area.</li>
-<li>The <code>cType</code> parameter specifies the MCI device type. The default is <code>"AVIVideo"</code> for AVI files.</li>
-<li>Call <code>End()</code> when the video is no longer needed to release the MCI device resources.</li>
+<li>TVideo encapsula la API MCI de Windows (<code>mciSendString</code>) para la reproducción de vídeo. Asegúrese de que los controladores MCI adecuados estén instalados en el sistema de destino.</li>
+<li>Utilice el parámetro <code>lNoBorder</code> en <code>New()</code> para eliminar el borde alrededor del área de visualización del vídeo.</li>
+<li>El parámetro <code>cType</code> especifica el tipo de dispositivo MCI. El valor predeterminado es <code>"AVIVideo"</code> para archivos AVI.</li>
+<li>Llame a <code>End()</code> cuando el vídeo ya no sea necesario para liberar los recursos del dispositivo MCI.</li>
 </ul>
 
 </main>

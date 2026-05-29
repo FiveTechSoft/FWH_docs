@@ -110,10 +110,10 @@
 
 <h1>TDDEMLClient / TDDEMLServer</h1>
 <p class="class-source">Sources: <code>source/classes/tddemlcl.prg</code>, <code>source/classes/tddemlsv.prg</code></p>
-<p class="class-hierarchy">Standalone classes</p>
+<p class="class-hierarchy">Classes independentes</p>
 
 <p>
-The DDE Management Library (DDEML) classes provide a high-level interface to Windows Dynamic Data Exchange using the DDEML API. TDDEMLClient connects to DDE servers and executes commands or requests data; TDDEMLServer registers a DDE server that responds to client requests. Both classes handle conversation management, service/topic registration, and data transfer through the DDEML protocol.
+As classes da DDE Management Library (DDEML) fornecem uma interface de alto nível para o Dynamic Data Exchange do Windows usando a API DDEML. TDDEMLClient conecta-se a servidores DDE e executa comandos ou solicita dados; TDDEMLServer registra um servidor DDE que responde às solicitações dos clientes. Ambas as classes gerenciam conversas, registro de serviço/tópico e transferência de dados através do protocolo DDEML.
 </p>
 
 <div class="mermaid">
@@ -127,84 +127,84 @@ flowchart LR
 
 <h2 id="client">TDDEMLClient</h2>
 
-<p>TDDEMLClient connects to an existing DDE server, sends commands, and requests data.</p>
+<p>TDDEMLClient conecta-se a um servidor DDE existente, envia comandos e solicita dados.</p>
 
-<h3>Key DATA</h3>
+<h3>Principais DATA</h3>
 
 <table>
 <thead>
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hInst</code></td><td>Numeric</td><td>DDEML instance handle</td></tr>
-<tr><td><code>hConv</code></td><td>Numeric</td><td>Conversation handle after successful connect</td></tr>
-<tr><td><code>cService</code></td><td>Character</td><td>Service name string</td></tr>
-<tr><td><code>hService</code></td><td>Numeric</td><td>Service handle</td></tr>
-<tr><td><code>cTopic</code></td><td>Character</td><td>Topic name string</td></tr>
-<tr><td><code>hTopic</code></td><td>Numeric</td><td>Topic handle</td></tr>
-<tr><td><code>nTimeOut</code></td><td>Numeric</td><td>Timeout in milliseconds for DDE operations</td></tr>
+<tr><td><code>hInst</code></td><td>Numérico</td><td>Handle da instância DDEML</td></tr>
+<tr><td><code>hConv</code></td><td>Numérico</td><td>Handle da conversa após conexão bem-sucedida</td></tr>
+<tr><td><code>cService</code></td><td>Caractere</td><td>String com o nome do serviço</td></tr>
+<tr><td><code>hService</code></td><td>Numérico</td><td>Handle do serviço</td></tr>
+<tr><td><code>cTopic</code></td><td>Caractere</td><td>String com o nome do tópico</td></tr>
+<tr><td><code>hTopic</code></td><td>Numérico</td><td>Handle do tópico</td></tr>
+<tr><td><code>nTimeOut</code></td><td>Numérico</td><td>Tempo limite em milissegundos para operações DDE</td></tr>
 </tbody>
 </table>
 
-<h3>Key METHODs</h3>
+<h3>Principais METHODs</h3>
 
 <table>
 <thead>
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Create DDE client and initialize DDEML</td></tr>
-<tr><td><code>Connect( cSvc, cTopic )</code></td><td>Connect to a DDE server on the given service/topic</td></tr>
-<tr><td><code>Disconnect()</code></td><td>Terminate the DDE conversation</td></tr>
-<tr><td><code>Execute( cCmd )</code></td><td>Send a command string to the server for execution</td></tr>
-<tr><td><code>Request( cReq )</code></td><td>Request data from the server; returns result string</td></tr>
-<tr><td><code>NetConnect( cSvr, cApp )</code></td><td>Connect to a DDE server on a remote network machine</td></tr>
+<tr><td><code>New()</code></td><td>Cria o cliente DDE e inicializa a DDEML</td></tr>
+<tr><td><code>Connect( cSvc, cTopic )</code></td><td>Conecta-se a um servidor DDE no serviço/tópico informado</td></tr>
+<tr><td><code>Disconnect()</code></td><td>Encerra a conversa DDE</td></tr>
+<tr><td><code>Execute( cCmd )</code></td><td>Envia uma string de comando ao servidor para execução</td></tr>
+<tr><td><code>Request( cReq )</code></td><td>Solicita dados ao servidor; retorna a string de resultado</td></tr>
+<tr><td><code>NetConnect( cSvr, cApp )</code></td><td>Conecta-se a um servidor DDE em uma máquina remota da rede</td></tr>
 </tbody>
 </table>
 
 <h2 id="server">TDDEMLServer</h2>
 
-<p>TDDEMLServer registers as a DDE server, listening for client connections and responding to execute/request operations.</p>
+<p>TDDEMLServer registra-se como um servidor DDE, aguardando conexões de clientes e respondendo a operações de execução/solicitação.</p>
 
-<h3>Key DATA</h3>
+<h3>Principais DATA</h3>
 
 <table>
 <thead>
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hInst</code></td><td>Numeric</td><td>DDEML instance handle</td></tr>
-<tr><td><code>aClients</code></td><td>Array</td><td>Array of connected client conversation handles</td></tr>
-<tr><td><code>bOnConnect</code></td><td>Block</td><td>Codeblock evaluated when a client connects</td></tr>
-<tr><td><code>bOnRequest</code></td><td>Block</td><td>Codeblock evaluated when a client requests data; returns result</td></tr>
-<tr><td><code>bOnDisconnect</code></td><td>Block</td><td>Codeblock evaluated when a client disconnects</td></tr>
-<tr><td><code>bOnExecute</code></td><td>Block</td><td>Codeblock evaluated when a client sends a command</td></tr>
+<tr><td><code>hInst</code></td><td>Numérico</td><td>Handle da instância DDEML</td></tr>
+<tr><td><code>aClients</code></td><td>Array</td><td>Array de handles de conversa dos clientes conectados</td></tr>
+<tr><td><code>bOnConnect</code></td><td>Block</td><td>Codeblock avaliado quando um cliente se conecta</td></tr>
+<tr><td><code>bOnRequest</code></td><td>Block</td><td>Codeblock avaliado quando um cliente solicita dados; retorna o resultado</td></tr>
+<tr><td><code>bOnDisconnect</code></td><td>Block</td><td>Codeblock avaliado quando um cliente se desconecta</td></tr>
+<tr><td><code>bOnExecute</code></td><td>Block</td><td>Codeblock avaliado quando um cliente envia um comando</td></tr>
 </tbody>
 </table>
 
-<h3>Key METHODs</h3>
+<h3>Principais METHODs</h3>
 
 <table>
 <thead>
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Create DDE server and initialize DDEML</td></tr>
-<tr><td><code>Connect()</code></td><td>Register the server's service name and start listening</td></tr>
-<tr><td><code>ConnectConfirm( hConv )</code></td><td>Accept and confirm a client conversation</td></tr>
-<tr><td><code>Disconnect( hConv )</code></td><td>Terminate a client conversation</td></tr>
-<tr><td><code>Execute( cCmd )</code></td><td>Process a command sent by a client</td></tr>
-<tr><td><code>Request( cReq, cTopic )</code></td><td>Handle a data request from a client; returns result string</td></tr>
-<tr><td><code>SetNetDDE( lOn )</code></td><td>Enable or disable network DDE support</td></tr>
-<tr><td><code>_Return( cData )</code></td><td>Return data to a client request; returns hData handle</td></tr>
+<tr><td><code>New()</code></td><td>Cria o servidor DDE e inicializa a DDEML</td></tr>
+<tr><td><code>Connect()</code></td><td>Registra o nome do serviço do servidor e começa a aguardar conexões</td></tr>
+<tr><td><code>ConnectConfirm( hConv )</code></td><td>Aceita e confirma a conversa de um cliente</td></tr>
+<tr><td><code>Disconnect( hConv )</code></td><td>Encerra a conversa de um cliente</td></tr>
+<tr><td><code>Execute( cCmd )</code></td><td>Processa um comando enviado por um cliente</td></tr>
+<tr><td><code>Request( cReq, cTopic )</code></td><td>Trata uma solicitação de dados de um cliente; retorna a string de resultado</td></tr>
+<tr><td><code>SetNetDDE( lOn )</code></td><td>Ativa ou desativa o suporte a DDE em rede</td></tr>
+<tr><td><code>_Return( cData )</code></td><td>Retorna dados a uma solicitação do cliente; retorna o handle hData</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Server and Client DDE</h2>
+<h2 id="example">Exemplo: Servidor e Cliente DDE</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
-// Server-side
+// Lado servidor
 function DdeServer()
 
    local oServer := TDDEMLServer():New()
@@ -222,7 +222,7 @@ function DdeServer()
 
 return oServer
 
-// Client-side
+// Lado cliente
 function DdeClient()
 
    local oClient := TDDEMLClient():New()
@@ -240,10 +240,10 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>Both classes require the Windows DDEML library (USER32.DLL). Initialize with <code>DdeInitialize()</code> and clean up with <code>DdeUninitialize()</code>.</li>
-<li>The <code>Request()</code> method on the client side returns a character string. On the server side, <code>Request()</code> should return the data to be sent, and <code>_Return()</code> packages it into a DDEML data handle.</li>
-<li>Use <code>NetConnect()</code> on the client to connect across machines via Network DDE (requires Network DDE to be enabled on both systems).</li>
-<li>Server callback blocks receive the conversation handle as a parameter, allowing multi-client management via the <code>aClients</code> array.</li>
+<li>Ambas as classes requerem a biblioteca DDEML do Windows (USER32.DLL). Inicialize com <code>DdeInitialize()</code> e libere os recursos com <code>DdeUninitialize()</code>.</li>
+<li>O método <code>Request()</code> no lado cliente retorna uma string de caracteres. No lado servidor, <code>Request()</code> deve retornar os dados a serem enviados, e <code>_Return()</code> os empacota em um handle de dados DDEML.</li>
+<li>Use <code>NetConnect()</code> no cliente para conectar entre máquinas via Network DDE (requer que o Network DDE esteja ativado em ambos os sistemas).</li>
+<li>Os blocos de callback do servidor recebem o handle da conversa como parâmetro, permitindo o gerenciamento de múltiplos clientes através do array <code>aClients</code>.</li>
 </ul>
 
 </main>

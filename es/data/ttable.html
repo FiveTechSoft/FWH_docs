@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTable / TAccTable - FWH Docs</title>
+<title>TTable / TAccTable - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -92,73 +92,73 @@
 <main id="content">
 
 <h1>TTable / TAccTable</h1>
-<p class="class-source">Source: <code>source/classes/ttable.prg</code>, <code>source/classes/tacctbl.prg</code></p>
+<p class="class-source">Fuente: <code>source/classes/ttable.prg</code>, <code>source/classes/tacctbl.prg</code></p>
 
 <p>
-TTable provides DBF table metadata management — it stores the table name, alias, field definitions and index list, and can create or import DBF structures. TAccTable manages Windows accelerator tables, allowing keyboard shortcuts (virtual key + modifier state) to be associated with control IDs.
+TTable proporciona la gestión de metadatos de tablas DBF — almacena el nombre de la tabla, el alias, las definiciones de campos y la lista de índices, y puede crear o importar estructuras DBF. TAccTable gestiona las tablas de aceleradores de Windows, permitiendo asociar atajos de teclado (tecla virtual + estado de modificadores) con IDs de controles.
 </p>
 
-<h2 id="ttable">TTable — DBF Table Metadata</h2>
+<h2 id="ttable">TTable — Metadatos de Tabla DBF</h2>
 
-<h3 id="ttable-data">Key DATA Members</h3>
-
-<table>
-<thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
-</thead>
-<tbody>
-<tr><td><code>cName</code></td><td>Character</td><td>Table file name (without extension)</td></tr>
-<tr><td><code>cAlias</code></td><td>Character</td><td>Alias used when opening the table</td></tr>
-<tr><td><code>lShared</code></td><td>Logical</td><td>Open table in shared mode</td></tr>
-<tr><td><code>aFields</code></td><td>Array</td><td>Array of TField objects defining the structure</td></tr>
-<tr><td><code>aIndexes</code></td><td>Array</td><td>Array of index definitions</td></tr>
-</tbody>
-</table>
-
-<h3 id="ttable-methods">Methods</h3>
+<h3 id="ttable-data">Miembros DATA Clave</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cName, cAlias, lShared, cComments )</code></td><td>Create a new table metadata descriptor</td></tr>
-<tr><td><code>Import( cDbfFile )</code></td><td>Import the field structure from an existing DBF file</td></tr>
-<tr><td><code>Create( cPath )</code></td><td>Physically create the DBF file on disk from the stored field definitions</td></tr>
+<tr><td><code>cName</code></td><td>Carácter</td><td>Nombre de archivo de la tabla (sin extensión)</td></tr>
+<tr><td><code>cAlias</code></td><td>Carácter</td><td>Alias usado al abrir la tabla</td></tr>
+<tr><td><code>lShared</code></td><td>Lógico</td><td>Abrir la tabla en modo compartido</td></tr>
+<tr><td><code>aFields</code></td><td>Array</td><td>Array de objetos TField que definen la estructura</td></tr>
+<tr><td><code>aIndexes</code></td><td>Array</td><td>Array de definiciones de índices</td></tr>
 </tbody>
 </table>
 
-<h2 id="tacctable">TAccTable — Accelerator Table</h2>
-
-<h3 id="tacctable-data">Key DATA Members</h3>
+<h3 id="ttable-methods">Métodos</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nHandle</code></td><td>Numeric</td><td>Windows accelerator table handle (returned by SetAccTable)</td></tr>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array of items, each is <code>{ nVirtKey, nVKState, nId }</code></td></tr>
+<tr><td><code>New( cName, cAlias, lShared, cComments )</code></td><td>Crea un nuevo descriptor de metadatos de tabla</td></tr>
+<tr><td><code>Import( cDbfFile )</code></td><td>Importa la estructura de campos desde un archivo DBF existente</td></tr>
+<tr><td><code>Create( cPath )</code></td><td>Crea físicamente el archivo DBF en disco a partir de las definiciones de campos almacenadas</td></tr>
 </tbody>
 </table>
 
-<h3 id="tacctable-methods">Methods</h3>
+<h2 id="tacctable">TAccTable — Tabla de Aceleradores</h2>
+
+<h3 id="tacctable-data">Miembros DATA Clave</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Create an empty accelerator table</td></tr>
-<tr><td><code>Add( nVK, nState, nId )</code></td><td>Add an accelerator entry (virtual key + modifier state + command ID)</td></tr>
-<tr><td><code>Del( nVK, nState )</code></td><td>Remove an accelerator entry by virtual key and state</td></tr>
-<tr><td><code>Activate()</code></td><td>Set this accelerator table as active for the calling thread</td></tr>
-<tr><td><code>DeActivate()</code></td><td>Restore the previous accelerator table (pass nil to SetAccTable)</td></tr>
-<tr><td><code>End()</code></td><td>Destroy the accelerator table and deactivate it if currently active</td></tr>
+<tr><td><code>nHandle</code></td><td>Numérico</td><td>Handle de la tabla de aceleradores de Windows (devuelto por SetAccTable)</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array de elementos, cada uno es <code>{ nVirtKey, nVKState, nId }</code></td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Create Table and Accelerator</h2>
+<h3 id="tacctable-methods">Métodos</h3>
+
+<table>
+<thead>
+<tr><th>Método</th><th>Descripción</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New()</code></td><td>Crea una tabla de aceleradores vacía</td></tr>
+<tr><td><code>Add( nVK, nState, nId )</code></td><td>Añade una entrada de acelerador (tecla virtual + estado de modificadores + ID de comando)</td></tr>
+<tr><td><code>Del( nVK, nState )</code></td><td>Elimina una entrada de acelerador por tecla virtual y estado</td></tr>
+<tr><td><code>Activate()</code></td><td>Establece esta tabla de aceleradores como activa para el hilo llamante</td></tr>
+<tr><td><code>DeActivate()</code></td><td>Restaura la tabla de aceleradores anterior (pasa nil a SetAccTable)</td></tr>
+<tr><td><code>End()</code></td><td>Destruye la tabla de aceleradores y la desactiva si está activa actualmente</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Ejemplo: Crear Tabla y Acelerador</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -166,13 +166,13 @@ function Main()
 
    local oTable, oAccel
 
-   // TTable: define and create a DBF
+   // TTable: definir y crear un DBF
    oTable := TTable():New( "customers", "CUST", .F. )
    AAdd( oTable:aFields, TField():New( "customers", 1, .F., "NAME", "C", 40, 0 ) )
    AAdd( oTable:aFields, TField():New( "customers", 2, .F., "CITY", "C", 30, 0 ) )
    oTable:Create( "c:\data" )
 
-   // TAccTable: define keyboard shortcuts
+   // TAccTable: definir atajos de teclado
    oAccel := TAccTable():New()
    oAccel:Add( VK_F2, 0, 101 )
    oAccel:Add( VK_F3, 0, 102 )
@@ -181,14 +181,14 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TTable does not manage record-level operations; it is solely for structure definition and physical DBF creation.</li>
-<li>The <code>Import()</code> method reads an existing DBF header and populates <code>aFields</code> with TField instances.</li>
-<li>TAccTable wraps the Windows <code>SetAccTable()</code> API. The modifier state (<code>nVKState</code>) can be a combination of MOD_CONTROL, MOD_ALT, MOD_SHIFT, etc.</li>
-<li>Call <code>Activate()</code> to register the table; the handle is stored in <code>nHandle</code> for later deactivation.</li>
-<li>Only one accelerator table can be active at a time per thread.</li>
+<li>TTable no gestiona operaciones a nivel de registro; está destinada únicamente a la definición de estructura y la creación física del DBF.</li>
+<li>El método <code>Import()</code> lee la cabecera de un DBF existente y rellena <code>aFields</code> con instancias de TField.</li>
+<li>TAccTable encapsula la API <code>SetAccTable()</code> de Windows. El estado de modificadores (<code>nVKState</code>) puede ser una combinación de MOD_CONTROL, MOD_ALT, MOD_SHIFT, etc.</li>
+<li>Llame a <code>Activate()</code> para registrar la tabla; el handle se almacena en <code>nHandle</code> para su posterior desactivación.</li>
+<li>Solo puede haber una tabla de aceleradores activa a la vez por hilo.</li>
 </ul>
 
 </main>

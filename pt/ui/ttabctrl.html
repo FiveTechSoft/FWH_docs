@@ -106,49 +106,50 @@
 <main id="content">
 
 <h1>TTabControl</h1>
-<p class="class-source">Source: <code>source/classes/ttabctrl.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fonte: <code>source/classes/ttabctrl.prg</code></p>
+<p class="class-hierarchy">Herda de: <code>TControl</code></p>
 
 <p>
-TTabControl wraps the standard Windows <code>SysTabControl32</code> common control. It displays a row of selectable tabs, each with a prompt, and notifies the application when the user clicks a tab via an action code block. TTabControl is a lightweight tab control without built-in page management — it fires an action on selection change and leaves the page-switching logic to the application. For automatic page switching, see <a href="ttabs.html">TTabs</a> or <a href="tpages.html">TPages</a>.
+TTabControl encapsula o controle comum padrão do Windows <code>SysTabControl32</code>. Ele exibe uma linha de abas selecionáveis, cada uma com um rótulo, e notifica a aplicação quando o usuário clica em uma aba através de um code block de ação. TTabControl é um controle de abas leve sem gerenciamento de páginas embutido — ele dispara uma ação na mudança de seleção e deixa a lógica de troca de páginas para a aplicação. Para troca automática de páginas, veja <a href="ttabs.html">TTabs</a> ou <a href="tpages.html">TPages</a>.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Membros DATA Principais</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of character strings displayed as tab labels.</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Code block evaluated when the user clicks a tab: <code>{ |nOption, oCtrl| ... }</code>.</td></tr>
-<tr><td><code>nOption</code></td><td>Numeric</td><td>Index of the currently selected tab (1-based).</td></tr>
-<tr><td><code>nClrText</code></td><td>Numeric</td><td>Text color for tab labels (RGB value).</td></tr>
-<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Background fill color (RGB value).</td></tr>
-<tr><td><code>hFont</code></td><td>Numeric (Handle)</td><td>Handle of the font used for tab label text.</td></tr>
-<tr><td><code>oFont</code></td><td>TFont</td><td>Font object used for tab label text.</td></tr>
-<tr><td><code>cMsg</code></td><td>Character</td><td>Message bar text displayed when the tab control receives focus.</td></tr>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array de strings de caracteres exibidas como rótulos das abas.</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block avaliado quando o usuário clica em uma aba: <code>{ |nOption, oCtrl| ... }</code>.</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Índice da aba atualmente selecionada (começando em 1).</td></tr>
+<tr><td><code>nClrText</code></td><td>Numeric</td><td>Cor do texto dos rótulos das abas (valor RGB).</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Cor de preenchimento do fundo (valor RGB).</td></tr>
+<tr><td><code>hFont</code></td><td>Numeric (Handle)</td><td>Handle da fonte usada para o texto dos rótulos das abas.</td></tr>
+<tr><td><code>oFont</code></td><td>TFont</td><td>Objeto de fonte usado para o texto dos rótulos das abas.</td></tr>
+<tr><td><code>cMsg</code></td><td>Character</td><td>Texto da barra de mensagens exibido quando o controle de abas recebe o foco.</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, aPrompts, bAction, oWnd, nClrT, nClrP, oFont, lPixel, lDesign, nW, nH, cMsg )</code></td><td>Create a new tab control. <code>aPrompts</code> is an array of tab label strings. <code>bAction</code> is called on tab selection.</td></tr>
-<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine from a dialog resource. Links to an existing SysTabControl32 by its control ID.</td></tr>
-<tr><td><code>Add( cPrompt )</code></td><td>Add a new tab at the end with the given label text.</td></tr>
-<tr><td><code>DelItem( nItem )</code></td><td>Remove the tab at position <code>nItem</code> (1-based).</td></tr>
-<tr><td><code>SetPrompts( aPrompts )</code></td><td>Replace all tab labels with a new array of strings.</td></tr>
-<tr><td><code>SetOption( nOption )</code></td><td>Programmatically select a tab by its index.</td></tr>
-<tr><td><code>End()</code></td><td>Destroy the control.</td></tr>
+<tr><td><code>New( nRow, nCol, aPrompts, bAction, oWnd, nClrT, nClrP, oFont, lPixel, lDesign, nW, nH, cMsg )</code></td><td>Cria um novo controle de abas. <code>aPrompts</code> é um array de strings de rótulos das abas. <code>bAction</code> é chamado na seleção da aba.</td></tr>
+<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine a partir de um recurso de diálogo. Vincula-se a um SysTabControl32 existente pelo seu ID de controle.</td></tr>
+<tr><td><code>Add( cPrompt )</code></td><td>Adiciona uma nova aba ao final com o texto de rótulo fornecido.</td></tr>
+<tr><td><code>DelItem( nItem )</code></td><td>Remove a aba na posição <code>nItem</code> (começando em 1).</td></tr>
+<tr><td><code>SetPrompts( aPrompts )</code></td><td>Substitui todos os rótulos das abas por um novo array de strings.</td></tr>
+<tr><td><code>SetOption( nOption )</code></td><td>Seleciona programaticamente uma aba pelo seu índice.</td></tr>
+<tr><td><code>End()</code></td><td>Destrói o controle.</td></tr>
 </tbody>
 </table>
 
 <h2 id="commands">Comandos: @ ... TAB</h2>
+
 
 <pre><code>@ nRow, nCol TAB oTab ;
    ITEMS aItems ;
@@ -158,7 +159,7 @@ TTabControl wraps the standard Windows <code>SysTabControl32</code> common contr
    [ ON CHANGE bChange ] ;
    [ COLOR nClrText, nClrPane ]</code></pre>
 
-<h2 id="example">Example: 3-Tab Control with Action</h2>
+<h2 id="example">Exemplo: Controle com 3 Abas e Ação</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -180,15 +181,15 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TTabControl inherits from TControl. All standard control methods are available.</li>
-<li>Unlike <a href="ttabs.html">TTabs</a> (which manages child controls through page switching), TTabControl only wraps the tab strip itself. The application must handle content changes in response to <code>bAction</code>.</li>
-<li>Use <code>nOption</code> to read the currently selected tab index at any time, or <code>SetOption()</code> to change it programmatically.</li>
-<li>Tab labels are set via <code>aPrompts</code> in the constructor or <code>SetPrompts()</code> at runtime. Individual tabs can be added or removed with <code>Add()</code> and <code>DelItem()</code>.</li>
-<li>For automatic page management with child controls that show/hide based on the selected tab, use <a href="tfolder.html">TFolder</a> instead.</li>
-<li>Tabs can be repositioned at design time using <code>Move()</code>, <code>SetSize()</code>, and <code>SetPos()</code>.</li>
+<li>TTabControl herda de TControl. Todos os métodos padrão de controle estão disponíveis.</li>
+<li>Diferente de <a href="ttabs.html">TTabs</a> (que gerencia controles filhos através da troca de páginas), TTabControl encapsula apenas a faixa de abas em si. A aplicação deve tratar as mudanças de conteúdo em resposta a <code>bAction</code>.</li>
+<li>Use <code>nOption</code> para ler o índice da aba atualmente selecionada a qualquer momento, ou <code>SetOption()</code> para alterá-lo programaticamente.</li>
+<li>Os rótulos das abas são definidos via <code>aPrompts</code> no construtor ou <code>SetPrompts()</code> em tempo de execução. Abas individuais podem ser adicionadas ou removidas com <code>Add()</code> e <code>DelItem()</code>.</li>
+<li>Para gerenciamento automático de páginas com controles filhos que aparecem/ocultam com base na aba selecionada, use <a href="tfolder.html">TFolder</a> em vez disso.</li>
+<li>As abas podem ser reposicionadas em tempo de design usando <code>Move()</code>, <code>SetSize()</code> e <code>SetPos()</code>.</li>
 </ul>
 
 </main>

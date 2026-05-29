@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TPostgres / FWPG_* - PostgreSQL Support - FWH Docs</title>
+<title>TPostgres / FWPG_* - Suporte a PostgreSQL - FWH Docs</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -99,7 +99,7 @@
 <a class="nav-item" href="../../pt/utilities/tmru.html">TMRU</a>
 <a class="nav-item" href="../../pt/utilities/tblock.html">TBlock</a>
 <a class="nav-item" href="../../pt/utilities/tlayout.html">TLayout</a>
-<a class="nav-item" href="../../pt/utilities/texcel.html">Excel Integration</a>
+<a class="nav-item" href="../../pt/utilities/texcel.html">Integração com Excel</a>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Internet e IA</div>
@@ -125,128 +125,128 @@
 </nav>
 <main id="content">
 
-<h1>TPostgreSQL + FWPG_* Funções</h1>
-<p class="class-source">Source: <code>source/function/pgsuport.prg</code></p>
+<h1>TPostgreSQL + Funções FWPG_*</h1>
+<p class="class-source">Origem: <code>source/function/pgsuport.prg</code></p>
 
 <p>
-FiveWin provides PostgreSQL integration via the <code>pgsuport.prg</code> module, which bridges
-the Harbour <code>hbpgsql</code> library (a <code>libpq</code> wrapper) with FWH components such
-as <code>TXBrowse</code> and <code>TDataRow</code>. Rather than requiring a compile-time link to
-<code>hbpgsql</code>, the module uses a lazy-loading mechanism to resolve <code>libpq</code>
-function pointers at runtime, making the library dependency optional.
+O FiveWin fornece integração com PostgreSQL através do módulo <code>pgsuport.prg</code>, que conecta
+a biblioteca Harbour <code>hbpgsql</code> (um wrapper de <code>libpq</code>) com componentes FWH como
+<code>TXBrowse</code> e <code>TDataRow</code>. Em vez de exigir uma vinculação em tempo de compilação com
+<code>hbpgsql</code>, o módulo usa um mecanismo de carregamento sob demanda (lazy-loading) para resolver os ponteiros de funções de <code>libpq</code>
+em tempo de execução, tornando a dependência da biblioteca opcional.
 </p>
 
 <!-- ================================================================ -->
-<h2 id="pglinked">PGLinked() - Lazy-Loading Function Resolution</h2>
+<h2 id="pglinked">PGLinked() - Resolução de Funções por Carregamento Sob Demanda</h2>
 
 <p>
-The internal static function <code>PGLinked()</code> is called automatically on the first invocation
-of any <code>FWPG_</code> function. It uses <code>HB_FUNCPTR()</code> to locate the Harbour-level
-<code>libpq</code> wrappers provided by the <code>hbpgsql</code> library. If <code>PQEXEC</code>
-is found, pointers are cached for the following operations:
+A função estática interna <code>PGLinked()</code> é chamada automaticamente na primeira invocação
+de qualquer função <code>FWPG_</code>. Ela usa <code>HB_FUNCPTR()</code> para localizar os wrappers
+<code>libpq</code> de nível Harbour fornecidos pela biblioteca <code>hbpgsql</code>. Se <code>PQEXEC</code>
+for encontrado, os ponteiros são armazenados em cache para as seguintes operações:
 </p>
 
 <table>
-<thead><tr><th>Pointer Variable</th><th>hbpgsql Function</th><th>Purpose</th></tr></thead>
+<thead><tr><th>Variável de Ponteiro</th><th>Função hbpgsql</th><th>Finalidade</th></tr></thead>
 <tbody>
-<tr><td><code>pPQExec</code></td><td><code>PQEXEC</code></td><td>Synchronous command execution</td></tr>
-<tr><td><code>pPQExecParams</code></td><td><code>PQEXECPARAMS</code></td><td>Parameterized command execution</td></tr>
-<tr><td><code>pPQMetaData</code></td><td><code>PQMETADATA</code></td><td>Result set schema retrieval</td></tr>
-<tr><td><code>pPQGetValue</code></td><td><code>PQGETVALUE</code></td><td>Data retrieval for specific row/column</td></tr>
-<tr><td><code>pPQResultStatus</code></td><td><code>PQRESULTSTATUS</code></td><td>Status check (Success / Tuples / Error)</td></tr>
-<tr><td><code>pPQlastrec</code></td><td><code>PQLASTREC</code></td><td>Row count retrieval</td></tr>
-<tr><td><code>pPQFCount</code></td><td><code>PQFCOUNT</code></td><td>Column count retrieval</td></tr>
-<tr><td><code>pPQcmdTuples</code></td><td><code>PQCMDTUPLES</code></td><td>Affected rows for DML</td></tr>
-<tr><td><code>pPQresultErrorMessage</code></td><td><code>PQRESULTERRORMESSAGE</code></td><td>Detailed server error text</td></tr>
+<tr><td><code>pPQExec</code></td><td><code>PQEXEC</code></td><td>Execução síncrona de comandos</td></tr>
+<tr><td><code>pPQExecParams</code></td><td><code>PQEXECPARAMS</code></td><td>Execução de comandos parametrizados</td></tr>
+<tr><td><code>pPQMetaData</code></td><td><code>PQMETADATA</code></td><td>Obtenção do esquema do conjunto de resultados</td></tr>
+<tr><td><code>pPQGetValue</code></td><td><code>PQGETVALUE</code></td><td>Obtenção de dados para linha/coluna específica</td></tr>
+<tr><td><code>pPQResultStatus</code></td><td><code>PQRESULTSTATUS</code></td><td>Verificação de status (Sucesso / Tuplas / Erro)</td></tr>
+<tr><td><code>pPQlastrec</code></td><td><code>PQLASTREC</code></td><td>Obtenção da contagem de linhas</td></tr>
+<tr><td><code>pPQFCount</code></td><td><code>PQFCOUNT</code></td><td>Obtenção da contagem de colunas</td></tr>
+<tr><td><code>pPQcmdTuples</code></td><td><code>PQCMDTUPLES</code></td><td>Linhas afetadas em comandos DML</td></tr>
+<tr><td><code>pPQresultErrorMessage</code></td><td><code>PQRESULTERRORMESSAGE</code></td><td>Texto detalhado de erro do servidor</td></tr>
 </tbody>
 </table>
 
 <p>
-These resolved function pointers are invoked via the <code>HB_ExecFromArray()</code> mechanism
-through <code>#xtranslate</code> macros (<code>PQ_Exec</code>, <code>PQ_ExecParams</code>,
+Esses ponteiros de função resolvidos são invocados através do mecanismo <code>HB_ExecFromArray()</code>
+por meio de macros <code>#xtranslate</code> (<code>PQ_Exec</code>, <code>PQ_ExecParams</code>,
 <code>PQ_MetaData</code>, etc.).
 </p>
 
 <!-- ================================================================ -->
-<h2 id="fwpg_execute">FWPG_Execute() - Query Execution</h2>
+<h2 id="fwpg_execute">FWPG_Execute() - Execução de Consultas</h2>
 
 <p>
-The central function for all PostgreSQL interaction is <code>FWPG_Execute</code>:
+A função central para toda interação com PostgreSQL é <code>FWPG_Execute</code>:
 </p>
 
-<p><strong>Signature:</strong></p>
+<p><strong>Assinatura:</strong></p>
 <pre><code class="language-harbour">FWPG_Execute( pDB, cSql, aParams )  &amp;&amp; -> aResult | nAffected | .F.</code></pre>
 
-<p><strong>Parameters:</strong></p>
+<p><strong>Parâmetros:</strong></p>
 <ul>
-<li><code>pDB</code> - The database connection object (or its <code>:pDB</code> handle).</li>
-<li><code>cSql</code> - The SQL statement to execute.</li>
-<li><code>aParams</code> - Optional array of parameter values for parameterized queries.</li>
+<li><code>pDB</code> - O objeto de conexão com o banco de dados (ou seu handle <code>:pDB</code>).</li>
+<li><code>cSql</code> - A instrução SQL a ser executada.</li>
+<li><code>aParams</code> - Array opcional de valores de parâmetros para consultas parametrizadas.</li>
 </ul>
 
-<p><strong>Return values:</strong></p>
+<p><strong>Valores de retorno:</strong></p>
 <ul>
-<li>For <code>SELECT</code> queries (<code>PGRES_TUPLES_OK</code>): Returns a 2D array (rows x columns)
-of Harbour-typed values.</li>
-<li>For DML commands (<code>PGRES_COMMAND_OK</code>): Returns the numeric count of affected rows.</li>
-<li>On error: Sets the error state on the connection object and returns <code>.F.</code>.</li>
+<li>Para consultas <code>SELECT</code> (<code>PGRES_TUPLES_OK</code>): Retorna um array 2D (linhas x colunas)
+de valores tipados em Harbour.</li>
+<li>Para comandos DML (<code>PGRES_COMMAND_OK</code>): Retorna a contagem numérica de linhas afetadas.</li>
+<li>Em caso de erro: Define o estado de erro no objeto de conexão e retorna <code>.F.</code>.</li>
 </ul>
 
 <p>
-When parameters are supplied via <code>aParams</code>, each value is converted to an SQL-safe string
-using <code>FW_ValToSQL(u, , "PG")</code> and the query is executed via <code>PQ_ExecParams</code>,
-preventing SQL injection.
+Quando os parâmetros são fornecidos via <code>aParams</code>, cada valor é convertido em uma string segura para SQL
+usando <code>FW_ValToSQL(u, , "PG")</code> e a consulta é executada via <code>PQ_ExecParams</code>,
+prevenindo injeção de SQL.
 </p>
 
 <!-- ================================================================ -->
-<h2 id="type-mapping">PostgreSQL-to-Harbour Type Mapping</h2>
+<h2 id="type-mapping">Mapeamento de Tipos PostgreSQL para Harbour</h2>
 
 <p>
-Query results arrive from <code>libpq</code> as strings. The internal <code>GetFieldTypes()</code>
-function inspects column metadata for specific keywords to determine the optimal Harbour type:
+Os resultados das consultas chegam de <code>libpq</code> como strings. A função interna <code>GetFieldTypes()</code>
+inspeciona os metadados das colunas em busca de palavras-chave específicas para determinar o tipo Harbour ideal:
 </p>
 
 <table>
-<thead><tr><th>Column Keyword</th><th>Harbour Type</th><th>Description</th></tr></thead>
+<thead><tr><th>Palavra-chave da Coluna</th><th>Tipo Harbour</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>bool</code></td><td><code>L</code></td><td>Logical (converted from 't'/'f')</td></tr>
-<tr><td><code>date</code></td><td><code>D</code></td><td>Date</td></tr>
-<tr><td><code>timestamp</code></td><td><code>T</code></td><td>Timestamp (date+time)</td></tr>
-<tr><td><code>bytea</code></td><td><code>m</code></td><td>Binary memo (lowercase m)</td></tr>
-<tr><td><code>text</code></td><td><code>M</code></td><td>Character memo (uppercase M)</td></tr>
-<tr><td><code>int</code>, <code>numeric</code>, <code>decimal</code></td><td><code>N</code></td><td>Numeric</td></tr>
-<tr><td><code>serial</code></td><td><code>N</code></td><td>Auto-increment numeric</td></tr>
-<tr><td><code>float</code>, <code>double</code>, <code>real</code></td><td><code>N</code></td><td>Floating-point numeric</td></tr>
-<tr><td><code>money</code></td><td><code>N</code></td><td>Currency numeric</td></tr>
-<tr><td>Default</td><td><code>C</code></td><td>Character string</td></tr>
+<tr><td><code>bool</code></td><td><code>L</code></td><td>Lógico (convertido de 't'/'f')</td></tr>
+<tr><td><code>date</code></td><td><code>D</code></td><td>Data</td></tr>
+<tr><td><code>timestamp</code></td><td><code>T</code></td><td>Timestamp (data+hora)</td></tr>
+<tr><td><code>bytea</code></td><td><code>m</code></td><td>Memo binário (m minúsculo)</td></tr>
+<tr><td><code>text</code></td><td><code>M</code></td><td>Memo de caractere (M maiúsculo)</td></tr>
+<tr><td><code>int</code>, <code>numeric</code>, <code>decimal</code></td><td><code>N</code></td><td>Numérico</td></tr>
+<tr><td><code>serial</code></td><td><code>N</code></td><td>Numérico auto-incremento</td></tr>
+<tr><td><code>float</code>, <code>double</code>, <code>real</code></td><td><code>N</code></td><td>Numérico de ponto flutuante</td></tr>
+<tr><td><code>money</code></td><td><code>N</code></td><td>Numérico monetário</td></tr>
+<tr><td>Padrão</td><td><code>C</code></td><td>String de caractere</td></tr>
 </tbody>
 </table>
 
 <!-- ================================================================ -->
-<h2 id="metadata">Metadata and Structure Funções</h2>
+<h2 id="metadata">Funções de Metadados e Estrutura</h2>
 
 <h3>FWPG_MetaStruct()</h3>
 
 <pre><code class="language-harbour">FWPG_MetaStruct( res )  &amp;&amp; -> aStruct</code></pre>
 
 <p>
-Returns an array of column metadata for a query result. Each element is an array indexed
-by the following constants:
+Retorna um array de metadados de colunas para o resultado de uma consulta. Cada elemento é um array indexado
+pelas seguintes constantes:
 </p>
 
 <table>
-<thead><tr><th>Index</th><th>Constant</th><th>Value</th><th>Description</th></tr></thead>
+<thead><tr><th>Índice</th><th>Constante</th><th>Valor</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td>1</td><td><code>_STRU_FIELDNAME</code></td><td>1</td><td>Field (column) name</td></tr>
-<tr><td>2</td><td><code>_STRU_FIELDTYPE</code></td><td>2</td><td>Harbour type code</td></tr>
-<tr><td>3</td><td><code>_STRU_FIELDLEN</code></td><td>3</td><td>Field length</td></tr>
-<tr><td>4</td><td><code>_STRU_FIELDDEC</code></td><td>4</td><td>Decimal places</td></tr>
-<tr><td>5</td><td><code>_STRU_TABLE</code></td><td>5</td><td>Table OID</td></tr>
-<tr><td>6</td><td><code>_STRU_TABLECOL</code></td><td>6</td><td>Column ordinal within table</td></tr>
-<tr><td>7</td><td><code>_STRU_TABLENAME</code></td><td>7</td><td>Source table name</td></tr>
-<tr><td>8</td><td><code>_STRU_COLNAME</code></td><td>8</td><td>Column name in source table</td></tr>
-<tr><td>9</td><td><code>_STRU_DEFAULT</code></td><td>9</td><td>Default value expression</td></tr>
-<tr><td>10</td><td><code>_STRU_PRI</code></td><td>10</td><td>Primary key indicator ("PRI" if key)</td></tr>
+<tr><td>1</td><td><code>_STRU_FIELDNAME</code></td><td>1</td><td>Nome do campo (coluna)</td></tr>
+<tr><td>2</td><td><code>_STRU_FIELDTYPE</code></td><td>2</td><td>Código de tipo Harbour</td></tr>
+<tr><td>3</td><td><code>_STRU_FIELDLEN</code></td><td>3</td><td>Comprimento do campo</td></tr>
+<tr><td>4</td><td><code>_STRU_FIELDDEC</code></td><td>4</td><td>Casas decimais</td></tr>
+<tr><td>5</td><td><code>_STRU_TABLE</code></td><td>5</td><td>OID da tabela</td></tr>
+<tr><td>6</td><td><code>_STRU_TABLECOL</code></td><td>6</td><td>Posição ordinal da coluna na tabela</td></tr>
+<tr><td>7</td><td><code>_STRU_TABLENAME</code></td><td>7</td><td>Nome da tabela de origem</td></tr>
+<tr><td>8</td><td><code>_STRU_COLNAME</code></td><td>8</td><td>Nome da coluna na tabela de origem</td></tr>
+<tr><td>9</td><td><code>_STRU_DEFAULT</code></td><td>9</td><td>Expressão de valor padrão</td></tr>
+<tr><td>10</td><td><code>_STRU_PRI</code></td><td>10</td><td>Indicador de chave primária ("PRI" se for chave)</td></tr>
 </tbody>
 </table>
 
@@ -255,11 +255,11 @@ by the following constants:
 <pre><code class="language-harbour">FWPG_Structure( oQry )  &amp;&amp; -> aStruct</code></pre>
 
 <p>
-Returns an enhanced structure array for a PostgreSQL query object. Enriches the base
-<code>aStruct</code> with table name, column name, and primary key information by querying
-<code>information_schema.columns</code>. Adjusts field types for <code>bytea</code> (mapped to
-<code>"m"</code>), <code>timestamp</code> (mapped to <code>"T"</code>), and auto-increment columns
-(mapped to <code>"+"</code>).
+Retorna um array de estrutura aprimorado para um objeto de consulta PostgreSQL. Enriquece o
+<code>aStruct</code> base com informações de nome de tabela, nome de coluna e chave primária consultando
+<code>information_schema.columns</code>. Ajusta os tipos de campo para <code>bytea</code> (mapeado para
+<code>"m"</code>), <code>timestamp</code> (mapeado para <code>"T"</code>) e colunas auto-incremento
+(mapeadas para <code>"+"</code>).
 </p>
 
 <h3>FWPG_FieldGet()</h3>
@@ -267,14 +267,14 @@ Returns an enhanced structure array for a PostgreSQL query object. Enriches the 
 <pre><code class="language-harbour">FWPG_FieldGet( oQry, nFldNo )  &amp;&amp; -> uVal</code></pre>
 
 <p>
-A specialized field getter that handles PostgreSQL-specific formatting:
+Um getter de campo especializado que trata a formatação específica do PostgreSQL:
 </p>
 <ul>
-<li>Converts <code>\x</code> hex prefixes (from <code>bytea</code> columns) to binary strings.</li>
-<li>Processes <code>timestamp</code> values with <code>FW_STR2DT()</code>.</li>
-<li>Applies Unicode padding via <code>FW_UTF8PADCHAR()</code> when Unicode mode is active.</li>
-<li>Accepts field names (character) in addition to numeric field positions.</li>
-<li>Falls back to evaluating expression blocks for computed columns.</li>
+<li>Converte prefixos hexadecimais <code>\x</code> (de colunas <code>bytea</code>) em strings binárias.</li>
+<li>Processa valores <code>timestamp</code> com <code>FW_STR2DT()</code>.</li>
+<li>Aplica preenchimento Unicode via <code>FW_UTF8PADCHAR()</code> quando o modo Unicode está ativo.</li>
+<li>Aceita nomes de campos (caractere) além de posições numéricas de campos.</li>
+<li>Recorre à avaliação de blocos de expressão para colunas calculadas.</li>
 </ul>
 
 <h3>FWPG_Skipper()</h3>
@@ -282,57 +282,57 @@ A specialized field getter that handles PostgreSQL-specific formatting:
 <pre><code class="language-harbour">FWPG_Skipper( oQry, nSkip )  &amp;&amp; -> nSkipped</code></pre>
 
 <p>
-Navigation helper used by <code>TXBrowse</code> codeblocks for record skipping. Calculates
-the new record offset relative to the current position, clamping to valid range
-<code>[1, nLastRec]</code>. Returns the actual number of records skipped.
+Auxiliar de navegação usado pelos codeblocks de <code>TXBrowse</code> para avanço de registros. Calcula
+o novo deslocamento de registro relativo à posição atual, limitando ao intervalo válido
+<code>[1, nLastRec]</code>. Retorna o número real de registros avançados.
 </p>
 
 <!-- ================================================================ -->
-<h2 id="utility">Utility Funções</h2>
+<h2 id="utility">Funções Utilitárias</h2>
 
 <table>
-<thead><tr><th>Function</th><th>Description</th></tr></thead>
+<thead><tr><th>Função</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>FWPG_ListDbs( oServer )</code></td><td>Returns an array of database names on the server (querying <code>pg_database</code>).</td></tr>
-<tr><td><code>FWPG_CurrentDB( oServer )</code></td><td>Returns the name of the current database via <code>current_database()</code>.</td></tr>
-<tr><td><code>FWPG_ListSchemas( oServer )</code></td><td>Returns an array of schema names from <code>information_schema.schemata</code>.</td></tr>
-<tr><td><code>FWPG_ImportFromDBF( oCn, cDbf, cTable, lcAutoInc )</code></td><td>Imports a DBF file into a PostgreSQL table. Creates the table structure, auto-maps memo types (<code>binary → bytea</code>, <code>text → TEXT</code>), and bulk-inserts via batching (100 rows by default).</td></tr>
-<tr><td><code>FWPG_CreateTableSQL( cTable, aStruct, lcAutoInc )</code></td><td>Generates a <code>CREATE TABLE</code> SQL statement from a DBF-like structure array using <code>SERIAL PRIMARY KEY</code> for auto-increment columns.</td></tr>
-<tr><td><code>FWPG_TableNameFromID( oQry, oID )</code></td><td>Resolves a PostgreSQL table OID to a table name via <code>pg_class</code>.</td></tr>
-<tr><td><code>FWPG_PrimaryKeys( oQry, cTable )</code></td><td>Returns an array of primary key columns for a given table from <code>information_schema.key_column_usage</code>.</td></tr>
+<tr><td><code>FWPG_ListDbs( oServer )</code></td><td>Retorna um array de nomes de bancos de dados no servidor (consultando <code>pg_database</code>).</td></tr>
+<tr><td><code>FWPG_CurrentDB( oServer )</code></td><td>Retorna o nome do banco de dados atual via <code>current_database()</code>.</td></tr>
+<tr><td><code>FWPG_ListSchemas( oServer )</code></td><td>Retorna um array de nomes de esquemas de <code>information_schema.schemata</code>.</td></tr>
+<tr><td><code>FWPG_ImportFromDBF( oCn, cDbf, cTable, lcAutoInc )</code></td><td>Importa um arquivo DBF para uma tabela PostgreSQL. Cria a estrutura da tabela, mapeia automaticamente os tipos memo (<code>binary → bytea</code>, <code>text → TEXT</code>) e faz inserção em massa via lotes (100 linhas por padrão).</td></tr>
+<tr><td><code>FWPG_CreateTableSQL( cTable, aStruct, lcAutoInc )</code></td><td>Gera uma instrução SQL <code>CREATE TABLE</code> a partir de um array de estrutura no estilo DBF, usando <code>SERIAL PRIMARY KEY</code> para colunas auto-incremento.</td></tr>
+<tr><td><code>FWPG_TableNameFromID( oQry, oID )</code></td><td>Resolve um OID de tabela PostgreSQL para um nome de tabela via <code>pg_class</code>.</td></tr>
+<tr><td><code>FWPG_PrimaryKeys( oQry, cTable )</code></td><td>Retorna um array de colunas de chave primária para uma dada tabela a partir de <code>information_schema.key_column_usage</code>.</td></tr>
 </tbody>
 </table>
 
 <!-- ================================================================ -->
-<h2 id="xbrowse">TXBrowse Integration</h2>
+<h2 id="xbrowse">Integração com TXBrowse</h2>
 
 <p>
-<code>TXBrowse</code> consumes PostgreSQL data sets through standard codeblock interfaces.
-The <code>FWPG_Skipper</code> function provides the <code>bSkip</code> codeblock; the query
-object's <code>bGoTop</code>, <code>bGoBottom</code>, <code>bEof</code>, <code>bBof</code>,
-and <code>bBookMark</code> codeblocks are set directly on the query object. Direct in-cell
-editing is supported via <code>FWPG_XBrSaveData( oCol, xValue )</code>, which constructs
-and executes <code>UPDATE</code> SQL targeting the source table's primary key.
+O <code>TXBrowse</code> consome conjuntos de dados PostgreSQL através das interfaces padrão de codeblocks.
+A função <code>FWPG_Skipper</code> fornece o codeblock <code>bSkip</code>; os codeblocks
+<code>bGoTop</code>, <code>bGoBottom</code>, <code>bEof</code>, <code>bBof</code>
+e <code>bBookMark</code> do objeto de consulta são definidos diretamente no objeto de consulta. A edição direta
+nas células é suportada via <code>FWPG_XBrSaveData( oCol, xValue )</code>, que constrói
+e executa SQL <code>UPDATE</code> direcionado à chave primária da tabela de origem.
 </p>
 
 <!-- ================================================================ -->
-<h2 id="datarow">TDataRow Integration</h2>
+<h2 id="datarow">Integração com TDataRow</h2>
 
 <p>
-<code>TDataRow</code> provides native PostgreSQL support through two internal methods:
+O <code>TDataRow</code> fornece suporte nativo a PostgreSQL através de dois métodos internos:
 </p>
 
 <ul>
-<li><strong>ReadPQQ</strong>: Reads field values and metadata from a PostgreSQL query object into
-the <code>TDataRow</code> edit buffer (<code>aData</code>/<code>aOrg</code>).</li>
-<li><strong>SavePQQ</strong>: Generates and executes the necessary SQL <code>UPDATE</code> or
-<code>INSERT</code> statements via <code>FWPG_Execute</code> to persist changes made through the
-data row interface.</li>
+<li><strong>ReadPQQ</strong>: Lê valores de campos e metadados de um objeto de consulta PostgreSQL para
+o buffer de edição do <code>TDataRow</code> (<code>aData</code>/<code>aOrg</code>).</li>
+<li><strong>SavePQQ</strong>: Gera e executa as instruções SQL <code>UPDATE</code> ou
+<code>INSERT</code> necessárias via <code>FWPG_Execute</code> para persistir as alterações feitas através da
+interface da linha de dados.</li>
 </ul>
 
 <div class="mermaid">
 sequenceDiagram
-    participant App as "Application Code"
+    participant App as "Código da Aplicação"
     participant DR as "TDataRow"
     participant PG as "pgsuport.prg"
     participant Lib as "hbpgsql (libpq)"
@@ -347,7 +347,7 @@ sequenceDiagram
 </div>
 
 <!-- ================================================================ -->
-<h2 id="example">Example: Connect, Query, and Browse</h2>
+<h2 id="example">Exemplo: Conectar, Consultar e Navegar</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -355,7 +355,7 @@ function Main()
 
    local oServer, oQry, oWnd, oBrw, aDbs
 
-   // Open a PostgreSQL connection using hbpgsql
+   // Abre uma conexão PostgreSQL usando hbpgsql
    oServer := TPostgreSQL():New( "localhost", "mydb", "postgres", "password", 5432 )
 
    if oServer:lError
@@ -363,11 +363,11 @@ function Main()
       return nil
    endif
 
-   // List available databases
+   // Lista os bancos de dados disponíveis
    aDbs := FWPG_ListDbs( oServer )
    XBROWSER aDbs TITLE "Databases on Server"
 
-   // Execute a query
+   // Executa uma consulta
    oQry := TPostgreSQLQuery():New( oServer, "SELECT id, name, email, city FROM customers ORDER BY name" )
 
    if oQry:nLastRec > 0
@@ -380,7 +380,7 @@ function Main()
       oBrw:nMarqueeStyle   := 3
       oBrw:lCanPaste       := .t.
 
-      // Connect XBrowse to PostgreSQL query via codeblocks
+      // Conecta o XBrowse à consulta PostgreSQL via codeblocks
       oBrw:bSkip       := { |nSkip| FWPG_Skipper( oQry, nSkip ) }
       oBrw:bGoTop      := { || oQry:GoTop() }
       oBrw:bGoBottom   := { || oQry:GoBottom() }
@@ -403,23 +403,23 @@ function Main()
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>PostgreSQL support requires the Harbour <code>hbpgsql</code> library to be linked into your
-application. The <code>PGLinked()</code> function resolves the library's function pointers
-at runtime; if <code>hbpgsql</code> is not linked, all <code>FWPG_</code> functions return
-<code>.F.</code> gracefully.</li>
-<li>Parameterized queries via <code>aParams</code> are strongly recommended for dynamic SQL
-to prevent injection attacks. Values are escaped using <code>FW_ValToSQL( u, , "PG" )</code>.</li>
-<li>The <code>TDataRow</code> integration (<code>ReadPQQ</code>/<code>SavePQQ</code>) enables
-record-at-a-time editing with automatic change tracking and SQL generation.</li>
-<li>In-cell editing via XBrowse (<code>FWPG_XBrSaveData</code>) requires that the query's source
-table has a primary key defined and that <code>FWPG_Structure()</code> has been called to
-populate the structure metadata.</li>
-<li>The <code>FWPG_Structure()</code> function automatically queries
-<code>information_schema.columns</code> to resolve table and column names from OID references,
-providing full metadata for complex JOIN queries.</li>
+<li>O suporte a PostgreSQL exige que a biblioteca Harbour <code>hbpgsql</code> esteja vinculada à sua
+aplicação. A função <code>PGLinked()</code> resolve os ponteiros de função da biblioteca
+em tempo de execução; se <code>hbpgsql</code> não estiver vinculado, todas as funções <code>FWPG_</code> retornam
+<code>.F.</code> de forma controlada.</li>
+<li>Consultas parametrizadas via <code>aParams</code> são fortemente recomendadas para SQL dinâmico
+a fim de prevenir ataques de injeção. Os valores são escapados usando <code>FW_ValToSQL( u, , "PG" )</code>.</li>
+<li>A integração com <code>TDataRow</code> (<code>ReadPQQ</code>/<code>SavePQQ</code>) permite
+a edição registro a registro com rastreamento automático de alterações e geração de SQL.</li>
+<li>A edição nas células via XBrowse (<code>FWPG_XBrSaveData</code>) exige que a tabela de origem
+da consulta tenha uma chave primária definida e que <code>FWPG_Structure()</code> tenha sido chamada para
+preencher os metadados da estrutura.</li>
+<li>A função <code>FWPG_Structure()</code> consulta automaticamente
+<code>information_schema.columns</code> para resolver nomes de tabelas e colunas a partir de referências OID,
+fornecendo metadados completos para consultas JOIN complexas.</li>
 </ul>
 
 </main>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Transformer Neural Network - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Rede Neural Transformer - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
 <body>
 <nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Versão 26.05</span></div>
 <div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a></div>
@@ -12,114 +12,114 @@
 </nav>
 <main id="content">
 
-<h1>Transformer Neural Network</h1>
-<p class="class-source">Source: <code>source/classes/transformer.prg</code>, <code>source/function/matrixes.c</code>, <code>source/function/matrices.prg</code></p>
+<h1>Rede Neural Transformer</h1>
+<p class="class-source">Fonte: <code>source/classes/transformer.prg</code>, <code>source/function/matrixes.c</code>, <code>source/function/matrices.prg</code></p>
 
 <p>
-FiveWin provides a pure Harbour/C implementation of the Transformer encoder-only architecture
-for sequence classification and language modeling. The implementation includes multi-head
-self-attention, feed-forward networks, layer normalization, and Adam/SGD optimizers. All
-heavy linear algebra is accelerated via C extensions in <code>matrixes.c</code>.
+O FiveWin fornece uma implementação em puro Harbour/C da arquitetura Transformer apenas-codificador
+para classificação de sequências e modelagem de linguagem. A implementação inclui auto-atenção
+multi-cabeça, redes feed-forward, normalização de camada e otimizadores Adam/SGD. Toda a
+álgebra linear pesada é acelerada via extensões C em <code>matrixes.c</code>.
 </p>
 
-<h2 id="architecture">Architecture</h2>
+<h2 id="architecture">Arquitetura</h2>
 
 <div class="mermaid">
 flowchart LR
-    Input[Input Tokens] --> Embed[Embedding Lookup]
-    Embed --> Pos[Positional Encoding]
-    Pos --> MHA[Multi-Head Attention]
+    Input[Tokens de Entrada] --> Embed[Busca de Embedding]
+    Embed --> Pos[Codificação Posicional]
+    Pos --> MHA[Atenção Multi-Cabeça]
     MHA --> Add1[+ Residual]
     Add1 --> LN1[Layer Norm]
     LN1 --> FF[Feed Forward]
     FF --> Add2[+ Residual]
     Add2 --> LN2[Layer Norm]
     LN2 --> Pool[Avg Pooling]
-    Pool --> Proj[W_vocab Projection]
+    Pool --> Proj[Projeção W_vocab]
     Proj --> SM[Softmax]
-    SM --> Output[Output Probabilities]
+    SM --> Output[Probabilidades de Saída]
 </div>
 
 <h2 id="classes">Classes</h2>
 
 <h3>Transformer</h3>
-<p>The top-level class that orchestrates embeddings, positional encoding, stacked layers, and output projection.</p>
+<p>A classe de nível superior que orquestra embeddings, codificação posicional, camadas empilhadas e projeção de saída.</p>
 
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>New( num_layers, d_model, n_heads, vocab_size, max_seq_len, hEmbeddings, aVocab )</code></td><td>Create a Transformer with the given architecture. Initializes all sub-layers and embeddings.</td></tr>
-<tr><td><code>Forward( src_indices, pos_indices )</code></td><td>Run a forward pass: embedding lookup, positional encoding, N transformer blocks, average pooling, and softmax over vocabulary.</td></tr>
-<tr><td><code>Backward( d_output, targets, src_indices, pos_indices )</code></td><td>Backpropagate gradients through all layers and accumulate weight gradients.</td></tr>
-<tr><td><code>zero_grad()</code></td><td>Reset all accumulated gradients to zero.</td></tr>
+<tr><td><code>New( num_layers, d_model, n_heads, vocab_size, max_seq_len, hEmbeddings, aVocab )</code></td><td>Cria um Transformer com a arquitetura informada. Inicializa todas as subcamadas e embeddings.</td></tr>
+<tr><td><code>Forward( src_indices, pos_indices )</code></td><td>Executa uma passagem direta: busca de embedding, codificação posicional, N blocos transformer, average pooling e softmax sobre o vocabulário.</td></tr>
+<tr><td><code>Backward( d_output, targets, src_indices, pos_indices )</code></td><td>Retropropaga os gradientes por todas as camadas e acumula os gradientes dos pesos.</td></tr>
+<tr><td><code>zero_grad()</code></td><td>Redefine para zero todos os gradientes acumulados.</td></tr>
 </tbody>
 </table>
 
 <h3>MultiHeadAttention</h3>
-<p>Computes scaled dot-product attention over multiple heads. Projects inputs into Query, Key, Value
-spaces via learned matrices, computes attention scores, and concatenates head outputs.</p>
+<p>Calcula a atenção por produto escalar escalonado sobre múltiplas cabeças. Projeta as entradas nos
+espaços Query, Key e Value via matrizes aprendidas, calcula os escores de atenção e concatena as saídas das cabeças.</p>
 
 <h3>FeedForward</h3>
-<p>A position-wise two-layer MLP with ReLU activation that operates on each position independently:
+<p>Um MLP de duas camadas por posição com ativação ReLU que opera em cada posição de forma independente:
 <code>FF(x) = W2 * ReLU(W1 * x + b1) + b2</code>.</p>
 
 <h3>LayerNorm</h3>
-<p>Applies layer normalization across the feature dimension: <code>y = (x - mean) / sqrt(var + eps) * gamma + beta</code>.</p>
+<p>Aplica a normalização de camada ao longo da dimensão de características: <code>y = (x - mean) / sqrt(var + eps) * gamma + beta</code>.</p>
 
 <h3>Optimizer_Adam</h3>
-<p>Adaptive Moment Estimation optimizer. Maintains first (m) and second (v) moment estimates with bias correction.
-Uses the C-accelerated <code>hb_AdamUpdate()</code> function for efficient parameter updates.</p>
+<p>Otimizador de Estimativa Adaptativa de Momento (Adaptive Moment Estimation). Mantém estimativas de primeiro (m) e segundo (v) momentos com correção de viés.
+Usa a função acelerada em C <code>hb_AdamUpdate()</code> para atualizações eficientes de parâmetros.</p>
 
 <h3>Optimizer_SGD</h3>
-<p>Stochastic Gradient Descent with optional momentum for simpler training scenarios.</p>
+<p>Gradiente Descendente Estocástico com momento opcional, para cenários de treinamento mais simples.</p>
 
-<h2 id="matrix-operations">Matrix Operations (C Extensions)</h2>
+<h2 id="matrix-operations">Operações de Matriz (Extensões C)</h2>
 
-<p>The <code>matrixes.c</code> file provides high-performance linear algebra exposed to Harbour as <code>HB_FUNC</code> wrappers:</p>
+<p>O arquivo <code>matrixes.c</code> fornece álgebra linear de alto desempenho exposta ao Harbour como wrappers <code>HB_FUNC</code>:</p>
 
 <table>
-<thead><tr><th>Function</th><th>Description</th></tr></thead>
+<thead><tr><th>Função</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>hb_MatrixMultiply( A, B )</code></td><td>Standard matrix multiplication (MxN * NxP = MxP)</td></tr>
-<tr><td><code>hb_Softmax( logits )</code></td><td>Row-wise softmax with numerical stability (max subtraction)</td></tr>
-<tr><td><code>hb_ReLU( M )</code></td><td>Rectified Linear Unit: max(0, x) element-wise</td></tr>
-<tr><td><code>hb_AdamUpdate( W, dW, m, v, t, lr, beta1, beta2, eps )</code></td><td>Adam optimizer parameter update step with bias correction</td></tr>
-<tr><td><code>hb_MatrixTranspose( M )</code></td><td>Transpose matrix (swap rows and columns)</td></tr>
-<tr><td><code>hb_Matrix3DAdd( A, B )</code></td><td>Element-wise addition for 3D tensors (batch x seq x dim)</td></tr>
-<tr><td><code>hb_Matrix3DAvg( X )</code></td><td>Average pooling over the sequence dimension</td></tr>
-<tr><td><code>hb_Matrix3DExpand( M, n )</code></td><td>Expand 2D gradient to 3D for backpropagation through sequence</td></tr>
+<tr><td><code>hb_MatrixMultiply( A, B )</code></td><td>Multiplicação de matrizes padrão (MxN * NxP = MxP)</td></tr>
+<tr><td><code>hb_Softmax( logits )</code></td><td>Softmax por linha com estabilidade numérica (subtração do máximo)</td></tr>
+<tr><td><code>hb_ReLU( M )</code></td><td>Unidade Linear Retificada: max(0, x) elemento a elemento</td></tr>
+<tr><td><code>hb_AdamUpdate( W, dW, m, v, t, lr, beta1, beta2, eps )</code></td><td>Passo de atualização de parâmetros do otimizador Adam com correção de viés</td></tr>
+<tr><td><code>hb_MatrixTranspose( M )</code></td><td>Transpõe a matriz (troca linhas e colunas)</td></tr>
+<tr><td><code>hb_Matrix3DAdd( A, B )</code></td><td>Adição elemento a elemento para tensores 3D (batch x seq x dim)</td></tr>
+<tr><td><code>hb_Matrix3DAvg( X )</code></td><td>Average pooling sobre a dimensão da sequência</td></tr>
+<tr><td><code>hb_Matrix3DExpand( M, n )</code></td><td>Expande o gradiente 2D para 3D para retropropagação ao longo da sequência</td></tr>
 </tbody>
 </table>
 
-<h2 id="fw-matrix">FW_Matrix Class</h2>
+<h2 id="fw-matrix">Classe FW_Matrix</h2>
 
 <p>
-The <code>FW_Matrix</code> class in <code>matrices.prg</code> provides a high-level wrapper for matrix manipulation
-with Harbour operator overloading:
+A classe <code>FW_Matrix</code> em <code>matrices.prg</code> fornece um wrapper de alto nível para manipulação de matrizes
+com sobrecarga de operadores do Harbour:
 </p>
 
 <pre><code class="language-harbour">oM1 := FW_Matrix():New( { { 1, 2 }, { 3, 4 } } )
 oM2 := FW_Matrix():New( { { 5, 6 }, { 7, 8 } } )
-oResult := oM1 * oM2   // operator overloading via OPERATOR keyword
-oResult:View()         // display in TXBrowse grid</code></pre>
+oResult := oM1 * oM2   // sobrecarga de operador via palavra-chave OPERATOR
+oResult:View()         // exibe na grade TXBrowse</code></pre>
 
-<h2 id="training">Training Pipeline</h2>
+<h2 id="training">Pipeline de Treinamento</h2>
 
-<p>A typical training loop follows these steps:</p>
+<p>Um laço de treinamento típico segue estes passos:</p>
 
 <ol>
-<li><strong>Forward pass</strong>: call <code>oTransformer:Forward( src_indices, pos_indices )</code> to get probability distributions.</li>
-<li><strong>Loss computation</strong>: compute cross-entropy loss between predictions and target tokens.</li>
-<li><strong>Backward pass</strong>: call <code>oTransformer:Backward( d_output, targets, src_indices, pos_indices )</code> to propagate gradients.</li>
-<li><strong>Optimizer step</strong>: use <code>Optimizer_Adam:Step( oTransformer )</code> or <code>Optimizer_SGD:Step( oTransformer )</code> to update weights.</li>
-<li><strong>Zero gradients</strong>: call <code>oTransformer:zero_grad()</code> before the next iteration.</li>
+<li><strong>Passagem direta</strong>: chame <code>oTransformer:Forward( src_indices, pos_indices )</code> para obter as distribuições de probabilidade.</li>
+<li><strong>Cálculo da perda</strong>: calcule a perda de entropia cruzada entre as previsões e os tokens alvo.</li>
+<li><strong>Passagem reversa</strong>: chame <code>oTransformer:Backward( d_output, targets, src_indices, pos_indices )</code> para propagar os gradientes.</li>
+<li><strong>Passo do otimizador</strong>: use <code>Optimizer_Adam:Step( oTransformer )</code> ou <code>Optimizer_SGD:Step( oTransformer )</code> para atualizar os pesos.</li>
+<li><strong>Zerar gradientes</strong>: chame <code>oTransformer:zero_grad()</code> antes da próxima iteração.</li>
 </ol>
 
-<h2 id="example">Example: Sentiment Classification</h2>
+<h2 id="example">Exemplo: Classificação de Sentimento</h2>
 
 <p>
-The sample <code>samples/ai/transf2.prg</code> extends the Transformer with a classification head
-for binary sentiment analysis (Positive/Negative):
+O exemplo <code>samples/ai/transf2.prg</code> estende o Transformer com uma cabeça de classificação
+para análise binária de sentimento (Positivo/Negativo):
 </p>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
@@ -143,17 +143,17 @@ METHOD New( ... ) CLASS CustomTransformer
    ::db_class := hb_MatrixZero( 1, num_classes )
 RETURN Self
 
-// Classification forward: parent forward + W_proj projection + softmax
+// Forward de classificacao: forward do pai + projecao W_proj + softmax
 METHOD ForwardClassification( src_indices, pos_indices ) CLASS CustomTransformer
    LOCAL probs := ::Forward( src_indices, pos_indices )
    ::last_probs := probs
    LOCAL logits := hb_MatrixMultiply( probs, ::W_proj )
-   // Add bias
+   // Adiciona o vies
    AEval( logits, { |row, i| row[ 1 ] += ::b_class[ 1 ][ 1 ] } )
    AEval( logits, { |row, i| row[ 2 ] += ::b_class[ 1 ][ 2 ] } )
 RETURN hb_Softmax( logits )
 
-// Training loop
+// Laco de treinamento
 oTransformer := CustomTransformer():New( 1, 6, 2, 8, 5, NIL, vocab, 2 )
 FOR e := 1 TO 50
    FOR i := 1 TO Len( trainSrc )
@@ -166,15 +166,15 @@ FOR e := 1 TO 50
    NEXT
 NEXT</code></pre>
 
-<p>Train with phrases like <code>"buen dia"</code> (Positive) and <code>"malo trabajo"</code> (Negative) using a
-vocabulary of 8 tokens and 50 training epochs.</p>
+<p>Treine com frases como <code>"buen dia"</code> (Positivo) e <code>"malo trabajo"</code> (Negativo) usando um
+vocabulário de 8 tokens e 50 épocas de treinamento.</p>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 <ul>
-<li>Sinusoidal positional encoding is pre-computed at initialization for efficiency.</li>
-<li>Residual connections use <code>hb_Matrix3DAdd</code> (C-accelerated) to avoid Harbour loop overhead.</li>
-<li>Softmax in C subtracts row max before exponentiation to prevent floating-point overflow.</li>
-<li>Visual training demos: <code>samples/ai/transformer.prg</code> (GUI) and <code>samples/ai/transf1.prg</code> (interactive).</li>
+<li>A codificação posicional senoidal é pré-calculada na inicialização por questão de eficiência.</li>
+<li>As conexões residuais usam <code>hb_Matrix3DAdd</code> (acelerado em C) para evitar a sobrecarga de laços do Harbour.</li>
+<li>O Softmax em C subtrai o máximo da linha antes da exponenciação para evitar estouro de ponto flutuante.</li>
+<li>Demos visuais de treinamento: <code>samples/ai/transformer.prg</code> (GUI) e <code>samples/ai/transf1.prg</code> (interativo).</li>
 </ul>
 
 </main>

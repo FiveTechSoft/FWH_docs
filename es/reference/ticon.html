@@ -91,10 +91,10 @@
 <p class="class-hierarchy">Hereda de: <code>TControl</code></p>
 
 <p>
-TIcon is a control for displaying Windows icons (.ico) from files or program resources.
-It supports click actions, dynamic icon switching, border display, and proper resource
-cleanup. TIcon is commonly used for toolbar indicators, status icons, and decorative
-elements in windows and dialogs.
+TIcon es un control para mostrar iconos de Windows (.ico) desde archivos o recursos del programa.
+Admite acciones de clic, cambio dinámico de icono, visualización de borde y la liberación
+adecuada de recursos. TIcon se usa habitualmente para indicadores de barra de herramientas, iconos de estado y elementos
+decorativos en ventanas y diálogos.
 </p>
 
 <h2 id="data">Miembros DATA Principales</h2>
@@ -104,9 +104,9 @@ elements in windows and dialogs.
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hIcon</code></td><td>Numeric (Handle)</td><td>Windows icon handle (HICON)</td></tr>
-<tr><td><code>cIcoFile</code></td><td>Character</td><td>Path to the .ico file</td></tr>
-<tr><td><code>cResName</code></td><td>Character</td><td>Name of the icon resource in the executable</td></tr>
+<tr><td><code>hIcon</code></td><td>Numérico (Handle)</td><td>Handle del icono de Windows (HICON)</td></tr>
+<tr><td><code>cIcoFile</code></td><td>Carácter</td><td>Ruta al archivo .ico</td></tr>
+<tr><td><code>cResName</code></td><td>Carácter</td><td>Nombre del recurso de icono en el ejecutable</td></tr>
 </tbody>
 </table>
 
@@ -117,15 +117,15 @@ elements in windows and dialogs.
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, cRes, cFile, lBorder, bClick, oWnd )</code></td><td>Create an icon control. Provide either <code>cRes</code> (resource name) or <code>cFile</code> (.ico file path).</td></tr>
-<tr><td><code>ReDefine( nId, cRes, cFile, bClick, lUpdate, oDlg )</code></td><td>Redefine from a dialog resource template</td></tr>
-<tr><td><code>SetName( cResName )</code></td><td>Switch to a different icon resource by name. Destroys the old icon handle.</td></tr>
-<tr><td><code>SetFile( cIcoFile )</code></td><td>Switch to a different .ico file. Destroys the old icon handle.</td></tr>
-<tr><td><code>End()</code></td><td>Destroy the icon handle and call the superclass End()</td></tr>
+<tr><td><code>New( nRow, nCol, cRes, cFile, lBorder, bClick, oWnd )</code></td><td>Crea un control de icono. Proporcione <code>cRes</code> (nombre del recurso) o <code>cFile</code> (ruta del archivo .ico).</td></tr>
+<tr><td><code>ReDefine( nId, cRes, cFile, bClick, lUpdate, oDlg )</code></td><td>Redefine a partir de una plantilla de recurso de diálogo</td></tr>
+<tr><td><code>SetName( cResName )</code></td><td>Cambia a un recurso de icono diferente por nombre. Destruye el handle del icono anterior.</td></tr>
+<tr><td><code>SetFile( cIcoFile )</code></td><td>Cambia a un archivo .ico diferente. Destruye el handle del icono anterior.</td></tr>
+<tr><td><code>End()</code></td><td>Destruye el handle del icono y llama al End() de la superclase</td></tr>
 </tbody>
 </table>
 
-<h2 id="command">ICON Command</h2>
+<h2 id="command">Comando ICON</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol ICON oIcon OF oWnd FILE cFile</code></pre>
 
@@ -139,10 +139,10 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "Icon Demo" SIZE 300, 200
 
-   // Display an icon from a file
+   // Muestra un icono desde un archivo
    @ 10, 10 ICON oIcon OF oWnd FILE "myapp.ico"
 
-   // Make the icon clickable
+   // Hace el icono clicable
    oIcon:bLClicked := {|| MsgInfo( "Icon clicked!" ) }
 
    ACTIVATE WINDOW oWnd CENTERED
@@ -152,11 +152,11 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>The icon is loaded from either a file (<code>cIcoFile</code> via <code>ExtractIcon()</code>) or a program resource (<code>cResName</code> via <code>LoadIcon()</code>). One of the two must be provided.</li>
-<li>The default icon size is 32x32 pixels, determined by the class constants <code>ICO_CHARPIX_H</code> (14) and <code>ICO_CHARPIX_W</code> (8) multiplied by row/column coordinates.</li>
-<li>Use <code>SetName()</code> and <code>SetFile()</code> to change the displayed icon at runtime. Both methods properly destroy the previous icon handle to prevent resource leaks.</li>
-<li>Assign a code block to <code>bLClicked</code> to handle click events on the icon.</li>
-<li>The <code>Destroy()</code> method ensures the icon handle is released via <code>DestroyIcon()</code> when the control is destroyed.</li>
+<li>El icono se carga desde un archivo (<code>cIcoFile</code> mediante <code>ExtractIcon()</code>) o desde un recurso del programa (<code>cResName</code> mediante <code>LoadIcon()</code>). Se debe proporcionar uno de los dos.</li>
+<li>El tamaño de icono predeterminado es de 32x32 píxeles, determinado por las constantes de clase <code>ICO_CHARPIX_H</code> (14) e <code>ICO_CHARPIX_W</code> (8) multiplicadas por las coordenadas de fila/columna.</li>
+<li>Use <code>SetName()</code> y <code>SetFile()</code> para cambiar el icono mostrado en tiempo de ejecución. Ambos métodos destruyen correctamente el handle del icono anterior para evitar fugas de recursos.</li>
+<li>Asigne un bloque de código a <code>bLClicked</code> para gestionar los eventos de clic sobre el icono.</li>
+<li>El método <code>Destroy()</code> garantiza que el handle del icono se libere mediante <code>DestroyIcon()</code> cuando se destruye el control.</li>
 </ul>
 
 </main>

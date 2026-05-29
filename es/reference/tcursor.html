@@ -88,13 +88,14 @@
 
 <h1>TCursor</h1>
 <p class="class-source">Fuente: <code>source/classes/cursor.prg</code></p>
-<p class="class-hierarchy">Clase independiente (no inheritance)</p>
+<p class="class-hierarchy">Clase independiente (sin herencia)</p>
 
 <p>
-TCursor loads, creates, and manages mouse cursor resources. It supports predefined Windows
-system cursors, custom cursors from .cur/.ico files, cursors from program resources, and
-cursors created programmatically from bitmap images. TCursor is used by the FiveWin framework
-for cursor management functions like <code>CursorHand()</code>, <code>CursorArrow()</code>, <code>CursorWait()</code>, etc.
+TCursor carga, crea y gestiona recursos de cursor del ratón. Admite cursores del sistema
+predefinidos de Windows, cursores personalizados desde archivos .cur/.ico, cursores desde
+recursos del programa y cursores creados mediante programación a partir de imágenes de mapa de bits.
+TCursor es utilizada por el framework FiveWin para funciones de gestión de cursores como
+<code>CursorHand()</code>, <code>CursorArrow()</code>, <code>CursorWait()</code>, etc.
 </p>
 
 <h2 id="data">Miembros DATA Principales</h2>
@@ -104,33 +105,33 @@ for cursor management functions like <code>CursorHand()</code>, <code>CursorArro
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hCursor</code></td><td>Numeric (Handle)</td><td>Windows cursor handle</td></tr>
-<tr><td><code>lPredef</code></td><td>Logical</td><td>Whether the cursor is a predefined system cursor (not destroyed on End)</td></tr>
-<tr><td><code>Source</code></td><td>Character</td><td>Source description string (e.g., "PREDEF:HAND" or file path)</td></tr>
+<tr><td><code>hCursor</code></td><td>Numérico (Handle)</td><td>Handle del cursor de Windows</td></tr>
+<tr><td><code>lPredef</code></td><td>Lógico</td><td>Indica si el cursor es un cursor del sistema predefinido (no se destruye en End)</td></tr>
+<tr><td><code>Source</code></td><td>Carácter</td><td>Cadena de descripción del origen (p. ej., "PREDEF:HAND" o ruta de archivo)</td></tr>
 </tbody>
 </table>
 
-<h2 id="predefined">Predefined Cursor Types</h2>
+<h2 id="predefined">Tipos de Cursor Predefinidos</h2>
 
 <table>
 <thead>
-<tr><th>Name</th><th>Descripción</th></tr>
+<tr><th>Nombre</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>ARROW</code></td><td>Standard arrow pointer (IDC_ARROW)</td></tr>
-<tr><td><code>IBEAM</code></td><td>Text I-beam cursor (IDC_IBEAM)</td></tr>
-<tr><td><code>WAIT</code></td><td>Hourglass/wait cursor (IDC_WAIT)</td></tr>
-<tr><td><code>CROSS</code></td><td>Crosshair cursor (IDC_CROSS)</td></tr>
-<tr><td><code>UPARROW</code></td><td>Vertical arrow cursor (IDC_UPARROW)</td></tr>
-<tr><td><code>SIZE</code></td><td>Four-pointed size/move cursor (IDC_SIZEALL)</td></tr>
-<tr><td><code>HAND</code></td><td>Hand pointer (clickable link)</td></tr>
-<tr><td><code>STOP</code></td><td>Stop/no-entry cursor</td></tr>
-<tr><td><code>DRAG</code></td><td>Drag cursor</td></tr>
-<tr><td><code>SEARCH</code></td><td>Search/zoom cursor</td></tr>
-<tr><td><code>SIZENWSE</code></td><td>Diagonal resize NW-SE</td></tr>
-<tr><td><code>SIZENESW</code></td><td>Diagonal resize NE-SW</td></tr>
-<tr><td><code>SIZEWE</code></td><td>Horizontal resize (west-east)</td></tr>
-<tr><td><code>SIZENS</code></td><td>Vertical resize (north-south)</td></tr>
+<tr><td><code>ARROW</code></td><td>Puntero de flecha estándar (IDC_ARROW)</td></tr>
+<tr><td><code>IBEAM</code></td><td>Cursor de texto en forma de I (IDC_IBEAM)</td></tr>
+<tr><td><code>WAIT</code></td><td>Cursor de reloj de arena/espera (IDC_WAIT)</td></tr>
+<tr><td><code>CROSS</code></td><td>Cursor en cruz (IDC_CROSS)</td></tr>
+<tr><td><code>UPARROW</code></td><td>Cursor de flecha vertical (IDC_UPARROW)</td></tr>
+<tr><td><code>SIZE</code></td><td>Cursor de redimensionar/mover de cuatro puntas (IDC_SIZEALL)</td></tr>
+<tr><td><code>HAND</code></td><td>Puntero de mano (enlace pulsable)</td></tr>
+<tr><td><code>STOP</code></td><td>Cursor de parada/prohibido</td></tr>
+<tr><td><code>DRAG</code></td><td>Cursor de arrastre</td></tr>
+<tr><td><code>SEARCH</code></td><td>Cursor de búsqueda/zoom</td></tr>
+<tr><td><code>SIZENWSE</code></td><td>Redimensionar en diagonal NO-SE</td></tr>
+<tr><td><code>SIZENESW</code></td><td>Redimensionar en diagonal NE-SO</td></tr>
+<tr><td><code>SIZEWE</code></td><td>Redimensionar horizontal (oeste-este)</td></tr>
+<tr><td><code>SIZENS</code></td><td>Redimensionar vertical (norte-sur)</td></tr>
 </tbody>
 </table>
 
@@ -141,11 +142,11 @@ for cursor management functions like <code>CursorHand()</code>, <code>CursorArro
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cResOrFile, cPredef )</code></td><td>Create cursor from a resource name, .cur/.ico file, or predefined type</td></tr>
-<tr><td><code>NewBmp( oBitmap, nHotRow, nHotCol )</code></td><td>Create cursor from a TBitmap or TBtnBmp object with hotspot coordinates</td></tr>
-<tr><td><code>NewFromBitmap( oBitmap, nHotRow, nHotCol, hMaskBitmap )</code></td><td>Create cursor from a bitmap with a separate mask bitmap</td></tr>
-<tr><td><code>SetSource( cSource, cPredef )</code></td><td>Set or change the cursor source and reload the cursor handle</td></tr>
-<tr><td><code>End()</code></td><td>Release the cursor handle (predefined cursors are not destroyed)</td></tr>
+<tr><td><code>New( cResOrFile, cPredef )</code></td><td>Crea un cursor a partir de un nombre de recurso, archivo .cur/.ico o tipo predefinido</td></tr>
+<tr><td><code>NewBmp( oBitmap, nHotRow, nHotCol )</code></td><td>Crea un cursor a partir de un objeto TBitmap o TBtnBmp con coordenadas del punto activo</td></tr>
+<tr><td><code>NewFromBitmap( oBitmap, nHotRow, nHotCol, hMaskBitmap )</code></td><td>Crea un cursor a partir de un mapa de bits con un mapa de bits de máscara aparte</td></tr>
+<tr><td><code>SetSource( cSource, cPredef )</code></td><td>Establece o cambia el origen del cursor y recarga el handle del cursor</td></tr>
+<tr><td><code>End()</code></td><td>Libera el handle del cursor (los cursores predefinidos no se destruyen)</td></tr>
 </tbody>
 </table>
 
@@ -159,9 +160,9 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "TCursor Demo" SIZE 400, 300
 
-   // Load a hand cursor from a file
+   // Carga un cursor de mano desde un archivo
    oCursor := TCursor():New( "hand.cur" )
-   // Alternative: predefined hand cursor
+   // Alternativa: cursor de mano predefinido
    // oCursor := TCursor():New( , "HAND" )
 
    oWnd:SetCursor( oCursor:hCursor )
@@ -175,10 +176,10 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>Predefined cursors (ARROW, IBEAM, WAIT, etc.) are loaded from Windows system resources and should not be destroyed. TCursor tracks this via the <code>lPredef</code> flag and skips <code>DestroyCursor()</code> for system cursors.</li>
-<li>Use <code>Source</code> (protected) to read back the source description of the currently loaded cursor.</li>
-<li>The <code>NewBmp()</code> method creates a cursor from any TBitmap object, automatically handling palette and transparency.</li>
-<li>Cursors from resources (compiled into the .exe) are loaded via <code>LoadCursor( GetResources(), cResName )</code>.</li>
+<li>Los cursores predefinidos (ARROW, IBEAM, WAIT, etc.) se cargan desde los recursos del sistema de Windows y no deben destruirse. TCursor controla esto mediante el indicador <code>lPredef</code> y omite <code>DestroyCursor()</code> para los cursores del sistema.</li>
+<li>Use <code>Source</code> (protegido) para consultar la descripción del origen del cursor cargado actualmente.</li>
+<li>El método <code>NewBmp()</code> crea un cursor a partir de cualquier objeto TBitmap, gestionando automáticamente la paleta y la transparencia.</li>
+<li>Los cursores desde recursos (compilados en el .exe) se cargan mediante <code>LoadCursor( GetResources(), cResName )</code>.</li>
 </ul>
 
 </main>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TClipBoard - Windows Clipboard - Documentação FWH</title>
+<title>TClipBoard - Área de Transferência do Windows - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -120,27 +120,27 @@
 </nav>
 <main id="content">
 
-<h1>TClipBoard - Windows Clipboard</h1>
+<h1>TClipBoard - Área de Transferência do Windows</h1>
 <p class="class-source">
-Source: <code>source/classes/clipbrd.prg</code>
+Fonte: <code>source/classes/clipbrd.prg</code>
 </p>
 
 <p>
-TClipBoard wraps the Windows Clipboard API (<code>OpenClipboard</code>, <code>GetClipboardData</code>,
-<code>SetClipboardData</code>, <code>CloseClipboard</code>, etc.) into an object-oriented interface.
-It supports ANSI and Unicode text, bitmap images, metafiles, and file lists (from Explorer's
-copy/paste). The class automatically manages clipboard ownership and sequencing of open/empty/close.
+TClipBoard encapsula a API da Área de Transferência do Windows (<code>OpenClipboard</code>, <code>GetClipboardData</code>,
+<code>SetClipboardData</code>, <code>CloseClipboard</code>, etc.) em uma interface orientada a objetos.
+Ela suporta texto ANSI e Unicode, imagens bitmap, metafiles e listas de arquivos (a partir da
+cópia/colagem do Explorer). A classe gerencia automaticamente a posse da área de transferência e a sequência de abrir/esvaziar/fechar.
 </p>
 
-<h3>DATA Members</h3>
+<h3>Membros DATA</h3>
 
 <table>
 <thead>
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nFormat</code></td><td>Numeric</td><td>Default clipboard format for text operations (CF_TEXT)</td></tr>
-<tr><td><code>oWnd</code></td><td>Object</td><td>Owner window for clipboard operations</td></tr>
+<tr><td><code>nFormat</code></td><td>Numérico</td><td>Formato padrão da área de transferência para operações de texto (CF_TEXT)</td></tr>
+<tr><td><code>oWnd</code></td><td>Objeto</td><td>Janela proprietária para operações da área de transferência</td></tr>
 </tbody>
 </table>
 
@@ -151,24 +151,24 @@ copy/paste). The class automatically manages clipboard ownership and sequencing 
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nFormat )</code></td><td>Create clipboard object with optional format (default CF_TEXT)</td></tr>
-<tr><td><code>SetText( c )</code></td><td>Copy ANSI text to the clipboard</td></tr>
-<tr><td><code>GetText()</code></td><td>Retrieve ANSI text from the clipboard</td></tr>
-<tr><td><code>SetWideText( c )</code></td><td>Copy Unicode (wide) text to the clipboard</td></tr>
-<tr><td><code>GetUnicodeText()</code></td><td>Retrieve Unicode text from the clipboard</td></tr>
-<tr><td><code>SetBitmap( oBmp )</code></td><td>Copy a bitmap to the clipboard</td></tr>
-<tr><td><code>GetBitmap()</code></td><td>Retrieve a bitmap from the clipboard</td></tr>
-<tr><td><code>SetMetaFile( o )</code></td><td>Copy a metafile to the clipboard</td></tr>
-<tr><td><code>GetMetaFile()</code></td><td>Retrieve a metafile from the clipboard</td></tr>
-<tr><td><code>GetFiles()</code></td><td>Return an array of file names from a CF_HDROP clipboard (copied from Explorer)</td></tr>
-<tr><td><code>Clear()</code></td><td>Clear all clipboard contents</td></tr>
-<tr><td><code>Open()</code></td><td>Open the clipboard for multiple operations (must call Empty() and Close() afterwards)</td></tr>
-<tr><td><code>Empty()</code></td><td>Empty the clipboard contents (must be called after Open() before setting data)</td></tr>
-<tr><td><code>Close()</code></td><td>Close the clipboard (must be called after Open())</td></tr>
+<tr><td><code>New( nFormat )</code></td><td>Cria o objeto da área de transferência com formato opcional (padrão CF_TEXT)</td></tr>
+<tr><td><code>SetText( c )</code></td><td>Copia texto ANSI para a área de transferência</td></tr>
+<tr><td><code>GetText()</code></td><td>Recupera texto ANSI da área de transferência</td></tr>
+<tr><td><code>SetWideText( c )</code></td><td>Copia texto Unicode (wide) para a área de transferência</td></tr>
+<tr><td><code>GetUnicodeText()</code></td><td>Recupera texto Unicode da área de transferência</td></tr>
+<tr><td><code>SetBitmap( oBmp )</code></td><td>Copia um bitmap para a área de transferência</td></tr>
+<tr><td><code>GetBitmap()</code></td><td>Recupera um bitmap da área de transferência</td></tr>
+<tr><td><code>SetMetaFile( o )</code></td><td>Copia um metafile para a área de transferência</td></tr>
+<tr><td><code>GetMetaFile()</code></td><td>Recupera um metafile da área de transferência</td></tr>
+<tr><td><code>GetFiles()</code></td><td>Retorna um array de nomes de arquivos de uma área de transferência CF_HDROP (copiados do Explorer)</td></tr>
+<tr><td><code>Clear()</code></td><td>Limpa todo o conteúdo da área de transferência</td></tr>
+<tr><td><code>Open()</code></td><td>Abre a área de transferência para múltiplas operações (deve chamar Empty() e Close() em seguida)</td></tr>
+<tr><td><code>Empty()</code></td><td>Esvazia o conteúdo da área de transferência (deve ser chamado após Open() antes de definir dados)</td></tr>
+<tr><td><code>Close()</code></td><td>Fecha a área de transferência (deve ser chamado após Open())</td></tr>
 </tbody>
 </table>
 
-<h3>Example: Copy/Paste Text and Files</h3>
+<h3>Exemplo: Copiar/Colar Texto e Arquivos</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -176,20 +176,20 @@ function Main()
 
    local oClip := TClipBoard():New()
 
-   // Copy text to clipboard
+   // Copia texto para a area de transferencia
    oClip:SetText( "Hello from FiveWin!" )
    ? "Text copied to clipboard"
 
-   // Paste text from clipboard
+   // Cola texto da area de transferencia
    ? "Clipboard content:", oClip:GetText()
 
-   // Copy a file list (as if from Explorer)
+   // Copia uma lista de arquivos (como se viesse do Explorer)
    oClip:Open()
    oClip:Empty()
-   // ... set CF_HDROP data via Windows API
+   // ... define dados CF_HDROP via API do Windows
    oClip:Close()
 
-   // Read files copied from Explorer
+   // Le arquivos copiados do Explorer
    local aFiles := oClip:GetFiles()
    if ValType( aFiles ) == "A"
       AEval( aFiles, {|c| ? "File: " + c } )
@@ -197,7 +197,7 @@ function Main()
 
 return nil</code></pre>
 
-<h3>Example: Copy a Bitmap</h3>
+<h3>Exemplo: Copiar um Bitmap</h3>
 
 <pre><code class="language-harbour">function CopyBitmap()
 

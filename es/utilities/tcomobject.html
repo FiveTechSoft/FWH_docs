@@ -126,7 +126,7 @@
 <p class="class-hierarchy">Clase independiente</p>
 
 <p>
-TComObject provides a generic wrapper around Windows COM (Component Object Model) objects via the <code>IDispatch</code> interface. It stores the <code>nIDispatch</code> pointer and exposes methods to invoke COM methods, get/set properties, and auto-wrap returned IDispatch pointers. The class supports chained COM calls through its error handler: property names prefixed with <code>_</code> set values, bare property names get values, and IDispatch return values are automatically wrapped in new TComObject instances.
+TComObject proporciona un envoltorio genérico alrededor de los objetos COM (Component Object Model) de Windows a través de la interfaz <code>IDispatch</code>. Almacena el puntero <code>nIDispatch</code> y expone métodos para invocar métodos COM, obtener/establecer propiedades y envolver automáticamente los punteros IDispatch devueltos. La clase admite llamadas COM encadenadas mediante su manejador de errores: los nombres de propiedades con el prefijo <code>_</code> establecen valores, los nombres de propiedades sin prefijo obtienen valores, y los valores IDispatch devueltos se envuelven automáticamente en nuevas instancias de TComObject.
 </p>
 
 <h2 id="data">Miembros DATA Principales</h2>
@@ -136,7 +136,7 @@ TComObject provides a generic wrapper around Windows COM (Component Object Model
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nIDispatch</code></td><td>Numeric</td><td>Pointer to the COM IDispatch interface</td></tr>
+<tr><td><code>nIDispatch</code></td><td>Numérico</td><td>Puntero a la interfaz COM IDispatch</td></tr>
 </tbody>
 </table>
 
@@ -147,14 +147,14 @@ TComObject provides a generic wrapper around Windows COM (Component Object Model
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cProgID )</code></td><td>Create a COM object from a ProgID string (e.g. "Word.Application")</td></tr>
-<tr><td><code>Invoke( cMethod, u1, u2, u3 )</code></td><td>Invoke a COM method with up to three optional parameters</td></tr>
-<tr><td><code>End()</code></td><td>Release the COM object and free the IDispatch pointer</td></tr>
-<tr><td><code>ClassName()</code></td><td>Return the Harbour class name ("TComObject")</td></tr>
+<tr><td><code>New( cProgID )</code></td><td>Crea un objeto COM a partir de una cadena ProgID (p. ej. "Word.Application")</td></tr>
+<tr><td><code>Invoke( cMethod, u1, u2, u3 )</code></td><td>Invoca un método COM con hasta tres parámetros opcionales</td></tr>
+<tr><td><code>End()</code></td><td>Libera el objeto COM y libera el puntero IDispatch</td></tr>
+<tr><td><code>ClassName()</code></td><td>Devuelve el nombre de clase de Harbour ("TComObject")</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Word Automation</h2>
+<h2 id="example">Ejemplo: Automatización de Word</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -162,27 +162,27 @@ function Main()
 
    local oWord, oDoc
 
-   // Create Word Application COM object
+   // Crear objeto COM de Word Application
    oWord := TComObject():New( "Word.Application" )
 
-   // Set property (prefix with _)
+   // Establecer propiedad (con prefijo _)
    oWord:_Visible := .T.
 
-   // Access documents collection (returns auto-wrapped TComObject)
+   // Acceder a la colección de documentos (devuelve un TComObject autoenvuelto)
    oDoc := oWord:Documents
 
-   // Add a new document
+   // Agregar un nuevo documento
    oDoc:Add()
 
-   // Invoke methods
+   // Invocar métodos
    oWord:Invoke( "Activate" )
 
-   // Set content
+   // Establecer contenido
    oWord:Selection:TypeText( "Hello from FiveWin!" )
 
    MsgInfo( "Word is running. Press OK to close." )
 
-   // Clean up
+   // Limpieza
    oWord:Quit()
    oWord:End()
 
@@ -191,11 +191,11 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>The error handler (<code>Error()</code>) is the core of TComObject's convenience. When you access a property without the underscore prefix, it calls <code>IDispatch::GetIDsOfNames</code> and <code>Invoke</code> with DISPATCH_PROPERTYGET. If the return value is another IDispatch pointer, it is auto-wrapped in a new TComObject, enabling chained navigation like <code>oWord:Selection:Text</code>.</li>
-<li>Setting a property requires the underscore prefix (e.g. <code>oWord:_Visible := .T.</code>), which triggers DISPATCH_PROPERTYPUT.</li>
-<li>Use <code>Invoke()</code> for methods that need explicit control over parameters, or when the auto-wrap behavior does not apply.</li>
-<li>Always call <code>End()</code> to release the COM interface pointer and avoid resource leaks.</li>
-<li>Requires the Windows COM subsystem (OLE32.dll). Works on all 32-bit and 64-bit Windows platforms.</li>
+<li>El manejador de errores (<code>Error()</code>) es el núcleo de la comodidad de TComObject. Cuando accede a una propiedad sin el prefijo de subrayado, llama a <code>IDispatch::GetIDsOfNames</code> e <code>Invoke</code> con DISPATCH_PROPERTYGET. Si el valor devuelto es otro puntero IDispatch, se envuelve automáticamente en un nuevo TComObject, lo que permite la navegación encadenada como <code>oWord:Selection:Text</code>.</li>
+<li>Establecer una propiedad requiere el prefijo de subrayado (p. ej. <code>oWord:_Visible := .T.</code>), lo que desencadena DISPATCH_PROPERTYPUT.</li>
+<li>Use <code>Invoke()</code> para métodos que necesitan un control explícito sobre los parámetros, o cuando el comportamiento de autoenvoltura no se aplica.</li>
+<li>Llame siempre a <code>End()</code> para liberar el puntero de la interfaz COM y evitar fugas de recursos.</li>
+<li>Requiere el subsistema COM de Windows (OLE32.dll). Funciona en todas las plataformas Windows de 32 y 64 bits.</li>
 </ul>
 
 </main>

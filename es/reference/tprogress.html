@@ -91,10 +91,10 @@
 <p class="class-hierarchy">Hereda de: <code>TControl</code></p>
 
 <p>
-TProgress wraps the Windows common control progress bar (msctls_progress32). It supports
-standard progress indication with configurable range and position, step increments, vertical
-orientation, and marquee (indeterminate) mode. TProgress is suitable for showing operation
-progress in windows, dialogs, and status bars.
+TProgress encapsula la barra de progreso de los controles comunes de Windows (msctls_progress32). Admite
+la indicación de progreso estándar con rango y posición configurables, incrementos por pasos, orientación
+vertical y modo marquesina (indeterminado). TProgress es adecuado para mostrar el progreso de una operación
+en ventanas, diálogos y barras de estado.
 </p>
 
 <h2 id="data">Miembros DATA Principales</h2>
@@ -104,10 +104,10 @@ progress in windows, dialogs, and status bars.
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum range value (default 0)</td></tr>
-<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum range value (default determined by system)</td></tr>
-<tr><td><code>nPos</code></td><td>Numeric</td><td>Current position</td></tr>
-<tr><td><code>nStep</code></td><td>Numeric</td><td>Step increment value</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Valor mínimo del rango (predeterminado 0)</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Valor máximo del rango (predeterminado determinado por el sistema)</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Posición actual</td></tr>
+<tr><td><code>nStep</code></td><td>Numeric</td><td>Valor del incremento por paso</td></tr>
 </tbody>
 </table>
 
@@ -118,24 +118,24 @@ progress in windows, dialogs, and status bars.
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, oWnd, nPos, nClrF, nClrB, lPixel, lDesign, nW, nH, cMsg, lVert, lMarquee )</code></td><td>Create a progress bar. Supports vertical and marquee modes via <code>lVert</code> and <code>lMarquee</code>.</td></tr>
-<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine from a dialog resource template</td></tr>
-<tr><td><code>SetPos( nPos )</code></td><td>Set the current position (alias <code>_nPosition</code>, <code>nPosition</code>)</td></tr>
-<tr><td><code>GetPos()</code></td><td>Return the current position</td></tr>
-<tr><td><code>SetRange( nMin, nMax )</code></td><td>Set the minimum and maximum range values</td></tr>
-<tr><td><code>SetStep( nStepInc )</code></td><td>Set the step increment value</td></tr>
-<tr><td><code>StepIt()</code></td><td>Advance the position by the current step value</td></tr>
-<tr><td><code>DeltaPos( nIncrement )</code></td><td>Change the position by a relative amount (positive or negative)</td></tr>
-<tr><td><code>SetMarquee( lOnOff )</code></td><td>Enable or disable marquee (indeterminate) mode</td></tr>
+<tr><td><code>New( nTop, nLeft, oWnd, nPos, nClrF, nClrB, lPixel, lDesign, nW, nH, cMsg, lVert, lMarquee )</code></td><td>Crea una barra de progreso. Admite los modos vertical y marquesina mediante <code>lVert</code> y <code>lMarquee</code>.</td></tr>
+<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine a partir de una plantilla de recurso de diálogo</td></tr>
+<tr><td><code>SetPos( nPos )</code></td><td>Establece la posición actual (alias <code>_nPosition</code>, <code>nPosition</code>)</td></tr>
+<tr><td><code>GetPos()</code></td><td>Devuelve la posición actual</td></tr>
+<tr><td><code>SetRange( nMin, nMax )</code></td><td>Establece los valores mínimo y máximo del rango</td></tr>
+<tr><td><code>SetStep( nStepInc )</code></td><td>Establece el valor del incremento por paso</td></tr>
+<tr><td><code>StepIt()</code></td><td>Avanza la posición según el valor de paso actual</td></tr>
+<tr><td><code>DeltaPos( nIncrement )</code></td><td>Cambia la posición en una cantidad relativa (positiva o negativa)</td></tr>
+<tr><td><code>SetMarquee( lOnOff )</code></td><td>Activa o desactiva el modo marquesina (indeterminado)</td></tr>
 </tbody>
 </table>
 
 <h2 id="commands">Comandos</h2>
 
-<pre><code class="language-harbour">// Standard progress bar
+<pre><code class="language-harbour">// Barra de progreso estándar
 DEFINE PROGRESS oProg OF oDlg
 
-// Marquee (indeterminate) progress bar
+// Barra de progreso marquesina (indeterminada)
 DEFINE PROGRESS oProg OF oDlg MARQUEE</code></pre>
 
 <h2 id="example">Ejemplo</h2>
@@ -168,11 +168,11 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>The progress bar uses the Windows common control class <code>msctls_progress32</code>.</li>
-<li>Marquee mode (indeterminate) shows an animated scrolling bar when the operation length is unknown. Enable via <code>lMarquee := .T.</code> at creation or call <code>SetMarquee( .T. )</code> at runtime.</li>
-<li>Vertical progress bars are created by setting <code>lVertical := .T.</code> (style <code>PBS_VERTICAL</code>).</li>
-<li>The <code>StepIt()</code> method advances the position by the value set via <code>SetStep()</code>. The default step is 1.</li>
-<li>Use <code>DeltaPos()</code> for relative position changes without modifying the step value.</li>
+<li>La barra de progreso utiliza la clase de control común de Windows <code>msctls_progress32</code>.</li>
+<li>El modo marquesina (indeterminado) muestra una barra animada de desplazamiento cuando se desconoce la duración de la operación. Actívelo mediante <code>lMarquee := .T.</code> en la creación o llame a <code>SetMarquee( .T. )</code> en tiempo de ejecución.</li>
+<li>Las barras de progreso verticales se crean estableciendo <code>lVertical := .T.</code> (estilo <code>PBS_VERTICAL</code>).</li>
+<li>El método <code>StepIt()</code> avanza la posición según el valor establecido mediante <code>SetStep()</code>. El paso predeterminado es 1.</li>
+<li>Use <code>DeltaPos()</code> para cambios de posición relativos sin modificar el valor del paso.</li>
 </ul>
 
 </main>

@@ -95,7 +95,7 @@
 <p class="class-source">Fuente: <code>source/classes/TXmlWriter.prg</code></p>
 
 <p>
-TXmlWriter is a minimal streaming XML writer that writes directly to disk. It supports the standard OpenTag / Element / CloseTag pattern and produces well-formed XML with automatic indentation and character escaping. Every method returns <code>Self</code>, enabling a fluent (chainable) API. The writer uses Harbour's low-level file I/O (<code>FCreate</code> / <code>FWrite</code>) so it stays memory-efficient even for large documents.
+TXmlWriter es un escritor XML de flujo (streaming) minimalista que escribe directamente en disco. Soporta el patrón estándar OpenTag / Element / CloseTag y produce XML bien formado con sangría automática y escapado de caracteres. Cada método devuelve <code>Self</code>, lo que permite una API fluida (encadenable). El escritor utiliza la E/S de archivos de bajo nivel de Harbour (<code>FCreate</code> / <code>FWrite</code>), por lo que se mantiene eficiente en memoria incluso para documentos grandes.
 </p>
 
 <h2 id="data">Miembros DATA Principales</h2>
@@ -103,13 +103,14 @@ TXmlWriter is a minimal streaming XML writer that writes directly to disk. It su
 <table>
 <thead>
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+
 </thead>
 <tbody>
-<tr><td><code>cFile</code></td><td>Character</td><td>Output file path</td></tr>
-<tr><td><code>hFile</code></td><td>Numeric</td><td>File handle from FCreate ( -1 if creation failed )</td></tr>
-<tr><td><code>nIndent</code></td><td>Numeric</td><td>Current indentation level (0-based)</td></tr>
-<tr><td><code>aStack</code></td><td>Array</td><td>Tag name stack for nesting; ensures CloseTag knows which tag to close</td></tr>
-<tr><td><code>lOpen</code></td><td>Logical</td><td>File is open and writable</td></tr>
+<tr><td><code>cFile</code></td><td>Character</td><td>Ruta del archivo de salida</td></tr>
+<tr><td><code>hFile</code></td><td>Numeric</td><td>Manejador de archivo devuelto por FCreate ( -1 si la creación falló )</td></tr>
+<tr><td><code>nIndent</code></td><td>Numeric</td><td>Nivel de sangría actual (basado en 0)</td></tr>
+<tr><td><code>aStack</code></td><td>Array</td><td>Pila de nombres de etiquetas para el anidamiento; asegura que CloseTag sepa qué etiqueta cerrar</td></tr>
+<tr><td><code>lOpen</code></td><td>Logical</td><td>El archivo está abierto y se puede escribir en él</td></tr>
 </tbody>
 </table>
 
@@ -118,21 +119,22 @@ TXmlWriter is a minimal streaming XML writer that writes directly to disk. It su
 <table>
 <thead>
 <tr><th>Método</th><th>Descripción</th></tr>
+
 </thead>
 <tbody>
-<tr><td><code>New( cFile )</code></td><td>Create a writer and open the output file. Returns Self</td></tr>
-<tr><td><code>Start( cVersion, cEncoding )</code></td><td>Write the XML declaration <code>&lt;?xml ... ?&gt;</code>. Defaults: "1.0", "UTF-8". Returns Self</td></tr>
-<tr><td><code>OpenTag( cTag, hAttribs )</code></td><td>Open a named tag with optional hash of attributes. Increases indent. Returns Self</td></tr>
-<tr><td><code>CloseTag( cTag )</code></td><td>Close the most recent (or named) tag. Decreases indent. Returns Self</td></tr>
-<tr><td><code>Element( cTag, cValue, hAttribs )</code></td><td>Write a self-closing tag or a full element with escaped text content. Returns Self</td></tr>
-<tr><td><code>Comment( cText )</code></td><td>Write an XML comment <code>&lt;!-- ... --&gt;</code>. Returns Self</td></tr>
-<tr><td><code>CData( cText )</code></td><td>Write a CDATA section <code>&lt;![CDATA[...]]&gt;</code>. Returns Self</td></tr>
-<tr><td><code>End()</code></td><td>Close any remaining open tags to ensure well-formed output. Returns Self</td></tr>
-<tr><td><code>Destroy()</code></td><td>Close the file handle if still open</td></tr>
+<tr><td><code>New( cFile )</code></td><td>Crea un escritor y abre el archivo de salida. Devuelve Self</td></tr>
+<tr><td><code>Start( cVersion, cEncoding )</code></td><td>Escribe la declaración XML <code>&lt;?xml ... ?&gt;</code>. Valores por defecto: "1.0", "UTF-8". Devuelve Self</td></tr>
+<tr><td><code>OpenTag( cTag, hAttribs )</code></td><td>Abre una etiqueta con nombre y un hash opcional de atributos. Aumenta la sangría. Devuelve Self</td></tr>
+<tr><td><code>CloseTag( cTag )</code></td><td>Cierra la etiqueta más reciente (o la indicada por nombre). Disminuye la sangría. Devuelve Self</td></tr>
+<tr><td><code>Element( cTag, cValue, hAttribs )</code></td><td>Escribe una etiqueta autocerrada o un elemento completo con contenido de texto escapado. Devuelve Self</td></tr>
+<tr><td><code>Comment( cText )</code></td><td>Escribe un comentario XML <code>&lt;!-- ... --&gt;</code>. Devuelve Self</td></tr>
+<tr><td><code>CData( cText )</code></td><td>Escribe una sección CDATA <code>&lt;![CDATA[...]]&gt;</code>. Devuelve Self</td></tr>
+<tr><td><code>End()</code></td><td>Cierra cualquier etiqueta abierta que quede para garantizar una salida bien formada. Devuelve Self</td></tr>
+<tr><td><code>Destroy()</code></td><td>Cierra el manejador de archivo si aún está abierto</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Generate XML</h2>
+<h2 id="example">Ejemplo: Generar XML</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -156,11 +158,11 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>All public methods (except <code>New</code> and <code>Destroy</code>) return <code>Self</code>, which allows method chaining: <code>oXml:Start():OpenTag(...):Element(...):CloseTag():End()</code>.</li>
-<li>Attribute hashes use the <code>key -> value</code> syntax (Harbour hashes). Values are automatically escaped for XML.</li>
-<li>The <code>Escape()</code> method handles five predefined XML entities: <code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&quot;</code>, and <code>&apos;</code>.</li>
-<li><code>End()</code> automatically closes any tags remaining on the stack, ensuring well-formed output even if the caller omitted explicit close calls.</li>
-<li>The writer uses two-space indentation per nesting level, controlled by <code>cIndStr</code>.</li>
+<li>Todos los métodos públicos (excepto <code>New</code> y <code>Destroy</code>) devuelven <code>Self</code>, lo que permite el encadenamiento de métodos: <code>oXml:Start():OpenTag(...):Element(...):CloseTag():End()</code>.</li>
+<li>Los hashes de atributos utilizan la sintaxis <code>key -> value</code> (hashes de Harbour). Los valores se escapan automáticamente para XML.</li>
+<li>El método <code>Escape()</code> gestiona las cinco entidades XML predefinidas: <code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&quot;</code> y <code>&apos;</code>.</li>
+<li><code>End()</code> cierra automáticamente cualquier etiqueta que quede en la pila, garantizando una salida bien formada incluso si el llamador omitió las llamadas de cierre explícitas.</li>
+<li>El escritor utiliza una sangría de dos espacios por nivel de anidamiento, controlada por <code>cIndStr</code>.</li>
 </ul>
 
 </main>

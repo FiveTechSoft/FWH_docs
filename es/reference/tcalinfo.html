@@ -123,7 +123,7 @@
 <p class="class-hierarchy">Hereda de: <code>TControl</code></p>
 
 <p>
-TCalInfo represents a calendar appointment or item displayed within a TCalex calendar control. It manages the visual appearance, temporal range, and selection state of individual calendar entries, supporting gradient-colored items across day, week, and month views.
+TCalInfo representa una cita o elemento de calendario mostrado dentro de un control de calendario TCalex. Gestiona la apariencia visual, el rango temporal y el estado de selección de las entradas individuales del calendario, admitiendo elementos coloreados con degradado en las vistas de día, semana y mes.
 </p>
 
 <h2 id="data">Miembros DATA Principales</h2>
@@ -133,14 +133,14 @@ TCalInfo represents a calendar appointment or item displayed within a TCalex cal
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nStart / nEnd</code></td><td>Numeric</td><td>Start and end time offsets within the day (in minutes)</td></tr>
-<tr><td><code>dStart / dEnd</code></td><td>Date</td><td>Start and end dates for multi-day appointments</td></tr>
-<tr><td><code>cText</code></td><td>Character</td><td>Display text for the appointment item</td></tr>
-<tr><td><code>cSubject</code></td><td>Character</td><td>Subject or title of the appointment</td></tr>
-<tr><td><code>aGradColor</code></td><td>Array</td><td>Gradient color array for the item background</td></tr>
-<tr><td><code>aGradColorND / aGradColorAp / aGradColorBT</code></td><td>Array</td><td>Gradient colors for non-displayed, appointment, and business time states</td></tr>
-<tr><td><code>lSelected</code></td><td>Logical</td><td>Selection state of the appointment</td></tr>
-<tr><td><code>oCalex</code></td><td>Object</td><td>Parent TCalex calendar control</td></tr>
+<tr><td><code>nStart / nEnd</code></td><td>Numeric</td><td>Desplazamientos de hora de inicio y fin dentro del día (en minutos)</td></tr>
+<tr><td><code>dStart / dEnd</code></td><td>Date</td><td>Fechas de inicio y fin para citas de varios días</td></tr>
+<tr><td><code>cText</code></td><td>Character</td><td>Texto que se muestra para el elemento de la cita</td></tr>
+<tr><td><code>cSubject</code></td><td>Character</td><td>Asunto o título de la cita</td></tr>
+<tr><td><code>aGradColor</code></td><td>Array</td><td>Array de colores de degradado para el fondo del elemento</td></tr>
+<tr><td><code>aGradColorND / aGradColorAp / aGradColorBT</code></td><td>Array</td><td>Colores de degradado para los estados no mostrado, cita y horario laboral</td></tr>
+<tr><td><code>lSelected</code></td><td>Logical</td><td>Estado de selección de la cita</td></tr>
+<tr><td><code>oCalex</code></td><td>Object</td><td>Control de calendario TCalex padre</td></tr>
 </tbody>
 </table>
 
@@ -151,17 +151,17 @@ TCalInfo represents a calendar appointment or item displayed within a TCalex cal
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oCalex, nStart, nEnd, dStart, dEnd, cText, cSubject )</code></td><td>Create a new calendar item with temporal bounds and display text</td></tr>
-<tr><td><code>BuildDates( nTop, nLeft, nW, nH )</code></td><td>Compute the visual rectangle for the item within the calendar grid</td></tr>
-<tr><td><code>Move()</code></td><td>Reposition the item in response to calendar scrolling or resize</td></tr>
-<tr><td><code>Paint()</code></td><td>Paint the item in the default calendar view</td></tr>
-<tr><td><code>PaintOnMonth()</code></td><td>Paint the item within the month overview grid</td></tr>
-<tr><td><code>PaintOnWeek()</code></td><td>Paint the item within the week/day view</td></tr>
-<tr><td><code>Show() / Hide()</code></td><td>Show or hide the calendar item</td></tr>
+<tr><td><code>New( oCalex, nStart, nEnd, dStart, dEnd, cText, cSubject )</code></td><td>Crea un nuevo elemento de calendario con límites temporales y texto a mostrar</td></tr>
+<tr><td><code>BuildDates( nTop, nLeft, nW, nH )</code></td><td>Calcula el rectángulo visual del elemento dentro de la cuadrícula del calendario</td></tr>
+<tr><td><code>Move()</code></td><td>Reposiciona el elemento en respuesta al desplazamiento o redimensionado del calendario</td></tr>
+<tr><td><code>Paint()</code></td><td>Dibuja el elemento en la vista predeterminada del calendario</td></tr>
+<tr><td><code>PaintOnMonth()</code></td><td>Dibuja el elemento dentro de la cuadrícula de vista mensual</td></tr>
+<tr><td><code>PaintOnWeek()</code></td><td>Dibuja el elemento dentro de la vista de semana/día</td></tr>
+<tr><td><code>Show() / Hide()</code></td><td>Muestra u oculta el elemento de calendario</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Create Appointment</h2>
+<h2 id="example">Ejemplo: Crear una Cita</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -174,8 +174,8 @@ function Main()
    oCalex := TCalex():New( oWnd )
 
    oAppt := TCalInfo():New( oCalex, ;
-      540, 600, ;              // 9:00 AM to 10:00 AM
-      dDate(), dDate(), ;      // Today only
+      540, 600, ;              // 9:00 a.m. a 10:00 a.m.
+      dDate(), dDate(), ;      // Solo hoy
       "Team Meeting", "Weekly sync" )
 
    oAppt:aGradColor := { CLR_BLUE, CLR_CYAN }
@@ -188,10 +188,10 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>Time values (<code>nStart</code>, <code>nEnd</code>) are expressed in minutes from midnight (0 to 1439).</li>
-<li>Multi-day appointments use <code>dStart</code> and <code>dEnd</code> date values spanning the event duration.</li>
-<li>Gradient arrays contain two numeric color values for the start and end gradient stops.</li>
-<li>The parent TCalex control dispatches paint calls to the appropriate view method (PaintOnMonth, PaintOnWeek, or Paint) based on the current display mode.</li>
+<li>Los valores de tiempo (<code>nStart</code>, <code>nEnd</code>) se expresan en minutos desde la medianoche (0 a 1439).</li>
+<li>Las citas de varios días usan los valores de fecha <code>dStart</code> y <code>dEnd</code> que abarcan la duración del evento.</li>
+<li>Los arrays de degradado contienen dos valores numéricos de color para las paradas de degradado inicial y final.</li>
+<li>El control TCalex padre distribuye las llamadas de dibujado al método de vista adecuado (PaintOnMonth, PaintOnWeek o Paint) según el modo de visualización actual.</li>
 </ul>
 
 </main>

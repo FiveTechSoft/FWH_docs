@@ -92,12 +92,12 @@
 
 <h1>TMenuItem</h1>
 <p class="class-source">Fonte: <code>source/classes/menuitem.prg</code></p>
-<p class="class-hierarchy">Classe independente class</p>
+<p class="class-hierarchy">Classe independente</p>
 
 <p>
-TMenuItem represents a single entry within a TMenu object. Each item has a prompt, an optional action
-(code block), a checked/unchecked state, an enabled/disabled state, and a WHEN condition for dynamic
-visibility. Items can also act as separators or open submenus.
+TMenuItem representa uma única entrada dentro de um objeto TMenu. Cada item tem um texto (prompt), uma ação
+opcional (bloco de código), um estado marcado/desmarcado, um estado habilitado/desabilitado e uma condição WHEN para
+visibilidade dinâmica. Os itens também podem atuar como separadores ou abrir submenus.
 </p>
 
 <h2 id="data">Principais Membros DATA</h2>
@@ -107,14 +107,14 @@ visibility. Items can also act as separators or open submenus.
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cPrompt</code></td><td>Character</td><td>Menu item text, with &amp; for accelerator underline</td></tr>
-<tr><td><code>nId</code></td><td>Numeric</td><td>Command ID for the menu item</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on selection</td></tr>
-<tr><td><code>bWhen</code></td><td>Block</td><td>Code block evaluated to enable/disable item dynamically</td></tr>
-<tr><td><code>lChecked</code></td><td>Logical</td><td>Whether the item shows a check mark</td></tr>
-<tr><td><code>lActive</code></td><td>Logical</td><td>Whether the item is enabled (clickable)</td></tr>
-<tr><td><code>lSeparator</code></td><td>Logical</td><td>.T. for a separator bar</td></tr>
-<tr><td><code>oMenu</code></td><td>Object</td><td>Parent TMenu object containing this item</td></tr>
+<tr><td><code>cPrompt</code></td><td>Character</td><td>Texto do item de menu, com &amp; para o sublinhado do acelerador</td></tr>
+<tr><td><code>nId</code></td><td>Numeric</td><td>ID de comando do item de menu</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Bloco de código executado ao selecionar</td></tr>
+<tr><td><code>bWhen</code></td><td>Block</td><td>Bloco de código avaliado para habilitar/desabilitar o item dinamicamente</td></tr>
+<tr><td><code>lChecked</code></td><td>Logical</td><td>Indica se o item exibe uma marca de seleção</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>Indica se o item está habilitado (clicável)</td></tr>
+<tr><td><code>lSeparator</code></td><td>Logical</td><td>.T. para uma barra separadora</td></tr>
+<tr><td><code>oMenu</code></td><td>Object</td><td>Objeto TMenu pai que contém este item</td></tr>
 </tbody>
 </table>
 
@@ -125,16 +125,16 @@ visibility. Items can also act as separators or open submenus.
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cPrompt, cMsg, lChecked, lActive, bAction, bWhen, ... )</code></td><td>Create a new menu item</td></tr>
-<tr><td><code>ReDefine( cPrompt, ... )</code></td><td>Redefine a menu item from a resource</td></tr>
-<tr><td><code>SetCheck( lOn )</code></td><td>Toggle the check mark on/off</td></tr>
-<tr><td><code>Enable()</code></td><td>Enable the menu item</td></tr>
-<tr><td><code>Disable()</code></td><td>Disable (gray out) the menu item</td></tr>
-<tr><td><code>SetPrompt( cText )</code></td><td>Change the menu item text at runtime</td></tr>
+<tr><td><code>New( cPrompt, cMsg, lChecked, lActive, bAction, bWhen, ... )</code></td><td>Cria um novo item de menu</td></tr>
+<tr><td><code>ReDefine( cPrompt, ... )</code></td><td>Redefine um item de menu a partir de um recurso</td></tr>
+<tr><td><code>SetCheck( lOn )</code></td><td>Alterna a marca de seleção (ligada/desligada)</td></tr>
+<tr><td><code>Enable()</code></td><td>Habilita o item de menu</td></tr>
+<tr><td><code>Disable()</code></td><td>Desabilita (esmaece) o item de menu</td></tr>
+<tr><td><code>SetPrompt( cText )</code></td><td>Altera o texto do item de menu em tempo de execução</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Menu Item with Action and Check</h2>
+<h2 id="example">Exemplo: Item de Menu com Ação e Marca de Seleção</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -170,11 +170,11 @@ return oMenu</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>Use the <code>CHECKED</code> clause in the <code>MENUITEM</code> command to create an item that is initially checked.</li>
-<li>The <code>bWhen</code> block is evaluated each time the menu is opened. If it returns .F., the item is disabled.</li>
-<li><code>SetPrompt()</code> allows dynamic menu text changes, useful for recent-file lists or state indicators.</li>
-<li>Separator items are created with the <code>SEPARATOR</code> command; they have no action or prompt.</li>
-<li>Each menu item is assigned a unique <code>nId</code> by the parent menu, used for command routing and accelerator mapping.</li>
+<li>Use a cláusula <code>CHECKED</code> no comando <code>MENUITEM</code> para criar um item que já vem marcado inicialmente.</li>
+<li>O bloco <code>bWhen</code> é avaliado cada vez que o menu é aberto. Se retornar .F., o item é desabilitado.</li>
+<li><code>SetPrompt()</code> permite alterações dinâmicas do texto do menu, útil para listas de arquivos recentes ou indicadores de estado.</li>
+<li>Itens separadores são criados com o comando <code>SEPARATOR</code>; eles não têm ação nem texto.</li>
+<li>A cada item de menu é atribuído um <code>nId</code> único pelo menu pai, usado para o roteamento de comandos e o mapeamento de aceleradores.</li>
 </ul>
 
 </main>

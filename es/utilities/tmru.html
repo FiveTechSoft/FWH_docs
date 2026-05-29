@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMRU - Most Recently Used File List - Documentación FWH</title>
+<title>TMRU - Lista de Archivos Usados Recientemente - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -120,17 +120,18 @@
 </nav>
 <main id="content">
 
-<h1>TMRU - Most Recently Used File List</h1>
+<h1>TMRU - Lista de Archivos Usados Recientemente</h1>
 <p class="class-source">
-Source: <code>source/classes/mru.prg</code>
+Fuente: <code>source/classes/mru.prg</code>
 </p>
 
 <p>
-TMRU manages a Most Recently Used (MRU) file list, typically displayed in the File menu of
-applications. It persists the list to an INI file (via <code>TIni</code>) and automatically
-updates a popup menu. When a user opens a file, the MRU list is updated with the new entry
-at the top, and older entries shift down or are removed if the list exceeds the maximum size.
-Selecting an MRU menu item fires the associated <code>bAction</code> codeblock.
+TMRU gestiona una lista de archivos usados recientemente (MRU, Most Recently Used), normalmente
+mostrada en el menú Archivo de las aplicaciones. Persiste la lista en un archivo INI (mediante
+<code>TIni</code>) y actualiza automáticamente un menú emergente. Cuando un usuario abre un archivo,
+la lista MRU se actualiza con la nueva entrada en la parte superior, y las entradas más antiguas
+descienden o se eliminan si la lista supera el tamaño máximo. Al seleccionar un elemento del menú
+MRU se ejecuta el codeblock <code>bAction</code> asociado.
 </p>
 
 <h3>DATA Members</h3>
@@ -140,12 +141,12 @@ Selecting an MRU menu item fires the associated <code>bAction</code> codeblock.
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array of file path strings in MRU order (most recent first)</td></tr>
-<tr><td><code>nMaxItems</code></td><td>Numeric</td><td>Maximum number of items in the MRU list (default 4)</td></tr>
-<tr><td><code>cIniFile</code></td><td>Character</td><td>Path to the INI file for persisting the MRU list</td></tr>
-<tr><td><code>cSection</code></td><td>Character</td><td>INI section name where MRU entries are stored</td></tr>
-<tr><td><code>oMenu</code></td><td>Object</td><td>Popup menu object that displays the MRU entries</td></tr>
-<tr><td><code>bAction</code></td><td>Codeblock</td><td>Codeblock executed when an MRU item is selected, receives the file path</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array de cadenas con rutas de archivo en orden MRU (el más reciente primero)</td></tr>
+<tr><td><code>nMaxItems</code></td><td>Numérico</td><td>Número máximo de elementos en la lista MRU (por defecto 4)</td></tr>
+<tr><td><code>cIniFile</code></td><td>Carácter</td><td>Ruta al archivo INI para persistir la lista MRU</td></tr>
+<tr><td><code>cSection</code></td><td>Carácter</td><td>Nombre de la sección INI donde se almacenan las entradas MRU</td></tr>
+<tr><td><code>oMenu</code></td><td>Objeto</td><td>Objeto de menú emergente que muestra las entradas MRU</td></tr>
+<tr><td><code>bAction</code></td><td>Codeblock</td><td>Codeblock que se ejecuta cuando se selecciona un elemento MRU; recibe la ruta del archivo</td></tr>
 </tbody>
 </table>
 
@@ -156,13 +157,13 @@ Selecting an MRU menu item fires the associated <code>bAction</code> codeblock.
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cIni, cSec, nMax, cMsg, bAction, oMenu, nPos )</code></td><td>Create MRU list. Loads from INI, creates popup menu items, and attaches them to oMenu at position nPos</td></tr>
-<tr><td><code>Save( uNew )</code></td><td>Add a new file to the top of the MRU list. If it already exists, move it to the top. Persists to INI. uNew can be a single file or an array of files</td></tr>
-<tr><td><code>Clear()</code></td><td>Clear the MRU list, remove all menu items, and delete the INI section</td></tr>
+<tr><td><code>New( cIni, cSec, nMax, cMsg, bAction, oMenu, nPos )</code></td><td>Crea la lista MRU. Carga desde el INI, crea los elementos del menú emergente y los adjunta a oMenu en la posición nPos</td></tr>
+<tr><td><code>Save( uNew )</code></td><td>Añade un nuevo archivo a la parte superior de la lista MRU. Si ya existe, lo mueve a la parte superior. Persiste en el INI. uNew puede ser un único archivo o un array de archivos</td></tr>
+<tr><td><code>Clear()</code></td><td>Vacía la lista MRU, elimina todos los elementos del menú y borra la sección del INI</td></tr>
 </tbody>
 </table>
 
-<h3>Example: MRU Menu in File Menu</h3>
+<h3>Ejemplo: Menú MRU en el Menú Archivo</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -178,13 +179,13 @@ function Main()
          MENUITEM "~Open..."   ACTION OpenFile( oWnd, oMru )
          MENUITEM "~Save"      ACTION MsgInfo( "Save" )
          SEPARATOR
-         // MRU list will be inserted here at position 4
+         // La lista MRU se insertará aquí en la posición 4
       ENDPOPUP
    ENDMENU
 
    oWnd:oMenu := oMenu
 
-   // Create MRU with max 5 items, attached to File menu at position 4
+   // Crea el MRU con máximo 5 elementos, adjunto al menú Archivo en la posición 4
    oMru := TMRU():New( "C:\MyApp\settings.ini", "MRU", 5, ;
                        "Open recent file", {|cFile| OpenRecent( cFile ) }, ;
                        oMenu, 4 )
@@ -198,8 +199,8 @@ function OpenFile( oWnd, oMru )
    local cFile := cGetFile( "All files (*.*)|*.*" )
 
    if ! Empty( cFile )
-      oMru:Save( cFile )   // Add to MRU and update menu
-      // ... open the file
+      oMru:Save( cFile )   // Añadir al MRU y actualizar el menú
+      // ... abrir el archivo
    endif
 
 return nil
@@ -207,7 +208,7 @@ return nil
 function OpenRecent( cFile )
 
    MsgInfo( "Opening recent: " + cFile )
-   // ... open the file
+   // ... abrir el archivo
 
 return nil</code></pre>
 

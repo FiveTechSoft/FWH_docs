@@ -18,7 +18,7 @@
 <a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
 <a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
 <a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a>
-<a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Ejemplos y Ruta de Aprendizaje</a>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Clases Base</div>
@@ -83,7 +83,7 @@
 <a class="nav-item" href="../../es/internet/tpop3.html">TPop3</a>
 <a class="nav-item" href="../../es/internet/tftp.html">TFtp</a>
 <a class="nav-item" href="../../es/internet/twhatsapp.html">TWhatsApp</a><a class="nav-item" href="../../es/internet/topenai.html">TOpenAI</a>
-<a class="nav-item" href="../../es/internet/tai.html">AI Classes</a>
+<a class="nav-item" href="../../es/internet/tai.html">Clases de IA</a>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">Referencia</div>
@@ -110,19 +110,19 @@ incluyendo SQL Server, MySQL, PostgreSQL, Oracle, SQLite y más.
 
 <div class="mermaid">
 flowchart LR
-    subgraph "Harbour Application"
+    subgraph "Aplicación Harbour"
         A[TODBC]
     end
-    subgraph "ODBC Layer"
-        B[ODBC Driver Manager]
-        C[ODBC Driver]
+    subgraph "Capa ODBC"
+        B[Administrador de Drivers ODBC]
+        C[Driver ODBC]
     end
-    subgraph "Databases"
+    subgraph "Bases de Datos"
         D[SQL Server]
         E[MySQL/MariaDB]
         F[PostgreSQL]
         G[SQLite]
-        H[Any ODBC Source]
+        H[Cualquier Origen ODBC]
     end
     A -->|"hEnv, hDbc"| B
     B --> C
@@ -137,21 +137,21 @@ flowchart LR
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Por Defecto</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Por Defecto</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hEnv</code></td><td>Numeric</td><td></td><td>ODBC environment handle</td></tr>
-<tr><td><code>hDbc</code></td><td>Numeric</td><td></td><td>ODBC connection handle</td></tr>
-<tr><td><code>cConnect</code></td><td>Character</td><td></td><td>Full connection string (after successful connect)</td></tr>
-<tr><td><code>cDSN</code></td><td>Character</td><td></td><td>Data Source Name</td></tr>
-<tr><td><code>cUser</code></td><td>Character</td><td></td><td>Username for authentication</td></tr>
-<tr><td><code>cPassword</code></td><td>Character</td><td></td><td>Password for authentication</td></tr>
-<tr><td><code>lSuccess</code></td><td>Logical</td><td><code>.T.</code></td><td>Whether the last operation succeeded</td></tr>
-<tr><td><code>lShowError</code></td><td>Logical</td><td><code>.T.</code></td><td>Show error dialogs automatically</td></tr>
-<tr><td><code>lAbort</code></td><td>Logical</td><td><code>.F.</code></td><td>Abort on error</td></tr>
-<tr><td><code>lCsrDyn</code></td><td>Logical</td><td><code>.T.</code></td><td>Use dynamic cursors</td></tr>
-<tr><td><code>lDateAsStr</code></td><td>Logical</td><td><code>.F.</code></td><td>Return dates as strings</td></tr>
-<tr><td><code>aErrors</code></td><td>Array</td><td><code>{}</code></td><td>Array of error messages</td></tr>
+<tr><td><code>hEnv</code></td><td>Numérico</td><td></td><td>Handle del entorno ODBC</td></tr>
+<tr><td><code>hDbc</code></td><td>Numérico</td><td></td><td>Handle de la conexión ODBC</td></tr>
+<tr><td><code>cConnect</code></td><td>Carácter</td><td></td><td>Cadena de conexión completa (tras conectar correctamente)</td></tr>
+<tr><td><code>cDSN</code></td><td>Carácter</td><td></td><td>Nombre del Origen de Datos (Data Source Name)</td></tr>
+<tr><td><code>cUser</code></td><td>Carácter</td><td></td><td>Nombre de usuario para la autenticación</td></tr>
+<tr><td><code>cPassword</code></td><td>Carácter</td><td></td><td>Contraseña para la autenticación</td></tr>
+<tr><td><code>lSuccess</code></td><td>Lógico</td><td><code>.T.</code></td><td>Indica si la última operación tuvo éxito</td></tr>
+<tr><td><code>lShowError</code></td><td>Lógico</td><td><code>.T.</code></td><td>Muestra diálogos de error automáticamente</td></tr>
+<tr><td><code>lAbort</code></td><td>Lógico</td><td><code>.F.</code></td><td>Abortar en caso de error</td></tr>
+<tr><td><code>lCsrDyn</code></td><td>Lógico</td><td><code>.T.</code></td><td>Usar cursores dinámicos</td></tr>
+<tr><td><code>lDateAsStr</code></td><td>Lógico</td><td><code>.F.</code></td><td>Devolver las fechas como cadenas</td></tr>
+<tr><td><code>aErrors</code></td><td>Array</td><td><code>{}</code></td><td>Array de mensajes de error</td></tr>
 </tbody>
 </table>
 
@@ -160,22 +160,22 @@ flowchart LR
 <h3>Constructor</h3>
 <pre><code>METHOD New( cDSN, cUser, cPassword )</code></pre>
 <p>
-Creates a new ODBC connection. The <code>cDSN</code> parameter can be either a DSN name registered in
-the ODBC Data Source Administrator, or a full connection string starting with <code>"DRIVER="</code>.
-The constructor allocates the ODBC environment and connection handles and immediately attempts to connect.
-Check <code>oOdbc:lSuccess</code> after creation.
+Crea una nueva conexión ODBC. El parámetro <code>cDSN</code> puede ser un nombre de DSN registrado en
+el Administrador de Orígenes de Datos ODBC, o una cadena de conexión completa que comience por <code>"DRIVER="</code>.
+El constructor reserva los handles de entorno y de conexión ODBC e intenta conectar de inmediato.
+Compruebe <code>oOdbc:lSuccess</code> tras la creación.
 </p>
 
 <h3>Métodos de Sentencia</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>AllocStatement()</code></td><td>Allocate a new SQL statement handle. Returns hStmt or 0 on error.</td></tr>
-<tr><td><code>DropStatement( hStmt )</code></td><td>Free a statement handle</td></tr>
-<tr><td><code>Execute( cCommand, cOperation, hStmt, @nRet )</code></td><td>Execute a SQL command. Returns hStmt.</td></tr>
+<tr><td><code>AllocStatement()</code></td><td>Reserva un nuevo handle de sentencia SQL. Devuelve hStmt o 0 en caso de error.</td></tr>
+<tr><td><code>DropStatement( hStmt )</code></td><td>Libera un handle de sentencia</td></tr>
+<tr><td><code>Execute( cCommand, cOperation, hStmt, @nRet )</code></td><td>Ejecuta un comando SQL. Devuelve hStmt.</td></tr>
 </tbody>
 </table>
 
@@ -183,15 +183,15 @@ Check <code>oOdbc:lSuccess</code> after creation.
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>Query( cCommand )</code></td><td>Execute a SELECT query. Returns array of { aFields, aData }.</td></tr>
-<tr><td><code>QueryRow( cCommand )</code></td><td>Execute a query and return only the first row</td></tr>
-<tr><td><code>QueryData( cCommand )</code></td><td>Execute a query and return data array only</td></tr>
-<tr><td><code>Fetch( hStmt )</code></td><td>Fetch next row from statement. Returns .T. if successful.</td></tr>
-<tr><td><code>CursorFields( hStmt, lDateAsStr )</code></td><td>Get field descriptors for a cursor</td></tr>
-<tr><td><code>GetValue( nField, hStmt, aFields )</code></td><td>Get value from the current row</td></tr>
+<tr><td><code>Query( cCommand )</code></td><td>Ejecuta una consulta SELECT. Devuelve un array de { aFields, aData }.</td></tr>
+<tr><td><code>QueryRow( cCommand )</code></td><td>Ejecuta una consulta y devuelve solo la primera fila</td></tr>
+<tr><td><code>QueryData( cCommand )</code></td><td>Ejecuta una consulta y devuelve solo el array de datos</td></tr>
+<tr><td><code>Fetch( hStmt )</code></td><td>Obtiene la siguiente fila de la sentencia. Devuelve .T. si tuvo éxito.</td></tr>
+<tr><td><code>CursorFields( hStmt, lDateAsStr )</code></td><td>Obtiene los descriptores de campo de un cursor</td></tr>
+<tr><td><code>GetValue( nField, hStmt, aFields )</code></td><td>Obtiene el valor de la fila actual</td></tr>
 </tbody>
 </table>
 
@@ -199,16 +199,16 @@ Check <code>oOdbc:lSuccess</code> after creation.
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>GetTables( cMask, lViews )</code></td><td>Get list of tables (optionally including views)</td></tr>
-<tr><td><code>Create( cFileName, aFieldsInfo )</code></td><td>Create a new table</td></tr>
-<tr><td><code>DelTable( cTable )</code></td><td>Drop a table</td></tr>
-<tr><td><code>TruncateTable( cTable )</code></td><td>Delete all rows from a table</td></tr>
-<tr><td><code>GetIndex( cTable )</code></td><td>Get index information for a table</td></tr>
-<tr><td><code>IndexKey( cTable, nOrder )</code></td><td>Get index key expression</td></tr>
-<tr><td><code>IsIndex( cTable, cIndex )</code></td><td>Check if an index exists</td></tr>
+<tr><td><code>GetTables( cMask, lViews )</code></td><td>Obtiene la lista de tablas (opcionalmente incluyendo vistas)</td></tr>
+<tr><td><code>Create( cFileName, aFieldsInfo )</code></td><td>Crea una nueva tabla</td></tr>
+<tr><td><code>DelTable( cTable )</code></td><td>Elimina una tabla</td></tr>
+<tr><td><code>TruncateTable( cTable )</code></td><td>Borra todas las filas de una tabla</td></tr>
+<tr><td><code>GetIndex( cTable )</code></td><td>Obtiene la información de índices de una tabla</td></tr>
+<tr><td><code>IndexKey( cTable, nOrder )</code></td><td>Obtiene la expresión de clave de índice</td></tr>
+<tr><td><code>IsIndex( cTable, cIndex )</code></td><td>Comprueba si existe un índice</td></tr>
 </tbody>
 </table>
 
@@ -216,11 +216,11 @@ Check <code>oOdbc:lSuccess</code> after creation.
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>Commit()</code></td><td>Commit the current transaction</td></tr>
-<tr><td><code>RollBack()</code></td><td>Roll back the current transaction</td></tr>
+<tr><td><code>Commit()</code></td><td>Confirma la transacción actual</td></tr>
+<tr><td><code>RollBack()</code></td><td>Deshace la transacción actual</td></tr>
 </tbody>
 </table>
 
@@ -228,16 +228,16 @@ Check <code>oOdbc:lSuccess</code> after creation.
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>GetInfo( nType )</code></td><td>Get ODBC connection information</td></tr>
-<tr><td><code>SetOptions( nType, uBuffer )</code></td><td>Set ODBC connection options</td></tr>
-<tr><td><code>GetOptions( nType )</code></td><td>Get ODBC connection options</td></tr>
-<tr><td><code>IsError()</code></td><td>Returns .T. if errors exist</td></tr>
-<tr><td><code>LastError()</code></td><td>Returns the last error message</td></tr>
-<tr><td><code>ShowErrorList( cTitle )</code></td><td>Display all errors in a dialog</td></tr>
-<tr><td><code>End()</code></td><td>Disconnect and free all handles</td></tr>
+<tr><td><code>GetInfo( nType )</code></td><td>Obtiene información de la conexión ODBC</td></tr>
+<tr><td><code>SetOptions( nType, uBuffer )</code></td><td>Establece opciones de la conexión ODBC</td></tr>
+<tr><td><code>GetOptions( nType )</code></td><td>Obtiene opciones de la conexión ODBC</td></tr>
+<tr><td><code>IsError()</code></td><td>Devuelve .T. si existen errores</td></tr>
+<tr><td><code>LastError()</code></td><td>Devuelve el último mensaje de error</td></tr>
+<tr><td><code>ShowErrorList( cTitle )</code></td><td>Muestra todos los errores en un diálogo</td></tr>
+<tr><td><code>End()</code></td><td>Desconecta y libera todos los handles</td></tr>
 </tbody>
 </table>
 
@@ -249,7 +249,7 @@ function Main()
 
    local oOdbc, aResult, aFields, aData
 
-   // Connect using a pre-configured DSN
+   // Conectar usando un DSN preconfigurado
    oOdbc := TOdbc():New( "MyDSN", "myuser", "mypass" )
 
    if ! oOdbc:lSuccess
@@ -259,15 +259,15 @@ function Main()
 
    ? "Connected to:", oOdbc:cDSN
 
-   // List tables
+   // Listar las tablas
    ? "Tables:", oOdbc:GetTables()
 
-   // Execute a SELECT query
+   // Ejecutar una consulta SELECT
    aResult := oOdbc:Query( "SELECT * FROM Customers WHERE Country = 'USA'" )
 
    if ! Empty( aResult )
-      aFields := aResult[ 1 ]   // field descriptors
-      aData   := aResult[ 2 ]   // data rows
+      aFields := aResult[ 1 ]   // descriptores de campo
+      aData   := aResult[ 2 ]   // filas de datos
       ? "Found", Len( aData ), "records"
       ? "Fields:", Len( aFields )
    endif
@@ -284,13 +284,13 @@ function Main()
 
    local oOdbc
 
-   // Connect to SQL Server without a DSN
+   // Conectar a SQL Server sin un DSN
    oOdbc := TOdbc():New( ;
       "DRIVER={SQL Server};SERVER=localhost\SQLEXPRESS;" + ;
       "DATABASE=Northwind;Trusted_Connection=yes" )
 
    if oOdbc:lSuccess
-      // Execute a command
+      // Ejecutar un comando
       oOdbc:Execute( "UPDATE Products SET UnitPrice = UnitPrice * 1.10 " + ;
                      "WHERE CategoryID = 1" )
       oOdbc:Commit()
@@ -316,19 +316,19 @@ function Main()
       return nil
    endif
 
-   // Execute and get statement handle
+   // Ejecutar y obtener el handle de la sentencia
    hStmt := oOdbc:Execute( "SELECT Name, Email, Balance FROM Clients" )
 
    if hStmt != 0
-      // Get field information
+      // Obtener la información de los campos
       aFields := oOdbc:CursorFields( hStmt )
 
-      // Fetch row by row
+      // Obtener fila por fila
       do while oOdbc:Fetch( hStmt )
          for n := 1 to Len( aFields )
             ?? oOdbc:GetValue( n, hStmt, aFields ), " | "
          next
-         ?   // new line
+         ?   // nueva línea
       enddo
 
       oOdbc:DropStatement( hStmt )
@@ -349,8 +349,8 @@ function Main()
    oOdbc := TOdbc():New( "MyDSN", "user", "pass" )
 
    if oOdbc:lSuccess
-      // Turn off auto-commit for manual transaction control
-      // (auto-commit is ON by default after New())
+      // Desactivar el auto-commit para el control manual de transacciones
+      // (el auto-commit está activado por defecto tras New())
 
       oOdbc:Execute( "INSERT INTO Orders (CustomerID, OrderDate) VALUES (1, '2026-03-24')" )
       oOdbc:Execute( "INSERT INTO OrderItems (OrderID, ProductID, Qty) VALUES (SCOPE_IDENTITY(), 42, 5)" )
@@ -373,7 +373,7 @@ return nil</code></pre>
 <pre><code>// SQL Server (DSN-less)
 "DRIVER={SQL Server};SERVER=myserver;DATABASE=mydb;UID=user;PWD=pass"
 
-// MySQL via ODBC
+// MySQL vía ODBC
 "DRIVER={MySQL ODBC 8.0 Unicode Driver};SERVER=localhost;DATABASE=mydb;USER=root;PASSWORD=pass;PORT=3306"
 
 // PostgreSQL

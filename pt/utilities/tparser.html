@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TParser - Dynamic Parser Machine - Documentação FWH</title>
+<title>TParser - Máquina de Análise Dinâmica - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -46,11 +46,11 @@
 </nav>
 <main id="content">
 
-<h1>TParser - Dynamic Parser Machine</h1>
+<h1>TParser - Máquina de Análise Dinâmica</h1>
 <p class="class-source">Fonte: <code>source/classes/tparser.prg</code></p>
 
 <p>
-TParser is a generic grammar-rule engine skeleton. It maintains a list of production rules and a state stack. Rules consist of a non-terminal symbol, a token array, and an action code block. This class provides the framework for building expression parsers, command interpreters, or domain-specific language processors.
+TParser é um esqueleto genérico de motor de regras gramaticais. Ele mantém uma lista de regras de produção e uma pilha de estados. As regras consistem em um símbolo não terminal, um array de tokens e um bloco de código de ação. Esta classe fornece a estrutura para construir analisadores de expressões, interpretadores de comandos ou processadores de linguagens específicas de domínio.
 </p>
 
 <h2 id="data">Principais Membros DATA</h2>
@@ -60,8 +60,8 @@ TParser is a generic grammar-rule engine skeleton. It maintains a list of produc
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aRules</code></td><td>Array</td><td>Array of grammar rules, each { cNonTerminal, aTokens, bAction }</td></tr>
-<tr><td><code>aStates</code></td><td>Array</td><td>State stack for parsing; state 0 is empty by default</td></tr>
+<tr><td><code>aRules</code></td><td>Array</td><td>Array de regras gramaticais, cada uma { cNonTerminal, aTokens, bAction }</td></tr>
+<tr><td><code>aStates</code></td><td>Array</td><td>Pilha de estados para análise; o estado 0 está vazio por padrão</td></tr>
 </tbody>
 </table>
 
@@ -72,12 +72,12 @@ TParser is a generic grammar-rule engine skeleton. It maintains a list of produc
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Create a new parser with empty rules and initial state</td></tr>
-<tr><td><code>Add( cNonTerminal, aTokens, bAction )</code></td><td>Add a production rule: non-terminal -> sequence of tokens with action</td></tr>
+<tr><td><code>New()</code></td><td>Cria um novo analisador com regras vazias e estado inicial</td></tr>
+<tr><td><code>Add( cNonTerminal, aTokens, bAction )</code></td><td>Adiciona uma regra de produção: não terminal -> sequência de tokens com ação</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Add Grammar Rules</h2>
+<h2 id="example">Exemplo: Adicionar Regras Gramaticais</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -94,16 +94,16 @@ function Main()
    // expr -> expr * expr
    oParser:Add( "expr", { "expr", "*", "expr" }, {|a,b| a * b } )
 
-   // Access the rules
-   ? Len( oParser:aRules )   // 3 rules added
+   // Acessa as regras
+   ? Len( oParser:aRules )   // 3 regras adicionadas
 
 return nil</code></pre>
 
 <h2 id="notes">Notas</h2>
 <ul>
-<li>TParser is a skeleton class. The core <code>Add()</code> method builds the rule table; you must implement the tokenizer and the parsing algorithm (shift-reduce, recursive descent, etc.) yourself using the <code>aRules</code> and <code>aStates</code> data.</li>
-<li>Each rule's <code>aTokens</code> array defines the expected token sequence; the <code>bAction</code> block is the semantic action fired when the rule matches.</li>
-<li><code>aStates</code> starts with a single empty state (index 0). States can be pushed/popped during parsing to handle nested constructs.</li>
+<li>TParser é uma classe esqueleto. O método central <code>Add()</code> constrói a tabela de regras; você deve implementar o tokenizador e o algoritmo de análise (shift-reduce, descida recursiva, etc.) por conta própria usando os dados <code>aRules</code> e <code>aStates</code>.</li>
+<li>O array <code>aTokens</code> de cada regra define a sequência de tokens esperada; o bloco <code>bAction</code> é a ação semântica disparada quando a regra corresponde.</li>
+<li><code>aStates</code> começa com um único estado vazio (índice 0). Os estados podem ser empilhados/desempilhados durante a análise para lidar com construções aninhadas.</li>
 </ul>
 
 </main>

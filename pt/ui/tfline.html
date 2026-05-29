@@ -101,47 +101,47 @@
 <main id="content">
 
 <h1>TFLine</h1>
-<p class="class-source">Source: <code>source/classes/fline.prg</code></p>
-<p class="class-hierarchy">Standalone class</p>
+<p class="class-source">Fonte: <code>source/classes/fline.prg</code></p>
+<p class="class-hierarchy">Classe independente</p>
 
 <p>
-TFLine (Formatted Line) is a utility class for composing a formatted line from multiple
-styled text fragments. Each fragment can have its own font, color, and alignment. TFLine
-is used in conjunction with <code>TSay:oLine</code> to render rich text labels and with <code>TReport</code>'s
-formatted line output. The class maintains an array of text, font, and color triplets that
-are drawn as a single line with word wrap controlled by <code>lCrLf</code>.
+TFLine (Linha Formatada) é uma classe utilitária para compor uma linha formatada a partir de múltiplos
+fragmentos de texto estilizados. Cada fragmento pode ter sua própria fonte, cor e alinhamento. TFLine
+é usada em conjunto com <code>TSay:oLine</code> para renderizar rótulos de texto rico e com a saída de
+linha formatada de <code>TReport</code>. A classe mantém um array de trios de texto, fonte e cor que
+são desenhados como uma única linha, com a quebra de linha controlada por <code>lCrLf</code>.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Membros DATA Principais</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oUp</code></td><td>Object</td><td>Linked upstream object (used in line chains)</td></tr>
-<tr><td><code>oDown</code></td><td>Object</td><td>Linked downstream object</td></tr>
-<tr><td><code>nalign</code></td><td>Numeric</td><td>Line alignment value (0 = default)</td></tr>
-<tr><td><code>aText</code></td><td>Array</td><td>Array of text strings for each fragment</td></tr>
-<tr><td><code>aFonts</code></td><td>Array</td><td>Array of font objects or indexes for each fragment</td></tr>
-<tr><td><code>aColors</code></td><td>Array</td><td>Array of color values for each fragment</td></tr>
-<tr><td><code>lCrLf</code></td><td>Logical</td><td>Insert carriage return/line feed after this line</td></tr>
+<tr><td><code>oUp</code></td><td>Objeto</td><td>Objeto ligado a montante (usado em cadeias de linhas)</td></tr>
+<tr><td><code>oDown</code></td><td>Objeto</td><td>Objeto ligado a jusante</td></tr>
+<tr><td><code>nalign</code></td><td>Numérico</td><td>Valor de alinhamento da linha (0 = padrão)</td></tr>
+<tr><td><code>aText</code></td><td>Array</td><td>Array de strings de texto para cada fragmento</td></tr>
+<tr><td><code>aFonts</code></td><td>Array</td><td>Array de objetos de fonte ou índices para cada fragmento</td></tr>
+<tr><td><code>aColors</code></td><td>Array</td><td>Array de valores de cor para cada fragmento</td></tr>
+<tr><td><code>lCrLf</code></td><td>Lógico</td><td>Insere retorno de carro/avanço de linha após esta linha</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nalign, aText, aFonts, aColors, lCrLf )</code></td><td>Create a formatted line with the given fragments. Defaults: <code>{}</code>, <code>{}</code>, <code>{}</code>, <code>0</code>, <code>.F.</code></td></tr>
-<tr><td><code>End()</code></td><td>Release linked objects (sets <code>oUp</code> and <code>oDown</code> to NIL)</td></tr>
+<tr><td><code>New( nalign, aText, aFonts, aColors, lCrLf )</code></td><td>Cria uma linha formatada com os fragmentos fornecidos. Padrões: <code>{}</code>, <code>{}</code>, <code>{}</code>, <code>0</code>, <code>.F.</code></td></tr>
+<tr><td><code>End()</code></td><td>Libera os objetos ligados (define <code>oUp</code> e <code>oDown</code> como NIL)</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Styled Text Fragments</h2>
+<h2 id="example">Exemplo: Fragmentos de Texto Estilizados</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -157,20 +157,20 @@ function FormattedLabel()
       { oFont1, oFont2, oFont1 }, ;
       { CLR_BLUE, CLR_RED, CLR_BLACK } )
 
-   // Use oLine with TSay for display
+   // Usa oLine com TSay para exibição
    @ 10, 10 SAY oSay PROMPT "" OF oWnd SIZE 300, 50
    oSay:oLine := oLine
    oSay:lTransparent := .T.
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TFLine is primarily used internally by TSay and TReport to support multi-style text rendering on a single line.</li>
-<li>Each array element in <code>aText</code>, <code>aFonts</code>, and <code>aColors</code> corresponds to one styled fragment. The fragments are concatenated horizontally.</li>
-<li>Set <code>lCrLf := .T.</code> to force a line break after this formatted line.</li>
-<li>The <code>oUp</code> and <code>oDown</code> pointers enable chaining multiple TFLine objects together.</li>
+<li>TFLine é usada principalmente de forma interna por TSay e TReport para dar suporte à renderização de texto com múltiplos estilos em uma única linha.</li>
+<li>Cada elemento de array em <code>aText</code>, <code>aFonts</code> e <code>aColors</code> corresponde a um fragmento estilizado. Os fragmentos são concatenados horizontalmente.</li>
+<li>Defina <code>lCrLf := .T.</code> para forçar uma quebra de linha após esta linha formatada.</li>
+<li>Os ponteiros <code>oUp</code> e <code>oDown</code> permitem encadear múltiplos objetos TFLine.</li>
 </ul>
 
 </main>

@@ -89,46 +89,46 @@
 <main id="content">
 
 <h1>TUpDown</h1>
-<p class="class-source">Source: <code>source/classes/tupdown.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fuente: <code>source/classes/tupdown.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
 
 <p>
-TUpDown wraps the Win32 up-down common control, also known as a spinner or buddy control. It is typically paired with a TGet field to provide increment/decrement arrow buttons that automatically update the buddy's value within a configurable range.
+TUpDown encapsula el control común up-down de Win32, también conocido como spinner o control buddy. Normalmente se asocia a un campo TGet para proporcionar botones de flecha de incremento/decremento que actualizan automáticamente el valor del buddy dentro de un rango configurable.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Miembros DATA Clave</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum value of the spinner range</td></tr>
-<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum value of the spinner range</td></tr>
-<tr><td><code>nPos</code></td><td>Numeric</td><td>Current spinner position</td></tr>
-<tr><td><code>oBuddy</code></td><td>Object</td><td>The buddy control (usually a TGet) linked to this spinner</td></tr>
-<tr><td><code>lWrap</code></td><td>Logical</td><td>Wrap around when reaching the range boundary</td></tr>
-<tr><td><code>nAlign</code></td><td>Numeric</td><td>Alignment relative to the buddy: 0=right, 1=left</td></tr>
+<tr><td><code>nMin</code></td><td>Numérico</td><td>Valor mínimo del rango del spinner</td></tr>
+<tr><td><code>nMax</code></td><td>Numérico</td><td>Valor máximo del rango del spinner</td></tr>
+<tr><td><code>nPos</code></td><td>Numérico</td><td>Posición actual del spinner</td></tr>
+<tr><td><code>oBuddy</code></td><td>Objeto</td><td>El control buddy (normalmente un TGet) vinculado a este spinner</td></tr>
+<tr><td><code>lWrap</code></td><td>Lógico</td><td>Da la vuelta al alcanzar el límite del rango</td></tr>
+<tr><td><code>nAlign</code></td><td>Numérico</td><td>Alineación respecto al buddy: 0=derecha, 1=izquierda</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, oBuddy, nW, nH, nMin, nMax, nPos )</code></td><td>Create a new up-down control</td></tr>
-<tr><td><code>SetPos( n )</code></td><td>Set the spinner position to <code>n</code></td></tr>
-<tr><td><code>GetPos()</code></td><td>Return the current spinner position</td></tr>
-<tr><td><code>SetRange( nMin, nMax )</code></td><td>Set the minimum and maximum range values</td></tr>
-<tr><td><code>SetBuddy( oBuddy )</code></td><td>Attach a buddy control to the spinner</td></tr>
-<tr><td><code>GetBuddy()</code></td><td>Return the currently attached buddy control</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, oBuddy, nW, nH, nMin, nMax, nPos )</code></td><td>Crea un nuevo control up-down</td></tr>
+<tr><td><code>SetPos( n )</code></td><td>Establece la posición del spinner en <code>n</code></td></tr>
+<tr><td><code>GetPos()</code></td><td>Devuelve la posición actual del spinner</td></tr>
+<tr><td><code>SetRange( nMin, nMax )</code></td><td>Establece los valores mínimo y máximo del rango</td></tr>
+<tr><td><code>SetBuddy( oBuddy )</code></td><td>Asocia un control buddy al spinner</td></tr>
+<tr><td><code>GetBuddy()</code></td><td>Devuelve el control buddy actualmente asociado</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Spinner Linked to a GET Field</h2>
+<h2 id="example">Ejemplo: Spinner Vinculado a un Campo GET</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -146,13 +146,13 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>The buddy control is automatically set as the window specified in the <code>BUDDY</code> clause. The up-down control positions itself adjacent to the buddy.</li>
-<li>When <code>lWrap</code> is set to <code>.T.</code>, clicking up at <code>nMax</code> wraps to <code>nMin</code> and vice versa.</li>
-<li>The <code>RANGE</code> clause sets both <code>nMin</code> and <code>nMax</code> simultaneously.</li>
-<li>TUpDown uses the Win32 <code>UDS_SETBUDDYINT</code> style to automatically update the buddy control's displayed value.</li>
+<li>El control buddy se establece automáticamente como la ventana especificada en la cláusula <code>BUDDY</code>. El control up-down se posiciona adyacente al buddy.</li>
+<li>Cuando <code>lWrap</code> está en <code>.T.</code>, hacer clic hacia arriba en <code>nMax</code> da la vuelta a <code>nMin</code> y viceversa.</li>
+<li>La cláusula <code>RANGE</code> establece a la vez <code>nMin</code> y <code>nMax</code>.</li>
+<li>TUpDown utiliza el estilo <code>UDS_SETBUDDYINT</code> de Win32 para actualizar automáticamente el valor mostrado del control buddy.</li>
 </ul>
 
 </main>

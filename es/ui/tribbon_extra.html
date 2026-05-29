@@ -11,7 +11,7 @@
 <nav id="sidebar">
 <div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a><span class="version">Versión 26.05</span></div>
 <div class="nav-section"><div class="nav-section-title">Primeros Pasos</div>
-<a class="nav-item" href="../../es/getting-started/overview.html">Overview</a>
+<a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a>
 <a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a>
 <a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a></div>
 <div class="nav-section"><div class="nav-section-title">Clases Base</div>
@@ -41,51 +41,51 @@
 <main id="content">
 
 <h1>TBackStage</h1>
-<p class="class-source">Source: <code>source/classes/tribbon.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fuente: <code>source/classes/tribbon.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
 
 <p>
-TBackStage implements the Office-style backstage view -- a full-panel menu replacing the ribbon when activated (typically by clicking the File tab). It displays a vertical list of selectable options and action buttons with icons, gradients, and hover effects.
+TBackStage implementa la vista backstage al estilo de Office -- un menú a pantalla completa que reemplaza al ribbon cuando se activa (normalmente al hacer clic en la pestaña Archivo). Muestra una lista vertical de opciones seleccionables y botones de acción con iconos, degradados y efectos al pasar el cursor.
 </p>
 
-<h2 id="data-bs">Key DATA Members</h2>
-<table><thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<h2 id="data-bs">Miembros DATA Clave</h2>
+<table><thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>aOptions</code></td><td>Array</td><td>Array of TBackStageOption objects</td></tr>
-<tr><td><code>nMainWidth</code></td><td>Numeric</td><td>Width of the options panel (default 155)</td></tr>
+<tr><td><code>aOptions</code></td><td>Array</td><td>Array de objetos TBackStageOption</td></tr>
+<tr><td><code>nMainWidth</code></td><td>Numérico</td><td>Ancho del panel de opciones (por defecto 155)</td></tr>
 </tbody></table>
 
-<h2 id="methods-bs">Methods</h2>
-<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
+<h2 id="methods-bs">Métodos</h2>
+<table><thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, nMainWidth )</code></td><td>Create a backstage panel</td></tr>
-<tr><td><code>AddOption( cCaption, ... )</code></td><td>Add a selectable option or button</td></tr>
-<tr><td><code>Paint()</code></td><td>Render the backstage</td></tr>
-<tr><td><code>GetSelectedOpt()</code></td><td>Return selected option index</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, nMainWidth )</code></td><td>Crear un panel backstage</td></tr>
+<tr><td><code>AddOption( cCaption, ... )</code></td><td>Añadir una opción seleccionable o botón</td></tr>
+<tr><td><code>Paint()</code></td><td>Renderizar el backstage</td></tr>
+<tr><td><code>GetSelectedOpt()</code></td><td>Devolver el índice de la opción seleccionada</td></tr>
 </tbody></table>
 
 <h1>TBackStageOption</h1>
-<p class="class-hierarchy">Standalone (used by TBackStage)</p>
-<table><thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<p class="class-hierarchy">Independiente (usada por TBackStage)</p>
+<table><thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>cCaption</code></td><td>Character</td><td>Display text</td></tr>
-<tr><td><code>cBmp</code></td><td>Character</td><td>Icon bitmap file</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Action on selection</td></tr>
-<tr><td><code>nType</code></td><td>Numeric</td><td>1 = selectable, 2 = button</td></tr>
+<tr><td><code>cCaption</code></td><td>Carácter</td><td>Texto a mostrar</td></tr>
+<tr><td><code>cBmp</code></td><td>Carácter</td><td>Archivo de bitmap del icono</td></tr>
+<tr><td><code>bAction</code></td><td>Bloque</td><td>Acción al seleccionar</td></tr>
+<tr><td><code>nType</code></td><td>Numérico</td><td>1 = seleccionable, 2 = botón</td></tr>
 </tbody></table>
 
 <h1>TQuickAccess</h1>
-<p class="class-source">Source: <code>source/classes/tribbon.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TRibbonBar</code></p>
-<p>Quick Access Toolbar sits above ribbon tabs with small icon buttons for frequent commands.</p>
-<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
+<p class="class-source">Fuente: <code>source/classes/tribbon.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TRibbonBar</code></p>
+<p>La barra de herramientas de acceso rápido (Quick Access Toolbar) se sitúa encima de las pestañas del ribbon con pequeños botones de icono para comandos frecuentes.</p>
+<table><thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>New( oRibbon, nLeft )</code></td><td>Create the toolbar</td></tr>
-<tr><td><code>AddButton( cBmp, bAction, cTooltip )</code></td><td>Add a button with bitmap and action</td></tr>
-<tr><td><code>DelButton( oButton )</code></td><td>Remove a button</td></tr>
+<tr><td><code>New( oRibbon, nLeft )</code></td><td>Crear la barra de herramientas</td></tr>
+<tr><td><code>AddButton( cBmp, bAction, cTooltip )</code></td><td>Añadir un botón con bitmap y acción</td></tr>
+<tr><td><code>DelButton( oButton )</code></td><td>Eliminar un botón</td></tr>
 </tbody></table>
 
-<h2 id="example">Example: Backstage with Pages</h2>
+<h2 id="example">Ejemplo: Backstage con Páginas</h2>
 <pre><code class="language-harbour">#include "FiveWin.ch"
 function Main()
    local oWnd, oRBar, oBack
@@ -99,11 +99,11 @@ function Main()
    ACTIVATE WINDOW oWnd CENTERED
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 <ul>
-<li>TBackStage is created independently and attached via <code>oRBar:SetBackStage()</code>.</li>
-<li>Option types: <code>BCKTYPE_SELECT</code> (1) for page selection, <code>BCKTYPE_BUTTON</code> (2) for actions.</li>
-<li>TQuickAccess is created via <code>oRBar:QuickAccess()</code> and populated with <code>AddButton()</code>.</li>
+<li>TBackStage se crea de forma independiente y se asocia mediante <code>oRBar:SetBackStage()</code>.</li>
+<li>Tipos de opción: <code>BCKTYPE_SELECT</code> (1) para selección de página, <code>BCKTYPE_BUTTON</code> (2) para acciones.</li>
+<li>TQuickAccess se crea mediante <code>oRBar:QuickAccess()</code> y se rellena con <code>AddButton()</code>.</li>
 </ul>
 
 </main>

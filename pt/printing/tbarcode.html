@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Barcode Generation (FWER_BarCode) - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Geração de Códigos de Barras (FWER_BarCode) - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
 <body>
 <nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Versão 26.05</span></div>
 <div class="nav-section"><div class="nav-section-title">Primeiros Passos</div><a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a><a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a><a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a><a class="nav-item" href="../../pt/getting-started/samples-guide.html">Exemplos e Rota de Aprendizado</a></div>
@@ -11,92 +11,92 @@
 </nav>
 <main id="content">
 
-<h1>Barcode Generation (FWER_BarCode)</h1>
-<p class="class-source">Source: <code>source/classes/fwbarcod.prg</code>, <code>source/function/fwzebra.prg</code></p>
+<h1>Geração de Códigos de Barras (FWER_BarCode)</h1>
+<p class="class-source">Fonte: <code>source/classes/fwbarcod.prg</code>, <code>source/function/fwzebra.prg</code></p>
 
 <p>
-FWER_BarCode is FiveWin's built-in barcode rendering engine. It supports 17 barcode symbologies
-through a native GDI engine, with optional fallback to the <code>hbzebra</code> library for 2D codes
-(QR, DataMatrix, PDF417). Barcodes can be rendered on windows, dialogs, printers, and PDF output.
+FWER_BarCode é o motor de renderização de códigos de barras integrado do FiveWin. Ele suporta 17 simbologias
+de códigos de barras através de um motor GDI nativo, com fallback opcional para a biblioteca <code>hbzebra</code> para códigos 2D
+(QR, DataMatrix, PDF417). Os códigos de barras podem ser renderizados em janelas, diálogos, impressoras e saída em PDF.
 </p>
 
-<h2 id="symbology">Symbology Referência</h2>
+<h2 id="symbology">Referência de Simbologias</h2>
 
 <table>
-<thead><tr><th>nBCodeType</th><th>Symbology</th><th>Description</th></tr></thead>
+<thead><tr><th>nBCodeType</th><th>Simbologia</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td>1</td><td>Code 39</td><td>Standard Code 39 (3-of-9) alphanumeric</td></tr>
-<tr><td>2</td><td>Code 39 + check</td><td>Code 39 with mandatory check digit</td></tr>
-<tr><td>3</td><td>Code 128 auto</td><td>Code 128 with automatic mode selection (A/B/C)</td></tr>
-<tr><td>4</td><td>Code 128 A</td><td>Code 128 mode A (uppercase, control chars)</td></tr>
-<tr><td>5</td><td>Code 128 B</td><td>Code 128 mode B (full ASCII)</td></tr>
-<tr><td>6</td><td>Code 128 C</td><td>Code 128 mode C (numeric pairs, highest density)</td></tr>
-<tr><td>7</td><td>EAN-8</td><td>EAN-8 (8-digit product code)</td></tr>
-<tr><td>8</td><td>EAN-13</td><td>EAN-13 (13-digit product code, most common retail)</td></tr>
-<tr><td>9</td><td>UPC-A</td><td>UPC-A (12-digit US product code)</td></tr>
-<tr><td>10</td><td>Codabar</td><td>Codabar (libraries, blood banks, FedEx)</td></tr>
-<tr><td>11</td><td>Supplement 5</td><td>5-digit supplement for EAN/UPC</td></tr>
-<tr><td>12</td><td>Industrial 2 of 5</td><td>Industrial 2 of 5 numeric</td></tr>
-<tr><td>13</td><td>Industrial 2 of 5 + check</td><td>Industrial 2 of 5 with check digit</td></tr>
-<tr><td>14</td><td>Interleaved 2 of 5</td><td>Interleaved 2 of 5 (high-density numeric)</td></tr>
-<tr><td>15</td><td>Interleaved 2 of 5 + check</td><td>Interleaved 2 of 5 with check digit</td></tr>
-<tr><td>16</td><td>Matrix 2 of 5</td><td>Matrix 2 of 5 numeric</td></tr>
-<tr><td>17</td><td>Matrix 2 of 5 + check</td><td>Matrix 2 of 5 with check digit</td></tr>
+<tr><td>1</td><td>Code 39</td><td>Code 39 (3-de-9) alfanumérico padrão</td></tr>
+<tr><td>2</td><td>Code 39 + verificação</td><td>Code 39 com dígito verificador obrigatório</td></tr>
+<tr><td>3</td><td>Code 128 auto</td><td>Code 128 com seleção automática de modo (A/B/C)</td></tr>
+<tr><td>4</td><td>Code 128 A</td><td>Code 128 modo A (maiúsculas, caracteres de controle)</td></tr>
+<tr><td>5</td><td>Code 128 B</td><td>Code 128 modo B (ASCII completo)</td></tr>
+<tr><td>6</td><td>Code 128 C</td><td>Code 128 modo C (pares numéricos, maior densidade)</td></tr>
+<tr><td>7</td><td>EAN-8</td><td>EAN-8 (código de produto de 8 dígitos)</td></tr>
+<tr><td>8</td><td>EAN-13</td><td>EAN-13 (código de produto de 13 dígitos, o mais comum no varejo)</td></tr>
+<tr><td>9</td><td>UPC-A</td><td>UPC-A (código de produto dos EUA de 12 dígitos)</td></tr>
+<tr><td>10</td><td>Codabar</td><td>Codabar (bibliotecas, bancos de sangue, FedEx)</td></tr>
+<tr><td>11</td><td>Supplement 5</td><td>Suplemento de 5 dígitos para EAN/UPC</td></tr>
+<tr><td>12</td><td>Industrial 2 of 5</td><td>Industrial 2 de 5 numérico</td></tr>
+<tr><td>13</td><td>Industrial 2 of 5 + verificação</td><td>Industrial 2 de 5 com dígito verificador</td></tr>
+<tr><td>14</td><td>Interleaved 2 of 5</td><td>Interleaved 2 de 5 (numérico de alta densidade)</td></tr>
+<tr><td>15</td><td>Interleaved 2 of 5 + verificação</td><td>Interleaved 2 de 5 com dígito verificador</td></tr>
+<tr><td>16</td><td>Matrix 2 of 5</td><td>Matrix 2 de 5 numérico</td></tr>
+<tr><td>17</td><td>Matrix 2 of 5 + verificação</td><td>Matrix 2 de 5 com dígito verificador</td></tr>
 </tbody>
 </table>
 
-<h2 id="data-members">DATA Members</h2>
+<h2 id="data-members">Membros DATA</h2>
 
 <table>
-<thead><tr><th>DATA</th><th>Default</th><th>Description</th></tr></thead>
+<thead><tr><th>DATA</th><th>Padrão</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>hDC</code></td><td>--</td><td>Device context handle (window, dialog, printer)</td></tr>
-<tr><td><code>cText</code></td><td><code>""</code></td><td>Barcode text to encode</td></tr>
-<tr><td><code>nTop, nLeft</code></td><td>--</td><td>Position coordinates</td></tr>
-<tr><td><code>nWidth, nHeight</code></td><td>200, 20</td><td>Barcode dimensions</td></tr>
-<tr><td><code>nColText</code></td><td>0 (black)</td><td>Bar (pin) color</td></tr>
-<tr><td><code>nColPane</code></td><td>RGB(255,255,255)</td><td>Background color</td></tr>
-<tr><td><code>lHorizontal</code></td><td>.T.</td><td>Horizontal (.T.) or vertical (.F.) orientation</td></tr>
-<tr><td><code>lTransparent</code></td><td>.F.</td><td>Transparent background</td></tr>
-<tr><td><code>nPinWidth</code></td><td>--</td><td>Individual bar (pin) width in pixels</td></tr>
+<tr><td><code>hDC</code></td><td>--</td><td>Handle do contexto de dispositivo (janela, diálogo, impressora)</td></tr>
+<tr><td><code>cText</code></td><td><code>""</code></td><td>Texto do código de barras a codificar</td></tr>
+<tr><td><code>nTop, nLeft</code></td><td>--</td><td>Coordenadas de posição</td></tr>
+<tr><td><code>nWidth, nHeight</code></td><td>200, 20</td><td>Dimensões do código de barras</td></tr>
+<tr><td><code>nColText</code></td><td>0 (preto)</td><td>Cor da barra (pino)</td></tr>
+<tr><td><code>nColPane</code></td><td>RGB(255,255,255)</td><td>Cor de fundo</td></tr>
+<tr><td><code>lHorizontal</code></td><td>.T.</td><td>Orientação horizontal (.T.) ou vertical (.F.)</td></tr>
+<tr><td><code>lTransparent</code></td><td>.F.</td><td>Fundo transparente</td></tr>
+<tr><td><code>nPinWidth</code></td><td>--</td><td>Largura individual da barra (pino) em pixels</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>New( hDC, cText, nTop, nLeft, nW, nH, nType, nClrT, nClrP, lHorz, lTransp, nPinW, nFlags, lPrinter )</code></td><td>Create a barcode object. Accepts numeric type (1-17) or string alias ("EAN13", "128", "39", etc.)</td></tr>
-<tr><td><code>ShowBarcode()</code></td><td>Render the barcode to the device context using the configured parameters</td></tr>
-<tr><td><code>CreateBarcode( cCode )</code></td><td>Generate the bar pattern string for a given code</td></tr>
-<tr><td><code>CheckDigit()</code></td><td>Compute and append the appropriate check digit for the current symbology</td></tr>
+<tr><td><code>New( hDC, cText, nTop, nLeft, nW, nH, nType, nClrT, nClrP, lHorz, lTransp, nPinW, nFlags, lPrinter )</code></td><td>Cria um objeto de código de barras. Aceita o tipo numérico (1-17) ou um alias em string ("EAN13", "128", "39", etc.)</td></tr>
+<tr><td><code>ShowBarcode()</code></td><td>Renderiza o código de barras no contexto de dispositivo usando os parâmetros configurados</td></tr>
+<tr><td><code>CreateBarcode( cCode )</code></td><td>Gera a string de padrão de barras para um determinado código</td></tr>
+<tr><td><code>CheckDigit()</code></td><td>Calcula e anexa o dígito verificador apropriado para a simbologia atual</td></tr>
 </tbody>
 </table>
 
-<h2 id="free-functions">Free Funções</h2>
+<h2 id="free-functions">Funções Livres</h2>
 
 <h3>FW_SayBarCode()</h3>
-<p>Direct barcode rendering without creating an object instance:</p>
+<p>Renderização direta de código de barras sem criar uma instância de objeto:</p>
 <pre><code class="language-harbour">FW_SayBarCode( oWnd, cText, aRect, cType, nClrT, nClrB, lVert, lTransp )</code></pre>
-<p>Parameters: <code>oWnd</code> (window/dialog/printer), <code>cText</code> (data to encode), <code>aRect</code> (array { nTop, nLeft, nBottom, nRight }), <code>cType</code> (symbology string), <code>nClrT</code>/<code>nClrB</code> (fore/back colors), <code>lVert</code> (vertical orientation), <code>lTransp</code> (transparent background).</p>
+<p>Parâmetros: <code>oWnd</code> (janela/diálogo/impressora), <code>cText</code> (dados a codificar), <code>aRect</code> (array { nTop, nLeft, nBottom, nRight }), <code>cType</code> (string da simbologia), <code>nClrT</code>/<code>nClrB</code> (cores de frente/fundo), <code>lVert</code> (orientação vertical), <code>lTransp</code> (fundo transparente).</p>
 
 <h3>FW_BarCodeBmp()</h3>
-<p>Generates a standalone bitmap handle of the barcode for use in reports or image controls.</p>
+<p>Gera um handle de bitmap independente do código de barras para uso em relatórios ou controles de imagem.</p>
 
-<h2 id="example">Example: EAN-13 on Printer</h2>
+<h2 id="example">Exemplo: EAN-13 na Impressora</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
 FUNCTION PrintBarcode()
-   LOCAL oPrn, nRow := 2.0  // cm from top
+   LOCAL oPrn, nRow := 2.0  // cm a partir do topo
 
    PRINT oPrn NAME "Barcode Test"
    PAGE
       oPrn:Say( nRow, 1.0, "Product Barcode:" )
       nRow += 0.8
 
-      // Method 1: Using FWER_BarCode directly
+      // Metodo 1: Usando FWER_BarCode diretamente
       FWER_BarCode():New( oPrn:hDC, "5901234567890", ;
                           oPrn:CmToPix( nRow ),        // nTop
                           oPrn:CmToPix( 1.0 ),         // nLeft
@@ -104,7 +104,7 @@ FUNCTION PrintBarcode()
                           oPrn:CmToPix( 2.5 ),         // nHeight
                           8, 0, 16777215, .T., .F. ):ShowBarcode()
 
-      // Method 2: Using FW_SayBarCode convenience function
+      // Metodo 2: Usando a funcao de conveniencia FW_SayBarCode
       nRow += 3.0
       FW_SayBarCode( oPrn, "5901234567890", ;
                      { oPrn:CmToPix( nRow ), oPrn:CmToPix( 1.0 ), ;
@@ -114,12 +114,12 @@ FUNCTION PrintBarcode()
    ENDPRINT
 RETURN NIL</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 <ul>
-<li>String type names are case-insensitive and normalized by removing <code>"CODE"</code> prefix, spaces, underscores, and hyphens. Example: <code>"CODE128"</code>, <code>"code 128"</code>, and <code>"128"</code> all resolve to Code 128 auto.</li>
-<li>When the <code>hbzebra</code> library is linked, 2D symbologies (QR, DataMatrix, PDF417) are automatically routed through the Zebra engine, which also supports direct PDF output via <code>TPDF</code> object detection.</li>
-<li>Use <code>FWER_BarCode:lUseZebraLib := .T.</code> at class level to force the Zebra engine for all supported symbologies.</li>
-<li>Printer output uses GDI <code>FillRect</code> for bars and <code>FillRectEx</code> for background, ensuring correct scaling on high-DPI devices.</li>
+<li>Os nomes de tipo em string não diferenciam maiúsculas de minúsculas e são normalizados removendo o prefixo <code>"CODE"</code>, espaços, sublinhados e hífens. Exemplo: <code>"CODE128"</code>, <code>"code 128"</code> e <code>"128"</code> resolvem todos para Code 128 auto.</li>
+<li>Quando a biblioteca <code>hbzebra</code> está vinculada, as simbologias 2D (QR, DataMatrix, PDF417) são automaticamente roteadas pelo motor Zebra, que também suporta saída direta em PDF via detecção do objeto <code>TPDF</code>.</li>
+<li>Use <code>FWER_BarCode:lUseZebraLib := .T.</code> no nível da classe para forçar o motor Zebra para todas as simbologias suportadas.</li>
+<li>A saída para impressora usa GDI <code>FillRect</code> para as barras e <code>FillRectEx</code> para o fundo, garantindo o dimensionamento correto em dispositivos de alta DPI.</li>
 </ul>
 
 </main>

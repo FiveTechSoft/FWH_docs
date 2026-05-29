@@ -115,38 +115,38 @@
 <main id="content">
 
 <h1>TBackup + TRestore</h1>
-<p class="class-source">Sources: <code>source/classes/tbackup.prg</code>, <code>source/classes/trestore.prg</code></p>
-<p class="class-hierarchy">Standalone classes</p>
+<p class="class-source">Fontes: <code>source/classes/tbackup.prg</code>, <code>source/classes/trestore.prg</code></p>
+<p class="class-hierarchy">Classes independentes</p>
 
 <p>
-TBackup and TRestore provide data backup and restore functionality supporting three storage types: normal file copy, ZIP compression, and Windows Backup (NTBackup). TBackup handles the backup creation while TRestore manages the restoration process including system restore points.
+TBackup e TRestore fornecem funcionalidade de backup e restauração de dados, suportando três tipos de armazenamento: cópia normal de arquivos, compressão ZIP e Windows Backup (NTBackup). TBackup cuida da criação do backup enquanto TRestore gerencia o processo de restauração, incluindo pontos de restauração do sistema.
 </p>
 
 <h2 id="tbackup-data">TBackup Principais Membros DATA</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nType</code></td><td>Numeric</td><td>Backup type: BK_NORMAL (file copy), BK_ZIP (compressed), BK_WIN (Windows Backup)</td></tr>
-<tr><td><code>cSource</code></td><td>Character</td><td>Source path or file specification</td></tr>
-<tr><td><code>cTargetDir</code></td><td>Character</td><td>Target directory for the backup</td></tr>
-<tr><td><code>aFiles</code></td><td>Array</td><td>Array of file names to include</td></tr>
+<tr><td><code>nType</code></td><td>Numérico</td><td>Tipo de backup: BK_NORMAL (cópia de arquivo), BK_ZIP (comprimido), BK_WIN (Windows Backup)</td></tr>
+<tr><td><code>cSource</code></td><td>Caractere</td><td>Caminho de origem ou especificação de arquivo</td></tr>
+<tr><td><code>cTargetDir</code></td><td>Caractere</td><td>Diretório de destino do backup</td></tr>
+<tr><td><code>aFiles</code></td><td>Array</td><td>Array de nomes de arquivos a incluir</td></tr>
 </tbody>
 </table>
 
-<h2 id="tbackup-methods">TBackup Methods</h2>
+<h2 id="tbackup-methods">Métodos de TBackup</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nType, cSrc, cDst, nLang, cZip, aFiles )</code></td><td>Create a new backup object with type, source, target, language, ZIP name, and file list</td></tr>
-<tr><td><code>Execute()</code></td><td>Execute the backup operation according to the selected type</td></tr>
-<tr><td><code>MakeZip()</code></td><td>Create a ZIP-format backup archive</td></tr>
-<tr><td><code>ExecuteWinBackup()</code></td><td>Execute Windows NTBackup operation</td></tr>
+<tr><td><code>New( nType, cSrc, cDst, nLang, cZip, aFiles )</code></td><td>Cria um novo objeto de backup com tipo, origem, destino, idioma, nome do ZIP e lista de arquivos</td></tr>
+<tr><td><code>Execute()</code></td><td>Executa a operação de backup conforme o tipo selecionado</td></tr>
+<tr><td><code>MakeZip()</code></td><td>Cria um arquivo de backup no formato ZIP</td></tr>
+<tr><td><code>ExecuteWinBackup()</code></td><td>Executa a operação do Windows NTBackup</td></tr>
 </tbody>
 </table>
 
@@ -154,26 +154,26 @@ TBackup and TRestore provide data backup and restore functionality supporting th
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nType</code></td><td>Numeric</td><td>Restore type: RES_NORMAL, RES_ZIP, RES_WIN</td></tr>
-<tr><td><code>lOverwrite</code></td><td>Logical</td><td>Overwrite existing files during restore</td></tr>
+<tr><td><code>nType</code></td><td>Numérico</td><td>Tipo de restauração: RES_NORMAL, RES_ZIP, RES_WIN</td></tr>
+<tr><td><code>lOverwrite</code></td><td>Lógico</td><td>Sobrescrever arquivos existentes durante a restauração</td></tr>
 </tbody>
 </table>
 
-<h2 id="trestore-methods">TRestore Methods</h2>
+<h2 id="trestore-methods">Métodos de TRestore</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nType, cSrc, cDst, nLang, aFiles, lOver )</code></td><td>Create a new restore object with type, paths, language, file list, and overwrite flag</td></tr>
-<tr><td><code>Execute()</code></td><td>Execute the restore operation</td></tr>
-<tr><td><code>MakeCopy()</code></td><td>Restore files by direct file copy</td></tr>
-<tr><td><code>UnZipData()</code></td><td>Extract files from a ZIP backup archive</td></tr>
-<tr><td><code>CreateRestorePoint( cDesc )</code></td><td>Create a Windows System Restore point with the given description</td></tr>
+<tr><td><code>New( nType, cSrc, cDst, nLang, aFiles, lOver )</code></td><td>Cria um novo objeto de restauração com tipo, caminhos, idioma, lista de arquivos e flag de sobrescrita</td></tr>
+<tr><td><code>Execute()</code></td><td>Executa a operação de restauração</td></tr>
+<tr><td><code>MakeCopy()</code></td><td>Restaura arquivos por cópia direta de arquivo</td></tr>
+<tr><td><code>UnZipData()</code></td><td>Extrai arquivos de um arquivo de backup ZIP</td></tr>
+<tr><td><code>CreateRestorePoint( cDesc )</code></td><td>Cria um ponto de Restauração do Sistema do Windows com a descrição fornecida</td></tr>
 </tbody>
 </table>
 
@@ -182,7 +182,7 @@ TBackup and TRestore provide data backup and restore functionality supporting th
 <pre><code class="language-harbour">DEFINE BACKUP oZip TYPE BK_ZIP ;
    SOURCE cSrc TARGET cDst ZIPNAME cZip FILES aFiles</code></pre>
 
-<h2 id="example">Example: ZIP Backup and Restore</h2>
+<h2 id="example">Exemplo: Backup e Restauração ZIP</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -210,14 +210,14 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>BK_NORMAL performs a simple file copy from source to target directory.</li>
-<li>BK_ZIP compresses the source files into a single ZIP archive using the specified ZIP file name.</li>
-<li>BK_WIN delegates to the Windows NTBackup utility for system-level backups.</li>
-<li>Use <code>CreateRestorePoint()</code> before destructive operations to enable system rollback.</li>
-<li>The <code>aFiles</code> array can hold individual file names or wildcard specifications.</li>
+<li>BK_NORMAL realiza uma cópia simples de arquivos da origem para o diretório de destino.</li>
+<li>BK_ZIP comprime os arquivos de origem em um único arquivo ZIP usando o nome de arquivo ZIP especificado.</li>
+<li>BK_WIN delega ao utilitário Windows NTBackup para backups em nível de sistema.</li>
+<li>Use <code>CreateRestorePoint()</code> antes de operações destrutivas para permitir a reversão do sistema.</li>
+<li>O array <code>aFiles</code> pode conter nomes de arquivos individuais ou especificações com curingas.</li>
 </ul>
 
 </main>

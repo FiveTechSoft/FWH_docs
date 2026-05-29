@@ -101,10 +101,10 @@
 
 <h1>TBtnClr / TPickerColor</h1>
 <p class="class-source">Fonte: <code>source/classes/tbtnclr.prg</code></p>
-<p class="class-hierarchy">TBtnClr inherits from: <code>TControl</code>. TPickerColor is a standalone helper class.</p>
+<p class="class-hierarchy">TBtnClr herda de: <code>TControl</code>. TPickerColor é uma classe auxiliar autônoma.</p>
 
 <p>
-TBtnClr is a color-picker button control that displays a selected color swatch and optionally a drop-down arrow bitmap. Clicking the button triggers an action (typically showing the TPickerColor dialog). TPickerColor provides a themed color selection dialog with a grid of standard colors, a row of base/theme colors, and a "More Colors" option using the system ChooseColor dialog.
+TBtnClr é um controle de botão seletor de cor que exibe uma amostra da cor selecionada e, opcionalmente, um bitmap de seta suspensa. Clicar no botão dispara uma ação (normalmente exibindo o diálogo TPickerColor). TPickerColor fornece um diálogo de seleção de cor com tema, com uma grade de cores padrão, uma linha de cores base/de tema e uma opção "Mais Cores" usando o diálogo ChooseColor do sistema.
 </p>
 
 <h2 id="data">Principais Membros DATA (TBtnClr)</h2>
@@ -114,13 +114,13 @@ TBtnClr is a color-picker button control that displays a selected color swatch a
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nColorSel</code></td><td>Numeric</td><td>Currently selected color (RGB)</td></tr>
-<tr><td><code>nTypeClr</code></td><td>Numeric</td><td>Swatch display mode: 1=large, 2=small</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on click</td></tr>
-<tr><td><code>lDrawBorder</code></td><td>Logical</td><td>Draw a custom border around the button</td></tr>
-<tr><td><code>nColorBorder</code></td><td>Numeric</td><td>Border color</td></tr>
-<tr><td><code>hBmpPop</code></td><td>Handle</td><td>Optional drop-down arrow bitmap</td></tr>
-<tr><td><code>cMsg</code></td><td>Character</td><td>Message bar prompt text</td></tr>
+<tr><td><code>nColorSel</code></td><td>Numeric</td><td>Cor atualmente selecionada (RGB)</td></tr>
+<tr><td><code>nTypeClr</code></td><td>Numeric</td><td>Modo de exibição da amostra: 1=grande, 2=pequena</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Bloco de código executado ao clicar</td></tr>
+<tr><td><code>lDrawBorder</code></td><td>Logical</td><td>Desenha uma borda personalizada ao redor do botão</td></tr>
+<tr><td><code>nColorBorder</code></td><td>Numeric</td><td>Cor da borda</td></tr>
+<tr><td><code>hBmpPop</code></td><td>Handle</td><td>Bitmap opcional de seta suspensa</td></tr>
+<tr><td><code>cMsg</code></td><td>Character</td><td>Texto de mensagem da barra de status</td></tr>
 </tbody>
 </table>
 
@@ -131,11 +131,11 @@ TBtnClr is a color-picker button control that displays a selected color swatch a
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, nWidth, nHeight, cBtnPop, nColorSel, nTypeClr, bAction, bWhenAct, cToolTip, lDesign, lDrawBorder, nClrText, nClrPane, nColorBorder )</code></td><td>Create a color button control</td></tr>
-<tr><td><code>SetColor( nClr )</code></td><td>Change the current selected color</td></tr>
-<tr><td><code>Click()</code></td><td>Trigger the button action</td></tr>
-<tr><td><code>Paint()</code></td><td>Render the button with theme or classic style, color swatch, and drop-down bitmap</td></tr>
-<tr><td><code>LoadBmp( cBitmap )</code></td><td>Load the popup arrow bitmap from file or resource</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, nWidth, nHeight, cBtnPop, nColorSel, nTypeClr, bAction, bWhenAct, cToolTip, lDesign, lDrawBorder, nClrText, nClrPane, nColorBorder )</code></td><td>Cria um controle de botão de cor</td></tr>
+<tr><td><code>SetColor( nClr )</code></td><td>Altera a cor selecionada atual</td></tr>
+<tr><td><code>Click()</code></td><td>Dispara a ação do botão</td></tr>
+<tr><td><code>Paint()</code></td><td>Renderiza o botão com estilo de tema ou clássico, amostra de cor e bitmap suspenso</td></tr>
+<tr><td><code>LoadBmp( cBitmap )</code></td><td>Carrega o bitmap de seta do popup a partir de arquivo ou recurso</td></tr>
 </tbody>
 </table>
 
@@ -146,15 +146,15 @@ TBtnClr is a color-picker button control that displays a selected color swatch a
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nColor, oControl, cTitle1, cTitle2, cTitle3 )</code></td><td>Create the picker dialog with customizable section titles</td></tr>
-<tr><td><code>Dialog( nColor )</code></td><td>Build the dialog with color grid, base colors, and More Colors button</td></tr>
-<tr><td><code>Activate()</code></td><td>Show the dialog modally; returns .T. if a color was chosen</td></tr>
+<tr><td><code>New( nColor, oControl, cTitle1, cTitle2, cTitle3 )</code></td><td>Cria o diálogo seletor com títulos de seção personalizáveis</td></tr>
+<tr><td><code>Dialog( nColor )</code></td><td>Constrói o diálogo com grade de cores, cores base e botão Mais Cores</td></tr>
+<tr><td><code>Activate()</code></td><td>Exibe o diálogo de forma modal; retorna .T. se uma cor foi escolhida</td></tr>
 </tbody>
 </table>
 
-<p>Free function <code>ChooseColor( nInitClr )</code> opens the standard Windows color picker and returns the selected RGB color.</p>
+<p>A função livre <code>ChooseColor( nInitClr )</code> abre o seletor de cores padrão do Windows e retorna a cor RGB selecionada.</p>
 
-<h2 id="example">Example: Color Button</h2>
+<h2 id="example">Exemplo: Botão de Cor</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -179,10 +179,10 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>TBtnClr supports Windows themes via <code>C5_DrawThemeBackground</code> with hover and pressed states.</li>
-<li>The color swatch is rendered as a filled rectangle inside the button using <code>nColorSel</code>.</li>
-<li><code>nTypeClr</code> controls swatch positioning: 1 fills the button face, 2 leaves room for the popup arrow.</li>
-<li>TPickerColor displays a 6x10 grid of standard colors plus a row of 10 theme/base colors. The "More Colors" button invokes the system <code>ChooseColor</code> dialog.</li>
+<li>TBtnClr suporta temas do Windows via <code>C5_DrawThemeBackground</code> com estados de hover e pressionado.</li>
+<li>A amostra de cor é renderizada como um retângulo preenchido dentro do botão usando <code>nColorSel</code>.</li>
+<li><code>nTypeClr</code> controla o posicionamento da amostra: 1 preenche a face do botão, 2 deixa espaço para a seta do popup.</li>
+<li>TPickerColor exibe uma grade 6x10 de cores padrão mais uma linha de 10 cores de tema/base. O botão "Mais Cores" invoca o diálogo <code>ChooseColor</code> do sistema.</li>
 </ul>
 
 </main>

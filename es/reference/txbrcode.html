@@ -127,7 +127,7 @@
 <p class="class-hierarchy">Hereda de: <code>TXBrowse</code> + <code>TXBrColCode</code></p>
 
 <p>
-TXBrCode is a code-generation tool that produces FiveWin PRG source code from a live TXBrowse configuration. It inspects the browse definition, including columns, data sources, headers, footers, and button bars, and outputs ready-to-compile Harbour code in multiple coding styles.
+TXBrCode es una herramienta de generación de código que produce código fuente PRG de FiveWin a partir de una configuración TXBrowse en vivo. Inspecciona la definición del browse, incluyendo columnas, fuentes de datos, encabezados, pies y barras de botones, y genera código Harbour listo para compilar en múltiples estilos de codificación.
 </p>
 
 <h2 id="methods">Métodos Principales</h2>
@@ -137,19 +137,19 @@ TXBrCode is a code-generation tool that produces FiveWin PRG source code from a 
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>PrgCode()</code></td><td>Return an array of 4 strings representing the generated code segments: (1) main window/browse setup, (2) column definitions, (3) button bar, (4) activation code</td></tr>
-<tr><td><code>PrgCodeMain()</code></td><td>Generate the main window and browse definition code block</td></tr>
-<tr><td><code>PrgCodeOpenData()</code></td><td>Generate the data source opening code block</td></tr>
-<tr><td><code>PrgCodeBtnBar()</code></td><td>Generate the button bar definition code block</td></tr>
-<tr><td><code>BrwDataCode( lOops )</code></td><td>Generate browse column definitions with optional error-handling wrapper</td></tr>
-<tr><td><code>RptCode()</code></td><td>Generate a report definition based on the browse layout</td></tr>
+<tr><td><code>PrgCode()</code></td><td>Devuelve un array de 4 cadenas que representan los segmentos de código generados: (1) configuración de la ventana/browse principal, (2) definiciones de columnas, (3) barra de botones, (4) código de activación</td></tr>
+<tr><td><code>PrgCodeMain()</code></td><td>Genera el bloque de código de la ventana principal y la definición del browse</td></tr>
+<tr><td><code>PrgCodeOpenData()</code></td><td>Genera el bloque de código de apertura de la fuente de datos</td></tr>
+<tr><td><code>PrgCodeBtnBar()</code></td><td>Genera el bloque de código de la definición de la barra de botones</td></tr>
+<tr><td><code>BrwDataCode( lOops )</code></td><td>Genera las definiciones de columnas del browse con un envoltorio opcional de manejo de errores</td></tr>
+<tr><td><code>RptCode()</code></td><td>Genera una definición de informe basada en la disposición del browse</td></tr>
 </tbody>
 </table>
 
 <h2 id="txbrcolcode">TXBrColCode</h2>
 
 <p>
-TXBrColCode extends column code generation with multiple style options and the ability to reuse column definitions across different output formats.
+TXBrColCode amplía la generación de código de columnas con múltiples opciones de estilo y la capacidad de reutilizar definiciones de columnas en distintos formatos de salida.
 </p>
 
 <table>
@@ -157,11 +157,11 @@ TXBrColCode extends column code generation with multiple style options and the a
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>PrgCode( nStyle, lSameCols )</code></td><td>Return a character string with column PRG code in the specified style (1=command syntax, 2=WITH_OBJECT syntax, 3=OOP syntax). Set <code>lSameCols</code> to reuse column definitions from a previous call</td></tr>
+<tr><td><code>PrgCode( nStyle, lSameCols )</code></td><td>Devuelve una cadena de caracteres con el código PRG de columnas en el estilo especificado (1=sintaxis de comando, 2=sintaxis WITH_OBJECT, 3=sintaxis OOP). Establezca <code>lSameCols</code> para reutilizar las definiciones de columnas de una llamada anterior</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Generate Browse PRG</h2>
+<h2 id="example">Ejemplo: Generar el PRG del Browse</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -170,19 +170,19 @@ function Main()
    local oBrw, oCode
    local aCode
 
-   // ... browse definition ...
+   // ... definición del browse ...
 
-   oCode := TXBrCode()      // Same object as oBrw
-   // or create an independent code generator
+   oCode := TXBrCode()      // Mismo objeto que oBrw
+   // o crear un generador de código independiente
 
    aCode := oCode:PrgCode()
 
-   // aCode[1] = window/browse setup
-   // aCode[2] = column definitions
-   // aCode[3] = button bar
-   // aCode[4] = activation
+   // aCode[1] = configuración de la ventana/browse
+   // aCode[2] = definiciones de columnas
+   // aCode[3] = barra de botones
+   // aCode[4] = activación
 
-   // Preview the generated code
+   // Previsualizar el código generado
    MemoEdit( aCode[1] + aCode[2] + aCode[3] + aCode[4] )
 
 return nil</code></pre>
@@ -190,10 +190,10 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>TXBrCode shares the same object instance as the browse. After configuring the browse interactively, call <code>PrgCode()</code> to capture its structure as source code.</li>
-<li>The <code>BrwDataCode()</code> method is useful for generating column code that includes error handling around data access (<code>lOops</code> parameter).</li>
-<li>TXBrColCode provides three output styles: command-style (<code>@ ... XBROWSE ...</code>), WITH_OBJECT-style, and pure OOP-style for maximum flexibility.</li>
-<li>Generated code includes all column headers, data blocks, widths, footers, and picture clauses as configured in the browse.</li>
+<li>TXBrCode comparte la misma instancia de objeto que el browse. Tras configurar el browse de forma interactiva, llame a <code>PrgCode()</code> para capturar su estructura como código fuente.</li>
+<li>El método <code>BrwDataCode()</code> es útil para generar código de columnas que incluye el manejo de errores en torno al acceso a datos (parámetro <code>lOops</code>).</li>
+<li>TXBrColCode ofrece tres estilos de salida: estilo de comando (<code>@ ... XBROWSE ...</code>), estilo WITH_OBJECT y estilo OOP puro para una máxima flexibilidad.</li>
+<li>El código generado incluye todos los encabezados de columna, bloques de datos, anchos, pies y cláusulas picture tal como están configurados en el browse.</li>
 </ul>
 
 </main>

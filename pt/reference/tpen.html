@@ -88,13 +88,13 @@
 
 <h1>TPen</h1>
 <p class="class-source">Fonte: <code>source/classes/pen.prg</code></p>
-<p class="class-hierarchy">Classe independente class (no inheritance)</p>
+<p class="class-hierarchy">Classe independente (sem herança)</p>
 
 <p>
-TPen encapsulates a Windows GDI pen object for drawing lines, borders, and outlines.
-Pens define the color, width, and style (solid, dashed, dotted, etc.) of lines drawn
-on any device context. TPen is used internally by many FiveWin controls and is also
-available for direct use in custom painting routines.
+TPen encapsula um objeto pen (caneta) GDI do Windows para desenhar linhas, bordas e contornos.
+As pens definem a cor, a largura e o estilo (sólido, tracejado, pontilhado, etc.) das linhas desenhadas
+em qualquer contexto de dispositivo. TPen é usada internamente por muitos controles do FiveWin e também
+está disponível para uso direto em rotinas de pintura personalizadas.
 </p>
 
 <h2 id="data">Principais Membros DATA</h2>
@@ -104,11 +104,11 @@ available for direct use in custom painting routines.
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hPen</code></td><td>Numeric (Handle)</td><td>Windows GDI pen handle</td></tr>
-<tr><td><code>nStyle</code></td><td>Numeric</td><td>Pen style (PS_SOLID, PS_DASH, PS_DOT, PS_DASHDOT, etc.)</td></tr>
-<tr><td><code>nWidth</code></td><td>Numeric</td><td>Pen width in logical units (pixels)</td></tr>
-<tr><td><code>nColor</code></td><td>Numeric</td><td>Pen color as RGB value</td></tr>
-<tr><td><code>oDevice</code></td><td>Object</td><td>Optional device context owner for DPI-aware width scaling</td></tr>
+<tr><td><code>hPen</code></td><td>Numérico (Handle)</td><td>Handle da pen GDI do Windows</td></tr>
+<tr><td><code>nStyle</code></td><td>Numérico</td><td>Estilo da pen (PS_SOLID, PS_DASH, PS_DOT, PS_DASHDOT, etc.)</td></tr>
+<tr><td><code>nWidth</code></td><td>Numérico</td><td>Largura da pen em unidades lógicas (pixels)</td></tr>
+<tr><td><code>nColor</code></td><td>Numérico</td><td>Cor da pen como valor RGB</td></tr>
+<tr><td><code>oDevice</code></td><td>Objeto</td><td>Contexto de dispositivo proprietário opcional para escalonamento de largura ciente de DPI</td></tr>
 </tbody>
 </table>
 
@@ -119,25 +119,25 @@ available for direct use in custom painting routines.
 <tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nStyle, nWidth, nColor, oDevice )</code></td><td>Create a new pen. Defaults: PS_SOLID, width 1, CLR_BLACK. When oDevice is provided, width is scaled by DPI.</td></tr>
-<tr><td><code>End()</code></td><td>Delete the GDI pen object and release resources. Alias for <code>Release()</code>.</td></tr>
+<tr><td><code>New( nStyle, nWidth, nColor, oDevice )</code></td><td>Cria uma nova pen. Padrões: PS_SOLID, largura 1, CLR_BLACK. Quando oDevice é fornecido, a largura é escalonada pelo DPI.</td></tr>
+<tr><td><code>End()</code></td><td>Exclui o objeto pen GDI e libera os recursos. Apelido para <code>Release()</code>.</td></tr>
 </tbody>
 </table>
 
-<h2 id="styles">Pen Styles</h2>
+<h2 id="styles">Estilos de Pen</h2>
 
 <table>
 <thead>
-<tr><th>Constant</th><th>Value</th><th>Descrição</th></tr>
+<tr><th>Constante</th><th>Valor</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>PS_SOLID</code></td><td>0</td><td>Solid line (default)</td></tr>
-<tr><td><code>PS_DASH</code></td><td>1</td><td>Dashed line (valid only when width is 1)</td></tr>
-<tr><td><code>PS_DOT</code></td><td>2</td><td>Dotted line (valid only when width is 1)</td></tr>
-<tr><td><code>PS_DASHDOT</code></td><td>3</td><td>Alternating dash-dot pattern</td></tr>
-<tr><td><code>PS_DASHDOTDOT</code></td><td>4</td><td>Dash-dot-dot pattern</td></tr>
-<tr><td><code>PS_NULL</code></td><td>5</td><td>Invisible pen</td></tr>
-<tr><td><code>PS_INSIDEFRAME</code></td><td>6</td><td>Solid pen that draws inside the bounding frame</td></tr>
+<tr><td><code>PS_SOLID</code></td><td>0</td><td>Linha sólida (padrão)</td></tr>
+<tr><td><code>PS_DASH</code></td><td>1</td><td>Linha tracejada (válida apenas quando a largura é 1)</td></tr>
+<tr><td><code>PS_DOT</code></td><td>2</td><td>Linha pontilhada (válida apenas quando a largura é 1)</td></tr>
+<tr><td><code>PS_DASHDOT</code></td><td>3</td><td>Padrão alternado traço-ponto</td></tr>
+<tr><td><code>PS_DASHDOTDOT</code></td><td>4</td><td>Padrão traço-ponto-ponto</td></tr>
+<tr><td><code>PS_NULL</code></td><td>5</td><td>Pen invisível</td></tr>
+<tr><td><code>PS_INSIDEFRAME</code></td><td>6</td><td>Pen sólida que desenha dentro do quadro delimitador</td></tr>
 </tbody>
 </table>
 
@@ -152,10 +152,10 @@ function Main()
    DEFINE WINDOW oWnd TITLE "TPen Demo" SIZE 400, 300
 
    oWnd:bPainted = {| hDC |
-      // Create a red pen with width 2
+      // Cria uma pen vermelha com largura 2
       DEFINE PEN oPen WIDTH 2 COLOR CLR_RED
 
-      // Draw a line from top-left to bottom-right
+      // Desenha uma linha do canto superior esquerdo ao inferior direito
       MoveTo( hDC, 50, 50 )
       LineTo( hDC, 350, 250, oPen:hPen )
 
@@ -169,10 +169,10 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>Always call <code>End()</code> or <code>Release()</code> when the pen is no longer needed to avoid GDI resource leaks.</li>
-<li>When specifying an <code>oDevice</code> (window, printer, etc.), the pen width is automatically scaled based on the device's logical pixels per inch, making the visual width consistent across different DPI settings.</li>
-<li>The <code>DEFINE PEN</code> command provides a convenient syntax alternative to calling <code>TPen():New()</code> directly.</li>
-<li>TPen is used extensively by FiveWin controls internally. Once a pen is selected into a device context via <code>SelectObject()</code>, it affects all subsequent drawing operations until another pen is selected.</li>
+<li>Sempre chame <code>End()</code> ou <code>Release()</code> quando a pen não for mais necessária para evitar vazamentos de recursos GDI.</li>
+<li>Ao especificar um <code>oDevice</code> (janela, impressora, etc.), a largura da pen é escalonada automaticamente com base nos pixels lógicos por polegada do dispositivo, tornando a largura visual consistente entre diferentes configurações de DPI.</li>
+<li>O comando <code>DEFINE PEN</code> oferece uma alternativa de sintaxe conveniente em vez de chamar <code>TPen():New()</code> diretamente.</li>
+<li>TPen é usada extensivamente pelos controles do FiveWin internamente. Uma vez que uma pen é selecionada em um contexto de dispositivo via <code>SelectObject()</code>, ela afeta todas as operações de desenho subsequentes até que outra pen seja selecionada.</li>
 </ul>
 
 </main>

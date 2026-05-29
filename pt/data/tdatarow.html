@@ -93,55 +93,55 @@
 <main id="content">
 
 <h1>TDataRow</h1>
-<p class="class-source">Source: <code>source/classes/datarow.prg</code></p>
-<p class="class-hierarchy">Standalone class</p>
+<p class="class-source">Fonte: <code>source/classes/datarow.prg</code></p>
+<p class="class-hierarchy">Classe independente</p>
 
 <p>
-TDataRow is a data-record editor that provides a convenient interface for viewing and editing
-individual records from a data source. It works with DBF work areas, ADO recordsets, arrays,
-and hashes, making it a versatile tool for record-level operations. TDataRow maintains an
-original copy of the data and can detect modifications.
+TDataRow é um editor de registros de dados que fornece uma interface conveniente para visualizar e editar
+registros individuais de uma fonte de dados. Funciona com áreas de trabalho DBF, recordsets ADO, arrays
+e hashes, tornando-se uma ferramenta versátil para operações em nível de registro. TDataRow mantém uma
+cópia original dos dados e pode detectar modificações.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Membros DATA Principais</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aData</code></td><td>Array</td><td>Array of current field values</td></tr>
-<tr><td><code>aOrg</code></td><td>Array</td><td>Array of original field values (for change detection)</td></tr>
-<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of field prompt/label strings</td></tr>
-<tr><td><code>uSource</code></td><td>Variant</td><td>Source data: alias (N), ADO recordset, array, or hash</td></tr>
-<tr><td><code>cSrcType</code></td><td>Character</td><td>Source type string: "DBF", "ADO", "ARR", or "HSH"</td></tr>
-<tr><td><code>bSave</code></td><td>Block</td><td>Code block evaluated on successful save</td></tr>
-<tr><td><code>bValid</code></td><td>Block</td><td>Code block for record validation before save</td></tr>
-<tr><td><code>bEdit</code></td><td>Block</td><td>Code block evaluated when edit begins</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>Array dos valores atuais dos campos</td></tr>
+<tr><td><code>aOrg</code></td><td>Array</td><td>Array dos valores originais dos campos (para detecção de alterações)</td></tr>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array das strings de prompt/rótulo dos campos</td></tr>
+<tr><td><code>uSource</code></td><td>Variant</td><td>Fonte de dados: alias (N), recordset ADO, array ou hash</td></tr>
+<tr><td><code>cSrcType</code></td><td>Character</td><td>String do tipo de fonte: "DBF", "ADO", "ARR" ou "HSH"</td></tr>
+<tr><td><code>bSave</code></td><td>Block</td><td>Bloco de código avaliado ao salvar com sucesso</td></tr>
+<tr><td><code>bValid</code></td><td>Block</td><td>Bloco de código para validação do registro antes de salvar</td></tr>
+<tr><td><code>bEdit</code></td><td>Block</td><td>Bloco de código avaliado quando a edição começa</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( uSource, cFieldList, lBlank, aInitVals )</code></td><td>Create a data row from a source and optional field list</td></tr>
-<tr><td><code>Load( lBlank )</code></td><td>Load current values from the source into aData</td></tr>
-<tr><td><code>Save( lCheck, lSilent )</code></td><td>Write changes back to the source; optional validation</td></tr>
-<tr><td><code>Edit( lReadOnly, lNavigate, cTitle, cMsg )</code></td><td>Open a dialog for interactive record editing</td></tr>
-<tr><td><code>Undo( fld )</code></td><td>Revert a field to its original value</td></tr>
-<tr><td><code>Copy()</code></td><td>Create a copy of the current record data</td></tr>
-<tr><td><code>Paste( hRec )</code></td><td>Paste a previously copied record into the buffer</td></tr>
-<tr><td><code>Modified( fld )</code></td><td>Check if a field (or any field) has been modified</td></tr>
-<tr><td><code>FieldGet( fld )</code></td><td>Get a field value by name or position</td></tr>
-<tr><td><code>FieldPut( fld, uVal )</code></td><td>Set a field value by name or position</td></tr>
+<tr><td><code>New( uSource, cFieldList, lBlank, aInitVals )</code></td><td>Cria uma linha de dados a partir de uma fonte e lista de campos opcional</td></tr>
+<tr><td><code>Load( lBlank )</code></td><td>Carrega os valores atuais da fonte para aData</td></tr>
+<tr><td><code>Save( lCheck, lSilent )</code></td><td>Grava as alterações de volta na fonte; validação opcional</td></tr>
+<tr><td><code>Edit( lReadOnly, lNavigate, cTitle, cMsg )</code></td><td>Abre um diálogo para edição interativa do registro</td></tr>
+<tr><td><code>Undo( fld )</code></td><td>Reverte um campo ao seu valor original</td></tr>
+<tr><td><code>Copy()</code></td><td>Cria uma cópia dos dados do registro atual</td></tr>
+<tr><td><code>Paste( hRec )</code></td><td>Cola um registro copiado anteriormente no buffer</td></tr>
+<tr><td><code>Modified( fld )</code></td><td>Verifica se um campo (ou qualquer campo) foi modificado</td></tr>
+<tr><td><code>FieldGet( fld )</code></td><td>Obtém o valor de um campo por nome ou posição</td></tr>
+<tr><td><code>FieldPut( fld, uVal )</code></td><td>Define o valor de um campo por nome ou posição</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Edit Current DBF Record</h2>
+<h2 id="example">Exemplo: Editar o Registro DBF Atual</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -153,12 +153,12 @@ function Main()
 
    oDb:GoTop()
 
-   // Create a data row for the current record
+   // Cria uma linha de dados para o registro atual
    oRow := TDataRow():New( oDb:nArea )
 
-   // Open the edit dialog
+   // Abre o diálogo de edição
    if oRow:Edit( , , "Edit Customer" )
-      // User pressed OK -- changes are saved automatically
+      // Usuário pressionou OK -- as alterações são salvas automaticamente
       MsgInfo( "Record saved" )
    else
       MsgInfo( "Edit cancelled" )
@@ -168,14 +168,14 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TDataRow adapts to the source type automatically. For DBF sources, pass the work area number or alias; for ADO, pass the recordset object; for arrays or hashes, pass the reference directly.</li>
-<li>The <code>Edit()</code> method creates a default dialog with TGet controls for each field. When <code>lReadOnly</code> is .T., the dialog displays data without allowing edits.</li>
-<li>Use <code>bSave</code> to execute custom logic after a successful save, such as logging or refreshing related controls.</li>
-<li>The <code>Modified()</code> method without arguments checks if any field changed; with a field argument it checks a specific field.</li>
-<li>Using <code>lNavigate=.T.</code> in <code>Edit()</code> adds navigation buttons (Next/Previous) to move between records.</li>
+<li>TDataRow adapta-se ao tipo de fonte automaticamente. Para fontes DBF, passe o número ou alias da área de trabalho; para ADO, passe o objeto recordset; para arrays ou hashes, passe a referência diretamente.</li>
+<li>O método <code>Edit()</code> cria um diálogo padrão com controles TGet para cada campo. Quando <code>lReadOnly</code> é .T., o diálogo exibe os dados sem permitir edições.</li>
+<li>Use <code>bSave</code> para executar lógica personalizada após salvar com sucesso, como registro de log ou atualização de controles relacionados.</li>
+<li>O método <code>Modified()</code> sem argumentos verifica se algum campo foi alterado; com um argumento de campo, verifica um campo específico.</li>
+<li>Usar <code>lNavigate=.T.</code> em <code>Edit()</code> adiciona botões de navegação (Próximo/Anterior) para mover-se entre registros.</li>
 </ul>
 
 </main>

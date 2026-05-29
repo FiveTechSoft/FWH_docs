@@ -14,12 +14,12 @@
 <p class="class-source">Fonte: <code>source/classes/fwstack.prg</code></p>
 
 <p>
-FWStack implements a classic LIFO (Last-In, First-Out) stack data structure.
-It stores items in an internal array and provides push, pop, and peek operations.
-The constructor and Push() method accept variable-length argument lists, allowing
-multiple items to be added in a single call. FWStack is useful for undo/redo
-operations, expression evaluation, and any scenario requiring last-in-first-out
-data management.
+FWStack implementa uma estrutura de dados de pilha LIFO (Last-In, First-Out) clássica.
+Ela armazena itens em um array interno e fornece operações push, pop e peek.
+O construtor e o método Push() aceitam listas de argumentos de comprimento variável, permitindo
+adicionar múltiplos itens em uma única chamada. FWStack é útil para operações de desfazer/refazer,
+avaliação de expressões e qualquer cenário que exija gerenciamento de dados
+no estilo último a entrar, primeiro a sair.
 </p>
 
 <h2 id="data">Principais Membros DATA</h2>
@@ -27,7 +27,7 @@ data management.
 <table>
 <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>aStack</code></td><td>Array</td><td>Internal array holding stack items</td></tr>
+<tr><td><code>aStack</code></td><td>Array</td><td>Array interno que contém os itens da pilha</td></tr>
 </tbody>
 </table>
 
@@ -36,16 +36,16 @@ data management.
 <table>
 <thead><tr><th>Método</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>New( item1, item2, ... )</code></td><td>Create a stack initialized with the given items (bottom to top)</td></tr>
-<tr><td><code>Push( item1, item2, ... )</code></td><td>Push one or more items onto the top of the stack. Returns Self for chaining.</td></tr>
-<tr><td><code>Pop()</code></td><td>Remove and return the top item from the stack. Returns nil if the stack is empty.</td></tr>
-<tr><td><code>Peek( n )</code></td><td>Return the nth item from the top without removing it. n defaults to 1 (the top). Negative n indexes from the bottom (e.g., -1 is bottom). Returns nil if the index is out of range.</td></tr>
-<tr><td><code>Size()</code></td><td>Return the number of items in the stack</td></tr>
-<tr><td><code>Clear()</code></td><td>Remove all items from the stack. Returns Self for chaining.</td></tr>
+<tr><td><code>New( item1, item2, ... )</code></td><td>Cria uma pilha inicializada com os itens fornecidos (da base ao topo)</td></tr>
+<tr><td><code>Push( item1, item2, ... )</code></td><td>Empilha um ou mais itens no topo da pilha. Retorna Self para encadeamento.</td></tr>
+<tr><td><code>Pop()</code></td><td>Remove e retorna o item do topo da pilha. Retorna nil se a pilha estiver vazia.</td></tr>
+<tr><td><code>Peek( n )</code></td><td>Retorna o n-ésimo item a partir do topo sem removê-lo. n assume 1 por padrão (o topo). Um n negativo indexa a partir da base (por exemplo, -1 é a base). Retorna nil se o índice estiver fora do intervalo.</td></tr>
+<tr><td><code>Size()</code></td><td>Retorna o número de itens na pilha</td></tr>
+<tr><td><code>Clear()</code></td><td>Remove todos os itens da pilha. Retorna Self para encadeamento.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Push/Pop Values</h2>
+<h2 id="example">Exemplo: Empilhar/Desempilhar Valores</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -53,40 +53,40 @@ function Main()
 
    local oStack := FWStack():New()
 
-   // Push multiple items
+   // Empilha vários itens
    oStack:Push( 10, 20, 30, 40, 50 )
 
    ? "Stack size:", oStack:Size()       // 5
 
-   // Peek at top item without removing
+   // Espia o item do topo sem removê-lo
    ? "Top item:", oStack:Peek()         // 50
 
-   // Peek at item 2 from top (0-indexed from the top)
+   // Espia o item 2 a partir do topo
    ? "Second from top:", oStack:Peek( 2 )  // 40
 
-   // Pop items
+   // Desempilha os itens
    while oStack:Size() > 0
       ? "Popped:", oStack:Pop()
    end
 
    ? "Stack is empty:", oStack:Size() == 0  // .T.
 
-   // Initialize with items
+   // Inicializa com itens
    oStack := FWStack():New( "apple", "banana", "cherry" )
    ? oStack:Pop()   // "cherry"
    ? oStack:Pop()   // "banana"
    ? oStack:Pop()   // "apple"
-   ? oStack:Pop()   // nil (empty)
+   ? oStack:Pop()   // nil (vazia)
 
 return nil</code></pre>
 
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>FWStack methods that accept variable arguments (New, Push) work with both Harbour and xHarbour. On xHarbour, they accept an array parameter instead of varargs.</li>
-<li>The <code>Peek()</code> method with no argument returns the top item without removing it. With a positive argument n, it looks n positions from the top (1 = top). With a negative argument, it counts from the bottom (-1 = bottom).</li>
-<li>Push() and Clear() return Self, enabling method chaining: <code>oStack:Clear():Push( 1, 2, 3 ):Push( 4 )</code>.</li>
-<li>Pop() returns nil when the stack is empty -- test with <code>oStack:Size() > 0</code> before popping.</li>
+<li>Os métodos de FWStack que aceitam argumentos variáveis (New, Push) funcionam tanto com Harbour quanto com xHarbour. No xHarbour, eles aceitam um parâmetro de array em vez de varargs.</li>
+<li>O método <code>Peek()</code> sem argumento retorna o item do topo sem removê-lo. Com um argumento positivo n, ele busca n posições a partir do topo (1 = topo). Com um argumento negativo, ele conta a partir da base (-1 = base).</li>
+<li>Push() e Clear() retornam Self, possibilitando o encadeamento de métodos: <code>oStack:Clear():Push( 1, 2, 3 ):Push( 4 )</code>.</li>
+<li>Pop() retorna nil quando a pilha está vazia -- teste com <code>oStack:Size() > 0</code> antes de desempilhar.</li>
 </ul>
 
 </main>

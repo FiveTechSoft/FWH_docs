@@ -11,60 +11,60 @@
 <main id="content">
 
 <h1>FWMariaRecord</h1>
-<p class="class-source">Source: <code>source/classes/mariarec.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TDataRow</code></p>
+<p class="class-source">Fuente: <code>source/classes/mariarec.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TDataRow</code></p>
 
 <p>
-FWMariaRecord provides single-record ORM-style access to MariaDB/MySQL tables.
-It extends TDataRow to automatically detect table structure, primary keys, and
-auto-increment columns. The class handles the complete CRUD lifecycle: loading
-a record from the database, editing field values via TDataRow's property access,
-and saving changes with automatic upsert (INSERT or UPDATE as appropriate).
+FWMariaRecord proporciona acceso de tipo ORM a un único registro de tablas MariaDB/MySQL.
+Extiende TDataRow para detectar automáticamente la estructura de la tabla, las claves primarias y
+las columnas autoincrementales. La clase gestiona el ciclo CRUD completo: cargar
+un registro desde la base de datos, editar los valores de los campos mediante el acceso a propiedades de TDataRow,
+y guardar los cambios con upsert automático (INSERT o UPDATE según corresponda).
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Miembros DATA Clave</h2>
 
 <table>
-<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>oCn</code></td><td>Object</td><td>FWMariaConnection object</td></tr>
-<tr><td><code>cTable</code></td><td>Character</td><td>Table name</td></tr>
-<tr><td><code>cWhere</code></td><td>Character</td><td>WHERE clause identifying the current record</td></tr>
-<tr><td><code>aStruct</code></td><td>Array</td><td>Table column structure (name, type, length, decimals, flags)</td></tr>
-<tr><td><code>aBlank</code></td><td>Array</td><td>Blank values for new record creation</td></tr>
-<tr><td><code>aPrimary</code></td><td>Array</td><td>Indices of primary key columns in aStruct</td></tr>
-<tr><td><code>nAutoIncFld</code></td><td>Numeric</td><td>Position of auto-increment field (0 if none)</td></tr>
-<tr><td><code>lValidData</code></td><td>Logical</td><td>ACCESS: .T. when record data is loaded</td></tr>
+<tr><td><code>oCn</code></td><td>Objeto</td><td>Objeto FWMariaConnection</td></tr>
+<tr><td><code>cTable</code></td><td>Carácter</td><td>Nombre de la tabla</td></tr>
+<tr><td><code>cWhere</code></td><td>Carácter</td><td>Cláusula WHERE que identifica el registro actual</td></tr>
+<tr><td><code>aStruct</code></td><td>Array</td><td>Estructura de columnas de la tabla (nombre, tipo, longitud, decimales, flags)</td></tr>
+<tr><td><code>aBlank</code></td><td>Array</td><td>Valores en blanco para la creación de nuevos registros</td></tr>
+<tr><td><code>aPrimary</code></td><td>Array</td><td>Índices de las columnas de clave primaria en aStruct</td></tr>
+<tr><td><code>nAutoIncFld</code></td><td>Numérico</td><td>Posición del campo autoincremental (0 si no hay)</td></tr>
+<tr><td><code>lValidData</code></td><td>Lógico</td><td>ACCESS: .T. cuando los datos del registro están cargados</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
-<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
 <tbody>
-<tr><td><code>New( oCn, cTable, cWhere )</code></td><td>Create and load a record. If cWhere is nil or empty, creates a blank record for new entry.</td></tr>
-<tr><td><code>Read( cWhere )</code></td><td>Load a specific record identified by the WHERE clause</td></tr>
-<tr><td><code>Blank()</code></td><td>Reset the record to a blank template for inserting a new row</td></tr>
-<tr><td><code>Load( lBlank )</code></td><td>Load record from server (or blank template if lBlank is .T.)</td></tr>
-<tr><td><code>Save()</code></td><td>Save changes using automatic upsert: INSERT if new, UPDATE if existing</td></tr>
-<tr><td><code>MakePrimaryWhere()</code></td><td>Build a WHERE clause from current primary key field values</td></tr>
+<tr><td><code>New( oCn, cTable, cWhere )</code></td><td>Crea y carga un registro. Si cWhere es nil o está vacío, crea un registro en blanco para una nueva entrada.</td></tr>
+<tr><td><code>Read( cWhere )</code></td><td>Carga un registro específico identificado por la cláusula WHERE</td></tr>
+<tr><td><code>Blank()</code></td><td>Restablece el registro a una plantilla en blanco para insertar una nueva fila</td></tr>
+<tr><td><code>Load( lBlank )</code></td><td>Carga el registro desde el servidor (o una plantilla en blanco si lBlank es .T.)</td></tr>
+<tr><td><code>Save()</code></td><td>Guarda los cambios mediante upsert automático: INSERT si es nuevo, UPDATE si ya existe</td></tr>
+<tr><td><code>MakePrimaryWhere()</code></td><td>Construye una cláusula WHERE a partir de los valores actuales de los campos de clave primaria</td></tr>
 </tbody>
 </table>
 
-<h2 id="access">Field Access</h2>
+<h2 id="access">Acceso a Campos</h2>
 
 <p>
-Since FWMariaRecord inherits from TDataRow, field values are accessible via the
-<code>FieldGet()</code> and <code>FieldPut()</code> methods using either field names
-or numeric positions:
+Dado que FWMariaRecord hereda de TDataRow, los valores de los campos son accesibles mediante los
+métodos <code>FieldGet()</code> y <code>FieldPut()</code> usando bien nombres de campo
+o bien posiciones numéricas:
 </p>
 
-<pre><code class="language-harbour">oRec:FieldGet( "name" )     // by field name
-oRec:FieldGet( 2 )           // by numeric position
-oRec:FieldPut( "phone", "555-1234" )  // set by field name</code></pre>
+<pre><code class="language-harbour">oRec:FieldGet( "name" )     // por nombre de campo
+oRec:FieldGet( 2 )           // por posición numérica
+oRec:FieldPut( "phone", "555-1234" )  // asignar por nombre de campo</code></pre>
 
-<h2 id="example">Example: Load and Update Record</h2>
+<h2 id="example">Ejemplo: Cargar y Actualizar un Registro</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -72,14 +72,14 @@ function Main()
 
    local oCn, oRec
 
-   // Connect to database
+   // Conectar a la base de datos
    oCn := FWMariaConnection():New( "localhost", "mydb", "root", "password" )
    if oCn:nError != 0
       MsgStop( "Connection failed" )
       return nil
    endif
 
-   // --- READ existing record ---
+   // --- LEER un registro existente ---
    oRec := FWMariaRecord():New( oCn, "customers", "id = 1" )
    if oRec:lValidData
       ? "Customer:", oRec:FieldGet( "name" )
@@ -87,15 +87,15 @@ function Main()
       ? "Phone:",    oRec:FieldGet( "phone" )
    endif
 
-   // --- UPDATE record ---
+   // --- ACTUALIZAR el registro ---
    oRec:FieldPut( "phone", "555-9999" )
    oRec:FieldPut( "city",  "Madrid" )
    if oRec:Save()
       MsgInfo( "Record updated successfully" )
    endif
 
-   // --- CREATE new record ---
-   oRec := FWMariaRecord():New( oCn, "customers" )  // blank record
+   // --- CREAR un nuevo registro ---
+   oRec := FWMariaRecord():New( oCn, "customers" )  // registro en blanco
    oRec:FieldPut( "name",  "Jane Smith" )
    oRec:FieldPut( "email", "jane@example.com" )
    oRec:FieldPut( "phone", "555-4321" )
@@ -103,7 +103,7 @@ function Main()
       MsgInfo( "New customer ID: " + Str( oRec:FieldGet( "id" ) ) )
    endif
 
-   // --- Load a different record ---
+   // --- Cargar un registro diferente ---
    oRec:Read( "email = 'jane@example.com'" )
    if oRec:lValidData
       MsgInfo( "Found: " + oRec:FieldGet( "name" ) )
@@ -113,13 +113,13 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>FWMariaRecord automatically detects the table structure, primary keys, and auto-increment columns on first load. This enables intelligent upsert behavior without manual configuration.</li>
-<li>The <code>Save()</code> method uses <code>oCn:Upsert()</code> internally, which generates an <code>INSERT ... ON DUPLICATE KEY UPDATE</code> statement. The primary key detection ensures correct behavior.</li>
-<li>After inserting a new record with an auto-increment primary key, the new ID is automatically retrieved and stored in the record's data.</li>
-<li>Character fields are padded to their defined length when Unicode mode is active (controlled by <code>oCn:lUnicode</code>).</li>
+<li>FWMariaRecord detecta automáticamente la estructura de la tabla, las claves primarias y las columnas autoincrementales en la primera carga. Esto habilita un comportamiento de upsert inteligente sin configuración manual.</li>
+<li>El método <code>Save()</code> utiliza internamente <code>oCn:Upsert()</code>, que genera una sentencia <code>INSERT ... ON DUPLICATE KEY UPDATE</code>. La detección de la clave primaria garantiza el comportamiento correcto.</li>
+<li>Tras insertar un nuevo registro con una clave primaria autoincremental, el nuevo ID se recupera automáticamente y se almacena en los datos del registro.</li>
+<li>Los campos de tipo carácter se rellenan hasta su longitud definida cuando el modo Unicode está activo (controlado por <code>oCn:lUnicode</code>).</li>
 </ul>
 
 </main>

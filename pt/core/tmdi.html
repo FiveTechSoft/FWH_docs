@@ -97,77 +97,77 @@
 <main id="content">
 
 <h1>TMDI* (MDI Classes)</h1>
-<p class="class-source">Sources: <code>source/classes/mdiframe.prg</code>, <code>mdiclien.prg</code>, <code>mdichild.prg</code></p>
-<p class="class-hierarchy">All three inherit from: <code>TWindow</code></p>
+<p class="class-source">Fontes: <code>source/classes/mdiframe.prg</code>, <code>mdiclien.prg</code>, <code>mdichild.prg</code></p>
+<p class="class-hierarchy">Todas as três herdam de: <code>TWindow</code></p>
 
 <p>
-The MDI (Multiple Document Interface) system consists of three coordinated classes: <strong>TMDIFrame</strong> (the main frame window), <strong>TMDIClient</strong> (the client area that manages child windows), and <strong>TMDIChild</strong> (individual document child windows). Together they provide the classic Windows MDI experience with tiling, cascading, icon arrangement, and menu merging.
+O sistema MDI (Multiple Document Interface) consiste em três classes coordenadas: <strong>TMDIFrame</strong> (a janela de moldura principal), <strong>TMDIClient</strong> (a área cliente que gerencia as janelas filhas) e <strong>TMDIChild</strong> (janelas filhas de documentos individuais). Juntas, elas proporcionam a experiência clássica de MDI do Windows com lado a lado, em cascata, organização de ícones e mesclagem de menus.
 </p>
 
-<h2 id="data-tmdiframe">TMDIFrame DATA Members</h2>
+<h2 id="data-tmdiframe">Membros DATA de TMDIFrame</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oWndClient</code></td><td>Object</td><td>The TMDIClient object that manages child windows</td></tr>
-<tr><td><code>oWndActive</code></td><td>Object</td><td>Referência to the currently active MDI child window</td></tr>
-<tr><td><code>oMenu</code></td><td>Object</td><td>Menu object attached to the frame; "Window" submenu is auto-managed</td></tr>
-<tr><td><code>lChildAutoSize</code></td><td>Logical</td><td>Auto-maximize new child windows to fill the client area</td></tr>
+<tr><td><code>oWndClient</code></td><td>Object</td><td>O objeto TMDIClient que gerencia as janelas filhas</td></tr>
+<tr><td><code>oWndActive</code></td><td>Object</td><td>Referência à janela filha MDI atualmente ativa</td></tr>
+<tr><td><code>oMenu</code></td><td>Object</td><td>Objeto de menu vinculado à moldura; o submenu "Janela" é gerenciado automaticamente</td></tr>
+<tr><td><code>lChildAutoSize</code></td><td>Logical</td><td>Maximiza automaticamente novas janelas filhas para preencher a área cliente</td></tr>
 </tbody>
 </table>
 
-<h2 id="data-tmdiclient">TMDIClient DATA Members</h2>
+<h2 id="data-tmdiclient">Membros DATA de TMDIClient</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aWnd</code></td><td>Array</td><td>Array of all TMDIChild windows managed by this client</td></tr>
+<tr><td><code>aWnd</code></td><td>Array</td><td>Array de todas as janelas TMDIChild gerenciadas por este cliente</td></tr>
 </tbody>
 </table>
 
-<h2 id="data-tmdichild">TMDIChild DATA Members</h2>
+<h2 id="data-tmdichild">Membros DATA de TMDIChild</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oWndClient</code></td><td>Object</td><td>Referência to the parent TMDIClient</td></tr>
-<tr><td><code>oControl</code></td><td>Object</td><td>Optional active control for clipboard/EDIT forwarding</td></tr>
+<tr><td><code>oWndClient</code></td><td>Object</td><td>Referência ao TMDIClient pai</td></tr>
+<tr><td><code>oControl</code></td><td>Object</td><td>Controle ativo opcional para encaminhamento de área de transferência/EDIT</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Class</th><th>Method</th><th>Description</th></tr>
+<tr><th>Classe</th><th>Método</th><th>Descrição</th></tr>
 </thead>
 <tbody>
-<tr><td>TMDIFrame</td><td><code>New( nTop, nLeft, nBottom, nRight, cTitle, nStyle, oMenu, oBrush, oIcon, ... )</code></td><td>Create the MDI frame window</td></tr>
-<tr><td>TMDIFrame</td><td><code>ChildNew( ... )</code></td><td>Create a new MDI child window</td></tr>
-<tr><td>TMDIFrame</td><td><code>Cascade() / Tile( lHor ) / ArrangeIcons()</code></td><td>Arrange child windows</td></tr>
-<tr><td>TMDIFrame</td><td><code>CloseAll() / CloseActive()</code></td><td>Close all or the active child</td></tr>
-<tr><td>TMDIFrame</td><td><code>NextWindow() / PrevWindow()</code></td><td>Cycle through child windows</td></tr>
-<tr><td>TMDIFrame</td><td><code>Zoom()</code></td><td>Maximize the active child</td></tr>
-<tr><td>TMDIFrame</td><td><code>SetMenu( oMenu, nMenuInfo )</code></td><td>Set the frame menu with MDI window submenu tracking</td></tr>
-<tr><td>TMDIClient</td><td><code>New( oFrame, nSubMenu, nIdChildFirst, oBrush, ... )</code></td><td>Create the MDI client window</td></tr>
-<tr><td>TMDIClient</td><td><code>GetActive()</code></td><td>Return the currently active child window (or nil)</td></tr>
-<tr><td>TMDIClient</td><td><code>ChildNew( ... )</code></td><td>Create and activate a new MDI child</td></tr>
-<tr><td>TMDIClient</td><td><code>ChildClose( oWnd )</code></td><td>Close a specific child window</td></tr>
-<tr><td>TMDIClient</td><td><code>Tile( lHor ) / Cascade() / ArrangeIcons()</code></td><td>Arrange child windows within the client</td></tr>
-<tr><td>TMDIChild</td><td><code>New( nTop, nLeft, nBottom, nRight, cTitle, nStyle, oMenu, oWnd, ... )</code></td><td>Create a new MDI child window</td></tr>
-<tr><td>TMDIChild</td><td><code>Activate()</code></td><td>Show and activate the child window</td></tr>
-<tr><td>TMDIChild</td><td><code>Maximize() / Restore() / Minimize()</code></td><td>Window state management</td></tr>
-<tr><td>TMDIChild</td><td><code>SetControl( oCtrl )</code></td><td>Associate an active control (e.g., for clipboard forwarding)</td></tr>
+<tr><td>TMDIFrame</td><td><code>New( nTop, nLeft, nBottom, nRight, cTitle, nStyle, oMenu, oBrush, oIcon, ... )</code></td><td>Cria a janela de moldura MDI</td></tr>
+<tr><td>TMDIFrame</td><td><code>ChildNew( ... )</code></td><td>Cria uma nova janela filha MDI</td></tr>
+<tr><td>TMDIFrame</td><td><code>Cascade() / Tile( lHor ) / ArrangeIcons()</code></td><td>Organiza as janelas filhas</td></tr>
+<tr><td>TMDIFrame</td><td><code>CloseAll() / CloseActive()</code></td><td>Fecha todas as filhas ou a filha ativa</td></tr>
+<tr><td>TMDIFrame</td><td><code>NextWindow() / PrevWindow()</code></td><td>Percorre as janelas filhas</td></tr>
+<tr><td>TMDIFrame</td><td><code>Zoom()</code></td><td>Maximiza a filha ativa</td></tr>
+<tr><td>TMDIFrame</td><td><code>SetMenu( oMenu, nMenuInfo )</code></td><td>Define o menu da moldura com rastreamento do submenu de janelas MDI</td></tr>
+<tr><td>TMDIClient</td><td><code>New( oFrame, nSubMenu, nIdChildFirst, oBrush, ... )</code></td><td>Cria a janela cliente MDI</td></tr>
+<tr><td>TMDIClient</td><td><code>GetActive()</code></td><td>Retorna a janela filha atualmente ativa (ou nil)</td></tr>
+<tr><td>TMDIClient</td><td><code>ChildNew( ... )</code></td><td>Cria e ativa uma nova filha MDI</td></tr>
+<tr><td>TMDIClient</td><td><code>ChildClose( oWnd )</code></td><td>Fecha uma janela filha específica</td></tr>
+<tr><td>TMDIClient</td><td><code>Tile( lHor ) / Cascade() / ArrangeIcons()</code></td><td>Organiza as janelas filhas dentro do cliente</td></tr>
+<tr><td>TMDIChild</td><td><code>New( nTop, nLeft, nBottom, nRight, cTitle, nStyle, oMenu, oWnd, ... )</code></td><td>Cria uma nova janela filha MDI</td></tr>
+<tr><td>TMDIChild</td><td><code>Activate()</code></td><td>Exibe e ativa a janela filha</td></tr>
+<tr><td>TMDIChild</td><td><code>Maximize() / Restore() / Minimize()</code></td><td>Gerenciamento do estado da janela</td></tr>
+<tr><td>TMDIChild</td><td><code>SetControl( oCtrl )</code></td><td>Associa um controle ativo (ex.: para encaminhamento de área de transferência)</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: MDI Frame with Two Child Windows</h2>
+<h2 id="example">Exemplo: Moldura MDI com Duas Janelas Filhas</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -187,14 +187,14 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>Use <code>DEFINE MDIFRAME ... TITLE cTitle</code> to create the frame. The frame automatically creates a TMDIClient and adds a "Window" submenu for child management if none is provided.</li>
-<li>Use <code>DEFINE MDICHILD oChild OF oWnd TITLE cTitle</code> to create child windows. They are automatically registered with the TMDIClient via <code>Add()</code>.</li>
-<li>TMDIFrame forwards clipboard operations (Copy, Cut, Paste, Undo, Redo, Find, SelectAll) to the active child's active control.</li>
-<li>Menu merging: when the frame is created with a menu, the <code>nMenuInfo</code> parameter specifies which submenu position becomes the Window list.</li>
-<li>The <code>lChildAutoSize</code> flag on TMDIFrame causes new children to open maximized.</li>
+<li>Use <code>DEFINE MDIFRAME ... TITLE cTitle</code> para criar a moldura. A moldura cria automaticamente um TMDIClient e adiciona um submenu "Janela" para gerenciamento das filhas, caso nenhum seja fornecido.</li>
+<li>Use <code>DEFINE MDICHILD oChild OF oWnd TITLE cTitle</code> para criar janelas filhas. Elas são registradas automaticamente no TMDIClient via <code>Add()</code>.</li>
+<li>TMDIFrame encaminha as operações de área de transferência (Copy, Cut, Paste, Undo, Redo, Find, SelectAll) para o controle ativo da filha ativa.</li>
+<li>Mesclagem de menus: quando a moldura é criada com um menu, o parâmetro <code>nMenuInfo</code> especifica qual posição de submenu se torna a lista de janelas.</li>
+<li>O sinalizador <code>lChildAutoSize</code> em TMDIFrame faz com que novas filhas abram maximizadas.</li>
 </ul>
 
 </main>

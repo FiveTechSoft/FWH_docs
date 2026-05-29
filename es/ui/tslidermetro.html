@@ -92,42 +92,42 @@
 <main id="content">
 
 <h1>TSliderMetro</h1>
-<p class="class-source">Source: <code>source/classes/sliderm.prg</code></p>
-<p class="class-hierarchy">Not inherited from TControl (standalone class)</p>
+<p class="class-source">Fuente: <code>source/classes/sliderm.prg</code></p>
+<p class="class-hierarchy">No hereda de TControl (clase independiente)</p>
 
 <p>
-TSliderMetro implements a slide-to-unlock screen in the style of Windows Metro / Modern UI. It displays a full-screen bitmap overlay with "FiveWin touch" and "Slide to unlock" text, and responds to vertical drag gestures. Dragging the bitmap upward reveals the underlying window. It is designed for touch-enabled kiosk or tablet applications.
+TSliderMetro implementa una pantalla de deslizar para desbloquear al estilo de Windows Metro / Modern UI. Muestra una superposición de bitmap a pantalla completa con los textos "FiveWin touch" y "Slide to unlock", y responde a gestos de arrastre vertical. Arrastrar el bitmap hacia arriba revela la ventana subyacente. Está diseñada para aplicaciones de tipo quiosco o tablet con pantalla táctil.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Miembros DATA Principales</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oBmp</code></td><td>Object</td><td>TBitmap instance holding the full-screen background image</td></tr>
-<tr><td><code>oFont1</code></td><td>Object</td><td>Large font ("Segoe UI Light" 90pt bold) for the title text</td></tr>
-<tr><td><code>oFont2</code></td><td>Object</td><td>Medium font ("Segoe UI Light" 60pt bold) for the instruction text</td></tr>
-<tr><td><code>lDrag</code></td><td>Logical</td><td>Indicates a drag operation is in progress</td></tr>
+<tr><td><code>oBmp</code></td><td>Objeto</td><td>Instancia de TBitmap que contiene la imagen de fondo a pantalla completa</td></tr>
+<tr><td><code>oFont1</code></td><td>Objeto</td><td>Fuente grande ("Segoe UI Light" 90pt negrita) para el texto del título</td></tr>
+<tr><td><code>oFont2</code></td><td>Objeto</td><td>Fuente mediana ("Segoe UI Light" 60pt negrita) para el texto de instrucción</td></tr>
+<tr><td><code>lDrag</code></td><td>Lógico</td><td>Indica que hay una operación de arrastre en curso</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cBmpFile, oWnd )</code></td><td>Create a slide-to-unlock overlay. Loads the background bitmap and creates the title fonts</td></tr>
-<tr><td><code>GoBottom()</code></td><td>Animate the bitmap back to the locked position (nTop = 0)</td></tr>
-<tr><td><code>GoTop()</code></td><td>Animate the bitmap upward off-screen to unlock the window</td></tr>
-<tr><td><code>MouseMove( nRow, nCol )</code></td><td>Track vertical drag distance and reposition the bitmap accordingly</td></tr>
+<tr><td><code>New( cBmpFile, oWnd )</code></td><td>Crea una superposición de deslizar para desbloquear. Carga el bitmap de fondo y crea las fuentes del título</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Anima el bitmap de vuelta a la posición bloqueada (nTop = 0)</td></tr>
+<tr><td><code>GoTop()</code></td><td>Anima el bitmap hacia arriba fuera de pantalla para desbloquear la ventana</td></tr>
+<tr><td><code>MouseMove( nRow, nCol )</code></td><td>Realiza el seguimiento de la distancia de arrastre vertical y reposiciona el bitmap en consecuencia</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Unlock Screen</h2>
+<h2 id="example">Ejemplo: Pantalla de Desbloqueo</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -143,15 +143,15 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TSliderMetro is not a TControl descendant; it manages a TBitmap directly via the window handle.</li>
-<li>The background bitmap should match the window dimensions for a seamless full-screen effect.</li>
-<li>Text is drawn on the bitmap using <code>oBmp:Say()</code> in the <code>bPainted</code> codeblock with white color and Segoe UI Light fonts.</li>
-<li>Dragging the bitmap more than halfway up triggers <code>GoTop()</code>, which moves the bitmap off-screen and enables the underlying window.</li>
-<li>Dragging less than halfway or releasing below the midpoint triggers <code>GoBottom()</code>, which snaps the lock back into place.</li>
-<li><code>GoTop()</code> disables the source window during animation and re-enables it when complete.</li>
+<li>TSliderMetro no es descendiente de TControl; gestiona un TBitmap directamente a través del handle de la ventana.</li>
+<li>El bitmap de fondo debería coincidir con las dimensiones de la ventana para lograr un efecto de pantalla completa sin cortes.</li>
+<li>El texto se dibuja sobre el bitmap usando <code>oBmp:Say()</code> en el codeblock <code>bPainted</code> con color blanco y fuentes Segoe UI Light.</li>
+<li>Arrastrar el bitmap más de la mitad hacia arriba activa <code>GoTop()</code>, que mueve el bitmap fuera de pantalla y habilita la ventana subyacente.</li>
+<li>Arrastrar menos de la mitad o soltar por debajo del punto medio activa <code>GoBottom()</code>, que devuelve el bloqueo a su sitio.</li>
+<li><code>GoTop()</code> deshabilita la ventana de origen durante la animación y la vuelve a habilitar al finalizar.</li>
 </ul>
 
 </main>

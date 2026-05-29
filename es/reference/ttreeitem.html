@@ -95,10 +95,10 @@
 <p class="class-source">Fuente: <code>source/classes/treeitem.prg</code>, <code>source/classes/ttvitem.prg</code></p>
 
 <p>
-TTreeItem implements a linked-list tree node for custom tree widgets. Each node stores a prompt, level, bitmaps, action codeblock, and cargo data, and maintains prev/next/child pointers via an associated TTree object. TTVItem wraps a native Win32 TreeView item (HTREEITEM) for use with the standard Windows tree control, providing insert, expand, edit, check-box and persistence operations.
+TTreeItem implementa un nodo de árbol de lista enlazada para widgets de árbol personalizados. Cada nodo almacena un prompt, un nivel, bitmaps, un bloque de código de acción y datos de carga (cargo), y mantiene punteros anterior/siguiente/hijo a través de un objeto TTree asociado. TTVItem encapsula un elemento nativo TreeView de Win32 (HTREEITEM) para su uso con el control de árbol estándar de Windows, proporcionando operaciones de inserción, expansión, edición, casilla de verificación y persistencia.
 </p>
 
-<h2 id="ttreeitem">TTreeItem — Linked-List Tree Node</h2>
+<h2 id="ttreeitem">TTreeItem — Nodo de Árbol de Lista Enlazada</h2>
 
 <h3 id="ttreeitem-data">Miembros DATA Principales</h3>
 
@@ -107,14 +107,14 @@ TTreeItem implements a linked-list tree node for custom tree widgets. Each node 
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cPrompt</code></td><td>Character</td><td>Node display text</td></tr>
-<tr><td><code>oTree</code></td><td>Object</td><td>Referencia to the child TTree object (children), nil if leaf</td></tr>
-<tr><td><code>lOpened</code></td><td>Logical</td><td>Node is expanded (children visible)</td></tr>
-<tr><td><code>nLevel</code></td><td>Numeric</td><td>Indentation level (0 = root)</td></tr>
-<tr><td><code>hBmpOpen</code></td><td>Handle</td><td>Bitmap handle for expanded state</td></tr>
-<tr><td><code>hBmpClose</code></td><td>Handle</td><td>Bitmap handle for collapsed state</td></tr>
-<tr><td><code>bAction</code></td><td>Codeblock</td><td>Code block executed when the node is activated</td></tr>
-<tr><td><code>Cargo</code></td><td>Any</td><td>User-defined data attached to the node</td></tr>
+<tr><td><code>cPrompt</code></td><td>Character</td><td>Texto que se muestra en el nodo</td></tr>
+<tr><td><code>oTree</code></td><td>Object</td><td>Referencia al objeto TTree hijo (hijos), nil si es una hoja</td></tr>
+<tr><td><code>lOpened</code></td><td>Logical</td><td>El nodo está expandido (hijos visibles)</td></tr>
+<tr><td><code>nLevel</code></td><td>Numeric</td><td>Nivel de sangría (0 = raíz)</td></tr>
+<tr><td><code>hBmpOpen</code></td><td>Handle</td><td>Handle del bitmap para el estado expandido</td></tr>
+<tr><td><code>hBmpClose</code></td><td>Handle</td><td>Handle del bitmap para el estado contraído</td></tr>
+<tr><td><code>bAction</code></td><td>Codeblock</td><td>Bloque de código ejecutado cuando se activa el nodo</td></tr>
+<tr><td><code>Cargo</code></td><td>Any</td><td>Datos definidos por el usuario asociados al nodo</td></tr>
 </tbody>
 </table>
 
@@ -125,24 +125,24 @@ TTreeItem implements a linked-list tree node for custom tree widgets. Each node 
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cPrompt, nLevel, hBmpOpen, hBmpClose, bAction, uCargo, uValue )</code></td><td>Create a new tree node at the specified level</td></tr>
-<tr><td><code>Open()</code></td><td>Expand the node to show children</td></tr>
-<tr><td><code>Close()</code></td><td>Collapse the node to hide children</td></tr>
-<tr><td><code>Toggle()</code></td><td>Toggle between open and closed state</td></tr>
-<tr><td><code>Add( cPrompt )</code></td><td>Add a sibling node after this one (linked-list insert)</td></tr>
-<tr><td><code>AddChild( cPrompt, lFirst )</code></td><td>Add a child node (creates or uses existing TTree)</td></tr>
-<tr><td><code>Delete( oRoot )</code></td><td>Remove this node from the list</td></tr>
-<tr><td><code>MoveUp( oRoot )</code></td><td>Move the node up in the list</td></tr>
-<tr><td><code>MoveDown( oRoot )</code></td><td>Move the node down in the list</td></tr>
-<tr><td><code>Sort( oRoot, lAsc, lRecurs )</code></td><td>Sort siblings by prompt, optionally recursive</td></tr>
-<tr><td><code>Promote()</code></td><td>Decrease indentation level by one</td></tr>
-<tr><td><code>Demote()</code></td><td>Increase indentation level by one</td></tr>
-<tr><td><code>Parent( nParent )</code></td><td>Find the ancestor at a given level</td></tr>
-<tr><td><code>ByIndex[ n ]</code></td><td>Access child/sub-node by index (operator [] overload)</td></tr>
+<tr><td><code>New( cPrompt, nLevel, hBmpOpen, hBmpClose, bAction, uCargo, uValue )</code></td><td>Crea un nuevo nodo de árbol en el nivel especificado</td></tr>
+<tr><td><code>Open()</code></td><td>Expande el nodo para mostrar los hijos</td></tr>
+<tr><td><code>Close()</code></td><td>Contrae el nodo para ocultar los hijos</td></tr>
+<tr><td><code>Toggle()</code></td><td>Alterna entre el estado abierto y cerrado</td></tr>
+<tr><td><code>Add( cPrompt )</code></td><td>Añade un nodo hermano después de este (inserción en lista enlazada)</td></tr>
+<tr><td><code>AddChild( cPrompt, lFirst )</code></td><td>Añade un nodo hijo (crea o usa un TTree existente)</td></tr>
+<tr><td><code>Delete( oRoot )</code></td><td>Elimina este nodo de la lista</td></tr>
+<tr><td><code>MoveUp( oRoot )</code></td><td>Mueve el nodo hacia arriba en la lista</td></tr>
+<tr><td><code>MoveDown( oRoot )</code></td><td>Mueve el nodo hacia abajo en la lista</td></tr>
+<tr><td><code>Sort( oRoot, lAsc, lRecurs )</code></td><td>Ordena los hermanos por prompt, opcionalmente de forma recursiva</td></tr>
+<tr><td><code>Promote()</code></td><td>Disminuye el nivel de sangría en uno</td></tr>
+<tr><td><code>Demote()</code></td><td>Aumenta el nivel de sangría en uno</td></tr>
+<tr><td><code>Parent( nParent )</code></td><td>Busca el ancestro en un nivel dado</td></tr>
+<tr><td><code>ByIndex[ n ]</code></td><td>Accede al nodo hijo/subnodo por índice (sobrecarga del operador [])</td></tr>
 </tbody>
 </table>
 
-<h2 id="ttvitem">TTVItem — TreeView Item Wrapper</h2>
+<h2 id="ttvitem">TTVItem — Encapsulador de Elemento TreeView</h2>
 
 <h3 id="ttvitem-data">Miembros DATA Principales</h3>
 
@@ -151,12 +151,12 @@ TTreeItem implements a linked-list tree node for custom tree widgets. Each node 
 <tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oParent</code></td><td>Object</td><td>Parent TTVItem (nil for root items)</td></tr>
-<tr><td><code>hItem</code></td><td>Handle</td><td>HTREEITEM handle identifying the native tree item</td></tr>
-<tr><td><code>aItems</code></td><td>Array</td><td>Child TTVItem objects</td></tr>
-<tr><td><code>nImage</code></td><td>Numeric</td><td>Zero-based image index in the tree image list</td></tr>
-<tr><td><code>Cargo</code></td><td>Any</td><td>User-defined data</td></tr>
-<tr><td><code>lBold</code></td><td>Logical</td><td>Item text is bold</td></tr>
+<tr><td><code>oParent</code></td><td>Object</td><td>TTVItem padre (nil para los elementos raíz)</td></tr>
+<tr><td><code>hItem</code></td><td>Handle</td><td>Handle HTREEITEM que identifica el elemento de árbol nativo</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Objetos TTVItem hijos</td></tr>
+<tr><td><code>nImage</code></td><td>Numeric</td><td>Índice de imagen (base cero) en la lista de imágenes del árbol</td></tr>
+<tr><td><code>Cargo</code></td><td>Any</td><td>Datos definidos por el usuario</td></tr>
+<tr><td><code>lBold</code></td><td>Logical</td><td>El texto del elemento está en negrita</td></tr>
 </tbody>
 </table>
 
@@ -167,25 +167,25 @@ TTreeItem implements a linked-list tree node for custom tree widgets. Each node 
 <tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( hItem, oTree, Cargo, cPrompt, nImage, oParent )</code></td><td>Wrap an existing native tree item handle</td></tr>
-<tr><td><code>Add( cPrompt, nImage, Cargo )</code></td><td>Insert a child item into the native tree</td></tr>
-<tr><td><code>Expand()</code></td><td>Expand the tree item (TVE_EXPAND)</td></tr>
-<tr><td><code>Collapse()</code></td><td>Collapse the tree item (TVE_COLLAPSE)</td></tr>
-<tr><td><code>Toggle()</code></td><td>Toggle expand/collapse (TVE_TOGGLE)</td></tr>
-<tr><td><code>Edit()</code></td><td>Start in-place label editing (TVM_EDITLABEL)</td></tr>
-<tr><td><code>SetCheck( lOnOff )</code></td><td>Set or clear the check-box state</td></tr>
-<tr><td><code>GetCheck()</code></td><td>Get the current check-box state</td></tr>
-<tr><td><code>GetText()</code></td><td>Get the item display text</td></tr>
-<tr><td><code>SetText( cText )</code></td><td>Set the item display text</td></tr>
-<tr><td><code>Bold()</code></td><td>Make the item text bold</td></tr>
-<tr><td><code>Normal()</code></td><td>Remove bold formatting</td></tr>
-<tr><td><code>Save()</code></td><td>Serialize the item (prompt, image, cargo) to a string</td></tr>
-<tr><td><code>Load( cInfo )</code></td><td>Deserialize and restore the item from a saved string</td></tr>
-<tr><td><code>MakeVisible()</code></td><td>Scroll the tree to ensure this item is visible</td></tr>
+<tr><td><code>New( hItem, oTree, Cargo, cPrompt, nImage, oParent )</code></td><td>Encapsula un handle de elemento de árbol nativo existente</td></tr>
+<tr><td><code>Add( cPrompt, nImage, Cargo )</code></td><td>Inserta un elemento hijo en el árbol nativo</td></tr>
+<tr><td><code>Expand()</code></td><td>Expande el elemento del árbol (TVE_EXPAND)</td></tr>
+<tr><td><code>Collapse()</code></td><td>Contrae el elemento del árbol (TVE_COLLAPSE)</td></tr>
+<tr><td><code>Toggle()</code></td><td>Alterna expandir/contraer (TVE_TOGGLE)</td></tr>
+<tr><td><code>Edit()</code></td><td>Inicia la edición de la etiqueta en su lugar (TVM_EDITLABEL)</td></tr>
+<tr><td><code>SetCheck( lOnOff )</code></td><td>Establece o borra el estado de la casilla de verificación</td></tr>
+<tr><td><code>GetCheck()</code></td><td>Obtiene el estado actual de la casilla de verificación</td></tr>
+<tr><td><code>GetText()</code></td><td>Obtiene el texto que se muestra en el elemento</td></tr>
+<tr><td><code>SetText( cText )</code></td><td>Establece el texto que se muestra en el elemento</td></tr>
+<tr><td><code>Bold()</code></td><td>Pone el texto del elemento en negrita</td></tr>
+<tr><td><code>Normal()</code></td><td>Elimina el formato de negrita</td></tr>
+<tr><td><code>Save()</code></td><td>Serializa el elemento (prompt, imagen, cargo) a una cadena</td></tr>
+<tr><td><code>Load( cInfo )</code></td><td>Deserializa y restaura el elemento desde una cadena guardada</td></tr>
+<tr><td><code>MakeVisible()</code></td><td>Desplaza el árbol para asegurar que este elemento sea visible</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Tree Construction</h2>
+<h2 id="example">Ejemplo: Construcción de un Árbol</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -193,7 +193,7 @@ function Main()
 
    local oTreeView, oRoot, oItem1, oItem2
 
-   // TTVItem example with native TreeView
+   // Ejemplo de TTVItem con TreeView nativo
    DEFINE WINDOW oWnd TITLE "Tree Demo" SIZE 400, 300
 
    oTreeView = TTreeView():New( 10, 10, 380, 280, oWnd )
@@ -215,11 +215,11 @@ return nil</code></pre>
 <h2 id="notes">Notas</h2>
 
 <ul>
-<li>TTreeItem is designed for a custom linked-list tree where each node can optionally hold a child TTree (via <code>oTree</code>). The linked list is doubly linked via <code>oPrev</code>/<code>oNext</code>.</li>
-<li>TTVItem wraps a native Windows tree item handle and delegates all display/structure operations to the common control via <code>SendMessage</code>.</li>
-<li>TTVItem <code>Save()</code> / <code>Load()</code> serialize the <code>cPrompt</code>, <code>nImage</code>, <code>Cargo</code> and <code>lBold</code> properties.</li>
-<li><code>GetCheck()</code> / <code>SetCheck()</code> require the tree to have the <code>TVS_CHECKBOXES</code> style.</li>
-<li>The <code>Value</code> accessor/assign in TTreeItem delegates to a <code>bSetGet</code> codeblock, allowing the node to act as a SET/GET variable.</li>
+<li>TTreeItem está diseñado para un árbol de lista enlazada personalizado donde cada nodo puede contener opcionalmente un TTree hijo (a través de <code>oTree</code>). La lista enlazada es doblemente enlazada mediante <code>oPrev</code>/<code>oNext</code>.</li>
+<li>TTVItem encapsula un handle de elemento de árbol nativo de Windows y delega todas las operaciones de visualización/estructura al control común a través de <code>SendMessage</code>.</li>
+<li>En TTVItem, <code>Save()</code> / <code>Load()</code> serializan las propiedades <code>cPrompt</code>, <code>nImage</code>, <code>Cargo</code> y <code>lBold</code>.</li>
+<li><code>GetCheck()</code> / <code>SetCheck()</code> requieren que el árbol tenga el estilo <code>TVS_CHECKBOXES</code>.</li>
+<li>El acceso/asignación de <code>Value</code> en TTreeItem delega en un bloque de código <code>bSetGet</code>, permitiendo que el nodo actúe como una variable SET/GET.</li>
 </ul>
 
 </main>

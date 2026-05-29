@@ -11,7 +11,7 @@
 <nav id="sidebar">
 <div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentação FWH</h2></a><span class="version">Versão 26.05</span></div>
 <div class="nav-section"><div class="nav-section-title">Primeiros Passos</div>
-<a class="nav-item" href="../../pt/getting-started/overview.html">Overview</a>
+<a class="nav-item" href="../../pt/getting-started/overview.html">Visão Geral</a>
 <a class="nav-item" href="../../pt/getting-started/installation.html">Instalação</a>
 <a class="nav-item" href="../../pt/getting-started/build-system.html">Sistema de Build</a></div>
 <div class="nav-section"><div class="nav-section-title">Classes Base</div>
@@ -41,36 +41,36 @@
 <main id="content">
 
 <h1>TSysLink</h1>
-<p class="class-source">Source: <code>source/classes/tsyslink.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fonte: <code>source/classes/tsyslink.prg</code></p>
+<p class="class-hierarchy">Herda de: <code>TControl</code></p>
 
 <p>
-TSysLink wraps the Windows SysLink common control (Vista+), providing clickable hyperlinks within dialogs. Multiple links can be embedded in a single text string using HTML-style <code>&lt;a&gt;</code> tags. Links open URLs in the default browser or trigger Harbour code blocks.
+TSysLink encapsula o controle comum SysLink do Windows (Vista+), fornecendo hyperlinks clicáveis dentro de diálogos. Vários links podem ser incorporados em uma única string de texto usando tags <code>&lt;a&gt;</code> no estilo HTML. Os links abrem URLs no navegador padrão ou disparam blocos de código Harbour.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
-<table><thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<h2 id="data">Membros DATA Principais</h2>
+<table><thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>cText</code></td><td>Character</td><td>Display text with <code>&lt;a&gt;</code> tags defining link regions</td></tr>
-<tr><td><code>cUrl</code></td><td>Character</td><td>URL opened when a link is clicked</td></tr>
-<tr><td><code>nLinkId</code></td><td>Numeric</td><td>Index of the last clicked link</td></tr>
+<tr><td><code>cText</code></td><td>Character</td><td>Texto exibido com tags <code>&lt;a&gt;</code> que definem as regiões de link</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td>URL aberta quando um link é clicado</td></tr>
+<tr><td><code>nLinkId</code></td><td>Numeric</td><td>Índice do último link clicado</td></tr>
 </tbody></table>
 
-<h2 id="methods">Methods</h2>
-<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
+<h2 id="methods">Métodos</h2>
+<table><thead><tr><th>Método</th><th>Descrição</th></tr></thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, cText, cUrl, nW, nH, lPixel, lDesign, cMsg, bWhen, bClick, lTransparent, ... )</code></td><td>Create a new SysLink control</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, cText, cUrl )</code></td><td>Redefine from a dialog resource</td></tr>
-<tr><td><code>SetText( cText ) / GetText()</code></td><td>Change or retrieve the link text</td></tr>
-<tr><td><code>HitTest( nX, nY )</code></td><td>Test which link is at the given coordinates</td></tr>
-<tr><td><code>GetIdealHeight( nWidth )</code></td><td>Return ideal height for a given width</td></tr>
-<tr><td><code>SetItem( nIndex, cUrl, nState ) / GetItem( nIndex )</code></td><td>Modify or query individual link items</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, cText, cUrl, nW, nH, lPixel, lDesign, cMsg, bWhen, bClick, lTransparent, ... )</code></td><td>Cria um novo controle SysLink</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cText, cUrl )</code></td><td>Redefine a partir de um recurso de diálogo</td></tr>
+<tr><td><code>SetText( cText ) / GetText()</code></td><td>Altera ou recupera o texto do link</td></tr>
+<tr><td><code>HitTest( nX, nY )</code></td><td>Testa qual link está nas coordenadas fornecidas</td></tr>
+<tr><td><code>GetIdealHeight( nWidth )</code></td><td>Retorna a altura ideal para uma dada largura</td></tr>
+<tr><td><code>SetItem( nIndex, cUrl, nState ) / GetItem( nIndex )</code></td><td>Modifica ou consulta itens de link individuais</td></tr>
 </tbody></table>
 
 <h2 id="commands">Comandos</h2>
 <pre><code class="language-harbour">@ nRow, nCol SYSLINK oLink TEXT cText OF oWnd</code></pre>
 
-<h2 id="example">Example: Multiple Links</h2>
+<h2 id="example">Exemplo: Múltiplos Links</h2>
 <pre><code class="language-harbour">#include "FiveWin.ch"
 function Main()
    local oWnd, oLink
@@ -82,11 +82,11 @@ function Main()
    ACTIVATE WINDOW oWnd CENTERED
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 <ul>
-<li>Requires Windows Vista or later (SysLink control not available on older versions).</li>
-<li>Link regions are defined with <code>&lt;a href="..."&gt;</code> tags. Clicking opens the URL in the default browser.</li>
-<li>Use <code>lTransparent := .T.</code> to make the background match the parent dialog.</li>
+<li>Requer Windows Vista ou posterior (o controle SysLink não está disponível em versões mais antigas).</li>
+<li>As regiões de link são definidas com tags <code>&lt;a href="..."&gt;</code>. Clicar abre a URL no navegador padrão.</li>
+<li>Use <code>lTransparent := .T.</code> para fazer o fundo coincidir com o diálogo pai.</li>
 </ul>
 
 </main>

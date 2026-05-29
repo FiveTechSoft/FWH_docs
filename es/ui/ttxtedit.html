@@ -123,49 +123,49 @@
 <main id="content">
 
 <h1>TTxtEdit</h1>
-<p class="class-source">Source: <code>source/classes/ttxtedit.prg</code></p>
-<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p class="class-source">Fuente: <code>source/classes/ttxtedit.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
 
 <p>
-TTxtEdit is a source code text editor control with syntax highlighting support. It provides line-oriented editing with insert/overwrite modes, clipboard operations, undo/redo history, find and replace dialogs, and line manipulation commands. Token-based syntax coloring can be customized for different programming languages.
+TTxtEdit es un control editor de texto para código fuente con soporte de resaltado de sintaxis. Proporciona edición orientada a líneas con modos de inserción/sobrescritura, operaciones de portapapeles, historial de deshacer/rehacer, diálogos de buscar y reemplazar, y comandos de manipulación de líneas. El coloreado de sintaxis basado en tokens puede personalizarse para diferentes lenguajes de programación.
 </p>
 
-<h2 id="data">Key DATA Members</h2>
+<h2 id="data">Miembros DATA Clave</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aLines</code></td><td>Array</td><td>Array of character strings, one per text line</td></tr>
-<tr><td><code>lInsert</code></td><td>Logical</td><td>Insert mode when <code>.T.</code>, overwrite mode when <code>.F.</code></td></tr>
-<tr><td><code>lChanged</code></td><td>Logical</td><td>Flag indicating the text has been modified</td></tr>
-<tr><td><code>cFileName</code></td><td>Character</td><td>File name associated with the edited document</td></tr>
-<tr><td><code>cTokens1 / cTokens2 / cTokens3</code></td><td>Character</td><td>Token lists for three syntax highlighting groups</td></tr>
-<tr><td><code>nClrTok1 / nClrTok2 / nClrTok3</code></td><td>Numeric</td><td>Text colors for each token group</td></tr>
-<tr><td><code>nClrNumber</code></td><td>Numeric</td><td>Color for numeric literals</td></tr>
-<tr><td><code>nClrString</code></td><td>Numeric</td><td>Color for string literals</td></tr>
+<tr><td><code>aLines</code></td><td>Array</td><td>Array de cadenas de caracteres, una por cada línea de texto</td></tr>
+<tr><td><code>lInsert</code></td><td>Lógico</td><td>Modo inserción cuando es <code>.T.</code>, modo sobrescritura cuando es <code>.F.</code></td></tr>
+<tr><td><code>lChanged</code></td><td>Lógico</td><td>Indicador de que el texto ha sido modificado</td></tr>
+<tr><td><code>cFileName</code></td><td>Carácter</td><td>Nombre del archivo asociado al documento editado</td></tr>
+<tr><td><code>cTokens1 / cTokens2 / cTokens3</code></td><td>Carácter</td><td>Listas de tokens para tres grupos de resaltado de sintaxis</td></tr>
+<tr><td><code>nClrTok1 / nClrTok2 / nClrTok3</code></td><td>Numérico</td><td>Colores de texto para cada grupo de tokens</td></tr>
+<tr><td><code>nClrNumber</code></td><td>Numérico</td><td>Color para literales numéricos</td></tr>
+<tr><td><code>nClrString</code></td><td>Numérico</td><td>Color para literales de cadena</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Métodos</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Description</th></tr>
+<tr><th>Método</th><th>Descripción</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, oWnd )</code></td><td>Create a new text editor control with position and dimensions</td></tr>
-<tr><td><code>Load( cFile ) / SaveToFile( cFile )</code></td><td>Load text from a file or save the current text to a file</td></tr>
-<tr><td><code>SetText( cText ) / GetText()</code></td><td>Set or retrieve the full editor text content</td></tr>
-<tr><td><code>Copy() / Cut() / Paste()</code></td><td>Clipboard operations for selected text</td></tr>
-<tr><td><code>Undo() / Redo()</code></td><td>Undo or redo the last editing action</td></tr>
-<tr><td><code>Find( cText ) / DlgFind() / DlgGoLine()</code></td><td>Search for text, show find dialog, or go to line dialog</td></tr>
-<tr><td><code>InsLine() / DelLine() / DupLine() / JoinLine()</code></td><td>Insert, delete, duplicate, or join the current line</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, oWnd )</code></td><td>Crea un nuevo control editor de texto con posición y dimensiones</td></tr>
+<tr><td><code>Load( cFile ) / SaveToFile( cFile )</code></td><td>Carga texto desde un archivo o guarda el texto actual en un archivo</td></tr>
+<tr><td><code>SetText( cText ) / GetText()</code></td><td>Establece o recupera todo el contenido de texto del editor</td></tr>
+<tr><td><code>Copy() / Cut() / Paste()</code></td><td>Operaciones de portapapeles para el texto seleccionado</td></tr>
+<tr><td><code>Undo() / Redo()</code></td><td>Deshace o rehace la última acción de edición</td></tr>
+<tr><td><code>Find( cText ) / DlgFind() / DlgGoLine()</code></td><td>Busca texto, muestra el diálogo de búsqueda o el diálogo de ir a línea</td></tr>
+<tr><td><code>InsLine() / DelLine() / DupLine() / JoinLine()</code></td><td>Inserta, elimina, duplica o une la línea actual</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Example: Syntax-Highlighted Editor</h2>
+<h2 id="example">Ejemplo: Editor con Resaltado de Sintaxis</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -177,7 +177,7 @@ function Main()
 
    oEdit := TTxtEdit():New( 0, 0, 600, 380, oWnd )
 
-   // Harbour syntax tokens
+   // Tokens de sintaxis de Harbour
    oEdit:cTokens1 := "function|procedure|local|if|else|endif|do|while|return"
    oEdit:nClrTok1 := CLR_BLUE
 
@@ -193,14 +193,14 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notes</h2>
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>Syntax highlighting uses three token groups (<code>cTokens1</code> through <code>cTokens3</code>) with independently configurable colors.</li>
-<li>Tokens are pipe-delimited strings. Each token is matched as a whole word in the source text.</li>
-<li>The <code>lChanged</code> flag is automatically maintained; check it before closing to prompt for saving.</li>
-<li>Use <code>DlgFind()</code> and <code>DlgGoLine()</code> to provide standard Find and Go To Line dialogs to the user.</li>
-<li>The <code>aLines</code> array provides direct access to individual lines for programmatic manipulation.</li>
+<li>El resaltado de sintaxis utiliza tres grupos de tokens (<code>cTokens1</code> a <code>cTokens3</code>) con colores configurables de forma independiente.</li>
+<li>Los tokens son cadenas delimitadas por barras verticales. Cada token se compara como palabra completa en el texto fuente.</li>
+<li>El indicador <code>lChanged</code> se mantiene automáticamente; compruébelo antes de cerrar para solicitar el guardado.</li>
+<li>Use <code>DlgFind()</code> y <code>DlgGoLine()</code> para ofrecer al usuario los diálogos estándar de Buscar e Ir a Línea.</li>
+<li>El array <code>aLines</code> proporciona acceso directo a las líneas individuales para su manipulación programática.</li>
 </ul>
 
 </main>
