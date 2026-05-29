@@ -138,6 +138,77 @@ aprendida, QKV combinado com bias, <code>lm_head</code> com weight-tying).
 <li>Cada fase é entregável de forma independente e deixa a biblioteca em estado funcional.</li>
 </ul>
 
+<h2 id="fwai">Utilidades HuggingFace concretas para apps FWH (objetivo "FWAI")</h2>
+<p>
+<strong>Objetivo:</strong> tornar o FWH uma plataforma AI de primeira &mdash;
+qualquer capacidade hospedada na HuggingFace usável a partir do Harbour em poucas
+linhas, via três backends <em>intercambiáveis</em>: remoto (Inference API,
+amplitude hoje), local (FW_Tensor / llama.cpp, privacidade + offline) e do zero
+(educacional). As apps FiveWin são de negócio sobre DBF/SQL + xBrowse, então as
+utilidades de maior valor são as que conectam IA a esses dados.
+</p>
+<table>
+<thead><tr><th>Utilidade</th><th>O que faz numa app FWH</th><th>Backend</th><th>Valor</th></tr></thead>
+<tbody>
+<tr><td><strong>Busca semântica</strong> sobre DBF/SQL</td><td>achar clientes/faturas/produtos por <em>significado</em>, não LIKE</td><td>embeddings (API <code>tembeddings</code> / local) + cosseno</td><td>★★★</td></tr>
+<tr><td><strong>RAG / Q&amp;A de docs</strong></td><td>responder perguntas em linguagem natural sobre PDFs/manuais</td><td>embeddings + retrieval + LLM</td><td>★★★</td></tr>
+<tr><td><strong>Classificação de texto</strong></td><td>auto-categorizar tickets, emails, despesas; roteamento de intenção</td><td>API / transformer pequeno local</td><td>★★★</td></tr>
+<tr><td><strong>NER (extração)</strong></td><td>extrair nomes/datas/valores/CPF de texto livre &rarr; campos DB</td><td>API / local</td><td>★★★</td></tr>
+<tr><td><strong>Voz para texto (Whisper)</strong></td><td>ditado em GETs, transcrever ligações/notas de voz</td><td>API / binding whisper.cpp</td><td>★★★</td></tr>
+<tr><td><strong>Resumo</strong></td><td>notas/relatórios/emails longos &rarr; campo resumo</td><td>API / llama.cpp</td><td>★★</td></tr>
+<tr><td><strong>Tradução</strong></td><td>faturas / UI / conteúdo multilíngue</td><td>API</td><td>★★</td></tr>
+<tr><td><strong>Sentimento</strong></td><td>pontuar avaliações / feedback de clientes</td><td>API / local</td><td>★★</td></tr>
+<tr><td><strong>OCR / imagem&rarr;texto</strong></td><td>escanear recibos/documentos &rarr; texto &rarr; DB</td><td>API / VLM local</td><td>★★</td></tr>
+<tr><td><strong>Assistente chat in-app</strong></td><td>consultar os dados da app em linguagem natural; ajuda</td><td>llama.cpp local / API</td><td>★★★</td></tr>
+<tr><td><strong>Autocompletar GETs</strong></td><td>predição de próxima palavra/campo</td><td>GPT-2 local (viável já)</td><td>★★</td></tr>
+<tr><td><strong>Normalização de dados</strong></td><td>corrigir endereços, deduplicar, padronizar</td><td>LLM API/local</td><td>★★</td></tr>
+</tbody>
+</table>
+<h3>As cinco a construir primeiro (máximo valor / menor esforço)</h3>
+<ol>
+<li><strong>TSemanticIndex</strong> &mdash; indexa uma coluna DBF/SQL em embeddings; <code>:Search(cText)</code> retorna registros por similaridade de cosseno. A killer para apps de dados; reutiliza <code>tembeddings</code>.</li>
+<li><strong>TChatAgent</strong> &mdash; chat sobre os dados da app (function-calling simples: o LLM pede consultas, a app devolve linhas). Backend llama.cpp (local) ou API.</li>
+<li><strong>THFTask</strong> &mdash; base fina + <code>:Classify / :NER / :Summarize / :Translate / :Sentiment</code> via Inference API (cada um ~20 linhas de curl, como <code>tembeddings</code>). Cinco utilidades de uma vez.</li>
+<li><strong>TWhisperCpp</strong> &mdash; binding ao whisper.cpp para ditado offline &rarr; texto em GET.</li>
+<li><strong>Autocompletar GET com GPT-2 local</strong> &mdash; tudo o necessário já existe.</li>
+</ol>
+
+<h2 id="local-vs-cloud">Local vs API cloud (ex. TDeepSeek) &mdash; quando usar cada um</h2>
+<p>
+Não é um-ou-outro. Uma API cloud (TDeepSeek, OpenAI, Gemini…) ganha em capacidade
+bruta; o local ganha no contexto de implantação. Escolha o backend por tarefa.
+</p>
+<p><strong>Onde o local (FW_Tensor / GPT-2 / llama.cpp) ganha:</strong></p>
+<ul>
+<li><strong>Privacidade / soberania do dado</strong> &mdash; o dado nunca sai da máquina (GDPR, médico, jurídico, financeiro, defesa). Uma API cloud envia seu dado a um terceiro.</li>
+<li><strong>Offline</strong> &mdash; fábricas, navios, redes isoladas/air-gapped.</li>
+<li><strong>Custo zero por chamada</strong> &mdash; embeddings sobre 1M registros DBF, autocompletar a cada tecla: grátis local; medido + rate-limited via API.</li>
+<li><strong>Latência</strong> &mdash; classificar/embedding local é instantâneo; por-tecla (&lt;50 ms) é impossível com round-trip de rede.</li>
+<li><strong>Sem dependência / longevidade</strong> &mdash; APIs mudam, depreciam, sobem preço, caem, geo-bloqueiam. O modelo local é seu para sempre e vai dentro do .exe.</li>
+<li><strong>Determinismo / auditável</strong> &mdash; pesos fixos = saída reproduzível; indústrias reguladas precisam disso.</li>
+<li><strong>Embarcável / sem conta</strong> &mdash; IA num desktop sem setup, sem API key por cliente, sem cadastro.</li>
+<li><strong>Personalização</strong> &mdash; treinar modelos minúsculos de domínio com os dados do próprio cliente (Trilha A).</li>
+</ul>
+<p><strong>Onde a API cloud ganha (honesto):</strong></p>
+<ul>
+<li><strong>Capacidade bruta</strong> &mdash; DeepSeek-V3/R1 ≫ GPT-2 ou qualquer coisa rodada local na CPU. Raciocínio difícil / chat de qualidade → cloud vence decisivamente.</li>
+<li><strong>Zero infraestrutura</strong> &mdash; sem modelo de 500 MB, sem footprint de RAM/GPU.</li>
+<li><strong>Sempre o último modelo, sem manutenção.</strong></li>
+</ul>
+<p>
+<strong>Regra prática:</strong> cloud para raciocínio/chat de qualidade sobre dado
+não sensível e online; local para dado sensível, offline, alto volume/barato
+(busca semântica sobre toda a BD), latência por-tecla, embarcado sem setup,
+regulado/auditável.
+</p>
+<p>
+<strong>A ideia-chave &mdash; híbrido.</strong> O local <em>complementa</em> o
+cloud, não o substitui. Exemplo RAG: retrieval com <strong>embeddings locais</strong>
+(barato, privado, sobre centenas de milhares de registros), depois gerar a resposta
+com <strong>a API cloud</strong> (qualidade). O design de backends intercambiáveis
+deixa o desenvolvedor escolher por tarefa, e a app nunca fica presa a um provedor.
+</p>
+
 <h2 id="status">Status</h2>
 <ul>
 <li>&#10003; <a href="../../pt/ai/hftokenizer.html">HFTokenizer</a> (BPE do GPT-2), bit a bit &mdash; na lib</li>

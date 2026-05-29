@@ -149,6 +149,83 @@ That is the most direct path to a headline feature.
 - Each phase is independently shippable and leaves the library in a working state,
   so the effort can pause/resume without half-finished plumbing.
 
+## Concrete HuggingFace utilities for FWH apps (the "FWAI" objective)
+
+**Objective:** make FWH a first-class AI app platform — any HuggingFace-hosted
+capability usable from Harbour in a few lines, via three *interchangeable*
+backends: remote (Inference API, breadth today), local (FW_Tensor / llama.cpp,
+privacy + offline) and from-scratch (educational). FiveWin apps are DBF/SQL +
+xBrowse business apps, so the high-value utilities are the ones that plug AI into
+that data.
+
+| Utility | What it does in an FWH app | Backend | Have / Need | Value |
+|---------|----------------------------|---------|-------------|-------|
+| **Semantic search** over DBF/SQL | find customers/invoices/products by *meaning*, not LIKE | embeddings (API `tembeddings` ✓ / local) + cosine | base ✓, need `TSemanticIndex` | ★★★ |
+| **RAG / doc Q&A** | answer natural-language questions over company PDFs/manuals | embeddings + retrieval + LLM | pieces ✓, need pipeline | ★★★ |
+| **Text classification** | auto-categorize tickets, emails, expenses; intent routing | API / small local transformer ✓ | `THFTask:Classify` | ★★★ |
+| **NER (extraction)** | pull names/dates/amounts/tax-ids from free text → DB fields | API / local | `THFTask:NER` | ★★★ |
+| **Speech-to-text (Whisper)** | dictation into GETs, transcribe calls/voice notes | API / whisper.cpp binding | need | ★★★ |
+| **Summarization** | long notes/reports/emails → summary field | API / llama.cpp | `THFTask:Summarize` | ★★ |
+| **Translation** | multilingual invoices / UI / content | API | `THFTask:Translate` | ★★ |
+| **Sentiment** | score reviews / customer feedback | API / local | `THFTask:Sentiment` | ★★ |
+| **OCR / image→text** | scan receipts/IDs → text → DB | API / local VLM | need | ★★ |
+| **In-app chat assistant** | query the app's data in natural language; help | llama.cpp local / API | `TChatAgent` | ★★★ |
+| **GET autocomplete** | next-word / field prediction | local GPT-2 (✓ now feasible) | sample | ★★ |
+| **Data normalization** | fix addresses, dedupe, standardize | LLM API/local | need | ★★ |
+
+**First five to build (max value / least effort):**
+1. **`TSemanticIndex`** — index a DBF/SQL column into embeddings; `:Search(cText)`
+   returns records by cosine similarity. The killer feature for data apps; reuses
+   `tembeddings`.
+2. **`TChatAgent`** — chat over the app's data (simple function-calling: the LLM
+   asks for queries, the app returns rows). Backend llama.cpp (local) or API.
+3. **`THFTask`** — thin base + `:Classify / :NER / :Summarize / :Translate /
+   :Sentiment` over the Inference API (each ~20 lines of curl, like `tembeddings`).
+   Covers five utilities at once.
+4. **`TWhisperCpp`** — binding to whisper.cpp for offline dictation → GET text.
+5. **GET autocomplete with local GPT-2** — everything needed already exists.
+
+**Key pattern:** every utility ships with interchangeable backends (remote for
+breadth now, local FW_Tensor/llama.cpp for privacy/offline). That is the FWAI
+objective in practice.
+
+## Local vs cloud API (e.g. TDeepSeek) — when to use each
+
+This is not either/or. A cloud API (TDeepSeek, OpenAI, Gemini…) wins on raw
+capability; local wins on the deployment context. Pick the backend per task.
+
+**Where local (FW_Tensor / GPT-2 / llama.cpp) wins:**
+- **Privacy / data sovereignty** — data never leaves the machine (GDPR, medical,
+  legal, financial, defense). A cloud API ships your data to a third party.
+- **Offline** — factories, ships, isolated/air-gapped networks. No internet needed.
+- **Zero per-call cost** — embeddings over 1M DBF rows, autocomplete on every
+  keystroke: free locally; metered + rate-limited via API.
+- **Latency** — local classify/embed is instant; per-keystroke (<50 ms) is
+  impossible across a network round-trip.
+- **No dependency / longevity** — APIs change, deprecate, raise prices, go down,
+  geo-block. A local model is yours forever and ships inside the .exe.
+- **Determinism / auditability** — fixed weights = reproducible output; cloud
+  models change under you. Regulated industries need this.
+- **Embeddable / no account** — AI in a desktop app with zero setup, no per-customer
+  API key, no signup.
+- **Customization** — train tiny domain models on the customer's own data (Track A).
+
+**Where the cloud API wins (be honest):**
+- **Raw capability** — DeepSeek-V3/R1 ≫ GPT-2 or anything you run locally on CPU.
+  Hard reasoning / high-quality chat → cloud wins decisively.
+- **Zero infrastructure** — no 500 MB model, no RAM/GPU footprint.
+- **Always the latest model, maintenance-free.**
+
+**Rule of thumb:** cloud for heavy reasoning / quality chat on non-sensitive,
+online data; local for sensitive data, offline, high-volume/cheap (semantic search
+over a whole DB), per-keystroke latency, embedded zero-setup, regulated/auditable.
+
+**The key insight — hybrid.** Local *complements* the cloud, it does not replace
+it. Example RAG: do retrieval with **local embeddings** (cheap, private, over
+hundreds of thousands of records), then generate the answer with **the cloud API**
+(quality). The interchangeable-backend design means the developer chooses per task
+and the app is never locked to one provider.
+
 ## Status
 
 - [x] HFTokenizer (GPT-2 BPE), bit-exact — in lib

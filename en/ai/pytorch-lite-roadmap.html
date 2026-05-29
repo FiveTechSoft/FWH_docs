@@ -136,6 +136,78 @@ Phase&nbsp;1&nbsp;+&nbsp;Phase&nbsp;3. That is the most direct path to a headlin
 <li>Each phase is independently shippable and leaves the library in a working state.</li>
 </ul>
 
+<h2 id="fwai">Concrete HuggingFace utilities for FWH apps (the "FWAI" objective)</h2>
+<p>
+<strong>Objective:</strong> make FWH a first-class AI app platform &mdash; any
+HuggingFace-hosted capability usable from Harbour in a few lines, via three
+<em>interchangeable</em> backends: remote (Inference API, breadth today), local
+(FW_Tensor / llama.cpp, privacy + offline) and from-scratch (educational).
+FiveWin apps are DBF/SQL + xBrowse business apps, so the high-value utilities are
+the ones that plug AI into that data.
+</p>
+<table>
+<thead><tr><th>Utility</th><th>What it does in an FWH app</th><th>Backend</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td><strong>Semantic search</strong> over DBF/SQL</td><td>find customers/invoices/products by <em>meaning</em>, not LIKE</td><td>embeddings (API <code>tembeddings</code> / local) + cosine</td><td>★★★</td></tr>
+<tr><td><strong>RAG / doc Q&amp;A</strong></td><td>answer natural-language questions over company PDFs/manuals</td><td>embeddings + retrieval + LLM</td><td>★★★</td></tr>
+<tr><td><strong>Text classification</strong></td><td>auto-categorize tickets, emails, expenses; intent routing</td><td>API / small local transformer</td><td>★★★</td></tr>
+<tr><td><strong>NER (extraction)</strong></td><td>pull names/dates/amounts/tax-ids from free text &rarr; DB fields</td><td>API / local</td><td>★★★</td></tr>
+<tr><td><strong>Speech-to-text (Whisper)</strong></td><td>dictation into GETs, transcribe calls/voice notes</td><td>API / whisper.cpp binding</td><td>★★★</td></tr>
+<tr><td><strong>Summarization</strong></td><td>long notes/reports/emails &rarr; summary field</td><td>API / llama.cpp</td><td>★★</td></tr>
+<tr><td><strong>Translation</strong></td><td>multilingual invoices / UI / content</td><td>API</td><td>★★</td></tr>
+<tr><td><strong>Sentiment</strong></td><td>score reviews / customer feedback</td><td>API / local</td><td>★★</td></tr>
+<tr><td><strong>OCR / image&rarr;text</strong></td><td>scan receipts/IDs &rarr; text &rarr; DB</td><td>API / local VLM</td><td>★★</td></tr>
+<tr><td><strong>In-app chat assistant</strong></td><td>query the app's data in natural language; help</td><td>llama.cpp local / API</td><td>★★★</td></tr>
+<tr><td><strong>GET autocomplete</strong></td><td>next-word / field prediction</td><td>local GPT-2 (feasible now)</td><td>★★</td></tr>
+<tr><td><strong>Data normalization</strong></td><td>fix addresses, dedupe, standardize</td><td>LLM API/local</td><td>★★</td></tr>
+</tbody>
+</table>
+<h3>First five to build (max value / least effort)</h3>
+<ol>
+<li><strong>TSemanticIndex</strong> &mdash; index a DBF/SQL column into embeddings; <code>:Search(cText)</code> returns records by cosine similarity. The killer feature for data apps; reuses <code>tembeddings</code>.</li>
+<li><strong>TChatAgent</strong> &mdash; chat over the app's data (simple function-calling: the LLM asks for queries, the app returns rows). Backend llama.cpp (local) or API.</li>
+<li><strong>THFTask</strong> &mdash; thin base + <code>:Classify / :NER / :Summarize / :Translate / :Sentiment</code> over the Inference API (each ~20 lines of curl, like <code>tembeddings</code>). Five utilities at once.</li>
+<li><strong>TWhisperCpp</strong> &mdash; binding to whisper.cpp for offline dictation &rarr; GET text.</li>
+<li><strong>GET autocomplete with local GPT-2</strong> &mdash; everything needed already exists.</li>
+</ol>
+
+<h2 id="local-vs-cloud">Local vs cloud API (e.g. TDeepSeek) &mdash; when to use each</h2>
+<p>
+Not either/or. A cloud API (TDeepSeek, OpenAI, Gemini…) wins on raw capability;
+local wins on the deployment context. Pick the backend per task.
+</p>
+<p><strong>Where local (FW_Tensor / GPT-2 / llama.cpp) wins:</strong></p>
+<ul>
+<li><strong>Privacy / data sovereignty</strong> &mdash; data never leaves the machine (GDPR, medical, legal, financial, defense). A cloud API ships your data to a third party.</li>
+<li><strong>Offline</strong> &mdash; factories, ships, isolated/air-gapped networks.</li>
+<li><strong>Zero per-call cost</strong> &mdash; embeddings over 1M DBF rows, autocomplete on every keystroke: free locally; metered + rate-limited via API.</li>
+<li><strong>Latency</strong> &mdash; local classify/embed is instant; per-keystroke (&lt;50 ms) is impossible across a network round-trip.</li>
+<li><strong>No dependency / longevity</strong> &mdash; APIs change, deprecate, raise prices, go down, geo-block. A local model is yours forever and ships inside the .exe.</li>
+<li><strong>Determinism / auditability</strong> &mdash; fixed weights = reproducible output; regulated industries need this.</li>
+<li><strong>Embeddable / no account</strong> &mdash; AI in a desktop app with zero setup, no per-customer API key, no signup.</li>
+<li><strong>Customization</strong> &mdash; train tiny domain models on the customer's own data (Track A).</li>
+</ul>
+<p><strong>Where the cloud API wins (be honest):</strong></p>
+<ul>
+<li><strong>Raw capability</strong> &mdash; DeepSeek-V3/R1 ≫ GPT-2 or anything you run locally on CPU. Hard reasoning / high-quality chat → cloud wins decisively.</li>
+<li><strong>Zero infrastructure</strong> &mdash; no 500 MB model, no RAM/GPU footprint.</li>
+<li><strong>Always the latest model, maintenance-free.</strong></li>
+</ul>
+<p>
+<strong>Rule of thumb:</strong> cloud for heavy reasoning / quality chat on
+non-sensitive, online data; local for sensitive data, offline, high-volume/cheap
+(semantic search over a whole DB), per-keystroke latency, embedded zero-setup,
+regulated/auditable.
+</p>
+<p>
+<strong>The key insight &mdash; hybrid.</strong> Local <em>complements</em> the
+cloud, it does not replace it. Example RAG: retrieval with <strong>local
+embeddings</strong> (cheap, private, over hundreds of thousands of records), then
+generate the answer with <strong>the cloud API</strong> (quality). The
+interchangeable-backend design lets the developer choose per task, and the app is
+never locked to one provider.
+</p>
+
 <h2 id="status">Status</h2>
 <ul>
 <li>&#10003; <a href="../../en/ai/hftokenizer.html">HFTokenizer</a> (GPT-2 BPE), bit-exact &mdash; in lib</li>
