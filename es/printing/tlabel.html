@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Label Printing - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar">
+<div id="sidebar-header">
+<a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a>
+<span class="version">Versión 26.05</span>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Getting Started</div>
+<a class="nav-item" href="../../es/getting-started/overview.html">Framework Overview</a>
+<a class="nav-item" href="../../es/getting-started/installation.html">Installation</a>
+<a class="nav-item" href="../../es/getting-started/build-system.html">Build System</a>
+<a class="nav-item" href="../../es/getting-started/samples-guide.html">Samples &amp; Learning Path</a>
+<a class="nav-item" href="../../es/getting-started/tlocalization.html">Localization</a>
+<a class="nav-item" href="../../es/getting-started/whatsnew.html">What's New</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Printing &amp; Reports</div>
+<a class="nav-item active" href="../../es/printing/tprinter.html">TPrinter</a>
+<a class="nav-item" href="../../es/printing/treport.html">TReport</a>
+<a class="nav-item" href="../../es/printing/tpreview.html">TPreview</a>
+<a class="nav-item" href="../../es/printing/tpdf.html">TPdf</a>
+<a class="nav-item" href="../../es/printing/tfwpdf.html">FWPdf</a>
+<a class="nav-item" href="../../es/printing/tvrd.html">VRD</a>
+<a class="nav-item" href="../../es/printing/easyreport.html">EasyReport</a>
+<a class="nav-item" href="../../es/printing/tbarcode.html">BarCode</a>
+<a class="nav-item" href="../../es/printing/tlabel.html">Label Printing</a>
+<a class="nav-item" href="../../es/printing/tereport.html">TEReport</a>
+<a class="nav-item" href="../../es/printing/trcolumn.html">TRColumn</a>
+<a class="nav-item" href="../../es/printing/trline.html">TRLine</a>
+<a class="nav-item" href="../../es/printing/trgroup.html">TRGroup</a>
+<a class="nav-item" href="../../es/printing/trfile.html">TRFile</a>
+</div>
+<div class="nav-section">
+<div class="nav-section-title">Reference</div>
+<a class="nav-item" href="../../es/reference/commands.html">Commands</a>
+<a class="nav-item" href="../../es/reference/functions.html">Functions</a>
+<a class="nav-item" href="../../es/reference/errorsys.html">Error System</a>
+<a class="nav-item" href="../../es/reference/resources.html">Resources (GDI)</a>
+<a class="nav-item" href="../../es/reference/more-classes.html">More Classes</a>
+</div>
+</nav>
+<main id="content">
+
+<h1>Label Printing</h1>
+<p class="class-source">Fuentes: <code>samples/labels/source/LABEL.PRG</code>, <code>LITEM.PRG</code>, <code>PDLABEL.PRG</code> &mdash; by Manuel Calero Solis (1995)</p>
+
+<p>
+FWH includes a complete label printing system in <code>samples/labels/</code> with 17 sample programs and full source code. It prints labels in a grid layout (e.g. 2 across, 7 down) with automatic page breaks, positioning, and bitmap support. Labels can output to printer, preview window, or text file.
+</p>
+
+<h2 id="architecture">Architecture</h2>
+<div class="mermaid">
+graph LR
+  A["LABEL Command"] --> B["TLabel Engine"]
+  B --> C["TPrinter"]
+  B --> D["TRFile (text)"]
+  B --> E["Preview Dialog"]
+  F["TLItem"] --> B
+  G["LBLITEM Command"] --> F
+</div>
+
+<h2 id="commands">Commands (include/label.ch)</h2>
+
+<h3>LABEL</h3>
+<pre><code class="language-harbour">LABEL oLabel ;
+   SIZE nWidth, nHeight ;          // mm
+   SEPARATORS nH, nV ;              // horizontal, vertical gap in mm
+   ON LINE nCount ;                 // labels per row
+   FONT aFonts PEN aPens ;         // optional font/pen arrays
+   TO PRINTER | PREVIEW | FILE cFile | DEVICE oDevice ;
+   CAPTION cTitle</code></pre>
+
+<h3>LBLITEM</h3>
+<pre><code class="language-harbour">LBLITEM DATA bData1, bData2, ... ;
+   AT nCol ;                        // column offset
+   SIZE nChars ;                    // width in characters
+   PICTURE cPict1, cPict2, ... ;
+   FONT uFont ;                     // font index or name
+   LEFT | CENTER | RIGHT ;
+   SHADOW ;                         // gray background
+   GRID nPen                        // bottom grid line</code></pre>
+
+<h3>ACTIVATE LABEL</h3>
+<pre><code class="language-harbour">ACTIVATE LABEL oLabel ;
+   FOR bFor WHILE bWhile ;
+   ON INIT bInit ;
+   ON STARTPAGE bStartPage ON ENDPAGE bEndPage ;
+   ON STARTLINE bStartLine ON ENDLINE bEndLine ;
+   ON STARTLABEL bStartLabel ON ENDLABEL bEndLabel ;
+   ON CHANGE bChange</code></pre>
+
+<h2 id="tlabel">TLabel Class</h2>
+<p>Core label engine. Manages label grid layout, page breaks, fonts, and output device.</p>
+
+<table>
+<tr><th>DATA</th><th>Description</th></tr>
+<tr><td><code>oDevice</code></td><td>Output device (TPrinter, TRFile, or screen)</td></tr>
+<tr><td><code>nLblWidth / nLblHeight</code></td><td>Label dimensions in pixels</td></tr>
+<tr><td><code>nHSeparator / nVSeparator</code></td><td>Horizontal/vertical gap between labels</td></tr>
+<tr><td><code>nLblOnLine</code></td><td>Labels per row across the page</td></tr>
+<tr><td><code>aoItems</code></td><td>Array of TLItem objects (label fields)</td></tr>
+<tr><td><code>aFont / aPen</code></td><td>Font and pen arrays (scaled to device)</td></tr>
+<tr><td><code>nLeftMargin / nRightMargin / nTopMargin / nDnMargin</code></td><td>Page margins in pixels</td></tr>
+</table>
+
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>New(nW,nH,hSep,vSep,nPerLine,aFont,aPen,...)</code></td><td>Constructor, creates device, scales units</td></tr>
+<tr><td><code>AddItem(oItem)</code></td><td>Append a TLItem to the label</td></tr>
+<tr><td><code>Activate(bFor,bWhile,bInit,...)</code></td><td>Set hooks and start the print loop</td></tr>
+<tr><td><code>Say(nRow,nCol,xText,nFont,nPad)</code></td><td>Print text with left/center/right alignment</td></tr>
+<tr><td><code>SayBitmap(nRow,nCol,cBmp,nW,nH)</code></td><td>Render bitmap at position</td></tr>
+<tr><td><code>Box(nRow,nCol,nBottom,nRight,nPen)</code></td><td>Draw rectangle</td></tr>
+<tr><td><code>Line(nTop,nLeft,nBottom,nRight,nPen)</code></td><td>Draw line</td></tr>
+<tr><td><code>Shadow(nH,nItem,nLine)</code></td><td>Gray background fill behind a label</td></tr>
+<tr><td><code>Grid(nH,nItem,nLine)</code></td><td>Horizontal grid line across label</td></tr>
+<tr><td><code>Margin(nVal,nType)</code></td><td>Set individual margins</td></tr>
+</table>
+
+<h2 id="tlitem">TLItem Class</h2>
+<p>Represents one data field within a label. Created by the LBLITEM command.</p>
+
+<table>
+<tr><th>DATA</th><th>Description</th></tr>
+<tr><td><code>aData</code></td><td>Array of code blocks returning values to print</td></tr>
+<tr><td><code>aPicture</code></td><td>PICTURE clauses per data block</td></tr>
+<tr><td><code>bDataFont</code></td><td>Code block returning font index</td></tr>
+<tr><td><code>nWidth / nDataHeight</code></td><td>Field dimensions in pixels</td></tr>
+<tr><td><code>nCol</code></td><td>Optional column offset from left edge</td></tr>
+<tr><td><code>nPad</code></td><td>Alignment: RPT_LEFT(1), RPT_RIGHT(2), RPT_CENTER(3)</td></tr>
+<tr><td><code>lShadow / lGrid</code></td><td>Enable shadow background / bottom grid line</td></tr>
+</table>
+
+<h2 id="example">Example: Simple Address Label</h2>
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "label.ch"
+
+FUNCTION Label01()
+   local oLabel
+   USE TEST NEW SHARED ALIAS "TEST"
+
+   // 89x23mm labels, 2 per row, preview
+   LABEL oLabel SIZE 89, 23 ;
+      SEPARATORS 5, 2 ;
+      ON LINE 2 ;
+      PREVIEW ;
+      CAPTION "Address Labels"
+
+   LBLITEM DATA "N.: " + Str( TEST-&gt;( RECNO() ), 0 )
+   LBLITEM DATA TEST-&gt;FIRST
+   LBLITEM DATA TEST-&gt;LAST
+   LBLITEM DATA TEST-&gt;STREET
+
+   END LABEL oLabel
+   ACTIVATE LABEL oLabel
+   CLOSE TEST
+RETURN NIL</code></pre>
+
+<h2 id="qr">Labels with QR Codes</h2>
+<p>Combine label printing with QR codes using <code>FW_BarCodeBmp()</code> + <code>SayBitmap()</code>:</p>
+<pre><code class="language-harbour">REQUEST FWZEBRA
+
+LABEL oLabel SIZE 100, 60 ;
+   SEPARATORS 3, 3 ;
+   ON LINE 2 ;
+   PREVIEW
+
+LBLITEM DATA CUSTOMER-&gt;FIRST
+LBLITEM DATA CUSTOMER-&gt;LAST
+LBLITEM DATA CUSTOMER-&gt;CITY
+
+ACTIVATE LABEL oLabel ;
+   ON STARTLABEL { || ;
+      oLabel:SayBitmap( 1, 3.5, ;
+         FW_BarCodeBmp( ;
+            "https://example.com/" + CUSTOMER-&gt;ID, ;
+            "QR", 150, 150 ), ;
+         0.5, 0.5 ) }
+
+END LABEL oLabel</code></pre>
+
+<h2 id="samples">Sample Programs</h2>
+<p>The <code>samples/labels/</code> directory contains 17 ready-to-run examples:</p>
+<ul>
+<li><code>LABEL01.PRG</code> through <code>LABEL17.PRG</code> &mdash; progressive examples covering address labels, product labels, barcodes, multi-page, file output, and preview</li>
+<li><code>DEMO.PRG</code> &mdash; combined demonstration</li>
+<li><code>source/LABEL.PRG</code> &mdash; TLabel engine class</li>
+<li><code>source/LITEM.PRG</code> &mdash; TLItem data field class</li>
+<li><code>source/PDLABEL.PRG</code> &mdash; command helper functions</li>
+<li><code>include/LABEL.CH</code> &mdash; #xcommand definitions</li>
+<li><code>ilabel/</code> &mdash; Italian label subsystem (ILABELS.PRG, MLABEL.PRG)</li>
+</ul>
+
+<h2 id="tips">Tips</h2>
+<ul>
+<li>Labels are measured in millimeters by default. Use <code>TO PRINTER</code> for direct printing or <code>PREVIEW</code> for on-screen preview.</li>
+<li>The <code>ON STARTLABEL</code> and <code>ON ENDLABEL</code> hooks are the best place to add custom drawings (images, barcodes, QR codes).</li>
+<li>For QR codes on labels, generate a bitmap with <code>FW_BarCodeBmp()</code> and render it via <code>oLabel:SayBitmap()</code> inside a STARTLABEL hook.</li>
+<li>For standalone label printing without the TLabel system, use <code>TPrinter</code> directly: set paper size, loop records, call <code>Say()</code> for each field, and manage positions manually.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>
