@@ -92,6 +92,29 @@ automaticamente a partir do reposit&oacute;rio principal via GitHub Actions.
 
 <h2 id="new-classes">Novas Classes</h2>
 
+<h3>HFTokenizer &mdash; Tokenizador BPE da HuggingFace (IA)</h3>
+<p>
+O objetivo das classes de IA do FWH &eacute; oferecer a pot&ecirc;ncia dos
+transformers nas suas aplica&ccedil;&otilde;es FiveWin &mdash; e fazer isso
+reutilizando, o m&aacute;ximo poss&iacute;vel, os recursos do ecossistema da
+HuggingFace. <code>HFTokenizer</code> &eacute; o primeiro marco desse esfor&ccedil;o:
+uma implementa&ccedil;&atilde;o em Harbour puro do tokenizador BPE em n&iacute;vel
+de bytes da HuggingFace usado pelo GPT-2. Ele carrega um <code>tokenizer.json</code>
+padr&atilde;o do Hub da HuggingFace e reproduz a tokeniza&ccedil;&atilde;o do GPT-2
+bit a bit (p.ex. <code>"hello world"</code> &rarr; <code>{ 31373, 995 }</code>, com
+ciclos exatos <code>Decode(Encode(texto))</code>).
+</p>
+<p>
+Uma ponte tokenizador&nbsp;&rarr;&nbsp;<a href="../../pt/ai/ttransformer.html">Transformer</a>
+tokeniza texto real, constr&oacute;i um vocabul&aacute;rio compacto apenas com os
+tokens que aparecem, treina o Transformer autorregressivo e decodifica os ids
+gerados de volta para texto &mdash; de modo que um modelo pode ser treinado e
+executado sobre linguagem real em vez de ids de brinquedo. Veja
+<a href="../../pt/ai/hftokenizer.html">HFTokenizer</a> para o pipeline completo e o
+roteiro de integra&ccedil;&atilde;o. Exemplos: <code>samples/ai/hftoktest.prg</code>,
+<code>samples/ai/hflmtest.prg</code>.
+</p>
+
 <h3>TGroupEx &mdash; Grupo Tipo Acorde&atilde;o</h3>
 <p>
 Contribui&ccedil;&atilde;o de Silvio Falconi (It&aacute;lia). Um grupo recolh&iacute;vel tipo acorde&atilde;o

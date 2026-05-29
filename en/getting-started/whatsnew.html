@@ -92,6 +92,28 @@ from the main repo via GitHub Actions.
 
 <h2 id="new-classes">New Classes</h2>
 
+<h3>HFTokenizer &mdash; HuggingFace BPE Tokenizer (AI)</h3>
+<p>
+The goal of the FWH AI classes is to bring the power of transformers into your
+FiveWin applications &mdash; and to do so by reusing, as much as possible, the
+resources of the HuggingFace ecosystem. <code>HFTokenizer</code> is the first
+milestone of that effort: a pure Harbour implementation of the HuggingFace
+byte-level BPE tokenizer used by GPT-2. It loads a standard
+<code>tokenizer.json</code> from the HuggingFace Hub and reproduces GPT-2
+tokenization bit-for-bit (e.g. <code>"hello world"</code> &rarr;
+<code>{ 31373, 995 }</code>, with exact <code>Decode(Encode(text))</code>
+round-trips).
+</p>
+<p>
+A tokenizer&nbsp;&rarr;&nbsp;<a href="../../en/ai/ttransformer.html">Transformer</a>
+bridge tokenizes real text, builds a compact vocabulary of only the tokens that
+appear, trains the autoregressive Transformer, and decodes generated ids back to
+text &mdash; so a model can be trained and run on real language instead of toy
+ids. See <a href="../../en/ai/hftokenizer.html">HFTokenizer</a> for the full
+pipeline and integration roadmap. Samples: <code>samples/ai/hftoktest.prg</code>,
+<code>samples/ai/hflmtest.prg</code>.
+</p>
+
 <h3>TGroupEx &mdash; Accordion-Style Group</h3>
 <p>
 Contributed by Silvio Falconi (Italy). An accordion-style collapsible group

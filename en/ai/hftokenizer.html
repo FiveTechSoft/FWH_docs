@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HFTokenizer - HuggingFace BPE Tokenizer - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>FWH Documentation</h2></a><span class="version">Version 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Getting Started</div><a class="nav-item" href="../../en/getting-started/overview.html">Framework Overview</a><a class="nav-item" href="../../en/getting-started/installation.html">Installation</a><a class="nav-item" href="../../en/getting-started/build-system.html">Build System</a><a class="nav-item" href="../../en/getting-started/samples-guide.html">Samples &amp; Learning Path</a></div>
+<div class="nav-section"><div class="nav-section-title">Core Classes</div><a class="nav-item" href="../../en/core/twindow.html">TWindow</a><a class="nav-item" href="../../en/core/tdialog.html">TDialog</a><a class="nav-item" href="../../en/core/tcontrol.html">TControl</a></div>
+<div class="nav-section"><div class="nav-section-title">UI Controls</div><a class="nav-item" href="../../en/ui/txbrowse.html">TXBrowse</a><a class="nav-item" href="../../en/ui/tbutton.html">TButton / TBtnBmp</a><a class="nav-item" href="../../en/ui/tget.html">TGet / TMGet</a><a class="nav-item" href="../../en/ui/tmenu.html">TMenu</a><a class="nav-item" href="../../en/ui/tfolder.html">TFolder</a><a class="nav-item" href="../../en/ui/tgraph.html">TGraph</a><a class="nav-item" href="../../en/ui/tcalex.html">TCalEx</a></div>
+<div class="nav-section"><div class="nav-section-title">Data Access</div><a class="nav-item" href="../../en/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../en/data/trecset.html">TRecordSet (ADO)</a><a class="nav-item" href="../../en/data/mariadb.html">MariaDB / MySQL</a><a class="nav-item" href="../../en/data/torm.html">ORM Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">Printing &amp; Reports</div><a class="nav-item" href="../../en/printing/tprinter.html">TPrinter</a><a class="nav-item" href="../../en/printing/treport.html">TReport</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet &amp; AI</div><a class="nav-item" href="../../en/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../en/internet/tai.html">AI Classes</a></div>
+<div class="nav-section"><div class="nav-section-title">AI &amp; ML</div><a class="nav-item" href="../../en/ai/ttransformer.html">Transformer</a><a class="nav-item active" href="../../en/ai/hftokenizer.html">HFTokenizer</a></div>
+<div class="nav-section"><div class="nav-section-title">Reference</div><a class="nav-item" href="../../en/reference/functions.html">Functions</a><a class="nav-item" href="../../en/reference/more-classes.html">More Classes</a></div>
+</nav>
+<main id="content">
+
+<h1>HFTokenizer - HuggingFace BPE Tokenizer</h1>
+<p class="class-source">Source: <code>source/classes/hftokenizer.prg</code></p>
+
+<p>
+<code>HFTokenizer</code> is a pure Harbour implementation of the HuggingFace
+<strong>byte-level Byte-Pair-Encoding (BPE)</strong> tokenizer used by GPT-2 and
+many derived models. It loads a standard <code>tokenizer.json</code> file
+(downloaded from the HuggingFace Hub) and reproduces GPT-2 tokenization
+<strong>bit-for-bit</strong>: the same text yields the exact same token ids.
+</p>
+
+<p>
+This bridges the FiveWin <a href="../../en/ai/ttransformer.html">Transformer</a> class with
+real-world vocabularies, so a model can be trained or run on real text instead of
+toy token ids.
+</p>
+
+<h2 id="pipeline">Tokenization Pipeline</h2>
+
+<div class="mermaid">
+flowchart LR
+    subgraph Encode
+      T[Raw text] --> PT[Pre-tokenize<br/>GPT-2 regex]
+      PT --> BU[Bytes &rarr; Unicode<br/>byte_to_unicode]
+      BU --> BPE[BPE merges<br/>by rank]
+      BPE --> ID[Token ids]
+    end
+    subgraph Decode
+      ID2[Token ids] --> TK[ids &rarr; tokens]
+      TK --> UB[Unicode &rarr; bytes]
+      UB --> TXT[Original text]
+    end
+</div>
+
+<h2 id="getting">Getting a tokenizer.json</h2>
+
+<p>Download a tokenizer from the HuggingFace Hub. For GPT-2:</p>
+
+<pre><code class="language-text">https://huggingface.co/gpt2/resolve/main/tokenizer.json</code></pre>
+
+<p>
+The file contains a <code>model</code> object with a <code>vocab</code> map
+(token&nbsp;&rarr;&nbsp;id) and a <code>merges</code> list (ordered BPE merge rules).
+GPT-2's file is about 1.35&nbsp;MB with 50,257 tokens and 50,000 merges.
+</p>
+
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( cFile )</code></td><td>Build the byte&nbsp;&rarr;&nbsp;unicode maps and, if <code>cFile</code> is given, load that <code>tokenizer.json</code>.</td></tr>
+<tr><td><code>Load( cFile )</code></td><td>Parse a <code>tokenizer.json</code>: read <code>model.vocab</code> and <code>model.merges</code> (string or pair form both accepted). Returns <code>NIL</code> on a malformed file.</td></tr>
+<tr><td><code>Encode( cText )</code></td><td>Tokenize text into an array of (0-based, raw HuggingFace) token ids.</td></tr>
+<tr><td><code>Decode( aIds )</code></td><td>Reconstruct the original text from an array of token ids.</td></tr>
+<tr><td><code>Size()</code></td><td>Number of tokens in the loaded vocabulary.</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION Main()
+   LOCAL oTok, aIds, cBack
+
+   oTok := HFTokenizer():New( "gpt2.tokenizer.json" )
+
+   ? oTok:Size()                       // 50257
+
+   aIds := oTok:Encode( "hello world" )
+   ? hb_ValToExp( aIds )               // { 31373, 995 }
+
+   cBack := oTok:Decode( aIds )
+   ? cBack                             // hello world
+
+RETURN NIL</code></pre>
+
+<h2 id="howitworks">How It Works</h2>
+
+<h3>1. Byte &rarr; Unicode map</h3>
+<p>
+GPT-2's <code>byte_to_unicode</code> maps every one of the 256 byte values to a
+printable Unicode character, so no byte is ever unprintable or whitespace inside
+the BPE step. The space byte (0x20) famously becomes <code>U+0120</code>
+(displayed as <code>&#x0120;</code>). The class builds this map once in
+<code>New()</code> and the exact inverse for <code>Decode()</code>.
+</p>
+
+<h3>2. Pre-tokenizer</h3>
+<p>
+Before BPE, text is split into pieces following the GPT-2 regular expression,
+which keeps contractions (<code>'s 't 're 've 'm 'll 'd</code>) together and
+attaches a single leading space to the following word, number or symbol group
+(the well-known <code>" ?\p{L}+"</code> behaviour). The implementation covers
+ASCII letters, digits, symbols and whitespace runs; any non-ASCII byte is handled
+transparently by the byte-level mapping.
+</p>
+
+<h3>3. BPE merges</h3>
+<p>
+Each pre-token is converted to its mapped Unicode characters and then merged
+greedily: at every step the adjacent symbol pair with the <em>lowest merge rank</em>
+(its position in <code>model.merges</code>) is joined, until no known pair
+remains. The resulting tokens are looked up in <code>model.vocab</code> to produce
+ids.
+</p>
+
+<h2 id="validation">Validation</h2>
+<p>
+The tokenizer is verified against the real GPT-2 <code>tokenizer.json</code>.
+Known reference ids match exactly:
+</p>
+<table>
+<thead><tr><th>Text</th><th>Token ids</th></tr></thead>
+<tbody>
+<tr><td><code>"hello world"</code></td><td><code>{ 31373, 995 }</code></td></tr>
+<tr><td><code>"Hello world"</code></td><td><code>{ 15496, 995 }</code></td></tr>
+</tbody>
+</table>
+<p>
+A full <code>Decode( Encode( text ) ) == text</code> round-trip holds for sentences
+with punctuation, contractions, digits, multiple spaces and newlines. The headless
+test harness is <code>samples/ai/hftoktest.prg</code>.
+</p>
+
+<h2 id="bridge">Bridging to the Transformer</h2>
+<p>
+HFTokenizer is the first step of an ongoing effort to integrate the FWH
+<a href="../../en/ai/ttransformer.html">Transformer</a> with the HuggingFace
+ecosystem, so FiveWin apps can reuse real-world AI resources &mdash; tokenizers
+today, datasets and (where the architecture allows) pretrained weights next.
+</p>
+<p>
+The GPT-2 vocabulary has 50,257 tokens &mdash; far more than a small
+from-scratch model needs. The bridge therefore builds a <em>compact</em>
+vocabulary containing only the tokens that appear in your corpus, mapping
+HuggingFace ids to dense 1-based local ids:
+</p>
+<ol>
+<li>Tokenize the corpus with <code>HFTokenizer:Encode</code>.</li>
+<li>Collect the unique token ids into a compact 1-based vocabulary plus token strings.</li>
+<li>Create the <code>Transformer</code> with that vocabulary and train it (<code>ForwardSeq</code> / <code>BackwardSeq</code>).</li>
+<li>Generate local ids, map them back to HuggingFace ids, and <code>Decode</code> to text.</li>
+</ol>
+<p>End-to-end sample: <code>samples/ai/hflmtest.prg</code>.</p>
+
+<h2 id="roadmap">Integration Roadmap</h2>
+<table>
+<thead><tr><th>Step</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>HuggingFace byte-level BPE tokenizer (GPT-2)</td><td>Done</td></tr>
+<tr><td>Tokenizer &rarr; Transformer bridge (compact vocabulary)</td><td>Done</td></tr>
+<tr><td>One-line language-model wrapper class</td><td>In progress</td></tr>
+<tr><td>Training on real corpora (Shakespeare, TinyStories)</td><td>Planned</td></tr>
+<tr><td>Better decoding (top-p / nucleus sampling, repetition penalty)</td><td>Planned</td></tr>
+<tr><td>Loading pretrained weights where the architecture allows</td><td>Exploring</td></tr>
+</tbody>
+</table>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Encode returns raw (0-based) HuggingFace ids. When feeding a 1-based FiveWin <code>Transformer</code> vocabulary, add 1 (or map through your own vocab).</li>
+<li>Both merge formats are accepted: legacy <code>"tokA tokB"</code> strings and the newer <code>[ "tokA", "tokB" ]</code> pairs.</li>
+<li>The <code>tokenizer.json</code> is a downloadable resource and is not shipped with FiveWin; download it once from the Hub.</li>
+<li>Special/added tokens (e.g. <code>&lt;|endoftext|&gt;</code>) are present in the vocab and resolve like any other token when they appear verbatim in the input.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>
