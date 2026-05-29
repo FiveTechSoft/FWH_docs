@@ -158,6 +158,6 @@ That is the most direct path to a headline feature.
 - [x] (Track A demo) train on real Shakespeare text (`samples/ai/shakegpt.prg`): overfit a line exactly + loss drops on a real slice. Added `HB_MatrixSeed()` for reproducible init.
 - [x] Phase 1: `FW_Tensor` (`source/function/fwtensor.c`): flat float32 GC tensor with create/get/set/shape, FromArray/ToArray, MatMul, safetensors float32 loader, **plus the forward-pass op set**: Add, Scale, AddBias, GELU, row-wise Softmax, row-wise LayerNorm, Transpose. All tested in `samples/ai/fwtensortest.prg` (9/9). Remaining nice-to-haves for Phase 3: row-gather (embedding/positional lookup), causal-mask add, head slicing/views — these compose from the above.
 - [ ] Phase 2: BLAS
-- [ ] Phase 3: `GPT2Model` inference (load real GPT-2 weights via FWT_LoadSafe + header parse, pre-norm/GELU/learned-pos/QKV-bias/weight-tying)
+- [x] Phase 3: `GPT2Model` inference — **WORKS and is numerically verified**. Real pretrained GPT-2 small (124M params, model.safetensors) loads via FWT_LoadSafe (per-tensor fread, no full-file load) and runs the full forward in pure FWH/Harbour on CPU. `samples/ai/gpt2test.prg`: "The capital of France is" -> " the" (id 262), matching a numpy GPT-2 reference exactly. Next: a generation loop (multi-token), then port `GPT2Model` to the library. (Phase 2 BLAS would speed it up.)
 - [ ] Phase 4: autograd / GPU
 - [ ] (Track A) top-p / nucleus + repetition-penalty sampling (the greedy degeneration seen in shakegpt)
