@@ -307,10 +307,11 @@ document.addEventListener('DOMContentLoaded', function() {
       searchResults.innerHTML = '';
       if (results.length > 0) {
         searchResults.classList.add('active');
+        var curLang = (window.location.pathname.match(/\/(en|es|pt)\//) || [])[1] || 'en';
         results.slice(0, 12).forEach(function(r) {
           var a = document.createElement('a');
           a.className = 'search-result';
-          a.href = r.u;
+          a.href = curLang !== 'en' ? r.u.replace('/en/', '/' + curLang + '/') : r.u;
           a.innerHTML = '<div class="sr-title">' + r.t + '</div><div class="sr-section">' + r.s + '</div>';
           searchResults.appendChild(a);
         });
