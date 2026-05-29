@@ -221,6 +221,24 @@ deja que el desarrollador elija por tarea, y la app nunca queda atada a un prove
 <li>&#9633; Pista A: muestreo top-p / nucleus + penalización por repetición</li>
 </ul>
 
+<h2 id="next">Trabajo siguiente / pendiente</h2>
+<p>Ordenado por valor; todo construye sobre lo que ya está en la lib (hb32).</p>
+<ol>
+<li><strong>TLlamaCpp (Pista C)</strong> &mdash; binding FFI a llama.cpp para LLMs locales reales (Llama/Mistral/Qwen/Phi), CPU/GPU, cuantizado 4-bit, un solo .exe autónomo (sin instalar Ollama). Usa el patrón de módulo opcional ya probado con TWhisperCpp; se enchufa a TChatAgent como <code>bChat</code>.</li>
+<li><strong>Autocompletar GET con GPT-2 local</strong> &mdash; última de las primeras-cinco utilidades FWAI; ya existe todo lo necesario.</li>
+<li><strong>Fase 2 &mdash; backend BLAS</strong> para <code>FWT_MatMul</code> (10&ndash;100&times;), más KV cache en <code>GPT2Model:Generate</code> (hoy O(n&sup2;)).</li>
+<li><strong>Más utilidades FWAI</strong> &mdash; OCR / imagen&rarr;texto, pipeline RAG (retrieval con TSemanticIndex + respuesta LLM), normalización de datos.</li>
+<li><strong>Cuantización + lector GGUF</strong> para FW_Tensor (lecciones de llama.cpp); mmap de pesos en <code>FWT_LoadSafe</code>.</li>
+<li><strong>Compilar todas las variantes de lib</strong> &mdash; este esfuerzo sólo reconstruyó hb32; antes de un release, recompilar cada target para que todos tengan las nuevas clases IA.</li>
+</ol>
+<p>
+<strong>Patrón reutilizable de binding opcional</strong> (para cualquier dependencia
+nativa pesada &mdash; llama.cpp, whisper.cpp, libs GPU): wrapper C guardado fuera de
+<code>fwhc.hbp</code>; clase PRG en la lib FWH que llama a las nativas por nombre (sin
+dependencia de link); chequeo <code>IsAvailable()</code>; la dependencia la añade sólo
+la app que la quiere. La IA potente queda opcional y de coste cero para el resto.
+</p>
+
 </main>
 <aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>

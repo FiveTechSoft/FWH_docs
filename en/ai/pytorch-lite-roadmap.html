@@ -221,6 +221,24 @@ never locked to one provider.
 <li>&#9633; Track A: top-p / nucleus + repetition-penalty sampling</li>
 </ul>
 
+<h2 id="next">Next / pending work</h2>
+<p>Ordered by value; all builds on what already ships (in lib, hb32).</p>
+<ol>
+<li><strong>TLlamaCpp (Track C)</strong> &mdash; FFI binding to llama.cpp for real local LLMs (Llama/Mistral/Qwen/Phi), CPU/GPU, 4-bit quantized, single self-contained exe (no Ollama install). Uses the proven optional-module pattern from TWhisperCpp; plugs into TChatAgent as <code>bChat</code>.</li>
+<li><strong>GET autocomplete with local GPT-2</strong> &mdash; last of the first-five FWAI utilities; everything needed exists.</li>
+<li><strong>Phase 2 &mdash; BLAS backend</strong> for <code>FWT_MatMul</code> (10&ndash;100&times;), plus a KV cache in <code>GPT2Model:Generate</code> (currently O(n&sup2;)).</li>
+<li><strong>More FWAI utilities</strong> &mdash; OCR / image&rarr;text, a RAG pipeline (TSemanticIndex retrieval + LLM answer), data normalization.</li>
+<li><strong>Quantization + GGUF reader</strong> for FW_Tensor (llama.cpp lessons); mmap weights in <code>FWT_LoadSafe</code>.</li>
+<li><strong>Build all library variants</strong> &mdash; this effort rebuilt only hb32; before a release, rebuild every compiler target so all have the new AI classes.</li>
+</ol>
+<p>
+<strong>Reusable optional-binding pattern</strong> (for any heavy native dep &mdash;
+llama.cpp, whisper.cpp, GPU libs): guarded C wrapper kept out of <code>fwhc.hbp</code>;
+PRG class in the FWH lib calling the natives by name (no link dependency); an
+<code>IsAvailable()</code> check; the dependency is added only by the app that wants
+it. Powerful AI stays optional and zero-cost for every other FWH user.
+</p>
+
 </main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>

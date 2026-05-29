@@ -222,6 +222,24 @@ deixa o desenvolvedor escolher por tarefa, e a app nunca fica presa a um provedo
 <li>&#9633; Trilha A: amostragem top-p / nucleus + penalização por repetição</li>
 </ul>
 
+<h2 id="next">Trabalho seguinte / pendente</h2>
+<p>Ordenado por valor; tudo constrói sobre o que já está na lib (hb32).</p>
+<ol>
+<li><strong>TLlamaCpp (Trilha C)</strong> &mdash; binding FFI ao llama.cpp para LLMs locais reais (Llama/Mistral/Qwen/Phi), CPU/GPU, quantizado 4-bit, um único .exe autônomo (sem instalar Ollama). Usa o padrão de módulo opcional já provado com TWhisperCpp; conecta-se ao TChatAgent como <code>bChat</code>.</li>
+<li><strong>Autocompletar GET com GPT-2 local</strong> &mdash; última das primeiras-cinco utilidades FWAI; tudo o necessário já existe.</li>
+<li><strong>Fase 2 &mdash; backend BLAS</strong> para <code>FWT_MatMul</code> (10&ndash;100&times;), mais KV cache em <code>GPT2Model:Generate</code> (hoje O(n&sup2;)).</li>
+<li><strong>Mais utilidades FWAI</strong> &mdash; OCR / imagem&rarr;texto, pipeline RAG (retrieval com TSemanticIndex + resposta LLM), normalização de dados.</li>
+<li><strong>Quantização + leitor GGUF</strong> para FW_Tensor (lições do llama.cpp); mmap de pesos em <code>FWT_LoadSafe</code>.</li>
+<li><strong>Compilar todas as variantes da lib</strong> &mdash; este esforço reconstruiu apenas hb32; antes de um release, recompilar cada target para que todos tenham as novas classes de IA.</li>
+</ol>
+<p>
+<strong>Padrão reutilizável de binding opcional</strong> (para qualquer dependência
+nativa pesada &mdash; llama.cpp, whisper.cpp, libs GPU): wrapper C guardado fora do
+<code>fwhc.hbp</code>; classe PRG na lib FWH chamando as nativas por nome (sem
+dependência de link); checagem <code>IsAvailable()</code>; a dependência é adicionada
+apenas pela app que a quer. A IA poderosa fica opcional e de custo zero para os demais.
+</p>
+
 </main>
 <aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>

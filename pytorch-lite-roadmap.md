@@ -250,3 +250,35 @@ and the app is never locked to one provider.
 - [x] Phase 3: `GPT2Model` inference — **WORKS and is numerically verified**. Real pretrained GPT-2 small (124M params, model.safetensors) loads via FWT_LoadSafe (per-tensor fread, no full-file load) and runs the full forward in pure FWH/Harbour on CPU. `samples/ai/gpt2test.prg`: "The capital of France is" -> " the" (id 262), matching a numpy GPT-2 reference exactly. Next: a generation loop (multi-token), then port `GPT2Model` to the library. (Phase 2 BLAS would speed it up.)
 - [ ] Phase 4: autograd / GPU
 - [ ] (Track A) top-p / nucleus + repetition-penalty sampling (the greedy degeneration seen in shakegpt)
+
+## Next / pending work
+
+Ordered by value. Everything below builds on what already ships (all in lib, hb32).
+
+1. **`TLlamaCpp` (Track C)** — FFI binding to llama.cpp (`libllama`) for real local
+   LLMs (Llama/Mistral/Qwen/Phi), CPU/GPU, 4-bit quantized, single self-contained
+   exe (no Ollama install). Use the **proven optional-module pattern** from
+   `TWhisperCpp`: a guarded `source/winapi/llamacpp.c` (NOT in fwhc.hbp), a PRG
+   class that calls the natives by name (`hb_ExecFromArray`, no link dependency)
+   and degrades via `IsAvailable()`. Plugs straight into `TChatAgent` as `bChat`.
+   Why over Ollama: zero-install embedded exe, no HTTP, full control (grammar/JSON,
+   embeddings, sampling). Same engine underneath.
+2. **GET autocomplete with local GPT-2** — last of the "first five" FWAI utilities;
+   everything needed exists (`GPT2Model:Generate`). A `TGet`-with-suggestion sample.
+3. **Phase 2 — BLAS backend for `FWT_MatMul`** — link OpenBLAS; 10–100× on GPT-2.
+   Also add a KV cache to `GPT2Model:Generate` (currently O(n²): re-runs the window
+   each token).
+4. **More FWAI utilities** — OCR / image→text, RAG pipeline (TSemanticIndex retrieval
+   + LLM answer), data normalization.
+5. **Quantization + GGUF reader for FW_Tensor** (llama.cpp lessons) so the
+   from-scratch path can hold bigger models; mmap weights in `FWT_LoadSafe`.
+6. **Build all library variants** — this whole effort rebuilt only **hb32**. Before
+   a release, rebuild hm32/hm64/hg32/hg64/hb64/xb32/xb64/xm64 so every compiler
+   target has the new AI classes (`mfwh_new.bat <variant>`); the new C
+   (`fwtensor.c`, optional `whispercpp.c`) must compile under each.
+
+**Reusable optional-binding pattern (for any heavy native dep — llama.cpp,
+whisper.cpp, GPU libs):** guarded C wrapper kept out of `fwhc.hbp`; PRG class in
+the FWH lib calling the natives by name so there is **no link dependency**; an
+`IsAvailable()` check; the dependency is added only by the app that wants it. This
+keeps powerful AI optional and zero-cost for every other FWH user.
