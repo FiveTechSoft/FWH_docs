@@ -29,7 +29,7 @@ Harbour-a-linguagem <strong>não</strong> é inferior ao Python para isso. O PyT
 não a linguagem.
 </p>
 
-<h2 id="tracks">Duas trilhas</h2>
+<h2 id="tracks">Três trilhas</h2>
 <p>Mantê-las distintas para definir expectativas honestas:</p>
 <ul>
 <li><strong>Trilha A &mdash; Transformer local do zero.</strong> Escala
@@ -40,8 +40,41 @@ igualará o PyTorch.</li>
 Já parcial: <code>tembeddings.prg</code>, <code>tollama.prg</code>,
 <code>chatgpt.prg</code>, <code>gemini*.prg</code>. Muito mais capaz hoje, sem
 treinamento local.</li>
+<li><strong>Trilha C &mdash; vincular llama.cpp (<code>libllama</code>) via FFI.</strong>
+O maior valor real para executar um LLM real <em>localmente</em> numa app FWH
+<em>hoje</em>. O llama.cpp já faz o difícil (pesos quantizados, SIMD, GPU, KV cache,
+mmap, GGUF); uma classe <code>TLlamaCpp</code> apenas chamaria sua API C
+(<code>llama_load_model_from_file</code>, <code>llama_decode</code>, sampling)
+&mdash; o mesmo padrão do binding do hbcurl &mdash; dando inferência real de
+Llama/Mistral/Qwen/Phi em CPU/GPU com quantização de 4 bits, sem treinar.</li>
 </ul>
-<p>Este roteiro trata de elevar o teto da Trilha A rumo a "executar/servir modelos reais localmente".</p>
+<p>As fases abaixo elevam o teto da <strong>Trilha A</strong>. A Trilha C é um
+esforço separado e complementar (um binding FFI, não um núcleo do zero) e é o
+caminho pragmático se o objetivo for potência LLM de produção em apps FWH agora.</p>
+
+<h3>Por que NÃO tornar nosso Transformer compatível com os pesos do llama.cpp</h3>
+<p>
+Baixo valor, alto custo. LLaMA/Mistral usam <strong>RoPE</strong> (não posições
+aprendidas), <strong>RMSNorm</strong> (não LayerNorm), <strong>SwiGLU</strong> (não
+GELU/ReLU) e <strong>GQA</strong> (grouped-query attention) &mdash; diferente do
+GPT-2 e da nossa classe. Rodar seus pesos exigiria reescrever por arquitetura mais
+dequantização de blocos GGUF. Vincular <code>libllama</code> (Trilha C) dá a mesma
+capacidade por uma fração do esforço.
+</p>
+
+<h2 id="lessons">Lições do llama.cpp</h2>
+<p>Incorporá-las à Trilha A para que <code>FW_Tensor</code> escale:</p>
+<table>
+<thead><tr><th>Lição</th><th>O que é</th><th>Onde se aplica</th></tr></thead>
+<tbody>
+<tr><td><strong>Quantização</strong> (Q4_K/Q8_0)</td><td>pesos em blocos de 4&ndash;8 bits + escala por bloco</td><td>4-bit = 1/8 da memória vs float32; assim cabem 7B em 4&nbsp;GB. <code>FW_Tensor</code> deveria suportar blocos quantizados + dequant no matmul</td></tr>
+<tr><td><strong>mmap de pesos</strong></td><td>mapear o arquivo; o SO pagina sob demanda</td><td><code>FWT_LoadSafe</code> hoje faz <code>fread</code>; mmap = "carregar" 500&nbsp;MB instantâneo, paginação lazy</td></tr>
+<tr><td><strong>KV cache</strong></td><td>cachear K,V por camada entre passos de geração</td><td>nosso <code>Generate</code> recomputa toda a janela a cada token (O(n&sup2;)); KV cache &rarr; O(1) camadas/token</td></tr>
+<tr><td><strong>grafo ggml + backends</strong></td><td>grafo de ops + backend CPU/CUDA/Metal + arena</td><td>alvo arquitetural do <code>FW_Tensor</code> (alinha com Fase 2/4)</td></tr>
+<tr><td><strong>matmul SIMD + threads + blocking</strong></td><td>kernels multinúcleo cache-aware</td><td>nosso matmul é triplo laço &rarr; Fase 2 (BLAS)</td></tr>
+<tr><td><strong>Formato único GGUF</strong></td><td>metadata + tensores + quant num arquivo mmap</td><td>um leitor GGUF (como o de safetensors) abre o ecossistema de modelos quantizados</td></tr>
+</tbody>
+</table>
 
 <h2 id="spike">Spike de carregamento de pesos do GPT-2 (achados)</h2>
 <p>

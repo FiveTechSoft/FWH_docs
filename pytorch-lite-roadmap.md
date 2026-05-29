@@ -14,7 +14,7 @@ Python layer over a C++/CUDA core. FWH already ships C extensions
 (`source/function/matrixes.c`). The gap to close is that **C core**, not the
 language.
 
-## Two tracks (keep distinct, set honest expectations)
+## Three tracks (keep distinct, set honest expectations)
 
 - **Track A — local from-scratch Transformer.** Toy/educational scale, CPU,
   small `d_model`. Niche: tiny embeddable/offline models, classification on small
@@ -22,9 +22,37 @@ language.
 - **Track B — HuggingFace as remote power (Inference API).** Already partial:
   `tembeddings.prg`, `tollama.prg`, `chatgpt.prg`, `gemini*.prg`. Vastly more
   capable today, no local training.
+- **Track C — bind llama.cpp (`libllama`) via FFI.** Highest real value for "run
+  a real LLM *locally* inside an FWH app *today*". llama.cpp already does the hard
+  part: quantized weights, SIMD, GPU, KV cache, mmap, GGUF. A `TLlamaCpp` class
+  would just call its C API (`llama_load_model_from_file`, `llama_decode`,
+  sampling) — the same pattern as the hbcurl binding — giving real
+  Llama/Mistral/Qwen/Phi inference on CPU/GPU with 4-bit quantization, no training.
 
-This roadmap is about raising Track A's ceiling toward "run/serve real models
-locally."
+This roadmap (Phases below) raises **Track A**'s ceiling toward "run/serve real
+models locally". Track C is a separate, complementary effort (an FFI binding, not
+a from-scratch core) and is the pragmatic path if the goal is production LLM power
+in FWH apps now.
+
+### Why NOT make our Transformer weight-compatible with llama.cpp models
+
+Low value, high cost. LLaMA/Mistral use **RoPE** (not learned positions),
+**RMSNorm** (not LayerNorm), **SwiGLU** (not GELU/ReLU) and **GQA** (grouped-query
+attention) — different from GPT-2 and from our class. Running their weights would
+mean a per-architecture rewrite plus GGUF block dequantization. Binding `libllama`
+(Track C) gets the same capability for a fraction of the effort.
+
+## Lessons from llama.cpp (fold into Track A so `FW_Tensor` scales)
+
+| Lesson | What it is | Where it applies here |
+|--------|-----------|-----------------------|
+| **Quantization** (Q4_K/Q8_0) | weights in 4–8-bit blocks + per-block scale | 4-bit = 1/8 the memory of float32; how 7B fits in 4 GB. `FW_Tensor` should support quantized blocks + dequant-in-matmul |
+| **mmap weights** | memory-map the file; OS pages on demand | `FWT_LoadSafe` currently `fread`s; mmap = "load" 500 MB instantly, lazy paging |
+| **KV cache** | cache K,V per layer across generation steps | our `Generate` recomputes the whole window each token (O(n²)); KV cache → O(1) layers/token |
+| **ggml graph + backends** | op graph + pluggable CPU/CUDA/Metal backend + arena allocator | architecture target for `FW_Tensor`: build a graph, one allocator, swap backends (aligns with Phase 2/4) |
+| **SIMD + threaded + blocked matmul** | cache-aware multicore kernels | our matmul is a triple loop → Phase 2 (BLAS) |
+| **GGUF single-file format** | metadata KV + tensors + quant in one mmap'd file | a GGUF reader (like our safetensors reader) opens the quantized-model ecosystem (Model IO) |
+| **Single static binary, no deps** | one self-contained exe | matches the FWH ethos (`-static`) |
 
 ## GPT-2 weight-loading spike — findings (2026-05-29)
 
