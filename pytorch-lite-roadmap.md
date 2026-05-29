@@ -174,9 +174,10 @@ that data.
 | **Data normalization** | fix addresses, dedupe, standardize | LLM API/local | need | ★★ |
 
 **First five to build (max value / least effort):**
-1. **`TSemanticIndex`** — index a DBF/SQL column into embeddings; `:Search(cText)`
-   returns records by cosine similarity. The killer feature for data apps; reuses
-   `tembeddings`.
+1. **`TSemanticIndex`** ✅ DONE — index a DBF/SQL column into embeddings;
+   `:Search(cText)` returns records by cosine similarity. The killer feature for
+   data apps; reuses `tembeddings`. In lib (`source/classes/tsemanticindex.prg`);
+   test `samples/ai/semindextest.prg`; docs `docs/{en,es,pt}/ai/tsemanticindex.html`.
 2. **`TChatAgent`** — chat over the app's data (simple function-calling: the LLM
    asks for queries, the app returns rows). Backend llama.cpp (local) or API.
 3. **`THFTask`** — thin base + `:Classify / :NER / :Summarize / :Translate /

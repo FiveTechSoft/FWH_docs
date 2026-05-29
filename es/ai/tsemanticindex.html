@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TSemanticIndex - Búsqueda Semántica sobre DBF/SQL - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<body>
+<nav id="sidebar"><div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>Documentación FWH</h2></a><span class="version">Versión 26.05</span></div>
+<div class="nav-section"><div class="nav-section-title">Primeros Pasos</div><a class="nav-item" href="../../es/getting-started/overview.html">Visión General</a><a class="nav-item" href="../../es/getting-started/installation.html">Instalación</a><a class="nav-item" href="../../es/getting-started/build-system.html">Sistema de Construcción</a></div>
+<div class="nav-section"><div class="nav-section-title">Acceso a Datos</div><a class="nav-item" href="../../es/data/tdatabase.html">TDatabase</a><a class="nav-item" href="../../es/data/trecset.html">TRecordSet (ADO)</a></div>
+<div class="nav-section"><div class="nav-section-title">Internet e IA</div><a class="nav-item" href="../../es/internet/twebview.html">TWebView2</a><a class="nav-item" href="../../es/internet/tai.html">Clases IA</a></div>
+<div class="nav-section"><div class="nav-section-title">IA y ML</div><a class="nav-item" href="../../es/ai/ttransformer.html">Transformer</a><a class="nav-item" href="../../es/ai/hftokenizer.html">HFTokenizer</a><a class="nav-item active" href="../../es/ai/tsemanticindex.html">TSemanticIndex</a><a class="nav-item" href="../../es/ai/pytorch-lite-roadmap.html">Hoja de Ruta PyTorch-lite</a></div>
+<div class="nav-section"><div class="nav-section-title">Referencia</div><a class="nav-item" href="../../es/reference/functions.html">Funciones</a><a class="nav-item" href="../../es/reference/more-classes.html">Más Clases</a></div>
+</nav>
+<main id="content">
+
+<h1>TSemanticIndex - Búsqueda Semántica sobre DBF/SQL</h1>
+<p class="class-source">Fuente: <code>source/classes/tsemanticindex.prg</code></p>
+
+<p>
+<code>TSemanticIndex</code> lleva la <strong>búsqueda por significado</strong> a las
+apps de datos FiveWin. En vez de <code>LIKE '%palabra%'</code>, encuentra los
+registros cuyo texto está más cerca en <em>significado</em> de una consulta
+&mdash; p.ej. buscar "descontento por entrega tardía" recupera una nota que dice
+"el pedido llegó dos semanas tarde y el cliente está furioso", aunque no
+compartan palabras.
+</p>
+<p>
+Funciona convirtiendo el texto en vectores de embedding y ordenando los registros
+por <strong>similitud coseno</strong>. Es la primera de las clases utilitarias
+"FWAI" &mdash; ver la <a href="../../es/ai/pytorch-lite-roadmap.html">hoja de ruta PyTorch-lite</a>.
+</p>
+
+<h2 id="how">Cómo funciona</h2>
+<div class="mermaid">
+flowchart LR
+    subgraph Indexar
+      F[Campo de texto DBF/SQL] --> E1[Embed por registro] --> N1[Normalizar] --> S[(vectores + ids)]
+    end
+    subgraph Consulta
+      Q[Texto consulta] --> E2[Embed] --> N2[Normalizar] --> D[Producto punto vs todos] --> R[Top-N registros por score]
+    end
+    S --> D
+</div>
+<p>
+Los vectores se guardan unit-normalizados, así la similitud coseno es un simple
+producto punto. Los scores van de 1.0 (significado idéntico) hacia abajo.
+</p>
+
+<h2 id="backend">Agnóstico de backend</h2>
+<p>
+<code>New( bEmbed )</code> recibe un codeblock <code>{ |cText| -&gt; vector }</code>,
+así los embeddings pueden venir de cualquier fuente &mdash; la Inference API de
+HuggingFace, un modelo local, o tu propia función. Para usar MiniLM de HuggingFace
+vía <a href="../../es/internet/tai.html">TEmbeddings</a>:
+</p>
+<pre><code class="language-harbour">oEmb := TEmbeddings():New()                 // necesita HF_API_KEY (MiniLM 384-dim)
+oIdx := TSemanticIndex():New( { |c| oEmb:GetEmbeddings( c ) } )</code></pre>
+<p>
+Para datos privados/offline, enchufa un modelo de embeddings local tras el mismo
+codeblock (ver guía local-vs-cloud de la hoja de ruta) &mdash; el código del índice
+no cambia.
+</p>
+
+<h2 id="methods">Métodos</h2>
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>New( bEmbed )</code></td><td>Crea un índice usando el codeblock de embedding dado.</td></tr>
+<tr><td><code>Add( cText, uId )</code></td><td>Hace embedding de <code>cText</code> y lo guarda bajo el id <code>uId</code>.</td></tr>
+<tr><td><code>AddVector( aVec, uId )</code></td><td>Guarda un vector precalculado bajo <code>uId</code> (sin embedding).</td></tr>
+<tr><td><code>IndexDbf( cField, bId )</code></td><td>Recorre el área de trabajo actual indexando <code>cField</code>; el id por defecto es <code>RecNo()</code> (o <code>Eval(bId)</code>).</td></tr>
+<tr><td><code>Search( cQuery, nTop )</code></td><td>Devuelve <code>{ { uId, nScore }, ... }</code> con las <code>nTop</code> mejores coincidencias, la mejor primero.</td></tr>
+<tr><td><code>Size()</code></td><td>Número de registros indexados.</td></tr>
+<tr><td><code>Save( cFile )</code> / <code>Load( cFile )</code></td><td>Persiste / restaura el índice (ids + vectores).</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Ejemplo: buscar en notas de clientes</h2>
+<pre><code class="language-harbour">USE customers
+oEmb := TEmbeddings():New()
+oIdx := TSemanticIndex():New( { |c| oEmb:GetEmbeddings( c ) } )
+oIdx:IndexDbf( "NOTES" )                     // un vector por registro, id = RecNo()
+oIdx:Save( "customers.idx" )                 // construir una vez, reutilizar
+
+aHits := oIdx:Search( "descontento por entrega tardía", 10 )
+for each h in aHits
+   ( customers )->( dbGoto( h[ 1 ] ) )       // h[1] = RecNo, h[2] = score
+   ? customers->NAME, h[ 2 ]
+next</code></pre>
+
+<h2 id="notes">Notas</h2>
+<ul>
+<li>Construye el índice una vez y haz <code>Save</code>; recárgalo al arrancar. Re-embebe sólo los registros que cambian.</li>
+<li>Los embeddings cloud (TEmbeddings/HF) son lo más fácil para empezar; para datos sensibles o alto volumen, un modelo de embeddings local evita el coste por llamada y mantiene el dato en la máquina.</li>
+<li>La búsqueda coseno aquí es un barrido lineal en Harbour &mdash; bien para miles de registros. Para conjuntos muy grandes, agrupa los vectores en una matriz <code>FW_Tensor</code> y ordena con una sola multiplicación de matrices.</li>
+<li>El codeblock embedder debe devolver un array numérico; <code>Add</code> ignora registros cuyo embedding falla (p.ej. error de API).</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+</body>
+</html>

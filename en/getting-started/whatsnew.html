@@ -92,6 +92,39 @@ from the main repo via GitHub Actions.
 
 <h2 id="new-classes">New Classes</h2>
 
+<h3>TSemanticIndex &mdash; semantic search over DBF/SQL (AI)</h3>
+<p>
+The first of the "FWAI" utility classes (<code>source/classes/tsemanticindex.prg</code>):
+meaning-based search for ordinary data apps. Instead of <code>LIKE '%word%'</code>,
+it ranks records by how close their text is in <em>meaning</em> to a query, using
+embedding vectors and cosine similarity. Backend-agnostic &mdash;
+<code>New( bEmbed )</code> takes a <code>{ |cText| -&gt; vector }</code> codeblock,
+so embeddings can come from <a href="../../en/internet/tai.html">TEmbeddings</a>
+(HuggingFace) or a local model.
+</p>
+<pre><code class="language-harbour">USE customers
+oEmb := TEmbeddings():New()
+oIdx := TSemanticIndex():New( { |c| oEmb:GetEmbeddings( c ) } )
+oIdx:IndexDbf( "NOTES" )
+aHits := oIdx:Search( "unhappy about late delivery", 10 )   // { { RecNo, score }, ... }</code></pre>
+<p>See <a href="../../en/ai/tsemanticindex.html">TSemanticIndex</a>. Test: <code>samples/ai/semindextest.prg</code>.</p>
+
+<h3 id="gpt2">Real pretrained GPT-2 runs in pure FWH/Harbour (AI)</h3>
+<p>
+A milestone for the FWH AI track: <code>samples/ai/gpt2test.prg</code> builds a
+GPT2Model on <strong>FW_Tensor</strong>, loads the actual GPT-2 small weights
+(<code>model.safetensors</code>, 124M params, ~500&nbsp;MB) one tensor at a time
+via <code>FWT_LoadSafe</code> (no full-file load), and runs the complete forward
+pass on CPU &mdash; pre-norm, multi-head causal attention, GELU MLP, weight-tied
+head. Verified numerically against a numpy GPT-2 reference: <em>"The capital of
+France is"</em> &rarr; <code>" the"</code> (token 262), an exact argmax match, in
+under a second. A multi-token generation loop (greedy / temperature / top-k) then
+produces real text, e.g. <em>"The capital of France is the capital of the French
+Republic, and"</em>. Download <code>model.safetensors</code> from
+<a href="https://huggingface.co/gpt2">huggingface.co/gpt2</a> &mdash; it is not
+shipped with FWH.
+</p>
+
 <h3>FW_Tensor &amp; TFWLanguageModel &mdash; toward local transformers (AI)</h3>
 <p>
 Two steps toward running real transformer models inside FWH apps.
@@ -101,9 +134,16 @@ instead of Harbour nested arrays, so large weight sets fit in reasonable memory
 and can be read straight from a <code>safetensors</code> file
 (<code>FWT_New</code>, <code>FWT_FromArray</code>, <code>FWT_ToArray</code>,
 <code>FWT_Shape</code>, <code>FWT_Size</code>, <code>FWT_Get/Set</code>,
-<code>FWT_MatMul</code>, <code>FWT_LoadSafe</code>). This is Phase 1 of the
-<em>PyTorch-lite</em> effort &mdash; see <code>docs/pytorch-lite-roadmap.md</code>
-for why each step is needed.
+<code>FWT_MatMul</code>, <code>FWT_LoadSafe</code>). It also ships the full
+transformer forward-pass op set: <code>FWT_Add</code>, <code>FWT_Scale</code>,
+<code>FWT_AddBias</code>, <code>FWT_GELU</code>, row-wise <code>FWT_Softmax</code>
+and <code>FWT_LayerNorm</code>, <code>FWT_Transpose</code>,
+<code>FWT_GatherRows</code> (embedding lookup), and
+<code>FWT_SliceCols</code>/<code>FWT_SetCols</code> (attention head split/merge).
+Test: <code>samples/ai/fwtensortest.prg</code> (10/10). This is Phase 1 of the
+<em>PyTorch-lite</em> effort &mdash; see
+<code>docs/{en,es,pt}/ai/pytorch-lite-roadmap.html</code> for why each step is
+needed.
 </p>
 <p>
 <strong>TFWLanguageModel</strong> (<code>source/classes/fwlangmodel.prg</code>) is

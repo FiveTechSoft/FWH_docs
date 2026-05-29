@@ -92,6 +92,40 @@ autom&aacute;ticamente desde el repositorio principal mediante GitHub Actions.
 
 <h2 id="new-classes">Nuevas Clases</h2>
 
+<h3>TSemanticIndex &mdash; b&uacute;squeda sem&aacute;ntica sobre DBF/SQL (IA)</h3>
+<p>
+La primera de las clases utilitarias "FWAI" (<code>source/classes/tsemanticindex.prg</code>):
+b&uacute;squeda por significado para apps de datos. En vez de <code>LIKE '%palabra%'</code>,
+ordena los registros por cu&aacute;n cerca est&aacute; su texto en <em>significado</em>
+de una consulta, usando vectores de embedding y similitud coseno. Agn&oacute;stica de
+backend &mdash; <code>New( bEmbed )</code> recibe un codeblock
+<code>{ |cText| -&gt; vector }</code>, as&iacute; los embeddings pueden venir de
+<a href="../../es/internet/tai.html">TEmbeddings</a> (HuggingFace) o un modelo local.
+</p>
+<pre><code class="language-harbour">USE customers
+oEmb := TEmbeddings():New()
+oIdx := TSemanticIndex():New( { |c| oEmb:GetEmbeddings( c ) } )
+oIdx:IndexDbf( "NOTES" )
+aHits := oIdx:Search( "descontento por entrega tard&iacute;a", 10 )   // { { RecNo, score }, ... }</code></pre>
+<p>Ver <a href="../../es/ai/tsemanticindex.html">TSemanticIndex</a>. Test: <code>samples/ai/semindextest.prg</code>.</p>
+
+<h3 id="gpt2">GPT-2 preentrenado real corriendo en FWH/Harbour puro (IA)</h3>
+<p>
+Un hito de la l&iacute;nea de IA de FWH: <code>samples/ai/gpt2test.prg</code>
+construye un GPT2Model sobre <strong>FW_Tensor</strong>, carga los pesos reales de
+GPT-2 small (<code>model.safetensors</code>, 124M par&aacute;metros, ~500&nbsp;MB)
+un tensor a la vez mediante <code>FWT_LoadSafe</code> (sin cargar todo el archivo),
+y ejecuta el forward pass completo en CPU &mdash; pre-norm, atenci&oacute;n causal
+multi-cabeza, MLP GELU, cabeza con pesos atados. Verificado num&eacute;ricamente
+contra una referencia GPT-2 en numpy: <em>"The capital of France is"</em> &rarr;
+<code>" the"</code> (token 262), coincidencia exacta de argmax, en menos de un
+segundo. Un bucle de generaci&oacute;n multi-token (greedy / temperatura / top-k)
+produce despu&eacute;s texto real, p.ej. <em>"The capital of France is the capital
+of the French Republic, and"</em>. Descarga <code>model.safetensors</code> desde
+<a href="https://huggingface.co/gpt2">huggingface.co/gpt2</a> &mdash; no se
+distribuye con FWH.
+</p>
+
 <h3>FW_Tensor y TFWLanguageModel &mdash; hacia transformers locales (IA)</h3>
 <p>
 Dos pasos hacia ejecutar modelos transformer reales dentro de apps FWH.
@@ -101,9 +135,17 @@ buffer contiguo en vez de arrays anidados de Harbour, de modo que grandes
 conjuntos de pesos caben en memoria razonable y se pueden leer directamente de un
 archivo <code>safetensors</code> (<code>FWT_New</code>, <code>FWT_FromArray</code>,
 <code>FWT_ToArray</code>, <code>FWT_Shape</code>, <code>FWT_Size</code>,
-<code>FWT_Get/Set</code>, <code>FWT_MatMul</code>, <code>FWT_LoadSafe</code>). Es
-la Fase 1 del esfuerzo <em>PyTorch-lite</em> &mdash; ver
-<code>docs/pytorch-lite-roadmap.md</code> para el porqu&eacute; de cada paso.
+<code>FWT_Get/Set</code>, <code>FWT_MatMul</code>, <code>FWT_LoadSafe</code>).
+Tambi&eacute;n incluye el conjunto completo de operaciones del forward pass del
+transformer: <code>FWT_Add</code>, <code>FWT_Scale</code>, <code>FWT_AddBias</code>,
+<code>FWT_GELU</code>, <code>FWT_Softmax</code> y <code>FWT_LayerNorm</code> por
+filas, <code>FWT_Transpose</code>, <code>FWT_GatherRows</code> (lookup de
+embeddings) y <code>FWT_SliceCols</code>/<code>FWT_SetCols</code> (divisi&oacute;n
+/uni&oacute;n de cabezas de atenci&oacute;n). Test:
+<code>samples/ai/fwtensortest.prg</code> (10/10). Es la Fase 1 del esfuerzo
+<em>PyTorch-lite</em> &mdash; ver
+<code>docs/{en,es,pt}/ai/pytorch-lite-roadmap.html</code> para el porqu&eacute; de
+cada paso.
 </p>
 <p>
 <strong>TFWLanguageModel</strong> (<code>source/classes/fwlangmodel.prg</code>) es
