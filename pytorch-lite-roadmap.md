@@ -186,8 +186,16 @@ that data.
    :Sentiment` over the HF Inference API; injectable transport for offline tests.
    In lib (`source/classes/thftask.prg`); test `samples/ai/thftasktest.prg`; docs
    `ai/thftask.html`. Covers five utilities at once.
-4. **`TWhisperCpp`** — binding to whisper.cpp for offline dictation → GET text.
+4. **`TWhisperCpp`** ✅ DONE — binding to whisper.cpp for offline dictation → text.
+   In lib (`source/classes/twhispercpp.prg`); native binding
+   `source/winapi/whispercpp.c` is an **optional module** (not in fwhc.hbp), so
+   normal apps link nothing — `IsAvailable()` is `.F.` until an app builds it with
+   `-DHB_HAS_WHISPER` + libwhisper. Test `samples/ai/whispertest.prg`, demo
+   `samples/ai/whisperdemo.prg`.
 5. **GET autocomplete with local GPT-2** — everything needed already exists.
+
+**Demos shipped** (`samples/ai/`): `gpt2demo.prg`, `semdemo.prg`, `hftaskdemo.prg`,
+`chatdemo.prg`, `whisperdemo.prg`.
 
 **Key pattern:** every utility ships with interchangeable backends (remote for
 breadth now, local FW_Tensor/llama.cpp for privacy/offline). That is the FWAI

@@ -77,6 +77,30 @@ Combine com <a href="../../pt/ai/tsemanticindex.html">TSemanticIndex</a> para o
 agente recuperar registros relevantes. Teste: <code>samples/ai/chatagenttest.prg</code>.
 </p>
 
+<h2 id="twhispercpp">TWhisperCpp &mdash; voz para texto offline</h2>
+<p>
+Voz para texto local e privada via <a href="https://github.com/ggerganov/whisper.cpp">whisper.cpp</a>
+(MIT, livre). Sem API, sem custo, sem o dado sair da máquina &mdash; ideal para
+ditado em GETs ou transcrever notas de voz.
+</p>
+<pre><code class="language-harbour">oW := TWhisperCpp():New( "ggml-base.bin" )
+if oW:IsAvailable()
+   cText := oW:Transcribe( "note.wav" )       // WAV PCM mono 16 kHz
+endif
+oW:End()</code></pre>
+<p>
+<strong>Opcional, custo zero para os demais.</strong> A classe está na biblioteca
+FWH, mas o binding nativo (<code>source/winapi/whispercpp.c</code>) <em>não</em>
+faz parte da biblioteca C do FWH e nunca é linkado por padrão &mdash; apps normais
+não linkam nada extra e <code>IsAvailable()</code> retorna simplesmente
+<code>.F.</code>. Uma app que queira voz para texto compila o whisper.cpp como lib
+estática e compila esse único arquivo no seu próprio build com
+<code>-DHB_HAS_WHISPER</code> + libwhisper. Os modelos (ggml-tiny/base/small...)
+são livres em huggingface.co/ggerganov/whisper.cpp. Demo:
+<code>samples/ai/whisperdemo.prg</code>; teste de degradação:
+<code>samples/ai/whispertest.prg</code>.
+</p>
+
 </main>
 <aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
