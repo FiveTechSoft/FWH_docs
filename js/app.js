@@ -98,6 +98,109 @@ var searchIndex = [
   { k: "fwstack stack lifo push pop peek clear data structure", t: "FWStack", u: "../../en/utilities/tfwstack.html", s: "Utilities" },
 ];
 
+// ---------------------------------------------------------------------------
+// Single source of truth for the sidebar navigation (per language).
+// The nav is rendered from JS on every page so it stays identical everywhere;
+// to add/rename a link, edit ONLY this table. Labels: {en,es,pt} object, or a
+// plain string when identical across languages (e.g. class names). Item `u` is
+// the path AFTER the language folder (or a full http URL for external links).
+// ---------------------------------------------------------------------------
+var NAV = [
+  { t: { en: "Getting Started", es: "Primeros Pasos", pt: "Primeiros Passos" }, items: [
+    { u: "getting-started/overview.html",      l: { en: "Framework Overview", es: "Visión General", pt: "Visão Geral" } },
+    { u: "getting-started/installation.html",  l: { en: "Installation", es: "Instalación", pt: "Instalação" } },
+    { u: "getting-started/build-system.html",  l: { en: "Build System", es: "Sistema de Construcción", pt: "Sistema de Build" } },
+    { u: "getting-started/samples-guide.html", l: { en: "Samples &amp; Learning Path", es: "Ejemplos y Ruta de Aprendizaje", pt: "Exemplos e Rota de Aprendizado" } },
+    { u: "getting-started/tlocalization.html", l: { en: "Localization", es: "Localización", pt: "Localização" } },
+    { u: "getting-started/tglossary.html",     l: { en: "Glossary", es: "Glosario", pt: "Glossário" } },
+    { u: "getting-started/whatsnew.html",      l: { en: "What's New", es: "Novedades", pt: "Novidades" } },
+    { u: "getting-started/examples.html",      l: { en: "Examples", es: "Ejemplos", pt: "Exemplos" } },
+  ]},
+  { t: { en: "Core Classes", es: "Clases Base", pt: "Classes Base" }, items: [
+    { u: "core/twindow.html",  l: "TWindow" },
+    { u: "core/tdialog.html",  l: "TDialog" },
+    { u: "core/tcontrol.html", l: "TControl" },
+    { u: "core/tmdi.html",     l: "TMDIFrame / TMDIChild" },
+  ]},
+  { t: { en: "UI Controls", es: "Controles UI", pt: "Controles UI" }, items: [
+    { u: "ui/txbrowse.html",  l: "TXBrowse" },
+    { u: "ui/tbutton.html",   l: "TButton / TBtnBmp" },
+    { u: "ui/tget.html",      l: "TGet / TMGet" },
+    { u: "ui/tmenu.html",     l: "TMenu" },
+    { u: "ui/tfolder.html",   l: "TFolder" },
+    { u: "ui/tcombobox.html", l: "TComboBox" },
+    { u: "ui/tcheckbox.html", l: "TCheckBox / TRadio" },
+  ]},
+  { t: { en: "Data Access", es: "Acceso a Datos", pt: "Acesso a Dados" }, items: [
+    { u: "data/tdatabase.html", l: "TDatabase" },
+    { u: "data/trecset.html",   l: "TRecordSet (ADO)" },
+    { u: "data/todbc.html",     l: "TODBC" },
+    { u: "data/mariadb.html",   l: "MariaDB / MySQL" },
+  ]},
+  { t: { en: "Printing &amp; Reports", es: "Impresión e Informes", pt: "Impressão e Relatórios" }, items: [
+    { u: "printing/tprinter.html",   l: "TPrinter" },
+    { u: "printing/treport.html",    l: "TReport" },
+    { u: "printing/easyreport.html", l: "EasyReport" },
+    { u: "printing/tlabel.html",     l: { en: "Label Printing", es: "Impresión de Etiquetas", pt: "Impressão de Etiquetas" } },
+    { u: "printing/tbarcode.html",   l: "BarCode" },
+  ]},
+  { t: { en: "Internet &amp; AI", es: "Internet e IA", pt: "Internet e IA" }, items: [
+    { u: "internet/twebview.html",   l: "TWebView2" },
+    { u: "internet/twebserver.html", l: "TWebServer" },
+    { u: "internet/tsocket.html",    l: "TSocket" },
+    { u: "internet/topenai.html",    l: "TOpenAI" },
+    { u: "internet/tai.html",        l: { en: "AI Classes", es: "Clases de IA", pt: "Classes de IA" } },
+  ]},
+  { t: { en: "Reference", es: "Referencia", pt: "Referência" }, items: [
+    { u: "reference/commands.html",     l: { en: "Commands", es: "Comandos", pt: "Comandos" } },
+    { u: "reference/functions.html",    l: { en: "Functions", es: "Funciones", pt: "Funções" } },
+    { u: "reference/errorsys.html",     l: { en: "Error System", es: "Sistema de Errores", pt: "Sistema de Erros" } },
+    { u: "reference/resources.html",    l: { en: "Resources (GDI)", es: "Recursos (GDI)", pt: "Recursos (GDI)" } },
+    { u: "reference/more-classes.html", l: { en: "More Classes", es: "Más Clases", pt: "Mais Classes" } },
+  ]},
+  { t: { en: "Advanced UI", es: "UI Avanzada", pt: "UI Avançada" }, items: [
+    { u: "ui/more-controls.html", l: { en: "More Controls", es: "Más Controles", pt: "Mais Controles" } },
+    { u: "ui/tlistview.html",     l: "TListView" },
+    { u: "ui/trichedit.html",     l: "TRichEdit / TScintilla" },
+    { u: "ui/ttreeview.html",     l: "TTreeView" },
+    { u: "ui/tribbon.html",       l: "TRibbonBar" },
+  ]},
+  { t: { en: "Utilities", es: "Utilidades", pt: "Utilitários" }, items: [
+    { u: "utilities/files.html",    l: { en: "File &amp; Text", es: "Archivos y Texto", pt: "Arquivos e Texto" } },
+    { u: "utilities/ole.html",      l: "OLE / COM / .NET" },
+    { u: "utilities/misc.html",     l: { en: "Miscellaneous", es: "Misceláneo", pt: "Diversos" } },
+    { u: "utilities/tfwstack.html", l: "FWStack" },
+  ]},
+  { t: { en: "Advanced", es: "Avanzado", pt: "Avançado" }, items: [
+    { u: "advanced/dll.html",     l: { en: "DLL &amp; API Calls", es: "Llamadas DLL y API", pt: "Chamadas DLL e API" } },
+    { u: "advanced/unicode.html", l: { en: "Unicode &amp; i18n", es: "Unicode e i18n", pt: "Unicode e i18n" } },
+  ]},
+  { t: { en: "Support", es: "Soporte", pt: "Suporte" }, items: [
+    { u: "https://forums.fivetechsupport.com/", l: { en: "Tech Support Forums &#8599;", es: "Foros de Soporte Técnico &#8599;", pt: "Fóruns de Suporte Técnico &#8599;" } },
+  ]},
+];
+
+// Pick a localized label (string or {en,es,pt} object)
+function navLabel(v, lang) { return (typeof v === 'string') ? v : (v[lang] || v.en); }
+
+// Render the whole sidebar nav for the given language.
+// lp = link prefix to the language root (e.g. "../../es"); path = current pathname.
+function buildNav(lang, lp, path) {
+  var html = '';
+  NAV.forEach(function(sec) {
+    html += '<div class="nav-section"><div class="nav-section-title">' + navLabel(sec.t, lang) + '</div>';
+    sec.items.forEach(function(it) {
+      var ext = it.u.indexOf('http') === 0;
+      var href = ext ? it.u : (lp + '/' + it.u);
+      var active = (!ext && path.indexOf('/' + it.u) !== -1) ? ' active' : '';
+      var tgt = ext ? ' target="_blank"' : '';
+      html += '<a class="nav-item' + active + '" href="' + href + '"' + tgt + '>' + navLabel(it.l, lang) + '</a>';
+    });
+    html += '</div>';
+  });
+  return html;
+}
+
 // Initialize Mermaid
 if (typeof mermaid !== 'undefined') {
   mermaid.initialize({
@@ -133,8 +236,24 @@ document.addEventListener('DOMContentLoaded', function() {
     tocLinks.appendChild(a);
   });
 
-  // Highlight current page in sidebar
+  // Render the sidebar nav from the single NAV table (language-aware).
+  // Replaces whatever static nav each page hard-coded, so every page shows
+  // the same complete, consistent navigation. Only runs on /en|es|pt/ pages.
   var path = window.location.pathname;
+  var navLangMatch = path.match(/\/(en|es|pt)\//);
+  if (navLangMatch) {
+    var navLang = navLangMatch[1];
+    var navSidebar = document.getElementById('sidebar');
+    if (navSidebar) {
+      navSidebar.querySelectorAll('.nav-section').forEach(function(s) { s.remove(); });
+      var navWrap = document.createElement('div');
+      navWrap.id = 'main-nav';
+      navWrap.innerHTML = buildNav(navLang, '../../' + navLang, path);
+      navSidebar.appendChild(navWrap);
+    }
+  }
+
+  // Highlight current page in sidebar (covers any non-lang pages with static nav)
   document.querySelectorAll('.nav-item').forEach(function(item) {
     if (item.getAttribute('href') && path.indexOf(item.getAttribute('href')) !== -1) {
       item.classList.add('active');
@@ -172,34 +291,8 @@ document.addEventListener('DOMContentLoaded', function() {
     searchDiv.innerHTML = '<input type="text" id="search-input" placeholder="Search docs... (Ctrl+K)"><div id="search-results"></div>';
     sidebarHeader.parentNode.insertBefore(searchDiv, sidebarHeader.nextSibling);
   }
-  // Inject additional nav sections and support link at bottom of sidebar
-  var sidebar = document.getElementById('sidebar');
-  if (sidebar && !document.getElementById('extra-sections')) {
-    // Detect current language from URL path
-    var curLang = 'en';
-    var m = window.location.pathname.match(/\/(en|es|pt)\//);
-    if (m) curLang = m[1];
-    var lp = '../../' + curLang;
-    var extra = document.createElement('div');
-    extra.id = 'extra-sections';
-    extra.innerHTML = '<div class="nav-section"><div class="nav-section-title">Advanced UI</div>'
-      + '<a class="nav-item" href="'+lp+'/ui/more-controls.html">More Controls</a>'
-      + '<a class="nav-item" href="'+lp+'/ui/tlistview.html">TListView</a>'
-      + '<a class="nav-item" href="'+lp+'/ui/trichedit.html">TRichEdit / TScintilla</a>'
-      + '<a class="nav-item" href="'+lp+'/ui/ttreeview.html">TTreeView</a>'
-      + '<a class="nav-item" href="'+lp+'/ui/tribbon.html">TRibbonBar</a></div>'
-      + '<div class="nav-section"><div class="nav-section-title">Utilities</div>'
-      + '<a class="nav-item" href="'+lp+'/utilities/files.html">File &amp; Text</a>'
-      + '<a class="nav-item" href="'+lp+'/utilities/ole.html">OLE / COM / .NET</a>'
-      + '<a class="nav-item" href="'+lp+'/utilities/misc.html">Miscellaneous</a>'
-      + '<a class="nav-item" href="'+lp+'/utilities/tfwstack.html">FWStack</a></div>'
-      + '<div class="nav-section"><div class="nav-section-title">Advanced</div>'
-      + '<a class="nav-item" href="'+lp+'/advanced/dll.html">DLL &amp; API Calls</a>'
-      + '<a class="nav-item" href="'+lp+'/advanced/unicode.html">Unicode &amp; i18n</a></div>'
-      + '<div class="nav-section" id="support-section"><div class="nav-section-title">Support</div>'
-      + '<a class="nav-item" href="https://forums.fivetechsupport.com/" target="_blank">Tech Support Forums &#8599;</a></div>';
-    sidebar.appendChild(extra);
-  }
+  // (Advanced UI / Utilities / Advanced / Support sections are now part of the
+  //  unified NAV table above and rendered by buildNav().)
 
   // Setup search
   var searchInput = document.getElementById('search-input');
