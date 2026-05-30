@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TScintilla - Documenta&ccedil;&atilde;o FWH</title>
+<title>TScintilla - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,66 +13,69 @@
 
 <h1>TScintilla</h1>
 <p class="class-source">Fonte: <code>source/classes/scintila.prg</code></p>
-<p class="class-hierarchy">Hierarquia: <strong>TScintilla</strong> &rarr; <strong>TControl</strong></p>
+<p class="class-hierarchy">Hierarchy: <strong>TScintilla</strong> &rarr; <strong>TControl</strong></p>
 
 <p>
-TScintilla encapsula o componente de edi&ccedil;&atilde;o de c&oacute;digo fonte Scintilla (<a href="https://www.scintilla.org">scintilla.org</a>) para uso em aplica&ccedil;&otilde;es FiveWin. Fornece um editor de c&oacute;digo completo com realce de sintaxe, dobramento de c&oacute;digo, numera&ccedil;&atilde;o de linhas, marcadores, localizar/substituir, desfazer/refazer e suporte a m&uacute;ltiplos lexers incluindo sintaxe Harbour/xHarbour.
+TScintilla wraps the Scintilla source code editing component (<a href="https://www.scintilla.org">scintilla.org</a>)
+for use within FiveWin applications. It provides a full-featured code editor with syntax
+highlighting, code folding, line numbering, bookmarks, search/replace, undo/redo, and
+support for multiple lexers including Harbour/xHarbour syntax.
 </p>
 
-<h2 id="command">Comando SCINTILLA</h2>
+<h2 id="command">SCINTILLA Command</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol SCINTILLA oSci SIZE nW, nH OF oWnd FONT oFont LEXER cLexer</code></pre>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padr&atilde;o</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cFileName</code></td><td>Character</td><td></td><td>Caminho do arquivo atualmente carregado</td></tr>
-<tr><td><code>cLexer</code></td><td>Character</td><td><code>0</code></td><td>Identificador de lexer para realce de sintaxe</td></tr>
-<tr><td><code>lMargLin</code></td><td>Logical</td><td><code>.F.</code></td><td>Mostrar margem de n&uacute;mero de linha</td></tr>
-<tr><td><code>lFolding</code></td><td>Logical</td><td><code>.F.</code></td><td>Habilitar margem de dobramento de c&oacute;digo</td></tr>
-<tr><td><code>lMarking</code></td><td>Logical</td><td><code>.F.</code></td><td>Mostrar margem de marcadores/s&iacute;mbolos</td></tr>
-<tr><td><code>lModified</code></td><td>Logical</td><td><code>.F.</code></td><td>Se o documento tem altera&ccedil;&otilde;es n&atilde;o salvas</td></tr>
-<tr><td><code>bModified</code></td><td>Block</td><td></td><td>Bloco de c&oacute;digo avaliado quando o estado de modifica&ccedil;&atilde;o do documento muda</td></tr>
-<tr><td><code>cCKeyw1..cCKeyw5</code></td><td>Array</td><td></td><td>Arrays de cor de sintaxe: cada um &eacute; <code>{ nForeColor, nBackColor, nCase }</code> para n&iacute;veis de palavra-chave 1&ndash;5</td></tr>
+<tr><td><code>cFileName</code></td><td>Character</td><td></td><td>Currently loaded file path</td></tr>
+<tr><td><code>cLexer</code></td><td>Character</td><td><code>0</code></td><td>Lexer identifier for syntax highlighting</td></tr>
+<tr><td><code>lMargLin</code></td><td>Logical</td><td><code>.F.</code></td><td>Show line number margin</td></tr>
+<tr><td><code>lFolding</code></td><td>Logical</td><td><code>.F.</code></td><td>Enable code folding margin</td></tr>
+<tr><td><code>lMarking</code></td><td>Logical</td><td><code>.F.</code></td><td>Show bookmark/symbol margin</td></tr>
+<tr><td><code>lModified</code></td><td>Logical</td><td><code>.F.</code></td><td>Whether the document has unsaved changes</td></tr>
+<tr><td><code>bModified</code></td><td>Block</td><td></td><td>Codeblock evaluated when the document modification state changes</td></tr>
+<tr><td><code>cCKeyw1..cCKeyw5</code></td><td>Array</td><td></td><td>Syntax color arrays: each is <code>{ nForeColor, nBackColor, nCase }</code> for keyword levels 1&ndash;5</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nWidth, nHeight, oWnd, nClrT, nClrP, cLex, cDll, bSetup )</code></td><td>Construtor. Carrega a DLL SciLexer e cria a janela Scintilla.</td></tr>
-<tr><td><code>OpenFile( cFileName )</code></td><td>Carregar um arquivo no editor. Detecta BOM UTF-8 automaticamente.</td></tr>
-<tr><td><code>Save()</code></td><td>Salvar o conte&uacute;do atual em disco. Solicita nome de arquivo se nenhum estiver definido.</td></tr>
-<tr><td><code>Open()</code></td><td>Mostrar um di&aacute;logo de abertura de arquivo e carregar o arquivo selecionado.</td></tr>
-<tr><td><code>SetText( cText )</code></td><td>Substituir todo o conte&uacute;do do editor por uma string.</td></tr>
-<tr><td><code>GetText()</code></td><td>Retornar todo o conte&uacute;do do editor como uma string.</td></tr>
-<tr><td><code>GetLine( nLine )</code></td><td>Retornar o texto de um n&uacute;mero de linha espec&iacute;fico (base 1).</td></tr>
-<tr><td><code>GetLineCount()</code></td><td>Retornar o n&uacute;mero total de linhas no documento.</td></tr>
-<tr><td><code>FindText( cText, lForward )</code></td><td>Pesquisar texto para frente ou para tr&aacute;s a partir da posi&ccedil;&atilde;o atual.</td></tr>
-<tr><td><code>SetFont( oFont )</code></td><td>Alterar a fonte do editor em tempo de execu&ccedil;&atilde;o.</td></tr>
-<tr><td><code>Undo()</code></td><td>Desfazer a &uacute;ltima a&ccedil;&atilde;o de edi&ccedil;&atilde;o.</td></tr>
-<tr><td><code>Redo()</code></td><td>Refazer uma a&ccedil;&atilde;o anteriormente desfeita.</td></tr>
-<tr><td><code>Copy()</code></td><td>Copiar a sele&ccedil;&atilde;o atual para a &aacute;rea de transfer&ecirc;ncia.</td></tr>
-<tr><td><code>Cut()</code></td><td>Recortar a sele&ccedil;&atilde;o atual para a &aacute;rea de transfer&ecirc;ncia.</td></tr>
-<tr><td><code>Paste()</code></td><td>Colar conte&uacute;do da &aacute;rea de transfer&ecirc;ncia na posi&ccedil;&atilde;o do cursor.</td></tr>
-<tr><td><code>SelectAll()</code></td><td>Selecionar todo o conte&uacute;do do documento.</td></tr>
-<tr><td><code>Print( oFont )</code></td><td>Imprimir o documento usando TReport com n&uacute;meros de linha opcionais.</td></tr>
-<tr><td><code>MarkerAdd( nLine, nMarker )</code></td><td>Adicionar um marcador na linha especificada.</td></tr>
-<tr><td><code>FoldAllContract()</code></td><td>Recolher todas as regi&otilde;es de c&oacute;digo dobr&aacute;veis.</td></tr>
-<tr><td><code>FoldAllExpand()</code></td><td>Expandir todas as regi&otilde;es de c&oacute;digo dobradas.</td></tr>
-<tr><td><code>SetColor( nClrText, nClrPane )</code></td><td>Definir as cores de texto e fundo padr&atilde;o.</td></tr>
+<tr><td><code>New( nRow, nCol, nWidth, nHeight, oWnd, nClrT, nClrP, cLex, cDll, bSetup )</code></td><td>Constructor. Loads the SciLexer DLL and creates the Scintilla window.</td></tr>
+<tr><td><code>OpenFile( cFileName )</code></td><td>Load a file into the editor. Detects UTF-8 BOM automatically.</td></tr>
+<tr><td><code>Save()</code></td><td>Save the current content to disk. Prompts for filename if none is set.</td></tr>
+<tr><td><code>Open()</code></td><td>Show a file-open dialog and load the selected file.</td></tr>
+<tr><td><code>SetText( cText )</code></td><td>Replace the entire editor content with a string.</td></tr>
+<tr><td><code>GetText()</code></td><td>Return the entire editor content as a string.</td></tr>
+<tr><td><code>GetLine( nLine )</code></td><td>Return the text of a specific 1-based line number.</td></tr>
+<tr><td><code>GetLineCount()</code></td><td>Return the total number of lines in the document.</td></tr>
+<tr><td><code>FindText( cText, lForward )</code></td><td>Search for text forward or backward from the current position.</td></tr>
+<tr><td><code>SetFont( oFont )</code></td><td>Change the editor font at runtime.</td></tr>
+<tr><td><code>Undo()</code></td><td>Undo the last editing action.</td></tr>
+<tr><td><code>Redo()</code></td><td>Redo a previously undone action.</td></tr>
+<tr><td><code>Copy()</code></td><td>Copy the current selection to the clipboard.</td></tr>
+<tr><td><code>Cut()</code></td><td>Cut the current selection to the clipboard.</td></tr>
+<tr><td><code>Paste()</code></td><td>Paste clipboard content at the cursor position.</td></tr>
+<tr><td><code>SelectAll()</code></td><td>Select the entire document content.</td></tr>
+<tr><td><code>Print( oFont )</code></td><td>Print the document using TReport with optional line numbers.</td></tr>
+<tr><td><code>MarkerAdd( nLine, nMarker )</code></td><td>Add a marker (bookmark) at the specified line.</td></tr>
+<tr><td><code>FoldAllContract()</code></td><td>Collapse all foldable code regions.</td></tr>
+<tr><td><code>FoldAllExpand()</code></td><td>Expand all folded code regions.</td></tr>
+<tr><td><code>SetColor( nClrText, nClrPane )</code></td><td>Set the default text and background colors.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Editor de C&oacute;digo</h2>
+<h2 id="example">Example: Code Editor</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -93,7 +96,7 @@ function Main()
    oSci:lMarking   := .T.
    oSci:SetUp()
 
-   // Botoes da barra de ferramentas
+   // Toolbar buttons
    @ 575, 10 BUTTON "&Open" SIZE 50, 20 ;
       ACTION oSci:Open()
 
@@ -117,89 +120,106 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="lexer-config">Configura&ccedil;&atilde;o do Lexer</h2>
+<h2 id="lexer-config">Lexer Configuration</h2>
 
 <p>
-TScintilla suporta realce de sintaxe via conjuntos de cores de palavras-chave configur&aacute;veis e arrays de cores espec&iacute;ficos de token:
+TScintilla supports syntax highlighting via configurable keyword color sets
+and token-specific color arrays:
 </p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cCKeyw1..cCKeyw5</code></td><td>Array</td><td>Conjuntos de cor de palavra-chave: <code>{ nForeColor, nBackColor, nCase }</code> para n&iacute;veis 1&ndash;5</td></tr>
-<tr><td><code>cCString</code></td><td>Array</td><td>Cor de literal de string: <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
-<tr><td><code>cCNumber</code></td><td>Array</td><td>Cor de literal num&eacute;rico: <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
-<tr><td><code>cCOperator</code></td><td>Array</td><td>Cor de operador: <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
-<tr><td><code>cCComment</code></td><td>Array</td><td>Cor de coment&aacute;rio (suporta multilinha): <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
+<tr><td><code>cCKeyw1..cCKeyw5</code></td><td>Array</td><td>Keyword color sets: <code>{ nForeColor, nBackColor, nCase }</code> for keyword levels 1&ndash;5</td></tr>
+<tr><td><code>cCString</code></td><td>Array</td><td>String literal color: <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
+<tr><td><code>cCNumber</code></td><td>Array</td><td>Numeric literal color: <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
+<tr><td><code>cCOperator</code></td><td>Array</td><td>Operator color: <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
+<tr><td><code>cCComment</code></td><td>Array</td><td>Comment color (supports multi-line): <code>{ nForeColor, nBackColor, nCase }</code></td></tr>
 </tbody>
 </table>
 
 <p>
-Cada array de cor cont&eacute;m tr&ecirc;s elementos:
+Each color array contains three elements:
 </p>
 <ul>
-<li><strong>nForeColor</strong> &mdash; Cor de primeiro plano (texto) como valor RGB num&eacute;rico.</li>
-<li><strong>nBackColor</strong> &mdash; Cor de fundo como valor RGB num&eacute;rico.</li>
-<li><strong>nCase</strong> &mdash; Modo de mai&uacute;sculas: <code>SC_CASE_MIXED</code>, <code>SC_CASE_UPPER</code> ou <code>SC_CASE_LOWER</code>.</li>
+<li><strong>nForeColor</strong> &mdash; Foreground (text) color as an RGB numeric value.</li>
+<li><strong>nBackColor</strong> &mdash; Background color as an RGB numeric value.</li>
+<li><strong>nCase</strong> &mdash; Case mode: <code>SC_CASE_MIXED</code>, <code>SC_CASE_UPPER</code>, or <code>SC_CASE_LOWER</code>.</li>
 </ul>
 
-<h2 id="encoding-modes">Modos de Codifica&ccedil;&atilde;o de Arquivos</h2>
+<p>
+Default colors for Harbour/xHarbour syntax are defined as class data members:
+</p>
+
+<pre><code class="language-harbour">DATA cCComment  INIT { CLR_GRAY,    CLR_WHITE, SC_CASE_MIXED }
+DATA cCString   INIT { CLR_HRED,    CLR_WHITE, SC_CASE_MIXED }
+DATA cCNumber   INIT { CLR_HBLUE,   CLR_WHITE, SC_CASE_MIXED }
+DATA cCOperator INIT { CLR_HBLACK,  CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw1    INIT { METRO_ORANGE,CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw2    INIT { CLR_HGREEN,  CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw3    INIT { CLR_HPURPLE, CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw4    INIT { CLR_HCYAN,   CLR_WHITE, SC_CASE_MIXED }
+DATA cCKeyw5    INIT { CLR_HRED,    CLR_WHITE, SC_CASE_MIXED }</code></pre>
+
+<h2 id="encoding-modes">File Encoding Modes</h2>
 
 <p>
-TScintilla suporta m&uacute;ltiplos modos de codifica&ccedil;&atilde;o de arquivos para ler e salvar documentos em diferentes codifica&ccedil;&otilde;es de caracteres. Estes s&atilde;o controlados pelos membros de dados <code>nModeSave</code> e <code>nModeLoad</code> juntamente com o indicador <code>lBom</code>.
+TScintilla supports multiple file encoding modes for reading and saving documents
+in different character encodings. These are controlled by the <code>nModeSave</code>
+and <code>nModeLoad</code> data members along with the <code>lBom</code> flag.
 </p>
 
 <table>
 <thead>
-<tr><th>Modo</th><th>Constante</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Mode</th><th>Constant</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td>0</td><td><code>nModeLoad := 0</code></td><td>Codifica&ccedil;&atilde;o normal (ANSI/CP1252)</td></tr>
-<tr><td>1</td><td><code>nModeLoad := 1</code> / <code>nModeSave := 1</code></td><td>UTF-8 com BOM</td></tr>
-<tr><td>2</td><td><code>nModeLoad := 2</code> / <code>nModeSave := 2</code></td><td>UTF-8 sem BOM</td></tr>
+<tr><td>0</td><td><code>nModeLoad := 0</code></td><td>Normal (ANSI/CP1252) encoding</td></tr>
+<tr><td>1</td><td><code>nModeLoad := 1</code> / <code>nModeSave := 1</code></td><td>UTF-8 with BOM</td></tr>
+<tr><td>2</td><td><code>nModeLoad := 2</code> / <code>nModeSave := 2</code></td><td>UTF-8 without BOM</td></tr>
 <tr><td>3</td><td><code>nModeLoad := 3</code> / <code>nModeSave := 3</code></td><td>UTF-16 Little Endian</td></tr>
 </tbody>
 </table>
 
 <ul>
-<li><code>nModeLoad</code> controla como o arquivo &eacute; interpretado ao abrir. Modo 0 l&ecirc; como ANSI; modos 1&ndash;3 decodificam o formato Unicode apropriado.</li>
-<li><code>nModeSave</code> controla como o documento &eacute; escrito de volta ao disco.</li>
-<li><code>lBom</code> (l&oacute;gico) controla se uma Marca de Ordem de Byte &eacute; escrita no in&iacute;cio do arquivo ao salvar. Relevante para modos UTF-8 e UTF-16.</li>
-<li>Quando <code>OpenFile()</code> carrega um documento, o BOM UTF-8 &eacute; detectado automaticamente independentemente de <code>nModeLoad</code>.</li>
+<li><code>nModeLoad</code> controls how the file is interpreted when opened. Mode 0 reads as ANSI; modes 1&ndash;3 decode the appropriate Unicode format.</li>
+<li><code>nModeSave</code> controls how the document is written back to disk.</li>
+<li><code>lBom</code> (logical) controls whether a Byte Order Mark is written at the beginning of the file on save. Relevant for UTF-8 and UTF-16 modes.</li>
+<li>When <code>OpenFile()</code> loads a document, UTF-8 BOM is detected automatically regardless of <code>nModeLoad</code>.</li>
 </ul>
 
-<h2 id="editor-comparison">Compara&ccedil;&atilde;o de Controles de Editor</h2>
+<h2 id="editor-comparison">Editor Control Comparison</h2>
 
 <table>
 <thead>
-<tr><th>Controle</th><th>Arquivo Fonte</th><th>Recursos</th></tr>
+<tr><th>Control</th><th>Source File</th><th>Features</th></tr>
 </thead>
 <tbody>
-<tr><td><code>TEdit</code></td><td><code>edit.prg</code></td><td>Edi&ccedil;&atilde;o b&aacute;sica, modo memo multilinha, sem suporte RTF</td></tr>
-<tr><td><code>TGet</code></td><td><code>tget.prg</code></td><td>Entrada de uma linha, cl&aacute;usulas picture, valida&ccedil;&atilde;o de entrada</td></tr>
-<tr><td><code>TMultiGet</code></td><td><code>mget.prg</code></td><td>Texto multilinha, sem formata&ccedil;&atilde;o, edi&ccedil;&atilde;o b&aacute;sica</td></tr>
-<tr><td><code>TRichEdit</code></td><td><code>trichedi.prg</code></td><td>RTF 2.0 (riched20.dll), formata&ccedil;&atilde;o b&aacute;sica de fonte/cor</td></tr>
-<tr><td><code>TRichEdit5</code></td><td><code>triched5.prg</code></td><td>RTF 5.0 (msftedit.dll), tabelas, imagens, exporta&ccedil;&atilde;o PDF</td></tr>
-<tr><td><code>TTxtEdit</code></td><td><code>ttxtedit.prg</code></td><td>Exibi&ccedil;&atilde;o de c&oacute;digo fonte, realce de sintaxe, n&uacute;meros de linha</td></tr>
-<tr><td><code>TScintilla</code></td><td><code>scintila.prg</code></td><td>Editor classe IDE completo, dobramento, lexers, marcadores, localizar/substituir, multi-codifica&ccedil;&atilde;o</td></tr>
+<tr><td><code>TEdit</code></td><td><code>edit.prg</code></td><td>Basic edit, multi-line memo mode, no RTF support</td></tr>
+<tr><td><code>TGet</code></td><td><code>tget.prg</code></td><td>Single-line input, picture clauses, input validation</td></tr>
+<tr><td><code>TMultiGet</code></td><td><code>mget.prg</code></td><td>Multi-line text, no formatting, basic editing</td></tr>
+<tr><td><code>TRichEdit</code></td><td><code>trichedi.prg</code></td><td>RTF 2.0 (riched20.dll), basic font/color formatting</td></tr>
+<tr><td><code>TRichEdit5</code></td><td><code>triched5.prg</code></td><td>RTF 5.0 (msftedit.dll), tables, images, PDF export</td></tr>
+<tr><td><code>TTxtEdit</code></td><td><code>ttxtedit.prg</code></td><td>Source code display, syntax highlighting, line numbers</td></tr>
+<tr><td><code>TScintilla</code></td><td><code>scintila.prg</code></td><td>Full IDE-class editor, code folding, lexers, bookmarks, search/replace, multi-encoding</td></tr>
 </tbody>
 </table>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TScintilla requer a DLL Scintilla (<code>SciLexer.dll</code> para 32 bits ou <code>SciLex64.dll</code> para 64 bits) em tempo de execu&ccedil;&atilde;o. A DLL &eacute; carregada dinamicamente via <code>LoadLibrary</code>.</li>
-<li>O realce de sintaxe Harbour/xHarbour &eacute; ativado passando <code>"Harbour"</code> ou o n&uacute;mero do lexer correspondente como par&acirc;metro <code>cLex</code>.</li>
-<li>Use <code>cCKeyw1</code> a <code>cCKeyw5</code> para personalizar as cores de sintaxe. Cada um &eacute; um array de <code>{ nForeColor, nBackColor, nCaseMode }</code>.</li>
-<li>O indicador <code>lModified</code> e o bloco de c&oacute;digo <code>bModified</code> permitem rastrear altera&ccedil;&otilde;es n&atilde;o salvas, por exemplo, para atualizar o t&iacute;tulo de uma janela com um indicador de modifica&ccedil;&atilde;o.</li>
-<li>A classe fornece di&aacute;logos integrados para localizar/substituir (<code>DlgFindText()</code>, <code>DlgReplace()</code>), ir para linha (<code>DlgGoToLine()</code>) e inser&ccedil;&atilde;o de caracteres (<code>DlgInsChar()</code>).</li>
-<li>As margens s&atilde;o configuradas via <code>nMargLines</code>, <code>nMargSymbol</code>, <code>nMargFold</code> e <code>nMargText</code>. Chame <code>SetUp()</code> ap&oacute;s alterar as configura&ccedil;&otilde;es de margem.</li>
+<li>TScintilla requires the Scintilla DLL (<code>SciLexer.dll</code> for 32-bit or <code>SciLex64.dll</code> for 64-bit) at runtime. The DLL is loaded dynamically via <code>LoadLibrary</code>.</li>
+<li>Harbour/xHarbour syntax highlighting is activated by passing <code>"Harbour"</code> or the corresponding lexer number as the <code>cLex</code> parameter.</li>
+<li>Use <code>cCKeyw1</code> through <code>cCKeyw5</code> to customize syntax colors. Each is an array of <code>{ nForeColor, nBackColor, nCaseMode }</code>.</li>
+<li>The <code>lModified</code> flag and <code>bModified</code> codeblock let you track unsaved changes, e.g., to update a window title with a modified indicator.</li>
+<li>The class provides built-in dialogs for find/replace (<code>DlgFindText()</code>, <code>DlgReplace()</code>), go-to-line (<code>DlgGoToLine()</code>), and character insertion (<code>DlgInsChar()</code>).</li>
+<li>Margins are configured via <code>nMargLines</code>, <code>nMargSymbol</code>, <code>nMargFold</code>, and <code>nMargText</code>. Call <code>SetUp()</code> after changing margin settings.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tsaybarcode.html">&larr; tsaybarcode</a> | <a href="../../pt/ui/tscrollbar.html">tscrollbar &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

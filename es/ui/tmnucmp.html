@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMnuComp - Documentaci&oacute;n FWH</title>
+<title>TMnuComp - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,39 +13,39 @@
 
 <h1>TMnuComp</h1>
 <p class="class-source">Fuente: <code>source/classes/tmnucomp.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TComponent</code></p>
+<p class="class-hierarchy">Inherits from: <code>TComponent</code></p>
 
 <p>
-TMnuComp es un componente no visual que envuelve un objeto <code>TMenu</code> en el marco de <code>TComponent</code> para su uso en el dise&ntilde;ador de formularios VisualFW. Permite dise&ntilde;ar, manipular y persistir men&uacute;s dentro del entorno del dise&ntilde;ador visual junto con controles visuales. El componente crea un men&uacute; predeterminado con elementos de ejemplo y lo registra en la ventana padre.
+TMnuComp is a non-visual component that wraps a <code>TMenu</code> object into the <code>TComponent</code> framework for use in the VisualFW form designer. It allows menus to be designed, manipulated, and persisted within the visual designer environment alongside visual controls. The component creates a default menu with sample items and registers it on the parent window.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oMenu</code></td><td>TMenu</td><td>El objeto TMenu envuelto</td></tr>
-<tr><td><code>cResBmp</code></td><td>Character</td><td>Nombre opcional de recurso de mapa de bits para el men&uacute;</td></tr>
-<tr><td><code>cVarName</code></td><td>Character</td><td>Nombre de variable utilizado en el dise&ntilde;ador (de CLASSDATA aProperties)</td></tr>
+<tr><td><code>oMenu</code></td><td>TMenu</td><td>The wrapped TMenu object</td></tr>
+<tr><td><code>cResBmp</code></td><td>Character</td><td>Optional bitmap resource name for the menu</td></tr>
+<tr><td><code>cVarName</code></td><td>Character</td><td>Variable name used in the designer (from CLASSDATA aProperties)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, lDesign, oObject, cResBmp )</code></td><td>Crear un componente de men&uacute;, envolver el TMenu y adjuntarlo a la ventana</td></tr>
-<tr><td><code>aItems( aNewItems )</code></td><td>M&eacute;todo SETGET; reemplaza todos los elementos del men&uacute; con un nuevo array de definiciones</td></tr>
-<tr><td><code>Destroy()</code></td><td>Finalizar el men&uacute; envuelto, desvincularlo de la ventana y destruir el componente</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, lDesign, oObject, cResBmp )</code></td><td>Create a menu component, wrap the TMenu, and attach it to the window</td></tr>
+<tr><td><code>aItems( aNewItems )</code></td><td>SETGET method; replaces all menu items with a new array of item definitions</td></tr>
+<tr><td><code>Destroy()</code></td><td>End the wrapped menu, detach from window, and destroy the component</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Componente de Men&uacute; en el Dise&ntilde;ador</h2>
+<h2 id="example">Example: Menu Component in Designer</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -55,32 +55,32 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "VisualFW Designer" SIZE 800, 600
 
-   // TMnuComp es instanciado t&iacute;picamente por el dise&ntilde;ador VisualFW.
-   // Aqu&iacute; se muestra expl&iacute;citamente:
+   // TMnuComp is typically instantiated by the VisualFW designer.
+   // Here it is shown explicitly:
 
    oMnuComp := TMnuComp():New( 0, 0, oWnd, .T., , "mybmp" )
 
-   // oMnuComp:oMenu ahora es la barra de men&uacute; de la ventana
-   // Reemplazar todos los elementos en tiempo de ejecuci&oacute;n:
+   // oMnuComp:oMenu is now the window's menu bar
+   // Replace all items at runtime:
 
-   oMnuComp:aItems := { "&amp;File", "&amp;Edit", "&amp;View", "&amp;Help" }
+   oMnuComp:aItems := { "&File", "&Edit", "&View", "&Help" }
 
    ACTIVATE WINDOW oWnd CENTERED
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TMnuComp deriva de <code>TComponent</code>, no de <code>TControl</code>, por lo que no tiene representaci&oacute;n visual en el formulario. Aparece como un componente no visual en la lista de componentes del dise&ntilde;ador.</li>
-<li>El constructor <code>New()</code> crea un men&uacute; predeterminado con tres elementos de nivel superior (&amp;One, &amp;Two, T&amp;hree) y un submen&uacute;. Esto sirve como marcador de posici&oacute;n en el dise&ntilde;ador.</li>
-<li>El m&eacute;todo SETGET <code>aItems</code> destruye el men&uacute; actual y lo reconstruye desde un array de cadenas. Cada cadena se convierte en un elemento de men&uacute; de nivel superior.</li>
-<li>El par&aacute;metro <code>cResBmp</code> se pasa a <code>TComponent:New()</code> para la visualizaci&oacute;n opcional del icono en el dise&ntilde;ador.</li>
-<li>En el entorno VisualFW, el dise&ntilde;ador serializa <code>aProperties</code> (aItems, cVarName) del componente para guardar/cargar definiciones de formularios.</li>
+<li>TMnuComp derives from <code>TComponent</code>, not <code>TControl</code>, so it has no visual representation on the form. It appears as a non-visual component in the designer's component list.</li>
+<li>The <code>New()</code> constructor creates a default menu with three top-level items (&amp;One, &amp;Two, T&amp;hree) and one submenu. This serves as a placeholder in the designer.</li>
+<li>The <code>aItems</code> SETGET method destroys the current menu and rebuilds it from a string array. Each string becomes a top-level menu item.</li>
+<li>The <code>cResBmp</code> parameter is passed to <code>TComponent:New()</code> for optional designer icon display.</li>
+<li>In the VisualFW environment, the designer serializes the component's <code>aProperties</code> (aItems, cVarName) for save/load of form definitions.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tmetropanel.html">&larr; tmetropanel</a> | <a href="../../es/reference/tmnucomp.html">tmnucomp &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

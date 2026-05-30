@@ -13,53 +13,53 @@
 
 <h1>TMeterEx</h1>
 <p class="class-source">Fuente: <code>source/classes/tmeterex.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TMeterEx es un control de barra de progreso extendido con renderizado de doble gradiente. Muestra una barra de progreso rellena sobre una pista de fondo, admitiendo definiciones de gradiente personalizadas, esquinas redondeadas, superposición opcional de bitmap, orientación vertical y dirección de relleno invertida. El valor del medidor se gestiona mediante un bloque de código <code>bSetGet</code>.
+TMeterEx is an extended progress meter control with dual-gradient rendering. It displays a filled progress bar over a background track, supporting custom gradient definitions, rounded corners, optional bitmap overlay, vertical orientation, and inverted fill direction. The meter value is managed through a <code>bSetGet</code> code block.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aGrad</code></td><td>Array</td><td>Definición del gradiente de la pista de fondo (array de {fracción, clrDesde, clrHasta})</td></tr>
-<tr><td><code>aGradMet</code></td><td>Array</td><td>Definición del gradiente de relleno del medidor</td></tr>
-<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloque de código para obtener/establecer el valor actual</td></tr>
-<tr><td><code>nTotal</code></td><td>Numeric</td><td>Valor máximo (relleno al 100%)</td></tr>
-<tr><td><code>nRefresh</code></td><td>Numeric</td><td>Último ancho en píxeles pintado (controla la lógica de refresco)</td></tr>
-<tr><td><code>lRound</code></td><td>Logical</td><td>Activa las esquinas redondeadas</td></tr>
-<tr><td><code>nRound</code></td><td>Numeric</td><td>Radio de las esquinas en píxeles</td></tr>
-<tr><td><code>lVertical</code></td><td>Logical</td><td>Orientación vertical</td></tr>
-<tr><td><code>lInverted</code></td><td>Logical</td><td>Invierte la dirección de relleno</td></tr>
-<tr><td><code>hBitmap</code></td><td>Handle</td><td>Bitmap de superposición opcional para el área de relleno</td></tr>
-<tr><td><code>nClrBoxIn</code></td><td>Numeric</td><td>Color del borde interior</td></tr>
-<tr><td><code>nClrBoxOut</code></td><td>Numeric</td><td>Color del borde exterior</td></tr>
+<tr><td><code>aGrad</code></td><td>Array</td><td>Background track gradient definition (array of {fraction, fromClr, toClr})</td></tr>
+<tr><td><code>aGradMet</code></td><td>Array</td><td>Meter fill gradient definition</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Code block to get/set the current value</td></tr>
+<tr><td><code>nTotal</code></td><td>Numeric</td><td>Maximum value (100% fill)</td></tr>
+<tr><td><code>nRefresh</code></td><td>Numeric</td><td>Last painted pixel width (drives refresh logic)</td></tr>
+<tr><td><code>lRound</code></td><td>Logical</td><td>Enable rounded corners</td></tr>
+<tr><td><code>nRound</code></td><td>Numeric</td><td>Corner radius in pixels</td></tr>
+<tr><td><code>lVertical</code></td><td>Logical</td><td>Vertical orientation</td></tr>
+<tr><td><code>lInverted</code></td><td>Logical</td><td>Invert fill direction</td></tr>
+<tr><td><code>hBitmap</code></td><td>Handle</td><td>Optional overlay bitmap for the fill area</td></tr>
+<tr><td><code>nClrBoxIn</code></td><td>Numeric</td><td>Inner border color</td></tr>
+<tr><td><code>nClrBoxOut</code></td><td>Numeric</td><td>Outer border color</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, oWnd, nWidth, nHeight, cBitmap, bSetGet, nTotal, lPixel, lDesign, lRound, nRound, aGrad, aGradMet, nClrBoxIn, nClrBoxOut, lVertical, lInverted, bPainted, lUpdate )</code></td><td>Crea un nuevo control de medidor</td></tr>
-<tr><td><code>Redefine( nId, bSetGet, nTotal, oWnd, cBitmap, lRound, nRound, aGrad, aGradMet, nClrBoxIn, nClrBoxOut, lVertical, lInverted, bPainted, lUpdate )</code></td><td>Redefine desde un recurso de diálogo</td></tr>
-<tr><td><code>Set( nActual )</code></td><td>Establece el valor actual y refresca la visualización</td></tr>
-<tr><td><code>SetTotal( nTotal )</code></td><td>Establece un nuevo valor máximo y refresca</td></tr>
-<tr><td><code>Paint()</code></td><td>Renderiza el medidor con gradientes y bordes</td></tr>
-<tr><td><code>Default()</code></td><td>Inicializa el valor de bSetGet a 0 si no está definido</td></tr>
-<tr><td><code>LoadBitmaps( cBitmap )</code></td><td>Carga un recurso o archivo de bitmap para la superposición</td></tr>
-<tr><td><code>Display()</code></td><td>Envoltura de inicio/fin de pintado</td></tr>
+<tr><td><code>New( nTop, nLeft, oWnd, nWidth, nHeight, cBitmap, bSetGet, nTotal, lPixel, lDesign, lRound, nRound, aGrad, aGradMet, nClrBoxIn, nClrBoxOut, lVertical, lInverted, bPainted, lUpdate )</code></td><td>Create a new meter control</td></tr>
+<tr><td><code>Redefine( nId, bSetGet, nTotal, oWnd, cBitmap, lRound, nRound, aGrad, aGradMet, nClrBoxIn, nClrBoxOut, lVertical, lInverted, bPainted, lUpdate )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>Set( nActual )</code></td><td>Set the current value and refresh the display</td></tr>
+<tr><td><code>SetTotal( nTotal )</code></td><td>Set a new maximum value and refresh</td></tr>
+<tr><td><code>Paint()</code></td><td>Render the meter with gradients and borders</td></tr>
+<tr><td><code>Default()</code></td><td>Initialize the bSetGet value to 0 if undefined</td></tr>
+<tr><td><code>LoadBitmaps( cBitmap )</code></td><td>Load a bitmap resource or file for the overlay</td></tr>
+<tr><td><code>Display()</code></td><td>Begin/end paint wrapper</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Medidor de Doble Valor</h2>
+<h2 id="example">Example: Dual-Value Meter</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -82,17 +82,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Use la cláusula <code>GRADIENTS</code> para establecer <code>aGrad</code> (fondo de la pista) y <code>aGradMet</code> (relleno de progreso). Cada uno es un array de entradas <code>{ fracción, colorDesde, colorHasta }</code>.</li>
-<li>La cláusula <code>ROUND</code> activa las esquinas redondeadas con un radio predeterminado de 3; pase <code>nRound</code> para un radio personalizado.</li>
-<li><code>lVertical</code> dibuja el medidor de abajo hacia arriba; <code>lInverted</code> invierte la dirección de relleno (de derecha a izquierda o de arriba hacia abajo).</li>
-<li>Se puede especificar una superposición de bitmap mediante <code>cBitmap</code>: el bitmap se redimensiona y se dibuja sobre el área rellena.</li>
+<li>Use <code>GRADIENTS</code> clause to set <code>aGrad</code> (track background) and <code>aGradMet</code> (progress fill). Each is an array of <code>{ fraction, fromColor, toColor }</code> entries.</li>
+<li>The <code>ROUND</code> clause enables rounded corners with default radius 3; pass <code>nRound</code> for a custom radius.</li>
+<li><code>lVertical</code> draws the meter bottom-to-top; <code>lInverted</code> reverses the fill direction (right-to-left or top-to-bottom).</li>
+<li>A bitmap overlay can be specified via <code>cBitmap</code> -- the bitmap is resized and drawn over the filled area.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tmeter.html">&larr; tmeter</a> | <a href="../../es/ui/tmeterex.html">tmeterex &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

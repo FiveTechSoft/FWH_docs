@@ -12,77 +12,77 @@
 <main id="content">
 
 <h1>TNewsServer / TNewsInstance</h1>
-<p class="class-source">Fontes: <code>source/classes/tnewssrv.prg</code>, <code>source/classes/tnewsins.prg</code></p>
-<p class="class-hierarchy">TNewsServer independente | TNewsInstance auxiliar</p>
+<p class="class-source">Sources: <code>source/classes/tnewssrv.prg</code>, <code>source/classes/tnewsins.prg</code></p>
+<p class="class-hierarchy">TNewsServer standalone | TNewsInstance helper</p>
 
 <p>
-TNewsServer implementa um servidor de notícias NNTP (Network News Transfer Protocol) na porta 119. É construído sobre TSocket e usa arquivos DBF/CDX para armazenar grupos de notícias e artigos. TNewsInstance lida com cada sessão de cliente conectada, analisando comandos NNTP e servindo dados de artigos.
+TNewsServer implements an NNTP (Network News Transfer Protocol) news server on port 119. It is built on TSocket and uses DBF/CDX files to store newsgroups and articles. TNewsInstance handles each connected client session, parsing NNTP commands and serving article data.
 </p>
 
 <h2 id="server">TNewsServer</h2>
 
-<h3>Principais Membros DATA</h3>
+<h3>Key DATA Members</h3>
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oTimer</code></td><td>Objeto</td><td>Temporizador para processamento periódico de tarefas de clientes</td></tr>
-<tr><td><code>oSocket</code></td><td>Objeto</td><td>Socket de escuta vinculado à porta 119</td></tr>
-<tr><td><code>aInstances</code></td><td>Array</td><td>Array de objetos TNewsInstance para clientes ativos</td></tr>
-<tr><td><code>cDefPath</code></td><td>Caractere</td><td>Diretório de dados padrão para arquivos DBF/CDX</td></tr>
-<tr><td><code>lDebug</code></td><td>Lógico</td><td>Habilita registro de depuração em cLogFile</td></tr>
+<tr><td><code>oTimer</code></td><td>Object</td><td>Timer for periodic client task processing</td></tr>
+<tr><td><code>oSocket</code></td><td>Object</td><td>Listener socket bound to port 119</td></tr>
+<tr><td><code>aInstances</code></td><td>Array</td><td>Array of TNewsInstance objects for active clients</td></tr>
+<tr><td><code>cDefPath</code></td><td>Character</td><td>Default data directory for DBF/CDX files</td></tr>
+<tr><td><code>lDebug</code></td><td>Logical</td><td>Enable debug logging to cLogFile</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos Principais</h3>
+<h3>Methods</h3>
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cPath )</code></td><td>Cria o servidor; cria Groups.dbf e índices em cPath</td></tr>
-<tr><td><code>Activate()</code></td><td>Inicia a escuta na porta 119 para conexões recebidas</td></tr>
-<tr><td><code>End()</code></td><td>Para o temporizador, fecha o socket e encerra todas as instâncias de cliente</td></tr>
+<tr><td><code>New( oWnd, cPath )</code></td><td>Create server; creates Groups.dbf and indexes in cPath</td></tr>
+<tr><td><code>Activate()</code></td><td>Start listening on port 119 for incoming connections</td></tr>
+<tr><td><code>End()</code></td><td>Stop timer, close socket, and terminate all client instances</td></tr>
 </tbody>
 </table>
 
 <h2 id="instance">TNewsInstance</h2>
 
-<h3>Principais Membros DATA</h3>
+<h3>Key DATA Members</h3>
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oSocket</code></td><td>Objeto</td><td>Socket de cliente para esta sessão NNTP</td></tr>
-<tr><td><code>oServer</code></td><td>Objeto</td><td>Referência ao TNewsServer pai</td></tr>
-<tr><td><code>cGroup</code></td><td>Caractere</td><td>Nome do grupo de notícias atualmente selecionado</td></tr>
-<tr><td><code>lPostAllow</code></td><td>Lógico</td><td>Se a publicação é permitida</td></tr>
+<tr><td><code>oSocket</code></td><td>Object</td><td>Client socket for this NNTP session</td></tr>
+<tr><td><code>oServer</code></td><td>Object</td><td>Parent TNewsServer reference</td></tr>
+<tr><td><code>cGroup</code></td><td>Character</td><td>Currently selected newsgroup name</td></tr>
+<tr><td><code>lPostAllow</code></td><td>Logical</td><td>Whether posting is allowed</td></tr>
 </tbody>
 </table>
 
-<h3>Comandos NNTP Implementados</h3>
+<h3>NNTP Commands Implemented</h3>
 <table>
 <thead>
-<tr><th>Método</th><th>Comando NNTP</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>NNTP Command</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>Article()</code></td><td>ARTICLE</td><td>Recupera cabeçalho e/ou corpo do artigo</td></tr>
-<tr><td><code>Head()</code></td><td>HEAD</td><td>Recupera apenas o cabeçalho do artigo</td></tr>
-<tr><td><code>Body()</code></td><td>BODY</td><td>Recupera apenas o corpo do artigo</td></tr>
-<tr><td><code>Group()</code></td><td>GROUP</td><td>Seleciona um grupo de notícias</td></tr>
-<tr><td><code>List()</code></td><td>LIST</td><td>Lista os grupos de notícias disponíveis</td></tr>
-<tr><td><code>ListGroup()</code></td><td>LISTGROUP</td><td>Lista números de artigo no grupo atual</td></tr>
-<tr><td><code>Post()</code></td><td>POST</td><td>Inicia a publicação de um novo artigo</td></tr>
-<tr><td><code>Quit()</code></td><td>QUIT</td><td>Encerra a sessão NNTP</td></tr>
-<tr><td><code>NewGroups()</code></td><td>NEWGROUPS</td><td>Lista grupos criados desde uma data/hora</td></tr>
-<tr><td><code>XOver()</code></td><td>XOVER</td><td>Visão geral de artigos (assunto, autor, data, etc.)</td></tr>
-<tr><td><code>Stat()</code></td><td>STAT</td><td>Verifica se um artigo existe sem recuperá-lo</td></tr>
+<tr><td><code>Article()</code></td><td>ARTICLE</td><td>Retrieve article head and/or body</td></tr>
+<tr><td><code>Head()</code></td><td>HEAD</td><td>Retrieve article header only</td></tr>
+<tr><td><code>Body()</code></td><td>BODY</td><td>Retrieve article body only</td></tr>
+<tr><td><code>Group()</code></td><td>GROUP</td><td>Select a newsgroup</td></tr>
+<tr><td><code>List()</code></td><td>LIST</td><td>List available newsgroups</td></tr>
+<tr><td><code>ListGroup()</code></td><td>LISTGROUP</td><td>List article numbers in current group</td></tr>
+<tr><td><code>Post()</code></td><td>POST</td><td>Begin posting a new article</td></tr>
+<tr><td><code>Quit()</code></td><td>QUIT</td><td>End the NNTP session</td></tr>
+<tr><td><code>NewGroups()</code></td><td>NEWGROUPS</td><td>List groups created since a date/time</td></tr>
+<tr><td><code>XOver()</code></td><td>XOVER</td><td>Overview of articles (subject, author, date, etc.)</td></tr>
+<tr><td><code>Stat()</code></td><td>STAT</td><td>Check if article exists without retrieving it</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Iniciar Servidor de Notícias</h2>
+<h2 id="example">Example: Start News Server</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -99,16 +99,16 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 <ul>
-<li>O servidor escuta na porta TCP 119 (porta NNTP padrão). Cada conexão de cliente cria um TNewsInstance.</li>
-<li>Os grupos de notícias e artigos são armazenados em arquivos DBF com índices CDX, organizados por ID de grupo.</li>
-<li>O temporizador (intervalo de 10ms) processa tarefas pendentes do cliente (p.ex., enviar resultados LIST em fragmentos).</li>
-<li>A análise de comandos não difere maiúsculas/minúsculas. Comandos não reconhecidos recebem "500 Command not implemented."</li>
+<li>The server listens on TCP port 119 (standard NNTP port). Each client connection creates a TNewsInstance.</li>
+<li>Newsgroups and articles are stored in DBF files with CDX indexes, organized by group ID.</li>
+<li>The timer (10ms interval) processes pending client tasks (e.g., sending LIST results in chunks).</li>
+<li>Command parsing is case-insensitive. Unrecognized commands receive "500 Command not implemented."</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tnewsinstance.html">&larr; tnewsinstance</a> | <a href="../../pt/utilities/tng.html">tng &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

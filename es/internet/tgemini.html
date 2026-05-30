@@ -15,14 +15,14 @@
 <p class="class-source">Fuente: <code>source/classes/tgemini.prg</code></p>
 
 <p>
-TGemini es el cliente de FiveWin para la <strong>API de Google Gemini</strong>. Proporciona acceso a la
-familia de modelos Gemini de Google con soporte para chat de texto, respuestas en streaming, análisis de
-imágenes y archivos (PNG, JPEG, PDF, TXT, CSV, PRG) y subida de archivos al servicio de archivos de Google.
-La clase utiliza la biblioteca <code>hb_curl</code> de Harbour para la comunicación HTTPS. Las claves de API
-pueden pasarse explícitamente o leerse de la variable de entorno <code>GEMINI_API_KEY</code>.
+TGemini is FiveWin's client for the <strong>Google Gemini API</strong>. It provides access to Google's
+Gemini family of models with support for text chat, streaming responses, image and file analysis
+(PNG, JPEG, PDF, TXT, CSV, PRG), and file uploads to Google's file service. The class uses Harbour's
+<code>hb_curl</code> library for HTTPS communication. API keys can be passed explicitly or read from the
+<code>GEMINI_API_KEY</code> environment variable.
 </p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
@@ -39,42 +39,42 @@ flowchart LR
     B --> C
 </div>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Por Defecto</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cKey</code></td><td>Carácter</td><td><code>""</code></td><td>Clave de API de Gemini. Lee la variable de entorno <code>GEMINI_API_KEY</code> si está vacía.</td></tr>
-<tr><td><code>cModel</code></td><td>Carácter</td><td><code>"gemini-2.0-flash"</code></td><td>Identificador del modelo Gemini</td></tr>
-<tr><td><code>cResponse</code></td><td>Carácter</td><td></td><td>Respuesta JSON sin procesar de la API</td></tr>
-<tr><td><code>cUrl</code></td><td>Carácter</td><td><code>"https://generativelanguage.googleapis.com/v1beta/models"</code></td><td>Endpoint base de la API</td></tr>
-<tr><td><code>cUploadUrl</code></td><td>Carácter</td><td><code>"https://generativelanguage.googleapis.com/upload/v1beta/files"</code></td><td>Endpoint de subida de archivos</td></tr>
-<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>Handle easy de libcurl</td></tr>
-<tr><td><code>nError</code></td><td>Numérico</td><td><code>0</code></td><td>Código de error de curl (0 = <code>HB_CURLE_OK</code>)</td></tr>
-<tr><td><code>nHttpCode</code></td><td>Numérico</td><td><code>0</code></td><td>Código de estado de la respuesta HTTP</td></tr>
-<tr><td><code>nTemperature</code></td><td>Numérico</td><td><code>0</code></td><td>Temperatura de muestreo (0.0 - 1.0)</td></tr>
+<tr><td><code>cKey</code></td><td>Character</td><td><code>""</code></td><td>Gemini API key. Reads <code>GEMINI_API_KEY</code> env var if empty.</td></tr>
+<tr><td><code>cModel</code></td><td>Character</td><td><code>"gemini-2.0-flash"</code></td><td>Gemini model identifier</td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Raw JSON response from the API</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td><code>"https://generativelanguage.googleapis.com/v1beta/models"</code></td><td>API base endpoint</td></tr>
+<tr><td><code>cUploadUrl</code></td><td>Character</td><td><code>"https://generativelanguage.googleapis.com/upload/v1beta/files"</code></td><td>File upload endpoint</td></tr>
+<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>libcurl easy handle</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>curl error code (0 = <code>HB_CURLE_OK</code>)</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>HTTP response status code</td></tr>
+<tr><td><code>nTemperature</code></td><td>Numeric</td><td><code>0</code></td><td>Sampling temperature (0.0 - 1.0)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cKey, cModel )</code></td><td>Crea una instancia de TGemini. Lee <code>GEMINI_API_KEY</code> del entorno si <code>cKey</code> está vacío. Inicializa el handle de libcurl.</td></tr>
-<tr><td><code>Send( uContent, [cPrompt], [bCallback] )</code></td><td>Método principal que acepta entrada flexible. <code>uContent</code> puede ser una cadena de texto, una ruta de archivo o un array de rutas de archivo. <code>cPrompt</code> proporciona texto opcional junto a los archivos. <code>bCallback</code> habilita el streaming mediante codeblock. Devuelve JSON sin procesar.</td></tr>
-<tr><td><code>GetValue()</code></td><td>Extrae el texto de la respuesta del JSON de <code>cResponse</code>. Navega por la ruta <code>candidates[1].content.parts[1].text</code>. Devuelve información de error en caso de fallo.</td></tr>
-<tr><td><code>GetTokens( cBuffer )</code></td><td>Analiza un fragmento de respuesta en streaming y extrae el token de texto. Maneja fragmentos JSON tanto en estilo array como en estilo objeto.</td></tr>
-<tr><td><code>UploadFile( cFileName, lDeleteAfter )</code></td><td>Sube un archivo a la API de archivos de Google. Devuelve la cadena URI del archivo. Opcionalmente elimina <code>cFileName</code> cuando <code>lDeleteAfter</code> es <code>.T.</code>.</td></tr>
-<tr><td><code>End()</code></td><td>Libera el handle de libcurl. Se llama automáticamente desde el destructor.</td></tr>
+<tr><td><code>New( cKey, cModel )</code></td><td>Create a TGemini instance. Reads <code>GEMINI_API_KEY</code> from environment if <code>cKey</code> is empty. Initializes the libcurl handle.</td></tr>
+<tr><td><code>Send( uContent, [cPrompt], [bCallback] )</code></td><td>Core method accepting flexible input. <code>uContent</code> can be a text string, a file path, or an array of file paths. <code>cPrompt</code> supplies optional text alongside files. <code>bCallback</code> enables streaming via codeblock. Returns raw JSON.</td></tr>
+<tr><td><code>GetValue()</code></td><td>Extract the response text from <code>cResponse</code> JSON. Navigates path <code>candidates[1].content.parts[1].text</code>. Returns error info on failure.</td></tr>
+<tr><td><code>GetTokens( cBuffer )</code></td><td>Parse a streaming response chunk and extract the text token. Handles both array-style and object-style JSON chunks.</td></tr>
+<tr><td><code>UploadFile( cFileName, lDeleteAfter )</code></td><td>Upload a file to Google's file API. Returns the file URI string. Optionally deletes <code>cFileName</code> when <code>lDeleteAfter</code> is <code>.T.</code>.</td></tr>
+<tr><td><code>End()</code></td><td>Clean up the libcurl handle. Called automatically by the destructor.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example-text">Ejemplo: Chat de Texto</h2>
+<h2 id="example-text">Example: Text Chat</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -94,7 +94,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-image">Ejemplo: Análisis de Imagen / Archivo</h2>
+<h2 id="example-image">Example: Image / File Analysis</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -102,14 +102,14 @@ function Main()
 
    local oAI := TGemini():New( "your-gemini-api-key" )
 
-   // Imagen única
+   // Single image
    oAI:Send( "C:\photos\chart.png", "Describe this chart." )
 
    if oAI:nError == 0
       MsgInfo( oAI:GetValue() )
    endif
 
-   // Análisis de múltiples archivos
+   // Multi-file analysis
    oAI:Send( { "C:\docs\invoice.pdf", "C:\docs\photo.jpg" }, ;
       "Compare and summarize." )
 
@@ -121,7 +121,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-stream">Ejemplo: Respuesta en Streaming</h2>
+<h2 id="example-stream">Example: Streaming Response</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -130,7 +130,7 @@ function Main()
    local oAI := TGemini():New( "your-gemini-api-key" )
    local cFull := ""
 
-   // Pasar un codeblock como tercer parámetro para activar el streaming
+   // Pass a codeblock as 3rd parameter to activate streaming
    oAI:Send( "Write a short story about AI.", , ;
       { |cChunk| cFull += cChunk, QOut( cChunk ) } )
 
@@ -142,18 +142,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Requiere la biblioteca <code>hb_curl</code>. Incluye <code>#include "hbcurl.ch"</code> para las constantes de curl.</li>
-<li>La verificación SSL está desactivada por defecto (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>).</li>
-<li><code>Send()</code> detecta automáticamente los archivos por su extensión y los codifica en base64 para su envío en línea. Tipos soportados: PNG, JPEG, PDF, TXT, CSV, PRG, CH.</li>
-<li>El streaming se habilita pasando un codeblock como tercer parámetro a <code>Send()</code>. El endpoint cambia de <code>:generateContent</code> a <code>:streamGenerateContent</code>.</li>
-<li><code>UploadFile()</code> utiliza el servicio dedicado de subida de archivos de Google y devuelve un URI para su posterior referencia en conversaciones de múltiples turnos.</li>
+<li>Requires the <code>hb_curl</code> library. Include <code>#include "hbcurl.ch"</code> for curl constants.</li>
+<li>SSL verification is disabled by default (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>).</li>
+<li><code>Send()</code> automatically detects files by their extension and base64-encodes them for inline submission. Supported types: PNG, JPEG, PDF, TXT, CSV, PRG, CH.</li>
+<li>Streaming is enabled by passing a codeblock as the third parameter to <code>Send()</code>. The endpoint switches from <code>:generateContent</code> to <code>:streamGenerateContent</code>.</li>
+<li><code>UploadFile()</code> uses Google's dedicated file upload service and returns a URI for later reference in multi-turn conversations.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/reference/tgdip.html">&larr; tgdip</a> | <a href="../../es/ui/tget.html">tget &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

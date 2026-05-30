@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TPanel - Documenta&ccedil;&atilde;o FWH</title>
+<title>TPanel - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,40 +13,40 @@
 
 <h1>TPanel</h1>
 <p class="class-source">Fonte: <code>source/classes/tpanel.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TPanel &eacute; um controle cont&ecirc;iner que hospeda controles filhos com suporte para transpar&ecirc;ncia, cor de fundo personalizada e uma borda opcional. &Eacute; comumente usado para agrupar controles relacionados visualmente dentro de um di&aacute;logo ou janela. O painel pode ser projetado em tempo de execu&ccedil;&atilde;o ou vinculado a um recurso de di&aacute;logo.
+TPanel is a container control that hosts child controls with support for transparency, custom background color, and an optional border. It is commonly used to group related controls visually within a dialog or window. The panel can be designed at runtime or linked to a dialog resource.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aControls</code></td><td>Array</td><td>Array de controles filhos hospedados no painel</td></tr>
-<tr><td><code>nOpacity</code></td><td>Numeric</td><td>N&iacute;vel de opacidade de 0 (transparente) a 255 (opaco)</td></tr>
-<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Cor de preenchimento de fundo (valor RGB)</td></tr>
+<tr><td><code>aControls</code></td><td>Array</td><td>Array of child controls hosted on the panel</td></tr>
+<tr><td><code>nOpacity</code></td><td>Numeric</td><td>Opacity level from 0 (transparent) to 255 (opaque)</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Background fill color (RGB value)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lDesign, cVar, lBorder )</code></td><td>Criar um novo controle painel</td></tr>
-<tr><td><code>Redefine( nId, oWnd )</code></td><td>Redefinir a partir de um recurso de di&aacute;logo</td></tr>
-<tr><td><code>Paint()</code></td><td>Pintar o fundo e a borda do painel</td></tr>
-<tr><td><code>GotFocus( hCtlLost )</code></td><td>Gerenciar a chegada do foco; encaminhar para controles filhos</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lDesign, cVar, lBorder )</code></td><td>Create a new panel control</td></tr>
+<tr><td><code>Redefine( nId, oWnd )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>Paint()</code></td><td>Paint the panel background and border</td></tr>
+<tr><td><code>GotFocus( hCtlLost )</code></td><td>Handle focus arrival; forward to child controls</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Painel com Controles Filhos</h2>
+<h2 id="example">Example: Panel with Child Controls</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -71,17 +71,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Use a cl&aacute;usula <code>TRANSPARENT</code> para tornar o fundo do painel transparente. Quando transparente, os controles filhos desenham diretamente sobre o fundo da janela pai.</li>
-<li>A cl&aacute;usula <code>COLOR</code> define <code>nClrPane</code> para o preenchimento de fundo quando a transpar&ecirc;ncia est&aacute; desabilitada.</li>
-<li>TPanel suporta edi&ccedil;&atilde;o em modo de design quando <code>lDesign</code> &eacute; verdadeiro, permitindo reposicionamento por arrastar e soltar de controles filhos em tempo de execu&ccedil;&atilde;o durante o desenvolvimento.</li>
-<li>O painel gerencia o foco encaminhando eventos <code>GotFocus</code> para o primeiro controle filho.</li>
+<li>Use the <code>TRANSPARENT</code> clause to make the panel background see-through. When transparent, child controls draw directly on the parent window background.</li>
+<li>The <code>COLOR</code> clause sets <code>nClrPane</code> for the background fill when transparency is disabled.</li>
+<li>TPanel supports design-mode editing when <code>lDesign</code> is true, allowing drag-and-drop repositioning of child controls at runtime during development.</li>
+<li>The panel handles focus management by forwarding <code>GotFocus</code> events to the first child control.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tpages.html">&larr; tpages</a> | <a href="../../pt/utilities/tparser.html">tparser &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

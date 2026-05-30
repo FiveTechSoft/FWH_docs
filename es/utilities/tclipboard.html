@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TClipBoard - Portapapeles de Windows - Documentación FWH</title>
+<title>TClipBoard - Windows Clipboard - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,55 +11,55 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>TClipBoard - Portapapeles de Windows</h1>
+<h1>TClipBoard - Windows Clipboard</h1>
 <p class="class-source">
 Fuente: <code>source/classes/clipbrd.prg</code>
 </p>
 
 <p>
-TClipBoard encapsula la API del Portapapeles de Windows (<code>OpenClipboard</code>, <code>GetClipboardData</code>,
-<code>SetClipboardData</code>, <code>CloseClipboard</code>, etc.) en una interfaz orientada a objetos.
-Soporta texto ANSI y Unicode, imágenes bitmap, metarchivos y listas de archivos (del
-copiar/pegar del Explorador). La clase gestiona automáticamente la propiedad del portapapeles y la secuencia de open/empty/close.
+TClipBoard wraps the Windows Clipboard API (<code>OpenClipboard</code>, <code>GetClipboardData</code>,
+<code>SetClipboardData</code>, <code>CloseClipboard</code>, etc.) into an object-oriented interface.
+It supports ANSI and Unicode text, bitmap images, metafiles, and file lists (from Explorer's
+copy/paste). The class automatically manages clipboard ownership and sequencing of open/empty/close.
 </p>
 
-<h3>Miembros DATA</h3>
+<h3>DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nFormat</code></td><td>Numérico</td><td>Formato de portapapeles por defecto para operaciones de texto (CF_TEXT)</td></tr>
-<tr><td><code>oWnd</code></td><td>Objeto</td><td>Ventana propietaria de las operaciones del portapapeles</td></tr>
+<tr><td><code>nFormat</code></td><td>Numeric</td><td>Default clipboard format for text operations (CF_TEXT)</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Owner window for clipboard operations</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos Principales</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nFormat )</code></td><td>Crea el objeto portapapeles con formato opcional (por defecto CF_TEXT)</td></tr>
-<tr><td><code>SetText( c )</code></td><td>Copia texto ANSI al portapapeles</td></tr>
-<tr><td><code>GetText()</code></td><td>Obtiene texto ANSI del portapapeles</td></tr>
-<tr><td><code>SetWideText( c )</code></td><td>Copia texto Unicode (wide) al portapapeles</td></tr>
-<tr><td><code>GetUnicodeText()</code></td><td>Obtiene texto Unicode del portapapeles</td></tr>
-<tr><td><code>SetBitmap( oBmp )</code></td><td>Copia un bitmap al portapapeles</td></tr>
-<tr><td><code>GetBitmap()</code></td><td>Obtiene un bitmap del portapapeles</td></tr>
-<tr><td><code>SetMetaFile( o )</code></td><td>Copia un metarchivo al portapapeles</td></tr>
-<tr><td><code>GetMetaFile()</code></td><td>Obtiene un metarchivo del portapapeles</td></tr>
-<tr><td><code>GetFiles()</code></td><td>Devuelve un array con los nombres de archivo de un portapapeles CF_HDROP (copiados desde el Explorador)</td></tr>
-<tr><td><code>Clear()</code></td><td>Borra todo el contenido del portapapeles</td></tr>
-<tr><td><code>Open()</code></td><td>Abre el portapapeles para múltiples operaciones (después se debe llamar a Empty() y Close())</td></tr>
-<tr><td><code>Empty()</code></td><td>Vacía el contenido del portapapeles (se debe llamar tras Open() antes de establecer datos)</td></tr>
-<tr><td><code>Close()</code></td><td>Cierra el portapapeles (se debe llamar tras Open())</td></tr>
+<tr><td><code>New( nFormat )</code></td><td>Create clipboard object with optional format (default CF_TEXT)</td></tr>
+<tr><td><code>SetText( c )</code></td><td>Copy ANSI text to the clipboard</td></tr>
+<tr><td><code>GetText()</code></td><td>Retrieve ANSI text from the clipboard</td></tr>
+<tr><td><code>SetWideText( c )</code></td><td>Copy Unicode (wide) text to the clipboard</td></tr>
+<tr><td><code>GetUnicodeText()</code></td><td>Retrieve Unicode text from the clipboard</td></tr>
+<tr><td><code>SetBitmap( oBmp )</code></td><td>Copy a bitmap to the clipboard</td></tr>
+<tr><td><code>GetBitmap()</code></td><td>Retrieve a bitmap from the clipboard</td></tr>
+<tr><td><code>SetMetaFile( o )</code></td><td>Copy a metafile to the clipboard</td></tr>
+<tr><td><code>GetMetaFile()</code></td><td>Retrieve a metafile from the clipboard</td></tr>
+<tr><td><code>GetFiles()</code></td><td>Return an array of file names from a CF_HDROP clipboard (copied from Explorer)</td></tr>
+<tr><td><code>Clear()</code></td><td>Clear all clipboard contents</td></tr>
+<tr><td><code>Open()</code></td><td>Open the clipboard for multiple operations (must call Empty() and Close() afterwards)</td></tr>
+<tr><td><code>Empty()</code></td><td>Empty the clipboard contents (must be called after Open() before setting data)</td></tr>
+<tr><td><code>Close()</code></td><td>Close the clipboard (must be called after Open())</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo: Copiar/Pegar texto y archivos</h3>
+<h3>Example: Copy/Paste Text and Files</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -67,20 +67,20 @@ function Main()
 
    local oClip := TClipBoard():New()
 
-   // Copia texto al portapapeles
+   // Copy text to clipboard
    oClip:SetText( "Hello from FiveWin!" )
    ? "Text copied to clipboard"
 
-   // Pega texto desde el portapapeles
+   // Paste text from clipboard
    ? "Clipboard content:", oClip:GetText()
 
-   // Copia una lista de archivos (como si fuera del Explorador)
+   // Copy a file list (as if from Explorer)
    oClip:Open()
    oClip:Empty()
-   // ... establece datos CF_HDROP mediante la API de Windows
+   // ... set CF_HDROP data via Windows API
    oClip:Close()
 
-   // Lee los archivos copiados desde el Explorador
+   // Read files copied from Explorer
    local aFiles := oClip:GetFiles()
    if ValType( aFiles ) == "A"
       AEval( aFiles, {|c| ? "File: " + c } )
@@ -88,7 +88,7 @@ function Main()
 
 return nil</code></pre>
 
-<h3>Ejemplo: Copiar un bitmap</h3>
+<h3>Example: Copy a Bitmap</h3>
 
 <pre><code class="language-harbour">function CopyBitmap()
 
@@ -100,8 +100,8 @@ return nil</code></pre>
 
 return nil</code></pre>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tchoosegradient.html">&larr; tchoosegradient</a> | <a href="../../es/ui/tclipget.html">tclipget &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

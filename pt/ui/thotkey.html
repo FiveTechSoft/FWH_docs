@@ -13,40 +13,40 @@
 
 <h1>THotKey</h1>
 <p class="class-source">Fonte: <code>source/classes/thotkey.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-THotKey encapsula o controle comum de tecla de atalho do Win32, permitindo ao usuário pressionar uma combinação de teclado (ex., Ctrl+Alt+F5) que é capturada e armazenada como um código de tecla virtual e máscara de modificadores. É comumente usado em diálogos de configuração onde os usuários definem atalhos de teclado personalizados.
+THotKey wraps the Win32 hot key common control, allowing the user to press a keyboard combination (e.g., Ctrl+Alt+F5) which is captured and stored as a virtual-key code and modifier mask. It is commonly used in configuration dialogs where users define custom keyboard shortcuts.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nVirtKey</code></td><td>Numeric</td><td>Código da tecla virtual da tecla selecionada (ex., <code>VK_F5</code>)</td></tr>
-<tr><td><code>nModifiers</code></td><td>Numeric</td><td>Máscara de bits das teclas modificadoras: <code>HOTKEYF_SHIFT</code>, <code>HOTKEYF_CONTROL</code>, <code>HOTKEYF_ALT</code></td></tr>
+<tr><td><code>nVirtKey</code></td><td>Numeric</td><td>Virtual-key code of the selected key (e.g., <code>VK_F5</code>)</td></tr>
+<tr><td><code>nModifiers</code></td><td>Numeric</td><td>Bitmask of modifier keys: <code>HOTKEYF_SHIFT</code>, <code>HOTKEYF_CONTROL</code>, <code>HOTKEYF_ALT</code></td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, nVK, nMod )</code></td><td>Cria um novo controle de entrada de tecla de atalho</td></tr>
-<tr><td><code>SetHotKey( nVK, nMod )</code></td><td>Define programaticamente a tecla de atalho como <code>nVK</code> com os modificadores <code>nMod</code></td></tr>
-<tr><td><code>GetHotKey()</code></td><td>Retorna um array <code>{ nVirtKey, nModifiers }</code> da tecla de atalho atual</td></tr>
-<tr><td><code>GetKeyName()</code></td><td>Retorna uma string legível como <code>"Ctrl+Alt+F5"</code></td></tr>
-<tr><td><code>SetRules( nInv, nDef )</code></td><td>Define combinações de teclas inválidas e o comportamento de substituição padrão</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, nVK, nMod )</code></td><td>Create a new hotkey input control</td></tr>
+<tr><td><code>SetHotKey( nVK, nMod )</code></td><td>Programmatically set the hotkey to <code>nVK</code> with modifiers <code>nMod</code></td></tr>
+<tr><td><code>GetHotKey()</code></td><td>Return an array <code>{ nVirtKey, nModifiers }</code> of the current hotkey</td></tr>
+<tr><td><code>GetKeyName()</code></td><td>Return a human-readable string such as <code>"Ctrl+Alt+F5"</code></td></tr>
+<tr><td><code>SetRules( nInv, nDef )</code></td><td>Set invalid key combinations and default override behavior</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Seletor de Tecla de Atalho com Callback</h2>
+<h2 id="example">Example: Hotkey Picker with Change Callback</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -66,17 +66,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>THotKey captura a combinação de teclas quando o controle tem o foco e o usuário pressiona um conjunto modificador+tecla. A combinação é exibida no controle.</li>
-<li>Constantes de modificadores: <code>HOTKEYF_SHIFT</code> (1), <code>HOTKEYF_CONTROL</code> (2), <code>HOTKEYF_ALT</code> (4). Combine com <code>+</code> para teclas de atalho com múltiplos modificadores.</li>
-<li><code>GetKeyName()</code> retorna uma string localizada adequada para exibição em menus ou listas de configuração.</li>
-<li>Use <code>SetRules()</code> para especificar quais combinações de teclas são inválidas. <code>nInv</code> é uma máscara de modificadores inválidos e <code>nDef</code> especifica o modificador padrão a ser usado quando o usuário digita uma combinação inválida.</li>
+<li>THotKey captures the key combination when the control has focus and the user presses a modifier+key chord. The combination is displayed in the control.</li>
+<li>Modifier constants: <code>HOTKEYF_SHIFT</code> (1), <code>HOTKEYF_CONTROL</code> (2), <code>HOTKEYF_ALT</code> (4). Combine with <code>+</code> for multi-modifier hotkeys.</li>
+<li><code>GetKeyName()</code> returns a localized string suitable for display in menus or configuration lists.</li>
+<li>Use <code>SetRules()</code> to specify which key combinations are invalid. <code>nInv</code> is a mask of invalid modifiers and <code>nDef</code> specifies the default modifier to use when the user types an invalid combination.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/thorzscroll.html">&larr; thorzscroll</a> | <a href="../../pt/ai/thtmlpage.html">thtmlpage &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

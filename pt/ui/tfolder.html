@@ -1,26 +1,26 @@
-﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TFolder - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TFolder - Documentação FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TFolder</h1>
-<p class="subtitle">Controle de abas para organizar dialogos complexos em paginas</p>
+<p class="subtitle">Tab folder control for organizing complex dialogs into pages</p>
 
 <p><strong>Fonte:</strong> <code>source/classes/folder.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<h2 id="overview">Visão Geral</h2>
+<h2 id="overview">Overview</h2>
 
-<p><code>TFolder</code> implementa um controle de abas do Windows. Cada pagina de aba e um objeto <code>TDialog</code> independente, permitindo colocar qualquer controle em cada pagina usando a sintaxe padrao de dialogos. O folder gerencia qual pagina esta visivel quando o usuario clica em uma aba.</p>
+<p><code>TFolder</code> implements a Windows tab control. Each tab page is an independent <code>TDialog</code> object, so you can place any controls on each page using standard dialog syntax. The folder manages which page is visible when the user clicks a tab.</p>
 
-<p>Recursos principais:</p>
+<p>Key features:</p>
 <ul>
-  <li>Cada pagina e um <code>TDialog</code> completo -- qualquer controle pode ser colocado nela</li>
-  <li>Icones nas abas via <code>oImageList</code></li>
-  <li>Troca de pagina programatica via <code>nOption</code></li>
-  <li>Abas no topo ou na parte inferior</li>
-  <li>Adicao/remocao dinamica de paginas em tempo de execucao</li>
+  <li>Each page is a full <code>TDialog</code> -- any control can be placed on it</li>
+  <li>Tab icons via <code>oImageList</code></li>
+  <li>Programmatic page switching via <code>nOption</code></li>
+  <li>Tabs at top or bottom</li>
+  <li>Dynamic page adding/removing at runtime</li>
 </ul>
 
-<h2 id="architecture">Composicao de Paginas</h2>
+<h2 id="architecture">Page Composition</h2>
 
 <div class="mermaid">
 graph TD
@@ -44,35 +44,35 @@ graph TD
     style DLG3 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
 </div>
 
-<h2 id="properties">Propriedades Principais</h2>
+<h2 id="properties">Key Properties</h2>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>aPrompts</code></td><td>Array</td><td>Array de strings para cada rotulo de aba (ex.: <code>{"Geral", "Detalhes", "Notas"}</code>)</td></tr>
-<tr><td><code>aDialogs</code></td><td>Array</td><td>Array de objetos <code>TDialog</code>, um por pagina de aba</td></tr>
-<tr><td><code>nOption</code></td><td>Numeric</td><td>Indice da aba atualmente selecionada (base 1). Defina para trocar de pagina programaticamente.</td></tr>
-<tr><td><code>oImageList</code></td><td>Object</td><td><code>TImageList</code> opcional fornecendo icones para cada aba</td></tr>
-<tr><td><code>bChange</code></td><td>Block</td><td>Bloco de codigo executado quando o usuario troca de aba</td></tr>
-<tr><td><code>lBottom</code></td><td>Logical</td><td>Quando <code>.T.</code>, as abas aparecem na parte inferior em vez do topo</td></tr>
-<tr><td><code>nTabHeight</code></td><td>Numeric</td><td>Altura da faixa de abas em pixels</td></tr>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of strings for each tab label (e.g. <code>{"General", "Details", "Notes"}</code>)</td></tr>
+<tr><td><code>aDialogs</code></td><td>Array</td><td>Array of <code>TDialog</code> objects, one per tab page</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Index of the currently selected tab (1-based). Set this to switch pages programmatically.</td></tr>
+<tr><td><code>oImageList</code></td><td>Object</td><td>Optional <code>TImageList</code> providing icons for each tab</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Code block executed when the user switches tabs</td></tr>
+<tr><td><code>lBottom</code></td><td>Logical</td><td>When <code>.T.</code>, tabs appear at the bottom instead of the top</td></tr>
+<tr><td><code>nTabHeight</code></td><td>Numeric</td><td>Height of the tab strip in pixels</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Metodos Principais</h2>
+<h2 id="methods">Key Methods</h2>
 
 <table>
-<thead><tr><th>Metodo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, aPrompts, ... )</code></td><td>Construtor. Cria o folder com os rotulos de aba fornecidos.</td></tr>
-<tr><td><code>AddPage( cPrompt, oDlg )</code></td><td>Adiciona uma nova pagina em tempo de execucao.</td></tr>
-<tr><td><code>DelPage( nPage )</code></td><td>Remove uma pagina em tempo de execucao.</td></tr>
-<tr><td><code>SetOption( n )</code></td><td>Troca para a pagina <code>n</code> programaticamente.</td></tr>
-<tr><td><code>GetPage( n )</code></td><td>Retorna o <code>TDialog</code> da pagina <code>n</code>.</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, aPrompts, ... )</code></td><td>Constructor. Creates the folder with the given tab labels.</td></tr>
+<tr><td><code>AddPage( cPrompt, oDlg )</code></td><td>Add a new page at runtime.</td></tr>
+<tr><td><code>DelPage( nPage )</code></td><td>Remove a page at runtime.</td></tr>
+<tr><td><code>SetOption( n )</code></td><td>Switch to page <code>n</code> programmatically.</td></tr>
+<tr><td><code>GetPage( n )</code></td><td>Returns the <code>TDialog</code> for page <code>n</code>.</td></tr>
 </tbody>
 </table>
 
-<h2 id="command">Sintaxe de Comandos</h2>
+<h2 id="command">Command Syntax</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol FOLDER oFld ;
    OF oDlg ;
@@ -82,9 +82,9 @@ graph TD
    [ ON CHANGE bChange ] ;
    [ BOTTOM ]</code></pre>
 
-<p>Cada variavel de dialogo (<code>oDlg1</code>, <code>oDlg2</code>, <code>oDlg3</code>) e criada automaticamente como um <code>TDialog</code> filho. Voce entao coloca os controles em cada dialogo de pagina no bloco <code>ACTIVATE DIALOG</code>.</p>
+<p>Each dialog variable (<code>oDlg1</code>, <code>oDlg2</code>, <code>oDlg3</code>) is automatically created as a child <code>TDialog</code>. You then place controls on each page dialog in the <code>ACTIVATE DIALOG</code> block.</p>
 
-<h2 id="tab-navigation">Fluxo de Navegacao entre Abas</h2>
+<h2 id="tab-navigation">Tab Navigation Flow</h2>
 
 <div class="mermaid">
 stateDiagram-v2
@@ -114,9 +114,9 @@ stateDiagram-v2
     }
 </div>
 
-<h2 id="examples">Exemplos de Codigo</h2>
+<h2 id="examples">Code Examples</h2>
 
-<h3>Exemplo 1: Dialogo de Edicao de Cliente com Abas</h3>
+<h3>Example 1: Customer Edit Dialog with Tabs</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -186,7 +186,7 @@ FUNCTION CustomerEdit()
    RELEASE FONT oFont
 RETURN NIL</code></pre>
 
-<h3>Exemplo 2: Folder com Browse e Troca Dinamica de Paginas</h3>
+<h3>Example 2: Folder with Browse and Dynamic Page Switching</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "XBrowse.ch"
@@ -240,25 +240,25 @@ FUNCTION DataViewer()
    CLOSE Customer
 RETURN NIL</code></pre>
 
-<h2 id="tips">Dicas</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-  <li>Coloque os controles em cada dialogo de pagina (<code>oDlg1</code>, <code>oDlg2</code>, ...) -- <strong>nao</strong> no dialogo pai <code>oDlg</code>.</li>
-  <li>Botoes que devem permanecer visiveis em todas as abas (Salvar, Cancelar) vao no dialogo pai, posicionados abaixo do folder.</li>
-  <li>Use <code>oFld:SetOption( n )</code> para trocar de aba via codigo, por exemplo em resposta a um clique de botao.</li>
-  <li>Use <code>bChange</code> para atualizar dados quando o usuario troca de aba (ex.: atualizar um browse em uma aba).</li>
-  <li>Para adicionar icones nas abas, crie um <code>TImageList</code> e atribua a <code>oFld:oImageList</code> antes da ativacao.</li>
-  <li>Cada dialogo de pagina herda a fonte do dialogo pai, portanto defina a fonte no pai para manter a consistencia.</li>
+  <li>Place controls on each page dialog (<code>oDlg1</code>, <code>oDlg2</code>, ...) -- <strong>not</strong> on the parent dialog <code>oDlg</code>.</li>
+  <li>Buttons that should remain visible on all tabs (Save, Cancel) go on the parent dialog, positioned below the folder.</li>
+  <li>Use <code>oFld:SetOption( n )</code> to switch tabs from code, for example in response to a button click.</li>
+  <li>Use <code>bChange</code> to refresh data when the user switches tabs (e.g. refresh a browse on a tab).</li>
+  <li>To add icons to tabs, create a <code>TImageList</code> and assign it to <code>oFld:oImageList</code> before activation.</li>
+  <li>Each page dialog inherits the font from the parent dialog, so set the font on the parent for consistency.</li>
 </ul>
 
 <h2 id="see-also">Veja Também</h2>
 <ul>
-  <li><a href="../../pt/core/tdialog.html">TDialog</a> -- cada pagina e um TDialog</li>
-  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- classe pai</li>
-  <li><a href="../../pt/ui/tget.html">TGet</a> -- comumente usado dentro de paginas do folder</li>
-  <li><a href="../../pt/ui/txbrowse.html">TXBrowse</a> -- grids de dados funcionam bem dentro de paginas do folder</li>
+  <li><a href="../../pt/core/tdialog.html">TDialog</a> -- each page is a TDialog</li>
+  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../pt/ui/tget.html">TGet</a> -- commonly used inside folder pages</li>
+  <li><a href="../../pt/ui/txbrowse.html">TXBrowse</a> -- data grids work well inside folder pages</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

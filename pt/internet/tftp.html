@@ -15,83 +15,83 @@
 <p class="class-source">Fonte: <code>source/classes/tftpcli.prg</code> (TFtpClient), <code>source/classes/tftpsess.prg</code> (TFtpSession)</p>
 
 <p>
-FiveWin fornece capacidades de cliente FTP através de <strong>TFtpClient</strong>, que implementa
-o protocolo FTP para operações de transferência de arquivos. Suporta upload (STOR), download (RETR),
-navegação de diretórios (CWD, PWD), criação de diretórios (MKD), exclusão de arquivos (DELE) e
-modos de transferência binário/texto (TYPE). <strong>TFtpSession</strong> é uma classe leve usada
-pelo servidor FTP interno para rastrear sessões de cliente conectadas.
+FiveWin provides FTP client capabilities through <strong>TFtpClient</strong>, which implements
+the FTP protocol for file transfer operations. It supports uploading (STOR), downloading (RETR),
+directory navigation (CWD, PWD), directory creation (MKD), file deletion (DELE), and
+binary/text transfer modes (TYPE). <strong>TFtpSession</strong> is a lightweight class used by
+the internal FTP server to track connected client sessions.
 </p>
 
-<h2 id="tftpclient">Classe TFtpClient</h2>
+<h2 id="tftpclient">TFtpClient Class</h2>
 
-<h3>Membros DATA</h3>
-
-<table>
-<thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
-</thead>
-<tbody>
-<tr><td><code>cIPServer</code></td><td>Character</td><td>Nome do servidor FTP ou endereço IP</td></tr>
-<tr><td><code>nPort</code></td><td>Numeric</td><td>Porta do servidor FTP (padrão 21)</td></tr>
-<tr><td><code>User</code></td><td>Character</td><td>Nome de usuário FTP</td></tr>
-<tr><td><code>Pass</code></td><td>Character</td><td>Senha FTP</td></tr>
-<tr><td><code>oSocket</code></td><td>TSocket</td><td>Socket da conexão de controle</td></tr>
-<tr><td><code>oDataSocket</code></td><td>TSocket</td><td>Socket da conexão de dados para transferências de arquivos</td></tr>
-<tr><td><code>nStatus</code></td><td>Numeric</td><td>Estado da sessão (CONNECTING, IDENTIFY1, IDENTIFY2)</td></tr>
-<tr><td><code>AllOk</code></td><td>Logical</td><td>Definido como .T. após login bem-sucedido</td></tr>
-<tr><td><code>SrvLastMsg</code></td><td>Character</td><td>Última mensagem de resposta do servidor</td></tr>
-<tr><td><code>lWaiting</code></td><td>Logical</td><td>Flag de ocupado durante execução síncrona de comandos</td></tr>
-<tr><td><code>lTimeOut</code></td><td>Logical</td><td>Definido como .T. se um comando expirar (30 segundos)</td></tr>
-<tr><td><code>nSended</code></td><td>Numeric</td><td>Contador de bytes enviados</td></tr>
-<tr><td><code>bConnecting</code></td><td>Block</td><td>Callback durante a conexão</td></tr>
-<tr><td><code>bConnected</code></td><td>Block</td><td>Callback quando conectado</td></tr>
-<tr><td><code>bDone</code></td><td>Block</td><td>Callback quando a operação é concluída</td></tr>
-</tbody>
-</table>
-
-<h3>Métodos</h3>
+<h3>DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cIPServer, nPort, User, Pass )</code></td><td>Criar cliente FTP e conectar ao servidor. nPort padrão é 21.</td></tr>
-<tr><td><code>PWD()</code></td><td>Imprimir diretório de trabalho. Retorna a resposta do servidor.</td></tr>
-<tr><td><code>CWD( cDirName )</code></td><td>Alterar diretório de trabalho no servidor</td></tr>
-<tr><td><code>MKD( cDirName )</code></td><td>Criar um diretório no servidor</td></tr>
-<tr><td><code>DELE( cFileName )</code></td><td>Excluir um arquivo do servidor</td></tr>
-<tr><td><code>TYPE( cType )</code></td><td>Definir modo de transferência: "I" (binário/imagem) ou "A" (ASCII)</td></tr>
-<tr><td><code>STOR( cFileName, bBlock )</code></td><td>Enviar um arquivo (STORE). Usa modo ativo PORT.</td></tr>
-<tr><td><code>RETR( cFileName )</code></td><td>Baixar um arquivo (RETRIEVE). Retorna .T. em sucesso, .F. se arquivo não encontrado (550).</td></tr>
-<tr><td><code>PORT( oTransSocket )</code></td><td>Gerar string do comando PORT para conexão de dados ativa</td></tr>
-<tr><td><code>QUIT()</code></td><td>Desconectar do servidor</td></tr>
-<tr><td><code>DoWait()</code></td><td>Aguardar sincronamente a resposta do servidor (timeout de 30 segundos)</td></tr>
+<tr><td><code>cIPServer</code></td><td>Character</td><td>FTP server hostname or IP address</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td>FTP server port (default 21)</td></tr>
+<tr><td><code>User</code></td><td>Character</td><td>FTP username</td></tr>
+<tr><td><code>Pass</code></td><td>Character</td><td>FTP password</td></tr>
+<tr><td><code>oSocket</code></td><td>TSocket</td><td>Control connection socket</td></tr>
+<tr><td><code>oDataSocket</code></td><td>TSocket</td><td>Data connection socket for file transfers</td></tr>
+<tr><td><code>nStatus</code></td><td>Numeric</td><td>Session state (CONNECTING, IDENTIFY1, IDENTIFY2)</td></tr>
+<tr><td><code>AllOk</code></td><td>Logical</td><td>Set to .T. after successful login</td></tr>
+<tr><td><code>SrvLastMsg</code></td><td>Character</td><td>Last server response message</td></tr>
+<tr><td><code>lWaiting</code></td><td>Logical</td><td>Busy flag during synchronous command execution</td></tr>
+<tr><td><code>lTimeOut</code></td><td>Logical</td><td>Set to .T. if a command times out (30 seconds)</td></tr>
+<tr><td><code>nSended</code></td><td>Numeric</td><td>Bytes sent counter</td></tr>
+<tr><td><code>bConnecting</code></td><td>Block</td><td>Callback during connection</td></tr>
+<tr><td><code>bConnected</code></td><td>Block</td><td>Callback when connected</td></tr>
+<tr><td><code>bDone</code></td><td>Block</td><td>Callback when operation completes</td></tr>
 </tbody>
 </table>
 
-<h2 id="tftpsession">Classe TFtpSession</h2>
+<h3>Methods</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( cIPServer, nPort, User, Pass )</code></td><td>Create FTP client and connect to server. nPort defaults to 21.</td></tr>
+<tr><td><code>PWD()</code></td><td>Print working directory. Returns server response.</td></tr>
+<tr><td><code>CWD( cDirName )</code></td><td>Change working directory on the server</td></tr>
+<tr><td><code>MKD( cDirName )</code></td><td>Create a directory on the server</td></tr>
+<tr><td><code>DELE( cFileName )</code></td><td>Delete a file from the server</td></tr>
+<tr><td><code>TYPE( cType )</code></td><td>Set transfer mode: "I" (binary/image) or "A" (ASCII)</td></tr>
+<tr><td><code>STOR( cFileName, bBlock )</code></td><td>Upload a file (STORE). Uses PORT active mode.</td></tr>
+<tr><td><code>RETR( cFileName )</code></td><td>Download a file (RETRIEVE). Returns .T. on success, .F. if file not found (550).</td></tr>
+<tr><td><code>PORT( oTransSocket )</code></td><td>Generate PORT command string for active data connection</td></tr>
+<tr><td><code>QUIT()</code></td><td>Disconnect from the server</td></tr>
+<tr><td><code>DoWait()</code></td><td>Wait synchronously for server response (30-second timeout)</td></tr>
+</tbody>
+</table>
+
+<h2 id="tftpsession">TFtpSession Class</h2>
 
 <p>
-TFtpSession é uma classe de dados simples usada internamente para representar uma sessão de cliente FTP
-conectada no lado do servidor:
+TFtpSession is a simple data class used internally to represent a connected FTP client
+session on the server side:
 </p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cUserName</code></td><td>Character</td><td>Nome de usuário autenticado</td></tr>
-<tr><td><code>cPassword</code></td><td>Character</td><td>Senha autenticada</td></tr>
-<tr><td><code>cCurDir</code></td><td>Character</td><td>Diretório de trabalho atual da sessão</td></tr>
-<tr><td><code>cIP</code></td><td>Character</td><td>Endereço IP do cliente do comando PORT</td></tr>
-<tr><td><code>nPort</code></td><td>Numeric</td><td>Porta do cliente do comando PORT</td></tr>
-<tr><td><code>oSocket</code></td><td>TSocket</td><td>Socket de resposta para a sessão</td></tr>
+<tr><td><code>cUserName</code></td><td>Character</td><td>Authenticated username</td></tr>
+<tr><td><code>cPassword</code></td><td>Character</td><td>Authenticated password</td></tr>
+<tr><td><code>cCurDir</code></td><td>Character</td><td>Current working directory for the session</td></tr>
+<tr><td><code>cIP</code></td><td>Character</td><td>Client IP address from PORT command</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td>Client port from PORT command</td></tr>
+<tr><td><code>oSocket</code></td><td>TSocket</td><td>Response socket for the session</td></tr>
 </tbody>
 </table>
 
-<h2 id="example-upload">Exemplo: Enviar um Arquivo</h2>
+<h2 id="example-upload">Example: Upload a File</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -113,7 +113,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-download">Exemplo: Baixar um Arquivo</h2>
+<h2 id="example-download">Example: Download a File</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -137,7 +137,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-ops">Exemplo: Operações de Diretório</h2>
+<h2 id="example-ops">Example: Directory Operations</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -166,18 +166,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="tips">Notas</h2>
+<h2 id="tips">Notes</h2>
 
 <ul>
-<li>TFtpClient usa modo FTP ativo (comando PORT) para transferências de dados. O cliente abre um socket de escuta e envia o comando PORT com informações de IP e porta para o servidor.</li>
-<li>Após chamar <code>New()</code>, verifique <code>AllOk</code> para confirmar que o login foi bem-sucedido antes de tentar operações de arquivo.</li>
-<li>O método <code>DoWait()</code> implementa execução síncrona de comandos com timeout de 30 segundos. Se o servidor não responder a tempo, <code>lTimeOut</code> é definido como <code>.T.</code>.</li>
-<li>Para downloads, <code>RETR()</code> retorna <code>.F.</code> se o servidor responder com código de erro 550 (arquivo não encontrado).</li>
-<li>TFtpSession é projetada para uso com a classe interna de servidor FTP e normalmente não é instanciada diretamente pelo código da aplicação.</li>
+<li>TFtpClient uses active FTP mode (PORT command) for data transfers. The client opens a listening socket and sends the PORT command with IP and port information to the server.</li>
+<li>After calling <code>New()</code>, check <code>AllOk</code> to verify that login succeeded before attempting file operations.</li>
+<li>The <code>DoWait()</code> method implements synchronous command execution with a 30-second timeout. If the server does not respond in time, <code>lTimeOut</code> is set to <code>.T.</code>.</li>
+<li>For downloads, <code>RETR()</code> returns <code>.F.</code> if the server responds with error code 550 (file not found).</li>
+<li>TFtpSession is designed for use with the internal FTP server class and is not typically instantiated directly by application code.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tform.html">&larr; tform</a> | <a href="../../pt/internet/tftpclient.html">tftpclient &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

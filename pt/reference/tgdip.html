@@ -13,139 +13,138 @@
 
 <h1>GDI+ Classes</h1>
 <p class="class-source">Fonte: <code>source/classes/tgdiplus.prg</code></p>
-<p class="class-hierarchy">Classes independentes: Graphics, Pen, Brush, GDIBmp, Path, Region</p>
+<p class="class-hierarchy">Standalone classes: Graphics, Pen, Brush, GDIBmp, Path, Region</p>
 
 <p>
-O FiveWin fornece um conjunto abrangente de classes wrapper do GDI+ para renderização 2D
-de alta qualidade com anti-aliasing, transparência alfa, pincéis de gradiente, desenho
-baseado em caminhos (paths) e processamento de imagens. Essas classes encapsulam a API flat
-do GDI+ do Windows e não requerem componentes ActiveX externos. O GDI+ é inicializado
-automaticamente quando a primeira classe é instanciada.
+FiveWin provides a comprehensive set of GDI+ wrapper classes for high-quality 2D rendering
+with anti-aliasing, alpha transparency, gradient brushes, path-based drawing, and image
+processing. These classes wrap the Windows GDI+ flat API and require no external ActiveX
+components. GDI+ is initialized automatically when the first class is instantiated.
 </p>
 
-<h2 id="graphics">Classe Graphics</h2>
+<h2 id="graphics">Graphics Class</h2>
 
-<p>A superfície de desenho principal. Todas as operações de desenho começam com um objeto Graphics.</p>
-
-<table>
-<thead>
-<tr><th>Método</th><th>Descrição</th></tr>
-</thead>
-<tbody>
-<tr><td><code>New( hDC [, lNoHighQuality] )</code></td><td>Cria a partir de um handle de contexto de dispositivo</td></tr>
-<tr><td><code>NewWnd( hWnd [, lNoHighQuality] )</code></td><td>Cria para desenho em janela</td></tr>
-<tr><td><code>NewFromWnd( oWnd [, lNoHighQuality] )</code></td><td>Cria a partir de um objeto TWindow</td></tr>
-<tr><td><code>NewImg( hImg [, lNoHighQuality] )</code></td><td>Cria para renderização de imagem fora da tela</td></tr>
-<tr><td><code>SetHighQuality()</code></td><td>Ativa a renderização com anti-aliasing</td></tr>
-<tr><td><code>SetNormalQuality()</code></td><td>Desativa o anti-aliasing para ganhar velocidade</td></tr>
-<tr><td><code>DrawLine( oPen, nLeft, nTop, nRight, nBottom )</code></td><td>Desenha uma linha</td></tr>
-<tr><td><code>DrawRect( oPen, oBrush, nLeft, nTop, nWidth, nHeight )</code></td><td>Desenha um retângulo</td></tr>
-<tr><td><code>DrawEllipse( oPen, oBrush, nLeft, nTop, nWidth, nHeight )</code></td><td>Desenha uma elipse</td></tr>
-<tr><td><code>DrawArc( oPen, nLeft, nTop, nW, nH, nStartAngle, nSweepAngle )</code></td><td>Desenha um arco</td></tr>
-<tr><td><code>DrawRoundRect( oPen, oBrush, nLeft, nTop, nW, nH, nRadius )</code></td><td>Desenha um retângulo arredondado</td></tr>
-<tr><td><code>DrawPath( oPen, oPath )</code></td><td>Desenha o contorno de um caminho gráfico</td></tr>
-<tr><td><code>FillPath( oBrush, oPath )</code></td><td>Preenche um caminho gráfico</td></tr>
-<tr><td><code>DrawImage( oImage, nTop, nLeft [, nW, nH] )</code></td><td>Desenha uma imagem</td></tr>
-<tr><td><code>Clear( nTrans, nRed, nGreen, nBlue )</code></td><td>Limpa a superfície com uma cor ARGB</td></tr>
-<tr><td><code>Translate( nRow, nCol )</code></td><td>Translada o sistema de coordenadas</td></tr>
-<tr><td><code>Rotate( nAngle )</code></td><td>Rotaciona o sistema de coordenadas</td></tr>
-<tr><td><code>Scale( nX, nY )</code></td><td>Escala o sistema de coordenadas</td></tr>
-<tr><td><code>Destroy()</code></td><td>Libera o objeto graphics do GDI+</td></tr>
-</tbody>
-</table>
-
-<h2 id="gdi-pen">Classe Pen do GDI+</h2>
-
-<p>Caneta (pen) do GDI+ para desenhar linhas com cor, largura e estilo.</p>
+<p>The main drawing surface. All drawing operations begin with a Graphics object.</p>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nAlpha, nR, nG, nB, nSize )</code></td><td>Cria uma caneta com cor ARGB e tamanho. Alfa 0..255.</td></tr>
-<tr><td><code>SetColor( nAlpha, nR, nG, nB )</code></td><td>Altera a cor da caneta</td></tr>
-<tr><td><code>SetSize( nSize )</code></td><td>Altera a largura da caneta</td></tr>
-<tr><td><code>SetStyle( nStyle )</code></td><td>Define o estilo da caneta (ex.: GDI_PEN_ROUND para extremidades arredondadas)</td></tr>
-<tr><td><code>SetLineJoin( nJoin )</code></td><td>Define o estilo de junção de linhas</td></tr>
-<tr><td><code>Destroy()</code></td><td>Libera a caneta do GDI+</td></tr>
+<tr><td><code>New( hDC [, lNoHighQuality] )</code></td><td>Create from a device context handle</td></tr>
+<tr><td><code>NewWnd( hWnd [, lNoHighQuality] )</code></td><td>Create for window drawing</td></tr>
+<tr><td><code>NewFromWnd( oWnd [, lNoHighQuality] )</code></td><td>Create from a TWindow object</td></tr>
+<tr><td><code>NewImg( hImg [, lNoHighQuality] )</code></td><td>Create for off-screen image rendering</td></tr>
+<tr><td><code>SetHighQuality()</code></td><td>Enable anti-aliased rendering</td></tr>
+<tr><td><code>SetNormalQuality()</code></td><td>Disable anti-aliasing for speed</td></tr>
+<tr><td><code>DrawLine( oPen, nLeft, nTop, nRight, nBottom )</code></td><td>Draw a line</td></tr>
+<tr><td><code>DrawRect( oPen, oBrush, nLeft, nTop, nWidth, nHeight )</code></td><td>Draw a rectangle</td></tr>
+<tr><td><code>DrawEllipse( oPen, oBrush, nLeft, nTop, nWidth, nHeight )</code></td><td>Draw an ellipse</td></tr>
+<tr><td><code>DrawArc( oPen, nLeft, nTop, nW, nH, nStartAngle, nSweepAngle )</code></td><td>Draw an arc</td></tr>
+<tr><td><code>DrawRoundRect( oPen, oBrush, nLeft, nTop, nW, nH, nRadius )</code></td><td>Draw a rounded rectangle</td></tr>
+<tr><td><code>DrawPath( oPen, oPath )</code></td><td>Draw a graphics path outline</td></tr>
+<tr><td><code>FillPath( oBrush, oPath )</code></td><td>Fill a graphics path</td></tr>
+<tr><td><code>DrawImage( oImage, nTop, nLeft [, nW, nH] )</code></td><td>Draw an image</td></tr>
+<tr><td><code>Clear( nTrans, nRed, nGreen, nBlue )</code></td><td>Clear the surface with an ARGB color</td></tr>
+<tr><td><code>Translate( nRow, nCol )</code></td><td>Translate the coordinate system</td></tr>
+<tr><td><code>Rotate( nAngle )</code></td><td>Rotate the coordinate system</td></tr>
+<tr><td><code>Scale( nX, nY )</code></td><td>Scale the coordinate system</td></tr>
+<tr><td><code>Destroy()</code></td><td>Release the GDI+ graphics object</td></tr>
 </tbody>
 </table>
 
-<h2 id="gdi-brush">Classe Brush do GDI+</h2>
+<h2 id="gdi-pen">GDI+ Pen Class</h2>
 
-<p>Pincel (brush) do GDI+ para preencher formas com cores sólidas ou gradientes.</p>
+<p>GDI+ pen for drawing lines with color, width, and style.</p>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>NewSolidBrush( nAlpha, nR, nG, nB )</code></td><td>Cria um pincel ARGB sólido</td></tr>
-<tr><td><code>NewGradientBrush( nTop, nLeft, nW, nH, nType, nA1, nR1, nG1, nB1, nA2, nR2, nG2, nB2 )</code></td><td>Cria um pincel de gradiente linear. nType: 0=horizontal, 1=vertical, 2=diagonal-direita, 3=diagonal-esquerda.</td></tr>
-<tr><td><code>AngleGradientBrush( ... nAngle, lScala )</code></td><td>Cria um gradiente em um ângulo arbitrário</td></tr>
-<tr><td><code>Destroy()</code></td><td>Libera o pincel do GDI+</td></tr>
+<tr><td><code>New( nAlpha, nR, nG, nB, nSize )</code></td><td>Create a pen with ARGB color and size. Alpha 0..255.</td></tr>
+<tr><td><code>SetColor( nAlpha, nR, nG, nB )</code></td><td>Change pen color</td></tr>
+<tr><td><code>SetSize( nSize )</code></td><td>Change pen width</td></tr>
+<tr><td><code>SetStyle( nStyle )</code></td><td>Set pen style (e.g., GDI_PEN_ROUND for rounded ends)</td></tr>
+<tr><td><code>SetLineJoin( nJoin )</code></td><td>Set line join style</td></tr>
+<tr><td><code>Destroy()</code></td><td>Release the GDI+ pen</td></tr>
 </tbody>
 </table>
 
-<h2 id="gdibmp">Classe GDIBmp</h2>
+<h2 id="gdi-brush">GDI+ Brush Class</h2>
 
-<p>Bitmap do GDI+ para carregar, manipular e salvar imagens.</p>
+<p>GDI+ brush for filling shapes with solid colors or gradients.</p>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cFile )</code></td><td>Carrega uma imagem de arquivo (BMP, JPG, GIF, TIF, PNG, EMF, WMF, ICO)</td></tr>
-<tr><td><code>Resize( nWidth, nHeight )</code></td><td>Redimensiona a imagem (mantém a proporção se uma dimensão for omitida)</td></tr>
-<tr><td><code>Rotate( nRotate )</code></td><td>Rotaciona/inverte a imagem</td></tr>
-<tr><td><code>ImageRotate( nDegrees )</code></td><td>Rotaciona em um ângulo arbitrário</td></tr>
-<tr><td><code>Save( cFile [, nQuality] )</code></td><td>Salva em arquivo. nQuality aplica-se a JPEG (0-100).</td></tr>
-<tr><td><code>GetWidth() / GetHeight()</code></td><td>Retorna as dimensões da imagem</td></tr>
-<tr><td><code>CreateThumbnail( nW, nH )</code></td><td>Cria uma miniatura GDIBmp</td></tr>
-<tr><td><code>Conver24to32Alpha()</code></td><td>Converte de 24 bits para 32 bits com transparência alfa</td></tr>
-<tr><td><code>GetGDIHbitmap()</code></td><td>Extrai um handle de bitmap GDI para uso com funções GDI</td></tr>
-<tr><td><code>End() / Destroy()</code></td><td>Libera a imagem do GDI+</td></tr>
+<tr><td><code>NewSolidBrush( nAlpha, nR, nG, nB )</code></td><td>Create a solid ARGB brush</td></tr>
+<tr><td><code>NewGradientBrush( nTop, nLeft, nW, nH, nType, nA1, nR1, nG1, nB1, nA2, nR2, nG2, nB2 )</code></td><td>Create a linear gradient brush. nType: 0=horizontal, 1=vertical, 2=diagonal-right, 3=diagonal-left.</td></tr>
+<tr><td><code>AngleGradientBrush( ... nAngle, lScala )</code></td><td>Create a gradient at an arbitrary angle</td></tr>
+<tr><td><code>Destroy()</code></td><td>Release the GDI+ brush</td></tr>
 </tbody>
 </table>
 
-<h2 id="path">Classe Path</h2>
+<h2 id="gdibmp">GDIBmp Class</h2>
 
-<p>Caminho gráfico (path) do GDI+ para construção de formas complexas.</p>
+<p>GDI+ bitmap for loading, manipulating, and saving images.</p>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Cria um caminho vazio</td></tr>
-<tr><td><code>AddLine( nLeft, nTop, nRight, nBottom )</code></td><td>Adiciona um segmento de linha</td></tr>
-<tr><td><code>AddArc( nLeft, nTop, nW, nH, nStartAngle, nSweepAngle )</code></td><td>Adiciona um arco</td></tr>
-<tr><td><code>AddRectangle( nLeft, nTop, nRight, nBottom )</code></td><td>Adiciona um retângulo</td></tr>
-<tr><td><code>AddRoundRect( x, y, nW, nH, nRadius )</code></td><td>Adiciona um retângulo arredondado</td></tr>
-<tr><td><code>AddElipse( nTop, nLeft, nW, nH )</code></td><td>Adiciona uma elipse</td></tr>
-<tr><td><code>AddString( cText, cFont, nStyle, eMSize, ... )</code></td><td>Adiciona texto como contorno de um caminho</td></tr>
-<tr><td><code>StarFigure() / CloseFigure()</code></td><td>Inicia/fecha uma figura dentro do caminho</td></tr>
-<tr><td><code>Translate() / Rotate() / Scale()</code></td><td>Transforma o caminho</td></tr>
-<tr><td><code>Destroy()</code></td><td>Libera o caminho</td></tr>
+<tr><td><code>New( cFile )</code></td><td>Load an image from file (BMP, JPG, GIF, TIF, PNG, EMF, WMF, ICO)</td></tr>
+<tr><td><code>Resize( nWidth, nHeight )</code></td><td>Resize the image (maintains aspect ratio if one dimension is omitted)</td></tr>
+<tr><td><code>Rotate( nRotate )</code></td><td>Rotate/flip the image</td></tr>
+<tr><td><code>ImageRotate( nDegrees )</code></td><td>Rotate by arbitrary angle</td></tr>
+<tr><td><code>Save( cFile [, nQuality] )</code></td><td>Save to file. nQuality applies to JPEG (0-100).</td></tr>
+<tr><td><code>GetWidth() / GetHeight()</code></td><td>Return image dimensions</td></tr>
+<tr><td><code>CreateThumbnail( nW, nH )</code></td><td>Create a thumbnail GDIBmp</td></tr>
+<tr><td><code>Conver24to32Alpha()</code></td><td>Convert 24-bit to 32-bit with alpha transparency</td></tr>
+<tr><td><code>GetGDIHbitmap()</code></td><td>Extract a GDI bitmap handle for use with GDI Funções</td></tr>
+<tr><td><code>End() / Destroy()</code></td><td>Release the GDI+ image</td></tr>
 </tbody>
 </table>
 
-<h2 id="region">Classe Region</h2>
+<h2 id="path">Path Class</h2>
+
+<p>GDI+ graphics path for complex shape construction.</p>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>NewFromPath( oPath )</code></td><td>Cria uma região GDI+ a partir de um objeto Path</td></tr>
-<tr><td><code>IsRegionVisible( nX, nY, oGraphics )</code></td><td>Testa se um ponto é visível na região</td></tr>
-<tr><td><code>Destroy()</code></td><td>Libera a região</td></tr>
+<tr><td><code>New()</code></td><td>Create an empty path</td></tr>
+<tr><td><code>AddLine( nLeft, nTop, nRight, nBottom )</code></td><td>Add a line segment</td></tr>
+<tr><td><code>AddArc( nLeft, nTop, nW, nH, nStartAngle, nSweepAngle )</code></td><td>Add an arc</td></tr>
+<tr><td><code>AddRectangle( nLeft, nTop, nRight, nBottom )</code></td><td>Add a rectangle</td></tr>
+<tr><td><code>AddRoundRect( x, y, nW, nH, nRadius )</code></td><td>Add a rounded rectangle</td></tr>
+<tr><td><code>AddElipse( nTop, nLeft, nW, nH )</code></td><td>Add an ellipse</td></tr>
+<tr><td><code>AddString( cText, cFont, nStyle, eMSize, ... )</code></td><td>Add text as a path outline</td></tr>
+<tr><td><code>StarFigure() / CloseFigure()</code></td><td>Begin/close a figure within the path</td></tr>
+<tr><td><code>Translate() / Rotate() / Scale()</code></td><td>Transform the path</td></tr>
+<tr><td><code>Destroy()</code></td><td>Release the path</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo</h2>
+<h2 id="region">Region Class</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>NewFromPath( oPath )</code></td><td>Create a GDI+ region from a Path object</td></tr>
+<tr><td><code>IsRegionVisible( nX, nY, oGraphics )</code></td><td>Test if a point is visible in the region</td></tr>
+<tr><td><code>Destroy()</code></td><td>Release the region</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -157,13 +156,13 @@ function Main()
 
    oWnd:bPainted = {| hDC |
       local oGraphics := Graphics():New( hDC )
-      local oPen      := Pen():New( 255, 255, 0, 0, 3 )   // Caneta vermelha, 3px
-      local oBrush    := Brush():NewSolidBrush( 128, 0, 0, 255 ) // Azul semitransparente
+      local oPen      := Pen():New( 255, 255, 0, 0, 3 )   // Red pen, 3px
+      local oBrush    := Brush():NewSolidBrush( 128, 0, 0, 255 ) // Semi-transparent blue
 
-      // Desenha o contorno de uma elipse vermelha
+      // Draw a red ellipse outline
       oGraphics:DrawEllipse( oPen, oBrush, 50, 50, 200, 150 )
 
-      // O preenchimento azul semitransparente é aplicado automaticamente por DrawEllipse
+      // Semi-transparent blue fill is applied automatically by DrawEllipse
 
       oPen:Destroy()
       oBrush:Destroy()
@@ -174,17 +173,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O GDI+ é inicializado automaticamente por meio de uma <code>init procedure GdiPlusStart()</code> e encerrado por meio de uma <code>exit procedure GdiPlusEnd()</code>. Nenhuma inicialização/encerramento manual é necessário.</li>
-<li>Todas as classes do GDI+ são independentes, no sentido de que não derivam de TControl nem de qualquer outra classe base do FiveWin.</li>
-<li>O GDIBmp suporta o carregamento a partir de arquivo, de recurso (PNG ou bitmap) e de string em memória. Formatos de entrada suportados: BMP, JPG, GIF, TIF, PNG, EMF, WMF, ICO. Formatos de saída: BMP, JPG, GIF, TIF, PNG.</li>
-<li>A classe Graphics define a unidade de página como pixels por padrão e ativa a renderização de alta qualidade (com anti-aliasing), a menos que <code>lNoHighQuality</code> seja .T.</li>
+<li>GDI+ is initialized automatically via an <code>init procedure GdiPlusStart()</code> and shut down via <code>exit procedure GdiPlusEnd()</code>. No manual startup/shutdown is needed.</li>
+<li>All GDI+ classes are standalone in the sense that they do not derive from TControl or any other FiveWin base class.</li>
+<li>GDIBmp supports loading from file, from resource (PNG or bitmap), and from memory string. Supported input formats: BMP, JPG, GIF, TIF, PNG, EMF, WMF, ICO. Output formats: BMP, JPG, GIF, TIF, PNG.</li>
+<li>The Graphics class sets page unit to pixels by default and enables high quality (anti-aliased) rendering unless <code>lNoHighQuality</code> is .T.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tgantt.html">&larr; tgantt</a> | <a href="../../pt/internet/tgemini.html">tgemini &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

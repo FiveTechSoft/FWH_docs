@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TCColumn - DocumentaÃ§Ã£o FWH</title>
+<title>TCColumn - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,35 +13,35 @@
 
 <h1>TCColumn</h1>
 <p class="class-source">Fonte: <code>source/classes/tccolumn.prg</code></p>
-<p class="class-hierarchy">Classe independente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TCColumn define uma coluna individual dentro de um controle TCBrowse. Cada coluna tem um cabeÃ§alho, bloco de cÃ³digo de dados, clÃ¡usula picture, alinhamento, largura, cores opcionais de primeiro plano/fundo, suporte a ediÃ§Ã£o inline e capacidade de exibiÃ§Ã£o de bitmap. Each column has a heading,
+TCColumn defines a single column within a TCBrowse control. Each column has a heading,
 data codeblock, picture clause, alignment, width, optional foreground/background colors,
 inline editing support, and bitmap display capability. Columns can be serialized for the
 Visual FiveWin IDE designer.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cHeading</code></td><td>Character</td><td>Texto do cabeÃ§alho da coluna exibido na linha de cabeÃ§alho do navegador</td></tr>
-<tr><td><code>bData</code></td><td>Codeblock</td><td>Bloco de cÃ³digo que retorna o valor da cÃ©lula para cada linha</td></tr>
-<tr><td><code>cPicture</code></td><td>Character</td><td>ClÃ¡usula picture para formatar valores de cÃ©lula</td></tr>
-<tr><td><code>bClrFore</code></td><td>Codeblock</td><td>Bloco de cÃ³digo retornando cor de primeiro plano por cÃ©lula</td></tr>
-<tr><td><code>bClrBack</code></td><td>Codeblock</td><td>Bloco de cÃ³digo retornando cor de fundo por cÃ©lula</td></tr>
-<tr><td><code>nAlign</code></td><td>Numeric</td><td>Alinhamento de texto: <code>DT_LEFT</code> (0), <code>DT_CENTER</code> (1), <code>DT_RIGHT</code> (2)</td></tr>
-<tr><td><code>nWidth</code></td><td>Numeric</td><td>Largura da coluna em unidades de diÃ¡logo (calculada automaticamente se nÃ£o especificada)</td></tr>
-<tr><td><code>lBitMap</code></td><td>Logical</td><td>A coluna exibe bitmaps em vez de texto</td></tr>
-<tr><td><code>lEdit</code></td><td>Logical</td><td>Permitir ediÃ§Ã£o no local de cÃ©lulas</td></tr>
-<tr><td><code>bValid</code></td><td>Codeblock</td><td>Bloco de cÃ³digo de validaÃ§Ã£o de ediÃ§Ã£o (retorna <code>.T.</code> para aceitar)</td></tr>
-<tr><td><code>cOrder</code></td><td>Character</td><td>Nome da tag de Ã­ndice para ordenaÃ§Ã£o</td></tr>
-<tr><td><code>cMsg</code></td><td>Character</td><td>Mensagem da barra de status ao editar esta coluna</td></tr>
-<tr><td><code>cError</code></td><td>Character</td><td>Mensagem de erro exibida quando a validaÃ§Ã£o falha</td></tr>
+<tr><td><code>cHeading</code></td><td>Character</td><td>Column header text displayed in the browse header row</td></tr>
+<tr><td><code>bData</code></td><td>Codeblock</td><td>Codeblock that returns the cell value for each row</td></tr>
+<tr><td><code>cPicture</code></td><td>Character</td><td>Picture clause for formatting cell values</td></tr>
+<tr><td><code>bClrFore</code></td><td>Codeblock</td><td>Codeblock returning foreground color per cell</td></tr>
+<tr><td><code>bClrBack</code></td><td>Codeblock</td><td>Codeblock returning background color per cell</td></tr>
+<tr><td><code>nAlign</code></td><td>Numeric</td><td>Text alignment: <code>DT_LEFT</code> (0), <code>DT_CENTER</code> (1), <code>DT_RIGHT</code> (2)</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Column width in dialog units (auto-calculated if not specified)</td></tr>
+<tr><td><code>lBitMap</code></td><td>Logical</td><td>Column displays bitmaps instead of text</td></tr>
+<tr><td><code>lEdit</code></td><td>Logical</td><td>Allow in-place editing of cells</td></tr>
+<tr><td><code>bValid</code></td><td>Codeblock</td><td>Edit validation codeblock (return <code>.T.</code> to accept)</td></tr>
+<tr><td><code>cOrder</code></td><td>Character</td><td>Index tag name for ordering</td></tr>
+<tr><td><code>cMsg</code></td><td>Character</td><td>Status bar message when editing this column</td></tr>
+<tr><td><code>cError</code></td><td>Character</td><td>Error message displayed when validation fails</td></tr>
 </tbody>
 </table>
 
@@ -49,16 +49,16 @@ Visual FiveWin IDE designer.
 
 <table>
 <thead>
-<tr><th>MÃ©todo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cHeading, bData, cPicture, bClrFore, bClrBack, uAlign, nWidth, lBitMap, lEdit, cMsg, bValid, cError, lNoLite, cOrder )</code></td><td>Criar uma nova definiÃ§Ã£o TCColumn</td></tr>
-<tr><td><code>Load( cInfo )</code></td><td>Carregar propriedades da coluna de uma string (designer VisualFW)</td></tr>
-<tr><td><code>Save()</code></td><td>Serializar propriedades da coluna para uma string (designer VisualFW)</td></tr>
+<tr><td><code>New( cHeading, bData, cPicture, bClrFore, bClrBack, uAlign, nWidth, lBitMap, lEdit, cMsg, bValid, cError, lNoLite, cOrder )</code></td><td>Create a new TCColumn definition</td></tr>
+<tr><td><code>Load( cInfo )</code></td><td>Load column properties from a string (VisualFW designer)</td></tr>
+<tr><td><code>Save()</code></td><td>Serialize column properties to a string (VisualFW designer)</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Coluna com Cor Condicional</h2>
+<h2 id="example">Example: Column with Conditional Color</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -84,7 +84,7 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>TCColumn Ã© usado exclusivamente com TCBrowse. Para TXBrowse, use TXColumn.</li>
+<li>TCColumn is used exclusively with TCBrowse. For TXBrowse, use TXColumn instead.</li>
 <li>The <code>uAlign</code> parameter accepts both numeric values (<code>DT_LEFT</code>, <code>DT_CENTER</code>, <code>DT_RIGHT</code>) and character strings (<code>"LEFT"</code>, <code>"CENTER"</code>, <code>"RIGHT"</code>).</li>
 <li>Color codeblocks (<code>bClrFore</code>, <code>bClrBack</code>) are evaluated per cell and can also accept dBASE-style color strings (e.g., <code>"R/W"</code> for red on white).</li>
 <li>Column width is auto-calculated if <code>nWidth</code> is omitted, based on heading and data lengths.</li>
@@ -92,8 +92,8 @@ return nil</code></pre>
 <li>The <code>Save()</code> and <code>Load()</code> methods support serialization for the Visual FiveWin IDE.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tcbrowse.html">&larr; tcbrowse</a> | <a href="../../pt/internet/tchatagent.html">tchatagent &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TDeepSeek - Documentaci&oacute;n FWH</title>
+<title>TDeepSeek - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -15,14 +15,14 @@
 <p class="class-source">Fuente: <code>source/classes/tdeepseek.prg</code></p>
 
 <p>
-TDeepSeek es el cliente de FiveWin para la <strong>API DeepSeek</strong>. DeepSeek es conocido por sus
-s&oacute;lidas capacidades de codificaci&oacute;n y razonamiento, lo que lo convierte en una excelente opci&oacute;n para generaci&oacute;n
-de c&oacute;digo, an&aacute;lisis y tareas de l&oacute;gica. La clase proporciona una interfaz simple de completaci&oacute;n de chat
-utilizando la biblioteca <code>hb_curl</code> de Harbour. Soporta los modelos <code>deepseek-chat</code> y
-<code>deepseek-reasoner</code>.
+TDeepSeek is FiveWin's client for the <strong>DeepSeek API</strong>. DeepSeek is known for its
+strong coding and reasoning capabilities, making it an excellent choice for code
+generation, analysis, and logic tasks. The class provides a simple chat completion
+interface using Harbour's <code>hb_curl</code> library. It supports the <code>deepseek-chat</code> and
+<code>deepseek-reasoner</code> models.
 </p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
@@ -39,38 +39,38 @@ flowchart LR
     B --> C
 </div>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cKey</code></td><td>Car&aacute;cter</td><td><code>""</code></td><td>Clave API DeepSeek. Lee <code>DEEPSEEK_API_KEY</code> del entorno si est&aacute; vac&iacute;a.</td></tr>
-<tr><td><code>cModel</code></td><td>Car&aacute;cter</td><td><code>"deepseek-chat"</code></td><td>Modelo: <code>"deepseek-chat"</code> o <code>"deepseek-reasoner"</code></td></tr>
-<tr><td><code>cResponse</code></td><td>Car&aacute;cter</td><td></td><td>Respuesta JSON en bruto de la API</td></tr>
-<tr><td><code>cUrl</code></td><td>Car&aacute;cter</td><td></td><td>URL del endpoint de la API (se establece autom&aacute;ticamente al endpoint DeepSeek)</td></tr>
-<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>Manejador easy de libcurl</td></tr>
-<tr><td><code>nError</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>C&oacute;digo de error curl (<code>HB_CURLE_OK</code> = 0 = &eacute;xito)</td></tr>
-<tr><td><code>nHttpCode</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>C&oacute;digo de estado HTTP de la respuesta</td></tr>
+<tr><td><code>cKey</code></td><td>Character</td><td><code>""</code></td><td>DeepSeek API key. Reads <code>DEEPSEEK_API_KEY</code> env var if empty.</td></tr>
+<tr><td><code>cModel</code></td><td>Character</td><td><code>"deepseek-chat"</code></td><td>Model: <code>"deepseek-chat"</code> or <code>"deepseek-reasoner"</code></td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Raw JSON response from the API</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td></td><td>API endpoint URL (auto-set to DeepSeek endpoint)</td></tr>
+<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>libcurl easy handle</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>curl error code (<code>HB_CURLE_OK</code> = 0 = success)</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>HTTP response status code</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cKey, cModel )</code></td><td>Crear una instancia de TDeepSeek. Si <code>cKey</code> est&aacute; vac&iacute;o, lee <code>DEEPSEEK_API_KEY</code> del entorno. Establece el endpoint de la API e inicializa un manejador libcurl.</td></tr>
-<tr><td><code>Send( cPrompt )</code></td><td>Enviar un prompt de texto a la API DeepSeek. Almacena la respuesta JSON en bruto en <code>cResponse</code>.</td></tr>
-<tr><td><code>GetValue()</code></td><td>Extraer la respuesta de texto del JSON en <code>cResponse</code>. Navega <code>choices[1].message.content</code> en caso de &eacute;xito, o devuelve el mensaje de error en caso de fallo.</td></tr>
-<tr><td><code>End()</code></td><td>Limpiar el manejador libcurl.</td></tr>
+<tr><td><code>New( cKey, cModel )</code></td><td>Create a TDeepSeek instance. If <code>cKey</code> is empty, reads <code>DEEPSEEK_API_KEY</code> from the environment. Sets the API endpoint and initializes a libcurl handle.</td></tr>
+<tr><td><code>Send( cPrompt )</code></td><td>Send a text prompt to the DeepSeek API. Stores the raw JSON response in <code>cResponse</code>.</td></tr>
+<tr><td><code>GetValue()</code></td><td>Extract the text response from the JSON in <code>cResponse</code>. Navigates <code>choices[1].message.content</code> on success, or returns the error message on failure.</td></tr>
+<tr><td><code>End()</code></td><td>Clean up the libcurl handle.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Completaci&oacute;n de Chat</h2>
+<h2 id="example">Example: Chat Completions</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -93,7 +93,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-reasoner">Ejemplo: Usando el Modelo Reasoner</h2>
+<h2 id="example-reasoner">Example: Using the Reasoner Model</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -112,19 +112,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TDeepSeek requiere la biblioteca <code>hb_curl</code>. Incluya <code>#include "hbcurl.ch"</code> para las constantes curl.</li>
-<li>La clave API se puede leer de la variable de entorno <code>DEEPSEEK_API_KEY</code> pasando una clave vac&iacute;a a <code>New()</code>.</li>
-<li>La verificaci&oacute;n SSL est&aacute; deshabilitada por defecto (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) para una amplia compatibilidad.</li>
-<li>El modelo <code>deepseek-reasoner</code> proporciona razonamiento de cadena de pensamiento antes de responder, lo que lo hace adecuado para tareas complejas de l&oacute;gica y an&aacute;lisis.</li>
-<li><code>GetValue()</code> navega la ruta JSON <code>choices[1].message.content</code> y devuelve el texto. Si la API devuelve un error, navega <code>error.message</code> en su lugar.</li>
-<li>La clase no tiene estado para los prompts: cada llamada a <code>Send()</code> es independiente. Para conversaciones de m&uacute;ltiples turnos, mantenga su propio historial de mensajes y env&iacute;e el contexto completo.</li>
+<li>TDeepSeek requires the <code>hb_curl</code> library. Include <code>#include "hbcurl.ch"</code> for curl constants.</li>
+<li>The API key can be read from the <code>DEEPSEEK_API_KEY</code> environment variable by passing an empty key to <code>New()</code>.</li>
+<li>SSL verification is disabled by default (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) for broad compatibility.</li>
+<li>The <code>deepseek-reasoner</code> model provides chain-of-thought reasoning before answering, making it suitable for complex logic and analysis tasks.</li>
+<li><code>GetValue()</code> navigates the JSON path <code>choices[1].message.content</code> and returns the text. If the API returns an error, it navigates <code>error.message</code> instead.</li>
+<li>The class is stateless for prompts — each <code>Send()</code> call is independent. For multi-turn conversations, maintain your own message history and send the full context.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/internet/tddeserver.html">&larr; tddeserver</a> | <a href="../../es/core/tdialog.html">tdialog &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

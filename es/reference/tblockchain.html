@@ -13,48 +13,48 @@
 
 <h1>TBlockChain</h1>
 <p class="class-source">Fuente: <code>source/internal/TBlockChain.prg</code></p>
-<p class="class-hierarchy">Clase independiente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TBlockChain es una implementación de blockchain en Harbour puro con hash SHA-256, minería por prueba de trabajo (proof-of-work) y validación de bloques. Utiliza un hash CLASSDATA (<code>aBlocks</code>) para que todas las instancias compartan la misma cadena, permitiendo que aplicaciones multiventana operen sobre los mismos datos. La cadena almacena un array de bloques con hash, cada uno conteniendo una marca de tiempo, una carga de datos, un once (nonce) y el hash del bloque anterior. La minería itera a través de los valores del nonce hasta que el hash coincide con el prefijo de dificultad.
+TBlockChain is a pure Harbour blockchain implementation with SHA-256 hashing, proof-of-work mining, and block validation. It uses a CLASSDATA hash (<code>aBlocks</code>) so all instances share the same chain, enabling multi-window applications to operate on the same data. The chain stores an array of hashed blocks, each containing a timestamp, data payload, once (nonce), and the previous block's hash. Mining iterates through nonce values until the hash matches the difficulty prefix.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aBlocks</code></td><td>Hash (CLASSDATA)</td><td>Todos los bloques de la cadena, compartidos entre todas las instancias</td></tr>
-<tr><td><code>cJson</code></td><td>Carácter</td><td>Representación JSON de la cadena completa</td></tr>
-<tr><td><code>uDifficulty</code></td><td>Carácter</td><td>Prefijo de dificultad de minería (por defecto: "0000")</td></tr>
-<tr><td><code>nIterations</code></td><td>Numérico</td><td>Total de iteraciones de minería realizadas</td></tr>
-<tr><td><code>cPrivateKey</code></td><td>Carácter</td><td>Clave privada para firmar bloques</td></tr>
-<tr><td><code>cPublicKey</code></td><td>Carácter</td><td>Clave pública para verificación de firma</td></tr>
-<tr><td><code>cSignature</code></td><td>Carácter</td><td>Cadena de firma del bloque</td></tr>
+<tr><td><code>aBlocks</code></td><td>Hash (CLASSDATA)</td><td>All blocks in the chain, shared across all instances</td></tr>
+<tr><td><code>cJson</code></td><td>Character</td><td>JSON representation of the entire chain</td></tr>
+<tr><td><code>uDifficulty</code></td><td>Character</td><td>Mining difficulty prefix (default: "0000")</td></tr>
+<tr><td><code>nIterations</code></td><td>Numeric</td><td>Total mining iterations performed</td></tr>
+<tr><td><code>cPrivateKey</code></td><td>Character</td><td>Private key for signing blocks</td></tr>
+<tr><td><code>cPublicKey</code></td><td>Character</td><td>Public key for signature verification</td></tr>
+<tr><td><code>cSignature</code></td><td>Character</td><td>Block signature string</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cKey )</code></td><td>Crea una nueva blockchain con bloque génesis, identificada por cKey</td></tr>
-<tr><td><code>AddNewBlock( uOnce, cData )</code></td><td>Añade un nuevo bloque con nonce opcional y cadena de datos</td></tr>
-<tr><td><code>BlockToHash( nIdx, uOnce, cData )</code></td><td>Calcula el hash para un índice de bloque y datos dados</td></tr>
-<tr><td><code>MineBlock( nIdx )</code></td><td>Mina el bloque nIdx iterando los nonces hasta que el hash coincide con la dificultad</td></tr>
-<tr><td><code>IsValidHash( nIdx )</code></td><td>Comprueba si el bloque nIdx tiene un hash válido que coincide con la dificultad</td></tr>
-<tr><td><code>IsValidBlock( nIdx, cHash )</code></td><td>Valida el bloque nIdx contra el hash proporcionado</td></tr>
-<tr><td><code>CountBlocks()</code></td><td>Devuelve el número total de bloques de la cadena</td></tr>
-<tr><td><code>UpdateAllBlocks()</code></td><td>Recalcula los hashes de todos los bloques de la cadena</td></tr>
+<tr><td><code>New( cKey )</code></td><td>Create a new blockchain with genesis block, keyed by cKey</td></tr>
+<tr><td><code>AddNewBlock( uOnce, cData )</code></td><td>Add a new block with optional nonce and data string</td></tr>
+<tr><td><code>BlockToHash( nIdx, uOnce, cData )</code></td><td>Compute the hash for a given block index and data</td></tr>
+<tr><td><code>MineBlock( nIdx )</code></td><td>Mine block nIdx by iterating nonces until hash matches difficulty</td></tr>
+<tr><td><code>IsValidHash( nIdx )</code></td><td>Check whether block nIdx has a valid hash matching difficulty</td></tr>
+<tr><td><code>IsValidBlock( nIdx, cHash )</code></td><td>Validate block nIdx against the provided hash</td></tr>
+<tr><td><code>CountBlocks()</code></td><td>Return the total number of blocks in the chain</td></tr>
+<tr><td><code>UpdateAllBlocks()</code></td><td>Recompute hashes for all blocks in the chain</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Crear una Cadena</h2>
+<h2 id="example">Example: Creating a Chain</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -62,21 +62,21 @@ function Main()
 
    local oChain := TBlockChain():New( "myapp" )
 
-   // Añadir bloques con datos
+   // Add blocks with data
    oChain:AddNewBlock( , "Genesis: Base record" )
    oChain:AddNewBlock( , "Block 2: Transaction data" )
    oChain:AddNewBlock( , "Block 3: Verification record" )
 
-   // Minar el segundo bloque
+   // Mine the second block
    oChain:MineBlock( 2 )
 
-   // Validar
+   // Validate
    if oChain:IsValidHash( 2 )
       MsgInfo( "Block 2 is valid. Total blocks: " + ;
                Str( oChain:CountBlocks() ) )
    endif
 
-   // Volcar la cadena como JSON
+   // Output chain as JSON
    if ! Empty( oChain:cJson )
       MemoWrit( "chain.json", oChain:cJson )
    endif
@@ -85,17 +85,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>El miembro de datos <code>aBlocks</code> está marcado como CLASSDATA y se almacena como un hash identificado por el parámetro cKey pasado a New(). Todas las instancias que usan la misma clave comparten los mismos datos de la cadena.</li>
-<li>La dificultad por defecto (<code>uDifficulty</code>) es "0000", lo que requiere que los primeros cuatro dígitos hexadecimales del hash SHA-256 sean cero. Aumente la longitud de la cadena (p. ej. "000000") para hacer la minería exponencialmente más difícil.</li>
-<li><code>MineBlock()</code> incrementa el nonce y vuelve a calcular el hash hasta que este coincide con el prefijo de dificultad. El número de iteraciones se acumula en <code>nIterations</code>.</li>
-<li>Escrito por Cristobal Navarro.</li>
+<li>The <code>aBlocks</code> data member is marked CLASSDATA and stored as a hash keyed by the cKey parameter passed to New(). All instances using the same key share the same chain data.</li>
+<li>The default difficulty (<code>uDifficulty</code>) is "0000", requiring the first four hex digits of the SHA-256 hash to be zero. Increase the string length (e.g. "000000") to make mining exponentially harder.</li>
+<li><code>MineBlock()</code> increments the nonce and re-hashes until the hash matches the difficulty prefix. The number of iterations is accumulated in <code>nIterations</code>.</li>
+<li>Written by Cristobal Navarro.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/utilities/tblock.html">&larr; tblock</a> | <a href="../../es/reference/tbrush.html">tbrush &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

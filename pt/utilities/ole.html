@@ -2,8 +2,8 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>Interoperabilidade OLE, COM, ActiveX &amp; .NET</h1>
-<p>O FiveWin oferece suporte abrangente para automação COM/OLE do Windows, incorporação de ActiveX e APIs modernas de e-mail baseadas em nuvem. Essas classes permitem automatizar aplicações do Microsoft Office, incorporar controles ActiveX em diálogos, interagir com assemblies .NET e enviar e-mail através das APIs do Gmail e Outlook.</p>
+<h1>OLE, COM, ActiveX &amp; .NET Interop</h1>
+<p>FiveWin provides comprehensive support for Windows COM/OLE automation, ActiveX embedding, and modern cloud-based email APIs. These classes let you automate Microsoft Office applications, embed ActiveX controls in dialogs, interact with .NET assemblies, and send email through Gmail and Outlook APIs.</p>
 
 <div class="mermaid">
 classDiagram
@@ -47,32 +47,32 @@ classDiagram
 </div>
 
 <!-- ================================================================ -->
-<h2 id="toleauto">TOleAuto - Automação OLE</h2>
-<p>TOleAuto é a classe principal do FiveWin para automação OLE/COM. Ela encapsula a funcionalidade <code>win_oleAuto</code> do Harbour, permitindo criar e controlar objetos OLE como Microsoft Word, Excel, Outlook, Internet Explorer e qualquer outro servidor de automação. Propriedades e métodos do objeto OLE são acessados de forma transparente através do manipulador de erros do Harbour -- você os chama como se fossem membros nativos da classe.</p>
+<h2 id="toleauto">TOleAuto - OLE Automation</h2>
+<p>TOleAuto is FiveWin's primary class for OLE/COM automation. It wraps the Harbour <code>win_oleAuto</code> functionality, allowing you to create and control OLE objects such as Microsoft Word, Excel, Outlook, Internet Explorer, and any other automation server. Properties and methods of the OLE object are accessed transparently through Harbour's error handler -- you call them as if they were native class members.</p>
 
-<h3>Como Funciona</h3>
-<p>Quando você chama <code>TOleAuto():New("Word.Application")</code>, o FiveWin chama <code>CreateOleObject()</code> que invoca <code>CoCreateInstance()</code> internamente para criar o objeto COM. O ponteiro IDispatch retornado é armazenado no DATA <code>hObj</code>. Qualquer acesso a método ou propriedade que não esteja definido na classe é interceptado pelo manipulador <code>OnError</code>, que o encaminha através de <code>OleInvoke()</code> ou <code>OleGetProperty()/OleSetProperty()</code>.</p>
+<h3>How It Works</h3>
+<p>When you call <code>TOleAuto():New("Word.Application")</code>, FiveWin calls <code>CreateOleObject()</code> which invokes <code>CoCreateInstance()</code> under the hood to create the COM object. The returned IDispatch pointer is stored in the <code>hObj</code> DATA member. Any method or property access that is not defined in the class is intercepted by the <code>OnError</code> handler, which routes it through <code>OleInvoke()</code> or <code>OleGetProperty()/OleSetProperty()</code>.</p>
 
-<h3>Membros DATA</h3>
+<h3>DATA Members</h3>
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>hObj</code></td><td>Pointer/Numeric</td><td>Ponteiro IDispatch para o objeto de automação OLE</td></tr>
+<tr><td><code>hObj</code></td><td>Pointer/Numeric</td><td>IDispatch pointer to the OLE automation object</td></tr>
 </tbody>
 </table>
 
-<h3>Referência de METHODs</h3>
+<h3>METHOD Reference</h3>
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cClassName )</code></td><td>Cria um objeto de automação OLE pelo ProgID (ex.: "Excel.Application", "Word.Application").</td></tr>
-<tr><td><code>End()</code></td><td>Libera o objeto COM e chama OleUninitialize().</td></tr>
-<tr><td><code>(qualquer propriedade)</code></td><td>Obtém/Define qualquer propriedade OLE via manipulador OnError. Ex.: <code>oExcel:Visible := .T.</code></td></tr>
-<tr><td><code>(qualquer método)</code></td><td>Invoca qualquer método OLE de forma transparente. Ex.: <code>oWord:Documents:Add()</code></td></tr>
+<tr><td><code>New( cClassName )</code></td><td>Creates an OLE automation object by ProgID (e.g. "Excel.Application", "Word.Application").</td></tr>
+<tr><td><code>End()</code></td><td>Releases the COM object and calls OleUninitialize().</td></tr>
+<tr><td><code>(any property)</code></td><td>Get/Set any OLE property via OnError handler. e.g. <code>oExcel:Visible := .T.</code></td></tr>
+<tr><td><code>(any method)</code></td><td>Invoke any OLE method transparently. e.g. <code>oWord:Documents:Add()</code></td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Criar um Documento Word</h3>
+<h3>Example: Create a Word Document</h3>
 <pre><code class="language-harbour">function CreateWordDoc()
    local oWord, oDoc, oSelection
 
@@ -108,7 +108,7 @@ classDiagram
 
 return nil</code></pre>
 
-<h3>Exemplo: Criar uma Planilha Excel</h3>
+<h3>Example: Create an Excel Spreadsheet</h3>
 <pre><code class="language-harbour">function CreateExcel()
    local oExcel, oBook, oSheet, n
 
@@ -157,7 +157,7 @@ return nil</code></pre>
 
 return nil</code></pre>
 
-<h3>Exemplo: Enviar E-mail via Outlook</h3>
+<h3>Example: Send Email via Outlook</h3>
 <pre><code class="language-harbour">function SendOutlookEmail()
    local oOutlook, oMail
 
@@ -184,29 +184,29 @@ return nil</code></pre>
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="tcomobject">TComObject - Interface COM de Baixo Nível</h2>
-<p>TComObject é uma alternativa de mais baixo nível ao TOleAuto para interoperabilidade COM. Ele armazena o ponteiro IDispatch como valor numérico e fornece chamadas Invoke() explícitas. Propriedades são acessadas via manipulador OnError, que encaminha através de OleGetProperty/OleSetProperty. Quando um método retorna outro objeto COM, TComObject automaticamente o encapsula.</p>
+<h2 id="tcomobject">TComObject - Low-Level COM Interface</h2>
+<p>TComObject is a lower-level alternative to TOleAuto for COM interop. It stores the IDispatch pointer as a numeric value and provides explicit Invoke() calls. Properties are accessed via the OnError handler, which routes through OleGetProperty/OleSetProperty. When a method returns another COM object, TComObject automatically wraps it.</p>
 
-<h3>Membros DATA</h3>
+<h3>DATA Members</h3>
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>nIDispatch</code></td><td>Numeric</td><td>Ponteiro IDispatch bruto para o objeto COM</td></tr>
+<tr><td><code>nIDispatch</code></td><td>Numeric</td><td>Raw IDispatch pointer to the COM object</td></tr>
 </tbody>
 </table>
 
-<h3>Referência de METHODs</h3>
+<h3>METHOD Reference</h3>
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cClassName )</code></td><td>Cria objeto COM pela string ProgID, ou encapsula um IDispatch existente se um valor numérico for passado.</td></tr>
-<tr><td><code>Invoke( cMethodName, uParam1, uParam2, uParam3 )</code></td><td>Invoca explicitamente um método. Retorna um novo TComObject se o resultado for um IDispatch.</td></tr>
-<tr><td><code>ClassName()</code></td><td>Retorna o nome da classe do objeto COM via OleGetProperty.</td></tr>
-<tr><td><code>End()</code></td><td>Chama OleUninitialize() para liberar o objeto COM.</td></tr>
+<tr><td><code>New( cClassName )</code></td><td>Creates COM object by ProgID string, or wraps existing IDispatch if numeric is passed.</td></tr>
+<tr><td><code>Invoke( cMethodName, uParam1, uParam2, uParam3 )</code></td><td>Explicitly invokes a method. Returns a new TComObject if the result is an IDispatch.</td></tr>
+<tr><td><code>ClassName()</code></td><td>Returns the COM object's class name via OleGetProperty.</td></tr>
+<tr><td><code>End()</code></td><td>Calls OleUninitialize() to release the COM object.</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Usando TComObject</h3>
+<h3>Example: Using TComObject</h3>
 <pre><code class="language-harbour">local oCom := TComObject():New( "Scripting.FileSystemObject" )
 
 if oCom:nIDispatch != 0
@@ -225,40 +225,40 @@ if oCom:nIDispatch != 0
 endif</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="tactivex">TActiveX - Controles ActiveX Incorporados</h2>
-<p>TActiveX herda de TControl e permite incorporar qualquer controle ActiveX/OCX dentro de uma janela ou diálogo do FiveWin. Ele cria o contêiner ActiveX usando incorporação OLE do Windows, e então expõe os métodos e propriedades do controle através de um objeto TOleAuto interno. Eventos do controle ActiveX podem ser capturados via o codeblock <code>bOnEvent</code>.</p>
+<h2 id="tactivex">TActiveX - Embedded ActiveX Controls</h2>
+<p>TActiveX inherits from TControl and allows embedding any ActiveX/OCX control inside a FiveWin window or dialog. It creates the ActiveX container using Windows OLE embedding, then exposes the control's methods and properties through an internal TOleAuto object. Events from the ActiveX control can be captured via the <code>bOnEvent</code> codeblock.</p>
 
-<h3>Membros DATA</h3>
+<h3>DATA Members</h3>
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>hActiveX</code></td><td>Numeric</td><td>Handle para o contêiner ActiveX</td></tr>
-<tr><td><code>cProgID</code></td><td>Character</td><td>ProgID do controle ActiveX (ex.: "Shell.Explorer.2")</td></tr>
-<tr><td><code>cString</code></td><td>Character</td><td>String de exibição para o controle ActiveX</td></tr>
-<tr><td><code>oOleAuto</code></td><td>Object</td><td>Wrapper TOleAuto interno para o IDispatch do controle</td></tr>
-<tr><td><code>aProperties</code></td><td>Array</td><td>Propriedades disponíveis (preenchido por ReadTypes)</td></tr>
-<tr><td><code>aMethods</code></td><td>Array</td><td>Métodos disponíveis (preenchido por ReadTypes)</td></tr>
-<tr><td><code>aEvents</code></td><td>Array</td><td>Eventos disponíveis (preenchido por ReadTypes)</td></tr>
-<tr><td><code>bOnEvent</code></td><td>Codeblock</td><td>Manipulador de eventos: {|nEvent, aParams, pParams| ... }</td></tr>
+<tr><td><code>hActiveX</code></td><td>Numeric</td><td>Handle to the ActiveX container</td></tr>
+<tr><td><code>cProgID</code></td><td>Character</td><td>ProgID of the ActiveX control (e.g. "Shell.Explorer.2")</td></tr>
+<tr><td><code>cString</code></td><td>Character</td><td>Display string for the ActiveX control</td></tr>
+<tr><td><code>oOleAuto</code></td><td>Object</td><td>Internal TOleAuto wrapper for the control's IDispatch</td></tr>
+<tr><td><code>aProperties</code></td><td>Array</td><td>Available properties (populated by ReadTypes)</td></tr>
+<tr><td><code>aMethods</code></td><td>Array</td><td>Available methods (populated by ReadTypes)</td></tr>
+<tr><td><code>aEvents</code></td><td>Array</td><td>Available events (populated by ReadTypes)</td></tr>
+<tr><td><code>bOnEvent</code></td><td>Codeblock</td><td>Event handler: {|nEvent, aParams, pParams| ... }</td></tr>
 </tbody>
 </table>
 
-<h3>Referência de METHODs</h3>
+<h3>METHOD Reference</h3>
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( oWnd, cProgID, nRow, nCol, nWidth, nHeight )</code></td><td>Cria controle ActiveX em oWnd na posição informada.</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, cProgID )</code></td><td>Redefine a partir de um ID de controle de recurso de diálogo.</td></tr>
-<tr><td><code>Do( ... )</code></td><td>Invoca um método no objeto OLE subjacente. Passe o nome do método e os parâmetros.</td></tr>
-<tr><td><code>GetProp( cPropName )</code></td><td>Obtém o valor de uma propriedade do controle ActiveX.</td></tr>
-<tr><td><code>SetProp( cPropName, uValue )</code></td><td>Define o valor de uma propriedade do controle ActiveX.</td></tr>
-<tr><td><code>ReadTypes()</code></td><td>Lê informações de tipo (propriedades, métodos, eventos) do controle.</td></tr>
-<tr><td><code>OnEvent( nEvent, aParams, pParams )</code></td><td>Despachante de eventos interno. Sobrescreva bOnEvent para tratamento personalizado.</td></tr>
-<tr><td><code>Destroy()</code></td><td>Destrói o contêiner ActiveX e libera os recursos.</td></tr>
+<tr><td><code>New( oWnd, cProgID, nRow, nCol, nWidth, nHeight )</code></td><td>Creates ActiveX control in oWnd at given position.</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cProgID )</code></td><td>Redefines from a dialog resource control ID.</td></tr>
+<tr><td><code>Do( ... )</code></td><td>Invokes a method on the underlying OLE object. Pass method name and parameters.</td></tr>
+<tr><td><code>GetProp( cPropName )</code></td><td>Gets a property value from the ActiveX control.</td></tr>
+<tr><td><code>SetProp( cPropName, uValue )</code></td><td>Sets a property value on the ActiveX control.</td></tr>
+<tr><td><code>ReadTypes()</code></td><td>Reads type information (properties, methods, events) from the control.</td></tr>
+<tr><td><code>OnEvent( nEvent, aParams, pParams )</code></td><td>Internal event dispatcher. Override bOnEvent for custom handling.</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destroys the ActiveX container and releases resources.</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Incorporar um Navegador Web</h3>
+<h3>Example: Embed a Web Browser</h3>
 <pre><code class="language-harbour">function EmbedBrowser()
    local oDlg, oActiveX
 
@@ -276,7 +276,7 @@ endif</code></pre>
 
 return nil</code></pre>
 
-<h3>Exemplo: Incorporar um Visualizador de PDF</h3>
+<h3>Example: Embed a PDF Viewer</h3>
 <pre><code class="language-harbour">function ShowPDF( cPdfFile )
    local oDlg, oActiveX
 
@@ -291,7 +291,7 @@ return nil</code></pre>
 
 return nil</code></pre>
 
-<h3>Exemplo: Incorporar o Windows Media Player</h3>
+<h3>Example: Embed Windows Media Player</h3>
 <pre><code class="language-harbour">function PlayMedia( cMediaFile )
    local oDlg, oWMP
 
@@ -305,26 +305,26 @@ return nil</code></pre>
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="tdotnet">TDotNet - Interoperabilidade com .NET</h2>
-<p>O FiveWin suporta a chamada de assemblies .NET a partir do Harbour através de interoperabilidade COM. Embora não exista uma classe TDotNet dedicada no código-fonte, componentes .NET que expõem interfaces COM podem ser instanciados via TOleAuto. Para assemblies .NET personalizados, você pode registrá-los para interoperabilidade COM usando <code>regasm</code> e então criá-los como qualquer outro objeto COM.</p>
+<h2 id="tdotnet">TDotNet - .NET Interop</h2>
+<p>FiveWin supports calling .NET assemblies from Harbour through COM interop. While there is no dedicated TDotNet class in the source, .NET components that expose COM interfaces can be instantiated via TOleAuto. For custom .NET assemblies, you can register them for COM interop using <code>regasm</code> and then create them like any other COM object.</p>
 
-<h3>Abordagem: Usando .NET via Interoperabilidade COM</h3>
+<h3>Approach: Using .NET via COM Interop</h3>
 <div class="mermaid">
 sequenceDiagram
     participant Harbour as Harbour/FiveWin
-    participant COM as Runtime COM
+    participant COM as COM Runtime
     participant CLR as .NET CLR
-    participant Assembly as Assembly .NET
+    participant Assembly as .NET Assembly
     Harbour->>COM: CreateOleObject("MyLib.MyClass")
-    COM->>CLR: Carregar Host CLR
-    CLR->>Assembly: Instanciar classe
-    Assembly-->>COM: Ponteiro IDispatch
-    COM-->>Harbour: Objeto TOleAuto
-    Harbour->>COM: Chamadas de Propriedade/Método
-    COM->>Assembly: Invocar via IDispatch
+    COM->>CLR: Load CLR Host
+    CLR->>Assembly: Instantiate class
+    Assembly-->>COM: IDispatch pointer
+    COM-->>Harbour: TOleAuto object
+    Harbour->>COM: Property/Method calls
+    COM->>Assembly: Invoke via IDispatch
 </div>
 
-<h3>Exemplo: Chamando .NET via COM</h3>
+<h3>Example: Calling .NET via COM</h3>
 <pre><code class="language-harbour">// Step 1: Register .NET assembly for COM interop (run once from command line):
 //   regasm MyLibrary.dll /tlb:MyLibrary.tlb /codebase
 
@@ -343,7 +343,7 @@ function UseDotNet()
 
 return nil</code></pre>
 
-<h3>Exemplo: Usando Bibliotecas do Sistema .NET</h3>
+<h3>Example: Using .NET System Libraries</h3>
 <pre><code class="language-harbour">// The .NET mscorlib types exposed via COM can be accessed directly
 function DotNetExample()
    local oNet
@@ -362,36 +362,36 @@ function DotNetExample()
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="tgmail">TGmail - Integração com a API do Gmail</h2>
-<p>TGmail herda de TOAuth e fornece acesso autenticado via OAuth2 à API do Gmail. Utiliza libcurl para comunicação HTTP e suporta envio de e-mails com conteúdo HTML e anexos de arquivo. A autenticação é tratada através do fluxo OAuth2 do Google com tokens de atualização (refresh tokens).</p>
+<h2 id="tgmail">TGmail - Gmail API Integration</h2>
+<p>TGmail inherits from TOAuth and provides OAuth2-authenticated access to the Gmail API. It uses libcurl for HTTP communication and supports sending emails with HTML content and file attachments. Authentication is handled through Google's OAuth2 flow with refresh tokens.</p>
 
-<h3>Membros DATA</h3>
+<h3>DATA Members</h3>
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>cToken</code></td><td>Character</td><td>Token de atualização OAuth2 (refresh token)</td></tr>
-<tr><td><code>hToken</code></td><td>Hash</td><td>Resposta de token parseada (access_token, etc.)</td></tr>
-<tr><td><code>hConfig</code></td><td>Hash</td><td>Configuração OAuth: client_id, client_secret, redirect_uri</td></tr>
+<tr><td><code>cToken</code></td><td>Character</td><td>OAuth2 refresh token</td></tr>
+<tr><td><code>hToken</code></td><td>Hash</td><td>Parsed token response (access_token, etc.)</td></tr>
+<tr><td><code>hConfig</code></td><td>Hash</td><td>OAuth configuration: client_id, client_secret, redirect_uri</td></tr>
 </tbody>
 </table>
 
-<h3>Referência de METHODs</h3>
+<h3>METHOD Reference</h3>
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cToken )</code></td><td>Cria instância TGmail com refresh token opcional.</td></tr>
-<tr><td><code>SetConfig( hConfig )</code></td><td>Define o hash de configuração OAuth2 com client_id, client_secret, redirect_uri.</td></tr>
-<tr><td><code>SetToken( cToken )</code></td><td>Define o refresh token.</td></tr>
-<tr><td><code>Auth()</code></td><td>Inicia o fluxo de autorização OAuth2. Abre o navegador para consentimento do usuário.</td></tr>
-<tr><td><code>IsAuth()</code></td><td>Verifica se o token atual é válido (valida contra o endpoint de informações de token do Google).</td></tr>
-<tr><td><code>GetToken( cCode )</code></td><td>Troca o código de autorização por um token de acesso.</td></tr>
-<tr><td><code>Me()</code></td><td>Retorna as informações de perfil do usuário autenticado.</td></tr>
-<tr><td><code>Send( cTo, cSubject, cMessage, lHTML, aAttachment )</code></td><td>Envia um e-mail. lHTML: .T. para corpo HTML. aAttachment: array de caminhos de arquivo.</td></tr>
-<tr><td><code>Revoke()</code></td><td>Revoga o token OAuth2.</td></tr>
+<tr><td><code>New( cToken )</code></td><td>Creates TGmail instance with optional refresh token.</td></tr>
+<tr><td><code>SetConfig( hConfig )</code></td><td>Sets OAuth2 configuration hash with client_id, client_secret, redirect_uri.</td></tr>
+<tr><td><code>SetToken( cToken )</code></td><td>Sets the refresh token.</td></tr>
+<tr><td><code>Auth()</code></td><td>Initiates OAuth2 authorization flow. Opens browser for user consent.</td></tr>
+<tr><td><code>IsAuth()</code></td><td>Checks if the current token is valid (validates against Google's token info endpoint).</td></tr>
+<tr><td><code>GetToken( cCode )</code></td><td>Exchanges authorization code for access token.</td></tr>
+<tr><td><code>Me()</code></td><td>Returns the authenticated user's profile information.</td></tr>
+<tr><td><code>Send( cTo, cSubject, cMessage, lHTML, aAttachment )</code></td><td>Sends an email. lHTML: .T. for HTML body. aAttachment: array of file paths.</td></tr>
+<tr><td><code>Revoke()</code></td><td>Revokes the OAuth2 token.</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Enviar E-mail via Gmail</h3>
+<h3>Example: Send Email via Gmail</h3>
 <pre><code class="language-harbour">function SendGmail()
    local oGmail := TGmail():New()
 
@@ -429,37 +429,37 @@ return nil</code></pre>
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="toutlookmail">TOutlookMail - API de E-mail do Outlook</h2>
-<p>TOutlookMail herda de TOAuth e fornece acesso autenticado via OAuth2 à API do Microsoft Graph para envio de e-mail através do Outlook/Office 365. Assim como TGmail, utiliza libcurl e suporta conteúdo HTML, anexos de arquivo, destinatários CC e BCC. Trata automaticamente a rotação de refresh tokens quando a Microsoft os rotaciona.</p>
+<h2 id="toutlookmail">TOutlookMail - Outlook Mail API</h2>
+<p>TOutlookMail inherits from TOAuth and provides OAuth2-authenticated access to Microsoft Graph API for sending email through Outlook/Office 365. Like TGmail, it uses libcurl and supports HTML content, file attachments, CC, and BCC recipients. It automatically handles refresh token rotation when Microsoft rotates them.</p>
 
-<h3>Membros DATA</h3>
+<h3>DATA Members</h3>
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>cToken</code></td><td>Character</td><td>Token de atualização OAuth2 (refresh token)</td></tr>
-<tr><td><code>hToken</code></td><td>Hash</td><td>Resposta de token parseada (access_token, refresh_token, etc.)</td></tr>
-<tr><td><code>hConfig</code></td><td>Hash</td><td>Configuração OAuth: client_id, client_secret, redirect_uri, tenant</td></tr>
-<tr><td><code>hUser</code></td><td>Hash</td><td>Informações do perfil do usuário autenticado</td></tr>
+<tr><td><code>cToken</code></td><td>Character</td><td>OAuth2 refresh token</td></tr>
+<tr><td><code>hToken</code></td><td>Hash</td><td>Parsed token response (access_token, refresh_token, etc.)</td></tr>
+<tr><td><code>hConfig</code></td><td>Hash</td><td>OAuth configuration: client_id, client_secret, redirect_uri, tenant</td></tr>
+<tr><td><code>hUser</code></td><td>Hash</td><td>Authenticated user profile information</td></tr>
 </tbody>
 </table>
 
-<h3>Referência de METHODs</h3>
+<h3>METHOD Reference</h3>
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cToken )</code></td><td>Cria instância com refresh token opcional.</td></tr>
-<tr><td><code>SetConfig( hConfig )</code></td><td>Define configuração OAuth2: client_id, client_secret, redirect_uri (com porta para servidor local).</td></tr>
-<tr><td><code>SetToken( cToken )</code></td><td>Define o refresh token.</td></tr>
-<tr><td><code>Auth()</code></td><td>Inicia o fluxo de autorização OAuth2 da Microsoft.</td></tr>
-<tr><td><code>IsAuth()</code></td><td>Valida o token, atualiza automaticamente se expirado. Atualiza o refresh_token se rotacionado.</td></tr>
-<tr><td><code>GetToken( cCode )</code></td><td>Troca o código de autorização por tokens de acesso/atualização.</td></tr>
-<tr><td><code>Me( cPhoto )</code></td><td>Retorna perfil do usuário. Opcionalmente salva foto do perfil no caminho cPhoto.</td></tr>
-<tr><td><code>Send( aTo, cSubject, cMessage, lHTML, aAttachment, aBCC, aCC )</code></td><td>Envia e-mail. aTo/aBCC/aCC são arrays de endereços de e-mail.</td></tr>
-<tr><td><code>Revoke()</code></td><td>Revoga o token OAuth2.</td></tr>
+<tr><td><code>New( cToken )</code></td><td>Creates instance with optional refresh token.</td></tr>
+<tr><td><code>SetConfig( hConfig )</code></td><td>Sets OAuth2 config: client_id, client_secret, redirect_uri (with port for local server).</td></tr>
+<tr><td><code>SetToken( cToken )</code></td><td>Sets the refresh token.</td></tr>
+<tr><td><code>Auth()</code></td><td>Initiates Microsoft OAuth2 authorization flow.</td></tr>
+<tr><td><code>IsAuth()</code></td><td>Validates token, auto-refreshes if expired. Updates refresh_token if rotated.</td></tr>
+<tr><td><code>GetToken( cCode )</code></td><td>Exchanges authorization code for access/refresh tokens.</td></tr>
+<tr><td><code>Me( cPhoto )</code></td><td>Returns user profile. Optionally saves profile photo to cPhoto path.</td></tr>
+<tr><td><code>Send( aTo, cSubject, cMessage, lHTML, aAttachment, aBCC, aCC )</code></td><td>Sends email. aTo/aBCC/aCC are arrays of email addresses.</td></tr>
+<tr><td><code>Revoke()</code></td><td>Revokes the OAuth2 token.</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Enviar E-mail via Outlook/Office 365</h3>
+<h3>Example: Send Email via Outlook/Office 365</h3>
 <pre><code class="language-harbour">function SendOutlookAPI()
    local oMail := TOutlookMail():New()
 
@@ -497,9 +497,9 @@ return nil</code></pre>
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="tips">Dicas e Boas Práticas</h2>
+<h2 id="tips">Tips and Best Practices</h2>
 
-<h3>Tratamento de Erros OLE</h3>
+<h3>OLE Error Handling</h3>
 <pre><code class="language-harbour">// Always wrap OLE calls in TRY/CATCH
 TRY
    local oExcel := TOleAuto():New( "Excel.Application" )
@@ -510,7 +510,7 @@ CATCH oErr
              "Make sure the application is installed." )
 END</code></pre>
 
-<h3>Padrão de Tratamento de Eventos ActiveX</h3>
+<h3>ActiveX Event Handling Pattern</h3>
 <pre><code class="language-harbour">// The bOnEvent codeblock receives:
 //   nEvent  - numeric event ID
 //   aParams - array of event parameters
@@ -527,8 +527,8 @@ oActiveX:bOnEvent := {| nEvent, aParams, pParams |  ;
    endcase ;
 }</code></pre>
 
-<h3>Liberando Objetos COM</h3>
-<p>Sempre libere os objetos COM quando terminar. Para aplicações do Office, chame <code>Quit()</code> antes de liberar, ou o processo pode permanecer na memória:</p>
+<h3>Releasing COM Objects</h3>
+<p>Always release COM objects when done. For Office applications, call <code>Quit()</code> before releasing, or the process may remain in memory:</p>
 <pre><code class="language-harbour">// Correct cleanup order for Excel:
 oSheet := nil
 oBook:Close( .F. )    // .F. = don't save
@@ -538,5 +538,5 @@ oExcel := nil
 SysRefresh()           // Allow COM cleanup</code></pre>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

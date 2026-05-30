@@ -13,56 +13,56 @@
 
 <h1>TWhatsApp</h1>
 <p class="class-source">Fonte: <code>source/classes/twhatsapp.prg</code></p>
-<p class="class-hierarchy">Hierarquia: <strong>TWhatsApp</strong> (classe independente, sem herança)</p>
+<p class="class-hierarchy">Hierarchy: <strong>TWhatsApp</strong> (standalone class, no inheritance)</p>
 
 <p>
-TWhatsApp é um cliente da API WhatsApp Cloud que se comunica com a Plataforma de Negócios da Meta
-via requisições HTTPS usando a biblioteca cURL. Requer uma Conta de Negócios Meta, um ID
-de número de telefone registrado e um token de acesso permanente do sistema gerado a partir do Painel de Aplicativos Meta.
-Todos os tipos de mensagem são enviados como payloads JSON através da Graph API.
+TWhatsApp is a WhatsApp Cloud API client that communicates with Meta's Business Platform
+via HTTPS requests using the cURL library. It requires a Meta Business Account, a registered
+phone number ID, and a permanent system access token generated from the Meta App Dashboard.
+All message types are sent as JSON payloads through the Graph API.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cToken</code></td><td>Caractere</td><td></td><td>Token de acesso Bearer para autenticação da API</td></tr>
-<tr><td><code>cPhoneId</code></td><td>Caractere</td><td></td><td>ID do número de telefone do remetente (ID numérico Meta, não o número de telefone)</td></tr>
-<tr><td><code>cVersion</code></td><td>Caractere</td><td><code>"v18.0"</code></td><td>String de versão da Graph API</td></tr>
-<tr><td><code>cBaseUrl</code></td><td>Caractere</td><td><code>"https://graph.facebook.com"</code></td><td>URL base para todas as chamadas da API</td></tr>
-<tr><td><code>cResponse</code></td><td>Caractere</td><td></td><td>Resposta JSON bruta da última chamada da API</td></tr>
-<tr><td><code>nError</code></td><td>Numérico</td><td><code>0</code></td><td>Código de erro cURL da última operação</td></tr>
-<tr><td><code>nHttpCode</code></td><td>Numérico</td><td><code>0</code></td><td>Código de status HTTP da última resposta</td></tr>
+<tr><td><code>cToken</code></td><td>Character</td><td></td><td>Bearer access token for API authentication</td></tr>
+<tr><td><code>cPhoneId</code></td><td>Character</td><td></td><td>Sender phone number ID (Meta numeric ID, not the phone number)</td></tr>
+<tr><td><code>cVersion</code></td><td>Character</td><td><code>"v18.0"</code></td><td>Graph API version string</td></tr>
+<tr><td><code>cBaseUrl</code></td><td>Character</td><td><code>"https://graph.facebook.com"</code></td><td>Base URL for all API calls</td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Raw JSON response from the last API call</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>cURL error code from the last operation</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>HTTP status code from the last response</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cToken, cPhoneId, cVersion )</code></td><td>Construtor. Inicializa o identificador cURL e armazena as credenciais. Opcionalmente define a versão da API.</td></tr>
-<tr><td><code>End()</code></td><td>Limpar o identificador cURL. Chamar quando terminar de usar o objeto.</td></tr>
-<tr><td><code>SendText( cTo, cMsg, lPreviewUrl )</code></td><td>Enviar uma mensagem de texto simples. <code>lPreviewUrl</code> habilita a geração de pré-visualização de link.</td></tr>
-<tr><td><code>SendTemplate( cTo, cName, cLang, aBodyParams )</code></td><td>Enviar um modelo de mensagem pré-aprovado com valores opcionais de parâmetros de corpo.</td></tr>
-<tr><td><code>SendImage( cTo, cLinkOrId, cCaption )</code></td><td>Enviar uma imagem por URL ou ID de mídia previamente enviada.</td></tr>
-<tr><td><code>SendDocument( cTo, cLinkOrId, cFilename, cCaption )</code></td><td>Enviar um documento por URL ou ID de mídia com nome de arquivo e legenda opcionais.</td></tr>
-<tr><td><code>SendAudio( cTo, cLinkOrId )</code></td><td>Enviar um arquivo de áudio por URL ou ID de mídia.</td></tr>
-<tr><td><code>SendVideo( cTo, cLinkOrId, cCaption )</code></td><td>Enviar um vídeo por URL ou ID de mídia com legenda opcional.</td></tr>
-<tr><td><code>SendLocation( cTo, nLat, nLong, cName, cAddress )</code></td><td>Enviar um marcador de localização com latitude, longitude e nome/endereço opcionais.</td></tr>
-<tr><td><code>UploadMedia( cFileName, cMimeType )</code></td><td>Enviar um arquivo de mídia para os servidores do WhatsApp. Retorna a string do ID da mídia ou nil em caso de falha.</td></tr>
-<tr><td><code>DownloadMedia( cMediaId, cTargetFile )</code></td><td>Baixar um arquivo de mídia dos servidores do WhatsApp e salvar no disco. Retorna .T. em caso de sucesso.</td></tr>
-<tr><td><code>GetMessageId()</code></td><td>Extrair o ID da mensagem da última resposta da API. Retorna string vazia em caso de falha.</td></tr>
-<tr><td><code>GetError()</code></td><td>Extrair a mensagem de erro da última resposta da API. Retorna string vazia se não houver erro.</td></tr>
+<tr><td><code>New( cToken, cPhoneId, cVersion )</code></td><td>Constructor. Initializes cURL handle and stores credentials. Optionally sets API version.</td></tr>
+<tr><td><code>End()</code></td><td>Clean up the cURL handle. Call when done with the object.</td></tr>
+<tr><td><code>SendText( cTo, cMsg, lPreviewUrl )</code></td><td>Send a plain text message. <code>lPreviewUrl</code> enables link preview generation.</td></tr>
+<tr><td><code>SendTemplate( cTo, cName, cLang, aBodyParams )</code></td><td>Send a pre-approved message template with optional body parameter values.</td></tr>
+<tr><td><code>SendImage( cTo, cLinkOrId, cCaption )</code></td><td>Send an image by URL or previously uploaded media ID.</td></tr>
+<tr><td><code>SendDocument( cTo, cLinkOrId, cFilename, cCaption )</code></td><td>Send a document by URL or media ID with optional filename and caption.</td></tr>
+<tr><td><code>SendAudio( cTo, cLinkOrId )</code></td><td>Send an audio file by URL or media ID.</td></tr>
+<tr><td><code>SendVideo( cTo, cLinkOrId, cCaption )</code></td><td>Send a video by URL or media ID with optional caption.</td></tr>
+<tr><td><code>SendLocation( cTo, nLat, nLong, cName, cAddress )</code></td><td>Send a location pin with latitude, longitude, and optional name/address.</td></tr>
+<tr><td><code>UploadMedia( cFileName, cMimeType )</code></td><td>Upload a media file to WhatsApp servers. Returns the media ID string, or nil on failure.</td></tr>
+<tr><td><code>DownloadMedia( cMediaId, cTargetFile )</code></td><td>Download a media file from WhatsApp servers and save to disk. Returns .T. on success.</td></tr>
+<tr><td><code>GetMessageId()</code></td><td>Extract the message ID from the last API response. Returns empty string on failure.</td></tr>
+<tr><td><code>GetError()</code></td><td>Extract the error message from the last API response. Returns empty string if no error.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Enviar Mensagem de Texto</h2>
+<h2 id="example">Example: Send Text Message</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -85,7 +85,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-template">Exemplo: Mensagem de Modelo</h2>
+<h2 id="example-template">Example: Template Message</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -100,19 +100,19 @@ function SendTemplate()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Uma Conta de Negócios Meta e um número de telefone registrado são necessários. O ID do número de telefone é um identificador numérico atribuído pela Meta, não o número de telefone em si.</li>
-<li>Use um token de acesso permanente do sistema do Painel de Aplicativos Meta. Tokens de usuário temporários expiram.</li>
-<li><code>SendImage</code>, <code>SendDocument</code>, <code>SendAudio</code> e <code>SendVideo</code> aceitam uma URL pública ou um ID de mídia previamente enviado. URLs devem começar com <code>http</code> (case-insensitive).</li>
-<li>Os nomes dos modelos devem corresponder a modelos pré-aprovados na conta de Negócios Meta. Os parâmetros de corpo são inseridos posicionalmente.</li>
-<li>Todos os métodos de envio retornam a resposta JSON bruta em <code>cResponse</code>. Chame <code>GetMessageId()</code> ou <code>GetError()</code> para analisar o resultado.</li>
-<li>A classe usa <code>hbcurl.ch</code> e requer a biblioteca cURL vinculada à aplicação.</li>
+<li>A Meta Business Account and a registered phone number are required. The phone number ID is a numeric identifier assigned by Meta, not the phone number itself.</li>
+<li>Use a permanent system access token from the Meta App Dashboard. Temporary user tokens expire.</li>
+<li><code>SendImage</code>, <code>SendDocument</code>, <code>SendAudio</code>, and <code>SendVideo</code> accept either a public URL or a previously uploaded media ID. URLs must start with <code>http</code> (case-insensitive).</li>
+<li>Template names must match pre-approved templates in the Meta Business account. Body parameters are inserted positionally.</li>
+<li>All send methods return the raw JSON response in <code>cResponse</code>. Call <code>GetMessageId()</code> or <code>GetError()</code> to parse the result.</li>
+<li>The class uses <code>hbcurl.ch</code> and requires the cURL library linked into the application.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tweekview.html">&larr; tweekview</a> | <a href="../../pt/reference/twhispercpp.html">twhispercpp &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

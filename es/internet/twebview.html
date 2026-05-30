@@ -15,27 +15,27 @@
 <p class="class-source">Fuente: <code>source/classes/twebview2.prg</code></p>
 
 <p>
-TWebView2 integra el motor del navegador Microsoft Edge (Chromium) en aplicaciones FiveWin.
-Proporciona un motor de renderizado moderno HTML5/CSS3/JavaScript que puede navegar URLs, mostrar
-HTML local, ejecutar JavaScript desde Harbour y recibir callbacks de JavaScript de vuelta al código Harbour.
-Esto reemplaza el antiguo enfoque basado en Internet Explorer TActiveX("Shell.Explorer.2").
+TWebView2 embeds the Microsoft Edge (Chromium) browser engine into FiveWin applications.
+It provides a modern HTML5/CSS3/JavaScript rendering engine that can navigate URLs, display
+local HTML, execute JavaScript from Harbour, and receive JavaScript callbacks back into Harbour code.
+This replaces the older Internet Explorer-based TActiveX("Shell.Explorer.2") approach.
 </p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
-    subgraph "Aplicación FiveWin"
+    subgraph "FiveWin Application"
         A[TWebView2]
         B[oWnd<br/>TWindow]
     end
-    subgraph "Runtime WebView2"
-        C[Edge Chromium<br/>Renderizador]
-        D[Carpeta de Datos de Usuario]
+    subgraph "WebView2 Runtime"
+        C[Edge Chromium<br/>Renderer]
+        D[User Data Folder]
     end
-    subgraph "Contenido"
-        E[URLs Web]
-        F[HTML Local]
+    subgraph "Content"
+        E[Web URLs]
+        F[Local HTML]
         G[JavaScript]
     end
     A --> B
@@ -46,67 +46,67 @@ flowchart LR
     A <-->|"Eval / bOnBind"| G
 </div>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hWebView</code></td><td>Numeric</td><td>Handle interno de WebView2</td></tr>
-<tr><td><code>oWnd</code></td><td>TWindow</td><td>Objeto ventana padre</td></tr>
-<tr><td><code>bOnBind</code></td><td>Block</td><td>Bloque callback cuando JavaScript llama a <code>SendToFWH()</code></td></tr>
-<tr><td><code>bOnNavigationCompleted</code></td><td>Block</td><td>Callback cuando la navegación de página finaliza</td></tr>
-<tr><td><code>bOnEval</code></td><td>Block</td><td>Callback con el resultado de la evaluación de JavaScript</td></tr>
-<tr><td><code>cUserDataFolder</code></td><td>Character</td><td>Ruta para cookies, caché y almacenamiento de datos de usuario</td></tr>
+<tr><td><code>hWebView</code></td><td>Numeric</td><td>WebView2 internal handle</td></tr>
+<tr><td><code>oWnd</code></td><td>TWindow</td><td>Parent window object</td></tr>
+<tr><td><code>bOnBind</code></td><td>Block</td><td>Callback block when JavaScript calls <code>SendToFWH()</code></td></tr>
+<tr><td><code>bOnNavigationCompleted</code></td><td>Block</td><td>Callback when page navigation finishes</td></tr>
+<tr><td><code>bOnEval</code></td><td>Block</td><td>Callback with result of JavaScript evaluation</td></tr>
+<tr><td><code>cUserDataFolder</code></td><td>Character</td><td>Path for cookies, cache, and user data storage</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWndParent, cUserDataFolder )</code></td><td>Crear control WebView2. Si oWndParent es nil, crea su propia ventana.</td></tr>
-<tr><td><code>Navigate( cURL )</code></td><td>Navegar a una URL</td></tr>
-<tr><td><code>SetHtml( cHtml )</code></td><td>Mostrar cadena HTML directamente</td></tr>
-<tr><td><code>Eval( cJavaScript )</code></td><td>Ejecutar código JavaScript en la página web</td></tr>
-<tr><td><code>InjectJavascript( cScript )</code></td><td>Inyectar un elemento &lt;script&gt; en el head de la página</td></tr>
-<tr><td><code>SetTitle( cText )</code></td><td>Establecer el título de la ventana</td></tr>
-<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Redimensionar el control WebView2</td></tr>
-<tr><td><code>SetUserAgent( cUserAgent )</code></td><td>Establecer cadena User-Agent personalizada</td></tr>
-<tr><td><code>SetParent( oWnd )</code></td><td>Reasignar el WebView como ventana hija</td></tr>
-<tr><td><code>Center()</code></td><td>Centrar la ventana padre en la pantalla</td></tr>
-<tr><td><code>Run()</code></td><td>Activar la ventana padre (inicia el bucle de mensajes)</td></tr>
-<tr><td><code>OpenDevToolsWindow( lOnOff )</code></td><td>Abrir/cerrar el panel de Chrome DevTools</td></tr>
-<tr><td><code>ShowDownloads( lOnOff )</code></td><td>Mostrar/ocultar el panel de descargas</td></tr>
-<tr><td><code>End()</code></td><td>Destruir la instancia de WebView2</td></tr>
+<tr><td><code>New( oWndParent, cUserDataFolder )</code></td><td>Create WebView2 control. If oWndParent is nil, creates its own window.</td></tr>
+<tr><td><code>Navigate( cURL )</code></td><td>Navigate to a URL</td></tr>
+<tr><td><code>SetHtml( cHtml )</code></td><td>Display HTML string directly</td></tr>
+<tr><td><code>Eval( cJavaScript )</code></td><td>Execute JavaScript code in the web page</td></tr>
+<tr><td><code>InjectJavascript( cScript )</code></td><td>Inject a &lt;script&gt; element into the page head</td></tr>
+<tr><td><code>SetTitle( cText )</code></td><td>Set the window title</td></tr>
+<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Resize the WebView2 control</td></tr>
+<tr><td><code>SetUserAgent( cUserAgent )</code></td><td>Set custom User-Agent string</td></tr>
+<tr><td><code>SetParent( oWnd )</code></td><td>Re-parent the WebView as a child window</td></tr>
+<tr><td><code>Center()</code></td><td>Center the parent window on screen</td></tr>
+<tr><td><code>Run()</code></td><td>Activate the parent window (starts message loop)</td></tr>
+<tr><td><code>OpenDevToolsWindow( lOnOff )</code></td><td>Open/close the Chrome DevTools panel</td></tr>
+<tr><td><code>ShowDownloads( lOnOff )</code></td><td>Show/hide the downloads panel</td></tr>
+<tr><td><code>End()</code></td><td>Destroy the WebView2 instance</td></tr>
 </tbody>
 </table>
 
-<h2 id="communication">Comunicación Harbour &lt;-&gt; JavaScript</h2>
+<h2 id="communication">Harbour &lt;-&gt; JavaScript Communication</h2>
 
 <div class="mermaid">
 sequenceDiagram
-    participant H as Código Harbour
+    participant H as Harbour Code
     participant WV as TWebView2
     participant JS as JavaScript
 
-    Note over H,JS: Harbour a JavaScript
+    Note over H,JS: Harbour to JavaScript
     H->>WV: oWV:Eval("document.title='Hello'")
-    WV->>JS: Ejecutar JavaScript
-    JS-->>WV: Resultado (asíncrono)
-    WV-->>H: callback bOnEval
+    WV->>JS: Execute JavaScript
+    JS-->>WV: Result (async)
+    WV-->>H: bOnEval callback
 
-    Note over H,JS: JavaScript a Harbour
+    Note over H,JS: JavaScript to Harbour
     JS->>WV: SendToFWH({action:"save", data:...})
     WV->>H: bOnBind( hParams, oWebView )
-    H->>H: Procesar la solicitud
+    H->>H: Process the request
 </div>
 
-<h2 id="example-navigate">Ejemplo: Navegar a una URL</h2>
+<h2 id="example-navigate">Example: Navigate to a URL</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -123,7 +123,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-html">Ejemplo: Mostrar HTML Local</h2>
+<h2 id="example-html">Example: Display Local HTML</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -147,9 +147,9 @@ function Main()
    &lt;body&gt;
       &lt;h1&gt;FiveWin + WebView2&lt;/h1&gt;
       &lt;div class="card"&gt;
-         &lt;p&gt;Este HTML es renderizado por el motor Chromium dentro de una ventana FiveWin.&lt;/p&gt;
+         &lt;p&gt;This HTML is rendered by the Chromium engine inside a FiveWin window.&lt;/p&gt;
          &lt;button onclick="SendToFWH({action:'hello', msg:'Button clicked!'})"&gt;
-            Haz Clic
+            Click Me
          &lt;/button&gt;
       &lt;/div&gt;
    &lt;/body&gt;
@@ -166,7 +166,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-js">Ejemplo: Llamar JavaScript desde Harbour</h2>
+<h2 id="example-js">Example: Call JavaScript from Harbour</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -179,16 +179,16 @@ function Main()
    oWV := TWebView2():New( oWnd )
    oWV:Navigate( "https://www.example.com" )
 
-   // Después de que la navegación se complete, inyectar JavaScript
+   // After navigation completes, inject JavaScript
    oWV:bOnNavigationCompleted := { |cUrl|
-      // Cambiar el fondo de la página
+      // Change the page background
       oWV:Eval( "document.body.style.backgroundColor = '#f0f0f0'" )
 
-      // Obtener el título de la página
+      // Get the page title
       oWV:Eval( "document.title" )
    }
 
-   // Recibir el resultado de Eval
+   // Receive the result of Eval
    oWV:bOnEval := { |cJson| oWnd:SetText( "Page: " + cJson ) }
 
    ACTIVATE WINDOW oWnd MAXIMIZED
@@ -197,7 +197,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-embed">Ejemplo: Integrar en un Diálogo</h2>
+<h2 id="example-embed">Example: Embed in a Dialog</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -216,25 +216,25 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="helper">Función Auxiliar: FW_WebView()</h2>
+<h2 id="helper">Helper: FW_WebView()</h2>
 
-<pre><code class="language-harbour">// Una sola línea para mostrar HTML en un WebView
+<pre><code class="language-harbour">// Quick one-liner to display HTML in a WebView
 FW_WebView( cHtml, oWnd )</code></pre>
 <p>
-<code>FW_WebView()</code> es una función de conveniencia que crea o reutiliza un TWebView2 para mostrar
-contenido HTML. Si <code>oWnd</code> es un TWebView2 existente, lo reutiliza; de lo contrario crea uno nuevo.
+<code>FW_WebView()</code> is a convenience function that creates or reuses a TWebView2 to display
+HTML content. If <code>oWnd</code> is an existing TWebView2, it reuses it; otherwise creates a new one.
 </p>
 
-<h2 id="requirements">Requisitos</h2>
+<h2 id="requirements">Requirements</h2>
 
 <ul>
-<li>Windows 10 o posterior con el Runtime WebView2 instalado (incluido con Windows 11 por defecto)</li>
-<li>El Runtime WebView2 es una descarga separada para Windows 10: <a href="https://developer.microsoft.com/en-us/microsoft-edge/webview2/" target="_blank">Runtime WebView2</a></li>
-<li>Los datos de usuario (cookies, caché) se almacenan en <code>cUserDataFolder</code>. Si no se especifica, se usa una ubicación predeterminada.</li>
+<li>Windows 10 or later with the WebView2 Runtime installed (ships with Windows 11 by default)</li>
+<li>The WebView2 Runtime is a separate download for Windows 10: <a href="https://developer.microsoft.com/en-us/microsoft-edge/webview2/" target="_blank">WebView2 Runtime</a></li>
+<li>User data (cookies, cache) is stored in the <code>cUserDataFolder</code>. If not specified, a default location is used.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/internet/twebsocketserver.html">&larr; twebsocketserver</a> | <a href="../../es/internet/twebview2.html">twebview2 &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -1,80 +1,79 @@
-﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCalEx - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCalEx - Documentação FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TCalEx</h1>
 <p class="class-source">Fonte: <code>source/classes/tcalex.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TCalEx é a classe base dos controles estendidos de calendário e agendamento do FiveWin.
-Ela fornece um sistema completo de navegação por datas com suporte a múltiplas visualizações
-(mês, semana, dia), gerenciamento de compromissos/eventos, renderização personalizada com
-gradiente e seleção interativa baseada no mouse. A classe foi projetada para lidar com
-interfaces de agendamento complexas, com intervalos de tempo, faixas de datas e estilo
-visual configuráveis.
+TCalEx is the base class for FiveWin's extended calendar and scheduling controls.
+It provides a full-featured date navigation system with support for multiple views
+(month, week, day), appointment/event management, custom gradient rendering, and
+interactive mouse-based selection. The class is designed to handle complex scheduling
+UIs with configurable time intervals, date ranges, and visual styling.
 </p>
 
 <p>
-TCalEx gerencia três objetos de subvisualização -- <code>oMonthView</code>, <code>oWeekView</code>
-e <code>oDayView</code> -- que tratam a renderização real e o tratamento de eventos para
-cada modo de visualização específico. A visualização ativa é controlada pelos métodos
-<code>SetMonthView()</code>, <code>SetWeekView()</code> e <code>SetDayView()</code>.
+TCalEx manages three sub-view objects -- <code>oMonthView</code>, <code>oWeekView</code>,
+and <code>oDayView</code> -- which handle the actual rendering and event handling for
+each specific view mode. The active view is controlled via <code>SetMonthView()</code>,
+<code>SetWeekView()</code>, and <code>SetDayView()</code> methods.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>dStart</code></td><td>Date</td><td>Data inicial da faixa visível</td></tr>
-<tr><td><code>dEnd</code></td><td>Date</td><td>Data final da faixa visível</td></tr>
-<tr><td><code>dDate</code></td><td>Date</td><td>Data exibida atualmente</td></tr>
-<tr><td><code>dDateSelected</code></td><td>Date</td><td>Data atualmente selecionada pelo usuário</td></tr>
-<tr><td><code>hCalInfo</code></td><td>Hash</td><td>Tabela hash de objetos de informação de calendário (compromisso/evento)</td></tr>
-<tr><td><code>oMonthView</code></td><td>Object</td><td>Subvisualização TMonthView para exibição mensal</td></tr>
-<tr><td><code>oWeekView</code></td><td>Object</td><td>Subvisualização TWeekView para exibição semanal</td></tr>
-<tr><td><code>oDayView</code></td><td>Object</td><td>Subvisualização TDayView para exibição diária</td></tr>
-<tr><td><code>nStartHour</code></td><td>Numeric</td><td>Primeira hora visível (0-23)</td></tr>
-<tr><td><code>nEndHour</code></td><td>Numeric</td><td>Última hora visível (0-23)</td></tr>
-<tr><td><code>nInterval</code></td><td>Numeric</td><td>Intervalo de cada faixa de tempo em minutos (5, 10, 15, 20, 30, 60)</td></tr>
-<tr><td><code>lAmPm</code></td><td>Logical</td><td>Exibe a hora no formato AM/PM</td></tr>
-<tr><td><code>lLeftLabel</code></td><td>Logical</td><td>Mostra/oculta os rótulos de hora à esquerda</td></tr>
-<tr><td><code>nColorGrid</code></td><td>Numeric</td><td>Cor das linhas da grade</td></tr>
-<tr><td><code>nColorGridToday</code></td><td>Numeric</td><td>Cor das linhas da grade do dia de hoje</td></tr>
-<tr><td><code>aGradCellNormal</code></td><td>Array</td><td>Cores de gradiente para células normais</td></tr>
-<tr><td><code>aGradCellSelected</code></td><td>Array</td><td>Cores de gradiente para células selecionadas</td></tr>
+<tr><td><code>dStart</code></td><td>Date</td><td>Start date of the visible range</td></tr>
+<tr><td><code>dEnd</code></td><td>Date</td><td>End date of the visible range</td></tr>
+<tr><td><code>dDate</code></td><td>Date</td><td>Currently displayed date</td></tr>
+<tr><td><code>dDateSelected</code></td><td>Date</td><td>Date currently selected by the user</td></tr>
+<tr><td><code>hCalInfo</code></td><td>Hash</td><td>Hash table of calendar info (appointment/event) objects</td></tr>
+<tr><td><code>oMonthView</code></td><td>Object</td><td>TMonthView sub-view for month display</td></tr>
+<tr><td><code>oWeekView</code></td><td>Object</td><td>TWeekView sub-view for week display</td></tr>
+<tr><td><code>oDayView</code></td><td>Object</td><td>TDayView sub-view for day display</td></tr>
+<tr><td><code>nStartHour</code></td><td>Numeric</td><td>First visible hour (0-23)</td></tr>
+<tr><td><code>nEndHour</code></td><td>Numeric</td><td>Last visible hour (0-23)</td></tr>
+<tr><td><code>nInterval</code></td><td>Numeric</td><td>Time slot interval in minutes (5, 10, 15, 20, 30, 60)</td></tr>
+<tr><td><code>lAmPm</code></td><td>Logical</td><td>Display time in AM/PM format</td></tr>
+<tr><td><code>lLeftLabel</code></td><td>Logical</td><td>Show/hide left time labels</td></tr>
+<tr><td><code>nColorGrid</code></td><td>Numeric</td><td>Grid line color</td></tr>
+<tr><td><code>nColorGridToday</code></td><td>Numeric</td><td>Today grid line color</td></tr>
+<tr><td><code>aGradCellNormal</code></td><td>Array</td><td>Gradient colors for normal cells</td></tr>
+<tr><td><code>aGradCellSelected</code></td><td>Array</td><td>Gradient colors for selected cells</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( oWnd, nFirst, nClrText, nTop, nLeft, nBottom, nRight, cAdjust )</code></td><td>Cria um novo controle TCalEx dentro de uma janela</td></tr>
-<tr><td><code>LoadDates( nStart, nEnd, dStart, dEnd, cText, cSubject, nIdx, lND, lAplicado, lBloqueoT, aGrad, nClrT, nStatus )</code></td><td>Carrega dados de compromisso/evento no calendário</td></tr>
-<tr><td><code>SetMonthView()</code></td><td>Alterna para a exibição em visualização mensal</td></tr>
-<tr><td><code>SetWeekView( dDate, nInterval )</code></td><td>Alterna para a exibição em visualização semanal</td></tr>
-<tr><td><code>SetDayView( dDate, nInterval )</code></td><td>Alterna para a exibição em visualização diária</td></tr>
-<tr><td><code>GoNext()</code></td><td>Navega para o próximo período de tempo (mês/semana/dia)</td></tr>
-<tr><td><code>GoPrev()</code></td><td>Navega para o período de tempo anterior</td></tr>
-<tr><td><code>HitTest( nRow, nCol )</code></td><td>Retorna o objeto de informação de calendário nas coordenadas de linha/coluna informadas</td></tr>
-<tr><td><code>SetDate( dDate )</code></td><td>Define o calendário para uma data específica</td></tr>
-<tr><td><code>SetInterval( nMin )</code></td><td>Define o intervalo da faixa de tempo (5, 10, 15, 20, 30 ou 60 minutos)</td></tr>
-<tr><td><code>DelCalInfo( lAll )</code></td><td>Exclui itens de informação de calendário (todos ou a seleção atual)</td></tr>
-<tr><td><code>SelectCalInfo( oCalInfo )</code></td><td>Seleciona um objeto específico de informação de calendário</td></tr>
-<tr><td><code>Reset()</code></td><td>Reinicia a hash de informações de calendário</td></tr>
-<tr><td><code>Destroy()</code></td><td>Destrói o controle e libera os recursos</td></tr>
+<tr><td><code>New( oWnd, nFirst, nClrText, nTop, nLeft, nBottom, nRight, cAdjust )</code></td><td>Create a new TCalEx control within a window</td></tr>
+<tr><td><code>LoadDates( nStart, nEnd, dStart, dEnd, cText, cSubject, nIdx, lND, lAplicado, lBloqueoT, aGrad, nClrT, nStatus )</code></td><td>Load appointment/event data into the calendar</td></tr>
+<tr><td><code>SetMonthView()</code></td><td>Switch to month view display</td></tr>
+<tr><td><code>SetWeekView( dDate, nInterval )</code></td><td>Switch to week view display</td></tr>
+<tr><td><code>SetDayView( dDate, nInterval )</code></td><td>Switch to day view display</td></tr>
+<tr><td><code>GoNext()</code></td><td>Navigate to the next time period (month/week/day)</td></tr>
+<tr><td><code>GoPrev()</code></td><td>Navigate to the previous time period</td></tr>
+<tr><td><code>HitTest( nRow, nCol )</code></td><td>Return calendar info object at the given row/col coordinates</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the calendar to a specific date</td></tr>
+<tr><td><code>SetInterval( nMin )</code></td><td>Set the time slot interval (5, 10, 15, 20, 30, or 60 minutes)</td></tr>
+<tr><td><code>DelCalInfo( lAll )</code></td><td>Delete calendar info items (all or current selection)</td></tr>
+<tr><td><code>SelectCalInfo( oCalInfo )</code></td><td>Select a specific calendar info object</td></tr>
+<tr><td><code>Reset()</code></td><td>Reset the calendar info hash</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destroy the control and free resources</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Sintaxe de Comando</h2>
+<h2 id="commands">Command Syntax</h2>
 
-<pre><code class="language-harbour">// Controle de calendário em uma janela:
+<pre><code class="language-harbour">// Calendar control in a window:
 @ nRow, nCol CALENDAR oCal OF oWnd</code></pre>
 
-<h2 id="example">Exemplo: Calendário com Compromissos</h2>
+<h2 id="example">Example: Calendar with Appointments</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -86,15 +85,15 @@ function Main()
 
    @ 10, 10 CALENDAR oCal OF oWnd
 
-   // Carrega compromissos para uma faixa de datas
-   oCal:LoadDates( 9, 18, ;           // horas exibidas 9:00-18:00
-      CToD( "2026-06-01" ), ;        // data inicial
-      CToD( "2026-06-30" ), ;        // data final
-      "Team Meeting", ;              // texto do evento
-      "Project review", ;            // assunto
+   // Load appointments for a date range
+   oCal:LoadDates( 9, 18, ;           // display hours 9:00-18:00
+      CToD( "2026-06-01" ), ;        // start date
+      CToD( "2026-06-30" ), ;        // end date
+      "Team Meeting", ;              // event text
+      "Project review", ;            // subject
       , , , , , CLR_YELLOW, CLR_RED, 1 )
 
-   // Alterna inicialmente para a visualização semanal
+   // Switch to week view initially
    oCal:SetWeekView( dDate(), 30 )
 
    ACTIVATE WINDOW oWnd MAXIMIZED
@@ -102,23 +101,23 @@ function Main()
 return nil</code></pre>
 
 <p>
-<strong>Exemplo completo:</strong> Consulte <code>samples/misc/calexmaria.prg</code> para uma
-aplica&ccedil;&atilde;o TCalex completa com backend MySQL/MariaDB, arrastar-e-soltar
-compromissos, e edi&ccedil;&atilde;o com di&aacute;logo RC.
+<strong>Full example:</strong> See <code>samples/misc/calexmaria.prg</code> for a complete
+TCalex application with MySQL/MariaDB backend, drag-and-drop appointment moving,
+and RC dialog editing.
 </p>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O TCalEx <strong>não</strong> usa o sistema de coordenadas PIXEL padrão. Todos os valores de posicionamento usam unidades de diálogo (coordenadas de texto).</li>
-<li>Os três objetos de subvisualização (oMonthView, oWeekView, oDayView) são criados internamente pelo TCalEx. Alterne entre eles usando os métodos <code>SetMonthView()</code>, <code>SetWeekView()</code> e <code>SetDayView()</code>.</li>
-<li>Os dados de evento/compromisso são armazenados na tabela hash <code>hCalInfo</code> e renderizados dentro da grade da visualização ativa.</li>
-<li>A coloração com gradiente de células, cabeçalhos e rótulos é configurada por meio dos arrays DATA <code>aGrad*</code>.</li>
-<li>Os intervalos de tempo controlam a granularidade da grade de visualização diária/semanal. Os valores válidos são 5, 10, 15, 20, 30 e 60 minutos.</li>
+<li>TCalEx does <strong>not</strong> use the standard PIXEL coordinate system. All positioning values use dialog units (text coordinates).</li>
+<li>The three sub-view objects (oMonthView, oWeekView, oDayView) are created internally by TCalEx. Switch between them using the <code>SetMonthView()</code>, <code>SetWeekView()</code>, and <code>SetDayView()</code> methods.</li>
+<li>Event/appointment data is stored in the <code>hCalInfo</code> hash table and rendered within the active view grid.</li>
+<li>Gradient coloring for cells, headers, and labels is configured via the <code>aGrad*</code> DATA arrays.</li>
+<li>Time intervals control the granularity of the day/week view grid. Valid values are 5, 10, 15, 20, 30, and 60 minutes.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tcalendar.html">&larr; tcalendar</a> | <a href="../../pt/reference/tcalinfo.html">tcalinfo &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

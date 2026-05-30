@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TBitmap - DocumentaÃ§Ã£o FWH</title>
+<title>TBitmap - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,30 +13,30 @@
 
 <h1>TBitmap</h1>
 <p class="class-source">Fonte: <code>source/classes/bitmap.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TBitmap Ã© um controle que exibe uma imagem bitmap de um arquivo, recurso ou manipulador. Suporta zoom, transparÃªncia, mesclagem alfa, modos de estiramento e imagens grandes rolÃ¡veis. O controle pode exibir arquivos BMP incorporados como recursos ou carregados do disco. It supports zoom, transparency, alpha blending, stretch modes, and scrollable large images. The control can display BMP files embedded as resources or loaded from disk.
+TBitmap is a control that displays a bitmap image from a file, resource, or handle. It supports zoom, transparency, alpha blending, stretch modes, and scrollable large images. The control can display BMP files embedded as resources or loaded from disk.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hBitmap</code></td><td>Handle</td><td>Manipulador do objeto GDI de bitmap</td></tr>
-<tr><td><code>hPalette</code></td><td>Handle</td><td>Manipulador da paleta de cores do bitmap</td></tr>
-<tr><td><code>cBmpFile</code></td><td>Character</td><td>Caminho do arquivo bitmap no disco</td></tr>
-<tr><td><code>cResName</code></td><td>Character</td><td>Nome do recurso bitmap incorporado no EXE</td></tr>
-<tr><td><code>nZoom</code></td><td>Numeric</td><td>Fator de zoom (1 = tamanho original)</td></tr>
-<tr><td><code>lTransparent</code></td><td>Logical</td><td>Habilitar desenho de fundo transparente</td></tr>
-<tr><td><code>lStretch</code></td><td>Logical</td><td>Esticar bitmap para ajustar Ã s dimensÃµes do controle</td></tr>
-<tr><td><code>nImgWidth</code></td><td>Numeric</td><td>Largura original do bitmap em pixels</td></tr>
-<tr><td><code>nImgHeight</code></td><td>Numeric</td><td>Altura original do bitmap em pixels</td></tr>
-<tr><td><code>lHasAlpha</code></td><td>Logical</td><td>Se o bitmap possui um canal alfa</td></tr>
-<tr><td><code>aHotAreas</code></td><td>Array</td><td>Array de Ã¡reas clicÃ¡veis no bitmap</td></tr>
+<tr><td><code>hBitmap</code></td><td>Handle</td><td>Handle to the bitmap GDI object</td></tr>
+<tr><td><code>hPalette</code></td><td>Handle</td><td>Handle to the bitmap color palette</td></tr>
+<tr><td><code>cBmpFile</code></td><td>Character</td><td>Bitmap file path on disk</td></tr>
+<tr><td><code>cResName</code></td><td>Character</td><td>Bitmap resource name embedded in the EXE</td></tr>
+<tr><td><code>nZoom</code></td><td>Numeric</td><td>Zoom factor (1 = original size)</td></tr>
+<tr><td><code>lTransparent</code></td><td>Logical</td><td>Enable transparent background drawing</td></tr>
+<tr><td><code>lStretch</code></td><td>Logical</td><td>Stretch bitmap to fit the control dimensions</td></tr>
+<tr><td><code>nImgWidth</code></td><td>Numeric</td><td>Original bitmap width in pixels</td></tr>
+<tr><td><code>nImgHeight</code></td><td>Numeric</td><td>Original bitmap height in pixels</td></tr>
+<tr><td><code>lHasAlpha</code></td><td>Logical</td><td>Whether the bitmap has an alpha channel</td></tr>
+<tr><td><code>aHotAreas</code></td><td>Array</td><td>Array of clickable hot areas on the bitmap</td></tr>
 </tbody>
 </table>
 
@@ -44,24 +44,24 @@ TBitmap Ã© um controle que exibe uma imagem bitmap de um arquivo, recurso ou m
 
 <table>
 <thead>
-<tr><th>MÃ©todo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nW, nH, cRes, cFile, lNoBorder, oWnd, bLClicked, bRClicked, lScroll, lStretch, oCursor, cMsg, lUpdate, bWhen, lPixel, bValid, lDesign )</code></td><td>Criar um novo controle de bitmap</td></tr>
-<tr><td><code>ReDefine( nId, cRes, cFile, oWnd, ... )</code></td><td>Redefinir a partir de um placeholder de recurso de diÃ¡logo</td></tr>
-<tr><td><code>LoadImage( cResName, cBmpFile )</code></td><td>Carregar bitmap de nome de recurso ou arquivo de disco</td></tr>
-<tr><td><code>LoadBMP( cBmpFile )</code></td><td>Carregar um bitmap do disco por nome de arquivo</td></tr>
-<tr><td><code>SetBMP( cResName )</code></td><td>Carregar um bitmap de um nome de recurso</td></tr>
-<tr><td><code>Zoom( nZoom )</code></td><td>Definir nÃ­vel de zoom (1=100%, 2=200%, etc.)</td></tr>
-<tr><td><code>SaveToBmp( cFile )</code></td><td>Salvar o bitmap atual em um arquivo no disco</td></tr>
-<tr><td><code>Paint()</code></td><td>Desenhar o bitmap na superfÃ­cie do controle</td></tr>
-<tr><td><code>Center()</code></td><td>Centralizar o bitmap dentro da Ã¡rea do controle</td></tr>
-<tr><td><code>CopyToClipboard()</code></td><td>Copiar a imagem do bitmap para a Ã¡rea de transferÃªncia</td></tr>
-<tr><td><code>HasAlpha()</code></td><td>Verificar se o bitmap possui um canal alfa</td></tr>
+<tr><td><code>New( nTop, nLeft, nW, nH, cRes, cFile, lNoBorder, oWnd, bLClicked, bRClicked, lScroll, lStretch, oCursor, cMsg, lUpdate, bWhen, lPixel, bValid, lDesign )</code></td><td>Create a new bitmap control</td></tr>
+<tr><td><code>ReDefine( nId, cRes, cFile, oWnd, ... )</code></td><td>Redefine from a dialog resource placeholder</td></tr>
+<tr><td><code>LoadImage( cResName, cBmpFile )</code></td><td>Load bitmap from resource name or disk file</td></tr>
+<tr><td><code>LoadBMP( cBmpFile )</code></td><td>Load a bitmap from disk by filename</td></tr>
+<tr><td><code>SetBMP( cResName )</code></td><td>Load a bitmap from a resource name</td></tr>
+<tr><td><code>Zoom( nZoom )</code></td><td>Set zoom level (1=100%, 2=200%, etc.)</td></tr>
+<tr><td><code>SaveToBmp( cFile )</code></td><td>Save the current bitmap to a file on disk</td></tr>
+<tr><td><code>Paint()</code></td><td>Draw the bitmap onto the control surface</td></tr>
+<tr><td><code>Center()</code></td><td>Center the bitmap within the control area</td></tr>
+<tr><td><code>CopyToClipboard()</code></td><td>Copy bitmap image to the clipboard</td></tr>
+<tr><td><code>HasAlpha()</code></td><td>Check if the bitmap has an alpha channel</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Carregar e Exibir um Bitmap</h2>
+<h2 id="example">Example: Load and Display a Bitmap</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -82,14 +82,14 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>Use a clÃ¡usula <code>BITMAP ... FILE cFile</code> para carregar do disco, ou <code>BITMAP ... RESOURCE cRes</code> para recursos incorporados.</li>
+<li>Use the <code>BITMAP ... FILE cFile</code> clause to load from disk, or <code>BITMAP ... RESOURCE cRes</code> for embedded resources.</li>
 <li>The <code>nWidth</code> and <code>nHeight</code> access methods return the zoomed bitmap dimensions automatically based on the original image size and <code>::nZoom</code>.</li>
-<li>Habilite <code>lScroll</code> para mostrar barras de rolagem quando o bitmap for maior que a Ã¡rea do controle. Use <code>lStretch</code> para ajustar o bitmap ao retÃ¢ngulo do controle. Use <code>lStretch</code> to fit the bitmap to the control rectangle.</li>
-<li>O array <code>aHotAreas</code> pode definir regiÃµes clicÃ¡veis no bitmap para mapas de imagem interativos.</li>
+<li>Enable <code>lScroll</code> to show scrollbars when the bitmap is larger than the control area. Use <code>lStretch</code> to fit the bitmap to the control rectangle.</li>
+<li>The <code>aHotAreas</code> array can define clickable regions on the bitmap for interactive image maps.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tbartabs.html">&larr; tbartabs</a> | <a href="../../pt/utilities/tblock.html">tblock &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

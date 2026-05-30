@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRadMenu - Documentaci&oacute;n FWH</title>
+<title>TRadMenu - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,45 +13,48 @@
 
 <h1>TRadMenu</h1>
 <p class="class-source">Fuente: <code>source/classes/radmenu.prg</code></p>
-<p class="class-hierarchy">Clase independiente (no derivada de TControl)</p>
+<p class="class-hierarchy">Standalone class (not derived from TControl)</p>
 
 <p>
-TRadMenu gestiona un grupo de controles de bot&oacute;n de radio (TRadio) como una unidad l&oacute;gica &uacute;nica con exclusi&oacute;n mutua: seleccionar un bot&oacute;n de radio deselecciona autom&aacute;ticamente los otros. Proporciona una interfaz simplificada para crear, navegar y consultar el estado de un grupo de botones de radio sin gestionar objetos TRadio individuales.
+TRadMenu manages a group of radio button (TRadio) controls as a single logical unit
+with mutual exclusion: selecting one radio button automatically deselects the others.
+It provides a simplified interface to create, navigate, and query the state of a
+radio button group without managing individual TRadio objects.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array de objetos TRadio gestionados por este grupo</td></tr>
-<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloque de c&oacute;digo SET/GET para el &iacute;ndice de opci&oacute;n actual</td></tr>
-<tr><td><code>nOption</code></td><td>Numeric</td><td>&Iacute;ndice de la opci&oacute;n actualmente seleccionada (basado en 1)</td></tr>
-<tr><td><code>bChange</code></td><td>Block</td><td>Bloque de c&oacute;digo evaluado cuando cambia la selecci&oacute;n</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array of TRadio objects managed by this group</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>SET/GET code block for the current option index</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Index of the currently selected option (1-based)</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Code block evaluated when the selection changes</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, acItems, bSetGet, oWnd )</code></td><td>Crear un nuevo grupo de radio con elementos de <code>acItems</code></td></tr>
-<tr><td><code>ReDefine( bSetGet, oWnd, anIDs )</code></td><td>Redefinir desde recurso de di&aacute;logo por IDs de control</td></tr>
-<tr><td><code>SetOption( n )</code></td><td>Establecer program&aacute;ticamente la opci&oacute;n seleccionada</td></tr>
-<tr><td><code>Refresh()</code></td><td>Actualizar la visualizaci&oacute;n de todos los elementos</td></tr>
-<tr><td><code>GoPrev()</code></td><td>Seleccionar la opci&oacute;n anterior (circular)</td></tr>
-<tr><td><code>GoNext()</code></td><td>Seleccionar la siguiente opci&oacute;n (circular)</td></tr>
-<tr><td><code>Enable()</code></td><td>Habilitar todos los botones de radio en el grupo</td></tr>
-<tr><td><code>Disable()</code></td><td>Deshabilitar todos los botones de radio en el grupo</td></tr>
+<tr><td><code>New( nRow, nCol, acItems, bSetGet, oWnd )</code></td><td>Create a new radio group with items from <code>acItems</code></td></tr>
+<tr><td><code>ReDefine( bSetGet, oWnd, anIDs )</code></td><td>Redefine from dialog resource by control IDs</td></tr>
+<tr><td><code>SetOption( n )</code></td><td>Programmatically set the selected option</td></tr>
+<tr><td><code>Refresh()</code></td><td>Refresh the display of all items</td></tr>
+<tr><td><code>GoPrev()</code></td><td>Select the previous option (circular)</td></tr>
+<tr><td><code>GoNext()</code></td><td>Select the next option (circular)</td></tr>
+<tr><td><code>Enable()</code></td><td>Enable all radio buttons in the group</td></tr>
+<tr><td><code>Disable()</code></td><td>Disable all radio buttons in the group</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Grupo de Radio de 3 Opciones</h2>
+<h2 id="example">Example: 3-Option Radio Group</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -73,18 +76,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TRadMenu no hereda de TControl; es un contenedor que posee y gestiona controles TRadio individuales.</li>
-<li>El array <code>acItems</code> contiene las cadenas de aviso para cada bot&oacute;n de radio. Cada aviso puede incluir un ampersand (<code>&amp;</code>) para un acelerador de teclado.</li>
-<li>El bloque <code>bSetGet</code> sigue el patr&oacute;n est&aacute;ndar SET/GET de FiveWin: llamado sin argumento devuelve el valor actual; llamado con un argumento establece el valor.</li>
-<li><code>GoPrev()</code> y <code>GoNext()</code> se envuelven (navegaci&oacute;n circular) al llegar al inicio o final del grupo.</li>
-<li>Use <code>ReDefine()</code> para vincular TRadMenu a controles de radio definidos en un recurso .rc de di&aacute;logo pasando un array de IDs de control que coincidan con el grupo.</li>
+<li>TRadMenu does not inherit from TControl; it is a container that owns and manages individual TRadio controls.</li>
+<li>The <code>acItems</code> array contains the prompt strings for each radio button. Each prompt can include an ampersand (<code>&amp;</code>) for a keyboard accelerator.</li>
+<li>The <code>bSetGet</code> block follows the standard FiveWin SET/GET pattern: called with no argument it returns the current value; called with an argument it sets the value.</li>
+<li><code>GoPrev()</code> and <code>GoNext()</code> wrap around (circular navigation) when reaching the beginning or end of the group.</li>
+<li>Use <code>ReDefine()</code> to bind TRadMenu to radio controls defined in a .rc dialog resource by passing an array of control IDs matching the group.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tradio.html">&larr; tradio</a> | <a href="../../es/reference/transformer.html">transformer &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

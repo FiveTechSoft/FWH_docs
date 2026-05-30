@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTabs - FWH Docs</title>
+<title>TTabs - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,46 +13,46 @@
 
 <h1>TTabs</h1>
 <p class="class-source">Fonte: <code>source/classes/tabs.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TTabs é um controle de barra de abas desenhado de forma personalizada que exibe uma linha ou coluna de abas selecionáveis. Diferentemente de TFolder, TTabs renderiza apenas a faixa de abas em si, sem um contêiner de página integrado. Suporta orientações horizontais (topo/base) e verticais (esquerda/direita), rótulos com bitmaps e navegação por teclado.
+TTabs is a custom-drawn tab bar control that displays a row or column of selectable tabs. Unlike TFolder, TTabs only renders the tab strip itself without an integrated page container. It supports horizontal (top/bottom) and vertical (left/right) orientations, bitmap labels, and keyboard navigation.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aPrompts</code></td><td>Array</td><td>Array de strings de rótulos das abas</td></tr>
-<tr><td><code>nOption</code></td><td>Numérico</td><td>Índice da aba atualmente selecionada (base 1)</td></tr>
-<tr><td><code>nOrientation</code></td><td>Numérico</td><td>Orientação da aba: <code>OR_TOP</code>, <code>OR_BOTTOM</code>, <code>OR_LEFT</code>, <code>OR_RIGHT</code></td></tr>
-<tr><td><code>acBitmaps</code></td><td>Array</td><td>Array de handles de bitmap ou nomes de arquivo para cada aba</td></tr>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of tab label strings</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Index of the currently selected tab (1-based)</td></tr>
+<tr><td><code>nOrientation</code></td><td>Numeric</td><td>Tab orientation: <code>OR_TOP</code>, <code>OR_BOTTOM</code>, <code>OR_LEFT</code>, <code>OR_RIGHT</code></td></tr>
+<tr><td><code>acBitmaps</code></td><td>Array</td><td>Array of bitmap handles or filenames for each tab</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, aPrompts, bAction, oWnd, nOption )</code></td><td>Cria um novo controle de barra de abas</td></tr>
-<tr><td><code>SetOption( n )</code></td><td>Seleciona a aba no índice <code>n</code></td></tr>
-<tr><td><code>AddItem( cPrompt )</code></td><td>Adiciona uma nova aba com o texto de rótulo fornecido</td></tr>
-<tr><td><code>DelItem( nIndex )</code></td><td>Remove a aba no índice especificado</td></tr>
-<tr><td><code>SetTabs( aTabs )</code></td><td>Substitui todas as definições de abas de uma vez</td></tr>
-<tr><td><code>GoTop()</code></td><td>Seleciona a primeira aba</td></tr>
-<tr><td><code>GoLeft()</code></td><td>Seleciona a aba à esquerda</td></tr>
-<tr><td><code>GoBottom()</code></td><td>Seleciona a última aba</td></tr>
-<tr><td><code>GoRight()</code></td><td>Seleciona a aba à direita</td></tr>
+<tr><td><code>New( nTop, nLeft, aPrompts, bAction, oWnd, nOption )</code></td><td>Create a new tab bar control</td></tr>
+<tr><td><code>SetOption( n )</code></td><td>Select the tab at index <code>n</code></td></tr>
+<tr><td><code>AddItem( cPrompt )</code></td><td>Add a new tab with the given prompt text</td></tr>
+<tr><td><code>DelItem( nIndex )</code></td><td>Remove the tab at the specified index</td></tr>
+<tr><td><code>SetTabs( aTabs )</code></td><td>Replace all tab definitions at once</td></tr>
+<tr><td><code>GoTop()</code></td><td>Select the first tab</td></tr>
+<tr><td><code>GoLeft()</code></td><td>Select the tab to the left</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Select the last tab</td></tr>
+<tr><td><code>GoRight()</code></td><td>Select the tab to the right</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Barra com 3 Abas</h2>
+<h2 id="example">Example: 3-Tab Bar</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -69,17 +69,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TTabs é uma faixa de abas independente. Combine-a com TPages ou um mecanismo de troca de diálogos para construir uma interface completa com abas.</li>
-<li>As constantes de orientação são <code>OR_TOP</code> (padrão), <code>OR_BOTTOM</code>, <code>OR_LEFT</code> e <code>OR_RIGHT</code>.</li>
-<li>Use <code>acBitmaps</code> para atribuir imagens bitmap a abas individuais. Os bitmaps podem ser especificados como nomes de arquivo ou handles de recurso.</li>
-<li>O bloco de código <code>bAction</code> é avaliado toda vez que uma aba diferente é selecionada.</li>
+<li>TTabs is a standalone tab strip. Pair it with TPages or a dialog-switching mechanism to build a full tabbed interface.</li>
+<li>Orientation constants are <code>OR_TOP</code> (default), <code>OR_BOTTOM</code>, <code>OR_LEFT</code>, and <code>OR_RIGHT</code>.</li>
+<li>Use <code>acBitmaps</code> to assign bitmap images to individual tabs. Bitmaps can be specified as file names or resource handles.</li>
+<li>The <code>bAction</code> code block is evaluated each time a different tab is selected.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/data/ttable.html">&larr; ttable</a> | <a href="../../pt/ui/ttagcloud.html">ttagcloud &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

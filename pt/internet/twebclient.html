@@ -15,42 +15,42 @@
 <p class="class-source">Fonte: <code>source/classes/twebclie.prg</code></p>
 
 <p>
-TWebClient é a classe de cliente HTTP leve do FiveWin, construída diretamente sobre
-<a href="../../pt/internet/tsocket.html">TSocket</a>. Ela fornece uma interface simples para
-conectar a servidores web, buscar páginas e processar respostas HTTP. Para funcionalidades
-HTTP mais avançadas (HTTPS, POST com JSON, cabeçalhos personalizados), considere usar
-a biblioteca <code>hb_curl</code> diretamente ou as classes TOpenAI/AI como referência.
+TWebClient is FiveWin's lightweight HTTP client class, built directly on top of
+<a href="../../pt/internet/tsocket.html">TSocket</a>. It provides a simple interface for
+connecting to web servers, fetching pages, and processing HTTP responses. For more
+advanced HTTP features (HTTPS, POST with JSON, custom headers), consider using
+the <code>hb_curl</code> library directly or the TOpenAI/AI classes as reference.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oSocket</code></td><td>TSocket</td><td>Socket TCP subjacente para a conexão HTTP</td></tr>
-<tr><td><code>bOnConnect</code></td><td>Block</td><td>Callback executado quando a conexão com o servidor é estabelecida</td></tr>
-<tr><td><code>bOnRead</code></td><td>Block</td><td>Callback executado quando dados chegam do servidor</td></tr>
+<tr><td><code>oSocket</code></td><td>TSocket</td><td>Underlying TCP socket for the HTTP connection</td></tr>
+<tr><td><code>bOnConnect</code></td><td>Block</td><td>Callback executed when the connection to the server is established</td></tr>
+<tr><td><code>bOnRead</code></td><td>Block</td><td>Callback executed when data arrives from the server</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Criar um novo TWebClient. Cria e configura o TSocket subjacente com handlers padrão de leitura/conexão/fechamento.</td></tr>
-<tr><td><code>Connect( cIPAddress )</code></td><td>Conectar a um servidor web. Aceita hostname (ex.: "example.com") ou endereço IP. Resolve hostnames automaticamente.</td></tr>
-<tr><td><code>GetPage( cPageName )</code></td><td>Enviar uma solicitação HTTP GET para o caminho de página especificado. Suporta tanto URLs completas (http://...) quanto caminhos relativos.</td></tr>
-<tr><td><code>OnConnect()</code></td><td>Chamado internamente quando a conexão é estabelecida. Dispara o callback bOnConnect se definido.</td></tr>
-<tr><td><code>OnRead( cData )</code></td><td>Chamado internamente quando dados são recebidos. Dispara o callback bOnRead com os dados recebidos.</td></tr>
+<tr><td><code>New()</code></td><td>Create a new TWebClient. Creates and configures the underlying TSocket with default read/connect/close handlers.</td></tr>
+<tr><td><code>Connect( cIPAddress )</code></td><td>Connect to a web server. Accepts hostname (e.g. "example.com") or IP address. Resolves hostnames automatically.</td></tr>
+<tr><td><code>GetPage( cPageName )</code></td><td>Send an HTTP GET request for the specified page path. Supports both full URLs (http://...) and relative paths.</td></tr>
+<tr><td><code>OnConnect()</code></td><td>Called internally when the connection is established. Triggers the bOnConnect callback if set.</td></tr>
+<tr><td><code>OnRead( cData )</code></td><td>Called internally when data is received. Triggers the bOnRead callback with the received data.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example-fetch">Exemplo: Buscar uma Página Web</h2>
+<h2 id="example-fetch">Example: Fetch a Web Page</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -80,7 +80,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-rest">Exemplo: Chamada de API REST</h2>
+<h2 id="example-rest">Example: REST API Call</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -120,18 +120,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="tips">Notas</h2>
+<h2 id="tips">Notes</h2>
 
 <ul>
-<li>TWebClient é um encapsulamento mínimo em torno de TSocket. Ele não analisa respostas HTTP nem lida com redirecionamentos automaticamente.</li>
-<li>O método <code>GetPage()</code> envia uma solicitação HTTP GET bruta. Quando uma URL completa começando com "http://" é fornecida, ele analisa o hostname e o caminho da URL e usa HTTP/1.1 com um cabeçalho Host. Caso contrário, envia uma solicitação HTTP/1.0 simples apenas com o caminho.</li>
-<li>Para conexões HTTPS, use a biblioteca <code>hb_curl</code> diretamente em vez de TWebClient, pois TSocket não suporta TLS/SSL nativamente.</li>
-<li>A classe reinicializa automaticamente o socket após uma conexão ser fechada (o handler <code>bClose</code> recria o socket).</li>
-<li>Como TWebClient usa eventos de socket assíncronos, <code>SysRefresh()</code> deve ser chamado para processar dados recebidos em aplicações modo console.</li>
+<li>TWebClient is a minimal wrapper around TSocket. It does not parse HTTP responses or handle redirects automatically.</li>
+<li>The <code>GetPage()</code> method sends a raw HTTP GET request. When a full URL starting with "http://" is provided, it parses the hostname and path from the URL and uses HTTP/1.1 with a Host header. Otherwise, it sends a simple HTTP/1.0 request with just the path.</li>
+<li>For HTTPS connections, use the <code>hb_curl</code> library directly instead of TWebClient, as TSocket does not support TLS/SSL natively.</li>
+<li>The class auto-reinitializes the socket after a connection is closed (<code>bClose</code> handler recreates the socket).</li>
+<li>Since TWebClient uses async socket events, <code>SysRefresh()</code> must be called to process incoming data in console-mode applications.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/twebcam.html">&larr; twebcam</a> | <a href="../../pt/internet/twebserver.html">twebserver &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

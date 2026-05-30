@@ -4,13 +4,13 @@
 
 <h1>TDialog</h1>
 <p>
-  <span class="badge badge-blue">Classe Base</span>
-  <span class="badge badge-purple">Herda de TWindow</span>
+  <span class="badge badge-blue">Core Class</span>
+  <span class="badge badge-purple">Inherits TWindow</span>
   <span class="source-badge">source/classes/dialog.prg</span>
 </p>
-<p>TDialog é a classe usada para criar caixas de diálogo modais e não-modais no FiveWin. Ela herda de <a href="twindow.html">TWindow</a> e adiciona comportamentos específicos de diálogos: ativação modal/não-modal, criação baseada em recursos, seleção de sistema de coordenadas (texto, pixel, pixel real), fundos transparentes de controles, suporte a modo escuro e um ciclo de vida estruturado com fases <code>ON INIT</code> / <code>VALID</code>.</p>
+<p>TDialog is the class used to create modal and modeless dialog boxes in FiveWin. It inherits from <a href="twindow.html">TWindow</a> and adds dialog-specific behavior: modal/modeless activation, resource-based creation, coordinate system selection (text, pixel, true-pixel), transparent control backgrounds, dark mode support, and a structured lifecycle with <code>ON INIT</code> / <code>VALID</code> phases.</p>
 
-<h2 id="inheritance">Herança</h2>
+<h2 id="inheritance">Inheritance</h2>
 <div class="mermaid">
 classDiagram
     class TWindow {
@@ -39,57 +39,73 @@ classDiagram
     TDialog : +oMonitor
 </div>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 <table>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
-<tr><td><code>lModal</code></td><td>Logical</td><td>nil</td><td>Se o diálogo executa como modal (<code>.T.</code>) ou não-modal (<code>.F.</code>). Definido durante <code>Activate()</code>.</td></tr>
-<tr><td><code>nResult</code></td><td>Numeric</td><td>0</td><td>Código de resultado do diálogo. Tipicamente <code>IDOK</code> (1) ou <code>IDCANCEL</code> (2).</td></tr>
-<tr><td><code>lCentered</code></td><td>Logical</td><td>nil</td><td>Centralizar o diálogo na tela quando ativado.</td></tr>
-<tr><td><code>lCenterInWnd</code></td><td>Logical</td><td>nil</td><td>Centralizar o diálogo dentro da janela pai em vez da tela.</td></tr>
-<tr><td><code>lTruePixel</code></td><td>Logical</td><td>.F.</td><td>Usar coordenadas em pixels reais (mapeamento 1:1). Veja <a href="#coordinates">Sistemas de Coordenadas</a>.</td></tr>
-<tr><td><code>lTransparent</code></td><td>Logical</td><td>.F.</td><td>Habilitar fundos transparentes nos controles (necessário para pincéis gradiente/bitmap).</td></tr>
-<tr><td><code>lResize16</code></td><td>Logical</td><td>.F.</td><td>Redimensionar diálogos de recurso 32-bit para corresponder a proporções 16-bit.</td></tr>
-<tr><td><code>cResName</code></td><td>Character</td><td>nil</td><td>Nome do recurso para diálogos baseados em recurso.</td></tr>
-<tr><td><code>hResources</code></td><td>Numeric</td><td>GetResources()</td><td>Handle para a DLL/EXE de recursos contendo templates de diálogo.</td></tr>
-<tr><td><code>bStart</code></td><td>Block</td><td>nil</td><td>Avaliado uma vez no primeiro <code>Display()</code>. Limpa-se automaticamente após execução.</td></tr>
-<tr><td><code>lMdiChild</code></td><td>Logical</td><td>.F.</td><td>Exibir o diálogo como uma janela filha MDI.</td></tr>
-<tr><td><code>oMonitor</code></td><td>Object</td><td>nil</td><td>Monitor alvo para posicionamento em múltiplas telas (somente leitura após Activate).</td></tr>
-<tr><td><code>aDarkColors</code></td><td>Array</td><td>nil</td><td>Array <code>{ nClrText, nClrBack }</code> para estilização em modo escuro.</td></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>lModal</code></td><td>Logical</td><td>nil</td><td>Whether the dialog runs as modal (<code>.T.</code>) or modeless (<code>.F.</code>). Set during <code>Activate()</code>.</td></tr>
+<tr><td><code>nResult</code></td><td>Numeric</td><td>0</td><td>Dialog result code. Typically <code>IDOK</code> (1) or <code>IDCANCEL</code> (2).</td></tr>
+<tr><td><code>lCentered</code></td><td>Logical</td><td>nil</td><td>Center the dialog on screen when activated.</td></tr>
+<tr><td><code>lCenterInWnd</code></td><td>Logical</td><td>nil</td><td>Center the dialog within its parent window instead of the screen.</td></tr>
+<tr><td><code>lTruePixel</code></td><td>Logical</td><td>.F.</td><td>Use true pixel coordinates (1:1 mapping). See <a href="#coordinates">Coordinate Systems</a>.</td></tr>
+<tr><td><code>lTransparent</code></td><td>Logical</td><td>.F.</td><td>Enable transparent control backgrounds (required for gradient/bitmap brushes).</td></tr>
+<tr><td><code>lResize16</code></td><td>Logical</td><td>.F.</td><td>Resize 32-bit resource dialogs to match 16-bit proportions.</td></tr>
+<tr><td><code>cResName</code></td><td>Character</td><td>nil</td><td>Resource name for resource-based dialogs.</td></tr>
+<tr><td><code>hResources</code></td><td>Numeric</td><td>GetResources()</td><td>Handle to the resource DLL/EXE containing dialog templates.</td></tr>
+<tr><td><code>bStart</code></td><td>Block</td><td>nil</td><td>Evaluated once on first <code>Display()</code>. Auto-clears after execution.</td></tr>
+<tr><td><code>lMdiChild</code></td><td>Logical</td><td>.F.</td><td>Show the dialog as an MDI child window.</td></tr>
+<tr><td><code>oMonitor</code></td><td>Object</td><td>nil</td><td>Target monitor for multi-display positioning (read-only after Activate).</td></tr>
+<tr><td><code>aDarkColors</code></td><td>Array</td><td>nil</td><td>Array <code>{ nClrText, nClrBack }</code> for dark mode styling.</td></tr>
 </table>
 
-<h2 id="methods">Principais Métodos</h2>
+<h2 id="methods">Key Methods</h2>
 
-<h3 id="new-method">New() &mdash; Construtor</h3>
+<h3 id="new-method">New() &mdash; Constructor</h3>
 <pre><code>METHOD New( nTop, nLeft, nBottom, nRight, cCaption, cResName,
       hResources, lVbx, nStyle, nClrText, nClrBack, oBrush, oWnd,
       lPixels, oIco, oFont, nHelpId, nWidth, nHeight, lTransparent,
       aGradColors, cVarName, lUnicode, lTruePixel, lResizable )</code></pre>
-<p>Cria um objeto TDialog. Se <code>cResName</code> for fornecido, o layout do diálogo vem de um recurso compilado. Caso contrário, as coordenadas definem o tamanho do diálogo. Quando <code>nWidth</code> e <code>nHeight</code> são diferentes de zero, eles substituem <code>nBottom/nRight</code> e forçam o modo pixel.</p>
+<p>Creates a TDialog object. If <code>cResName</code> is provided, the dialog layout comes from a compiled resource. Otherwise coordinates define the dialog size. When <code>nWidth</code> and <code>nHeight</code> are non-zero, they override <code>nBottom/nRight</code> and force pixel mode.</p>
 
-<h3 id="define-method">Define() &mdash; Construtor Alternativo</h3>
+<h3 id="define-method">Define() &mdash; Alternative Constructor</h3>
 <pre><code>METHOD Define( nTop, nLeft, nBottom, nRight, cCaption, nStyle,
       lVbx, nClrText, nClrBack, oBrush )</code></pre>
-<p>Construtor mínimo usado principalmente pelo designer visual. Cria o objeto com menos parâmetros.</p>
+<p>Minimal constructor used primarily by the visual designer. Creates the object with fewer parameters.</p>
 
 <h3 id="activate-method">Activate()</h3>
 <pre><code>METHOD Activate( bLClicked, bMoved, bPainted, lCentered,
       bValid, lModal, bInit, bRClicked, bWhen, lResize16,
       lCenterInWnd, lMdiChild, oMdiChild, bMdiSetup, oMonitor )</code></pre>
-<p>Cria o diálogo Win32 e entra no loop de mensagens. Para diálogos modais (padrão), esta chamada bloqueia até que <code>End()</code> seja chamado. Para diálogos não-modais (<code>lModal := .F.</code> ou cláusula <code>NOMODAL</code>), retorna imediatamente.</p>
+<p>Creates the Win32 dialog and enters the message loop. For modal dialogs (default), this call blocks until <code>End()</code> is called. For modeless dialogs (<code>lModal := .F.</code> or <code>NOMODAL</code> clause), it returns immediately.</p>
 
 <h3 id="end-method">End()</h3>
 <pre><code>METHOD End( nResult )</code></pre>
-<p>Fecha o diálogo. Se <code>bValid</code> estiver definido, ele é avaliado primeiro; se retornar <code>.F.</code>, o diálogo permanece aberto. O parâmetro opcional <code>nResult</code> define <code>::nResult</code> antes de fechar.</p>
+<p>Closes the dialog. If <code>bValid</code> is set, it is evaluated first; if it returns <code>.F.</code>, the dialog stays open. The optional <code>nResult</code> parameter sets <code>::nResult</code> before closing.</p>
 
 <h3 id="ctochar-method">cToChar()</h3>
 <pre><code>METHOD cToChar( hActiveWnd )</code></pre>
-<p>Gera uma representação em string do diálogo e todos os seus controles &mdash; usado pelo designer visual para serializar um diálogo em código-fonte.</p>
+<p>Generates a character string representation of the dialog and all its controls &mdash; used by the visual designer to serialize a dialog to source code.</p>
 
 <h3 id="setdarkmode-method">SetDarkMode()</h3>
 <pre><code>METHOD SetDarkMode( nClrText, nClrBack )</code></pre>
-<p>Habilita a estilização em modo escuro para o diálogo e seus controles filhos.</p>
+<p>Enables dark mode styling for the dialog and its child controls.</p>
 
-<h2 id="commands">Comandos: DEFINE DIALOG / ACTIVATE DIALOG</h2>
+<h3 id="defcontrol">DefControl()</h3>
+<pre><code>METHOD DefControl( oCtrl )</code></pre>
+<p>Register a control as the default focus target for the dialog. When the dialog is activated, this control receives the initial focus.</p>
+
+<h3 id="initiate">Initiate()</h3>
+<pre><code>METHOD Initiate( hDlg )</code></pre>
+<p>Called internally during dialog creation to subclass the Win32 dialog procedure, distribute child controls via <code>REDEFINE</code>, evaluate <code>bInit</code>, and apply dark mode colors. Called automatically during <code>Activate()</code>.</p>
+
+<h3 id="command">Command()</h3>
+<pre><code>METHOD Command( nCtrlId, nNotifyCode )</code></pre>
+<p>Handles <code>WM_COMMAND</code> messages from child controls. Routes button clicks, menu selections, and control notifications to the appropriate event handlers.</p>
+
+<h3 id="ctlcolor">CtlColor()</h3>
+<pre><code>METHOD CtlColor( hDC, oCtrl, nCtlType )</code></pre>
+<p>Handles <code>WM_CTLCOLOR</code> messages to set text and background colors for child controls. Called automatically during dialog painting.</p>
+
+<h2 id="commands">Commands: DEFINE DIALOG / ACTIVATE DIALOG</h2>
 
 <h3 id="define-dialog">DEFINE DIALOG</h3>
 <pre><code>DEFINE DIALOG oDlg ;
@@ -125,8 +141,8 @@ classDiagram
    [ WHEN bWhen ] ;
    [ RESIZE16 ]</code></pre>
 
-<h2 id="lifecycle">Ciclo de Vida do Diálogo</h2>
-<p>Entender o ciclo de vida do diálogo é fundamental para inicialização e limpeza corretas:</p>
+<h2 id="lifecycle">Dialog Lifecycle</h2>
+<p>Understanding the dialog lifecycle is critical for correct initialization and cleanup:</p>
 <div class="mermaid">
 flowchart TD
     A["DEFINE DIALOG<br/>(TDialog:New)"] --> B["Add Controls<br/>@ ... GET, SAY, BUTTON, etc."]
@@ -140,19 +156,19 @@ flowchart TD
     H -->|"VALID returns .T."| I["Destroy controls<br/>DestroyWindow"]
     I --> J["Activate() returns<br/>nResult available"]
 </div>
-<p>Importante: os controles devem ser criados <strong>entre</strong> <code>DEFINE DIALOG</code> e <code>ACTIVATE DIALOG</code>. O bloco <code>ON INIT</code> dispara depois que a janela do diálogo existe (tem um <code>hWnd</code> válido), tornando-o o lugar certo para inicialização que precisa do handle da janela.</p>
+<p>Important: controls must be created <strong>between</strong> <code>DEFINE DIALOG</code> and <code>ACTIVATE DIALOG</code>. The <code>ON INIT</code> block fires after the dialog window exists (has a valid <code>hWnd</code>), making it the right place for initialization that needs the window handle.</p>
 
-<h2 id="coordinates">Sistemas de Coordenadas</h2>
-<p>Os diálogos do FiveWin suportam três sistemas de coordenadas. Escolher o correto é essencial para um layout adequado em diferentes configurações de DPI:</p>
+<h2 id="coordinates">Coordinate Systems</h2>
+<p>FiveWin dialogs support three coordinate systems. Choosing the right one is essential for correct layout across different DPI settings:</p>
 
 <table>
-<tr><th>Sistema</th><th>Cláusula</th><th>Unidade</th><th>Quando Usar</th></tr>
-<tr><td><strong>Coordenadas de texto</strong></td><td>(padrão)</td><td>Células de caractere: 1 linha ~ 16px, 1 coluna ~ 8px (a 96 DPI)</td><td>Código legado, diálogos simples. Coordenadas como <code>@ 1, 2</code> posicionam controles em posições de grade de texto.</td></tr>
-<tr><td><strong>PIXEL</strong></td><td><code>PIXEL</code></td><td>Unidades de diálogo (DLUs), não pixels reais. Escaladas pela fonte do sistema.</td><td>Compatibilidade com editores de recurso. Ainda não é 1:1 com pixels da tela.</td></tr>
-<tr><td><strong>TRUEPIXEL</strong></td><td><code>TRUEPIXEL</code></td><td>Pixels reais da tela (mapeamento 1:1)</td><td>Aplicações modernas. Controle total sobre posicionamento exato. Recomendado para código novo.</td></tr>
+<tr><th>System</th><th>Clause</th><th>Unit</th><th>When to Use</th></tr>
+<tr><td><strong>Text coordinates</strong></td><td>(default)</td><td>Character cells: 1 row ~ 16px, 1 col ~ 8px (at 96 DPI)</td><td>Legacy code, simple dialogs. Coordinates like <code>@ 1, 2</code> place controls in text grid positions.</td></tr>
+<tr><td><strong>PIXEL</strong></td><td><code>PIXEL</code></td><td>Dialog units (DLUs), not true pixels. Scaled by the system font.</td><td>Resource-editor compatibility. Still not 1:1 with screen pixels.</td></tr>
+<tr><td><strong>TRUEPIXEL</strong></td><td><code>TRUEPIXEL</code></td><td>Actual screen pixels (1:1 mapping)</td><td>Modern applications. Full control over exact positioning. Recommended for new code.</td></tr>
 </table>
 
-<h3 id="coord-comparison">Comparação de Coordenadas</h3>
+<h3 id="coord-comparison">Coordinate Comparison</h3>
 <pre><code>// Text coordinates (default) - relative to character grid
 DEFINE DIALOG oDlg TITLE "Text Coords" ;
    FROM 2, 5 TO 20, 60
@@ -171,9 +187,9 @@ DEFINE DIALOG oDlg TITLE "True Pixels" ;
 
 ACTIVATE DIALOG oDlg CENTER</code></pre>
 
-<p><strong>Dica:</strong> No Windows 10/11 com telas de alto DPI, as coordenadas de texto e o modo PIXEL podem produzir resultados inesperados. Use <code>TRUEPIXEL</code> para layouts com precisão de pixel. Você também pode defini-lo globalmente com <code>FW_SetTruePixel( .T. )</code> ou no nível da classe com <code>TDialog():lClsTruePixel := .T.</code>.</p>
+<p><strong>Tip:</strong> On Windows 10/11 with high-DPI displays, text coordinates and PIXEL mode may produce unexpected results. Use <code>TRUEPIXEL</code> for pixel-perfect layouts. You can also set it globally with <code>FW_SetTruePixel( .T. )</code> or at the class level with <code>TDialog():lClsTruePixel := .T.</code>.</p>
 
-<h2 id="example-modal">Exemplo: Diálogo Modal com GETs e Botões</h2>
+<h2 id="example-modal">Example: Modal Dialog with GETs and Buttons</h2>
 <pre><code>#include "FiveWin.ch"
 
 function EditCustomer( oWnd )
@@ -227,8 +243,8 @@ function EditCustomer( oWnd )
 
 return nResult</code></pre>
 
-<h2 id="example-modeless">Exemplo: Diálogo Não-Modal</h2>
-<p>Um diálogo não-modal não bloqueia o código chamador. O usuário pode interagir tanto com o diálogo quanto com outras janelas. Use <code>NOMODAL</code> ou <code>NOWAIT</code>:</p>
+<h2 id="example-modeless">Example: Modeless Dialog</h2>
+<p>A modeless dialog does not block the calling code. The user can interact with both the dialog and other windows. Use <code>NOMODAL</code> or <code>NOWAIT</code>:</p>
 <pre><code>#include "FiveWin.ch"
 
 static oDlgFind   // keep reference alive!
@@ -266,8 +282,8 @@ static function DoSearch( cSearch )
    MsgInfo( "Searching for: " + AllTrim( cSearch ) )
 return nil</code></pre>
 
-<h2 id="resource-dialogs">Diálogos Baseados em Recurso</h2>
-<p>Diálogos podem ser carregados a partir de recursos <code>.RC</code> compilados (embutidos no EXE ou em uma DLL de recursos). Isso é útil para editores visuais ou ao migrar de aplicações C/C++:</p>
+<h2 id="resource-dialogs">Resource-Based Dialogs</h2>
+<p>Dialogs can be loaded from compiled <code>.RC</code> resources (embedded in the EXE or a resource DLL). This is useful for visual editors or when migrating from C/C++ applications:</p>
 <pre><code>#include "FiveWin.ch"
 
 function ShowAbout()
@@ -281,16 +297,16 @@ function ShowAbout()
    ACTIVATE DIALOG oDlg CENTER
 
 return nil</code></pre>
-<p>Use os comandos <code>REDEFINE</code> (em vez de <code>@</code>) para vincular objetos FiveWin a controles já definidos no template de recurso pelos seus IDs numéricos.</p>
+<p>Use <code>REDEFINE</code> commands (instead of <code>@</code>) to bind FiveWin objects to controls already defined in the resource template by their numeric IDs.</p>
 
-<h2 id="gradient">Fundos Gradientes e Transparentes</h2>
-<p>Fundos gradientes requerem <code>TRANSPARENT</code> para que os controles filhos pintem corretamente sobre o gradiente:</p>
+<h2 id="gradient">Gradient and Transparent Backgrounds</h2>
+<p>Gradient backgrounds require <code>TRANSPARENT</code> so child controls paint correctly over the gradient:</p>
 <pre><code>DEFINE DIALOG oDlg TITLE "Gradient Dialog" ;
    SIZE 500, 350 TRUEPIXEL TRANSPARENT ;
    GRADIENT { { 0.5, nRGB(30,60,120), nRGB(15,30,60) }, ;
               { 0.5, nRGB(15,30,60),  nRGB(5,10,20) } }</code></pre>
 
-<h2 id="dialog-flow">Fluxo Modal vs Não-Modal</h2>
+<h2 id="dialog-flow">Modal vs Modeless Flow</h2>
 <div class="mermaid">
 flowchart LR
     subgraph Modal
@@ -305,24 +321,50 @@ flowchart LR
     end
 </div>
 
-<h2 id="tips">Dicas de Uso</h2>
+<h2 id="tips">Usage Tips</h2>
 <ul>
-<li><strong>Sempre use <code>CENTER</code></strong> a menos que tenha um motivo específico para posicionar o diálogo manualmente. Posições fixas em pixels quebram em diferentes resoluções de tela.</li>
-<li><strong>Mantenha referências de diálogos não-modais em variáveis <code>static</code></strong> para evitar que o coletor de lixo os destrua.</li>
-<li><strong>Use <code>ON INIT</code></strong> para código que precisa que a janela do diálogo exista (definir foco, popular XBrowse, chamar API Win32). <em>Não</em> confie no código entre <code>DEFINE</code> e <code>ACTIVATE</code> para isso.</li>
-<li><strong><code>VALID</code> dispara a cada tentativa de fechamento</strong>, incluindo o botão X da barra de título e pressionar Escape. Retorne <code>.T.</code> para permitir o fechamento, <code>.F.</code> para impedi-lo.</li>
-<li><strong>Modo escuro</strong> &mdash; Chame <code>oDlg:SetDarkMode( nClrText, nClrBack )</code> no bloco <code>ON INIT</code> para um diálogo com tema escuro.</li>
-<li><strong>Diálogos redimensionáveis</strong> &mdash; Use a cláusula <code>RESIZABLE</code>. Combine com ancoragem de controles (<code>AdjClient()</code>, <code>AdjTop()</code>) para redimensionar automaticamente os controles filhos.</li>
+<li><strong>Always use <code>CENTER</code></strong> unless you have a specific reason to position the dialog manually. Hardcoded pixel positions break on different screen resolutions.</li>
+<li><strong>Keep modeless dialog references in <code>static</code> variables</strong> to prevent the garbage collector from destroying them.</li>
+<li><strong>Use <code>ON INIT</code></strong> for code that needs the dialog window to exist (setting focus, populating XBrowse, calling Win32 API). Do <em>not</em> rely on code between <code>DEFINE</code> and <code>ACTIVATE</code> for this.</li>
+<li><strong><code>VALID</code> fires on every close attempt</strong>, including the title-bar X button and pressing Escape. Return <code>.T.</code> to allow closing, <code>.F.</code> to prevent it.</li>
+<li><strong>Dark mode</strong> &mdash; Call <code>oDlg:SetDarkMode( nClrText, nClrBack )</code> in the <code>ON INIT</code> block for a dark-themed dialog.</li>
+<li><strong>Resizable dialogs</strong> &mdash; Use the <code>RESIZABLE</code> clause. Combine with control anchoring (<code>AdjClient()</code>, <code>AdjTop()</code>) to auto-resize child controls.</li>
 </ul>
+
+<h2 id="dark-mode-api">FW_SetDarkMode &mdash; Global Dark Theme</h2>
+<p>FiveWin provides a global dark mode function that automatically themes all new and existing dialogs. Call <code>FW_SetDarkMode()</code> once to enable dark styling across the entire application:</p>
+
+<pre><code>// Enable with default colors
+FW_SetDarkMode( .T. )
+
+// Enable with custom colors
+FW_SetDarkMode( .T., nClrText, nClrBack )
+
+// Disable
+FW_SetDarkMode( .F. )
+
+// Query current state
+lIsDark := FW_SetDarkMode()
+</code></pre>
+
+<p>When enabled:
+<ul>
+<li>All new dialogs are automatically themed in <code>Initiate()</code> using the configured dark colors.</li>
+<li>Existing open windows are themed immediately.</li>
+<li>Child controls inherit the dark colors automatically via <code>WM_CTLCOLOR</code> handling.</li>
+<li>The <code>aDarkColors</code> DATA member stores the <code>{ nClrText, nClrBack }</code> pair for each dialog.</li>
+<li>Individual dialogs can override the global theme using <code>oDlg:SetDarkMode( nClrT, nClrP )</code> in <code>ON INIT</code>.</li>
+</ul>
+</p>
 
 <h2 id="see-also">Veja Também</h2>
 <ul>
-<li><a href="twindow.html">TWindow</a> &mdash; Classe pai com métodos e DATA compartilhados</li>
-<li><a href="tcontrol.html">TControl</a> &mdash; Classe base para todos os controles colocados dentro de diálogos</li>
-<li><a href="../../pt/ui/tget.html">TGet</a> &mdash; Campos de entrada comumente usados em diálogos</li>
-<li><a href="../../pt/ui/tbutton.html">TButton</a> &mdash; Controles de botão</li>
+<li><a href="twindow.html">TWindow</a> &mdash; Parent class with shared methods and DATA</li>
+<li><a href="tcontrol.html">TControl</a> &mdash; Base class for all controls placed inside dialogs</li>
+<li><a href="../../pt/ui/tget.html">TGet</a> &mdash; Input fields commonly used in dialogs</li>
+<li><a href="../../pt/ui/tbutton.html">TButton</a> &mdash; Button controls</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

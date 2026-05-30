@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TSkin - FWH Docs</title>
+<title>TSkin - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,54 +13,54 @@
 
 <h1>TSkin</h1>
 <p class="class-source">Fonte: <code>source/classes/skin.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TSkin aplica uma pele personalizada baseada em bitmap a uma janela, substituindo a barra de título, bordas e botões de legenda padrão do Windows por imagens estilizadas. Carrega 11 bitmaps componentes de uma pasta de pele (cantos, bordas, botões fechar/maximizar/minimizar) e lida com teste de hit, arrasto e redimensionamento da janela. A função de conveniência <code>SKIN()</code> fornece ativação em uma linha.
+TSkin applies a custom bitmap-based skin to a window, replacing the standard Windows title bar, borders and caption buttons with styled images. It loads 11 component bitmaps from a skin folder (corner pieces, edge tiles, close/maximize/minimize buttons) and handles hit-testing, window dragging and resizing. A convenience function <code>SKIN()</code> provides one-line activation.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aBmp</code></td><td>Array</td><td>Array de 11 objetos TBitmap formando a pele: cantos (1-3,5-7), bordas (4,8), botões (9-11)</td></tr>
-<tr><td><code>cSkin</code></td><td>Caractere</td><td>Caminho para a pasta de pele contendo arquivos w01-w12, close, max, min .bmp</td></tr>
-<tr><td><code>nTrans</code></td><td>Numérico</td><td>Nível de transparência da janela (0-255)</td></tr>
-<tr><td><code>lReSize</code></td><td>Lógico</td><td>Habilitar redimensionamento de janela arrastando bordas/cantos da pele</td></tr>
-<tr><td><code>nTextColor</code></td><td>Numérico</td><td>Cor do texto da barra de título</td></tr>
+<tr><td><code>aBmp</code></td><td>Array</td><td>Array of 11 TBitmap objects forming the skin: corners (1-3,5-7), edges (4,8), buttons (9-11)</td></tr>
+<tr><td><code>cSkin</code></td><td>Character</td><td>Path to the skin folder containing w01-w12, close, max, min .bmp files</td></tr>
+<tr><td><code>nTrans</code></td><td>Numeric</td><td>Window transparency level (0-255)</td></tr>
+<tr><td><code>lReSize</code></td><td>Logical</td><td>Enable window resizing by dragging skin edges/corners</td></tr>
+<tr><td><code>nTextColor</code></td><td>Numeric</td><td>Color of the title bar text</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cSkin, nTrans, lReSize, nTextColor, nTextTop )</code></td><td>Criar uma sobreposição de pele. Carrega todos os 11 componentes bitmap da pasta de pele</td></tr>
-<tr><td><code>Update()</code></td><td>Reposicionar e redesenhar todos os elementos da pele para corresponder ao tamanho e posição atual da janela</td></tr>
-<tr><td><code>Position( oBmp, nTop, nLeft, nWidth, nHeight )</code></td><td>Posicionar um bitmap da pele nas coordenadas e dimensões fornecidas</td></tr>
-<tr><td><code>Transparent( nTrans )</code></td><td>Ajustar o nível de transparência da pele</td></tr>
-<tr><td><code>End()</code></td><td>Limpar e remover a pele</td></tr>
+<tr><td><code>New( oWnd, cSkin, nTrans, lReSize, nTextColor, nTextTop )</code></td><td>Create a skin overlay. Loads all 11 bitmap components from the skin folder</td></tr>
+<tr><td><code>Update()</code></td><td>Reposition and redraw all skin elements to match the current window size and position</td></tr>
+<tr><td><code>Position( oBmp, nTop, nLeft, nWidth, nHeight )</code></td><td>Position a skin bitmap at the given coordinates and dimensions</td></tr>
+<tr><td><code>Transparent( nTrans )</code></td><td>Adjust the transparency level of the skin</td></tr>
+<tr><td><code>End()</code></td><td>Clean up and remove the skin</td></tr>
 </tbody>
 </table>
 
-<h2 id="skin-function">Função SKIN()</h2>
+<h2 id="skin-function">SKIN() Function</h2>
 
 <table>
 <thead>
-<tr><th>Sintaxe</th><th>Descrição</th></tr>
+<tr><th>Syntax</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>SKIN( oWnd, cSkinFolder )</code></td><td>Função livre que cria uma instância TSkin anexada à janela fornecida</td></tr>
+<tr><td><code>SKIN( oWnd, cSkinFolder )</code></td><td>Free function that creates a TSkin instance attached to the given window</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Aplicar Pele Personalizada a uma Janela</h2>
+<h2 id="example">Example: Apply Custom Skin to Window</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -76,19 +76,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>A pasta de pele deve conter pelo menos 8 arquivos bitmap: w01.bmp a w12.bmp, mais close.bmp, max.bmp e min.bmp para os botões de legenda.</li>
-<li>Os 11 bitmaps estão organizados como: canto superior-esquerdo (w01), borda superior (w02), canto superior-direito (w04), borda esquerda (w05), canto inferior-direito (w12), borda inferior (w10), canto inferior-esquerdo (w09), borda direita (w08), botão fechar, botão maximizar, botão minimizar.</li>
-<li>Quando <code>lReSize</code> está habilitado, as peças de bordas e cantos mudam os cursores para indicar áreas redimensionáveis (EW, NS, NESW, NWSE).</li>
-<li>O bitmap centro-superior (w02) é arrastável para mover a janela; seu <code>bLClicked</code> envia <code>WM_SYSCOMMAND / MOUSE_MOVE</code>.</li>
-<li>TSkin usa <code>bPainted</code> na janela pai para chamar <code>Update()</code> após cada repintura, garantindo que a pele permaneça alinhada.</li>
-<li>A transparência é aplicada conforme o valor de <code>nTrans</code> (0 = completamente transparente, 255 = completamente opaco).</li>
+<li>The skin folder must contain at least 8 bitmap files: w01.bmp through w12.bmp, plus close.bmp, max.bmp, and min.bmp for the caption buttons.</li>
+<li>The 11 bitmaps are arranged as: top-left corner (w01), top edge tile (w02), top-right corner (w04), left edge tile (w05), right-bottom corner (w12), bottom-center tile (w10), bottom-left corner (w09), right edge tile (w08), close button, maximize button, minimize button.</li>
+<li>When <code>lReSize</code> is enabled, the edge and corner pieces change cursors to indicate resizable areas (EW, NS, NESW, NWSE).</li>
+<li>The center-top bitmap (w02) is draggable to move the window; its <code>bLClicked</code> sends <code>WM_SYSCOMMAND / MOUSE_MOVE</code>.</li>
+<li>TSkin uses <code>bPainted</code> on the parent window to call <code>Update()</code> after each window repaint, ensuring the skin stays aligned.</li>
+<li>Transparency is applied per the <code>nTrans</code> value (0 = fully transparent, 255 = fully opaque).</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ai/tsemanticindex.html">&larr; tsemanticindex</a> | <a href="../../pt/ui/tskinbutton.html">tskinbutton &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

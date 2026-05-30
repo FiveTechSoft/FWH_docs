@@ -3,92 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mais Classes - Documentação FWH</title>
+<title>More Classes - FWH Documentation</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <nav id="sidebar"></nav>
 <main id="content">
-  <h1>Referência de Classes Adicionais</h1>
+  <h1>Additional Classes Reference</h1>
   <p>
-    Esta página documenta classes e recursos importantes do FiveWin que não são abordados nas
-    páginas principais de referência de classes. Cada entrada inclui uma breve descrição, os
-    principais DATA e METHODs, e um exemplo prático.
+    This page documents important FiveWin classes and features that are not covered in the
+    main class reference pages. Each entry includes a brief description, key DATA and METHODs,
+    and a practical example.
   </p>
 
-  <h2 id="class-map">Mapa de Classes</h2>
+  <h2 id="class-map">Class Map</h2>
   <div class="mermaid">
 graph LR
-    subgraph "Componentes UI"
-        EXPLBAR["TExplorerBar<br/>Painéis Recolhíveis"]
-        NAV["TNavigator<br/>Painéis de Navegação"]
-        CFLOW["TCoverFlow<br/>Navegador de Imagens"]
-        BTABS["TBarTabs<br/>Barra de Botões com Abas"]
+    subgraph "UI Components"
+        EXPLBAR["TExplorerBar<br/>Collapsible Panels"]
+        NAV["TNavigator<br/>Navigation Panels"]
+        CFLOW["TCoverFlow<br/>Image Browser"]
+        BTABS["TBarTabs<br/>Tab Button Bar"]
     end
-    subgraph "Dados e Documentos"
-        XML["TXmlDocument<br/>Parsing XML"]
+    subgraph "Data &amp; Documents"
+        XML["TXmlDocument<br/>XML Parsing"]
         WBOOK["TWorkBook<br/>Excel XLSX"]
         BCHAIN["TBlockChain<br/>Blockchain"]
     end
-    subgraph "Internet e Mídia"
-        WCLIENT["TWebClient<br/>Cliente HTTP"]
-        WEBCAM["TWebCam<br/>Captura de Câmera"]
+    subgraph "Internet &amp; Media"
+        WCLIENT["TWebClient<br/>HTTP Client"]
+        WEBCAM["TWebCam<br/>Camera Capture"]
     end
-    subgraph "Desenvolvimento"
-        DBG["TDbg<br/>Depurador"]
-        GDIP["Graphics<br/>Classes GDI+"]
+    subgraph "Development"
+        DBG["TDbg<br/>Debugger"]
+        GDIP["Graphics<br/>GDI+ Classes"]
     end
-    subgraph "Recursos"
-        DARK["Modo Escuro<br/>FW_SetDarkMode()"]
-        VIDE["IDE Visual<br/>Designer de Formulários"]
+    subgraph "Features"
+        DARK["Dark Mode<br/>FW_SetDarkMode()"]
+        VIDE["Visual IDE<br/>Form Designer"]
     end
   </div>
 
   <!-- ================================================================== -->
-  <h2 id="txmldocument">TXmlDocument &mdash; Parsing e Criação de XML</h2>
+  <h2 id="txmldocument">TXmlDocument &mdash; XML Parsing &amp; Creation</h2>
   <p>
-    <code>TXmlDocument</code> é fornecido pela biblioteca contrib <strong>hbxml</strong> do Harbour
-    e é amplamente usado nos exemplos do FiveWin (mais de 23 exemplos). Fornece parsing XML no estilo
-    DOM a partir de arquivos ou strings, com iteração via <code>TXmlIterator</code>.
+    <code>TXmlDocument</code> is provided by Harbour's <strong>hbxml</strong> contrib library
+    and is used extensively in FiveWin samples (23+ examples). It provides DOM-style XML
+    parsing from files or strings, with iteration via <code>TXmlIterator</code>.
   </p>
 
-  <h3>Principais DATA</h3>
+  <h3>Key DATA</h3>
   <table>
-    <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>oRoot</code></td><td>TXmlNode</td><td>Nó raiz do documento XML analisado</td></tr>
-      <tr><td><code>nStatus</code></td><td>Numérico</td><td>Status do parsing (0 = sucesso)</td></tr>
-      <tr><td><code>nError</code></td><td>Numérico</td><td>Código de erro se o parsing falhou</td></tr>
-      <tr><td><code>nLine</code></td><td>Numérico</td><td>Número da linha onde o erro ocorreu</td></tr>
+      <tr><td><code>oRoot</code></td><td>TXmlNode</td><td>Root node of the parsed XML document</td></tr>
+      <tr><td><code>nStatus</code></td><td>Numeric</td><td>Parse status (0 = success)</td></tr>
+      <tr><td><code>nError</code></td><td>Numeric</td><td>Error code if parsing failed</td></tr>
+      <tr><td><code>nLine</code></td><td>Numeric</td><td>Line number where error occurred</td></tr>
     </tbody>
   </table>
 
-  <h3>Principais METHODs</h3>
+  <h3>Key METHODs</h3>
   <table>
-    <thead><tr><th>METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>New( hFile | cString )</code></td><td>Analisa XML a partir de um handle de arquivo ou string</td></tr>
-      <tr><td><code>Read( hFile )</code></td><td>Lê e analisa a partir de um handle de arquivo aberto</td></tr>
-      <tr><td><code>ToString()</code></td><td>Serializa o documento de volta para uma string XML</td></tr>
-      <tr><td><code>Write( hFile )</code></td><td>Grava o documento em um handle de arquivo</td></tr>
+      <tr><td><code>New( hFile | cString )</code></td><td>Parse XML from file handle or string</td></tr>
+      <tr><td><code>Read( hFile )</code></td><td>Read and parse from an open file handle</td></tr>
+      <tr><td><code>ToString()</code></td><td>Serialize the document back to XML string</td></tr>
+      <tr><td><code>Write( hFile )</code></td><td>Write the document to a file handle</td></tr>
     </tbody>
   </table>
 
-  <h3>TXmlNode (nós filhos)</h3>
+  <h3>TXmlNode (child nodes)</h3>
   <table>
-    <thead><tr><th>DATA/METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA/METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>cName</code></td><td>Nome da tag do nó</td></tr>
-      <tr><td><code>cData</code></td><td>Conteúdo de texto do nó</td></tr>
-      <tr><td><code>aAttributes</code></td><td>Hash de pares nome/valor de atributos</td></tr>
-      <tr><td><code>oChild</code></td><td>Primeiro nó filho</td></tr>
-      <tr><td><code>oNext</code></td><td>Próximo nó irmão</td></tr>
-      <tr><td><code>AddBelow( oNode )</code></td><td>Adiciona um nó filho</td></tr>
+      <tr><td><code>cName</code></td><td>Tag name of the node</td></tr>
+      <tr><td><code>cData</code></td><td>Text content of the node</td></tr>
+      <tr><td><code>aAttributes</code></td><td>Hash of attribute name/value pairs</td></tr>
+      <tr><td><code>oChild</code></td><td>First child node</td></tr>
+      <tr><td><code>oNext</code></td><td>Next sibling node</td></tr>
+      <tr><td><code>AddBelow( oNode )</code></td><td>Add a child node</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -100,7 +100,7 @@ function Main()
 
    while ( oTag := oXmlIter:Next() ) != nil
       MsgInfo( oTag:cName + ": " + oTag:cData )
-      // Acessar atributos:
+      // Access attributes:
       // HEval( oTag:aAttributes, { |k,v| QOut( k, v ) } )
    end
 
@@ -109,51 +109,51 @@ function Main()
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="texplorerbar">TExplorerBar &mdash; Contêiner de Painéis Recolhíveis</h2>
+  <h2 id="texplorerbar">TExplorerBar &mdash; Collapsible Panel Container</h2>
   <p>
-    Uma barra lateral no estilo Explorer com painéis de tarefas recolhíveis. Cada painel tem uma
-    barra de título com gradiente que alterna entre recolher/expandir ao clicar, e uma área de corpo
-    onde você pode colocar links ou qualquer controle. Herda de <code>TControl</code>.
+    An Explorer-style sidebar with collapsible task panels. Each panel has a gradient title
+    bar that toggles collapse/expand on click, and a body area where you can place links
+    or any controls. Inherits from <code>TControl</code>.
   </p>
   <p><strong>Fonte:</strong> <code>source/classes/texplbar.prg</code></p>
 
-  <h3>Principais DATA</h3>
+  <h3>Key DATA</h3>
   <table>
-    <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>aPanels</code></td><td>Array</td><td>Array de objetos TTaskPanel</td></tr>
-      <tr><td><code>nTopColor</code></td><td>Numérico</td><td>Cor superior do gradiente (padrão: azul)</td></tr>
-      <tr><td><code>nBottomColor</code></td><td>Numérico</td><td>Cor inferior do gradiente</td></tr>
-      <tr><td><code>oVScroll</code></td><td>TScrollBar</td><td>Barra de rolagem vertical (gerenciada automaticamente)</td></tr>
+      <tr><td><code>aPanels</code></td><td>Array</td><td>Array of TTaskPanel objects</td></tr>
+      <tr><td><code>nTopColor</code></td><td>Numeric</td><td>Top gradient color (default: blue)</td></tr>
+      <tr><td><code>nBottomColor</code></td><td>Numeric</td><td>Bottom gradient color</td></tr>
+      <tr><td><code>oVScroll</code></td><td>TScrollBar</td><td>Vertical scrollbar (auto-managed)</td></tr>
     </tbody>
   </table>
 
-  <h3>Principais METHODs</h3>
+  <h3>Key METHODs</h3>
   <table>
-    <thead><tr><th>METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd )</code></td><td>Cria a barra do explorer</td></tr>
-      <tr><td><code>AddPanel( cName, cBmpName, nBodyHeight )</code></td><td>Adiciona um painel recolhível; retorna um TTaskPanel</td></tr>
-      <tr><td><code>CloseAll( nExcept )</code></td><td>Recolhe todos os painéis exceto o especificado</td></tr>
-      <tr><td><code>Update( nPos )</code></td><td>Reposiciona todos os painéis a partir de nPos</td></tr>
+      <tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd )</code></td><td>Create the explorer bar</td></tr>
+      <tr><td><code>AddPanel( cName, cBmpName, nBodyHeight )</code></td><td>Add a collapsible panel; returns a TTaskPanel</td></tr>
+      <tr><td><code>CloseAll( nExcept )</code></td><td>Collapse all panels except the specified one</td></tr>
+      <tr><td><code>Update( nPos )</code></td><td>Reposition all panels starting at nPos</td></tr>
     </tbody>
   </table>
 
-  <h3>TTaskPanel (painéis individuais)</h3>
+  <h3>TTaskPanel (individual panels)</h3>
   <table>
-    <thead><tr><th>DATA/METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA/METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>cTitle</code></td><td>Texto do título do painel</td></tr>
-      <tr><td><code>lCollapsed</code></td><td>.T. quando recolhido</td></tr>
-      <tr><td><code>nBodyHeight</code></td><td>Altura da área de conteúdo</td></tr>
-      <tr><td><code>nTitleHeight</code></td><td>Altura da barra de título (padrão: 25)</td></tr>
-      <tr><td><code>AddLink( cPrompt, bAction, cBitmap )</code></td><td>Adiciona um link clicável no estilo URL ao corpo do painel</td></tr>
-      <tr><td><code>ChangeHeight( nHeight )</code></td><td>Redimensiona o painel dinamicamente</td></tr>
-      <tr><td><code>bOnCollapse</code></td><td>Codeblock avaliado quando o painel é recolhido/expandido</td></tr>
+      <tr><td><code>cTitle</code></td><td>Panel title text</td></tr>
+      <tr><td><code>lCollapsed</code></td><td>.T. when collapsed</td></tr>
+      <tr><td><code>nBodyHeight</code></td><td>Height of the content area</td></tr>
+      <tr><td><code>nTitleHeight</code></td><td>Height of the title bar (default: 25)</td></tr>
+      <tr><td><code>AddLink( cPrompt, bAction, cBitmap )</code></td><td>Add a clickable URL-style link to the panel body</td></tr>
+      <tr><td><code>ChangeHeight( nHeight )</code></td><td>Dynamically resize the panel</td></tr>
+      <tr><td><code>bOnCollapse</code></td><td>Codeblock evaluated when panel is collapsed/expanded</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -178,43 +178,43 @@ function Main()
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="tnavigator">TNavigator &mdash; Painel de Navegação Recolhível</h2>
+  <h2 id="tnavigator">TNavigator &mdash; Collapsible Navigation Panel</h2>
   <p>
-    Um painel de navegação recolhível visualmente rico, com fundos em gradiente, fundos com bitmap
-    opcionais e animação suave de expandir/recolher. Semelhante ao painel de navegação do Outlook.
-    Herda de <code>TControl</code>.
+    A visually rich collapsible navigation panel with gradient backgrounds, optional bitmap
+    backgrounds, and smooth expand/collapse animation. Similar to Outlook's navigation pane.
+    Inherits from <code>TControl</code>.
   </p>
   <p><strong>Fonte:</strong> <code>source/classes/navpanels.prg</code></p>
 
-  <h3>Principais DATA</h3>
+  <h3>Key DATA</h3>
   <table>
-    <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>lExpanded</code></td><td>Lógico</td><td>.T. quando o painel está expandido (padrão: .T.)</td></tr>
-      <tr><td><code>cTitle</code></td><td>Caractere</td><td>Texto do título do painel</td></tr>
-      <tr><td><code>cImage</code></td><td>Caractere</td><td>Nome do recurso da imagem de fundo</td></tr>
-      <tr><td><code>nTitleHeight</code></td><td>Numérico</td><td>Altura da barra de título (padrão: 40)</td></tr>
-      <tr><td><code>nTopColor / nBottomColor</code></td><td>Numérico</td><td>Cores do gradiente</td></tr>
-      <tr><td><code>nWidthClosed</code></td><td>Numérico</td><td>Largura quando recolhido</td></tr>
-      <tr><td><code>lGradient</code></td><td>Lógico</td><td>Usar preenchimento em gradiente (padrão: .T.)</td></tr>
-      <tr><td><code>nOpacity</code></td><td>Numérico</td><td>Nível de transparência 0-255 (padrão: 255)</td></tr>
-      <tr><td><code>bToggled</code></td><td>Block</td><td>Codeblock avaliado ao expandir/recolher</td></tr>
+      <tr><td><code>lExpanded</code></td><td>Logical</td><td>.T. when panel is expanded (default: .T.)</td></tr>
+      <tr><td><code>cTitle</code></td><td>Character</td><td>Panel title text</td></tr>
+      <tr><td><code>cImage</code></td><td>Character</td><td>Background image resource name</td></tr>
+      <tr><td><code>nTitleHeight</code></td><td>Numeric</td><td>Title bar height (default: 40)</td></tr>
+      <tr><td><code>nTopColor / nBottomColor</code></td><td>Numeric</td><td>Gradient colors</td></tr>
+      <tr><td><code>nWidthClosed</code></td><td>Numeric</td><td>Width when collapsed</td></tr>
+      <tr><td><code>lGradient</code></td><td>Logical</td><td>Use gradient fill (default: .T.)</td></tr>
+      <tr><td><code>nOpacity</code></td><td>Numeric</td><td>Transparency level 0-255 (default: 255)</td></tr>
+      <tr><td><code>bToggled</code></td><td>Block</td><td>Codeblock evaluated on expand/collapse</td></tr>
     </tbody>
   </table>
 
-  <h3>Principais METHODs</h3>
+  <h3>Key METHODs</h3>
   <table>
-    <thead><tr><th>METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, ... )</code></td><td>Cria o painel navigator</td></tr>
-      <tr><td><code>ToggleSize()</code></td><td>Alterna entre os estados expandido e recolhido</td></tr>
-      <tr><td><code>CloseAll()</code></td><td>Recolhe todos os navigators relacionados</td></tr>
-      <tr><td><code>OpenAll()</code></td><td>Expande todos os navigators relacionados</td></tr>
-      <tr><td><code>ChangeWidth( nWidth, nHeight )</code></td><td>Anima a mudança de largura</td></tr>
+      <tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, ... )</code></td><td>Create the navigator panel</td></tr>
+      <tr><td><code>ToggleSize()</code></td><td>Toggle between expanded and collapsed states</td></tr>
+      <tr><td><code>CloseAll()</code></td><td>Collapse all related navigators</td></tr>
+      <tr><td><code>OpenAll()</code></td><td>Expand all related navigators</td></tr>
+      <tr><td><code>ChangeWidth( nWidth, nHeight )</code></td><td>Animate width change</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -233,44 +233,44 @@ function Main()
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="tcoverflow">TCoverFlow &mdash; Navegador de Imagens no Estilo Apple</h2>
+  <h2 id="tcoverflow">TCoverFlow &mdash; Apple-Style Image Browser</h2>
   <p>
-    Um controle coverflow visualmente impressionante inspirado no Cover Flow da Apple. Exibe imagens
-    em um carrossel com perspectiva 3D e animação suave para esquerda/direita. Navegue com as setas do
-    teclado ou cliques do mouse. Herda de <code>TControl</code>.
+    A visually striking coverflow control inspired by Apple's Cover Flow. Displays images
+    in a 3D perspective carousel with smooth left/right animation. Navigate with keyboard
+    arrows or mouse clicks. Inherits from <code>TControl</code>.
   </p>
   <p><strong>Fonte:</strong> <code>source/classes/tcvrflow.prg</code></p>
 
-  <h3>Principais DATA</h3>
+  <h3>Key DATA</h3>
   <table>
-    <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>aCovers</code></td><td>Array</td><td>Array de itens de capa (bitmaps + texto)</td></tr>
-      <tr><td><code>nAt</code></td><td>Numérico</td><td>Índice da capa atualmente selecionada</td></tr>
-      <tr><td><code>bAction</code></td><td>Block</td><td>Ação quando uma capa é clicada</td></tr>
-      <tr><td><code>nAngle</code></td><td>Numérico</td><td>Ângulo de perspectiva para as capas laterais</td></tr>
-      <tr><td><code>nCoverWidth / nCoverHeight</code></td><td>Numérico</td><td>Dimensões de cada imagem de capa</td></tr>
-      <tr><td><code>nCoversL / nCoversR</code></td><td>Numérico</td><td>Número de capas visíveis em cada lado</td></tr>
-      <tr><td><code>lAnimated</code></td><td>Lógico</td><td>Ativa a animação de transição suave</td></tr>
-      <tr><td><code>nSeparation</code></td><td>Numérico</td><td>Espaçamento entre as capas laterais</td></tr>
-      <tr><td><code>nHorizon</code></td><td>Numérico</td><td>Posição vertical da linha de reflexo</td></tr>
+      <tr><td><code>aCovers</code></td><td>Array</td><td>Array of cover items (bitmaps + text)</td></tr>
+      <tr><td><code>nAt</code></td><td>Numeric</td><td>Currently selected cover index</td></tr>
+      <tr><td><code>bAction</code></td><td>Block</td><td>Action when a cover is clicked</td></tr>
+      <tr><td><code>nAngle</code></td><td>Numeric</td><td>Perspective angle for side covers</td></tr>
+      <tr><td><code>nCoverWidth / nCoverHeight</code></td><td>Numeric</td><td>Dimensions of each cover image</td></tr>
+      <tr><td><code>nCoversL / nCoversR</code></td><td>Numeric</td><td>Number of visible covers on each side</td></tr>
+      <tr><td><code>lAnimated</code></td><td>Logical</td><td>Enable smooth transition animation</td></tr>
+      <tr><td><code>nSeparation</code></td><td>Numeric</td><td>Gap between side covers</td></tr>
+      <tr><td><code>nHorizon</code></td><td>Numeric</td><td>Vertical position of the reflection line</td></tr>
     </tbody>
   </table>
 
-  <h3>Principais METHODs</h3>
+  <h3>Key METHODs</h3>
   <table>
-    <thead><tr><th>METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd )</code></td><td>Cria o controle coverflow</td></tr>
-      <tr><td><code>AddCover( cBmpFile, cText, nClrText )</code></td><td>Adiciona uma capa a partir de um arquivo de bitmap</td></tr>
-      <tr><td><code>AddCoverH( hBmp, cText, nClrText )</code></td><td>Adiciona uma capa a partir de um handle de bitmap</td></tr>
-      <tr><td><code>GoLeft()</code></td><td>Navega para a capa anterior</td></tr>
-      <tr><td><code>GoRight()</code></td><td>Navega para a próxima capa</td></tr>
-      <tr><td><code>GoTo( nCover )</code></td><td>Salta para um índice de capa específico</td></tr>
+      <tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd )</code></td><td>Create the coverflow control</td></tr>
+      <tr><td><code>AddCover( cBmpFile, cText, nClrText )</code></td><td>Add a cover from a bitmap file</td></tr>
+      <tr><td><code>AddCoverH( hBmp, cText, nClrText )</code></td><td>Add a cover from a bitmap handle</td></tr>
+      <tr><td><code>GoLeft()</code></td><td>Navigate to the previous cover</td></tr>
+      <tr><td><code>GoRight()</code></td><td>Navigate to the next cover</td></tr>
+      <tr><td><code>GoTo( nCover )</code></td><td>Jump to a specific cover index</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -292,35 +292,35 @@ function Main()
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="tbartabs">TBarTabs &mdash; Barra de Botões com Abas</h2>
+  <h2 id="tbartabs">TBarTabs &mdash; Tabbed Button Bar</h2>
   <p>
-    Combina um controle de abas (<code>TTabs</code>) com múltiplas barras de botões (<code>TBar</code>).
-    Selecionar uma aba alterna a barra de botões visível abaixo dela, semelhante ao conceito de ribbon do Office.
-    Uma alternativa leve ao TRibbon para aplicações que precisam de botões de barra de ferramentas categorizados.
+    Combines a tab control (<code>TTabs</code>) with multiple button bars (<code>TBar</code>).
+    Selecting a tab switches the visible button bar beneath it, similar to the Office ribbon concept.
+    A lightweight alternative to TRibbon for applications that need categorized toolbar buttons.
   </p>
   <p><strong>Fonte:</strong> <code>source/classes/bartabs.prg</code></p>
 
-  <h3>Principais DATA</h3>
+  <h3>Key DATA</h3>
   <table>
-    <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>aBars</code></td><td>Array</td><td>Array de objetos TBar, um por aba</td></tr>
-      <tr><td><code>oTabs</code></td><td>TTabs</td><td>O controle de abas no topo</td></tr>
-      <tr><td><code>oPanel</code></td><td>TPanel</td><td>Painel contêiner para abas + barras</td></tr>
-      <tr><td><code>nBar</code></td><td>Numérico</td><td>Índice da barra atualmente ativa</td></tr>
+      <tr><td><code>aBars</code></td><td>Array</td><td>Array of TBar objects, one per tab</td></tr>
+      <tr><td><code>oTabs</code></td><td>TTabs</td><td>The tab control at the top</td></tr>
+      <tr><td><code>oPanel</code></td><td>TPanel</td><td>Container panel for tabs + bars</td></tr>
+      <tr><td><code>nBar</code></td><td>Numeric</td><td>Currently active bar index</td></tr>
     </tbody>
   </table>
 
-  <h3>Principais METHODs</h3>
+  <h3>Key METHODs</h3>
   <table>
-    <thead><tr><th>METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>New( oWnd, nBtnW, nBtnH, aPrompts, acBitmaps, nOption )</code></td><td>Cria a barra com abas, com prompts e bitmaps para cada aba</td></tr>
-      <tr><td><code>AddBar( cPrompt, cBitmap )</code></td><td>Adiciona dinamicamente uma nova aba com sua própria barra de botões</td></tr>
+      <tr><td><code>New( oWnd, nBtnW, nBtnH, aPrompts, acBitmaps, nOption )</code></td><td>Create tabbed bar with prompts and bitmaps for each tab</td></tr>
+      <tr><td><code>AddBar( cPrompt, cBitmap )</code></td><td>Dynamically add a new tab with its own button bar</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -330,10 +330,10 @@ function Main()
    DEFINE WINDOW oWnd TITLE "BarTabs Demo" SIZE 800, 600
 
    oBarTabs := TBarTabs():New( oWnd, 64, 32, ;
-      { "Home", "Edit", "View" },  ;    // Prompts das abas
-      { "home.bmp", "edit.bmp", "view.bmp" } )  // Bitmaps das abas
+      { "Home", "Edit", "View" },  ;    // Tab prompts
+      { "home.bmp", "edit.bmp", "view.bmp" } )  // Tab bitmaps
 
-   // Adiciona botões à barra da primeira aba:
+   // Add buttons to the first tab's bar:
    DEFINE BUTTON OF oBarTabs:aBars[ 1 ] ;
       RESOURCE "NEW" PROMPT "New" ;
       ACTION MsgInfo( "New!" )
@@ -342,7 +342,7 @@ function Main()
       RESOURCE "OPEN" PROMPT "Open" ;
       ACTION MsgInfo( "Open!" )
 
-   // Adiciona botões à barra da segunda aba:
+   // Add buttons to the second tab's bar:
    DEFINE BUTTON OF oBarTabs:aBars[ 2 ] ;
       RESOURCE "CUT" PROMPT "Cut" ;
       ACTION MsgInfo( "Cut!" )
@@ -352,45 +352,45 @@ function Main()
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="tworkbook">TWorkBook / TWorkSheet &mdash; Geração de Excel XLSX</h2>
+  <h2 id="tworkbook">TWorkBook / TWorkSheet &mdash; Excel XLSX Generation</h2>
   <p>
-    Crie arquivos nativos do Excel <code>.xlsx</code> sem precisar do Microsoft Office.
-    Construído sobre a biblioteca C <strong>xlsxwriter</strong> (de John McNamara), encapsulada para
-    o Harbour por Arturo Tamayo. Suporta formatação, fórmulas, imagens, células mescladas e mais.
+    Create native <code>.xlsx</code> Excel files without requiring Microsoft Office.
+    Built on the <strong>xlsxwriter</strong> C library (by John McNamara), wrapped for
+    Harbour by Arturo Tamayo. Supports formatting, formulas, images, merged cells, and more.
   </p>
   <p><strong>Fonte:</strong> <code>source/function/fwxlsxlb.prg</code></p>
 
-  <h3>TWorkBook &mdash; Principais DATA/METHODs</h3>
+  <h3>TWorkBook &mdash; Key DATA/METHODs</h3>
   <table>
-    <thead><tr><th>DATA/METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA/METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>cFile</code></td><td>Caminho do arquivo de saída</td></tr>
-      <tr><td><code>aSheets</code></td><td>Array de objetos TWorkSheet</td></tr>
-      <tr><td><code>New( cFile )</code></td><td>Cria uma nova pasta de trabalho (.xlsx)</td></tr>
-      <tr><td><code>AddSheet( cName )</code></td><td>Adiciona uma planilha, retorna TWorkSheet</td></tr>
-      <tr><td><code>Format( cPicture, cStyles, nAlign )</code></td><td>Cria um TFormat para formatação de célula</td></tr>
-      <tr><td><code>Close()</code></td><td>Finaliza e grava o arquivo em disco</td></tr>
+      <tr><td><code>cFile</code></td><td>Output file path</td></tr>
+      <tr><td><code>aSheets</code></td><td>Array of TWorkSheet objects</td></tr>
+      <tr><td><code>New( cFile )</code></td><td>Create a new workbook (.xlsx)</td></tr>
+      <tr><td><code>AddSheet( cName )</code></td><td>Add a worksheet, returns TWorkSheet</td></tr>
+      <tr><td><code>Format( cPicture, cStyles, nAlign )</code></td><td>Create a TFormat for cell formatting</td></tr>
+      <tr><td><code>Close()</code></td><td>Finalize and write the file to disk</td></tr>
     </tbody>
   </table>
 
-  <h3>TWorkSheet &mdash; Principais DATA/METHODs</h3>
+  <h3>TWorkSheet &mdash; Key DATA/METHODs</h3>
   <table>
-    <thead><tr><th>DATA/METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA/METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>Say( nRow, nCol, uValue, oFormat )</code></td><td>Grava um valor em uma célula (detecta o tipo automaticamente)</td></tr>
-      <tr><td><code>SayRow( nRow, aValues, aFormat )</code></td><td>Grava uma linha inteira de valores</td></tr>
-      <tr><td><code>SayImage( nRow, nCol, cImage )</code></td><td>Incorpora uma imagem em uma célula</td></tr>
-      <tr><td><code>SayFormula( nRow, nCol, cFormula )</code></td><td>Grava uma fórmula do Excel</td></tr>
-      <tr><td><code>MergeRange( r1, c1, r2, c2, cValue )</code></td><td>Mescla um intervalo de células</td></tr>
-      <tr><td><code>SetColumnSize( nFrom, nTo, nWidth )</code></td><td>Define a largura da coluna</td></tr>
-      <tr><td><code>RowHeight( nRow, nHeight )</code></td><td>Define a altura da linha</td></tr>
-      <tr><td><code>Freeze( nRow, nCol )</code></td><td>Congela os painéis na posição informada</td></tr>
-      <tr><td><code>CreateFrom( uSource )</code></td><td>Popula a partir de um DBF, array ou recordset</td></tr>
-      <tr><td><code>SetArrayData( aData, aStruct )</code></td><td>Grava um array 2D como dados de tabela</td></tr>
+      <tr><td><code>Say( nRow, nCol, uValue, oFormat )</code></td><td>Write a value to a cell (auto-detects type)</td></tr>
+      <tr><td><code>SayRow( nRow, aValues, aFormat )</code></td><td>Write an entire row of values</td></tr>
+      <tr><td><code>SayImage( nRow, nCol, cImage )</code></td><td>Embed an image in a cell</td></tr>
+      <tr><td><code>SayFormula( nRow, nCol, cFormula )</code></td><td>Write an Excel formula</td></tr>
+      <tr><td><code>MergeRange( r1, c1, r2, c2, cValue )</code></td><td>Merge a range of cells</td></tr>
+      <tr><td><code>SetColumnSize( nFrom, nTo, nWidth )</code></td><td>Set column width</td></tr>
+      <tr><td><code>RowHeight( nRow, nHeight )</code></td><td>Set row height</td></tr>
+      <tr><td><code>Freeze( nRow, nCol )</code></td><td>Freeze panes at the given position</td></tr>
+      <tr><td><code>CreateFrom( uSource )</code></td><td>Populate from a DBF, array, or recordset</td></tr>
+      <tr><td><code>SetArrayData( aData, aStruct )</code></td><td>Write a 2D array as table data</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -400,61 +400,61 @@ function Main()
    oBook := TWorkBook():New( "report.xlsx" )
    oSheet := oBook:AddSheet( "Sales" )
 
-   // Cria um formato em negrito
-   oFmtBold := oBook:Format( , "B" )   // "B" = Negrito
+   // Create a bold format
+   oFmtBold := oBook:Format( , "B" )   // "B" = Bold
 
-   // Grava os cabeçalhos
+   // Write headers
    oSheet:Say( 0, 0, "Product",  oFmtBold )
    oSheet:Say( 0, 1, "Quantity", oFmtBold )
    oSheet:Say( 0, 2, "Price",    oFmtBold )
 
-   // Grava as linhas de dados
+   // Write data rows
    oSheet:SayRow( 1, { "Widget A", 150, 29.99 } )
    oSheet:SayRow( 2, { "Widget B",  75, 49.99 } )
    oSheet:SayRow( 3, { "Widget C", 200, 14.99 } )
 
-   // Adiciona uma fórmula SUM
+   // Add a SUM formula
    oSheet:SayFormula( 4, 1, "=SUM(B2:B4)" )
 
-   oSheet:SetColumnSize( 0, 0, 20 )   // Alarga a coluna A
-   oSheet:Freeze( 1, 0 )              // Congela a linha de cabeçalho
+   oSheet:SetColumnSize( 0, 0, 20 )   // Widen column A
+   oSheet:Freeze( 1, 0 )              // Freeze header row
 
    oBook:Close()
-   MsgInfo( "report.xlsx criado!" )
+   MsgInfo( "report.xlsx created!" )
 
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="twebclient">TWebClient &mdash; Cliente HTTP (Baseado em Socket)</h2>
+  <h2 id="twebclient">TWebClient &mdash; HTTP Client (Socket-based)</h2>
   <p>
-    Um cliente HTTP leve, construído sobre a classe <code>TSocket</code> do FiveWin. Realiza
-    requisições HTTP GET assíncronas com tratamento de resposta baseado em callback.
-    Para necessidades HTTP mais avançadas (POST, cabeçalhos, SSL), considere usar
-    <code>FW_CurlHttp()</code> ou <code>TWebView2</code>.
+    A lightweight HTTP client built on FiveWin's <code>TSocket</code> class. Performs
+    asynchronous HTTP GET requests with callback-based response handling.
+    For more advanced HTTP needs (POST, headers, SSL), consider using
+    <code>FW_CurlHttp()</code> or <code>TWebView2</code> instead.
   </p>
   <p><strong>Fonte:</strong> <code>source/classes/twebclie.prg</code></p>
 
-  <h3>Principais DATA</h3>
+  <h3>Key DATA</h3>
   <table>
-    <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>oSocket</code></td><td>TSocket</td><td>Conexão de socket subjacente</td></tr>
-      <tr><td><code>bOnConnect</code></td><td>Block</td><td>Codeblock chamado quando conectado</td></tr>
-      <tr><td><code>bOnRead</code></td><td>Block</td><td>Codeblock chamado com os dados de resposta: { |cData, oSelf| }</td></tr>
+      <tr><td><code>oSocket</code></td><td>TSocket</td><td>Underlying socket connection</td></tr>
+      <tr><td><code>bOnConnect</code></td><td>Block</td><td>Codeblock called when connected</td></tr>
+      <tr><td><code>bOnRead</code></td><td>Block</td><td>Codeblock called with response data: { |cData, oSelf| }</td></tr>
     </tbody>
   </table>
 
-  <h3>Principais METHODs</h3>
+  <h3>Key METHODs</h3>
   <table>
-    <thead><tr><th>METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>New()</code></td><td>Cria um novo cliente web (porta 80)</td></tr>
-      <tr><td><code>Connect( cHost )</code></td><td>Conecta a um host (nome ou IP)</td></tr>
-      <tr><td><code>GetPage( cUrl )</code></td><td>Envia uma requisição HTTP GET</td></tr>
+      <tr><td><code>New()</code></td><td>Create a new web client (port 80)</td></tr>
+      <tr><td><code>Connect( cHost )</code></td><td>Connect to a host (name or IP)</td></tr>
+      <tr><td><code>GetPage( cUrl )</code></td><td>Send an HTTP GET request</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -473,44 +473,44 @@ function Main()
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="twebcam">TWebCam &mdash; Controle de Captura de Webcam</h2>
+  <h2 id="twebcam">TWebCam &mdash; Webcam Capture Control</h2>
   <p>
-    Captura vídeo de uma webcam conectada usando a API Windows Video for Windows (VFW).
-    Pode exibir uma prévia ao vivo, salvar imagens estáticas como BMP e gravar vídeo.
-    Herda de <code>TControl</code>.
+    Captures video from a connected webcam using the Windows Video for Windows (VFW) API.
+    Can display a live preview, save still images as BMP, and record video.
+    Inherits from <code>TControl</code>.
   </p>
   <p><strong>Fonte:</strong> <code>source/classes/twebcam.prg</code></p>
 
-  <h3>Principais DATA</h3>
+  <h3>Key DATA</h3>
   <table>
-    <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>hWebcam</code></td><td>Numérico</td><td>Handle da janela de captura</td></tr>
-      <tr><td><code>cName</code></td><td>Caractere</td><td>Nome do dispositivo de webcam</td></tr>
-      <tr><td><code>cVersion</code></td><td>Caractere</td><td>Versão do driver da webcam</td></tr>
-      <tr><td><code>isConnected</code></td><td>Lógico</td><td>.T. quando a prévia está ativa</td></tr>
-      <tr><td><code>isScale</code></td><td>Lógico</td><td>Auto-escala a imagem para o tamanho do controle</td></tr>
-      <tr><td><code>nRateRefresh</code></td><td>Numérico</td><td>Taxa de atualização da prévia em ms (padrão: 66)</td></tr>
-      <tr><td><code>bError</code></td><td>Block</td><td>Codeblock tratador de erros</td></tr>
+      <tr><td><code>hWebcam</code></td><td>Numeric</td><td>Handle to the capture window</td></tr>
+      <tr><td><code>cName</code></td><td>Character</td><td>Webcam device name</td></tr>
+      <tr><td><code>cVersion</code></td><td>Character</td><td>Webcam driver version</td></tr>
+      <tr><td><code>isConnected</code></td><td>Logical</td><td>.T. when preview is active</td></tr>
+      <tr><td><code>isScale</code></td><td>Logical</td><td>Auto-scale image to control size</td></tr>
+      <tr><td><code>nRateRefresh</code></td><td>Numeric</td><td>Preview refresh rate in ms (default: 66)</td></tr>
+      <tr><td><code>bError</code></td><td>Block</td><td>Error handler codeblock</td></tr>
     </tbody>
   </table>
 
-  <h3>Principais METHODs</h3>
+  <h3>Key METHODs</h3>
   <table>
-    <thead><tr><th>METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>New( oWnd, nTop, nLeft, nW, nH, lInit )</code></td><td>Cria o controle de webcam; defina lInit = .T. para iniciar imediatamente</td></tr>
-      <tr><td><code>Initialize()</code></td><td>Conecta à webcam e inicia a prévia ao vivo</td></tr>
-      <tr><td><code>Finalize()</code></td><td>Desconecta e para a prévia</td></tr>
-      <tr><td><code>SaveFile( cFileName )</code></td><td>Captura uma imagem estática e salva como .bmp</td></tr>
-      <tr><td><code>StartCapture( cFile )</code></td><td>Inicia a gravação de vídeo em um arquivo</td></tr>
-      <tr><td><code>StopCapture()</code></td><td>Para a gravação de vídeo</td></tr>
-      <tr><td><code>VideoFormat()</code></td><td>Abre o diálogo de configurações de formato de vídeo</td></tr>
-      <tr><td><code>SetRate( nMs )</code></td><td>Altera a taxa de atualização da prévia</td></tr>
+      <tr><td><code>New( oWnd, nTop, nLeft, nW, nH, lInit )</code></td><td>Create webcam control; set lInit = .T. to start immediately</td></tr>
+      <tr><td><code>Initialize()</code></td><td>Connect to the webcam and start live preview</td></tr>
+      <tr><td><code>Finalize()</code></td><td>Disconnect and stop preview</td></tr>
+      <tr><td><code>SaveFile( cFileName )</code></td><td>Capture a still image and save as .bmp</td></tr>
+      <tr><td><code>StartCapture( cFile )</code></td><td>Start recording video to a file</td></tr>
+      <tr><td><code>StopCapture()</code></td><td>Stop video recording</td></tr>
+      <tr><td><code>VideoFormat()</code></td><td>Open the video format settings dialog</td></tr>
+      <tr><td><code>SetRate( nMs )</code></td><td>Change the preview refresh rate</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 #include "WebCam.ch"
 
@@ -522,7 +522,7 @@ function Main()
 
    oCam := TWebCam():New( oWnd, 10, 10, 640, 480, .T. )
 
-   // Salva um instantâneo:
+   // Save a snapshot:
    // oCam:SaveFile( "photo.bmp" )
 
    ACTIVATE WINDOW oWnd ;
@@ -531,48 +531,48 @@ function Main()
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="tdbg">TDbg &mdash; Depurador / Inspetor de Objetos do FiveWin</h2>
+  <h2 id="tdbg">TDbg &mdash; FiveWin Debugger / Object Inspector</h2>
   <p>
-    Um depurador completo de nível de código-fonte para aplicações FiveWin. Fornece execução
-    passo a passo, breakpoints, inspeção de variáveis, navegação na pilha de chamadas, expressões
-    de watch e inspeção de áreas de trabalho de banco de dados. Escrito por Carles Aubia.
+    A full-featured source-level debugger for FiveWin applications. Provides step-through
+    execution, breakpoints, variable inspection, call stack browsing, watch expressions,
+    and database work area inspection. Written by Carles Aubia.
   </p>
   <p><strong>Fonte:</strong> <code>source/classes/fwdbg.prg</code></p>
-  <p><strong>Requisitos:</strong> Linkar <code>FWDbg.lib</code> e colocar <code>FWDbg.dll</code>
-     (ou <code>FWDbg64.dll</code>) no diretório da sua aplicação. Adicione <code>#pragma /b+</code>
-     aos módulos que você deseja depurar.</p>
+  <p><strong>Requirements:</strong> Link <code>FWDbg.lib</code> and place <code>FWDbg.dll</code>
+     (or <code>FWDbg64.dll</code>) in your application directory. Add <code>#pragma /b+</code>
+     to modules you want to debug.</p>
 
-  <h3>Principais DATA</h3>
+  <h3>Key DATA</h3>
   <table>
-    <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>aStack</code></td><td>Array</td><td>Pilha de chamadas atual</td></tr>
-      <tr><td><code>aModules</code></td><td>Array</td><td>Módulos de código-fonte carregados</td></tr>
-      <tr><td><code>aBreak</code></td><td>Array</td><td>Definições de breakpoints</td></tr>
-      <tr><td><code>aSource</code></td><td>Array</td><td>Linhas do arquivo de código-fonte atual</td></tr>
-      <tr><td><code>lStop</code></td><td>Lógico</td><td>Para na próxima linha (modo passo a passo)</td></tr>
-      <tr><td><code>lGo</code></td><td>Lógico</td><td>Executa até o próximo breakpoint</td></tr>
+      <tr><td><code>aStack</code></td><td>Array</td><td>Current call stack</td></tr>
+      <tr><td><code>aModules</code></td><td>Array</td><td>Loaded source modules</td></tr>
+      <tr><td><code>aBreak</code></td><td>Array</td><td>Breakpoint definitions</td></tr>
+      <tr><td><code>aSource</code></td><td>Array</td><td>Current source file lines</td></tr>
+      <tr><td><code>lStop</code></td><td>Logical</td><td>Stop at next line (single-step mode)</td></tr>
+      <tr><td><code>lGo</code></td><td>Logical</td><td>Run until next breakpoint</td></tr>
     </tbody>
   </table>
 
-  <h3>Principais METHODs</h3>
+  <h3>Key METHODs</h3>
   <table>
-    <thead><tr><th>METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>Activate()</code></td><td>Abre a janela do depurador</td></tr>
-      <tr><td><code>DbgBreak()</code></td><td>Define/alterna um breakpoint na linha atual</td></tr>
-      <tr><td><code>DbgGo()</code></td><td>Executa até o próximo breakpoint</td></tr>
-      <tr><td><code>DbgNext()</code></td><td>Avança para a próxima linha</td></tr>
-      <tr><td><code>DbgNextRoutine()</code></td><td>Avança por cima (sem entrar nas sub-rotinas)</td></tr>
-      <tr><td><code>DbgVars()</code></td><td>Inspeciona variáveis locais e privadas</td></tr>
-      <tr><td><code>DbgAreas()</code></td><td>Navega pelas áreas de trabalho de banco de dados abertas</td></tr>
-      <tr><td><code>DbgPrgs()</code></td><td>Navega pelos arquivos de código-fonte carregados</td></tr>
-      <tr><td><code>ViewDbf()</code></td><td>Abre um visualizador de DBF para a área de trabalho atual</td></tr>
+      <tr><td><code>Activate()</code></td><td>Open the debugger window</td></tr>
+      <tr><td><code>DbgBreak()</code></td><td>Set/toggle a breakpoint at the current line</td></tr>
+      <tr><td><code>DbgGo()</code></td><td>Run until next breakpoint</td></tr>
+      <tr><td><code>DbgNext()</code></td><td>Step to next line</td></tr>
+      <tr><td><code>DbgNextRoutine()</code></td><td>Step over (skip into subroutines)</td></tr>
+      <tr><td><code>DbgVars()</code></td><td>Inspect local and private variables</td></tr>
+      <tr><td><code>DbgAreas()</code></td><td>Browse open database work areas</td></tr>
+      <tr><td><code>DbgPrgs()</code></td><td>Browse loaded source files</td></tr>
+      <tr><td><code>ViewDbf()</code></td><td>Open a DBF viewer for the current work area</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
-  <pre><code>// Para habilitar a depuração, adicione este pragma no topo dos módulos a depurar:
+  <h3>Example</h3>
+  <pre><code>// To enable debugging, add this pragma at the top of modules to debug:
 #pragma /b+
 
 #include "FiveWin.ch"
@@ -581,66 +581,66 @@ function Main()
 
    local cName := "FiveWin"
 
-   // O depurador será ativado automaticamente quando o programa iniciar
-   // se FWDbg.lib estiver linkado. Use F5=Executar, F8=Passo, F9=Breakpoint.
+   // The debugger will activate automatically when the program starts
+   // if FWDbg.lib is linked. Use F5=Go, F8=Step, F9=Breakpoint.
 
    MsgInfo( "Hello " + cName )
 
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="tblockchain">TBlockChain &mdash; Implementação de Blockchain</h2>
+  <h2 id="tblockchain">TBlockChain &mdash; Blockchain Implementation</h2>
   <p>
-    Uma implementação de blockchain em puro Harbour, com hashing SHA-256, mineração por
-    prova de trabalho e validação de blocos. Útil para aprender conceitos de blockchain ou
-    implementar cadeias de dados à prova de adulteração em suas aplicações. Escrito por Cristobal Navarro.
+    A pure Harbour blockchain implementation with SHA-256 hashing, proof-of-work mining,
+    and block validation. Useful for learning blockchain concepts or implementing
+    tamper-proof data chains in your applications. Written by Cristobal Navarro.
   </p>
   <p><strong>Fonte:</strong> <code>source/internal/TBlockChain.prg</code></p>
 
-  <h3>Principais DATA</h3>
+  <h3>Key DATA</h3>
   <table>
-    <thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>aBlocks</code></td><td>Hash</td><td>Todos os blocos da cadeia (CLASSDATA, compartilhado)</td></tr>
-      <tr><td><code>uDifficulty</code></td><td>Caractere</td><td>Prefixo de dificuldade de mineração (padrão: "0000")</td></tr>
-      <tr><td><code>nIterations</code></td><td>Numérico</td><td>Número de iterações de mineração realizadas</td></tr>
-      <tr><td><code>cPublicKey</code></td><td>Caractere</td><td>Chave pública para assinatura</td></tr>
-      <tr><td><code>cSignature</code></td><td>Caractere</td><td>Assinatura do bloco</td></tr>
+      <tr><td><code>aBlocks</code></td><td>Hash</td><td>All blocks in the chain (CLASSDATA, shared)</td></tr>
+      <tr><td><code>uDifficulty</code></td><td>Character</td><td>Mining difficulty prefix (default: "0000")</td></tr>
+      <tr><td><code>nIterations</code></td><td>Numeric</td><td>Number of mining iterations performed</td></tr>
+      <tr><td><code>cPublicKey</code></td><td>Character</td><td>Public key for signing</td></tr>
+      <tr><td><code>cSignature</code></td><td>Character</td><td>Block signature</td></tr>
     </tbody>
   </table>
 
-  <h3>Principais METHODs</h3>
+  <h3>Key METHODs</h3>
   <table>
-    <thead><tr><th>METHOD</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>METHOD</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>New( cKey )</code></td><td>Cria um novo blockchain com bloco gênesis</td></tr>
-      <tr><td><code>AddNewBlock( uOnce, cData )</code></td><td>Adiciona um novo bloco com dados à cadeia</td></tr>
-      <tr><td><code>MineBlock( nIndex )</code></td><td>Minera um bloco (encontra hash que corresponda à dificuldade)</td></tr>
-      <tr><td><code>IsValidBlock( nIndex, cHash )</code></td><td>Valida um bloco específico</td></tr>
-      <tr><td><code>IsValidHash( nIndex )</code></td><td>Verifica o hash de um bloco</td></tr>
-      <tr><td><code>IsValidPrevious( nIndex )</code></td><td>Verifica o vínculo com o hash anterior</td></tr>
-      <tr><td><code>GetAllBlocks()</code></td><td>Retorna toda a cadeia</td></tr>
-      <tr><td><code>GetLastBlock()</code></td><td>Retorna o bloco mais recente</td></tr>
-      <tr><td><code>CountBlocks()</code></td><td>Retorna o número de blocos na cadeia</td></tr>
-      <tr><td><code>SetDifficulty( cVal )</code></td><td>Altera a dificuldade de mineração (ex.: "000000")</td></tr>
+      <tr><td><code>New( cKey )</code></td><td>Create a new blockchain with genesis block</td></tr>
+      <tr><td><code>AddNewBlock( uOnce, cData )</code></td><td>Add a new block with data to the chain</td></tr>
+      <tr><td><code>MineBlock( nIndex )</code></td><td>Mine a block (find hash matching difficulty)</td></tr>
+      <tr><td><code>IsValidBlock( nIndex, cHash )</code></td><td>Validate a specific block</td></tr>
+      <tr><td><code>IsValidHash( nIndex )</code></td><td>Verify the hash of a block</td></tr>
+      <tr><td><code>IsValidPrevious( nIndex )</code></td><td>Verify the previous-hash link</td></tr>
+      <tr><td><code>GetAllBlocks()</code></td><td>Return the entire chain</td></tr>
+      <tr><td><code>GetLastBlock()</code></td><td>Return the most recent block</td></tr>
+      <tr><td><code>CountBlocks()</code></td><td>Return the number of blocks in the chain</td></tr>
+      <tr><td><code>SetDifficulty( cVal )</code></td><td>Change mining difficulty (e.g. "000000")</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
 
    local oChain := TBlockChain():New( "mychain" )
 
-   // Adiciona blocos com dados
+   // Add blocks with data
    oChain:AddNewBlock( , "First transaction: Alice pays Bob 10" )
    oChain:AddNewBlock( , "Second transaction: Bob pays Carol 5" )
 
-   // Minera um bloco
+   // Mine a block
    oChain:MineBlock( 2 )
 
-   // Valida
+   // Validate
    if oChain:IsValidHash( 2 )
       MsgInfo( "Block 2 is valid! Blocks: " + ;
                Str( oChain:CountBlocks() ) )
@@ -651,48 +651,48 @@ function Main()
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="dark-mode">Modo Escuro</h2>
+  <h2 id="dark-mode">Dark Mode</h2>
   <p>
-    O FiveWin oferece suporte integrado a modo escuro através da função <code>FW_SetDarkMode()</code>.
-    Quando habilitado, todos os novos diálogos recebem automaticamente o tema com cores escuras
-    em <code>TDialog:Initiate()</code>, e as janelas já abertas também recebem o tema imediatamente.
+    FiveWin provides built-in dark mode support through the <code>FW_SetDarkMode()</code>
+    function. When enabled, all new dialogs are automatically themed with dark colors
+    in <code>TDialog:Initiate()</code>, and existing open windows are also themed immediately.
   </p>
-  <p><strong>Fonte:</strong> <code>source/classes/dialog.prg</code> (linha ~1462)</p>
+  <p><strong>Fonte:</strong> <code>source/classes/dialog.prg</code> (line ~1462)</p>
 
   <div class="mermaid">
 flowchart LR
-    A["FW_SetDarkMode(.T.)"] --> B["Define lDarkMode = .T."]
-    B --> C["Aplica tema a todas as janelas existentes"]
-    B --> D["Novos diálogos com tema automático<br/>em TDialog:Initiate()"]
-    C --> E["SetDarkMode() em cada janela"]
+    A["FW_SetDarkMode(.T.)"] --> B["Sets lDarkMode = .T."]
+    B --> C["Themes all existing windows"]
+    B --> D["New dialogs auto-themed<br/>in TDialog:Initiate()"]
+    C --> E["SetDarkMode() on each window"]
     D --> E
-    E --> F["Fundo escuro + texto claro<br/>em todos os controles"]
+    E --> F["Dark background + light text<br/>on all controls"]
   </div>
 
   <h3>API</h3>
   <table>
-    <thead><tr><th>Chamada</th><th>Descrição</th></tr></thead>
+    <thead><tr><th>Call</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>FW_SetDarkMode( .T. )</code></td><td>Habilita o modo escuro com cores padrão (texto: RGB(220,220,220), fundo: RGB(30,30,30))</td></tr>
-      <tr><td><code>FW_SetDarkMode( .T., nClrText, nClrBack )</code></td><td>Habilita com cores personalizadas</td></tr>
-      <tr><td><code>FW_SetDarkMode( .F. )</code></td><td>Desabilita o modo escuro (restaura as cores do sistema)</td></tr>
-      <tr><td><code>FW_SetDarkMode()</code></td><td>Consulta o estado atual (retorna .T. ou .F.)</td></tr>
+      <tr><td><code>FW_SetDarkMode( .T. )</code></td><td>Enable dark mode with default colors (text: RGB(220,220,220), back: RGB(30,30,30))</td></tr>
+      <tr><td><code>FW_SetDarkMode( .T., nClrText, nClrBack )</code></td><td>Enable with custom colors</td></tr>
+      <tr><td><code>FW_SetDarkMode( .F. )</code></td><td>Disable dark mode (restore system colors)</td></tr>
+      <tr><td><code>FW_SetDarkMode()</code></td><td>Query current state (returns .T. or .F.)</td></tr>
     </tbody>
   </table>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
 
    local oWnd, oDlg
 
-   // Habilita o modo escuro para toda a aplicação
+   // Enable dark mode for the entire application
    FW_SetDarkMode( .T. )
 
    DEFINE WINDOW oWnd TITLE "Dark Mode App" SIZE 600, 400
 
-   // Todos os diálogos criados a partir deste ponto são automaticamente escuros
+   // All dialogs created after this point are automatically dark
    DEFINE DIALOG oDlg TITLE "Settings" SIZE 400, 300 PIXEL TRUEPIXEL OF oWnd
    @ 30, 20 SAY "This dialog is automatically dark!" OF oDlg SIZE 350, 24 PIXEL
    @ 70, 20 GET oGet VAR cName OF oDlg SIZE 350, 24 PIXEL
@@ -703,15 +703,15 @@ function Main()
 
 return nil
 
-// Alterna o modo escuro em tempo de execução:
+// Toggle dark mode at runtime:
 // FW_SetDarkMode( ! FW_SetDarkMode() )</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="gdiplus">Classes de Gráficos GDI+</h2>
+  <h2 id="gdiplus">GDI+ Graphics Classes</h2>
   <p>
-    O FiveWin encapsula a API GDI+ do Windows através de um conjunto de classes para gráficos 2D de
-    alta qualidade: linhas com anti-aliasing, imagens com mesclagem alfa, preenchimentos em gradiente,
-    desenho baseado em caminhos e mais. Todas as classes ficam em <code>source/classes/tgdiplus.prg</code>.
+    FiveWin wraps the Windows GDI+ API through a set of classes for high-quality 2D graphics:
+    anti-aliased lines, alpha-blended images, gradient fills, path-based drawing, and more.
+    All classes live in <code>source/classes/tgdiplus.prg</code>.
   </p>
 
   <div class="mermaid">
@@ -763,14 +763,14 @@ classDiagram
         +New( oPath )
         +Destroy()
     }
-    Graphics --> Pen : usa
-    Graphics --> Brush : usa
-    Graphics --> GDIBmp : desenha
-    Graphics --> Path : desenha
-    Region --> Path : de
+    Graphics --> Pen : uses
+    Graphics --> Brush : uses
+    Graphics --> GDIBmp : draws
+    Graphics --> Path : draws
+    Region --> Path : from
   </div>
 
-  <h3>Exemplo</h3>
+  <h3>Example</h3>
   <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -787,24 +787,24 @@ return nil
 function DrawGdiPlus( hDC )
 
    local oGfx    := Graphics():New( hDC )
-   local oPen    := Pen():New( 255, 255, 0, 0, 3 )    // Caneta vermelha, 3px de largura
-   local oBrush  := Brush():NewSolidBrush( 128, 0, 0, 255 )  // Azul semitransparente
-   local oPenGrn := Pen():New( 255, 0, 180, 0, 2 )    // Caneta verde
+   local oPen    := Pen():New( 255, 255, 0, 0, 3 )    // Red pen, 3px wide
+   local oBrush  := Brush():NewSolidBrush( 128, 0, 0, 255 )  // Semi-transparent blue
+   local oPenGrn := Pen():New( 255, 0, 180, 0, 2 )    // Green pen
 
-   // Desenha um retângulo preenchido com borda
+   // Draw a filled rectangle with border
    oGfx:DrawRect( oPen, oBrush, 50, 50, 200, 150 )
 
-   // Desenha uma elipse
+   // Draw an ellipse
    oGfx:DrawEllipse( oPenGrn, , 300, 80, 180, 120 )
 
-   // Desenha uma linha
+   // Draw a line
    oGfx:DrawLine( oPen, 50, 250, 500, 350 )
 
-   // Desenha texto com anti-aliasing
+   // Draw anti-aliased text
    oGfx:DrawText( 20, 50, "GDI+ in FiveWin!", "Segoe UI", 24, ;
                   Brush():NewSolidBrush( 255, 0, 0, 0 ) )
 
-   // Limpeza
+   // Clean up
    oPen:Destroy()
    oPenGrn:Destroy()
    oBrush:Destroy()
@@ -813,102 +813,102 @@ function DrawGdiPlus( hDC )
 return nil</code></pre>
 
   <!-- ================================================================== -->
-  <h2 id="visual-ide">IDE Visual do FiveWin</h2>
+  <h2 id="visual-ide">FiveWin Visual IDE</h2>
   <p>
-    A IDE Visual do FiveWin (<code>visual/visualfw.exe</code>) é um designer visual de formulários
-    que permite projetar diálogos arrastando e soltando controles, e então gera o
-    código-fonte <code>.prg</code> correspondente. Também suporta edição de arquivos de recursos.
+    The FiveWin Visual IDE (<code>visual/visualfw.exe</code>) is a visual forms designer
+    that lets you design dialogs by dragging and dropping controls, then generates the
+    corresponding <code>.prg</code> source code. It also supports resource file editing.
   </p>
 
-  <h3>Características Principais</h3>
+  <h3>Key Features</h3>
   <ul>
-    <li>Design de diálogos com arrastar e soltar e prévia ao vivo</li>
-    <li>Inspetor de propriedades para todas as propriedades dos controles</li>
-    <li>Geração automática de código <code>.prg</code></li>
-    <li>Importação e exportação de arquivos de recursos (.rc)</li>
-    <li>Suporte a todos os controles do FiveWin (TGet, TButton, TXBrowse, TFolder, etc.)</li>
-    <li>Ferramentas de alinhamento: encaixar na grade, centralizar, distribuir</li>
-    <li>Edição de múltiplos diálogos em abas</li>
+    <li>Drag-and-drop dialog design with live preview</li>
+    <li>Property inspector for all control properties</li>
+    <li>Automatic <code>.prg</code> code generation</li>
+    <li>Resource file (.rc) import and export</li>
+    <li>Support for all FiveWin controls (TGet, TButton, TXBrowse, TFolder, etc.)</li>
+    <li>Alignment tools: snap to grid, center, distribute</li>
+    <li>Multiple dialog editing in tabs</li>
   </ul>
 
-  <h3>Primeiros Passos</h3>
+  <h3>Getting Started</h3>
   <ol>
-    <li>Execute <code>visual/visualfw.exe</code> a partir do diretório do FiveWin</li>
-    <li>Crie um novo formulário ou abra um arquivo <code>.prg</code> existente</li>
-    <li>Arraste controles da caixa de ferramentas para a superfície do diálogo</li>
-    <li>Defina as propriedades no painel inspetor à direita</li>
-    <li>Clique em "Gerar Código" para produzir o código-fonte <code>.prg</code></li>
-    <li>Compile o código gerado com o compilador de sua preferência</li>
+    <li>Run <code>visual/visualfw.exe</code> from the FiveWin directory</li>
+    <li>Create a new form or open an existing <code>.prg</code> file</li>
+    <li>Drag controls from the toolbox onto the dialog surface</li>
+    <li>Set properties in the inspector panel on the right</li>
+    <li>Click "Generate Code" to produce the <code>.prg</code> source</li>
+    <li>Build the generated code with your preferred compiler</li>
   </ol>
   <p>
-    Consulte o diretório <code>samples/FiveUI/</code> para ver 17 formulários de exemplo criados com o
-    designer visual.
+    See the <code>samples/FiveUI/</code> directory for 17 sample forms created with the
+    visual designer.
   </p>
 
-  <h2 id="summary">Diagrama Resumo</h2>
+  <h2 id="summary">Summary Diagram</h2>
   <div class="mermaid">
 mindmap
-  root((Mais Classes FWH))
-    Componentes UI
+  root((More FWH Classes))
+    UI Components
       TExplorerBar
-        Painéis recolhíveis
-        Filhos TTaskPanel
-        Links URL dentro dos painéis
+        Collapsible panels
+        TTaskPanel children
+        URL links inside panels
       TNavigator
-        Painéis com gradiente
-        Expandir/recolher
-        Estilo Outlook
+        Gradient panels
+        Expand/collapse
+        Outlook-style
       TCoverFlow
-        Carrossel de imagens 3D
-        Transições animadas
-        Navegação por teclado
+        3D image carousel
+        Animated transitions
+        Keyboard navigation
       TBarTabs
-        Barras de ferramentas com abas
-        Adição dinâmica de abas
-    Dados e Documentos
+        Tabbed toolbars
+        Dynamic tab addition
+    Data &amp; Documents
       TXmlDocument
         Harbour hbxml
-        Parsing estilo DOM
+        DOM-style parsing
         TXmlIterator
       TWorkBook
-        XLSX nativo
+        Native XLSX
         TWorkSheet
-        Fórmulas e imagens
+        Formulas and images
       TBlockChain
-        Hashing SHA-256
-        Prova de trabalho
-        Validação de blocos
-    Internet e Mídia
+        SHA-256 hashing
+        Proof of work
+        Block validation
+    Internet &amp; Media
       TWebClient
         HTTP GET via sockets
-        Callbacks assíncronos
+        Async callbacks
       TWebCam
-        API VFW
-        Prévia ao vivo
-        Captura de imagem estática
-    Ferramentas de Desenvolvimento
-      Depurador TDbg
+        VFW API
+        Live preview
+        Still capture
+    Development Tools
+      TDbg Debugger
         Breakpoints
-        Inspeção de variáveis
-        Pilha de chamadas
-      Classes GDI+
+        Variable inspection
+        Call stack
+      GDI+ Classes
         Graphics, Pen, Brush
         Path, Region, GDIBmp
-        Desenho com anti-aliasing
-    Recursos da Aplicação
-      Modo Escuro
+        Anti-aliased drawing
+    Application Features
+      Dark Mode
         FW_SetDarkMode
-        Tema automático de diálogos
-        Cores personalizadas
-      IDE Visual
-        Designer de formulários
-        Geração de código
-        Inspetor de propriedades
+        Auto-themes dialogs
+        Custom colors
+      Visual IDE
+        Form designer
+        Code generation
+        Property inspector
   </div>
 
 </main>
 <aside id="toc">
-  <div id="toc-title">Nesta página</div>
+  <div id="toc-title">On this page</div>
   <div id="toc-links"></div>
 </aside>
 <script src="../../js/app.js"></script>

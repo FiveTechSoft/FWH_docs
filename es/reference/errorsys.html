@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema de Errores - Documentación FWH</title>
+<title>Error System - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,170 +11,170 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>Sistema de Errores</h1>
+<h1>Error System</h1>
 <p class="class-source">Fuente: <code>source/function/errsysw.prg</code></p>
 
 <p>
-FiveWin reemplaza el manejador de errores predeterminado de Harbour con un diálogo de error basado en GUI que muestra
-información diagnóstica detallada. El sistema de errores se inicializa automáticamente al inicio de la aplicación
-a través del procedimiento <code>ErrorSys()</code>, que establece un bloque de error que llama a
+FiveWin replaces Harbour's default error handler with a GUI-based error dialog that displays
+detailed diagnostic information. The error system is automatically initialized at application
+startup via the <code>ErrorSys()</code> procedure, which sets an error block calling
 <code>ErrorDialog()</code>.
 </p>
 
-<h2 id="flow">Flujo de Manejo de Errores</h2>
+<h2 id="flow">Error Handling Flow</h2>
 
 <div class="mermaid">
 flowchart TD
-    A[Ocurre Error en Tiempo de Ejecución] --> B{¿Tipo de Error?}
-    B -->|División por Cero| C[Devolver 0<br/>silenciosamente]
-    B -->|Error de Apertura de Red| D[Establecer NetErr .T.<br/>Devolver .F.]
-    B -->|Error de Bloqueo Append| E[Establecer NetErr .T.<br/>Devolver .F.]
-    B -->|Otro Error| F[ErrorDialog]
-    F --> G[Construir Registro de Error]
-    G --> H{¿bUserDlg establecido?}
-    H -->|Sí| I[Llamar Diálogo Personalizado]
-    H -->|No| J[Mostrar Diálogo de Error FWH]
-    J --> K[Usuario Elige Acción]
-    K -->|Salir| L[Escribir error.log<br/>QUIT]
-    K -->|Reintentar| M[Devolver .T.]
-    K -->|Por Defecto| N[Devolver .F.]
-    K -->|Depurar| O[AltD en el error]
-    L --> P{¿bUserAction establecido?}
-    P -->|Sí| Q[Ejecutar Acción Post-Error]
-    P -->|No| R[La Aplicación Sale]
+    A[Runtime Error Occurs] --> B{Error Type?}
+    B -->|Division by Zero| C[Return 0<br/>silently]
+    B -->|Network Open Error| D[Set NetErr .T.<br/>Return .F.]
+    B -->|Append Lock Error| E[Set NetErr .T.<br/>Return .F.]
+    B -->|Other Error| F[ErrorDialog]
+    F --> G[Build Error Log]
+    G --> H{bUserDlg set?}
+    H -->|Yes| I[Call Custom Dialog]
+    H -->|No| J[Show FWH Error Dialog]
+    J --> K[User Chooses Action]
+    K -->|Quit| L[Write error.log<br/>QUIT]
+    K -->|Retry| M[Return .T.]
+    K -->|Default| N[Return .F.]
+    K -->|Debug| O[AltD at error]
+    L --> P{bUserAction set?}
+    P -->|Yes| Q[Execute Post-Error Action]
+    P -->|No| R[Application Exits]
 </div>
 
-<h2 id="auto-handling">Manejo Automático de Errores</h2>
+<h2 id="auto-handling">Automatic Error Handling</h2>
 
 <p>
-Ciertos tipos de error se manejan automáticamente sin mostrar el diálogo de error:
+Certain error types are handled automatically without showing the error dialog:
 </p>
 
 <table>
 <thead>
-<tr><th>Error</th><th>genCode</th><th>Acción Automática</th></tr>
+<tr><th>Error</th><th>genCode</th><th>Automatic Action</th></tr>
 </thead>
 <tbody>
-<tr><td>División por cero</td><td><code>EG_ZERODIV</code></td><td>Devuelve 0 silenciosamente</td></tr>
-<tr><td>Error de apertura de red (código OS 32 o 5)</td><td><code>EG_OPEN</code></td><td>Establece <code>NetErr(.T.)</code>, devuelve .F.</td></tr>
-<tr><td>Error de bloqueo append</td><td><code>EG_APPENDLOCK</code></td><td>Establece <code>NetErr(.T.)</code>, devuelve .F.</td></tr>
-<tr><td>Error recursivo (7+ niveles de profundidad)</td><td>cualquiera</td><td>Fuerza QUIT para prevenir bucle infinito</td></tr>
+<tr><td>Division by zero</td><td><code>EG_ZERODIV</code></td><td>Returns 0 silently</td></tr>
+<tr><td>Network open error (OS code 32 or 5)</td><td><code>EG_OPEN</code></td><td>Sets <code>NetErr(.T.)</code>, returns .F.</td></tr>
+<tr><td>Append lock error</td><td><code>EG_APPENDLOCK</code></td><td>Sets <code>NetErr(.T.)</code>, returns .F.</td></tr>
+<tr><td>Recursive error (7+ levels deep)</td><td>any</td><td>Forces QUIT to prevent infinite loop</td></tr>
 </tbody>
 </table>
 
-<h2 id="error-dialog">Diálogo de Error</h2>
+<h2 id="error-dialog">Error Dialog</h2>
 
 <p>
-El diálogo de error de FiveWin es un diálogo moderno y rico en funciones que se adapta al tema del sistema:
+The FiveWin error dialog is a modern, feature-rich dialog that adapts to the system theme:
 </p>
 
 <ul>
-<li><strong>Detección automática de modo oscuro</strong> -- el diálogo lee la clave del registro "AppsUseLightTheme" de Windows y ajusta su esquema de colores en consecuencia</li>
-<li><strong>Mensaje de error</strong> -- mostrado prominentemente en la parte superior</li>
-<li><strong>Pila de llamadas</strong> -- mostrada en un listbox con nombres de procedimientos, números de línea y archivos fuente</li>
-<li><strong>Botones de acción</strong>:
+<li><strong>Dark mode auto-detection</strong> -- the dialog reads the Windows "AppsUseLightTheme" registry key and adjusts its color scheme accordingly</li>
+<li><strong>Error message</strong> -- displayed prominently at the top</li>
+<li><strong>Call stack</strong> -- shown in a listbox with procedure names, line numbers, and source files</li>
+<li><strong>Action buttons</strong>:
   <ul>
-    <li><strong>Salir</strong> -- escribe error.log y termina</li>
-    <li><strong>Reintentar</strong> -- devuelve .T. (si <code>e:canRetry</code>)</li>
-    <li><strong>Por Defecto</strong> -- devuelve .F. (si <code>e:canDefault</code>)</li>
-    <li><strong>Depurar</strong> -- activa el depurador (si está disponible)</li>
+    <li><strong>Quit</strong> -- writes error.log and terminates</li>
+    <li><strong>Retry</strong> -- returns .T. (if <code>e:canRetry</code>)</li>
+    <li><strong>Default</strong> -- returns .F. (if <code>e:canDefault</code>)</li>
+    <li><strong>Debug</strong> -- activates the debugger (if available)</li>
   </ul>
 </li>
-<li><strong>Botón Copiar</strong> -- copia el registro de error completo al portapapeles</li>
-<li><strong>Botón Ver</strong> -- abre error.log en el Bloc de Notas</li>
+<li><strong>Copy button</strong> -- copies the complete error log to the clipboard</li>
+<li><strong>See button</strong> -- opens error.log in Notepad</li>
 </ul>
 
-<h2 id="error-log">Formato del Registro de Error</h2>
+<h2 id="error-log">Error Log Format</h2>
 
 <p>
-Cuando el usuario hace clic en "Salir", se escribe (o se agrega a) un archivo <code>error.log</code>. El registro contiene estas secciones:
+When the user clicks "Quit", an <code>error.log</code> file is written (or appended). The log contains these sections:
 </p>
 
-<pre><code>Aplicación
+<pre><code>Application
 ===========
-   Ruta y nombre: C:\myapp\myapp.exe (32 bits)
-   Versión FiveWin: FWH 26.05
-   Versión Harbour: 3.2.0
-   Fecha: 2026-03-24
-   Hora: 14:30:45
+   Path and name: C:\myapp\myapp.exe (32 bits)
+   FiveWin version: FWH 26.05
+   Harbour version: 3.2.0
+   Date: 2026-03-24
+   Time: 14:30:45
 
 Error
 =====
-   Descripción: Argument error
-   SubSistema: BASE
-   Operación: +
+   Description: Argument error
+   SubSystem: BASE
+   Operation: +
    Args:
       [1] = C "Hello"
       [2] = N 42
 
-Pila de Llamadas
+Call Stack
 ==========
-   Llamado desde MAIN(25) en source\main.prg
-   Llamado desde PROCESSDATA(102) en source\process.prg
+   Called from MAIN(25) in source\main.prg
+   Called from PROCESSDATA(102) in source\process.prg
    ...
 
-Sistema
+System
 ======
-   SO: Windows 11 Build 22621
-   Directorios de Windows
-   Tareas activas
+   OS: Windows 11 Build 22621
+   Windows Directories
+   Active tasks
 
-Bases de datos en uso
+Databases in use
 ================
-   Área 1: CUSTOMERS (customers.dbf) RecNo: 42 RecCount: 1500
+   Area 1: CUSTOMERS (customers.dbf) RecNo: 42 RecCount: 1500
    ...</code></pre>
 
-<h2 id="customization">Personalizar el Sistema de Errores</h2>
+<h2 id="customization">Customizing the Error System</h2>
 
 <h3>SetErrorPath() / SetErrorFileName()</h3>
 
-<pre><code class="language-harbour">// Cambiar la ubicación del registro de errores
+<pre><code class="language-harbour">// Change error log location
 SetErrorPath( "C:\logs\" )
 SetErrorFileName( "myapp_error.log" )</code></pre>
 
-<h3>SetErrorDialog() -- Diálogo Personalizado</h3>
+<h3>SetErrorDialog() -- Custom Dialog</h3>
 
-<pre><code class="language-harbour">// Reemplazar el diálogo de error completo con uno personalizado
+<pre><code class="language-harbour">// Replace the entire error dialog with a custom one
 SetErrorDialog( { |oDlg, e, cLog, aStack|
-   // oDlg es el diálogo que se está creando
-   // e es el objeto de error
-   // cLog es el texto del registro de error
-   // aStack es el array de la pila de llamadas
-   // Devuelve: nil (usar botones por defecto) o manejar botones usted mismo
+   // oDlg is the dialog being created
+   // e is the error object
+   // cLog is the error log text
+   // aStack is the call stack array
+   // Return: nil (use default buttons) or handle buttons yourself
 } )</code></pre>
 
-<h3>SetPostErrorAction() -- Gancho Post-Error</h3>
+<h3>SetPostErrorAction() -- Post-Error Hook</h3>
 
-<pre><code class="language-harbour">// Ejecutar código después de que se cierre el diálogo de error
+<pre><code class="language-harbour">// Execute code after the error dialog closes
 SetPostErrorAction( { |e, cLog|
-   // Enviar informe de error al servidor
+   // Send error report to server
    SendErrorReport( cLog )
-   // o reiniciar la aplicación
+   // or restart the application
    // WinExec( GetModuleFileName( GetInstance() ) )
 } )</code></pre>
 
-<h3>ErrorBlock Personalizado</h3>
+<h3>Custom ErrorBlock</h3>
 
-<pre><code class="language-harbour">// Reemplazar el manejador de errores completamente
+<pre><code class="language-harbour">// Replace the error handler entirely
 ErrorBlock( { |e| MyErrorHandler( e ) } )
 
 static function MyErrorHandler( e )
 
-   // Registrar en archivo
+   // Log to file
    LogFile( "errors.log", { e:Description, e:Operation, ;
       ProcName(4), ProcLine(4) } )
 
-   // Mostrar mensaje simple
+   // Show simple message
    MsgStop( e:Description + CRLF + ;
-      "en " + ProcName(4) + "(" + LTrim( Str( ProcLine(4) ) ) + ")" )
+      "at " + ProcName(4) + "(" + LTrim( Str( ProcLine(4) ) ) + ")" )
 
-   // Salir de la aplicación
+   // Quit the application
    PostQuitMessage( 0 )
    __Quit()
 
 return nil</code></pre>
 
-<h2 id="example-try">Ejemplo: Bloques TRY/CATCH</h2>
+<h2 id="example-try">Example: TRY/CATCH Blocks</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -182,76 +182,76 @@ function Main()
 
    local xResult
 
-   // TRY/CATCH previene que se muestre el diálogo de error
+   // TRY/CATCH prevents the error dialog from showing
    TRY
       xResult := SomeRiskyOperation()
-      MsgInfo( "Resultado: " + cValToChar( xResult ) )
+      MsgInfo( "Result: " + cValToChar( xResult ) )
    CATCH e
       MsgAlert( "Error: " + e:Description + CRLF + ;
-         "Operación: " + e:Operation )
+         "Operation: " + e:Operation )
    END
 
 return nil</code></pre>
 
-<h2 id="example-custom">Ejemplo: Manejador de Error Personalizado con Email</h2>
+<h2 id="example-custom">Example: Custom Error Handler with Email</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
 function Main()
 
-   // Instalar acción post-error personalizada
+   // Install custom post-error action
    SetPostErrorAction( { |e, cLog|
-      // Guardar registro de error
+      // Save error log
       MemoWrit( "crash_" + DToS( Date() ) + "_" + StrTran( Time(), ":", "" ) + ".log", cLog )
 
-      // Podría enviar notificación por email aquí
+      // Could send email notification here
       // SendMail( "admin@company.com", "App Crash", cLog )
    } )
 
-   // Cambiar ubicación del registro de errores
+   // Change error log location
    SetErrorPath( "C:\logs\" )
    SetErrorFileName( "app_errors.log" )
 
-   // ... resto de la aplicación ...
+   // ... rest of application ...
    AppMain()
 
 return nil</code></pre>
 
-<h2 id="error-object">Propiedades del Objeto de Error</h2>
+<h2 id="error-object">Error Object Properties</h2>
 
 <p>
-El objeto de error <code>e</code> pasado al manejador de errores es un objeto Error estándar de Harbour:
+The error object <code>e</code> passed to the error handler is a standard Harbour Error object:
 </p>
 
 <table>
 <thead>
-<tr><th>Propiedad</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>Property</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>e:Description</code></td><td>Character</td><td>Descripción legible del error</td></tr>
-<tr><td><code>e:Operation</code></td><td>Character</td><td>La operación que causó el error</td></tr>
-<tr><td><code>e:SubSystem</code></td><td>Character</td><td>Nombre del subsistema (BASE, DBCMD, etc.)</td></tr>
-<tr><td><code>e:genCode</code></td><td>Numeric</td><td>Código genérico de error (EG_*)</td></tr>
-<tr><td><code>e:subCode</code></td><td>Numeric</td><td>Código de error específico del subsistema</td></tr>
-<tr><td><code>e:osCode</code></td><td>Numeric</td><td>Código de error del sistema operativo</td></tr>
-<tr><td><code>e:Args</code></td><td>Array</td><td>Argumentos que causaron el error</td></tr>
-<tr><td><code>e:canRetry</code></td><td>Logical</td><td>Si es posible reintentar</td></tr>
-<tr><td><code>e:canDefault</code></td><td>Logical</td><td>Si es posible la acción por defecto</td></tr>
-<tr><td><code>e:canSubstitute</code></td><td>Logical</td><td>Si se puede devolver un valor sustituto</td></tr>
-<tr><td><code>e:FileName</code></td><td>Character</td><td>Archivo que causó el error (si aplica)</td></tr>
+<tr><td><code>e:Description</code></td><td>Character</td><td>Human-readable error description</td></tr>
+<tr><td><code>e:Operation</code></td><td>Character</td><td>The operation that caused the error</td></tr>
+<tr><td><code>e:SubSystem</code></td><td>Character</td><td>Subsystem name (BASE, DBCMD, etc.)</td></tr>
+<tr><td><code>e:genCode</code></td><td>Numeric</td><td>Generic error code (EG_*)</td></tr>
+<tr><td><code>e:subCode</code></td><td>Numeric</td><td>Subsystem-specific error code</td></tr>
+<tr><td><code>e:osCode</code></td><td>Numeric</td><td>Operating system error code</td></tr>
+<tr><td><code>e:Args</code></td><td>Array</td><td>Arguments that caused the error</td></tr>
+<tr><td><code>e:canRetry</code></td><td>Logical</td><td>Whether retry is possible</td></tr>
+<tr><td><code>e:canDefault</code></td><td>Logical</td><td>Whether default action is possible</td></tr>
+<tr><td><code>e:canSubstitute</code></td><td>Logical</td><td>Whether a substitute value can be returned</td></tr>
+<tr><td><code>e:FileName</code></td><td>Character</td><td>File that caused the error (if applicable)</td></tr>
 </tbody>
 </table>
 
-<h2 id="multi-language">Soporte Multi-Idioma</h2>
+<h2 id="multi-language">Multi-Language Support</h2>
 
 <p>
-El diálogo de error usa <code>FWString()</code> para todo el texto visible al usuario, por lo que se adapta automáticamente
-al idioma establecido por <code>FWSetLanguage()</code>. Las cadenas soportadas incluyen
-"Application", "Path and name", "Date", "Time", descripciones de error y etiquetas de botones.
+The error dialog uses <code>FWString()</code> for all user-visible text, so it automatically
+adapts to the language set by <code>FWSetLanguage()</code>. Supported strings include
+"Application", "Path and name", "Date", "Time", error descriptions, and button labels.
 </p>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

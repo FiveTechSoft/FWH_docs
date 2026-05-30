@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TKnob - Documentaci&oacute;n FWH</title>
+<title>TKnob - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -12,73 +12,73 @@
 <main id="content">
 
 <h1>TKnob</h1>
-<p class="class-source">Fuente: <code>source/classes/tknob.prg</code> &nbsp;|&nbsp; Comando: <code>include/tknob.ch</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
-<p style="opacity:.8">Aportado por Silvio Falconi.</p>
+<p class="class-source">Fuente: <code>source/classes/tknob.prg</code> &nbsp;|&nbsp; Command: <code>include/tknob.ch</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
+<p style="opacity:.8">Contributed by Silvio Falconi.</p>
 
 <p>
-TKnob es un control moderno de mando rotatorio (knob) para FiveWin / Harbour, dise&ntilde;ado para
-aplicaciones de audio, MIDI y sintetizadores (mezcladores, cajas de ritmos, interfaces estilo
-VST y pantallas t&aacute;ctiles). Es una implementaci&oacute;n pura en Harbour/FiveWin basada en
-<code>TControl</code>: todo el dibujo se hace con primitivas GDI, por lo que no requiere ninguna DLL adicional.
+TKnob is a modern custom rotary knob control for FiveWin / Harbour, designed for audio,
+MIDI and synthesizer style applications (mixers, drum machines, VST-like interfaces and
+touch screens). It is a pure Harbour/FiveWin implementation built on <code>TControl</code> &mdash;
+all drawing is done with GDI primitives, so no extra DLL is required.
 </p>
 
-<h2 id="features">Caracter&iacute;sticas</h2>
+<h2 id="features">Features</h2>
 <ul>
-<li>Dise&ntilde;o moderno de mando rotatorio con &aacute;rea compacta y recorte (clipping) correcto.</li>
-<li>Soporte de fondo transparente / con tema (<code>IsAppThemed()</code>).</li>
-<li>Dos modos de indicador: <strong>LED</strong> (punto) o <strong>LINE</strong> (l&iacute;nea).</li>
-<li>Anillo exterior iluminado con resplandor suave y marcas externas opcionales (<code>lTicks</code>).</li>
-<li>Modo <strong>Unipolar</strong> (0..127) y modo <strong>Bipolar</strong> (-30..+30, muestra el valor con signo).</li>
-<li>Control con arrastre del rat&oacute;n (vertical) y rueda; mant&eacute;n <kbd>CTRL</kbd> para un paso m&aacute;s fino.</li>
-<li>El doble clic restaura el valor por defecto.</li>
-<li>Estado habilitado / deshabilitado con realimentaci&oacute;n visual atenuada (<code>Toggle()</code>).</li>
-<li>Visualizaci&oacute;n del valor interno y etiqueta externa, con fuentes separadas (<code>oFontInner</code> / <code>oFont</code>).</li>
-<li>Enlace de variable <code>bSetGet</code> y callbacks <code>bChanged</code> y <code>bAction</code>.</li>
+<li>Modern rotary knob design with compact control area and correct clipping.</li>
+<li>Transparent / themed background support (<code>IsAppThemed()</code>).</li>
+<li>Two indicator modes: <strong>LED</strong> (dot) or <strong>LINE</strong>.</li>
+<li>External illuminated ring with soft glow, plus optional external ticks (<code>lTicks</code>).</li>
+<li><strong>Unipolar</strong> mode (0..127) and <strong>Bipolar</strong> mode (-30..+30, shows signed value).</li>
+<li>Mouse drag (vertical) and mouse wheel control; hold <kbd>CTRL</kbd> for a finer wheel step.</li>
+<li>Double click resets to the default value.</li>
+<li>Enable / disable state with dimmed visual feedback (<code>Toggle()</code>).</li>
+<li>Internal value display and external label, with separate fonts (<code>oFontInner</code> / <code>oFont</code>).</li>
+<li><code>bSetGet</code> variable binding, <code>bChanged</code> and <code>bAction</code> callbacks.</li>
 </ul>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Defecto</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nValue</code></td><td>Num&eacute;rico</td><td><code>64</code></td><td>Valor actual (limitado a nMin..nMax)</td></tr>
-<tr><td><code>nMin</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>Valor m&iacute;nimo</td></tr>
-<tr><td><code>nMax</code></td><td>Num&eacute;rico</td><td><code>127</code></td><td>Valor m&aacute;ximo</td></tr>
-<tr><td><code>nDefault</code></td><td>Num&eacute;rico</td><td><code>64</code></td><td>Valor restaurado con doble clic</td></tr>
-<tr><td><code>cIndicator</code></td><td>Car&aacute;cter</td><td><code>"LED"</code></td><td>Estilo de indicador: <code>"LED"</code> o <code>"LINE"</code></td></tr>
-<tr><td><code>cMode</code></td><td>Car&aacute;cter</td><td><code>"UNIPOLAR"</code></td><td>Modo de rango: <code>"UNIPOLAR"</code> o <code>"BIPOLAR"</code></td></tr>
-<tr><td><code>lTicks</code></td><td>L&oacute;gico</td><td><code>.F.</code></td><td>Dibujar marcas externas alrededor del anillo</td></tr>
-<tr><td><code>lActive</code></td><td>L&oacute;gico</td><td><code>.T.</code></td><td>Estado habilitado (atenuado si .F.)</td></tr>
-<tr><td><code>nWheelStep</code> / <code>nCtrlStep</code></td><td>Num&eacute;rico</td><td><code>1</code></td><td>Paso de rueda y paso m&aacute;s fino con CTRL pulsado</td></tr>
-<tr><td><code>oFont</code> / <code>oFontInner</code></td><td>Objeto</td><td></td><td>Fuentes de la etiqueta externa y del valor interno</td></tr>
-<tr><td><code>bSetGet</code></td><td>Bloque</td><td></td><td>Bloque SetGet para enlace de variable (lectura/escritura)</td></tr>
-<tr><td><code>bChanged</code></td><td>Bloque</td><td></td><td>Se ejecuta al cambiar el valor; recibe <code>( Self, nValue )</code></td></tr>
-<tr><td><code>bAction</code></td><td>Bloque</td><td></td><td>Se ejecuta al alternar; recibe <code>( Self, lActive )</code></td></tr>
+<tr><td><code>nValue</code></td><td>Numeric</td><td><code>64</code></td><td>Current value (clamped to nMin..nMax)</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td><code>0</code></td><td>Minimum value</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td><code>127</code></td><td>Maximum value</td></tr>
+<tr><td><code>nDefault</code></td><td>Numeric</td><td><code>64</code></td><td>Value restored on double click</td></tr>
+<tr><td><code>cIndicator</code></td><td>Char</td><td><code>"LED"</code></td><td>Indicator style: <code>"LED"</code> or <code>"LINE"</code></td></tr>
+<tr><td><code>cMode</code></td><td>Char</td><td><code>"UNIPOLAR"</code></td><td>Range mode: <code>"UNIPOLAR"</code> or <code>"BIPOLAR"</code></td></tr>
+<tr><td><code>lTicks</code></td><td>Logical</td><td><code>.F.</code></td><td>Draw external tick marks around the ring</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td><code>.T.</code></td><td>Enabled state (dimmed when .F.)</td></tr>
+<tr><td><code>nWheelStep</code> / <code>nCtrlStep</code></td><td>Numeric</td><td><code>1</code></td><td>Wheel step, and finer step while CTRL is held</td></tr>
+<tr><td><code>oFont</code> / <code>oFontInner</code></td><td>Object</td><td></td><td>Fonts for the external label and the inner value text</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td></td><td>SetGet codeblock for variable binding (read/write)</td></tr>
+<tr><td><code>bChanged</code></td><td>Block</td><td></td><td>Fired when the value changes; receives <code>( Self, nValue )</code></td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td></td><td>Fired on toggle; receives <code>( Self, lActive )</code></td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, bSetGet, oWnd, nWidth, nHeight, cMsg, nMin, nMax, cIndicator, cMode, lTicks, bAction, lDesign, oFont, oFontInner )</code></td><td>Crear un nuevo control knob</td></tr>
-<tr><td><code>SetValue( nValue )</code></td><td>Establecer el valor (limitado), disparar bSetGet/bChanged y repintar</td></tr>
-<tr><td><code>GetValue()</code></td><td>Devolver el <code>nValue</code> actual</td></tr>
-<tr><td><code>SetMode( cMode )</code></td><td>Cambiar entre <code>"UNIPOLAR"</code> (0..127) y <code>"BIPOLAR"</code> (-30..+30) y reiniciar rango/defecto</td></tr>
-<tr><td><code>Toggle()</code></td><td>Alternar el estado habilitado y disparar <code>bAction</code></td></tr>
-<tr><td><code>Display()</code> / <code>Paint()</code></td><td>Renderizar el knob (anillo, arco de resplandor, cuerpo, indicador, valor, etiqueta)</td></tr>
-<tr><td><code>Destroy()</code></td><td>Destruir el control</td></tr>
+<tr><td><code>New( nTop, nLeft, bSetGet, oWnd, nWidth, nHeight, cMsg, nMin, nMax, cIndicator, cMode, lTicks, bAction, lDesign, oFont, oFontInner )</code></td><td>Create a new knob control</td></tr>
+<tr><td><code>SetValue( nValue )</code></td><td>Set the value (clamped), fire bSetGet/bChanged and repaint</td></tr>
+<tr><td><code>GetValue()</code></td><td>Return the current <code>nValue</code></td></tr>
+<tr><td><code>SetMode( cMode )</code></td><td>Switch between <code>"UNIPOLAR"</code> (0..127) and <code>"BIPOLAR"</code> (-30..+30) and reset range/default</td></tr>
+<tr><td><code>Toggle()</code></td><td>Flip the enabled state and fire <code>bAction</code></td></tr>
+<tr><td><code>Display()</code> / <code>Paint()</code></td><td>Render the knob (ring, glow arc, body, indicator, value, label)</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destroy the control</td></tr>
 </tbody>
 </table>
 
-<h2 id="command">El Comando @ ... KNOB</h2>
-<p>Incluye <code>tknob.ch</code> para usar el comando declarativo:</p>
+<h2 id="command">The @ ... KNOB Command</h2>
+<p>Include <code>tknob.ch</code> to use the declarative command:</p>
 <pre><code class="language-harbour">@ &lt;nRow&gt;, &lt;nCol&gt; KNOB &lt;oKnob&gt;            ;
    VAR &lt;nVar&gt;                            ;
    OF &lt;oWnd&gt;                             ;
@@ -92,7 +92,7 @@ VST y pantallas t&aacute;ctiles). Es una implementaci&oacute;n pura en Harbour/F
    [ ON CHANGE &lt;uChange&gt; ]               ;
    [ ACTION &lt;uAction&gt; ]</code></pre>
 
-<h2 id="example">Ejemplo: Mandos de Volumen y Modulaci&oacute;n</h2>
+<h2 id="example">Example: Volume &amp; Modulation Knobs</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "tknob.ch"
@@ -129,17 +129,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 <ul>
-<li>Arrastra el knob verticalmente para cambiar el valor; la rueda del rat&oacute;n tambi&eacute;n funciona, y mantener <kbd>CTRL</kbd> usa el paso m&aacute;s fino <code>nCtrlStep</code>.</li>
-<li>Un clic simple (sin arrastre) alterna el estado habilitado mediante <code>Toggle()</code>; un doble clic restaura <code>nDefault</code>.</li>
-<li>En modo <code>BIPOLAR</code> el valor interno se muestra con signo (p. ej. <code>+12</code>) y el arco verde comienza desde el centro (posici&oacute;n cero).</li>
-<li>Enlaza una variable con <code>VAR</code> (el comando la envuelve en un bloque <code>bSetGet</code>) o asigna <code>bSetGet</code> manualmente; usa <code>ON CHANGE</code> para actualizar la interfaz.</li>
-<li>Ejemplos: <code>samples/knobtst1.prg</code> (uso directo de <code>New</code>) y <code>samples/knobtst2.prg</code> (sintaxis de comando).</li>
+<li>Drag the knob vertically to change the value; the mouse wheel also works, and holding <kbd>CTRL</kbd> uses the finer <code>nCtrlStep</code>.</li>
+<li>A single click (no drag) toggles the enabled state via <code>Toggle()</code>; a double click resets to <code>nDefault</code>.</li>
+<li>In <code>BIPOLAR</code> mode the inner value is shown signed (e.g. <code>+12</code>) and the green arc starts from the center (zero) position.</li>
+<li>Bind a variable with <code>VAR</code> (the command wraps it in a <code>bSetGet</code> block) or set <code>bSetGet</code> manually; use <code>ON CHANGE</code> for UI updates.</li>
+<li>Demos: <code>samples/knobtst1.prg</code> (direct <code>New</code>) and <code>samples/knobtst2.prg</code> (command syntax).</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/internet/tkimi.html">&larr; tkimi</a> | <a href="../../es/printing/tlabel.html">tlabel &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

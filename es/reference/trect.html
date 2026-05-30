@@ -13,116 +13,116 @@
 
 <h1>TRect / TPoint</h1>
 <p class="class-source">Fuente: <code>source/classes/rect.prg</code></p>
-<p class="class-hierarchy">Clases independientes (sin herencia)</p>
+<p class="class-hierarchy">Standalone classes (no inheritance)</p>
 
 <p>
-TRect y TPoint son clases de utilidad para operaciones de geometría 2D. TRect representa un
-rectángulo definido por sus bordes superior, izquierdo, inferior y derecho. TPoint representa un único
-punto con coordenadas de fila y columna (o Y y X). Ambas clases admiten operadores aritméticos
-y transformaciones geométricas que se necesitan habitualmente en el diseño de la interfaz y el código de dibujo.
+TRect and TPoint are utility classes for 2D geometry operations. TRect represents a
+rectangle defined by its top, left, bottom, and right edges. TPoint represents a single
+point with row and column (or Y and X) coordinates. Both classes support arithmetic operators
+and geometric transformations commonly needed in UI layout and drawing code.
 </p>
 
 <h2 id="trect">TRect</h2>
 
-<h3 id="trect-data">Miembros DATA Principales</h3>
+<h3 id="trect-data">Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aRect</code></td><td>Array</td><td>Datos principales: <code>{ nTop, nLeft, nBottom, nRight }</code></td></tr>
-<tr><td><code>nTop</code></td><td>Numeric</td><td>Borde superior (accesor de aRect[1])</td></tr>
-<tr><td><code>nLeft</code></td><td>Numeric</td><td>Borde izquierdo (accesor de aRect[2])</td></tr>
-<tr><td><code>nBottom</code></td><td>Numeric</td><td>Borde inferior (accesor de aRect[3])</td></tr>
-<tr><td><code>nRight</code></td><td>Numeric</td><td>Borde derecho (accesor de aRect[4])</td></tr>
-<tr><td><code>nWidth</code></td><td>Numeric</td><td>Ancho calculado</td></tr>
-<tr><td><code>nHeight</code></td><td>Numeric</td><td>Alto calculado</td></tr>
-<tr><td><code>cRect</code></td><td>Character</td><td>Estructura binaria RECT (8 bytes) para llamadas a la API Win32</td></tr>
-<tr><td><code>CenterPt</code></td><td>Array</td><td>Punto central como <code>{ nTop, nLeft }</code></td></tr>
-<tr><td><code>lWinRect</code></td><td>Logical</td><td>Rectángulo estilo Windows (derecha/inferior exclusivos). Por defecto .T.</td></tr>
+<tr><td><code>aRect</code></td><td>Array</td><td>Core data: <code>{ nTop, nLeft, nBottom, nRight }</code></td></tr>
+<tr><td><code>nTop</code></td><td>Numeric</td><td>Top edge (accessor for aRect[1])</td></tr>
+<tr><td><code>nLeft</code></td><td>Numeric</td><td>Left edge (accessor for aRect[2])</td></tr>
+<tr><td><code>nBottom</code></td><td>Numeric</td><td>Bottom edge (accessor for aRect[3])</td></tr>
+<tr><td><code>nRight</code></td><td>Numeric</td><td>Right edge (accessor for aRect[4])</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Computed width</td></tr>
+<tr><td><code>nHeight</code></td><td>Numeric</td><td>Computed height</td></tr>
+<tr><td><code>cRect</code></td><td>Character</td><td>Binary RECT structure (8 bytes) for Win32 API calls</td></tr>
+<tr><td><code>CenterPt</code></td><td>Array</td><td>Center point as <code>{ nTop, nLeft }</code></td></tr>
+<tr><td><code>lWinRect</code></td><td>Logical</td><td>Windows-style rect (exclusive right/bottom). Default .T.</td></tr>
 </tbody>
 </table>
 
-<h3 id="trect-methods">Métodos de TRect</h3>
+<h3 id="trect-methods">TRect Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight [, nWidth, nHeight] )</code></td><td>Crea un nuevo rectángulo. Acepta un array, una cadena binaria o cuatro coordenadas. nWidth/nHeight prevalecen sobre nRight/nBottom.</td></tr>
-<tr><td><code>MoveBy( nRows, nCols )</code></td><td>Desplaza todo el rectángulo según los incrementos indicados</td></tr>
-<tr><td><code>MoveTo( nNewTop, nNewLeft )</code></td><td>Mueve el rectángulo de modo que su esquina superior izquierda quede en la posición dada</td></tr>
-<tr><td><code>Contains( aPoint )</code></td><td>Comprueba si un punto { fila, columna } u otro rectángulo está dentro de este</td></tr>
-<tr><td><code>Resize( nRatio [, aPoint] )</code></td><td>Redimensiona según una proporción relativa al centro (o al punto de anclaje especificado)</td></tr>
-<tr><td><code>FitInside( oRect, nType, cAlign )</code></td><td>Ajusta este rectángulo dentro de otro, ampliándolo opcionalmente. nType: 1=exacto, 2=llenar el exterior, 3=ajustar dentro.</td></tr>
-<tr><td><code>AsSquare( lOuter, cAlign )</code></td><td>Lo ajusta para formar un cuadrado expandiendo o contrayendo la dimensión mayor</td></tr>
-<tr><td><code>Modify( ... )</code></td><td>Devuelve un nuevo TRect con los bordes modificados; admite cambios absolutos, fraccionarios y relativos</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight [, nWidth, nHeight] )</code></td><td>Create a new rectangle. Accepts array, binary string, or four coordinates. nWidth/nHeight override nRight/nBottom.</td></tr>
+<tr><td><code>MoveBy( nRows, nCols )</code></td><td>Offset the entire rectangle by the given deltas</td></tr>
+<tr><td><code>MoveTo( nNewTop, nNewLeft )</code></td><td>Move rectangle so its top-left corner is at the given position</td></tr>
+<tr><td><code>Contains( aPoint )</code></td><td>Check if a point { row, col } or another rectangle is inside this one</td></tr>
+<tr><td><code>Resize( nRatio [, aPoint] )</code></td><td>Resize by a ratio relative to center (or specified anchor point)</td></tr>
+<tr><td><code>FitInside( oRect, nType, cAlign )</code></td><td>Fit this rectangle inside another, optionally enlarging. nType: 1=exact, 2=fill outer, 3=fit inside.</td></tr>
+<tr><td><code>AsSquare( lOuter, cAlign )</code></td><td>Adjust to make a square by expanding or contracting the larger dimension</td></tr>
+<tr><td><code>Modify( ... )</code></td><td>Return a new TRect with modified edges; supports absolute, fractional, and relative changes</td></tr>
 </tbody>
 </table>
 
-<h3 id="trect-operators">Operadores de TRect</h3>
+<h3 id="trect-operators">TRect Operators</h3>
 
 <table>
 <thead>
-<tr><th>Operador</th><th>Descripción</th></tr>
+<tr><th>Operator</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>==</code></td><td>Comparación de igualdad (coinciden los cuatro bordes)</td></tr>
-<tr><td><code>+, -, *, /, %</code></td><td>Aritmética sobre los cuatro bordes mediante un valor o un array</td></tr>
-<tr><td><code>+=, -=, *=, /=, %=</code></td><td>Operadores aritméticos in situ</td></tr>
-<tr><td><code>[]</code></td><td>Acceso indexado: <code>oRect[1]</code> = nTop, <code>oRect[2]</code> = nLeft, etc.</td></tr>
+<tr><td><code>==</code></td><td>Equality comparison (all four edges match)</td></tr>
+<tr><td><code>+, -, *, /, %</code></td><td>Arithmetic on all four edges by a value or array</td></tr>
+<tr><td><code>+=, -=, *=, /=, %=</code></td><td>In-place arithmetic operators</td></tr>
+<tr><td><code>[]</code></td><td>Indexed access: <code>oRect[1]</code> = nTop, <code>oRect[2]</code> = nLeft, etc.</td></tr>
 </tbody>
 </table>
 
 <h2 id="tpoint">TPoint</h2>
 
-<h3 id="tpoint-data">Miembros DATA Principales de TPoint</h3>
+<h3 id="tpoint-data">TPoint Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nRow</code></td><td>Numeric</td><td>Coordenada de fila (Y)</td></tr>
-<tr><td><code>nCol</code></td><td>Numeric</td><td>Coordenada de columna (X)</td></tr>
-<tr><td><code>X</code></td><td>Numeric</td><td>Alias de nCol</td></tr>
-<tr><td><code>Y</code></td><td>Numeric</td><td>Alias de nRow</td></tr>
+<tr><td><code>nRow</code></td><td>Numeric</td><td>Row (Y) coordinate</td></tr>
+<tr><td><code>nCol</code></td><td>Numeric</td><td>Column (X) coordinate</td></tr>
+<tr><td><code>X</code></td><td>Numeric</td><td>Alias for nCol</td></tr>
+<tr><td><code>Y</code></td><td>Numeric</td><td>Alias for nRow</td></tr>
 <tr><td><code>aPt</code></td><td>Array</td><td><code>{ nRow, nCol }</code></td></tr>
 <tr><td><code>aXY</code></td><td>Array</td><td><code>{ X, Y }</code> = <code>{ nCol, nRow }</code></td></tr>
 </tbody>
 </table>
 
-<h3 id="tpoint-methods">Métodos de TPoint</h3>
+<h3 id="tpoint-methods">TPoint Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol )</code></td><td>Crea a partir de fila/columna; también acepta un array {fila,columna}</td></tr>
-<tr><td><code>NewXY( x, y )</code></td><td>Crea a partir de coordenadas X/Y (almacenadas como nCol/nRow)</td></tr>
-<tr><td><code>Rect( nRadius [, yRadius] )</code></td><td>Devuelve un TRect centrado en este punto con el radio indicado</td></tr>
-<tr><td><code>Distance( oPt )</code></td><td>Distancia euclídea a otro punto</td></tr>
-<tr><td><code>Plus( r, c [, lNew] )</code></td><td>Suma incrementos y devuelve un nuevo punto (o modifica Self si lNew es .F.)</td></tr>
+<tr><td><code>New( nRow, nCol )</code></td><td>Create from row/col; also accepts an array {row,col}</td></tr>
+<tr><td><code>NewXY( x, y )</code></td><td>Create from X/Y coordinates (stored as nCol/nRow)</td></tr>
+<tr><td><code>Rect( nRadius [, yRadius] )</code></td><td>Return a TRect centered at this point with the given radius</td></tr>
+<tr><td><code>Distance( oPt )</code></td><td>Euclidean distance to another point</td></tr>
+<tr><td><code>Plus( r, c [, lNew] )</code></td><td>Add deltas and return a new point (or modify Self if lNew is .F.)</td></tr>
 </tbody>
 </table>
 
-<h3 id="tpoint-operators">Operadores de TPoint</h3>
+<h3 id="tpoint-operators">TPoint Operators</h3>
 
 <table>
 <thead>
-<tr><th>Operador</th><th>Descripción</th></tr>
+<tr><th>Operator</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>+</code></td><td>Crea un nuevo punto desplazado según el incremento indicado</td></tr>
-<tr><td><code>+=</code></td><td>Desplazamiento in situ</td></tr>
-<tr><td><code>-</code></td><td>Devuelve la distancia entre dos puntos</td></tr>
+<tr><td><code>+</code></td><td>Create a new point offset by the given delta</td></tr>
+<tr><td><code>+=</code></td><td>In-place offset</td></tr>
+<tr><td><code>-</code></td><td>Return the distance between two points</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo</h2>
+<h2 id="example">Example</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -130,36 +130,36 @@ function Main()
 
    local oRect, oPt, oInner
 
-   // Crea un rectángulo de 200x100 en la posición (10,10)
+   // Create a 200x100 rectangle at position (10,10)
    oRect := TRect():New( 10, 10, 110, 210 )
 
-   // Comprueba si un punto está dentro
+   // Test if a point is inside
    oPt := TPoint():New( 50, 100 )
    if oRect:Contains( oPt:aPt )
-      MsgInfo( "El punto está dentro del rectángulo" )
+      MsgInfo( "Point is inside the rectangle" )
    endif
 
-   // Crea un cuadrado y lo ajusta dentro del rectángulo
+   // Create a square and fit it inside the rectangle
    oInner := TRect():New( 0, 0, 100, 100 )
-   oInner:FitInside( oRect, 3, "C" )  // Ajustar dentro, centrado
+   oInner:FitInside( oRect, 3, "C" )  // Fit inside, centered
 
-   // Mueve el rectángulo 10 píxeles en cada dirección
+   // Move the rectangle by 10 pixels in each direction
    oRect:MoveBy( 10, 10 )
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TRect puede construirse a partir de un array, de una estructura binaria RECT o de cuatro coordenadas numéricas.</li>
-<li>El indicador <code>lWinRect</code> controla si los cálculos de ancho/alto usan la convención de Windows (bordes inferior/derecho exclusivos, por defecto .T.) o la convención inclusiva (.F.).</li>
-<li>El operador <code>-</code> de TPoint devuelve la distancia euclídea (un valor numérico), no un nuevo punto.</li>
-<li>Ambas clases ofrecen sobrecarga de <code>OPERATOR</code> para una sintaxis natural de aritmética e indexación.</li>
-<li>Las funciones auxiliares <code>PointXY( x, y )</code> y <code>PointRowCol( r, c )</code> crean objetos TPoint de forma directa.</li>
+<li>TRect can be constructed from an array, from a binary RECT structure, or from four numeric coordinates.</li>
+<li>The <code>lWinRect</code> flag controls whether width/height calculations use Windows convention (exclusive bottom/right edges, default .T.) or inclusive convention (.F.).</li>
+<li>TPoint's <code>-</code> operator returns the Euclidean distance (a numeric value), not a new point.</li>
+<li>Both classes provide <code>OPERATOR</code> overloading for natural arithmetic and indexing syntax.</li>
+<li>Helper Funciones <code>PointXY( x, y )</code> and <code>PointRowCol( r, c )</code> create TPoint objects inline.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/data/trecset.html">&larr; trecset</a> | <a href="../../es/utilities/treg32.html">treg32 &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -13,53 +13,53 @@
 
 <h1>RRW (Rave Reports Wrapper)</h1>
 <p class="class-source">Fuente: <code>source/classes/rrw.prg</code></p>
-<p class="class-hierarchy">Clase independiente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-RRW es una clase envoltorio (wrapper) para el motor de ejecución de Rave Reports (RRW). Gestiona la ejecución de informes mediante un archivo de control (un registro de informes basado en DBF), genera un archivo de control <code>.CNT</code> temporal, lanza el motor <code>RRWRUN.EXE</code> como un proceso externo y recopila los resultados de la ejecución. Los informes se definen en un DBF de control (por defecto <code>RREPORTS.DBF</code>) y se ejecutan por nombre.
+RRW is a wrapper class for the Rave Reports (RRW) runtime engine. It manages report execution via a control file (DBF-based report registry), generates a temporary <code>.CNT</code> control file, launches the <code>RRWRUN.EXE</code> engine as an external process, and collects execution results. Reports are defined in a control DBF (default <code>RREPORTS.DBF</code>) and executed by name.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cRi_Report</code></td><td>Character</td><td>Nombre del informe a ejecutar</td></tr>
-<tr><td><code>cRi_OutFile</code></td><td>Character</td><td>Ruta del archivo de salida para los resultados</td></tr>
-<tr><td><code>cRi_Printer</code></td><td>Character</td><td>Modo de impresión: "P"=impresora, "D"=vista previa</td></tr>
-<tr><td><code>cRi_Filter</code></td><td>Character</td><td>Expresión de filtro opcional</td></tr>
-<tr><td><code>cRi_Query</code></td><td>Character</td><td>Modo de consulta: "S"=silencioso, "?"=preguntar, "O"=filtro</td></tr>
-<tr><td><code>nRi_Copies</code></td><td>Numeric</td><td>Número de copias a imprimir</td></tr>
-<tr><td><code>lActive</code></td><td>Logical</td><td>Indica si el objeto informe está activo y listo</td></tr>
-<tr><td><code>cDataDirectory</code></td><td>Character</td><td>Directorio de los archivos de datos</td></tr>
-<tr><td><code>cLibDirectory</code></td><td>Character</td><td>Directorio de la biblioteca de informes</td></tr>
-<tr><td><code>cControlFile</code></td><td>Character</td><td>Ruta al archivo de control .CNT generado</td></tr>
-<tr><td><code>cOutFile</code></td><td>Character</td><td>Ruta al archivo de resultados .OUT</td></tr>
-<tr><td><code>aResults</code></td><td>Array</td><td>Resultados de la ejecución: { ecode, emsg, nReports, nPages, nRecNo }</td></tr>
+<tr><td><code>cRi_Report</code></td><td>Character</td><td>Report name to execute</td></tr>
+<tr><td><code>cRi_OutFile</code></td><td>Character</td><td>Output file path for results</td></tr>
+<tr><td><code>cRi_Printer</code></td><td>Character</td><td>Print mode: "P"=printer, "D"=preview</td></tr>
+<tr><td><code>cRi_Filter</code></td><td>Character</td><td>Optional filter expression</td></tr>
+<tr><td><code>cRi_Query</code></td><td>Character</td><td>Query mode: "S"=silent, "?"=prompt, "O"=filter</td></tr>
+<tr><td><code>nRi_Copies</code></td><td>Numeric</td><td>Number of copies to print</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>Is the report object active and ready</td></tr>
+<tr><td><code>cDataDirectory</code></td><td>Character</td><td>Data file directory</td></tr>
+<tr><td><code>cLibDirectory</code></td><td>Character</td><td>Report library directory</td></tr>
+<tr><td><code>cControlFile</code></td><td>Character</td><td>Path to the generated .CNT control file</td></tr>
+<tr><td><code>cOutFile</code></td><td>Character</td><td>Path to the .OUT results file</td></tr>
+<tr><td><code>aResults</code></td><td>Array</td><td>Execution results: { ecode, emsg, nReports, nPages, nRecNo }</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cControlFile, cReport, lQuery, lPreview, nBegPage, nEndPage, cDataDirectory, cLibDirectory, cTempDir, cOutFile )</code></td><td>Inicializa una ejecución de informe: abre el DBF de control, localiza el informe y genera el archivo de control .CNT</td></tr>
-<tr><td><code>End()</code></td><td>Cierra las áreas de la base de datos y marca el objeto como inactivo</td></tr>
-<tr><td><code>Print()</code></td><td>Ejecuta el informe mediante RRWRUN.EXE y recopila los resultados</td></tr>
-<tr><td><code>Activate()</code></td><td>Alias de <code>Print()</code></td></tr>
-<tr><td><code>SetFilter( cVar )</code></td><td>Establece una expresión de filtro y cambia al modo de consulta por filtro</td></tr>
-<tr><td><code>SetPrinter( cVar )</code></td><td>Establece el nombre de la impresora en el archivo de control</td></tr>
-<tr><td><code>Results()</code></td><td>Lee el archivo de resultados .OUT; devuelve un array con el código de error, el mensaje, el número de informes, el número de páginas y el número de registro</td></tr>
-<tr><td><code>ShowError()</code></td><td>Muestra un cuadro de mensaje con los detalles del error de ejecución</td></tr>
+<tr><td><code>New( cControlFile, cReport, lQuery, lPreview, nBegPage, nEndPage, cDataDirectory, cLibDirectory, cTempDir, cOutFile )</code></td><td>Initialize a report run: open the control DBF, locate the report, generate the .CNT control file</td></tr>
+<tr><td><code>End()</code></td><td>Close database areas and mark as inactive</td></tr>
+<tr><td><code>Print()</code></td><td>Execute the report via RRWRUN.EXE and collect results</td></tr>
+<tr><td><code>Activate()</code></td><td>Alias for <code>Print()</code></td></tr>
+<tr><td><code>SetFilter( cVar )</code></td><td>Set a filter expression and switch to filter query mode</td></tr>
+<tr><td><code>SetPrinter( cVar )</code></td><td>Set the printer name in the control file</td></tr>
+<tr><td><code>Results()</code></td><td>Read the .OUT results file; returns array with error code, message, report count, page count, record number</td></tr>
+<tr><td><code>ShowError()</code></td><td>Display a message box with the execution error details</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Ejecutar un informe de Rave Reports</h2>
+<h2 id="example">Example: Execute a Rave Report</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -75,24 +75,24 @@ function Main()
       if oReport:aResults[ 1 ] != "0"
          oReport:ShowError()
       else
-         MsgInfo( "Informe generado correctamente" )
+         MsgInfo( "Report generated successfully" )
       endif
       oReport:End()
    endif
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>El DBF de control (<code>RREPORTS.DBF</code>) debe contener al menos un campo <code>RI_REPORT</code> para el nombre del informe, <code>RI_LIBRARY</code> para el archivo de la biblioteca de informes, <code>RI_WTITLE</code> para el título de la ventana y <code>RI_WPTR</code> para el nombre de la impresora.</li>
-<li>La clase invoca <code>RRWRUN.EXE</code> (el motor de ejecución de Rave Reports) como un proceso externo mediante <code>WaitRun()</code>.</li>
-<li>Los resultados se escriben en un archivo <code>.OUT</code> en formato INI y se leen de nuevo mediante <code>TIni</code>.</li>
-<li>Escrita originalmente por Jerry Shaw (AlliedSignal Technical Services Corp.).</li>
+<li>The control DBF (<code>RREPORTS.DBF</code>) must contain at least a <code>RI_REPORT</code> field for the report name, <code>RI_LIBRARY</code> for the report library file, <code>RI_WTITLE</code> for the window title, and <code>RI_WPTR</code> for the printer name.</li>
+<li>The class invokes <code>RRWRUN.EXE</code> (the Rave Reports runtime) as an external process via <code>WaitRun()</code>.</li>
+<li>Results are written to a <code>.OUT</code> file in INI format and read back via <code>TIni</code>.</li>
+<li>Originally authored by Jerry Shaw (AlliedSignal Technical Services Corp.).</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/reference/trpanel.html">&larr; trpanel</a> | <a href="../../es/utilities/trtffile.html">trtffile &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

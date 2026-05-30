@@ -13,47 +13,47 @@
 
 <h1>TComm</h1>
 <p class="class-source">Fonte: <code>source/classes/tcomm.prg</code></p>
-<p class="class-hierarchy">Classe independente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TComm fornece recursos de comunicação por porta serial (RS-232) para interagir com modems, impressoras seriais, leitores de código de barras e outros dispositivos seriais legados. Ela encapsula a API COM do Windows com métodos para configuração de porta, transmissão de dados e controle de fluxo.
+TComm provides serial port (RS-232) communication capabilities for interfacing with modems, serial printers, barcode scanners, and other legacy serial devices. It wraps the Windows COM API with methods for port configuration, data transmission, and flow control.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nDevice</code></td><td>Numeric</td><td>Número da porta COM (base 1: COM1, COM2, etc.)</td></tr>
-<tr><td><code>nId</code></td><td>Numeric</td><td>Handle de arquivo do Windows da porta COM aberta</td></tr>
-<tr><td><code>nBaud</code></td><td>Numeric</td><td>Taxa de transmissão (ex.: 9600, 19200, 115200)</td></tr>
-<tr><td><code>cParity</code></td><td>Character</td><td>Configuração de paridade: "N" (nenhuma), "E" (par), "O" (ímpar)</td></tr>
-<tr><td><code>nStop</code></td><td>Numeric</td><td>Bits de parada: 1, 1.5 ou 2</td></tr>
-<tr><td><code>nData</code></td><td>Numeric</td><td>Bits de dados: 5, 6, 7 ou 8</td></tr>
-<tr><td><code>nInQueue / nOutQueue</code></td><td>Numeric</td><td>Tamanhos dos buffers de entrada e saída em bytes</td></tr>
+<tr><td><code>nDevice</code></td><td>Numeric</td><td>COM port number (1-based: COM1, COM2, etc.)</td></tr>
+<tr><td><code>nId</code></td><td>Numeric</td><td>Windows file handle of the opened COM port</td></tr>
+<tr><td><code>nBaud</code></td><td>Numeric</td><td>Baud rate (e.g., 9600, 19200, 115200)</td></tr>
+<tr><td><code>cParity</code></td><td>Character</td><td>Parity setting: "N" (none), "E" (even), "O" (odd)</td></tr>
+<tr><td><code>nStop</code></td><td>Numeric</td><td>Stop bits: 1, 1.5, or 2</td></tr>
+<tr><td><code>nData</code></td><td>Numeric</td><td>Data bits: 5, 6, 7, or 8</td></tr>
+<tr><td><code>nInQueue / nOutQueue</code></td><td>Numeric</td><td>Input and output buffer sizes in bytes</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nDev, nInQ, nOutQ, cStyle, nBaud, cParity, nStop, nData )</code></td><td>Abre uma porta COM com os parâmetros especificados</td></tr>
-<tr><td><code>SetUp()</code></td><td>Aplica a configuração da porta (baud, paridade, bits de parada, bits de dados)</td></tr>
-<tr><td><code>Write( cStr )</code></td><td>Escreve uma string na porta serial</td></tr>
-<tr><td><code>Close()</code></td><td>Fecha a conexão da porta serial</td></tr>
-<tr><td><code>Break() / UnBreak()</code></td><td>Define ou limpa o sinal de break serial</td></tr>
-<tr><td><code>Flush()</code></td><td>Esvazia os buffers de entrada e saída</td></tr>
-<tr><td><code>Error()</code></td><td>Retorna o último código de erro</td></tr>
+<tr><td><code>New( nDev, nInQ, nOutQ, cStyle, nBaud, cParity, nStop, nData )</code></td><td>Open a COM port with the specified parameters</td></tr>
+<tr><td><code>SetUp()</code></td><td>Apply port configuration (baud, parity, stop bits, data bits)</td></tr>
+<tr><td><code>Write( cStr )</code></td><td>Write a string to the serial port</td></tr>
+<tr><td><code>Close()</code></td><td>Close the serial port connection</td></tr>
+<tr><td><code>Break() / UnBreak()</code></td><td>Set or clear the serial break signal</td></tr>
+<tr><td><code>Flush()</code></td><td>Flush the input and output buffers</td></tr>
+<tr><td><code>Error()</code></td><td>Return the last error code</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: COM1 a 9600 Baud</h2>
+<h2 id="example">Example: COM1 at 9600 Baud</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -65,7 +65,7 @@ function Main()
    oComm := TComm():New( 1, 4096, 4096, , 9600, "N", 1, 8 )
 
    if oComm:nId != 0
-      oComm:Write( "AT" + Chr( 13 ) )   // Envia comando AT para o modem
+      oComm:Write( "AT" + Chr( 13 ) )   // Send AT command to modem
       cData := oComm:Read()
       MsgInfo( cData )
    else
@@ -76,17 +76,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O parâmetro <code>cStyle</code> no construtor aceita uma string de modo estendido pouco usada; passe <code>nil</code> para o estilo padrão.</li>
-<li>Os tamanhos dos buffers (<code>nInQueue</code>, <code>nOutQueue</code>) são definidos no momento da abertura da porta e não podem ser alterados sem reabri-la.</li>
-<li>Use <code>Error()</code> após uma operação malsucedida para obter o código de erro do sistema para diagnóstico.</li>
-<li>A classe trata a configuração do DCB (Device Control Block) internamente através do método <code>SetUp()</code>, chamado automaticamente a partir de <code>New()</code>.</li>
+<li>The <code>cStyle</code> parameter in the constructor accepts an extended mode string not commonly used; pass <code>nil</code> for default style.</li>
+<li>Buffer sizes (<code>nInQueue</code>, <code>nOutQueue</code>) are set at port open time and cannot be changed without reopening.</li>
+<li>Use <code>Error()</code> after a failed operation to obtain the system error code for diagnostics.</li>
+<li>The class handles DCB (Device Control Block) configuration internally through the <code>SetUp()</code> method, called automatically from <code>New()</code>.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tcombometro.html">&larr; tcombometro</a> | <a href="../../pt/utilities/tcomobject.html">tcomobject &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

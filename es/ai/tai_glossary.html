@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Glosario IA - FWH Docs</title>
+<title>AI Glossary - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,97 +11,97 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>Glosario IA / ML</h1>
+<h1>AI / ML Glossary</h1>
 
 <p>
-Definiciones de la terminología de inteligencia artificial y aprendizaje automático relevante para las clases de IA de FiveWin,
-la infraestructura de redes neuronales y la integración con LLM. Los términos abarcan arquitecturas de modelos, conceptos de entrenamiento,
-algoritmos de optimización y los proveedores de IA soportados. Organizado alfabéticamente.
+Definitions for artificial intelligence and machine learning terminology relevant to FiveWin's AI classes,
+neural network infrastructure, and LLM integration. Terms cover model architectures, training concepts,
+optimization algorithms, and the supported AI providers. Organized alphabetically.
 </p>
 
 <h3 id="adam">Adam / SGD</h3>
-<p>Dos optimizadores proporcionados por FWH. <strong>Adam</strong> (Adaptive Moment Estimation) mantiene tasas de aprendizaje adaptativas por parámetro con momentum corregido por sesgo, adecuado para modelos complejos. <strong>SGD</strong> (Stochastic Gradient Descent) con momentum opcional es más simple y preferido para escenarios de entrenamiento menos complejos.</p>
+<p>Two optimizers provided by FWH. <strong>Adam</strong> (Adaptive Moment Estimation) maintains per-parameter adaptive learning rates with bias-corrected momentum, suitable for complex models. <strong>SGD</strong> (Stochastic Gradient Descent) with optional momentum is simpler and preferred for less complex training scenarios.</p>
 
 <h3 id="api-key">API Key</h3>
-<p>Una credencial de autenticación requerida por los proveedores de IA en la nube. Las clases de IA de FWH leen las claves desde variables de entorno (<code>OPENAI_API_KEY</code>, <code>DEEPSEEK_API_KEY</code>, <code>GEMINI_API_KEY</code>) o las aceptan directamente en el constructor <code>New()</code>. La clase local TOLlama no requiere clave API.</p>
+<p>An authentication credential required by cloud AI providers. FWH's AI classes read keys from environment variables (<code>OPENAI_API_KEY</code>, <code>DEEPSEEK_API_KEY</code>, <code>GEMINI_API_KEY</code>) or accept them directly in the <code>New()</code> constructor. The local TOLlama class requires no API key.</p>
 
 <h3 id="attention">Attention</h3>
-<p>Un mecanismo en las redes Transformer que calcula puntuaciones de relevancia ponderadas entre cada par de posiciones de una secuencia. La clase <code>MultiHeadAttention</code> de FWH implementa atención de producto escalar escalado (scaled dot-product) con múltiples cabezas paralelas, permitiendo al modelo centrarse en diferentes subespacios de representación.</p>
+<p>A mechanism in Transformer networks that computes weighted relevance scores between every pair of positions in a sequence. FWH's <code>MultiHeadAttention</code> class implements scaled dot-product attention with multiple parallel heads, enabling the model to focus on different representational subspaces.</p>
 
 <h3 id="backpropagation">Backpropagation</h3>
-<p>El algoritmo central de entrenamiento de las redes neuronales, que calcula los gradientes de la función de pérdida respecto a cada peso mediante la regla de la cadena. Las clases <code>Transformer</code> y de redes neuronales de FWH incluyen métodos <code>Backward()</code> que propagan los gradientes de error hacia atrás a través del grafo de cómputo.</p>
+<p>The core training algorithm for neural networks, computing gradients of the loss function with respect to each weight via the chain rule. FWH's <code>Transformer</code> and neural network classes include <code>Backward()</code> methods that propagate error gradients backward through the computation graph.</p>
 
 <h3 id="chatgpt">ChatGPT / OpenAI</h3>
-<p>La familia de modelos GPT de OpenAI accesible mediante API REST. La clase <code>TOpenAI</code> de FWH se integra con modelos como <code>gpt-4o</code> y <code>gpt-4o-mini</code>, soportando prompts de texto, visión (análisis de imágenes mediante <code>SendImage()</code>) y respuestas en streaming a través de callbacks.</p>
+<p>OpenAI's GPT model family accessed via REST API. FWH's <code>TOpenAI</code> class integrates with models including <code>gpt-4o</code> and <code>gpt-4o-mini</code>, supporting text prompts, vision (image analysis via <code>SendImage()</code>), and streaming responses through callbacks.</p>
 
-<h3 id="cosine-distance">Distancia de Coseno</h3>
-<p>Una métrica de similitud que mide el coseno del ángulo entre dos vectores, variando desde 1 (misma dirección) a 0 (ortogonales) a -1 (opuestos). Usada en la clase <code>TEmbeddings</code> de FWH para comparar vectores de embedding en búsquedas de similitud semántica y agrupamiento (clustering).</p>
+<h3 id="cosine-distance">Cosine Distance</h3>
+<p>A similarity metric measuring the cosine of the angle between two vectors, ranging from 1 (identical direction) to 0 (orthogonal) to -1 (opposite). Used in FWH's <code>TEmbeddings</code> class to compare embedding vectors for semantic similarity search and clustering.</p>
 
 <h3 id="deepseek">DeepSeek</h3>
-<p>Una familia de modelos de IA de DeepSeek reconocida por sus sólidas capacidades de programación y razonamiento. La clase <code>TDeepSeek</code> de FWH se conecta a la API de DeepSeek, soportando los modelos <code>deepseek-chat</code> para conversación general y <code>deepseek-reasoner</code> para razonamiento en cadena de pensamiento (chain-of-thought).</p>
+<p>An AI model family by DeepSeek known for strong coding and reasoning capabilities. FWH's <code>TDeepSeek</code> class connects to DeepSeek's API, supporting models <code>deepseek-chat</code> for general conversation and <code>deepseek-reasoner</code> for chain-of-thought reasoning.</p>
 
 <h3 id="embedding">Embedding</h3>
-<p>Una representación vectorial numérica densa de texto, que captura el significado semántico en un espacio de alta dimensión. En FWH, los embeddings son generados por la clase <code>TEmbeddings</code> y se usan para búsqueda de similitud, agrupamiento (clustering) y pipelines RAG (Retrieval-Augmented Generation).</p>
+<p>A dense numerical vector representation of text, capturing semantic meaning in a high-dimensional space. In FWH, embeddings are generated by the <code>TEmbeddings</code> class and used for similarity search, clustering, and RAG (Retrieval-Augmented Generation) pipelines.</p>
 
-<h3 id="epoch">Epoch (Época)</h3>
-<p>Una pasada completa por todo el conjunto de datos de entrenamiento durante el entrenamiento de la red neuronal. Los bucles de entrenamiento de FWH iteran sobre un número configurable de épocas, comprendiendo cada época la pasada hacia adelante (forward), el cálculo de la pérdida, la retropropagación y la actualización de parámetros.</p>
+<h3 id="epoch">Epoch</h3>
+<p>One complete pass through the entire training dataset during neural network training. FWH's training loops iterate over configurable numbers of epochs, with each epoch comprising forward pass, loss computation, backpropagation, and parameter updates.</p>
 
-<h3 id="fine-tuning">Fine-tuning (Ajuste Fino)</h3>
-<p>El proceso de seguir entrenando un modelo preentrenado con datos específicos de un dominio para adaptar sus capacidades. FWH soporta flujos de trabajo de fine-tuning a través de su infraestructura de entrenamiento de redes neuronales y Transformer, donde los pesos preentrenados se ajustan sobre conjuntos de datos personalizados.</p>
+<h3 id="fine-tuning">Fine-tuning</h3>
+<p>The process of further training a pre-trained model on domain-specific data to adapt its capabilities. FWH supports fine-tuning workflows through its neural network and Transformer training infrastructure, where pre-trained weights are adjusted on custom datasets.</p>
 
 <h3 id="gemini">Gemini</h3>
-<p>La familia de modelos de IA multimodal de Google. La clase <code>TGemini</code> de FWH se integra con la API Google Generative Language, soportando prompts de texto, subida de archivos de imagen para análisis visual y callbacks de streaming opcionales para respuesta en tiempo real.</p>
+<p>Google's multimodal AI model family. FWH's <code>TGemini</code> class integrates with the Google Generative Language API, supporting text prompts, image file uploads for visual analysis, and optional streaming callbacks for real-time response.</p>
 
 <h3 id="grok">Grok / xAI</h3>
-<p>La familia de modelos de xAI de Elon Musk. La clase <code>TGrok</code> de FWH proporciona integración con la API de Grok para generación de texto e interacciones de chat, siguiendo el mismo patrón que otras clases de proveedores de IA de FWH.</p>
+<p>Elon Musk's xAI model family. FWH's <code>TGrok</code> class provides integration with the Grok API for text generation and chat interactions, following the same pattern as other FWH AI provider classes.</p>
 
 <h3 id="inference">Inference</h3>
-<p>El proceso de usar un modelo entrenado para realizar predicciones sobre datos nuevos no vistos (en contraposición al entrenamiento). Las clases de IA de FWH realizan inferencia al llamar a <code>Send()</code> con un prompt: el modelo procesa la entrada y genera una respuesta sin modificar sus pesos.</p>
+<p>The process of using a trained model to make predictions on new, unseen data (as opposed to training). FWH's AI classes perform inference when calling <code>Send()</code> with a prompt -- the model processes the input and generates a response without modifying its weights.</p>
 
 <h3 id="kimi">Kimi / Moonshot</h3>
-<p>La familia de modelos Kimi de Moonshot AI, conocida por sus capacidades de contexto largo (hasta 2 millones de tokens). La clase <code>TKimi</code> de FWH proporciona integración con la API de Moonshot para generación de texto, siguiendo el patrón estándar de las clases de IA de FWH.</p>
+<p>Moonshot AI's Kimi model family, known for long-context capabilities (up to 2 million tokens). FWH's <code>TKimi</code> class provides integration with the Moonshot API for text generation, following the standard FWH AI class pattern.</p>
 
 <h3 id="llm">LLM (Large Language Model)</h3>
-<p>Una red neuronal con cientos de millones hasta billones de parámetros, entrenada sobre vastos corpus de texto para generar texto similar al humano. FWH se integra con múltiples LLM a través de clases dedicadas: <code>TOpenAI</code>, <code>TDeepSeek</code>, <code>TGemini</code>, <code>TGrok</code>, <code>TKimi</code> y <code>TOLlama</code> para modelos locales.</p>
+<p>A neural network with hundreds of millions to trillions of parameters, trained on vast text corpora to generate human-like text. FWH integrates with multiple LLMs through dedicated classes: <code>TOpenAI</code>, <code>TDeepSeek</code>, <code>TGemini</code>, <code>TGrok</code>, <code>TKimi</code>, and <code>TOLlama</code> for local models.</p>
 
-<h3 id="loss-function">Función de Pérdida</h3>
-<p>Una función que mide la discrepancia entre los valores predichos y los reales durante el entrenamiento. La infraestructura de entrenamiento de FWH soporta la pérdida de entropía cruzada (cross-entropy) para tareas de clasificación (comparando distribuciones de probabilidad predichas con objetivos one-hot) y MSE (Mean Squared Error, error cuadrático medio) para regresión.</p>
+<h3 id="loss-function">Loss Function</h3>
+<p>A function measuring the discrepancy between predicted and actual values during training. FWH's training infrastructure supports cross-entropy loss for classification tasks (comparing predicted probability distributions to one-hot targets) and MSE (Mean Squared Error) for regression.</p>
 
-<h3 id="neural-network">Red Neuronal</h3>
-<p>Un sistema de cómputo inspirado en las redes neuronales biológicas, formado por capas de nodos interconectados (neuronas) con pesos aprendidos. FWH proporciona la clase <code>TNeuralNetwork</code> que soporta arquitecturas feed-forward, convolucionales y recurrentes para tareas de ML personalizadas.</p>
+<h3 id="neural-network">Neural Network</h3>
+<p>A computing system inspired by biological neural networks, consisting of layers of interconnected nodes (neurons) with learned weights. FWH provides the <code>TNeuralNetwork</code> class supporting feed-forward, convolutional, and recurrent architectures for custom ML tasks.</p>
 
 <h3 id="ollama">Ollama</h3>
-<p>Un servidor LLM local que ejecuta modelos en la propia máquina del usuario sin dependencias de la nube ni claves API. La clase <code>TOLlama</code> de FWH se conecta a la API REST de Ollama en <code>http://localhost:11434/api/chat</code>, soportando todos los modelos servidos por Ollama (llama3, deepseek-r1, mistral, etc.).</p>
+<p>A local LLM server that runs models on the user's own machine without cloud dependencies or API keys. FWH's <code>TOLlama</code> class connects to Ollama's REST API at <code>http://localhost:11434/api/chat</code>, supporting all models served by Ollama (llama3, deepseek-r1, mistral, etc.).</p>
 
-<h3 id="optimizer">Optimizador</h3>
-<p>Un algoritmo que actualiza los pesos de la red neuronal para minimizar la función de pérdida durante el entrenamiento. FWH proporciona implementaciones de optimizadores en <code>transformer.prg</code> con tasas de aprendizaje, decaimiento de pesos (weight decay) y parámetros de momentum configurables.</p>
+<h3 id="optimizer">Optimizer</h3>
+<p>An algorithm that updates neural network weights to minimize the loss function during training. FWH provides optimizer implementations in <code>transformer.prg</code> with configurable learning rates, weight decay, and momentum parameters.</p>
 
 <h3 id="rag">RAG (Retrieval-Augmented Generation)</h3>
-<p>Una técnica que combina la recuperación de información con la generación mediante LLM: se recuperan fragmentos de contexto relevantes de una base de conocimiento (mediante búsqueda de similitud de embeddings) y se inyectan en el prompt. La clase <code>TEmbeddings</code> de FWH y las operaciones matriciales permiten construir pipelines RAG completos.</p>
+<p>A technique combining information retrieval with LLM generation: relevant context chunks are retrieved from a knowledge base (via embedding similarity search) and injected into the prompt. FWH's <code>TEmbeddings</code> class and matrix operations enable building complete RAG pipelines.</p>
 
 <h3 id="relu">ReLU</h3>
-<p>Función de activación Rectified Linear Unit (unidad lineal rectificada): <code>ReLU(x) = max(0, x)</code>. Es la activación por defecto en las capas transformer <code>FeedForward</code> y en las capas ocultas de <code>TNeuralNetwork</code> de FWH, valorada por su eficiencia computacional y por mitigar el problema del gradiente evanescente.</p>
+<p>Rectified Linear Unit activation function: <code>ReLU(x) = max(0, x)</code>. The default activation in FWH's <code>FeedForward</code> transformer layers and <code>TNeuralNetwork</code> hidden layers, valued for its computational efficiency and mitigation of the vanishing gradient problem.</p>
 
 <h3 id="sigmoid">Sigmoid</h3>
-<p>Una función de activación: <code>sigmoid(x) = 1 / (1 + exp(-x))</code>, que comprime las entradas de valor real al rango (0, 1). Usada en las capas de salida de las redes neuronales de FWH para clasificación binaria y como mecanismo de compuerta (gating) en diversas arquitecturas de red.</p>
+<p>An activation function: <code>sigmoid(x) = 1 / (1 + exp(-x))</code>, squashing real-valued inputs to the (0, 1) range. Used in FWH's neural network output layers for binary classification and as a gating mechanism in various network architectures.</p>
 
 <h3 id="softmax">Softmax</h3>
-<p>Una función de activación que convierte un vector de puntuaciones en bruto (logits) en una distribución de probabilidad sobre las clases, donde todas las salidas suman 1. Usada en la capa de salida del Transformer de FWH para la predicción del siguiente token y en los clasificadores de redes neuronales.</p>
+<p>An activation function that converts a vector of raw scores (logits) into a probability distribution over classes, where all outputs sum to 1. Used in FWH's Transformer output layer for next-token prediction and in neural network classifiers.</p>
 
-<h3 id="temperature">Temperatura</h3>
-<p>Un parámetro de muestreo (rango típico de 0.0 a 2.0) que controla la aleatoriedad de la salida del LLM. Los valores más bajos (0.0-0.3) producen respuestas más enfocadas y deterministas; los valores más altos aumentan la creatividad y la diversidad. Las clases de IA de FWH exponen <code>nTemperature</code> como un miembro DATA configurable.</p>
+<h3 id="temperature">Temperature</h3>
+<p>A sampling parameter (typical range 0.0 to 2.0) controlling the randomness of LLM output. Lower values (0.0-0.3) produce more focused, deterministic responses; higher values increase creativity and diversity. FWH's AI classes expose <code>nTemperature</code> as a configurable DATA member.</p>
 
 <h3 id="token">Token</h3>
-<p>La unidad atómica de texto que procesa un LLM. Los tokens pueden ser palabras, subpalabras (p. ej., "un" + "believe" + "able") o caracteres. Las clases de IA de FWH interactúan con APIs que facturan por número de tokens y limitan las ventanas de contexto por un máximo de tokens. La clase <code>Transformer</code> incluye su propia tabla de búsqueda de embeddings de tokens.</p>
+<p>The atomic unit of text that an LLM processes. Tokens can be words, subwords (e.g., "un" + "believe" + "able"), or characters. FWH's AI classes interact with APIs that bill by token count and limit context windows by maximum tokens. The <code>Transformer</code> class includes its own token embedding lookup table.</p>
 
 <h3 id="transformer">Transformer</h3>
-<p>La arquitectura de red neuronal que sustenta los LLM modernos, introducida en "Attention Is All You Need" (Vaswani et al., 2017). FWH proporciona una implementación pura en Harbour/C del codificador Transformer en <code>source/classes/transformer.prg</code> con autoatención multi-cabeza (multi-head self-attention), capas feed-forward, normalización de capas y codificación posicional.</p>
+<p>The neural network architecture underlying modern LLMs, introduced in "Attention Is All You Need" (Vaswani et al., 2017). FWH provides a pure Harbour/C implementation of the Transformer encoder in <code>source/classes/transformer.prg</code> with multi-head self-attention, feed-forward layers, layer normalization, and positional encoding.</p>
 
 <h3 id="vector">Vector</h3>
-<p>Un arreglo de números en coma flotante que representa datos en un espacio matemático. En contextos de IA dentro de FWH, los vectores representan embeddings (significado semántico), pesos de redes neuronales y activaciones intermedias. Las operaciones vectoriales rápidas se implementan en la extensión C <code>matrixes.c</code>.</p>
+<p>An array of floating-point numbers representing data in a mathematical space. In AI contexts within FWH, vectors represent embeddings (semantic meaning), neural network weights, and intermediate activations. Fast vector operations are implemented in the C extension <code>matrixes.c</code>.</p>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/internet/tai.html">&larr; tai</a> | <a href="../../es/ui/tanimate.html">tanimate &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

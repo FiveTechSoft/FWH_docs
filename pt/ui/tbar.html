@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TBar - FWH Docs</title>
+<title>TBar - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,58 +13,58 @@
 
 <h1>TBar</h1>
 <p class="class-source">Fonte: <code>source/classes/bar.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TBar é um contêiner de barra de botões que exibe uma faixa horizontal ou vertical de botões com bitmap
-e separadores de grupo opcionais. Suporta múltiplos estilos visuais, incluindo 3D plano, temas Office
-2007/2010/2013/2015, renderização GDI+, tema escuro e barras de ferramentas flutuantes/encaixáveis.
+TBar is a button bar container that displays a horizontal or vertical strip of bitmap buttons
+with optional group separators. It supports multiple visual styles including flat 3D, Office
+2007/2010/2013/2015 themes, GDI+ rendering, dark theme, and floating/dockable toolbars.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nGroups</code></td><td>Numérico</td><td>Número de grupos de botões na barra</td></tr>
-<tr><td><code>nMode</code></td><td>Numérico</td><td>Posição de encaixe: BAR_TOP(1), BAR_LEFT(2), BAR_RIGHT(3), BAR_DOWN(4), BAR_FLOAT(5)</td></tr>
-<tr><td><code>nBtnWidth</code></td><td>Numérico</td><td>Largura do botão (padrão 28 pixels)</td></tr>
-<tr><td><code>nBtnHeight</code></td><td>Numérico</td><td>Altura do botão (padrão 28 pixels)</td></tr>
-<tr><td><code>l3D</code></td><td>Lógico</td><td>Ativa bordas de botão 3D</td></tr>
-<tr><td><code>l2007</code></td><td>Lógico</td><td>Aparência do tema Office 2007</td></tr>
-<tr><td><code>l2010</code></td><td>Lógico</td><td>Aparência do tema Office 2010</td></tr>
-<tr><td><code>l2013</code></td><td>Lógico</td><td>Aparência do tema plano Office 2013</td></tr>
-<tr><td><code>l2015</code></td><td>Lógico</td><td>Aparência do tema Office 2015</td></tr>
-<tr><td><code>lGDIP</code></td><td>Lógico</td><td>Ativa renderização GDI+ (somente leitura)</td></tr>
-<tr><td><code>lBorder</code></td><td>Lógico</td><td>Exibe a borda da barra</td></tr>
-<tr><td><code>bClrGrad</code></td><td>Codeblock</td><td>Codeblock de cor do gradiente</td></tr>
+<tr><td><code>nGroups</code></td><td>Numeric</td><td>Number of button groups in the bar</td></tr>
+<tr><td><code>nMode</code></td><td>Numeric</td><td>Docking position: BAR_TOP(1), BAR_LEFT(2), BAR_RIGHT(3), BAR_DOWN(4), BAR_FLOAT(5)</td></tr>
+<tr><td><code>nBtnWidth</code></td><td>Numeric</td><td>Button width (default 28 pixels)</td></tr>
+<tr><td><code>nBtnHeight</code></td><td>Numeric</td><td>Button height (default 28 pixels)</td></tr>
+<tr><td><code>l3D</code></td><td>Logical</td><td>Enable 3D button borders</td></tr>
+<tr><td><code>l2007</code></td><td>Logical</td><td>Office 2007 theme look</td></tr>
+<tr><td><code>l2010</code></td><td>Logical</td><td>Office 2010 theme look</td></tr>
+<tr><td><code>l2013</code></td><td>Logical</td><td>Office 2013 flat theme look</td></tr>
+<tr><td><code>l2015</code></td><td>Logical</td><td>Office 2015 theme look</td></tr>
+<tr><td><code>lGDIP</code></td><td>Logical</td><td>Enable GDI+ rendering (read-only)</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Show bar border</td></tr>
+<tr><td><code>bClrGrad</code></td><td>Codeblock</td><td>Gradient color codeblock</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nBtnW, nBtnH, l3D, cMode, oCursor, l2007, l2010, l2013, lBorder, oBrush, aGrad, nColor, lHScroll, l2015, nAlto, lGDIP, lDesign, cVarName )</code></td><td>Cria uma nova TBar anexada a <code>oWnd</code></td></tr>
-<tr><td><code>NewAt( nRow, nCol, nWidth, nHeight, nBtnW, nBtnH, oWnd, l3D, cMode )</code></td><td>Cria uma TBar em uma posição e tamanho específicos</td></tr>
-<tr><td><code>Add( oBtnBmp, nPos )</code></td><td>Adiciona um TButtonBmp à barra</td></tr>
-<tr><td><code>AddGroup( nPos )</code></td><td>Insere um separador visual de grupo</td></tr>
-<tr><td><code>Del( nPos, lRefresh )</code></td><td>Remove um botão da barra</td></tr>
-<tr><td><code>Adjust()</code></td><td>Recalcula as posições dos botões e o tamanho da barra</td></tr>
-<tr><td><code>Float()</code></td><td>Desencaixa a barra em uma janela flutuante</td></tr>
-<tr><td><code>GoDown() / GoLeft() / GoRight() / GoTop()</code></td><td>Encaixa a barra na borda especificada</td></tr>
-<tr><td><code>SetDarkTheme()</code></td><td>Aplica as cores do tema escuro à barra</td></tr>
-<tr><td><code>SetGradients( aGrad, oBrush, nColor )</code></td><td>Aplica fundo com gradiente</td></tr>
-<tr><td><code>Redefine( nId, oWnd, nWidth, nHeight, l2007, l2010, l2013, lBorder, l2015 )</code></td><td>Redefine a partir de um recurso de diálogo</td></tr>
+<tr><td><code>New( oWnd, nBtnW, nBtnH, l3D, cMode, oCursor, l2007, l2010, l2013, lBorder, oBrush, aGrad, nColor, lHScroll, l2015, nAlto, lGDIP, lDesign, cVarName )</code></td><td>Create a new TBar attached to <code>oWnd</code></td></tr>
+<tr><td><code>NewAt( nRow, nCol, nWidth, nHeight, nBtnW, nBtnH, oWnd, l3D, cMode )</code></td><td>Create a TBar at a specific position and size</td></tr>
+<tr><td><code>Add( oBtnBmp, nPos )</code></td><td>Add a TButtonBmp to the bar</td></tr>
+<tr><td><code>AddGroup( nPos )</code></td><td>Insert a visual group separator</td></tr>
+<tr><td><code>Del( nPos, lRefresh )</code></td><td>Remove a button from the bar</td></tr>
+<tr><td><code>Adjust()</code></td><td>Recalculate button positions and bar size</td></tr>
+<tr><td><code>Float()</code></td><td>Undock the bar into a floating window</td></tr>
+<tr><td><code>GoDown() / GoLeft() / GoRight() / GoTop()</code></td><td>Dock the bar to the specified edge</td></tr>
+<tr><td><code>SetDarkTheme()</code></td><td>Apply dark theme colors to the bar</td></tr>
+<tr><td><code>SetGradients( aGrad, oBrush, nColor )</code></td><td>Apply gradient background</td></tr>
+<tr><td><code>Redefine( nId, oWnd, nWidth, nHeight, l2007, l2010, l2013, lBorder, l2015 )</code></td><td>Redefine from dialog resource</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Barra Superior com 3 Botões</h2>
+<h2 id="example">Example: Top Bar with 3 Buttons</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -84,18 +84,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>A TBar ajusta seu tamanho automaticamente à largura (topo/baixo) ou altura (esquerda/direita) da janela pai.</li>
-<li>Use o parâmetro <code>cMode</code> para definir o encaixe inicial: <code>"TOP"</code>, <code>"LEFT"</code>, <code>"RIGHT"</code>, <code>"BOTTOM"</code> ou <code>"FLOAT"</code>.</li>
-<li>O membro de dados <code>l97Look</code> controla a aparência plana de botão compatível com versões anteriores. Mantenha-o como NIL para a renderização moderna de botões.</li>
-<li>Os temas Office (l2007, l2010, l2013, l2015) são mutuamente exclusivos; ative apenas um.</li>
-<li>A TBar suporta menus de contexto do botão direito para personalização em tempo de execução.</li>
+<li>TBar auto-sizes to fit its parent window width (top/down) or height (left/right).</li>
+<li>Use the <code>cMode</code> parameter to set initial docking: <code>"TOP"</code>, <code>"LEFT"</code>, <code>"RIGHT"</code>, <code>"BOTTOM"</code>, or <code>"FLOAT"</code>.</li>
+<li>The <code>l97Look</code> data member controls backward-compatible flat button appearance. Keep it as NIL for modern button rendering.</li>
+<li>Office themes (l2007, l2010, l2013, l2015) are mutually exclusive; enable only one.</li>
+<li>TBar supports right-button context menus for runtime customization.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/utilities/tbackup.html">&larr; tbackup</a> | <a href="../../pt/printing/tbarcode.html">tbarcode &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Clases ORM (ORM_Connection + ORM_Table) - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ORM Classes (ORM_Connection + ORM_Table) - Documentación FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
@@ -6,21 +6,21 @@
 <p class="class-source">Fuente: <code>source/classes/fworm.prg</code></p>
 
 <p>
-Las clases ORM (Mapeo Objeto-Relacional) proporcionan una capa de abstracción multi-backend
-que funciona con conexiones ADO, FWH (MariaDB) y Dolphin (DLP). ORM_Connection
-gestiona el enlace con la base de datos y expone las tablas como objetos ORM_Table. ORM_Table proporciona
-una interfaz fluida de construcción de consultas con métodos encadenables Where/OrderBy/Select,
-funciones de agregación, navegación entre relaciones y acceso dinámico a campos mediante un
-manejador de errores.
+The ORM (Object-Relational Mapping) classes provide a multi-backend abstraction layer
+that works with ADO, FWH (MariaDB), and Dolphin (DLP) connections. ORM_Connection
+manages the database link and exposes tables as ORM_Table objects. ORM_Table provides
+a fluent query-building interface with chainable Where/OrderBy/Select methods,
+aggregation Funciones, relationship navigation, and dynamic field access via an
+error handler.
 </p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
-    App[Aplicación] --> OC[ORM_Connection]
+    App[Application] --> OC[ORM_Connection]
     OC --> OT[ORM_Table]
-    OT --> RS[Conjunto de Resultados]
+    OT --> RS[Result Set]
     OC --> ADO[ADO]
     OC --> FWH[FWMariaConnection]
     OC --> DLP[Dolphin]
@@ -29,114 +29,114 @@ flowchart LR
 <h2 id="orm-connection">ORM_Connection</h2>
 
 <p>
-ORM_Connection abstrae las conexiones a bases de datos a través de tres backends: ADO (para cualquier
-RDBMS compatible con ODBC), FWH (MariaDB nativo mediante FWMariaConnection) y DLP (la librería Dolphin
-para MariaDB). Acepta tanto parámetros de conexión como un objeto de conexión
-existente.
+ORM_Connection abstracts database connections across three backends: ADO (for any
+ODBC-compliant RDBMS), FWH (native MariaDB via FWMariaConnection), and DLP (Dolphin
+library for MariaDB). It accepts either connection parameters or an existing connection
+object.
 </p>
 
-<h3>Miembros DATA</h3>
+<h3>DATA Members</h3>
 
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>rdbms</code></td><td>Character</td><td>Tipo de RDBMS ("MYSQL", "MSSQL", "DBASE", "ORACLE", etc.)</td></tr>
-<tr><td><code>oCn</code></td><td>Object</td><td>Objeto de conexión subyacente (ADO/FWH/DLP)</td></tr>
-<tr><td><code>nLib</code></td><td>Numeric</td><td>Constante de librería: LIB_ADO(1), LIB_FWH(2), LIB_DLP(4)</td></tr>
-<tr><td><code>cServer</code></td><td>Character</td><td>Nombre de host del servidor</td></tr>
-<tr><td><code>cDataBase</code></td><td>Character</td><td>Nombre de la base de datos</td></tr>
-<tr><td><code>cUserName</code></td><td>Character</td><td>Nombre de usuario de la base de datos</td></tr>
+<tr><td><code>rdbms</code></td><td>Character</td><td>RDBMS type ("MYSQL", "MSSQL", "DBASE", "ORACLE", etc.)</td></tr>
+<tr><td><code>oCn</code></td><td>Object</td><td>Underlying connection object (ADO/FWH/DLP)</td></tr>
+<tr><td><code>nLib</code></td><td>Numeric</td><td>Library constant: LIB_ADO(1), LIB_FWH(2), LIB_DLP(4)</td></tr>
+<tr><td><code>cServer</code></td><td>Character</td><td>Server hostname</td></tr>
+<tr><td><code>cDataBase</code></td><td>Character</td><td>Database name</td></tr>
+<tr><td><code>cUserName</code></td><td>Character</td><td>Database user name</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
-<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( rdbms, cServer, cDataBase, cUserName, cPassword )</code></td><td>Crea y conecta a una base de datos. Si el primer parámetro es un objeto, envuelve una conexión existente.</td></tr>
-<tr><td><code>Connect( cPassWord )</code></td><td>Establece la conexión</td></tr>
-<tr><td><code>Tables()</code></td><td>Devuelve un FW_Array con los nombres de las tablas de la base de datos</td></tr>
-<tr><td><code>Table( cTable )</code></td><td>Devuelve un objeto ORM_Table para el nombre de tabla indicado</td></tr>
-<tr><td><code>HasTable( cTable )</code></td><td>Comprueba si una tabla existe</td></tr>
-<tr><td><code>Close()</code></td><td>Cierra la conexión</td></tr>
+<tr><td><code>New( rdbms, cServer, cDataBase, cUserName, cPassword )</code></td><td>Create and connect to a database. If first parameter is an object, wraps an existing connection.</td></tr>
+<tr><td><code>Connect( cPassWord )</code></td><td>Establish the connection</td></tr>
+<tr><td><code>Tables()</code></td><td>Return an FW_Array of table names in the database</td></tr>
+<tr><td><code>Table( cTable )</code></td><td>Return an ORM_Table object for the given table name</td></tr>
+<tr><td><code>HasTable( cTable )</code></td><td>Check if a table exists</td></tr>
+<tr><td><code>Close()</code></td><td>Close the connection</td></tr>
 </tbody>
 </table>
 
 <h2 id="orm-table">ORM_Table</h2>
 
 <p>
-ORM_Table proporciona navegación del recordset, construcción de consultas y manipulación de datos
-para una única tabla de la base de datos. Su manejador de errores expone los valores de los campos como propiedades
-dinámicas y las sub-tablas como objetos ORM_Table relacionados.
+ORM_Table provides recordset navigation, query building, and data manipulation
+for a single database table. Its error handler exposes field values as dynamic
+properties and sub-tables as related ORM_Table objects.
 </p>
 
-<h3>Miembros DATA Principales</h3>
+<h3>Key DATA Members</h3>
 
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>cTableName</code></td><td>Character</td><td>Nombre de la tabla</td></tr>
-<tr><td><code>cPrimaryKey</code></td><td>Character</td><td>Nombre(s) del campo de clave primaria</td></tr>
-<tr><td><code>cSelect</code></td><td>Character</td><td>Cláusula SELECT (lista de campos o expresión SQL)</td></tr>
-<tr><td><code>cWhere</code></td><td>Character</td><td>Cláusula WHERE (acumulada mediante llamadas a Where())</td></tr>
-<tr><td><code>cOrderBy</code></td><td>Character</td><td>Cláusula ORDER BY (acumulada mediante llamadas a OrderBy())</td></tr>
-<tr><td><code>lAutoSave</code></td><td>Logical</td><td>Si es .T., guarda los cambios automáticamente (por defecto .F.)</td></tr>
-<tr><td><code>aRelate</code></td><td>Array</td><td>Definición de relación: { cField, oTable, cFKey }</td></tr>
+<tr><td><code>cTableName</code></td><td>Character</td><td>Table name</td></tr>
+<tr><td><code>cPrimaryKey</code></td><td>Character</td><td>Primary key field name(s)</td></tr>
+<tr><td><code>cSelect</code></td><td>Character</td><td>SELECT clause (field list or SQL expression)</td></tr>
+<tr><td><code>cWhere</code></td><td>Character</td><td>WHERE clause (accumulated via Where() calls)</td></tr>
+<tr><td><code>cOrderBy</code></td><td>Character</td><td>ORDER BY clause (accumulated via OrderBy() calls)</td></tr>
+<tr><td><code>lAutoSave</code></td><td>Logical</td><td>If .T., saves changes automatically (default .F.)</td></tr>
+<tr><td><code>aRelate</code></td><td>Array</td><td>Relationship definition: { cField, oTable, cFKey }</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
-<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( oConnection, cTable )</code></td><td>Crea un ORM_Table vinculado a una conexión</td></tr>
-<tr><td><code>Where( ... )</code></td><td>Añade condición(es) de filtro. Encadenable, devuelve Self.</td></tr>
-<tr><td><code>OrderBy( ... )</code></td><td>Añade especificación(es) de ordenación. Encadenable, devuelve Self.</td></tr>
-<tr><td><code>Select( ... )</code></td><td>Añade campo(s) a la cláusula SELECT. Encadenable.</td></tr>
-<tr><td><code>First()</code></td><td>Navega al primer registro. Devuelve Self.</td></tr>
-<tr><td><code>Last()</code></td><td>Navega al último registro. Devuelve Self.</td></tr>
-<tr><td><code>Next()</code></td><td>Navega al registro siguiente. Devuelve Self.</td></tr>
-<tr><td><code>Prev()</code></td><td>Navega al registro anterior. Devuelve Self.</td></tr>
-<tr><td><code>Move( n )</code></td><td>Navega hacia adelante/atrás n registros. Devuelve Self.</td></tr>
-<tr><td><code>Add( aFlds, aVals )</code></td><td>Añade un nuevo registro con los valores de campo indicados</td></tr>
-<tr><td><code>Del()</code></td><td>Elimina el registro actual</td></tr>
-<tr><td><code>Find( uVal, u )</code></td><td>Busca un registro por el valor de la clave primaria, o por el par (cField, uVal)</td></tr>
-<tr><td><code>Count()</code></td><td>Devuelve el número de registros coincidentes</td></tr>
-<tr><td><code>Sum( cField )</code></td><td>Devuelve la SUMA de un campo numérico</td></tr>
-<tr><td><code>Max( cField )</code></td><td>Devuelve el valor MÁXIMO de un campo</td></tr>
-<tr><td><code>Min( cField )</code></td><td>Devuelve el valor MÍNIMO de un campo</td></tr>
-<tr><td><code>Avg( cField )</code></td><td>Devuelve el PROMEDIO de un campo numérico</td></tr>
-<tr><td><code>Std( cField )</code></td><td>Devuelve la STD (desviación estándar) de un campo</td></tr>
-<tr><td><code>Browse( acFields )</code></td><td>Muestra el recordset en un diálogo XBrowse</td></tr>
-<tr><td><code>Relate( cField, oTable, cFKey )</code></td><td>Define una relación con otra ORM_Table</td></tr>
-<tr><td><code>Save()</code></td><td>Guarda los cambios pendientes. Devuelve Self.</td></tr>
-<tr><td><code>Get( u )</code></td><td>Obtiene el valor de un campo por nombre o posición</td></tr>
-<tr><td><code>Close()</code></td><td>Cierra el recordset y libera los recursos</td></tr>
+<tr><td><code>New( oConnection, cTable )</code></td><td>Create an ORM_Table bound to a connection</td></tr>
+<tr><td><code>Where( ... )</code></td><td>Add filter condition(s). Chainable, returns Self.</td></tr>
+<tr><td><code>OrderBy( ... )</code></td><td>Add sort specification(s). Chainable, returns Self.</td></tr>
+<tr><td><code>Select( ... )</code></td><td>Add field(s) to the SELECT clause. Chainable.</td></tr>
+<tr><td><code>First()</code></td><td>Navigate to the first record. Returns Self.</td></tr>
+<tr><td><code>Last()</code></td><td>Navigate to the last record. Returns Self.</td></tr>
+<tr><td><code>Next()</code></td><td>Navigate to the next record. Returns Self.</td></tr>
+<tr><td><code>Prev()</code></td><td>Navigate to the previous record. Returns Self.</td></tr>
+<tr><td><code>Move( n )</code></td><td>Navigate forward/backward by n records. Returns Self.</td></tr>
+<tr><td><code>Add( aFlds, aVals )</code></td><td>Add a new record with the given field values</td></tr>
+<tr><td><code>Del()</code></td><td>Delete the current record</td></tr>
+<tr><td><code>Find( uVal, u )</code></td><td>Find a record by primary key value, or (cField, uVal) pair</td></tr>
+<tr><td><code>Count()</code></td><td>Return the number of matching records</td></tr>
+<tr><td><code>Sum( cField )</code></td><td>Return the SUM of a numeric field</td></tr>
+<tr><td><code>Max( cField )</code></td><td>Return the MAX value of a field</td></tr>
+<tr><td><code>Min( cField )</code></td><td>Return the MIN value of a field</td></tr>
+<tr><td><code>Avg( cField )</code></td><td>Return the AVG of a numeric field</td></tr>
+<tr><td><code>Std( cField )</code></td><td>Return the STD (standard deviation) of a field</td></tr>
+<tr><td><code>Browse( acFields )</code></td><td>Display the recordset in an XBrowse dialog</td></tr>
+<tr><td><code>Relate( cField, oTable, cFKey )</code></td><td>Define a relationship to another ORM_Table</td></tr>
+<tr><td><code>Save()</code></td><td>Save pending changes. Returns Self.</td></tr>
+<tr><td><code>Get( u )</code></td><td>Get field value by name or position</td></tr>
+<tr><td><code>Close()</code></td><td>Close the recordset and free resources</td></tr>
 </tbody>
 </table>
 
-<h2 id="dynamic-access">Acceso Dinámico a Campos</h2>
+<h2 id="dynamic-access">Dynamic Field Access</h2>
 
 <p>
-ORM_Table usa un manejador de errores para proporcionar acceso directo de tipo propiedad a los valores de los campos.
-Cualquier mensaje que coincida con el nombre de un campo de la tabla se traduce automáticamente a un get/set de campo:
+ORM_Table uses an error handler to provide direct property-style access to field values.
+Any message that matches a table field name is automatically translated to a field get/set:
 </p>
 
-<pre><code class="language-harbour">// En lugar de: oTable:Get( "name" )
-? oTable:name        // acceso dinámico mediante el manejador de errores
-oTable:city := "Madrid"   // asignar valor de campo</code></pre>
+<pre><code class="language-harbour">// Instead of: oTable:Get( "name" )
+? oTable:name        // dynamic access via error handler
+oTable:city := "Madrid"   // set field value</code></pre>
 
 <p>
-De forma similar, acceder a una propiedad que coincide con el nombre de otra tabla devuelve un nuevo ORM_Table
-para esa tabla, permitiendo una navegación fluida entre tablas relacionadas:
+Similarly, accessing a property that matches another table name returns a new ORM_Table
+for that table, enabling seamless navigation between related tables:
 </p>
 
-<pre><code class="language-harbour">// Si "orders" es una tabla, esto devuelve un ORM_Table para orders:
+<pre><code class="language-harbour">// If "orders" is a table, this returns ORM_Table for orders:
 oTable:orders:Where( "status = 'active'" )</code></pre>
 
-<h2 id="example">Ejemplo: Encadenar Consultas con Relaciones</h2>
+<h2 id="example">Example: Chain Queries with Relationships</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -144,51 +144,51 @@ function Main()
 
    local oCn, oCustomers
 
-   // Crear conexión a MariaDB mediante el backend FWH
+   // Create connection to MariaDB via FWH backend
    oCn := ORM_Connection():New( "FWH", "localhost", "mydb", "root", "password" )
    if oCn == nil
       MsgStop( "Connection failed" )
       return nil
    endif
 
-   // Obtener una tabla y encadenar filtros de consulta
+   // Get a table and chain query filters
    oCustomers := oCn:Table( "customers" )
 
    oCustomers:Where( "city", "Madrid" ):OrderBy( "name" )
 
    oCustomers:First()
    while !oCustomers:oRs:Eof()
-      ? oCustomers:name, oCustomers:email   // acceso dinámico a campos
+      ? oCustomers:name, oCustomers:email   // dynamic field access
       oCustomers:Next()
    end
 
-   // Agregación
+   // Aggregation
    ? "Total customers in Madrid:", oCustomers:Count()
    ? "Max credit:", oCustomers:Max( "credit_limit" )
 
-   // Buscar por clave primaria
+   // Find by primary key
    oCustomers:Find( 101 )
    ? oCustomers:name
 
-   // Añadir un nuevo registro
+   // Add a new record
    oCustomers:Add( { "name", "email" }, { "New Client", "client@test.com" } )
 
    oCn:Close()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Los métodos Where(), OrderBy() y Select() de ORM_Table son encadenables -- cada uno devuelve el objeto Self, permitiendo una sintaxis fluida como <code>oTable:Where(...):OrderBy(...):First()</code>.</li>
-<li>El método Where() acepta varias convenciones de llamada: <code>Where( "field = value" )</code>, <code>Where( "field", value )</code>, <code>Where( "field", "LIKE", "%pattern%" )</code>, o <code>Where( "field", ">=", 100 )</code>.</li>
-<li>El método <code>Relate()</code> enlaza dos instancias de ORM_Table de modo que al navegar por la tabla padre se filtra automáticamente el recordset de la tabla hija según el valor de la clave foránea.</li>
-<li>El manejador de errores dinámico hace que el acceso a los campos se sienta como acceso nativo a propiedades: <code>oTable:fieldname</code> (lectura) y <code>oTable:fieldname := value</code> (escritura).</li>
-<li>Los métodos de agregación (Count, Sum, Max, Min, Avg, Std) respetan las condiciones Where() actuales.</li>
+<li>ORM_Table methods Where(), OrderBy(), and Select() are chainable -- each returns the Self object, allowing fluent syntax like <code>oTable:Where(...):OrderBy(...):First()</code>.</li>
+<li>The Where() method accepts multiple calling conventions: <code>Where( "field = value" )</code>, <code>Where( "field", value )</code>, <code>Where( "field", "LIKE", "%pattern%" )</code>, or <code>Where( "field", ">=", 100 )</code>.</li>
+<li>The <code>Relate()</code> method links two ORM_Table instances so that navigating the parent automatically filters the child table's recordset based on the foreign key value.</li>
+<li>The dynamic error handler makes field access feel like native property access: <code>oTable:fieldname</code> (read) and <code>oTable:fieldname := value</code> (write).</li>
+<li>Aggregation methods (Count, Sum, Max, Min, Avg, Std) respect the current Where() conditions.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/data/tordinfo.html">&larr; tordinfo</a> | <a href="../../es/ui/toutlook.html">toutlook &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

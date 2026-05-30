@@ -15,67 +15,67 @@
 <p class="class-source">Fonte: <code>source/classes/tgrok.prg</code></p>
 
 <p>
-TGrok é o cliente FiveWin para a <strong>API xAI Grok</strong>. Fornece acesso aos modelos
-de linguagem Grok com suporte para chat de texto, respostas em stream e análise de imagens
-(incluindo upload de ficheiros locais e URLs de imagens). A classe usa a biblioteca <code>hb_curl</code>
-do Harbour para comunicação HTTPS com o endpoint da API xAI. As chaves de API podem ser passadas
-explicitamente ou lidas da variável de ambiente <code>XAI_API_KEY</code>.
+TGrok is FiveWin's client for the <strong>xAI Grok API</strong>. It provides access to Grok
+language models with support for text chat, streaming responses, and image analysis
+(including both local file uploads and image URLs). The class uses Harbour's <code>hb_curl</code>
+library for HTTPS communication with the xAI API endpoint. API keys can be passed
+explicitly or read from the <code>XAI_API_KEY</code> environment variable.
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
-    subgraph "Aplicação FiveWin"
+    subgraph "FiveWin Application"
         A[TGrok]
     end
     subgraph "libcurl"
         B[hb_curl<br/>HTTPS]
     end
-    subgraph "API xAI"
+    subgraph "xAI API"
         C["api.x.ai/v1/chat/completions"]
     end
     A --> B
     B --> C
 </div>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cKey</code></td><td>Caractere</td><td><code>""</code></td><td>Chave da API xAI. Lê a variável de ambiente <code>XAI_API_KEY</code> se vazia.</td></tr>
-<tr><td><code>cModel</code></td><td>Caractere</td><td><code>"grok-3-latest"</code></td><td>Modelo Grok a usar</td></tr>
-<tr><td><code>cPrompt</code></td><td>Caractere</td><td></td><td>Último prompt enviado à API</td></tr>
-<tr><td><code>cResponse</code></td><td>Caractere</td><td></td><td>Resposta JSON bruta da API</td></tr>
-<tr><td><code>cUrl</code></td><td>Caractere</td><td></td><td>URL do endpoint da API (auto-definido para endpoint xAI)</td></tr>
-<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>Handle easy do libcurl</td></tr>
-<tr><td><code>nError</code></td><td>Numérico</td><td><code>0</code></td><td>Código de erro curl (<code>HB_CURLE_OK</code> = 0 = sucesso)</td></tr>
-<tr><td><code>nHttpCode</code></td><td>Numérico</td><td><code>0</code></td><td>Código de estado da resposta HTTP</td></tr>
-<tr><td><code>nTemperature</code></td><td>Numérico</td><td><code>0.5</code></td><td>Temperatura de amostragem (0.0 - 2.0)</td></tr>
+<tr><td><code>cKey</code></td><td>Character</td><td><code>""</code></td><td>xAI API key. Reads <code>XAI_API_KEY</code> env var if empty.</td></tr>
+<tr><td><code>cModel</code></td><td>Character</td><td><code>"grok-3-latest"</code></td><td>Grok model to use</td></tr>
+<tr><td><code>cPrompt</code></td><td>Character</td><td></td><td>Last prompt sent to the API</td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Raw JSON response from the API</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td></td><td>API endpoint URL (auto-set to xAI endpoint)</td></tr>
+<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>libcurl easy handle</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>curl error code (<code>HB_CURLE_OK</code> = 0 = success)</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>HTTP response status code</td></tr>
+<tr><td><code>nTemperature</code></td><td>Numeric</td><td><code>0.5</code></td><td>Sampling temperature (0.0 - 2.0)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cKey, cModel )</code></td><td>Criar uma instância TGrok. Se <code>cKey</code> estiver vazio, lê <code>XAI_API_KEY</code> do ambiente. Inicializa o handle libcurl.</td></tr>
-<tr><td><code>Send( cPrompt )</code></td><td>Enviar um prompt de texto para a API Grok. Armazena a resposta JSON bruta em <code>cResponse</code>.</td></tr>
-<tr><td><code>SendStream( cPrompt, bCallback )</code></td><td>Enviar um prompt com streaming ativado. O bloco de código <code>bCallback</code> recebe cada bloco de dados à medida que chega.</td></tr>
-<tr><td><code>SendImage( cImageFile, cPrompt )</code></td><td>Enviar um ficheiro de imagem local com um prompt de texto para análise de visão. Codifica a imagem como base64.</td></tr>
-<tr><td><code>SendImageURL( cImageUrl, cPrompt )</code></td><td>Enviar um URL de imagem com um prompt de texto para análise de visão.</td></tr>
-<tr><td><code>GetValue()</code></td><td>Extrair a resposta de texto do JSON em <code>cResponse</code>. Retorna o conteúdo da mensagem ou informação de erro.</td></tr>
-<tr><td><code>End()</code></td><td>Limpar o handle libcurl. Chamado automaticamente pelo destrutor.</td></tr>
+<tr><td><code>New( cKey, cModel )</code></td><td>Create a TGrok instance. If <code>cKey</code> is empty, reads <code>XAI_API_KEY</code> from the environment. Initializes the libcurl handle.</td></tr>
+<tr><td><code>Send( cPrompt )</code></td><td>Send a text prompt to the Grok API. Stores the raw JSON response in <code>cResponse</code>.</td></tr>
+<tr><td><code>SendStream( cPrompt, bCallback )</code></td><td>Send a prompt with streaming enabled. The <code>bCallback</code> codeblock receives each data chunk as it arrives.</td></tr>
+<tr><td><code>SendImage( cImageFile, cPrompt )</code></td><td>Send a local image file with a text prompt for vision analysis. Encodes the image as base64.</td></tr>
+<tr><td><code>SendImageURL( cImageUrl, cPrompt )</code></td><td>Send an image URL with a text prompt for vision analysis.</td></tr>
+<tr><td><code>GetValue()</code></td><td>Extract the text response from the JSON in <code>cResponse</code>. Returns the message content or error info.</td></tr>
+<tr><td><code>End()</code></td><td>Clean up the libcurl handle. Automatically called by the destructor.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example-text">Exemplo: Chat de Texto</h2>
+<h2 id="example-text">Example: Text Chat</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -95,7 +95,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-stream">Exemplo: Resposta em Stream</h2>
+<h2 id="example-stream">Example: Streaming Response</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -115,7 +115,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-image">Exemplo: Análise de Imagem</h2>
+<h2 id="example-image">Example: Image Analysis</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -142,18 +142,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TGrok requer a biblioteca <code>hb_curl</code>. Inclua <code>#include "hbcurl.ch"</code> para constantes curl.</li>
-<li>A verificação SSL está desativada por padrão (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) para compatibilidade.</li>
-<li>A chave da API pode ser lida da variável de ambiente <code>XAI_API_KEY</code> passando uma chave vazia para <code>New()</code>.</li>
-<li><code>GetValue()</code> navega pelo caminho JSON <code>choices[1].message.content</code> para extrair o texto. Se ocorreu um erro, retorna o objeto de erro.</li>
-<li>O método <code>SendImage()</code> lê o ficheiro do disco, codifica-o como base64 e envia-o inline com o pedido.</li>
+<li>TGrok requires the <code>hb_curl</code> library. Include <code>#include "hbcurl.ch"</code> for curl constants.</li>
+<li>SSL verification is disabled by default (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) for compatibility.</li>
+<li>The API key can be read from the <code>XAI_API_KEY</code> environment variable by passing an empty key to <code>New()</code>.</li>
+<li><code>GetValue()</code> navigates the JSON response path <code>choices[1].message.content</code> to extract the text. If an error occurred, it returns the error object instead.</li>
+<li>The <code>SendImage()</code> method reads the file from disk, encodes it as base64, and sends it inline with the request.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tgraph.html">&larr; tgraph</a> | <a href="../../pt/ui/tgroup.html">tgroup &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

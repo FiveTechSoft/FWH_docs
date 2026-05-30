@@ -11,28 +11,26 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>Clases de IA</h1>
-<p class="class-source">Fuentes: <code>source/classes/topenai.prg</code>, <code>source/classes/tdeepseek.prg</code>, <code>source/classes/tgemini.prg</code>, <code>source/classes/tollama.prg</code></p>
+<h1>AI Classes</h1>
+<p class="class-source">Sources: <code>source/classes/topenai.prg</code>, <code>source/classes/tdeepseek.prg</code>, <code>source/classes/tgemini.prg</code>, <code>source/classes/tollama.prg</code></p>
 
 <p>
-FiveWin proporciona un conjunto unificado de clases de IA/LLM que se integran con proveedores
-de IA en la nube populares y modelos locales. Todas las clases siguen el mismo patrón básico:
-instanciar con una clave API (o nombre del modelo para local), enviar un prompt y extraer la
-respuesta. Utilizan la librería <code>hb_curl</code> de Harbour para la comunicación HTTPS con los
-puntos finales de la API respectivos.
+FiveWin provides a unified set of AI/LLM classes that integrate with popular cloud AI
+providers and local models. All classes follow the same basic pattern: instantiate with
+an API key (or model name for local), send a prompt, and extract the response. They use
+Harbour's <code>hb_curl</code> library for HTTPS communication with the respective API endpoints.
 </p>
 
 <p>
-Para la documentación completa de IA incluyendo todos los miembros de las clases y ejemplos
-extendidos, consulte <a href="../../es/internet/topenai.html">TOpenAI / TChatGPT</a> &mdash; esa
-página documenta cada clase de IA con tablas de referencia completas, ejemplos de código y una
-guía comparativa.
+For the complete AI documentation including all class members and extended examples, see
+<a href="../../es/internet/topenai.html">TOpenAI / TChatGPT</a> &mdash; that page documents every AI class
+with full reference tables, code samples, and a comparison guide.
 </p>
 
-<h2 id="common-pattern">Patrón Común</h2>
+<h2 id="common-pattern">Common Pattern</h2>
 
 <p>
-Todas las clases de IA comparten este flujo de trabajo básico:
+All AI classes share this basic workflow:
 </p>
 
 <pre><code class="language-harbour">// 1. Create instance with API key (or model name for local)
@@ -47,60 +45,60 @@ cAnswer := oAI:GetValue()
 // 4. Clean up
 oAI:End()</code></pre>
 
-<h2 id="class-reference">Referencia de Clases</h2>
+<h2 id="class-reference">Class Reference</h2>
 
 <h3>TOpenAI</h3>
 <p class="source-badge">Fuente: <code>source/classes/topenai.prg</code></p>
-<p>Integración con OpenAI ChatGPT. Soporta texto, visión (análisis de imágenes) y respuestas en streaming.</p>
+<p>OpenAI ChatGPT integration. Supports text, vision (image analysis), and streaming responses.</p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Default</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cKey</code></td><td>env OPENAI_API_KEY</td><td>Clave API de OpenAI</td></tr>
-<tr><td><code>cModel</code></td><td>gpt-4o-mini</td><td>Nombre del modelo (ej. gpt-4o, gpt-4o-mini)</td></tr>
-<tr><td><code>nTemperature</code></td><td>0.5</td><td>Temperatura de muestreo (0.0 a 2.0)</td></tr>
-<tr><td><code>cResponse</code></td><td></td><td>Respuesta JSON cruda de la API</td></tr>
+<tr><td><code>cKey</code></td><td>OPENAI_API_KEY env</td><td>OpenAI API key</td></tr>
+<tr><td><code>cModel</code></td><td>gpt-4o-mini</td><td>Model name (e.g. gpt-4o, gpt-4o-mini)</td></tr>
+<tr><td><code>nTemperature</code></td><td>0.5</td><td>Sampling temperature (0.0 to 2.0)</td></tr>
+<tr><td><code>cResponse</code></td><td></td><td>Raw JSON response from API</td></tr>
 </tbody>
 </table>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Parámetros</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>cKey, cModel</td><td>Constructor. Lee la variable de entorno si cKey está vacío.</td></tr>
-<tr><td><code>Send()</code></td><td>cPrompt</td><td>Enviar un prompt de texto, devuelve JSON crudo</td></tr>
-<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Respuesta en streaming a través de callback</td></tr>
-<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Visión: analizar una imagen local</td></tr>
-<tr><td><code>SendImageURL()</code></td><td>cImageUrl, cPrompt</td><td>Visión: analizar imagen desde URL</td></tr>
-<tr><td><code>GetValue()</code></td><td></td><td>Extraer texto de la respuesta JSON</td></tr>
+<tr><td><code>New()</code></td><td>cKey, cModel</td><td>Constructor. Reads env var if cKey empty.</td></tr>
+<tr><td><code>Send()</code></td><td>cPrompt</td><td>Send text prompt, return raw JSON</td></tr>
+<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Streaming response via callback</td></tr>
+<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Vision: analyze a local image</td></tr>
+<tr><td><code>SendImageURL()</code></td><td>cImageUrl, cPrompt</td><td>Vision: analyze image from URL</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extract text from JSON response</td></tr>
 </tbody>
 </table>
 
 <h3>TDeepSeek</h3>
 <p class="source-badge">Fuente: <code>source/classes/tdeepseek.prg</code></p>
-<p>Integración con DeepSeek AI. Conocido por sus sólidas capacidades de codificación y razonamiento.</p>
+<p>DeepSeek AI integration. Known for strong coding and reasoning capabilities.</p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Default</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cKey</code></td><td>env DEEPSEEK_API_KEY</td><td>Clave API de DeepSeek</td></tr>
-<tr><td><code>cModel</code></td><td>deepseek-chat</td><td>Modelo: deepseek-chat o deepseek-reasoner</td></tr>
+<tr><td><code>cKey</code></td><td>DEEPSEEK_API_KEY env</td><td>DeepSeek API key</td></tr>
+<tr><td><code>cModel</code></td><td>deepseek-chat</td><td>Model: deepseek-chat or deepseek-reasoner</td></tr>
 </tbody>
 </table>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Parámetros</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New()</code></td><td>cKey, cModel</td><td>Constructor</td></tr>
-<tr><td><code>Send()</code></td><td>cPrompt</td><td>Enviar prompt, devuelve JSON crudo</td></tr>
-<tr><td><code>GetValue()</code></td><td></td><td>Extraer texto de la respuesta JSON</td></tr>
+<tr><td><code>Send()</code></td><td>cPrompt</td><td>Send prompt, return raw JSON</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extract text from JSON response</td></tr>
 </tbody>
 </table>
 
@@ -111,28 +109,28 @@ oAI:End()</code></pre>
 
 <h3>TGemini</h3>
 <p class="source-badge">Fuente: <code>source/classes/tgemini.prg</code></p>
-<p>Integración con Google Gemini. Soporta texto, imágenes, subida de archivos y streaming.</p>
+<p>Google Gemini integration. Supports text, images, file uploads, and streaming.</p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Default</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cKey</code></td><td>env GEMINI_API_KEY</td><td>Clave API de Google</td></tr>
-<tr><td><code>cModel</code></td><td>gemini-2.0-flash</td><td>Nombre del modelo</td></tr>
-<tr><td><code>nTemperature</code></td><td>0</td><td>Creatividad de la respuesta (0-2)</td></tr>
+<tr><td><code>cKey</code></td><td>GEMINI_API_KEY env</td><td>Google API key</td></tr>
+<tr><td><code>cModel</code></td><td>gemini-2.0-flash</td><td>Model name</td></tr>
+<tr><td><code>nTemperature</code></td><td>0</td><td>Response creativity (0-2)</td></tr>
 </tbody>
 </table>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Parámetros</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New()</code></td><td>cKey, cModel</td><td>Constructor</td></tr>
-<tr><td><code>Send()</code></td><td>uContent, cPrompt, bCallback</td><td>Enviar texto, archivo de imagen o array de archivos con prompt</td></tr>
-<tr><td><code>UploadFile()</code></td><td>cFileName, lDeleteAfter</td><td>Subir archivo a Gemini para análisis</td></tr>
-<tr><td><code>GetValue()</code></td><td></td><td>Extraer texto de la respuesta JSON</td></tr>
+<tr><td><code>Send()</code></td><td>uContent, cPrompt, bCallback</td><td>Send text, image file, or array of files with prompt</td></tr>
+<tr><td><code>UploadFile()</code></td><td>cFileName, lDeleteAfter</td><td>Upload file to Gemini for analysis</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extract text from JSON response</td></tr>
 </tbody>
 </table>
 
@@ -148,30 +146,30 @@ MsgInfo( oAI:GetValue() )
 
 oAI:End()</code></pre>
 
-<h3>TOLlama (IA Local)</h3>
+<h3>TOLlama (Local AI)</h3>
 <p class="source-badge">Fuente: <code>source/classes/tollama.prg</code></p>
-<p>Integración con LLM local a través de <a href="https://ollama.ai">Ollama</a>. No necesita clave API &mdash; ejecuta modelos en su propia máquina. Modelo predeterminado: deepseek-r1:14b.</p>
+<p>Local LLM integration via <a href="https://ollama.ai">Ollama</a>. No API key needed &mdash; runs models on your own machine. Default model: deepseek-r1:14b.</p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Default</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cModel</code></td><td>deepseek-r1:14b</td><td>Nombre del modelo de Ollama</td></tr>
-<tr><td><code>cUrl</code></td><td>http://localhost:11434/api/chat</td><td>Punto final del servidor Ollama</td></tr>
+<tr><td><code>cModel</code></td><td>deepseek-r1:14b</td><td>Ollama model name</td></tr>
+<tr><td><code>cUrl</code></td><td>http://localhost:11434/api/chat</td><td>Ollama server endpoint</td></tr>
 </tbody>
 </table>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Parámetros</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>cModel</td><td>Constructor. Modelo predeterminado: deepseek-r1:14b.</td></tr>
-<tr><td><code>Send()</code></td><td>cPrompt</td><td>Enviar prompt, devuelve JSON crudo</td></tr>
-<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Respuesta en streaming a través de callback</td></tr>
-<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Visión para modelos multimodales (ej. llava)</td></tr>
-<tr><td><code>GetValue()</code></td><td></td><td>Extraer contenido del mensaje desde JSON</td></tr>
+<tr><td><code>New()</code></td><td>cModel</td><td>Constructor. Default model: deepseek-r1:14b.</td></tr>
+<tr><td><code>Send()</code></td><td>cPrompt</td><td>Send prompt, return raw JSON</td></tr>
+<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Streaming response via callback</td></tr>
+<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Vision for multimodal models (e.g. llava)</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extract message content from JSON</td></tr>
 </tbody>
 </table>
 
@@ -188,37 +186,36 @@ oAI:SendImage( "photo.jpg", "What do you see?" )
 
 oAI:End()</code></pre>
 
-<h2 id="api-keys">Configuración de Claves API</h2>
+<h2 id="api-keys">API Key Configuration</h2>
 
 <p>
-Cada clase de IA en la nube lee su clave API de una variable de entorno específica cuando no se pasa
-ninguna clave a <code>New()</code>:
+Each cloud AI class reads its API key from a specific environment variable when no key is passed to <code>New()</code>:
 </p>
 
 <table>
 <thead>
-<tr><th>Clase</th><th>Variable de Entorno</th><th>URL Base</th></tr>
+<tr><th>Class</th><th>Environment Variable</th><th>Base URL</th></tr>
 </thead>
 <tbody>
 <tr><td>TOpenAI</td><td><code>OPENAI_API_KEY</code></td><td>https://api.openai.com/v1</td></tr>
 <tr><td>TDeepSeek</td><td><code>DEEPSEEK_API_KEY</code></td><td>https://api.deepseek.com</td></tr>
 <tr><td>TGemini</td><td><code>GEMINI_API_KEY</code></td><td>https://generativelanguage.googleapis.com</td></tr>
-<tr><td>TOLlama</td><td>No necesaria (local)</td><td>http://localhost:11434</td></tr>
+<tr><td>TOLlama</td><td>Not needed (local)</td><td>http://localhost:11434</td></tr>
 </tbody>
 </table>
 
-<h2 id="tips">Consejos</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-<li>Todas las clases de IA requieren la librería <code>hb_curl</code>. Enlace con <code>#include "hbcurl.ch"</code> para constantes curl.</li>
-<li>La verificación SSL está deshabilitada por defecto (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) para amplia compatibilidad.</li>
-<li>Use <code>GetValue()</code> para extraer la respuesta de texto del JSON crudo almacenado en <code>cResponse</code>.</li>
-<li>El DATA miembro <code>cResponse</code> siempre contiene el JSON crudo. Acceda a él directamente para depuración o análisis personalizado.</li>
-<li>Para documentación completa incluyendo todos los métodos, codeblocks de callback y uso avanzado, consulte la página <a href="../../es/internet/topenai.html">TOpenAI / TChatGPT</a>.</li>
+<li>All AI classes require the <code>hb_curl</code> library. Link with <code>#include "hbcurl.ch"</code> for curl constants.</li>
+<li>SSL verification is disabled by default (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) for broad compatibility.</li>
+<li>Use <code>GetValue()</code> to extract the text response from the raw JSON stored in <code>cResponse</code>.</li>
+<li>The <code>cResponse</code> DATA member always contains the raw JSON. Access it directly for debugging or custom parsing.</li>
+<li>For complete documentation including all methods, callback codeblocks, and advanced usage, see the <a href="../../es/internet/topenai.html">TOpenAI / TChatGPT</a> page.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tactivex.html">&larr; tactivex</a> | <a href="../../es/ai/tai_glossary.html">tai_glossary &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

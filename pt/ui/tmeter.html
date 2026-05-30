@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMeter - FWH Docs</title>
+<title>TMeter - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,55 +13,55 @@
 
 <h1>TMeter</h1>
 <p class="class-source">Fonte: <code>source/classes/meter.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TMeter é um controle de medidor de progresso que exibe o status de conclusão de uma
-operação demorada. Suporta três estilos de renderização: barra retangular padrão, medidor
-circular e array de bitmaps. O medidor pode exibir um rótulo de texto e a porcentagem, com
-cores de primeiro plano e de fundo personalizáveis.
+TMeter is a progress meter control that displays the completion status of a long-running
+operation. It supports three rendering styles: standard rectangular bar, circular gauge,
+and bitmap array. The meter can display a text label and percentage, with customizable
+foreground and background colors.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nTotal</code></td><td>Numérico</td><td>Valor máximo (100% de conclusão)</td></tr>
-<tr><td><code>cText</code></td><td>Caractere</td><td>Texto do rótulo exibido sobre ou ao lado do medidor</td></tr>
-<tr><td><code>lPercentage</code></td><td>Lógico</td><td>Exibe o texto de porcentagem no medidor</td></tr>
-<tr><td><code>nClrBar</code></td><td>Numérico</td><td>Cor de preenchimento da barra (padrão CLR_HBLUE)</td></tr>
-<tr><td><code>nClrBText</code></td><td>Numérico</td><td>Cor do texto da barra (padrão CLR_WHITE)</td></tr>
-<tr><td><code>nClrBlank</code></td><td>Numérico</td><td>Cor da porção não preenchida</td></tr>
-<tr><td><code>cStyle</code></td><td>Caractere</td><td>Estilo de renderização: <code>"CIRCULAR"</code>, <code>"BMPARRAY"</code>, <code>"BRUSH"</code>, ou NIL para barra padrão</td></tr>
-<tr><td><code>nInnerDia</code></td><td>Numérico</td><td>Diâmetro interno para o medidor circular (estilo rosca)</td></tr>
-<tr><td><code>nClrFill</code></td><td>Numérico</td><td>Cor de preenchimento do medidor circular</td></tr>
-<tr><td><code>nClrBorder</code></td><td>Numérico</td><td>Cor da borda do medidor circular</td></tr>
+<tr><td><code>nTotal</code></td><td>Numeric</td><td>Maximum value (100% completion)</td></tr>
+<tr><td><code>cText</code></td><td>Character</td><td>Label text displayed on or beside the meter</td></tr>
+<tr><td><code>lPercentage</code></td><td>Logical</td><td>Show percentage text on the meter</td></tr>
+<tr><td><code>nClrBar</code></td><td>Numeric</td><td>Bar fill color (default CLR_HBLUE)</td></tr>
+<tr><td><code>nClrBText</code></td><td>Numeric</td><td>Bar text color (default CLR_WHITE)</td></tr>
+<tr><td><code>nClrBlank</code></td><td>Numeric</td><td>Unfilled portion color</td></tr>
+<tr><td><code>cStyle</code></td><td>Character</td><td>Rendering style: <code>"CIRCULAR"</code>, <code>"BMPARRAY"</code>, <code>"BRUSH"</code>, or NIL for standard bar</td></tr>
+<tr><td><code>nInnerDia</code></td><td>Numeric</td><td>Inner diameter for circular meter (donut style)</td></tr>
+<tr><td><code>nClrFill</code></td><td>Numeric</td><td>Fill color for circular meter</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Border color for circular meter</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, bSetGet, nTotal, oWnd, nW, nH, lUpdate, lPixel, oFont, cText, lNoPercentage, nClrPane, nClrText, nClrBar, nClrBText, lDesign, lCircular, nInnerDia, nClrFill, nClrBorder, lBmpArray )</code></td><td>Cria um novo controle de medidor</td></tr>
-<tr><td><code>ReDefine( nId, bSetGet, nTotal, oWnd, lUpdate, oFont, cText, lNoPercentage, nClrPane, nClrText, nClrBar, nClrBText, lCircular, nInnerDia, nClrFill, nClrBorder, lBmpArray )</code></td><td>Redefine a partir de um recurso de diálogo</td></tr>
-<tr><td><code>Set( nActual )</code></td><td>Define o valor de progresso atual e atualiza a exibição</td></tr>
-<tr><td><code>SetTotal( nTotal )</code></td><td>Altera o valor máximo</td></tr>
-<tr><td><code>Paint()</code></td><td>Renderiza a barra retangular padrão</td></tr>
-<tr><td><code>PaintCircular()</code></td><td>Renderiza o estilo de medidor circular</td></tr>
-<tr><td><code>PaintBmpArray()</code></td><td>Renderiza usando um array de tiras de bitmap</td></tr>
-<tr><td><code>PaintBrushed()</code></td><td>Renderiza usando um padrão de preenchimento por pincel</td></tr>
-<tr><td><code>Default()</code></td><td>Aplica a fonte e as cores padrão</td></tr>
+<tr><td><code>New( nRow, nCol, bSetGet, nTotal, oWnd, nW, nH, lUpdate, lPixel, oFont, cText, lNoPercentage, nClrPane, nClrText, nClrBar, nClrBText, lDesign, lCircular, nInnerDia, nClrFill, nClrBorder, lBmpArray )</code></td><td>Create a new meter control</td></tr>
+<tr><td><code>ReDefine( nId, bSetGet, nTotal, oWnd, lUpdate, oFont, cText, lNoPercentage, nClrPane, nClrText, nClrBar, nClrBText, lCircular, nInnerDia, nClrFill, nClrBorder, lBmpArray )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>Set( nActual )</code></td><td>Set the current progress value and refresh the display</td></tr>
+<tr><td><code>SetTotal( nTotal )</code></td><td>Change the maximum value</td></tr>
+<tr><td><code>Paint()</code></td><td>Render the standard rectangular bar</td></tr>
+<tr><td><code>PaintCircular()</code></td><td>Render the circular gauge style</td></tr>
+<tr><td><code>PaintBmpArray()</code></td><td>Render using a bitmap strip array</td></tr>
+<tr><td><code>PaintBrushed()</code></td><td>Render using a brush fill pattern</td></tr>
+<tr><td><code>Default()</code></td><td>Apply default font and colors</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Progresso Circular</h2>
+<h2 id="example">Example: Circular Progress</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -84,18 +84,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O codeblock <code>bSetGet</code> fornece uma ligação bidirecional a uma variável numérica. Ele é avaliado para ler o valor atual e recebe uma atribuição quando o valor muda.</li>
-<li>O estilo circular é ativado passando <code>.T.</code> para <code>lCircular</code> em <code>New()</code>, o que define <code>cStyle</code> como <code>"CIRCULAR"</code>.</li>
-<li>O estilo de array de bitmaps é ativado por <code>lBmpArray := .T.</code>, o que define <code>cStyle</code> como <code>"BMPARRAY"</code>.</li>
-<li>Use <code>Set()</code> para atualizar a posição do progresso; o medidor é redesenhado automaticamente.</li>
-<li>Para medidores circulares, <code>nInnerDia</code> controla o tamanho do furo de um medidor estilo rosca.</li>
+<li>The <code>bSetGet</code> codeblock provides a two-way binding to a numeric variable. It is evaluated to read the current value and assigned to when the value changes.</li>
+<li>Circular style is enabled by passing <code>.T.</code> for <code>lCircular</code> in <code>New()</code>, which sets <code>cStyle</code> to <code>"CIRCULAR"</code>.</li>
+<li>Bitmap array style is enabled by <code>lBmpArray := .T.</code>, which sets <code>cStyle</code> to <code>"BMPARRAY"</code>.</li>
+<li>Use <code>Set()</code> to update the progress position; the meter redraws automatically.</li>
+<li>For circular meters, <code>nInnerDia</code> controls the hole size for a donut-style gauge.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tmetafile.html">&larr; tmetafile</a> | <a href="../../pt/reference/tmeter_ex.html">tmeter_ex &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

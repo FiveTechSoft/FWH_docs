@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TODBC - FWH Docs</title>
+<title>TODBC - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -12,16 +12,16 @@
 <main id="content">
 
 <h1>TODBC</h1>
-<p class="class-source">Source: <code>source/classes/todbc.prg</code></p>
+<p class="class-source">Fonte: <code>source/classes/todbc.prg</code></p>
 
 <p>
-TODBC fornece acesso direto ODBC (Open Database Connectivity) a partir de aplicacoes Harbour. Diferente do TRecSet
-que depende de ADO/COM, o TODBC chama as funcoes da API ODBC do Windows diretamente atraves da interface em nivel C
-do Harbour. Isso o torna leve e adequado para conectar a qualquer fonte de dados compativel com ODBC,
-incluindo SQL Server, MySQL, PostgreSQL, Oracle, SQLite e mais.
+TODBC provides direct ODBC (Open Database Connectivity) access from Harbour applications. Unlike TRecSet
+which relies on ADO/COM, TODBC calls the Windows ODBC API Funções directly through Harbour's C-level
+interface. This makes it lightweight and suitable for connecting to any ODBC-compliant data source
+including SQL Server, MySQL, PostgreSQL, Oracle, SQLite, and more.
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
@@ -48,11 +48,11 @@ flowchart LR
     C --> H
 </div>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>hEnv</code></td><td>Numeric</td><td></td><td>ODBC environment handle</td></tr>
@@ -70,22 +70,22 @@ flowchart LR
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
-<h3>Construtor</h3>
+<h3>Constructor</h3>
 <pre><code>METHOD New( cDSN, cUser, cPassword )</code></pre>
 <p>
-Cria uma nova conexao ODBC. O parametro <code>cDSN</code> pode ser um nome DSN registrado no
-Administrador de Fonte de Dados ODBC ou uma string de conexao completa iniciando com <code>"DRIVER="</code>.
-O construtor aloca os handles de ambiente e conexao ODBC e tenta conectar imediatamente.
-Verifique <code>oOdbc:lSuccess</code> apos a criacao.
+Creates a new ODBC connection. The <code>cDSN</code> parameter can be either a DSN name registered in
+the ODBC Data Source Administrator, or a full connection string starting with <code>"DRIVER="</code>.
+The constructor allocates the ODBC environment and connection handles and immediately attempts to connect.
+Check <code>oOdbc:lSuccess</code> after creation.
 </p>
 
-<h3>Metodos de Statement</h3>
+<h3>Statement Methods</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>AllocStatement()</code></td><td>Allocate a new SQL statement handle. Returns hStmt or 0 on error.</td></tr>
@@ -94,11 +94,11 @@ Verifique <code>oOdbc:lSuccess</code> apos a criacao.
 </tbody>
 </table>
 
-<h3>Metodos de Consulta</h3>
+<h3>Query Methods</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>Query( cCommand )</code></td><td>Execute a SELECT query. Returns array of { aFields, aData }.</td></tr>
@@ -110,11 +110,11 @@ Verifique <code>oOdbc:lSuccess</code> apos a criacao.
 </tbody>
 </table>
 
-<h3>Gerenciamento de Tabelas</h3>
+<h3>Table Management</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>GetTables( cMask, lViews )</code></td><td>Get list of tables (optionally including views)</td></tr>
@@ -127,11 +127,11 @@ Verifique <code>oOdbc:lSuccess</code> apos a criacao.
 </tbody>
 </table>
 
-<h3>Metodos de Transacao</h3>
+<h3>Transaction Methods</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>Commit()</code></td><td>Commit the current transaction</td></tr>
@@ -139,11 +139,11 @@ Verifique <code>oOdbc:lSuccess</code> apos a criacao.
 </tbody>
 </table>
 
-<h3>Informacoes e Tratamento de Erros</h3>
+<h3>Information &amp; Error Handling</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>GetInfo( nType )</code></td><td>Get ODBC connection information</td></tr>
@@ -156,7 +156,7 @@ Verifique <code>oOdbc:lSuccess</code> apos a criacao.
 </tbody>
 </table>
 
-<h2 id="example-dsn">Exemplo: Conectar via DSN</h2>
+<h2 id="example-dsn">Example: Connect via DSN</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -191,7 +191,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-driver">Exemplo: Conectar via String de Driver</h2>
+<h2 id="example-driver">Example: Connect via Driver String</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -216,7 +216,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-fetch">Exemplo: Buscar Linha por Linha</h2>
+<h2 id="example-fetch">Example: Fetch Row by Row</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "sql.ch"
@@ -253,7 +253,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-transaction">Exemplo: Transacoes</h2>
+<h2 id="example-transaction">Example: Transactions</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -283,7 +283,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="common-dsn">Strings de Conexao Comuns</h2>
+<h2 id="common-dsn">Common Connection Strings</h2>
 
 <pre><code>// SQL Server (DSN-less)
 "DRIVER={SQL Server};SERVER=myserver;DATABASE=mydb;UID=user;PWD=pass"
@@ -300,8 +300,8 @@ return nil</code></pre>
 // MS Access
 "DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\data\mydb.accdb"</code></pre>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/core/tobjfile.html">&larr; tobjfile</a> | <a href="../../pt/internet/tollama.html">tollama &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

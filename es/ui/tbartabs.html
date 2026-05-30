@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TBarTabs - DocumentaciÃ³n FWH</title>
+<title>TBarTabs - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,7 +13,7 @@
 
 <h1>TBarTabs</h1>
 <p class="class-source">Fuente: <code>source/classes/bartabs.prg</code></p>
-<p class="class-hierarchy">Clase independiente (not descendant of TControl)</p>
+<p class="class-hierarchy">Standalone class (not descendant of TControl)</p>
 
 <p>
 TBarTabs combines TTabs with TBar to create a ribbon-like tabbed toolbar interface.
@@ -22,18 +22,18 @@ This provides a compact way to organize toolbar buttons into functional groups, 
 the ribbon pattern found in modern desktop applications.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescripciÃ³n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aBars</code></td><td>Array</td><td>Array de objetos TBar, uno por pestaÃ±a</td></tr>
-<tr><td><code>oTabs</code></td><td>Object</td><td>Control TTabs para cambiar entre barras de herramientas</td></tr>
-<tr><td><code>oPanel</code></td><td>Object</td><td>Contenedor TPanel que contiene las pestaÃ±as y botones</td></tr>
-<tr><td><code>oWnd</code></td><td>Object</td><td>Ventana padre</td></tr>
-<tr><td><code>nBar</code></td><td>Numeric</td><td>Ãndice de la pestaÃ±a de barra de herramientas actualmente activa</td></tr>
+<tr><td><code>aBars</code></td><td>Array</td><td>Array of TBar objects, one per tab</td></tr>
+<tr><td><code>oTabs</code></td><td>Object</td><td>TTabs control for switching between toolbars</td></tr>
+<tr><td><code>oPanel</code></td><td>Object</td><td>TPanel container holding the tabs and buttons</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Parent window</td></tr>
+<tr><td><code>nBar</code></td><td>Numeric</td><td>Index of the currently active toolbar tab</td></tr>
 </tbody>
 </table>
 
@@ -41,15 +41,15 @@ the ribbon pattern found in modern desktop applications.
 
 <table>
 <thead>
-<tr><th>MÃ©todo</th><th>DescripciÃ³n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nBtnWidth, nBtnHeight, aPrompts, acBitmaps, nOption, l3D, l2007 )</code></td><td>Crear un nuevo control TBarTabs con pestaÃ±as iniciales</td></tr>
-<tr><td><code>AddBar( cPrompt, cBitmap )</code></td><td>Agregar una nueva pestaÃ±a con su barra de herramientas asociada. Devuelve el objeto TBar.</td></tr>
+<tr><td><code>New( oWnd, nBtnWidth, nBtnHeight, aPrompts, acBitmaps, nOption, l3D, l2007 )</code></td><td>Create a new TBarTabs control with initial tabs</td></tr>
+<tr><td><code>AddBar( cPrompt, cBitmap )</code></td><td>Add a new tab with its associated toolbar. Returns the TBar object.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Barra de Herramientas de Tres PestaÃ±as</h2>
+<h2 id="example">Example: Three-Tab Toolbar</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -88,16 +88,16 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>TBarTabs es una clase independiente que no hereda de TControl. Gestiona un contenedor TPanel que contiene un control TTabs y mÃºltiples barras de herramientas TBar.</li>
-<li>El constructor crea una barra de herramientas por prompt. Use <code>AddBar()</code> para agregar barras de herramientas dinÃ¡micamente despuÃ©s de la construcciÃ³n.</li>
-<li>Establezca <code>l3D := .T.</code> para un aspecto de botÃ³n 3D clÃ¡sico, o <code>l2007 := .T.</code> (predeterminado) para la apariencia de degradado estilo Office 2007.</li>
-<li>El panel se posiciona como <code>oWnd:oTop</code>, lo que significa que se adhiere a la parte superior de la ventana padre. Llame a <code>oBarTabs:oPanel:ReSize()</code> despuÃ©s de agregar botones para asegurar un diseÃ±o correcto.</li>
-<li>Solo la barra de herramientas correspondiente a la pestaÃ±a seleccionada es visible; cambiar de pestaÃ±a oculta automÃ¡ticamente la barra anterior y muestra la nueva.</li>
-<li>Los mapas de bits para los encabezados de pestaÃ±as se pueden proporcionar mediante el parÃ¡metro array <code>acBitmaps</code>, que se pasa directamente al control TTabs.</li>
+<li>TBarTabs is a standalone class that does not inherit from TControl. It manages a TPanel container that holds a TTabs control and multiple TBar toolbars.</li>
+<li>The constructor creates one toolbar per prompt. Use <code>AddBar()</code> to add toolbars dynamically after construction.</li>
+<li>Set <code>l3D := .T.</code> for a classic 3D button look, or <code>l2007 := .T.</code> (default) for the Office 2007-style gradient appearance.</li>
+<li>The panel is positioned as <code>oWnd:oTop</code>, meaning it attaches to the top of the parent window. Call <code>oBarTabs:oPanel:ReSize()</code> after adding buttons to ensure correct layout.</li>
+<li>Only the toolbar corresponding to the selected tab is visible; switching tabs automatically hides the previous toolbar and shows the new one.</li>
+<li>Bitmaps for tab headers can be provided via the <code>acBitmaps</code> array parameter, which is passed directly to the TTabs control.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/printing/tbarcode.html">&larr; tbarcode</a> | <a href="../../es/ui/tbitmap.html">tbitmap &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

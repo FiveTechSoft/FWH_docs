@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TButtonBmp - DocumentaciÃ³n FWH</title>
+<title>TButtonBmp - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,7 +13,7 @@
 
 <h1>TButtonBmp</h1>
 <p class="class-source">Fuente: <code>source/classes/buttonb.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TButton</code></p>
+<p class="class-hierarchy">Inherits from: <code>TButton</code></p>
 
 <p>
 TButtonBmp is a push button that displays a bitmap image alongside or instead of text.
@@ -22,22 +22,22 @@ mapping, and flexible text positioning. TButtonBmp is commonly used inside TBar 
 TRibbonBar controls.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescripciÃ³n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aPalBmp</code></td><td>Array</td><td>Array interno que contiene manejadores de mapa de bits, paleta, informaciÃ³n alfa y nombre de archivo</td></tr>
-<tr><td><code>cPosText</code></td><td>Character</td><td>PosiciÃ³n del texto: <code>TEXTTOP</code>, <code>TEXTBOTTOM</code>, <code>TEXTLEFT</code>, <code>TEXTRIGHT</code></td></tr>
-<tr><td><code>cLayOut</code></td><td>Character</td><td>Cadena de diseÃ±o para la disposiciÃ³n imagen/texto</td></tr>
-<tr><td><code>lBmpTransparent</code></td><td>Logical</td><td>Habilitar transparencia del mapa de bits (predeterminado .T.)</td></tr>
-<tr><td><code>lGDIP</code></td><td>Logical</td><td>Habilitar renderizado GDI+ (solo lectura)</td></tr>
-<tr><td><code>bColorMap</code></td><td>Codeblock</td><td>Bloque de cÃ³digo de mapeo de color para recolorear la imagen</td></tr>
-<tr><td><code>bAlphaLevel</code></td><td>Codeblock</td><td>Bloque de cÃ³digo de nivel de transparencia alfa</td></tr>
-<tr><td><code>lHasAlpha</code></td><td>Logical</td><td>Indica si el mapa de bits cargado tiene canal alfa (acceso solo lectura)</td></tr>
-<tr><td><code>cBitmap</code></td><td>Character</td><td>Nombre de archivo de mapa de bits o nombre de recurso (acceso solo lectura)</td></tr>
+<tr><td><code>aPalBmp</code></td><td>Array</td><td>Internal array holding bitmap handles, palette, alpha info, and file name</td></tr>
+<tr><td><code>cPosText</code></td><td>Character</td><td>Text position: <code>TEXTTOP</code>, <code>TEXTBOTTOM</code>, <code>TEXTLEFT</code>, <code>TEXTRIGHT</code></td></tr>
+<tr><td><code>cLayOut</code></td><td>Character</td><td>Layout string for image/text arrangement</td></tr>
+<tr><td><code>lBmpTransparent</code></td><td>Logical</td><td>Enable bitmap transparency (default .T.)</td></tr>
+<tr><td><code>lGDIP</code></td><td>Logical</td><td>Enable GDI+ rendering (read-only)</td></tr>
+<tr><td><code>bColorMap</code></td><td>Codeblock</td><td>Color mapping codeblock for image recoloring</td></tr>
+<tr><td><code>bAlphaLevel</code></td><td>Codeblock</td><td>Alpha transparency level codeblock</td></tr>
+<tr><td><code>lHasAlpha</code></td><td>Logical</td><td>Whether loaded bitmap has alpha channel (read-only access)</td></tr>
+<tr><td><code>cBitmap</code></td><td>Character</td><td>Bitmap file name or resource name (read-only access)</td></tr>
 </tbody>
 </table>
 
@@ -45,26 +45,26 @@ TRibbonBar controls.
 
 <table>
 <thead>
-<tr><th>MÃ©todo</th><th>DescripciÃ³n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, cCaption, oWnd, bAction, nW, nH, nHelpId, oFont, lDefault, lPixel, lDesign, cMsg, lUpdate, bWhen, bValid, lCancel, cBitmap, cPosText, cToolTip, lFlat, cLayOut, lGDIP, lRelPix )</code></td><td>Crear un nuevo botÃ³n de mapa de bits</td></tr>
-<tr><td><code>ReDefine( nId, bAction, oWnd, nHelpId, cMsg, lUpdate, bWhen, bValid, cPrompt, lCancel, cBitmap, cPosText, cToolTip, lGDIP )</code></td><td>Redefinir desde recurso de diÃ¡logo</td></tr>
-<tr><td><code>LoadBitmap( cBmpName )</code></td><td>Cargar un mapa de bits desde archivo o recurso</td></tr>
-<tr><td><code>Paint()</code></td><td>Renderizar el botÃ³n con su mapa de bits y texto</td></tr>
-<tr><td><code>HasAlpha()</code></td><td>Devuelve <code>.T.</code> si el mapa de bits tiene un canal alfa</td></tr>
-<tr><td><code>nAlphaLevel( uNew )</code></td><td>Obtener o establecer el nivel de transparencia alfa</td></tr>
-<tr><td><code>SetText( cText )</code></td><td>Actualizar el texto del tÃ­tulo del botÃ³n</td></tr>
-<tr><td><code>Enable() / Disable()</code></td><td>Habilitar o deshabilitar el botÃ³n</td></tr>
-<tr><td><code>Release() / Destroy()</code></td><td>Liberar recursos del mapa de bits y destruir el control</td></tr>
+<tr><td><code>New( nRow, nCol, cCaption, oWnd, bAction, nW, nH, nHelpId, oFont, lDefault, lPixel, lDesign, cMsg, lUpdate, bWhen, bValid, lCancel, cBitmap, cPosText, cToolTip, lFlat, cLayOut, lGDIP, lRelPix )</code></td><td>Create a new bitmap button</td></tr>
+<tr><td><code>ReDefine( nId, bAction, oWnd, nHelpId, cMsg, lUpdate, bWhen, bValid, cPrompt, lCancel, cBitmap, cPosText, cToolTip, lGDIP )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>LoadBitmap( cBmpName )</code></td><td>Load a bitmap from file or resource</td></tr>
+<tr><td><code>Paint()</code></td><td>Render the button with its bitmap and text</td></tr>
+<tr><td><code>HasAlpha()</code></td><td>Return <code>.T.</code> if the bitmap has an alpha channel</td></tr>
+<tr><td><code>nAlphaLevel( uNew )</code></td><td>Get or set the alpha transparency level</td></tr>
+<tr><td><code>SetText( cText )</code></td><td>Update the button caption text</td></tr>
+<tr><td><code>Enable() / Disable()</code></td><td>Enable or disable the button</td></tr>
+<tr><td><code>Release() / Destroy()</code></td><td>Release bitmap resources and destroy the control</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Sintaxis del Comando</h2>
+<h2 id="commands">Command Syntax</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol BTNBMP oBtn PROMPT cText FILE cBmp SIZE nW, nH ACTION bAct</code></pre>
 
-<h2 id="example">Ejemplo: BotÃ³n con Icono</h2>
+<h2 id="example">Example: Button with Icon</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -90,15 +90,15 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>El comando <code>BTNBMP</code> es la forma preferida de crear controles TButtonBmp. Soporta fuentes de mapa de bits <code>FILE</code> (ruta de archivo) y <code>RESOURCE</code> (ID de recurso).</li>
-<li>La posiciÃ³n del texto se controla mediante <code>cPosText</code>: <code>TEXTTOP</code>, <code>TEXTBOTTOM</code>, <code>TEXTLEFT</code> o <code>TEXTRIGHT</code>. El valor predeterminado de la clase se establece mediante <code>cPosDefault</code>.</li>
-<li>Use <code>bColorMap</code> para recolorear dinÃ¡micamente los pÃ­xeles del mapa de bits, habilitando efectos de resaltado y adaptaciÃ³n de tema.</li>
-<li>El renderizado GDI+ (<code>lGDIP</code>) proporciona escalado suavizado y mezcla alfa para una visualizaciÃ³n de alta calidad.</li>
-<li>El estilo plano se habilita con el parÃ¡metro <code>lFlat</code> o la clÃ¡usula <code>NOBORDER</code>.</li>
+<li>The <code>BTNBMP</code> command is the preferred way to create TButtonBmp controls. It supports <code>FILE</code> (file path) and <code>RESOURCE</code> (resource ID) bitmap sources.</li>
+<li>Text position is controlled by <code>cPosText</code>: <code>TEXTTOP</code>, <code>TEXTBOTTOM</code>, <code>TEXTLEFT</code>, or <code>TEXTRIGHT</code>. The class default is set via <code>cPosDefault</code>.</li>
+<li>Use <code>bColorMap</code> to dynamically recolor bitmap pixels, enabling hover/hot effects and theme adaptation.</li>
+<li>GDI+ rendering (<code>lGDIP</code>) provides anti-aliased scaling and alpha blending for high-quality display.</li>
+<li>Flat style is enabled with the <code>lFlat</code> parameter or <code>NOBORDER</code> clause.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tbutton.html">&larr; tbutton</a> | <a href="../../es/reference/tc5tooltip.html">tc5tooltip &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

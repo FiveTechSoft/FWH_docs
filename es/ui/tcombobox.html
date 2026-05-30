@@ -1,43 +1,43 @@
-﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TComboBox - DocumentaciÃ³n FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TComboBox - Documentación FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TComboBox</h1>
-<p class="subtitle">Control de selecciÃ³n desplegable con mÃºltiples estilos y enlace de datos</p>
+<p class="subtitle">Drop-down selection control with multiple styles and data binding</p>
 
-<p><strong>Fuente:</strong> <code>source/classes/combobox.prg</code> &nbsp;|&nbsp; <strong>Clase padre:</strong> <code>TControl</code></p>
+<p><strong>Fuente:</strong> <code>source/classes/combobox.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
 <h2 id="overview">Overview</h2>
 
-<p><code>TComboBox</code> envuelve el control ComboBox de Windows, proporcionando una lista desplegable de la cual el usuario selecciona un elemento. Soporta tres estilos:</p>
+<p><code>TComboBox</code> wraps the Windows ComboBox control, providing a drop-down list from which the user selects one item. It supports three styles:</p>
 
 <ul>
-  <li><strong>CBS_DROPDOWN</strong> (predeterminado) -- campo de texto editable con lista desplegable</li>
-  <li><strong>CBS_DROPDOWNLIST</strong> -- no editable; el usuario solo puede seleccionar de la lista</li>
-  <li><strong>CBS_SIMPLE</strong> -- campo de texto editable con lista siempre visible</li>
+  <li><strong>CBS_DROPDOWN</strong> (default) -- editable text field with a drop-down list</li>
+  <li><strong>CBS_DROPDOWNLIST</strong> -- non-editable; the user can only select from the list</li>
+  <li><strong>CBS_SIMPLE</strong> -- editable text field with an always-visible list</li>
 </ul>
 
-<p>El combo puede enlazarse a una <em>variable de cadena</em> (el texto del elemento seleccionado) o a una <em>variable numÃ©rica</em> (el Ã­ndice del elemento seleccionado). Soporta bÃºsqueda incremental, dibujo personalizado y listas de elementos basadas en datos.</p>
+<p>The combo can bind to either a <em>string variable</em> (the selected item text) or a <em>numeric variable</em> (the selected item index). It supports incremental search, custom drawing, and data-driven item lists.</p>
 
-<h2 id="styles">Estilos de ComboBox</h2>
+<h2 id="styles">ComboBox Styles</h2>
 
 <div class="mermaid">
 graph LR
     subgraph "CBS_DROPDOWN"
-        DD_TEXT["Campo de texto editable"]
-        DD_BTN["BotÃ³n desplegable"]
-        DD_LIST["La lista aparece al hacer clic"]
+        DD_TEXT["Editable text field"]
+        DD_BTN["Drop-down button"]
+        DD_LIST["List appears on click"]
     end
 
     subgraph "CBS_DROPDOWNLIST"
-        DDL_TEXT["VisualizaciÃ³n solo lectura"]
-        DDL_BTN["BotÃ³n desplegable"]
-        DDL_LIST["SelecciÃ³n solo de la lista"]
+        DDL_TEXT["Read-only display"]
+        DDL_BTN["Drop-down button"]
+        DDL_LIST["Selection from list only"]
     end
 
     subgraph "CBS_SIMPLE"
-        S_TEXT["Campo de texto editable"]
-        S_LIST["Lista siempre visible"]
+        S_TEXT["Editable text field"]
+        S_LIST["List always visible"]
     end
 
     style DD_TEXT fill:#1c2129,stroke:#58a6ff,color:#e6edf3
@@ -45,42 +45,42 @@ graph LR
     style S_TEXT fill:#1c2129,stroke:#d29922,color:#e6edf3
 </div>
 
-<h2 id="properties">Propiedades Principales</h2>
+<h2 id="properties">Key Properties</h2>
 
 <table>
-<thead><tr><th>Propiedad</th><th>Tipo</th><th>DescripciÃ³n</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array de cadenas mostradas en la lista desplegable</td></tr>
-<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloque de enlace de datos. Para combos de cadena: lee/escribe el texto seleccionado. Para combos numÃ©ricos: lee/escribe el Ã­ndice seleccionado.</td></tr>
-<tr><td><code>bChange</code></td><td>Block</td><td>Bloque de cÃ³digo ejecutado cuando cambia la selecciÃ³n</td></tr>
-<tr><td><code>nAt</code></td><td>Numeric</td><td>Ãndice del elemento actualmente seleccionado (basado en 1)</td></tr>
-<tr><td><code>lIncSearch</code></td><td>Logical</td><td>Habilitar bÃºsqueda incremental mientras el usuario escribe</td></tr>
-<tr><td><code>lOwnerDraw</code></td><td>Logical</td><td>Habilitar dibujo personalizado de elementos mediante <code>bDrawItem</code></td></tr>
-<tr><td><code>bDrawItem</code></td><td>Block</td><td>Bloque de dibujo personalizado para modo owner-draw</td></tr>
-<tr><td><code>cCueText</code></td><td>String</td><td>Texto de marcador de posiciÃ³n cuando no hay nada seleccionado</td></tr>
-<tr><td><code>nDropWidth</code></td><td>Numeric</td><td>Ancho de la lista desplegable (puede ser mÃ¡s ancho que el control mismo)</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array of strings displayed in the drop-down list</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Data-binding block. For string combos: reads/writes the selected text. For numeric combos: reads/writes the selected index.</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Code block executed when the selection changes</td></tr>
+<tr><td><code>nAt</code></td><td>Numeric</td><td>Index of the currently selected item (1-based)</td></tr>
+<tr><td><code>lIncSearch</code></td><td>Logical</td><td>Enable incremental search as the user types</td></tr>
+<tr><td><code>lOwnerDraw</code></td><td>Logical</td><td>Enable custom item drawing via <code>bDrawItem</code></td></tr>
+<tr><td><code>bDrawItem</code></td><td>Block</td><td>Custom drawing block for owner-draw mode</td></tr>
+<tr><td><code>cCueText</code></td><td>String</td><td>Placeholder text when nothing is selected</td></tr>
+<tr><td><code>nDropWidth</code></td><td>Numeric</td><td>Width of the drop-down list (can be wider than the control itself)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">MÃ©todos Principales</h2>
+<h2 id="methods">Key Methods</h2>
 
 <table>
-<thead><tr><th>MÃ©todo</th><th>DescripciÃ³n</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, bSetGet, aItems, ... )</code></td><td>Constructor. Crea un nuevo combo en la posiciÃ³n dada.</td></tr>
-<tr><td><code>ReDefine( nId, bSetGet, aItems, oWnd, ... )</code></td><td>Redefinir desde un recurso de diÃ¡logo.</td></tr>
-<tr><td><code>Set( cText )</code></td><td>Establecer el elemento seleccionado por su texto.</td></tr>
-<tr><td><code>Select( n )</code></td><td>Establecer el elemento seleccionado por su Ã­ndice.</td></tr>
-<tr><td><code>Add( cItem )</code></td><td>Agregar un elemento a la lista en tiempo de ejecuciÃ³n.</td></tr>
-<tr><td><code>Del( n )</code></td><td>Eliminar elemento en el Ã­ndice <code>n</code>.</td></tr>
-<tr><td><code>Reset()</code></td><td>Limpiar todos los elementos de la lista.</td></tr>
-<tr><td><code>Refresh()</code></td><td>Repoblar la lista desde <code>aItems</code> y restaurar la selecciÃ³n.</td></tr>
+<tr><td><code>New( nRow, nCol, bSetGet, aItems, ... )</code></td><td>Constructor. Creates a new combo at the given position.</td></tr>
+<tr><td><code>ReDefine( nId, bSetGet, aItems, oWnd, ... )</code></td><td>Redefine from a dialog resource.</td></tr>
+<tr><td><code>Set( cText )</code></td><td>Set the selected item by its text.</td></tr>
+<tr><td><code>Select( n )</code></td><td>Set the selected item by its index.</td></tr>
+<tr><td><code>Add( cItem )</code></td><td>Add an item to the list at runtime.</td></tr>
+<tr><td><code>Del( n )</code></td><td>Remove item at index <code>n</code>.</td></tr>
+<tr><td><code>Reset()</code></td><td>Clear all items from the list.</td></tr>
+<tr><td><code>Refresh()</code></td><td>Repopulate the list from <code>aItems</code> and restore the selection.</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Sintaxis del Comando</h2>
+<h2 id="commands">Command Syntax</h2>
 
-<h3>ComboBox Enlazado a Cadena</h3>
+<h3>String-bound ComboBox</h3>
 <pre><code class="language-harbour">@ nRow, nCol COMBOBOX oCombo VAR cVar ;
    ITEMS aItems ;
    [ OF oWnd ] ;
@@ -90,14 +90,14 @@ graph LR
    [ STYLE CBS_DROPDOWNLIST ] ;
    [ FONT oFont ]</code></pre>
 
-<h3>ComboBox Enlazado a NumÃ©rico (Ã­ndice)</h3>
+<h3>Numeric-bound (index) ComboBox</h3>
 <pre><code class="language-harbour">@ nRow, nCol COMBOBOX oCombo VAR nIndex ;
    ITEMS aItems ;
    [ OF oWnd ] ;
    [ SIZE nWidth, nHeight ] ;
    [ ON CHANGE bChange ]</code></pre>
 
-<h2 id="binding">Diagrama de Enlace de Datos</h2>
+<h2 id="binding">Data Binding Diagram</h2>
 
 <div class="mermaid">
 sequenceDiagram
@@ -117,9 +117,9 @@ sequenceDiagram
     Note over Combo,Var: On dialog activation, Combo reads<br/>Eval(bSetGet) to set initial selection
 </div>
 
-<h2 id="examples">Ejemplos de CÃ³digo</h2>
+<h2 id="examples">Code Examples</h2>
 
-<h3>Ejemplo 1: Selecciones Simples de ComboBox</h3>
+<h3>Example 1: Simple ComboBox Selections</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -159,7 +159,7 @@ FUNCTION ComboDemo()
    RELEASE FONT oFont
 RETURN NIL</code></pre>
 
-<h3>Ejemplo 2: ComboBox Basado en Base de Datos</h3>
+<h3>Example 2: Database-Driven ComboBox</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -196,7 +196,7 @@ FUNCTION DBCombo()
    CLOSE Categories
 RETURN NIL</code></pre>
 
-<h3>Ejemplo 3: ComboBoxes Dependientes (PaÃ­s/Ciudad)</h3>
+<h3>Example 3: Dependent ComboBoxes (Country/City)</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -255,22 +255,22 @@ RETURN NIL</code></pre>
 <h2 id="tips">Tips</h2>
 
 <ul>
-  <li>Use <code>CBS_DROPDOWNLIST</code> cuando el usuario deba elegir solo de la lista. Use <code>CBS_DROPDOWN</code> cuando la entrada de texto libre tambiÃ©n sea aceptable.</li>
-  <li>El parÃ¡metro de altura SIZE controla la altura de la <em>lista desplegable</em>, no la del control mismo. HÃ¡galo suficientemente grande para mostrar varios elementos.</li>
-  <li>Para listas grandes de elementos, habilite <code>lIncSearch</code> para que los usuarios puedan escribir para filtrar.</li>
-  <li>Use <code>bChange</code> para combos en cascada (cambiar un combo actualiza otro).</li>
+  <li>Use <code>CBS_DROPDOWNLIST</code> when the user must choose from the list only. Use <code>CBS_DROPDOWN</code> when free-text entry is also acceptable.</li>
+  <li>The SIZE height parameter controls the <em>drop-down list</em> height, not the control itself. Make it large enough to show several items.</li>
+  <li>For large item lists, enable <code>lIncSearch</code> so users can type to filter.</li>
+  <li>Use <code>bChange</code> for cascading combos (changing one combo updates another).</li>
   <li>To refresh a combo's items at runtime, update <code>aItems</code>, call <code>Reset()</code>, then <code>Refresh()</code>.</li>
-  <li>Para combos enlazados a un campo DBF, use <code>FieldWBlock()</code> como <code>bSetGet</code>.</li>
+  <li>For combos bound to a DBF field, use <code>FieldWBlock()</code> as the <code>bSetGet</code>.</li>
 </ul>
 
-<h2 id="see-also">Ver tambiÃ©n</h2>
+<h2 id="see-also">Ver También</h2>
 <ul>
-  <li><a href="../../es/core/tcontrol.html">TControl</a> -- clase padre</li>
-  <li><a href="../../es/ui/tget.html">TGet</a> -- alternativa de entrada de texto</li>
-  <li><a href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a> -- otros controles de selecciÃ³n</li>
-  <li><a href="../../es/ui/txbrowse.html">TXBrowse</a> -- los combos se usan como editores de celda en columnas de exploraciÃ³n</li>
+  <li><a href="../../es/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../es/ui/tget.html">TGet</a> -- text input alternative</li>
+  <li><a href="../../es/ui/tcheckbox.html">TCheckBox / TRadio</a> -- other selection controls</li>
+  <li><a href="../../es/ui/txbrowse.html">TXBrowse</a> -- combos are used as cell editors in browse columns</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta pÃ¡gina</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

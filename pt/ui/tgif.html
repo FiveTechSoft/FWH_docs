@@ -13,65 +13,65 @@
 
 <h1>TGif</h1>
 <p class="class-source">Fonte: <code>source/classes/tgif.prg</code></p>
-<p class="class-hierarchy">Hierarquia: <strong>TGif</strong> &rarr; <strong>TControl</strong></p>
+<p class="class-hierarchy">Hierarchy: <strong>TGif</strong> &rarr; <strong>TControl</strong></p>
 
 <p>
-TGif é um controle para exibir imagens GIF animadas dentro de janelas e diálogos FiveWin.
-Ele suporta operações de reproduzir, parar, reiniciar e três modos de redimensionamento para controlar como
-os quadros do GIF se ajustam ao retângulo delimitador do controle. O controle pode carregar GIFs de
-arquivos ou de recursos incorporados.
+TGif is a control for displaying animated GIF images within FiveWin windows and dialogs.
+It supports play, stop, restart operations and three sizing modes for controlling how the
+GIF frames fit within the control's bounding rectangle. The control can load GIFs from
+files or from embedded resources.
 </p>
 
-<h2 id="command">Comando GIF</h2>
+<h2 id="command">GIF Command</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol GIF oGif FILE cGifFile SIZE nW, nH OF oWnd</code></pre>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hGif</code></td><td>Numérico</td><td></td><td>Identificador da janela de animação GIF interna</td></tr>
-<tr><td><code>cFilename</code></td><td>Caractere</td><td></td><td>Caminho para o arquivo GIF (ou nome do recurso)</td></tr>
-<tr><td><code>lAdjust</code></td><td>Lógico</td><td><code>.F.</code></td><td>Esticar GIF para preencher as dimensões do controle quando <code>.T.</code></td></tr>
-<tr><td><code>nSizingType</code></td><td>Numérico</td><td><code>FWGIF_SIZING_FILE</code></td><td>Um de <code>FWGIF_SIZING_FILE</code>, <code>FWGIF_SIZING_CLIP</code> ou <code>FWGIF_SIZING_STRETCH</code></td></tr>
+<tr><td><code>hGif</code></td><td>Numeric</td><td></td><td>Handle to the internal GIF animation window</td></tr>
+<tr><td><code>cFilename</code></td><td>Character</td><td></td><td>Path to the GIF file (or resource name)</td></tr>
+<tr><td><code>lAdjust</code></td><td>Logical</td><td><code>.F.</code></td><td>Stretch GIF to fill the control dimensions when <code>.T.</code></td></tr>
+<tr><td><code>nSizingType</code></td><td>Numeric</td><td><code>FWGIF_SIZING_FILE</code></td><td>One of <code>FWGIF_SIZING_FILE</code>, <code>FWGIF_SIZING_CLIP</code>, or <code>FWGIF_SIZING_STRETCH</code></td></tr>
 </tbody>
 </table>
 
-<h2 id="sizing">Modos de Redimensionamento</h2>
+<h2 id="sizing">Sizing Modes</h2>
 
 <table>
 <thead>
-<tr><th>Constante</th><th>Valor</th><th>Descrição</th></tr>
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>FWGIF_SIZING_FILE</code></td><td>Padrão</td><td>Usar as dimensões naturais do GIF. O controle se redimensiona automaticamente para corresponder.</td></tr>
-<tr><td><code>FWGIF_SIZING_CLIP</code></td><td></td><td>Recortar o GIF para caber no retângulo delimitador do controle em seu tamanho natural.</td></tr>
-<tr><td><code>FWGIF_SIZING_STRETCH</code></td><td></td><td>Esticar o GIF para preencher as dimensões do controle (mesmo que <code>lAdjust := .T.</code>).</td></tr>
+<tr><td><code>FWGIF_SIZING_FILE</code></td><td>Default</td><td>Use the GIF's natural dimensions. Control auto-sizes to match.</td></tr>
+<tr><td><code>FWGIF_SIZING_CLIP</code></td><td></td><td>Clip the GIF to fit the control's bounding rectangle at its natural size.</td></tr>
+<tr><td><code>FWGIF_SIZING_STRETCH</code></td><td></td><td>Stretch the GIF to fill the control dimensions (same as <code>lAdjust := .T.</code>).</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cGifFile, nRow, nCol, nHeight, nWidth, oCursor, lAdjust, bAction )</code></td><td>Construtor. Cria o controle GIF e inicia a animação.</td></tr>
-<tr><td><code>Play()</code></td><td>Iniciar ou retomar a animação do GIF.</td></tr>
-<tr><td><code>Stop()</code></td><td>Pausar a animação do GIF no quadro atual.</td></tr>
-<tr><td><code>Restart()</code></td><td>Reiniciar a animação do primeiro quadro.</td></tr>
-<tr><td><code>IsRunning()</code></td><td>Retornar <code>.T.</code> se a animação está sendo reproduzida no momento.</td></tr>
-<tr><td><code>SetFile( cFile )</code></td><td>Carregar um novo arquivo GIF no controle.</td></tr>
-<tr><td><code>SetSizing( nType )</code></td><td>Alterar o modo de redimensionamento em tempo de execução.</td></tr>
-<tr><td><code>GetData()</code></td><td>Retornar um array com metadados do GIF (dimensões, número de quadros, etc.).</td></tr>
+<tr><td><code>New( oWnd, cGifFile, nRow, nCol, nHeight, nWidth, oCursor, lAdjust, bAction )</code></td><td>Constructor. Creates the GIF control and begins animation.</td></tr>
+<tr><td><code>Play()</code></td><td>Start or resume the GIF animation.</td></tr>
+<tr><td><code>Stop()</code></td><td>Pause the GIF animation at the current frame.</td></tr>
+<tr><td><code>Restart()</code></td><td>Restart the animation from the first frame.</td></tr>
+<tr><td><code>IsRunning()</code></td><td>Return <code>.T.</code> if the animation is currently playing.</td></tr>
+<tr><td><code>SetFile( cFile )</code></td><td>Load a new GIF file into the control.</td></tr>
+<tr><td><code>SetSizing( nType )</code></td><td>Change the sizing mode at runtime.</td></tr>
+<tr><td><code>GetData()</code></td><td>Return an array with GIF metadata (dimensions, frame count, etc.).</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Spinner de Carregamento</h2>
+<h2 id="example">Example: Loading Spinner</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -99,18 +99,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Arquivos GIF podem ser carregados do disco ou de recursos incorporados (tipo de recurso 10 / <code>RT_RCDATA</code>). Quando um nome de recurso é passado, o controle o extrai para um arquivo temporário para exibição.</li>
-<li>Quando nenhuma largura/altura explícita é fornecida, o controle se redimensiona automaticamente para as dimensões naturais do GIF.</li>
-<li>A flag <code>lAdjust</code> é uma propriedade de conveniência que internamente define o modo de redimensionamento para <code>FWGIF_SIZING_STRETCH</code>.</li>
-<li>Múltiplos controles TGif podem coexistir na mesma janela; cada um gerencia sua própria animação independentemente.</li>
-<li>O controle requer o mecanismo GIF interno do FWH (vinculado de <code>source/function/</code>).</li>
+<li>GIF files can be loaded from disk or from embedded resources (resource type 10 / <code>RT_RCDATA</code>). When a resource name is passed, the control extracts it to a temporary file for display.</li>
+<li>When no explicit width/height is given, the control auto-sizes to the GIF's natural dimensions.</li>
+<li>The <code>lAdjust</code> flag is a convenience property that internally sets the sizing mode to <code>FWGIF_SIZING_STRETCH</code>.</li>
+<li>Multiple TGif controls can coexist in the same window; each manages its own animation independently.</li>
+<li>The control requires the FWH internal GIF engine (linked from <code>source/function/</code>).</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tgfx.html">&larr; tgfx</a> | <a href="../../pt/reference/tgmail.html">tgmail &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

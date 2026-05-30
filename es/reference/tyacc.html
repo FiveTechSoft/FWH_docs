@@ -12,76 +12,76 @@
 <main id="content">
 
 <h1>TYacc + TLex</h1>
-<p class="class-source">Fuentes: <code>source/classes/tyacc.prg</code>, <code>source/classes/tlex.prg</code></p>
-<p class="class-hierarchy">Clases independientes (TYacc, TLex)</p>
+<p class="class-source">Sources: <code>source/classes/tyacc.prg</code>, <code>source/classes/tlex.prg</code></p>
+<p class="class-hierarchy">Standalone classes (TYacc, TLex)</p>
 
 <p>
-TYacc y TLex implementan un generador de analizadores sintácticos LALR(1) completo y un analizador léxico en Harbour puro. TYacc realiza análisis sintáctico por desplazamiento-reducción (shift-reduce) usando una máquina de estados generada, mientras que TLex se encarga de la tokenización comparando la entrada con un conjunto de patrones de tokens. Juntos permiten analizar lenguajes estructurados, expresiones y archivos de configuración.
+TYacc and TLex implement a complete LALR(1) parser generator and lexical analyzer in pure Harbour. TYacc performs shift-reduce parsing using a generated state machine, while TLex handles tokenization by matching input against a set of token patterns. Together they enable parsing of structured languages, expressions, and configuration files.
 </p>
 
-<h2 id="tyacc-data">TYacc Miembros DATA Principales</h2>
+<h2 id="tyacc-data">TYacc Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oLex</code></td><td>Objeto</td><td>Referencia al tokenizador TLex asociado</td></tr>
-<tr><td><code>lDebug</code></td><td>Lógico</td><td>Activa la traza de depuración de los estados y transiciones del analizador</td></tr>
-<tr><td><code>nToken</code></td><td>Numérico</td><td>Identificador del token de anticipación (look-ahead) actual</td></tr>
-<tr><td><code>nState</code></td><td>Numérico</td><td>Número del estado actual del analizador</td></tr>
-<tr><td><code>aStates / aValues</code></td><td>Array</td><td>Pila de estados del analizador y pila de valores semánticos</td></tr>
-<tr><td><code>bShift / bReduce</code></td><td>Bloque de código</td><td>Callbacks ejecutados en las acciones de desplazamiento (shift) y reducción (reduce)</td></tr>
+<tr><td><code>oLex</code></td><td>Object</td><td>Reference to the associated TLex tokenizer</td></tr>
+<tr><td><code>lDebug</code></td><td>Logical</td><td>Enable debug trace of parser states and transitions</td></tr>
+<tr><td><code>nToken</code></td><td>Numeric</td><td>Current look-ahead token identifier</td></tr>
+<tr><td><code>nState</code></td><td>Numeric</td><td>Current parser state number</td></tr>
+<tr><td><code>aStates / aValues</code></td><td>Array</td><td>Parser state stack and semantic value stack</td></tr>
+<tr><td><code>bShift / bReduce</code></td><td>Code block</td><td>Callbacks executed on shift and reduce actions</td></tr>
 </tbody>
 </table>
 
-<h2 id="tyacc-methods">Métodos de TYacc</h2>
+<h2 id="tyacc-methods">TYacc Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oLex )</code></td><td>Crea un analizador asociado al objeto lexer indicado</td></tr>
-<tr><td><code>Parse( cText )</code></td><td>Analiza el texto de entrada y devuelve el valor resultante</td></tr>
-<tr><td><code>Shift( n )</code></td><td>Desplaza el siguiente estado a la pila del analizador</td></tr>
-<tr><td><code>Reduce( n )</code></td><td>Reduce por la regla de gramática número <code>n</code></td></tr>
-<tr><td><code>Accept()</code></td><td>Indica la finalización correcta del análisis</td></tr>
-<tr><td><code>ProdValue( n )</code></td><td>Recupera el valor semántico de un símbolo de producción en la posición <code>n</code></td></tr>
+<tr><td><code>New( oLex )</code></td><td>Create a parser associated with the given lexer object</td></tr>
+<tr><td><code>Parse( cText )</code></td><td>Parse the input text and return the result value</td></tr>
+<tr><td><code>Shift( n )</code></td><td>Shift the next state onto the parser stack</td></tr>
+<tr><td><code>Reduce( n )</code></td><td>Reduce by grammar rule number <code>n</code></td></tr>
+<tr><td><code>Accept()</code></td><td>Signal successful parse completion</td></tr>
+<tr><td><code>ProdValue( n )</code></td><td>Retrieve the semantic value of a production symbol at position <code>n</code></td></tr>
 </tbody>
 </table>
 
 <h2 id="tlex">TLex</h2>
 
 <p>
-TLex hereda de <code>TFile</code> y proporciona servicios de tokenización: lee el texto de entrada y devuelve un flujo de tokens con sus valores semánticos asociados.
+TLex inherits from <code>TFile</code> and provides tokenization services: it reads input text and returns a stream of tokens with associated semantic values.
 </p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aTokens</code></td><td>Array</td><td>Array de cadenas con los patrones de tokens</td></tr>
-<tr><td><code>aIds</code></td><td>Array</td><td>Array de IDs numéricos de token correspondientes a cada patrón</td></tr>
-<tr><td><code>cToken</code></td><td>Carácter</td><td>Texto del token coincidente actual</td></tr>
-<tr><td><code>uValue</code></td><td>Varios</td><td>Valor semántico asociado al token actual</td></tr>
+<tr><td><code>aTokens</code></td><td>Array</td><td>Array of token pattern strings</td></tr>
+<tr><td><code>aIds</code></td><td>Array</td><td>Array of numeric token IDs corresponding to each pattern</td></tr>
+<tr><td><code>cToken</code></td><td>Character</td><td>Current matched token text</td></tr>
+<tr><td><code>uValue</code></td><td>Various</td><td>Semantic value associated with the current token</td></tr>
 </tbody>
 </table>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cFile, aTokens, aIds, cSeparators )</code></td><td>Crea un lexer con patrones de tokens, IDs y caracteres separadores</td></tr>
-<tr><td><code>nGetToken()</code></td><td>Obtiene el siguiente token de la entrada; devuelve el ID del token</td></tr>
-<tr><td><code>SetText( c )</code></td><td>Establece el texto de entrada que se va a tokenizar</td></tr>
-<tr><td><code>Add( cToken, nId )</code></td><td>Añade un nuevo patrón de token con su ID numérico</td></tr>
+<tr><td><code>New( cFile, aTokens, aIds, cSeparators )</code></td><td>Create a lexer with token patterns, IDs, and separator characters</td></tr>
+<tr><td><code>nGetToken()</code></td><td>Get the next token from the input; returns the token ID</td></tr>
+<tr><td><code>SetText( c )</code></td><td>Set the input text to be tokenized</td></tr>
+<tr><td><code>Add( cToken, nId )</code></td><td>Add a new token pattern with its numeric ID</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Analizador de expresiones simple</h2>
+<h2 id="example">Example: Simple Expression Parser</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -89,7 +89,7 @@ function Main()
 
    local oLex, oYacc
    local aTokens := { "\d+", "\+", "\-", "\*", "/", "\(", "\)" }
-   local aIds    := { 1, 2, 3, 4, 5, 6, 7 }  // NUM, MAS, MENOS, MUL, DIV, LPAR, RPAR
+   local aIds    := { 1, 2, 3, 4, 5, 6, 7 }  // NUM, PLUS, MINUS, MUL, DIV, LPAR, RPAR
 
    oLex := TLex():New( , aTokens, aIds, " " )
    oLex:SetText( "12 + 34 * ( 56 - 7 )" )
@@ -97,23 +97,23 @@ function Main()
    oYacc := TYacc():New( oLex )
    oYacc:lDebug := .T.
 
-   // Analiza la expresión
+   // Parse the expression
    oYacc:Parse( oLex:cToken )
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TYacc utiliza un algoritmo de análisis LALR(1) dirigido por tablas. Las reglas de gramática y las transiciones de estado deben definirse mediante subclases o configurando las tablas de acciones por programa.</li>
-<li>Los bloques de código <code>bShift</code> y <code>bReduce</code> permiten ejecutar acciones semánticas personalizadas durante el análisis.</li>
-<li>TLex prueba los patrones de tokens en orden; el primer patrón coincidente determina el token. Coloque los patrones más específicos antes que los generales.</li>
-<li><code>ProdValue( n )</code> accede a los valores semánticos de la parte derecha de una regla de gramática, donde <code>n</code> es la posición del símbolo en la producción (empezando en 1).</li>
-<li>Active <code>lDebug</code> para rastrear las transiciones de estado del analizador y las decisiones de desplazamiento/reducción al depurar las definiciones de gramática.</li>
+<li>TYacc uses a table-driven LALR(1) parsing algorithm. The grammar rules and state transitions must be defined by subclassing or by setting up the action tables programmatically.</li>
+<li>The <code>bShift</code> and <code>bReduce</code> code blocks allow custom semantic actions to be executed during parsing.</li>
+<li>TLex attempts token patterns in order; the first matching pattern determines the token. Place more specific patterns before general ones.</li>
+<li><code>ProdValue( n )</code> accesses semantic values from the right-hand side of a grammar rule, where <code>n</code> is the 1-based symbol position in the production.</li>
+<li>Enable <code>lDebug</code> to trace the parser's state transitions and shift/reduce decisions for troubleshooting grammar definitions.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/utilities/txmlwriter.html">&larr; txmlwriter</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

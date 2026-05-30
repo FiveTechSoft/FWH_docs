@@ -1,24 +1,24 @@
-﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TRichEdit / TScintilla - Documenta&ccedil;&atilde;o FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TRichEdit / TScintilla - Documentação FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TRichEdit / TScintilla</h1>
-<p class="subtitle">Edi&ccedil;&atilde;o de texto rico com formata&ccedil;&atilde;o RTF e edi&ccedil;&atilde;o de c&oacute;digo fonte com realce de sintaxe</p>
+<p class="subtitle">Rich text editing with RTF formatting, and source code editing with syntax highlighting</p>
 
 <div class="mermaid">
 graph TD
     TControl --> TRichEdit
     TControl --> TScintilla
 
-    TRichEdit --> RTF["Formata&ccedil;&atilde;o RTF<br/>Negrito, It&aacute;lico, Cores"]
-    TRichEdit --> OLE["Objetos OLE<br/>Imagens Incorporadas"]
-    TRichEdit --> FIND["Localizar / Substituir"]
-    TRichEdit --> PRINT["Imprimir / Pr&eacute;-visualizar / PDF"]
+    TRichEdit --> RTF["RTF Formatting<br/>Bold, Italic, Colors"]
+    TRichEdit --> OLE["OLE Objects<br/>Embedded Pictures"]
+    TRichEdit --> FIND["Find / Replace"]
+    TRichEdit --> PRINT["Print / Preview / PDF"]
 
-    TScintilla --> SYNTAX["Realce de Sintaxe<br/>Harbour, C, PRG"]
-    TScintilla --> FOLD["Dobramento de C&oacute;digo"]
-    TScintilla --> MARGIN["Margens<br/>N&uacute;meros de Linha, Marcadores"]
-    TScintilla --> AUTO["Autocompletar<br/>Dicas de Chamada"]
+    TScintilla --> SYNTAX["Syntax Highlighting<br/>Harbour, C, PRG"]
+    TScintilla --> FOLD["Code Folding"]
+    TScintilla --> MARGIN["Margins<br/>Line Numbers, Bookmarks"]
+    TScintilla --> AUTO["Autocomplete<br/>Call Tips"]
 
     style TRichEdit fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
     style TScintilla fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
@@ -27,89 +27,89 @@ graph TD
 <!-- ================================================================== -->
 <h2 id="trichedit">TRichEdit</h2>
 
-<p><strong>Fonte:</strong> <code>source/classes/trichedi.prg</code> &nbsp;|&nbsp; <strong>Pai:</strong> <code>TControl</code></p>
+<p><strong>Fonte:</strong> <code>source/classes/trichedi.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<p><code>TRichEdit</code> encapsula o controle <code>RichEdit20A</code> do Windows, fornecendo um editor RTF completo. Suporta formata&ccedil;&atilde;o negrito/it&aacute;lico/sublinhado, altera&ccedil;&otilde;es de fonte e cor, alinhamento de par&aacute;grafo, listas com marcadores, imagens incorporadas via OLE, localizar/substituir, zoom, desfazer/refazer e impress&atilde;o/pr&eacute;-visualiza&ccedil;&atilde;o/exporta&ccedil;&atilde;o PDF.</p>
+<p><code>TRichEdit</code> wraps the Windows <code>RichEdit20A</code> control, providing a full-featured RTF editor. It supports bold/italic/underline formatting, font and color changes, paragraph alignment, bullet lists, embedded images via OLE, find/replace, zoom, undo/redo, and print/preview/PDF export.</p>
 
-<h3 id="trichedit-properties">Propriedades</h3>
+<h3 id="trichedit-properties">Properties</h3>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>cFileName</code></td><td>String</td><td>Caminho atual do arquivo RTF</td></tr>
-<tr><td><code>nRTFSize</code></td><td>Numeric</td><td>Limite m&aacute;ximo de tamanho de texto</td></tr>
-<tr><td><code>lURL</code></td><td>Logical</td><td>Habilitar detec&ccedil;&atilde;o autom&aacute;tica de URL e links clic&aacute;veis</td></tr>
-<tr><td><code>lRE30</code></td><td>Logical</td><td>Usando RichEdit 3.0+ (suporta zoom, refazer, tipografia avan&ccedil;ada)</td></tr>
-<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Modo somente leitura -- edi&ccedil;&atilde;o desabilitada</td></tr>
-<tr><td><code>lHighlight</code></td><td>Logical</td><td>Habilitar realce de sintaxe (para edi&ccedil;&atilde;o de c&oacute;digo)</td></tr>
-<tr><td><code>aKeywords1</code></td><td>Array</td><td>Palavras-chave real&ccedil;adas principais</td></tr>
-<tr><td><code>aKeywords2</code></td><td>Array</td><td>Palavras-chave real&ccedil;adas secund&aacute;rias</td></tr>
-<tr><td><code>cSeparators</code></td><td>String</td><td>Caracteres separadores de token para realce</td></tr>
-<tr><td><code>nClrNumber</code></td><td>Numeric</td><td>Cor para literais num&eacute;ricos</td></tr>
-<tr><td><code>nClrString</code></td><td>Numeric</td><td>Cor para literais de string</td></tr>
-<tr><td><code>nClrComment</code></td><td>Numeric</td><td>Cor para coment&aacute;rios</td></tr>
+<tr><td><code>cFileName</code></td><td>String</td><td>Current RTF file path</td></tr>
+<tr><td><code>nRTFSize</code></td><td>Numeric</td><td>Maximum text size limit</td></tr>
+<tr><td><code>lURL</code></td><td>Logical</td><td>Enable automatic URL detection and clickable links</td></tr>
+<tr><td><code>lRE30</code></td><td>Logical</td><td>Using RichEdit 3.0+ (supports zoom, redo, advanced typography)</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Read-only mode -- editing disabled</td></tr>
+<tr><td><code>lHighlight</code></td><td>Logical</td><td>Enable syntax highlighting (for code editing)</td></tr>
+<tr><td><code>aKeywords1</code></td><td>Array</td><td>Primary highlighted keywords</td></tr>
+<tr><td><code>aKeywords2</code></td><td>Array</td><td>Secondary highlighted keywords</td></tr>
+<tr><td><code>cSeparators</code></td><td>String</td><td>Token separator characters for highlighting</td></tr>
+<tr><td><code>nClrNumber</code></td><td>Numeric</td><td>Color for numeric literals</td></tr>
+<tr><td><code>nClrString</code></td><td>Numeric</td><td>Color for string literals</td></tr>
+<tr><td><code>nClrComment</code></td><td>Numeric</td><td>Color for comments</td></tr>
 </tbody>
 </table>
 
-<h3 id="trichedit-methods">M&eacute;todos Principais</h3>
+<h3 id="trichedit-methods">Key Methods</h3>
 
 <table>
-<thead><tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, bSetGet, oWnd, nWidth, nHeight, oFont, lPixel, cMsg, lHScroll, lReadOnly, bWhen, bValid, bChanged, lDesign, lHighlight, cFileName, nRTFSize, lNoURL, lNoScroll, lNoBorder )</code></td><td>Construtor</td></tr>
-<tr><td><code>ReDefine( nId, bSetGet, oWnd, ... )</code></td><td>Redefinir a partir de recurso</td></tr>
-<tr><td colspan="2"><strong>Formata&ccedil;&atilde;o de Texto</strong></td></tr>
-<tr><td><code>SetBold( lOnOff )</code></td><td>Alternar negrito no texto selecionado</td></tr>
-<tr><td><code>SetItalic( lOnOff )</code></td><td>Alternar it&aacute;lico</td></tr>
-<tr><td><code>SetUnderline( lOnOff )</code></td><td>Alternar sublinhado</td></tr>
-<tr><td><code>SetStrikeOut( lOnOff )</code></td><td>Alternar tachado</td></tr>
-<tr><td><code>SetFontName( cName )</code></td><td>Definir tipo de fonte para a sele&ccedil;&atilde;o</td></tr>
-<tr><td><code>SetFontSize( nSize )</code></td><td>Definir tamanho de fonte para a sele&ccedil;&atilde;o</td></tr>
-<tr><td><code>SetTextColor( nRGB )</code></td><td>Definir cor do texto para a sele&ccedil;&atilde;o</td></tr>
-<tr><td><code>SetHighLight( nColor )</code></td><td>Definir cor de destaque de fundo para a sele&ccedil;&atilde;o</td></tr>
-<tr><td><code>SetBkGndColor( nRGB )</code></td><td>Definir a cor de fundo de todo o controle</td></tr>
-<tr><td><code>SetAlign( nAlign )</code></td><td>Alinhamento de par&aacute;grafo: <code>PFA_LEFT</code> (1), <code>PFA_RIGHT</code> (2), <code>PFA_CENTER</code> (3), <code>PFA_JUSTIFY</code> (4)</td></tr>
-<tr><td><code>SetBullet( lOnOff )</code></td><td>Alternar lista com marcadores</td></tr>
-<tr><td><code>SetNumbering( lOnOff )</code></td><td>Alternar lista numerada</td></tr>
-<tr><td><code>SetIndent( nLeft, nRight, nFirst )</code></td><td>Definir indentac&atilde;o de par&aacute;grafo</td></tr>
-<tr><td colspan="2"><strong>&Aacute;rea de Transfer&ecirc;ncia e Edi&ccedil;&atilde;o</strong></td></tr>
-<tr><td><code>Copy()</code></td><td>Copiar sele&ccedil;&atilde;o para &aacute;rea de transfer&ecirc;ncia</td></tr>
-<tr><td><code>Cut()</code></td><td>Recortar sele&ccedil;&atilde;o para &aacute;rea de transfer&ecirc;ncia</td></tr>
-<tr><td><code>Paste()</code></td><td>Colar da &aacute;rea de transfer&ecirc;ncia</td></tr>
-<tr><td><code>Del()</code></td><td>Excluir sele&ccedil;&atilde;o</td></tr>
-<tr><td><code>SelectAll()</code></td><td>Selecionar todo o texto</td></tr>
-<tr><td><code>UnDo()</code></td><td>Desfazer &uacute;ltima a&ccedil;&atilde;o</td></tr>
-<tr><td><code>ReDo()</code></td><td>Refazer &uacute;ltima a&ccedil;&atilde;o desfeita</td></tr>
-<tr><td><code>CanUndo() / CanRedo()</code></td><td>Verificar se desfazer/refazer est&aacute; dispon&iacute;vel</td></tr>
-<tr><td><code>CanCopy() / CanCut() / CanPaste()</code></td><td>Verificar disponibilidade de opera&ccedil;&atilde;o da &aacute;rea de transfer&ecirc;ncia</td></tr>
-<tr><td colspan="2"><strong>Localizar e Navega&ccedil;&atilde;o</strong></td></tr>
-<tr><td><code>Find( cFind, lDown, lCase, lWord )</code></td><td>Pesquisar texto. Retorna posi&ccedil;&atilde;o ou -1.</td></tr>
-<tr><td><code>ReplaceSel( lUnDo, cText )</code></td><td>Substituir a sele&ccedil;&atilde;o atual por novo texto</td></tr>
-<tr><td><code>GoToLine( nLine )</code></td><td>Rolar e posicionar cursor em uma linha espec&iacute;fica</td></tr>
-<tr><td><code>GetRow() / GetCol()</code></td><td>Obter linha e coluna atuais do cursor</td></tr>
-<tr><td><code>GetLineCount()</code></td><td>N&uacute;mero total de linhas</td></tr>
-<tr><td><code>GetLine( nLine )</code></td><td>Obter texto de uma linha espec&iacute;fica</td></tr>
-<tr><td><code>Len()</code></td><td>Contagem total de caracteres</td></tr>
-<tr><td colspan="2"><strong>Arquivo I/O</strong></td></tr>
-<tr><td><code>LoadFromRTFFile( cFileName )</code></td><td>Carregar um arquivo RTF no controle</td></tr>
-<tr><td><code>SaveToRTFFile( cFileName )</code></td><td>Salvar conte&uacute;do como arquivo RTF</td></tr>
-<tr><td><code>LoadRTF( cRTF )</code></td><td>Carregar RTF de uma string</td></tr>
-<tr><td><code>SaveAsRTF()</code></td><td>Retornar conte&uacute;do como uma string RTF</td></tr>
-<tr><td><code>cText( cText )</code></td><td>Obter ou definir conte&uacute;do de texto simples</td></tr>
-<tr><td colspan="2"><strong>OLE e Imagens</strong></td></tr>
-<tr><td><code>InsertPicture( cFile, nSizeX, nSizeY )</code></td><td>Incorporar uma imagem de um arquivo</td></tr>
-<tr><td><code>InsertBitmap( hBitmap, nSizeX, nSizeY )</code></td><td>Incorporar um bitmap por handle</td></tr>
-<tr><td colspan="2"><strong>Imprimir e Exportar</strong></td></tr>
-<tr><td><code>Print( cName )</code></td><td>Imprimir o conte&uacute;do</td></tr>
-<tr><td><code>Preview( cName )</code></td><td>Mostrar pr&eacute;-visualiza&ccedil;&atilde;o de impress&atilde;o</td></tr>
-<tr><td><code>SaveToPDF( cName, cFile, lView )</code></td><td>Exportar para PDF</td></tr>
+<tr><td><code>New( nTop, nLeft, bSetGet, oWnd, nWidth, nHeight, oFont, lPixel, cMsg, lHScroll, lReadOnly, bWhen, bValid, bChanged, lDesign, lHighlight, cFileName, nRTFSize, lNoURL, lNoScroll, lNoBorder )</code></td><td>Constructor</td></tr>
+<tr><td><code>ReDefine( nId, bSetGet, oWnd, ... )</code></td><td>Redefine from resource</td></tr>
+<tr><td colspan="2"><strong>Text Formatting</strong></td></tr>
+<tr><td><code>SetBold( lOnOff )</code></td><td>Toggle bold on selected text</td></tr>
+<tr><td><code>SetItalic( lOnOff )</code></td><td>Toggle italic</td></tr>
+<tr><td><code>SetUnderline( lOnOff )</code></td><td>Toggle underline</td></tr>
+<tr><td><code>SetStrikeOut( lOnOff )</code></td><td>Toggle strikethrough</td></tr>
+<tr><td><code>SetFontName( cName )</code></td><td>Set font face for selection</td></tr>
+<tr><td><code>SetFontSize( nSize )</code></td><td>Set font size for selection</td></tr>
+<tr><td><code>SetTextColor( nRGB )</code></td><td>Set text color for selection</td></tr>
+<tr><td><code>SetHighLight( nColor )</code></td><td>Set background highlight color for selection</td></tr>
+<tr><td><code>SetBkGndColor( nRGB )</code></td><td>Set the entire control's background color</td></tr>
+<tr><td><code>SetAlign( nAlign )</code></td><td>Paragraph alignment: <code>PFA_LEFT</code> (1), <code>PFA_RIGHT</code> (2), <code>PFA_CENTER</code> (3), <code>PFA_JUSTIFY</code> (4)</td></tr>
+<tr><td><code>SetBullet( lOnOff )</code></td><td>Toggle bullet list</td></tr>
+<tr><td><code>SetNumbering( lOnOff )</code></td><td>Toggle numbered list</td></tr>
+<tr><td><code>SetIndent( nLeft, nRight, nFirst )</code></td><td>Set paragraph indentation</td></tr>
+<tr><td colspan="2"><strong>Clipboard &amp; Editing</strong></td></tr>
+<tr><td><code>Copy()</code></td><td>Copy selection to clipboard</td></tr>
+<tr><td><code>Cut()</code></td><td>Cut selection to clipboard</td></tr>
+<tr><td><code>Paste()</code></td><td>Paste from clipboard</td></tr>
+<tr><td><code>Del()</code></td><td>Delete selection</td></tr>
+<tr><td><code>SelectAll()</code></td><td>Select all text</td></tr>
+<tr><td><code>UnDo()</code></td><td>Undo last action</td></tr>
+<tr><td><code>ReDo()</code></td><td>Redo last undone action</td></tr>
+<tr><td><code>CanUndo() / CanRedo()</code></td><td>Check if undo/redo is available</td></tr>
+<tr><td><code>CanCopy() / CanCut() / CanPaste()</code></td><td>Check clipboard operation availability</td></tr>
+<tr><td colspan="2"><strong>Find &amp; Navigation</strong></td></tr>
+<tr><td><code>Find( cFind, lDown, lCase, lWord )</code></td><td>Search for text. Returns position or -1.</td></tr>
+<tr><td><code>ReplaceSel( lUnDo, cText )</code></td><td>Replace the current selection with new text</td></tr>
+<tr><td><code>GoToLine( nLine )</code></td><td>Scroll to and position cursor at a specific line</td></tr>
+<tr><td><code>GetRow() / GetCol()</code></td><td>Get current cursor row and column</td></tr>
+<tr><td><code>GetLineCount()</code></td><td>Total number of lines</td></tr>
+<tr><td><code>GetLine( nLine )</code></td><td>Get text of a specific line</td></tr>
+<tr><td><code>Len()</code></td><td>Total character count</td></tr>
+<tr><td colspan="2"><strong>File I/O</strong></td></tr>
+<tr><td><code>LoadFromRTFFile( cFileName )</code></td><td>Load an RTF file into the control</td></tr>
+<tr><td><code>SaveToRTFFile( cFileName )</code></td><td>Save content as RTF file</td></tr>
+<tr><td><code>LoadRTF( cRTF )</code></td><td>Load RTF from a string</td></tr>
+<tr><td><code>SaveAsRTF()</code></td><td>Return content as an RTF string</td></tr>
+<tr><td><code>cText( cText )</code></td><td>Get or set plain text content</td></tr>
+<tr><td colspan="2"><strong>OLE &amp; Pictures</strong></td></tr>
+<tr><td><code>InsertPicture( cFile, nSizeX, nSizeY )</code></td><td>Embed an image from a file</td></tr>
+<tr><td><code>InsertBitmap( hBitmap, nSizeX, nSizeY )</code></td><td>Embed a bitmap by handle</td></tr>
+<tr><td colspan="2"><strong>Print &amp; Export</strong></td></tr>
+<tr><td><code>Print( cName )</code></td><td>Print the content</td></tr>
+<tr><td><code>Preview( cName )</code></td><td>Show print preview</td></tr>
+<tr><td><code>SaveToPDF( cName, cFile, lView )</code></td><td>Export to PDF</td></tr>
 <tr><td colspan="2"><strong>Zoom</strong></td></tr>
-<tr><td><code>SetZoom( nNumerator, nDenominator )</code></td><td>Definir n&iacute;vel de zoom (ex. <code>SetZoom(2, 1)</code> = 200%)</td></tr>
-<tr><td><code>GetZoom()</code></td><td>Obter zoom atual como <code>{nNumerator, nDenominator}</code></td></tr>
+<tr><td><code>SetZoom( nNumerator, nDenominator )</code></td><td>Set zoom level (e.g. <code>SetZoom(2, 1)</code> = 200%)</td></tr>
+<tr><td><code>GetZoom()</code></td><td>Get current zoom as <code>{nNumerator, nDenominator}</code></td></tr>
 </tbody>
 </table>
 
-<h3 id="trichedit-command">Sintaxe de Comandos</h3>
+<h3 id="trichedit-command">Command Syntax</h3>
 
 <pre><code class="language-harbour">@ nTop, nLeft RICHEDIT [ oRTF VAR ] uVar ;
    [ OF oWnd ] ;
@@ -140,7 +140,7 @@ REDEFINE RICHEDIT [ oRTF VAR ] uVar ;
    [ VALID bValid ] ;
    [ ON CHANGE bChange ]</code></pre>
 
-<h3 id="trichedit-example">Exemplo: Editor RTF</h3>
+<h3 id="trichedit-example">Example: RTF Editor</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "RichEdit.ch"
@@ -153,7 +153,7 @@ FUNCTION RichEditDemo()
    @ 0.5, 0.5 RICHEDIT oRTF VAR cText OF oDlg ;
       SIZE 280, 180 PIXEL
 
-   // Botoes da barra de ferramentas para formatacao
+   // Toolbar buttons for formatting
    @ 8, 0.5 BUTTON "Bold"      OF oDlg SIZE 50, 14 ;
       ACTION oRTF:SetBold( .T. )
    @ 8, 5   BUTTON "Italic"    OF oDlg SIZE 50, 14 ;
@@ -161,7 +161,7 @@ FUNCTION RichEditDemo()
    @ 8, 9.5 BUTTON "Underline" OF oDlg SIZE 60, 14 ;
       ACTION oRTF:SetUnderline( .T. )
 
-   // Carregar e salvar
+   // Load and save
    @ 10, 0.5 BUTTON "Open RTF" OF oDlg SIZE 60, 14 ;
       ACTION ( cFile := cGetFile( "*.rtf", "Open RTF" ), ;
                If( !Empty(cFile), oRTF:LoadFromRTFFile( cFile ), ) )
@@ -178,48 +178,186 @@ RETURN NIL</code></pre>
 <!-- ================================================================== -->
 <h2 id="tscintilla">TScintilla</h2>
 
-<p><strong>Fonte:</strong> <code>source/classes/scintila.prg</code> &nbsp;|&nbsp; <strong>Pai:</strong> <code>TControl</code></p>
+<p><strong>Fonte:</strong> <code>source/classes/scintila.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<p><code>TScintilla</code> encapsula o componente editor <a href="https://www.scintilla.org/">Scintilla</a>, fornecendo um editor de c&oacute;digo fonte profissional com realce de sintaxe, dobramento de c&oacute;digo, n&uacute;meros de linha, marcadores, correspond&ecirc;ncia de colchetes, autocompletar e suporte a m&uacute;ltiplos documentos. &Eacute; o motor de editor usado no IDE do FiveWin.</p>
+<p><code>TScintilla</code> wraps the <a href="https://www.scintilla.org/">Scintilla</a> editor component, providing a professional source code editor with syntax highlighting, code folding, line numbers, bookmarks, brace matching, autocomplete, and multi-document support. It is the editor engine used in the FiveWin IDE.</p>
 
-<p>Para detalhes completos do TScintilla, consulte a <a href="../../pt/ui/tscintilla.html">p&aacute;gina dedicada do TScintilla</a>.</p>
+<h3 id="tscintilla-properties">Properties</h3>
+
+<table>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>cFileName</code></td><td>String</td><td>Current file path being edited</td></tr>
+<tr><td><code>cLexer</code></td><td>String</td><td>Syntax lexer (e.g. <code>"harbour"</code>, <code>"cpp"</code>)</td></tr>
+<tr><td><code>cLang</code></td><td>String</td><td>Language identifier</td></tr>
+<tr><td><code>lMargLin</code></td><td>Logical</td><td>Show line number margin</td></tr>
+<tr><td><code>lFolding</code></td><td>Logical</td><td>Enable code folding</td></tr>
+<tr><td><code>lMarking</code></td><td>Logical</td><td>Enable bookmark margin</td></tr>
+<tr><td><code>lMessage</code></td><td>Logical</td><td>Show message/build margin</td></tr>
+<tr><td><code>nMargLines</code></td><td>Numeric</td><td>Width of line number margin</td></tr>
+<tr><td><code>nMargSymbol</code></td><td>Numeric</td><td>Width of symbol/bookmark margin</td></tr>
+<tr><td><code>nMargFold</code></td><td>Numeric</td><td>Width of folding margin</td></tr>
+<tr><td><code>nWidthTab</code></td><td>Numeric</td><td>Tab width in characters</td></tr>
+<tr><td><code>nSpacLin</code></td><td>Numeric</td><td>Extra line spacing</td></tr>
+<tr><td><code>lVirtSpace</code></td><td>Logical</td><td>Allow cursor in virtual space beyond line end</td></tr>
+<tr><td><code>cFontS</code></td><td>String</td><td>Editor font face name</td></tr>
+<tr><td><code>nHFont</code></td><td>Numeric</td><td>Editor font height</td></tr>
+<tr><td><code>lModified</code></td><td>Logical</td><td>Document has unsaved changes</td></tr>
+<tr><td><code>bModified</code></td><td>Block</td><td>Callback when modification state changes</td></tr>
+<tr><td><code>lUtf8</code></td><td>Logical</td><td>Document is UTF-8 encoded</td></tr>
+<tr><td><code>lSaveBak</code></td><td>Logical</td><td>Create .bak backup on save</td></tr>
+<tr><td><code>aKey</code></td><td>Array</td><td>Custom key bindings: <code>{ { nKey, bAction }, ... }</code></td></tr>
+<tr><td><code>lAutoWords</code></td><td>Logical</td><td>Enable autocomplete word suggestions</td></tr>
+<tr><td><code>lHistClip</code></td><td>Logical</td><td>Clipboard history support</td></tr>
+</tbody>
+</table>
+
+<h3>Syntax Highlighting Colors</h3>
+
+<table>
+<thead><tr><th>Property</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>cCComment</code></td><td>Block comment color <code>{ nFore, nBack, nCase }</code></td></tr>
+<tr><td><code>cCCommentLin</code></td><td>Line comment color</td></tr>
+<tr><td><code>cCString</code></td><td>String literal color</td></tr>
+<tr><td><code>cCNumber</code></td><td>Numeric literal color</td></tr>
+<tr><td><code>cCOperator</code></td><td>Operator color</td></tr>
+<tr><td><code>cCKeyw1 .. cCKeyw5</code></td><td>Keyword group colors (1-5)</td></tr>
+<tr><td><code>cCBraces</code></td><td>Matched brace color</td></tr>
+<tr><td><code>cCBraceBad</code></td><td>Unmatched brace color</td></tr>
+<tr><td><code>cCIdentif</code></td><td>Identifier color</td></tr>
+<tr><td><code>nColorSelection</code></td><td>Text selection foreground color</td></tr>
+<tr><td><code>nColorSelectionB</code></td><td>Text selection background color</td></tr>
+</tbody>
+</table>
+
+<h3 id="tscintilla-methods">Key Methods</h3>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, nWidth, nHeight, oWnd, nClrT, nClrP, cLex, cDll, bSetup, lLoad, cPathApli )</code></td><td>Constructor. Creates the Scintilla editor.</td></tr>
+<tr><td colspan="2"><strong>Text Operations</strong></td></tr>
+<tr><td><code>GetText()</code></td><td>Get the entire document text</td></tr>
+<tr><td><code>AddText( cText )</code></td><td>Append text at the current position</td></tr>
+<tr><td><code>GetLine( nLine )</code></td><td>Get text of a specific line</td></tr>
+<tr><td><code>GetLineCount()</code></td><td>Total number of lines</td></tr>
+<tr><td><code>GetSelText()</code></td><td>Get the selected text</td></tr>
+<tr><td><code>GetCurrentPos()</code></td><td>Get cursor position (character offset)</td></tr>
+<tr><td><code>GetCurrentLineNumber()</code></td><td>Get current line number</td></tr>
+<tr><td><code>GetModify()</code></td><td>Check if document has unsaved changes</td></tr>
+<tr><td colspan="2"><strong>Clipboard</strong></td></tr>
+<tr><td><code>Copy() / Cut() / Paste()</code></td><td>Standard clipboard operations</td></tr>
+<tr><td><code>CopyLine()</code></td><td>Copy the entire current line</td></tr>
+<tr><td><code>CopyRange( nStart, nEnd )</code></td><td>Copy a character range</td></tr>
+<tr><td><code>CanUndo() / CanRedo()</code></td><td>Check undo/redo availability</td></tr>
+<tr><td colspan="2"><strong>Navigation</strong></td></tr>
+<tr><td><code>GoLine( nLine )</code></td><td>Go to a specific line (1-based)</td></tr>
+<tr><td><code>GoHome() / GoEol()</code></td><td>Go to start/end of line</td></tr>
+<tr><td><code>GoUp() / GoDown()</code></td><td>Move cursor up/down one line</td></tr>
+<tr><td><code>GoLeft() / GoRight()</code></td><td>Move cursor left/right one character</td></tr>
+<tr><td><code>GoAtEnd()</code></td><td>Go to end of document</td></tr>
+<tr><td colspan="2"><strong>Find &amp; Replace</strong></td></tr>
+<tr><td><code>FindText( cText, lForward )</code></td><td>Search for text forward or backward</td></tr>
+<tr><td><code>FindNext() / FindPrev()</code></td><td>Find next/previous occurrence of last search</td></tr>
+<tr><td><code>DlgFindText()</code></td><td>Show find dialog</td></tr>
+<tr><td><code>DlgReplace()</code></td><td>Show find/replace dialog</td></tr>
+<tr><td><code>DlgGoToLine()</code></td><td>Show go-to-line dialog</td></tr>
+<tr><td colspan="2"><strong>Code Folding</strong></td></tr>
+<tr><td><code>FoldAllContract()</code></td><td>Collapse all foldable regions</td></tr>
+<tr><td><code>FoldAllExpand()</code></td><td>Expand all foldable regions</td></tr>
+<tr><td><code>FoldAllToggle()</code></td><td>Toggle all folding</td></tr>
+<tr><td colspan="2"><strong>File I/O</strong></td></tr>
+<tr><td><code>AddFile( lFin, lHome )</code></td><td>Load a file into the editor</td></tr>
+<tr><td><code>CloseF( lEnd )</code></td><td>Close the current file</td></tr>
+<tr><td colspan="2"><strong>Brace Matching</strong></td></tr>
+<tr><td><code>BraceHighlight( nPos1, nPos2 )</code></td><td>Highlight matching braces</td></tr>
+<tr><td><code>BraceBadlight( nPos1, nPos2 )</code></td><td>Highlight unmatched braces</td></tr>
+<tr><td><code>BraceMatch( nPos )</code></td><td>Find the matching brace position</td></tr>
+<tr><td colspan="2"><strong>Call Tips &amp; Autocomplete</strong></td></tr>
+<tr><td><code>CallTipShow( nPosStart, cText )</code></td><td>Show a calltip popup</td></tr>
+<tr><td><code>CallTipCancel()</code></td><td>Hide the calltip</td></tr>
+<tr><td><code>CallTipActive()</code></td><td>Check if a calltip is visible</td></tr>
+<tr><td colspan="2"><strong>Custom Keys</strong></td></tr>
+<tr><td><code>AddKey( nKey, bAction )</code></td><td>Add a custom key binding</td></tr>
+</tbody>
+</table>
+
+<h3 id="tscintilla-example">Example: Source Code Editor</h3>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION CodeEditor()
+   LOCAL oWnd, oSci
+
+   DEFINE WINDOW oWnd TITLE "Code Editor"
+
+   // Create Scintilla editor filling the window
+   oSci := TScintilla():New( 0, 0, 800, 600, oWnd, ;
+      CLR_BLACK, CLR_WHITE, "harbour" )
+
+   // Load a source file
+   oSci:cFileName := "myapp.prg"
+   oSci:AddFile()
+
+   // Custom key bindings
+   oSci:AddKey( VK_F5, { || CompileAndRun() } )
+   oSci:AddKey( VK_F3, { || oSci:FindNext() } )
+
+   ACTIVATE WINDOW oWnd ;
+      ON RESIZE ( oSci:Move( 0, 0, nWidth, nHeight, .T. ) )
+RETURN NIL</code></pre>
+
+<h3>Example: TScintilla with Custom Colors</h3>
+
+<pre><code class="language-harbour">oSci := TScintilla():New( 0, 0, 800, 600, oWnd, ;
+   CLR_BLACK, RGB( 30, 30, 30 ), "harbour" )
+
+// Dark theme colors
+oSci:cCComment    := { CLR_GRAY,    RGB(30,30,30), SC_CASE_MIXED }
+oSci:cCString     := { CLR_HRED,    RGB(30,30,30), SC_CASE_MIXED }
+oSci:cCNumber     := { CLR_RED,     RGB(30,30,30), SC_CASE_MIXED }
+oSci:cCKeyw1      := { CLR_CYAN,    RGB(30,30,30), SC_CASE_MIXED }
+oSci:cCKeyw2      := { CLR_YELLOW,  RGB(30,30,30), SC_CASE_MIXED }
+oSci:nColorSelection  := RGB( 255, 255, 255 )
+oSci:nColorSelectionB := RGB( 60, 100, 160 )</code></pre>
 
 <h2 id="comparison">TRichEdit vs TScintilla</h2>
 
 <table>
-<thead><tr><th>Caracter&iacute;stica</th><th>TRichEdit</th><th>TScintilla</th></tr></thead>
+<thead><tr><th>Feature</th><th>TRichEdit</th><th>TScintilla</th></tr></thead>
 <tbody>
-<tr><td>Uso principal</td><td>Edi&ccedil;&atilde;o de texto rico/documentos</td><td>Edi&ccedil;&atilde;o de c&oacute;digo fonte</td></tr>
-<tr><td>Formata&ccedil;&atilde;o RTF</td><td>Suporte completo</td><td>N&atilde;o</td></tr>
-<tr><td>Realce de sintaxe</td><td>B&aacute;sico (apenas palavras-chave)</td><td>Completo baseado em lexer</td></tr>
-<tr><td>Dobramento de c&oacute;digo</td><td>N&atilde;o</td><td>Sim</td></tr>
-<tr><td>N&uacute;meros de linha</td><td>Manual</td><td>Margem integrada</td></tr>
-<tr><td>Correspond&ecirc;ncia de colchetes</td><td>N&atilde;o</td><td>Sim</td></tr>
-<tr><td>Autocompletar</td><td>N&atilde;o</td><td>Sim</td></tr>
-<tr><td>Imagens incorporadas</td><td>Objetos OLE</td><td>N&atilde;o</td></tr>
-<tr><td>Imprimir / PDF</td><td>Integrado</td><td>Via classe de relat&oacute;rio</td></tr>
-<tr><td>Depend&ecirc;ncia do Windows</td><td>DLL RichEdit integrada</td><td>Requer SciLexer.dll</td></tr>
+<tr><td>Primary use</td><td>Rich text / document editing</td><td>Source code editing</td></tr>
+<tr><td>RTF formatting</td><td>Full support</td><td>No</td></tr>
+<tr><td>Syntax highlighting</td><td>Basic (keywords only)</td><td>Full lexer-based</td></tr>
+<tr><td>Code folding</td><td>No</td><td>Yes</td></tr>
+<tr><td>Line numbers</td><td>Manual</td><td>Built-in margin</td></tr>
+<tr><td>Brace matching</td><td>No</td><td>Yes</td></tr>
+<tr><td>Autocomplete</td><td>No</td><td>Yes</td></tr>
+<tr><td>Embedded images</td><td>OLE objects</td><td>No</td></tr>
+<tr><td>Print / PDF</td><td>Built-in</td><td>Via report class</td></tr>
+<tr><td>Windows dependency</td><td>Built-in RichEdit DLL</td><td>Requires SciLexer.dll</td></tr>
 </tbody>
 </table>
 
-<h2 id="tips">Dicas</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-  <li>Use <code>TRichEdit</code> para edi&ccedil;&atilde;o de documentos, reda&ccedil;&atilde;o de cartas/memos e qualquer cen&aacute;rio que exija texto formatado.</li>
-  <li>Use <code>TScintilla</code> para editores de c&oacute;digo fonte, editores de script e editores de arquivos de configura&ccedil;&atilde;o.</li>
-  <li>TRichEdit suporta o modo <code>HIGHLIGHT</code> para realce b&aacute;sico de sintaxe de c&oacute;digo Harbour, mas TScintilla &eacute; muito mais capaz.</li>
-  <li>TScintilla requer <code>SciLexer.dll</code> (ou <code>Scintilla.dll</code>) para estar dispon&iacute;vel em tempo de execu&ccedil;&atilde;o.</li>
-  <li>Para TRichEdit, chame <code>SetZoom(2, 1)</code> para zoom de 200% -- &uacute;til para telas de alta densidade.</li>
-  <li>Ambos os controles suportam <code>ON CHANGE</code> para detectar modifica&ccedil;&otilde;es em tempo real.</li>
+  <li>Use <code>TRichEdit</code> for document editing, letter/memo writing, and any scenario requiring formatted text.</li>
+  <li>Use <code>TScintilla</code> for source code editors, script editors, and configuration file editors.</li>
+  <li>TRichEdit supports <code>HIGHLIGHT</code> mode for basic syntax highlighting of Harbour code, but TScintilla is far more capable.</li>
+  <li>TScintilla requires <code>SciLexer.dll</code> (or <code>Scintilla.dll</code>) to be available at runtime.</li>
+  <li>For TRichEdit, call <code>SetZoom(2, 1)</code> for 200% zoom -- useful for high-DPI displays.</li>
+  <li>Both controls support <code>ON CHANGE</code> to detect modifications in real time.</li>
 </ul>
 
-<h2 id="see-also">Veja Tamb&eacute;m</h2>
+<h2 id="see-also">Veja Também</h2>
 <ul>
-  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- classe pai</li>
-  <li><a href="../../pt/ui/tget.html">TGet / TMGet</a> -- entrada de texto simples / memo multilinha</li>
-  <li><a href="../../pt/printing/tprinter.html">TPrinter</a> -- suporte a impress&atilde;o</li>
+  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../pt/ui/tget.html">TGet / TMGet</a> -- simple text input / multiline memo</li>
+  <li><a href="../../pt/printing/tprinter.html">TPrinter</a> -- printing support</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

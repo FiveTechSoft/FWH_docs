@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TScrollPanel - FWH Docs</title>
+<title>TScrollPanel - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,7 +13,7 @@
 
 <h1>TScrollPanel</h1>
 <p class="class-source">Fonte: <code>source/classes/scrlpanl.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TPanel</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
 
 <p>
 TScrollPanel is a scrollable container panel with automatic vertical and horizontal scrollbars
@@ -22,51 +22,51 @@ touch panning via gesture handling, page-based navigation, and helper methods to
 control into view. Created by G.N. Rao.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>vStep</code></td><td>Numeric</td><td>Passo da rolagem vertical em pixels (padrão 20)</td></tr>
-<tr><td><code>hStep</code></td><td>Numeric</td><td>Passo da rolagem horizontal em pixels (padrão 20)</td></tr>
-<tr><td><code>nScrollRange</code></td><td>Numeric</td><td>Intervalo da rolagem vertical calculado a partir dos controles filhos</td></tr>
-<tr><td><code>nHScrollRange</code></td><td>Numeric</td><td>Intervalo da rolagem horizontal calculado a partir dos controles filhos</td></tr>
-<tr><td><code>aSays</code></td><td>Array</td><td>Matriz de retângulos de texto estático rolados com o painel</td></tr>
-<tr><td><code>aPages</code></td><td>Array</td><td>Matriz de marcadores { cPageName, nRow } para navegação de páginas</td></tr>
-<tr><td><code>lScrollDrag</code></td><td>Logical</td><td>Indicador de modo arrastar-para-rolar</td></tr>
-<tr><td><code>nRightMargin</code></td><td>Numeric</td><td>Margem direita preservada quando o pai redimensiona</td></tr>
-<tr><td><code>nBottomMargin</code></td><td>Numeric</td><td>Margem inferior preservada quando o pai redimensiona</td></tr>
-<tr><td><code>oCtrlTop</code></td><td>Object</td><td>Controle filho mais ao topo (para intervalo de rolagem)</td></tr>
-<tr><td><code>oCtrlBot</code></td><td>Object</td><td>Controle filho mais ao fundo (para intervalo de rolagem)</td></tr>
+<tr><td><code>vStep</code></td><td>Numeric</td><td>Vertical scroll step in pixels (default 20)</td></tr>
+<tr><td><code>hStep</code></td><td>Numeric</td><td>Horizontal scroll step in pixels (default 20)</td></tr>
+<tr><td><code>nScrollRange</code></td><td>Numeric</td><td>Vertical scroll range calculated from child controls</td></tr>
+<tr><td><code>nHScrollRange</code></td><td>Numeric</td><td>Horizontal scroll range calculated from child controls</td></tr>
+<tr><td><code>aSays</code></td><td>Array</td><td>Array of static text rectangles scrolled with the panel</td></tr>
+<tr><td><code>aPages</code></td><td>Array</td><td>Array of { cPageName, nRow } bookmarks for page navigation</td></tr>
+<tr><td><code>lScrollDrag</code></td><td>Logical</td><td>Drag-to-scroll mode flag</td></tr>
+<tr><td><code>nRightMargin</code></td><td>Numeric</td><td>Right margin preserved when parent resizes</td></tr>
+<tr><td><code>nBottomMargin</code></td><td>Numeric</td><td>Bottom margin preserved when parent resizes</td></tr>
+<tr><td><code>oCtrlTop</code></td><td>Object</td><td>Topmost child control (for scroll range)</td></tr>
+<tr><td><code>oCtrlBot</code></td><td>Object</td><td>Bottommost child control (for scroll range)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lNoBorder )</code></td><td>Criar um novo TScrollPanel</td></tr>
-<tr><td><code>SetRange()</code></td><td>Examinar controles filhos e definir intervalo de rolagem. Chamar após adicionar todos os controles.</td></tr>
-<tr><td><code>ScrollBy( nV, nH )</code></td><td>Rolar o painel por nV pixels verticalmente e nH pixels horizontalmente</td></tr>
-<tr><td><code>GoTop()</code></td><td>Rolar para o topo do painel</td></tr>
-<tr><td><code>GoBottom()</code></td><td>Rolar para o fundo do painel</td></tr>
-<tr><td><code>GoLeft()</code></td><td>Rolar para a borda esquerda</td></tr>
-<tr><td><code>GoRight()</code></td><td>Rolar para a borda direita</td></tr>
-<tr><td><code>GoUp( nPix )</code></td><td>Rolar para cima por nPix pixels (padrão vStep)</td></tr>
-<tr><td><code>GoDown( nPix )</code></td><td>Rolar para baixo por nPix pixels (padrão vStep)</td></tr>
-<tr><td><code>ControlIntoView( oControl )</code></td><td>Rolar o painel para garantir que oControl esteja visível</td></tr>
-<tr><td><code>SetPage( cPage, nRow )</code></td><td>Marcar a linha atual com um nome de página</td></tr>
-<tr><td><code>GoToPage( cPage )</code></td><td>Rolar para uma página marcada anteriormente</td></tr>
-<tr><td><code>AddText( nRow, nCol, nW, nH, cbText, oFont, nClrText )</code></td><td>Adicionar texto rolante que se move com o conteúdo do painel</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lNoBorder )</code></td><td>Create a new TScrollPanel</td></tr>
+<tr><td><code>SetRange()</code></td><td>Scan child controls and set scroll range. Call after adding all controls.</td></tr>
+<tr><td><code>ScrollBy( nV, nH )</code></td><td>Scroll the panel by nV pixels vertically and nH pixels horizontally</td></tr>
+<tr><td><code>GoTop()</code></td><td>Scroll to the top of the panel</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Scroll to the bottom of the panel</td></tr>
+<tr><td><code>GoLeft()</code></td><td>Scroll to the left edge</td></tr>
+<tr><td><code>GoRight()</code></td><td>Scroll to the right edge</td></tr>
+<tr><td><code>GoUp( nPix )</code></td><td>Scroll up by nPix pixels (default vStep)</td></tr>
+<tr><td><code>GoDown( nPix )</code></td><td>Scroll down by nPix pixels (default vStep)</td></tr>
+<tr><td><code>ControlIntoView( oControl )</code></td><td>Scroll the panel to ensure oControl is visible</td></tr>
+<tr><td><code>SetPage( cPage, nRow )</code></td><td>Bookmark the current row with a page name</td></tr>
+<tr><td><code>GoToPage( cPage )</code></td><td>Scroll to a previously bookmarked page</td></tr>
+<tr><td><code>AddText( nRow, nCol, nW, nH, cbText, oFont, nClrText )</code></td><td>Add scrolling text that moves with the panel content</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Painel de Rolagem com Controles</h2>
+<h2 id="example">Example: Scroll Panel with Controls</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -91,19 +91,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Observações</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Chame <code>SetRange()</code> após adicionar todos os controles filhos para calcular o intervalo de rolagem e ativar as barras de rolagem.</li>
-<li>O painel cria barras de rolagem verticais e horizontais automaticamente através dos estilos <code>WS_VSCROLL</code> e <code>WS_HSCROLL</code>.</li>
-<li>Arrastar-para-rolar é ativado segurando o botão esquerdo do mouse e arrastando. O deslocamento por toque é suportado via <code>HandleGesture()</code> para mensagens WM_GESTURE.</li>
-<li>Use <code>ControlIntoView()</code> nos blocos <code>bGotFocus</code> dos controles filhos para rolar automaticamente o painel ao navegar por controles com tabulação.</li>
-<li><code>AddText()</code> cria etiquetas de texto rolantes que se movem com o conteúdo do painel, ao contrário dos controles SAY padrão que permanecem fixos a menos que rolados manualmente.</li>
-<li>Os membros DATA <code>nRightMargin</code> e <code>nBottomMargin</code> permitem que o painel seja redimensionado automaticamente quando sua janela pai é redimensionada.</li>
+<li>Call <code>SetRange()</code> after adding all child controls to calculate the scroll range and enable the scrollbars.</li>
+<li>The panel creates both vertical and horizontal scrollbars automatically via <code>WS_VSCROLL</code> and <code>WS_HSCROLL</code> styles.</li>
+<li>Drag-to-scroll is enabled by holding the left mouse button and dragging. Touch panning is supported via <code>HandleGesture()</code> for WM_GESTURE messages.</li>
+<li>Use <code>ControlIntoView()</code> in <code>bGotFocus</code> blocks of child controls to automatically scroll the panel when tabbing through controls.</li>
+<li><code>AddText()</code> creates scrolling text labels that move with the panel content, unlike standard SAY controls which stay fixed unless scrolled manually.</li>
+<li>The <code>nRightMargin</code> and <code>nBottomMargin</code> DATA members allow the panel to auto-resize when its parent window is resized.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tscrollmsg.html">&larr; tscrollmsg</a> | <a href="../../pt/ui/tscrollpanel_ex.html">tscrollpanel_ex &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

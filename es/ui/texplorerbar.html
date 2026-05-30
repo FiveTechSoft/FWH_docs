@@ -13,54 +13,54 @@
 
 <h1>TExplorerBar</h1>
 <p class="class-source">Fuente: <code>source/classes/texplbar.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TExplorerBar es un panel de tareas vertical estilo Outlook con secciones colapsables y encabezados degradados. Cada sección está representada por un objeto hijo TTaskPanel que puede expandirse o colapsarse haciendo clic en su barra de título. El panel soporta desplazamiento vertical cuando el contenido excede el área visible, lo que lo hace adecuado para menús de navegación, listas de tareas y grupos de propiedades.
+TExplorerBar is an Outlook-style vertical task panel with collapsible sections and gradient headers.
 Each section is represented by a TTaskPanel child object that can be expanded or collapsed by clicking
 its title bar. The panel supports vertical scrolling when content exceeds the visible area, making
 it suitable for navigation menus, task lists, and property groups.
 </p>
 
-<h2 id="command">Sintaxis del Comando</h2>
+<h2 id="command">Command Syntax</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol EXPLORERBAR oBar OF oWnd SIZE nW, nH</code></pre>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aPanels</code></td><td>Array</td><td>Array de objetos TTaskPanel agregados a la barra</td></tr>
-<tr><td><code>nTopColor</code></td><td>Numeric</td><td>Color de degradado superior para el fondo de la barra (predeterminado RGB(122,161,230))</td></tr>
-<tr><td><code>nBottomColor</code></td><td>Numeric</td><td>Color de degradado inferior para el fondo de la barra (predeterminado RGB(99,117,214))</td></tr>
-<tr><td><code>oVScroll</code></td><td>Object</td><td>Control de barra de desplazamiento vertical para contenido del panel</td></tr>
-<tr><td><code>nVPos</code></td><td>Numeric</td><td>Posición actual de desplazamiento vertical</td></tr>
-<tr><td><code>nVirtualHeight</code></td><td>Numeric</td><td>Altura virtual total de todos los paneles combinados</td></tr>
-<tr><td><code>nVirtualTop</code></td><td>Numeric</td><td>Desplazamiento actual desde la parte superior</td></tr>
-<tr><td><code>lSBVisible</code></td><td>Logical</td><td>Bandera de visibilidad de la barra de desplazamiento</td></tr>
-<tr><td><code>aGradient</code></td><td>Array</td><td>Definición de degradado personalizado para encabezados de panel</td></tr>
-<tr><td><code>bClrGrad</code></td><td>Block</td><td>Bloque de código que devuelve colores de degradado personalizados</td></tr>
+<tr><td><code>aPanels</code></td><td>Array</td><td>Array of TTaskPanel objects added to the bar</td></tr>
+<tr><td><code>nTopColor</code></td><td>Numeric</td><td>Top gradient color for the bar background (default RGB(122,161,230))</td></tr>
+<tr><td><code>nBottomColor</code></td><td>Numeric</td><td>Bottom gradient color for the bar background (default RGB(99,117,214))</td></tr>
+<tr><td><code>oVScroll</code></td><td>Object</td><td>Vertical scrollbar control for scrolling panel content</td></tr>
+<tr><td><code>nVPos</code></td><td>Numeric</td><td>Current vertical scroll position</td></tr>
+<tr><td><code>nVirtualHeight</code></td><td>Numeric</td><td>Total virtual height of all panels combined</td></tr>
+<tr><td><code>nVirtualTop</code></td><td>Numeric</td><td>Current scroll offset from the top</td></tr>
+<tr><td><code>lSBVisible</code></td><td>Logical</td><td>Scrollbar visibility flag</td></tr>
+<tr><td><code>aGradient</code></td><td>Array</td><td>Custom gradient definition for panel headers</td></tr>
+<tr><td><code>bClrGrad</code></td><td>Block</td><td>Code block returning custom gradient colors</td></tr>
 </tbody>
 </table>
 
-<h2 id="ttaskpanel">Clase TTaskPanel (Hijo de TExplorerBar)</h2>
+<h2 id="ttaskpanel">TTaskPanel Class (Child of TExplorerBar)</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cTitle</code></td><td>Character</td><td>Título de la sección del panel mostrado en el encabezado</td></tr>
-<tr><td><code>nTitleHeight</code></td><td>Numeric</td><td>Altura de la barra de título cliqueable (predeterminado 25)</td></tr>
-<tr><td><code>nBodyHeight</code></td><td>Numeric</td><td>Altura del área del cuerpo cuando está expandido (predeterminado 50)</td></tr>
-<tr><td><code>lCollapsed</code></td><td>Logical</td><td>Indica si el panel está actualmente colapsado</td></tr>
-<tr><td><code>aLinks</code></td><td>Array</td><td>Array de controles TUrlLink agregados mediante AddLink()</td></tr>
-<tr><td><code>aGradient</code></td><td>Array</td><td>Colores de degradado para la barra de título</td></tr>
-<tr><td><code>nRound</code></td><td>Numeric</td><td>Radio de esquinas redondeadas para el panel (predeterminado 6)</td></tr>
-<tr><td><code>bOnCollapse</code></td><td>Block</td><td>Bloque de código ejecutado cuando el panel se colapsa/expande</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Panel section title displayed in the header</td></tr>
+<tr><td><code>nTitleHeight</code></td><td>Numeric</td><td>Height of the clickable title bar (default 25)</td></tr>
+<tr><td><code>nBodyHeight</code></td><td>Numeric</td><td>Height of the body area when expanded (default 50)</td></tr>
+<tr><td><code>lCollapsed</code></td><td>Logical</td><td>Whether the panel is currently collapsed</td></tr>
+<tr><td><code>aLinks</code></td><td>Array</td><td>Array of TUrlLink controls added via AddLink()</td></tr>
+<tr><td><code>aGradient</code></td><td>Array</td><td>Gradient colors for the title bar</td></tr>
+<tr><td><code>nRound</code></td><td>Numeric</td><td>Corner rounding radius for the panel (default 6)</td></tr>
+<tr><td><code>bOnCollapse</code></td><td>Block</td><td>Code block executed when the panel is collapsed/expanded</td></tr>
 </tbody>
 </table>
 
@@ -68,16 +68,16 @@ it suitable for navigation menus, task lists, and property groups.
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, nClrFore, nClrBack, oBrush, l2007, l2010, l2013, l2015 )</code></td><td>Crear un nuevo control TExplorerBar</td></tr>
-<tr><td><code>Redefine( nId, oDlg )</code></td><td>Redefinir desde recurso de diálogo</td></tr>
-<tr><td><code>AddPanel( cName, cBmpName, nBodyHeight, nTitleH, nRound, aGrad, oFnt, nClrT, nClrP )</code></td><td>Agregar una nueva sección TTaskPanel. Devuelve el objeto del panel.</td></tr>
-<tr><td><code>CloseAll( nExcept )</code></td><td>Colapsar todos los paneles excepto el del índice nExcept (predeterminado 1)</td></tr>
-<tr><td><code>CheckScroll()</code></td><td>Recalcular el rango de la barra de desplazamiento basado en alturas de paneles</td></tr>
-<tr><td><code>VScrollSetPos( nPos )</code></td><td>Establecer la posición de desplazamiento vertical y actualizar posiciones de paneles</td></tr>
-<tr><td><code>VScrollSkip( nSkip )</code></td><td>Desplazar verticalmente nSkip píxeles</td></tr>
+<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, nClrFore, nClrBack, oBrush, l2007, l2010, l2013, l2015 )</code></td><td>Create a new TExplorerBar control</td></tr>
+<tr><td><code>Redefine( nId, oDlg )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>AddPanel( cName, cBmpName, nBodyHeight, nTitleH, nRound, aGrad, oFnt, nClrT, nClrP )</code></td><td>Add a new TTaskPanel section. Returns the panel object.</td></tr>
+<tr><td><code>CloseAll( nExcept )</code></td><td>Collapse all panels except the one at index nExcept (default 1)</td></tr>
+<tr><td><code>CheckScroll()</code></td><td>Recalculate scrollbar range based on panel heights</td></tr>
+<tr><td><code>VScrollSetPos( nPos )</code></td><td>Set the vertical scroll position and update panel positions</td></tr>
+<tr><td><code>VScrollSkip( nSkip )</code></td><td>Scroll vertically by nSkip pixels</td></tr>
 </tbody>
 </table>
 
@@ -85,15 +85,15 @@ it suitable for navigation menus, task lists, and property groups.
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>AddLink( cPrompt, bAction, cBitmap, oFnt, nClrT, nClrP, nClrO, cMsg, cTooltip )</code></td><td>Agregar un enlace cliqueable al cuerpo del panel. Devuelve el objeto TUrlLink.</td></tr>
-<tr><td><code>LoadBitmaps( nType, cnBitmap )</code></td><td>Cargar mapas de bits de flecha expandir/colapsar o un mapa de bits de panel personalizado</td></tr>
+<tr><td><code>AddLink( cPrompt, bAction, cBitmap, oFnt, nClrT, nClrP, nClrO, cMsg, cTooltip )</code></td><td>Add a clickable link to the panel body. Returns the TUrlLink object.</td></tr>
+<tr><td><code>LoadBitmaps( nType, cnBitmap )</code></td><td>Load expand/collapse arrow bitmaps or a custom panel bitmap</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Barra Exploradora con Dos Paneles</h2>
+<h2 id="example">Example: Explorer Bar with Two Panels</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -122,16 +122,16 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>Use la sintaxis del comando <code>EXPLORERBAR</code> para crear la barra; los paneles se agregan programáticamente con <code>AddPanel()</code>.</li>
-<li>Hacer clic en la barra de título de un panel alterna su estado colapsado. El método <code>CloseAll()</code> colapsa todos los paneles excepto el especificado. The <code>CloseAll()</code> method collapses all panels except the specified one.</li>
-<li>Cada panel puede mostrar un mapa de bits en su área de encabezado (especificado mediante <code>cBmpName</code> en <code>AddPanel()</code>).</li>
-<li>Los enlaces dentro de los paneles son controles <code>TUrlLink</code> que soportan efectos de resaltado, tooltips y colores personalizados.</li>
-<li>La barra gestiona automáticamente el desplazamiento vertical cuando los paneles se extienden más allá del área visible.</li>
-<li>Los estilos visuales (l2007, l2010, l2013, l2015) ajustan la apariencia predeterminada para coincidir con la estética de la versión de Windows.</li>
+<li>Use the <code>EXPLORERBAR</code> command syntax to create the bar; panels are added programmatically with <code>AddPanel()</code>.</li>
+<li>Clicking a panel title bar toggles its collapsed state. The <code>CloseAll()</code> method collapses all panels except the specified one.</li>
+<li>Each panel can display a bitmap in its header area (specified via <code>cBmpName</code> in <code>AddPanel()</code>).</li>
+<li>Links inside panels are <code>TUrlLink</code> controls that support hover effects, tooltips, and custom colors.</li>
+<li>The bar automatically manages vertical scrolling when panels extend beyond the visible area.</li>
+<li>Visual styles (l2007, l2010, l2013, l2015) adjust the default appearance to match Windows version aesthetics.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/utilities/texplist.html">&larr; texplist</a> | <a href="../../es/ui/texplorerlist.html">texplorerlist &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

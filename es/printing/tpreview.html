@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TPreview - Documentaci&oacute;n FWH</title>
+<title>TPreview - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,34 +13,34 @@
 
 <h1>TPreview</h1>
 <p class="class-source">Fuente: <code>source/classes/rpreview.prg</code></p>
-<p class="class-hierarchy">Clase independiente (no hereda de TControl)</p>
+<p class="class-hierarchy">Standalone class (not inherited from TControl)</p>
 
 <p>
-TPreview es el motor de vista previa de impresi&oacute;n de FiveWin. Se invoca autom&aacute;ticamente al usar
-la cl&aacute;usula <code>PREVIEW</code> con el comando <code>PRINTER</code>, y proporciona un entorno de previsualizaci&oacute;n
-completo con zoom, navegaci&oacute;n de p&aacute;ginas, vista de dos p&aacute;ginas, impresi&oacute;n y capacidades de exportaci&oacute;n.
-Tambi&eacute;n es utilizado internamente por <code>TReport</code> para la previsualizaci&oacute;n de informes.
+TPreview is the print preview window engine for FiveWin. It is automatically invoked when using
+the <code>PREVIEW</code> clause with the <code>PRINTER</code> command, and provides a full-featured
+preview environment with zoom, page navigation, two-page view, printing, and export capabilities.
+It is also used internally by <code>TReport</code> for report preview.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oDevice</code></td><td>TPrinter</td><td>El objeto dispositivo de impresi&oacute;n en previsualizaci&oacute;n</td></tr>
-<tr><td><code>oReport</code></td><td>TReport</td><td>Objeto TReport opcional vinculado a esta previsualizaci&oacute;n</td></tr>
-<tr><td><code>oWnd</code></td><td>TWindow</td><td>La ventana de previsualizaci&oacute;n</td></tr>
-<tr><td><code>oBar</code></td><td>TReBar</td><td>Barra de herramientas con botones de navegaci&oacute;n y acci&oacute;n</td></tr>
-<tr><td><code>nPage</code></td><td>Num&eacute;rico</td><td>N&uacute;mero de p&aacute;gina actual (base 1)</td></tr>
-<tr><td><code>nZFactor</code></td><td>Num&eacute;rico</td><td>Multiplicador del factor de zoom</td></tr>
-<tr><td><code>lTwoPages</code></td><td>L&oacute;gico</td><td>Modo de vista de dos p&aacute;ginas lado a lado</td></tr>
-<tr><td><code>lZoom</code></td><td>L&oacute;gico</td><td>Modo zoom activo al redimensionar la ventana</td></tr>
-<tr><td><code>aFactor</code></td><td>Array</td><td>Array de valores disponibles de factor de zoom</td></tr>
-<tr><td><code>oMeta1</code></td><td>TMetafile</td><td>Metarchivo de la p&aacute;gina actual para renderizado</td></tr>
-<tr><td><code>oMeta2</code></td><td>TMetafile</td><td>Metarchivo de la segunda p&aacute;gina (modo dos p&aacute;ginas)</td></tr>
-<tr><td><code>oLvw</code></td><td>TListView</td><td>Vista de lista de miniaturas de p&aacute;ginas (p&aacute;ginas mini)</td></tr>
+<tr><td><code>oDevice</code></td><td>TPrinter</td><td>The printer device object being previewed</td></tr>
+<tr><td><code>oReport</code></td><td>TReport</td><td>Optional TReport object bound to this preview</td></tr>
+<tr><td><code>oWnd</code></td><td>TWindow</td><td>The preview window</td></tr>
+<tr><td><code>oBar</code></td><td>TReBar</td><td>Toolbar with navigation and action buttons</td></tr>
+<tr><td><code>nPage</code></td><td>Numeric</td><td>Current page number (1-based)</td></tr>
+<tr><td><code>nZFactor</code></td><td>Numeric</td><td>Zoom factor multiplier</td></tr>
+<tr><td><code>lTwoPages</code></td><td>Logical</td><td>Two-page side-by-side view mode</td></tr>
+<tr><td><code>lZoom</code></td><td>Logical</td><td>Zoom mode active when resizing window</td></tr>
+<tr><td><code>aFactor</code></td><td>Array</td><td>Array of available zoom factor values</td></tr>
+<tr><td><code>oMeta1</code></td><td>TMetafile</td><td>Current page metafile for rendering</td></tr>
+<tr><td><code>oMeta2</code></td><td>TMetafile</td><td>Second page metafile (two-page mode)</td></tr>
+<tr><td><code>oLvw</code></td><td>TListView</td><td>Page thumbnail list view (mini pages)</td></tr>
 </tbody>
 </table>
 
@@ -48,52 +48,52 @@ Tambi&eacute;n es utilizado internamente por <code>TReport</code> para la previs
 
 <table>
 <thead>
-<tr><th>CLASSDATA</th><th>Descripci&oacute;n</th></tr>
+<tr><th>CLASSDATA</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>bPrint</code></td><td>Bloque de c&oacute;digo ejecutado en la acci&oacute;n Imprimir</td></tr>
-<tr><td><code>bExportToWord</code></td><td>Bloque de c&oacute;digo para exportaci&oacute;n a Word</td></tr>
-<tr><td><code>bEmail</code></td><td>Bloque de c&oacute;digo para la acci&oacute;n Enviar Correo</td></tr>
-<tr><td><code>bSaveAsPDF</code></td><td>Valor predeterminado: guarda como PDF</td></tr>
-<tr><td><code>bSaveAsWord</code></td><td>Valor predeterminado: guarda como DOC</td></tr>
+<tr><td><code>bPrint</code></td><td>Code block executed on Print action</td></tr>
+<tr><td><code>bExportToWord</code></td><td>Code block for Word export</td></tr>
+<tr><td><code>bEmail</code></td><td>Code block for Send Email action</td></tr>
+<tr><td><code>bSaveAsPDF</code></td><td>Default: saves as PDF</td></tr>
+<tr><td><code>bSaveAsWord</code></td><td>Default: saves as DOC</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oDevice, oReport )</code></td><td>Crear previsualizaci&oacute;n para un dispositivo de impresi&oacute;n e informe opcional</td></tr>
-<tr><td><code>Activate()</code></td><td>Mostrar la ventana de previsualizaci&oacute;n maximizada</td></tr>
-<tr><td><code>BuildWindow()</code></td><td>Construir la ventana de previsualizaci&oacute;n y barra de herramientas</td></tr>
-<tr><td><code>BuildButtonBar()</code></td><td>Construir la barra de herramientas con botones de navegaci&oacute;n</td></tr>
-<tr><td><code>BuildMenu()</code></td><td>Construir los men&uacute;s emergentes de zoom y dos p&aacute;ginas</td></tr>
-<tr><td><code>GoPage( nPage )</code></td><td>Ir a un n&uacute;mero de p&aacute;gina espec&iacute;fico</td></tr>
-<tr><td><code>NextPage()</code></td><td>Ir a la p&aacute;gina siguiente</td></tr>
-<tr><td><code>PrevPage()</code></td><td>Ir a la p&aacute;gina anterior</td></tr>
-<tr><td><code>TopPage()</code></td><td>Ir a la primera p&aacute;gina</td></tr>
-<tr><td><code>BottomPage()</code></td><td>Ir a la &uacute;ltima p&aacute;gina</td></tr>
-<tr><td><code>Zoom( lMenu )</code></td><td>Alternar modo zoom o seleccionar nivel de zoom desde el men&uacute;</td></tr>
-<tr><td><code>TwoPages( lMenu )</code></td><td>Alternar vista de dos p&aacute;ginas o seleccionar desde el men&uacute;</td></tr>
-<tr><td><code>PrintPage()</code></td><td>Imprimir la p&aacute;gina actual</td></tr>
-<tr><td><code>SetFactor( nValue )</code></td><td>Establecer el factor de zoom directamente</td></tr>
-<tr><td><code>SaveAs( lPDF, cFile, lView )</code></td><td>Guardar como PDF (<code>.T.</code>) o DOC (<code>.F.</code>)</td></tr>
-<tr><td><code>SaveAsMenu()</code></td><td>Mostrar di&aacute;logo de selecci&oacute;n de tipo Guardar Como</td></tr>
-<tr><td><code>ExportToMSWord()</code></td><td>Exportar el documento actual a Microsoft Word</td></tr>
-<tr><td><code>ExportToMSExcel()</code></td><td>Exportar los datos del informe actual a Excel (requiere informe con bInit/bToExcel)</td></tr>
-<tr><td><code>SendEmail()</code></td><td>Enviar el documento como archivo adjunto de correo</td></tr>
-<tr><td><code>SelPrinter( cPrinter )</code></td><td>Cambiar la impresora de salida desde la previsualizaci&oacute;n</td></tr>
-<tr><td><code>PaintMeta()</code></td><td>Repintar el metarchivo de la p&aacute;gina actual</td></tr>
-<tr><td><code>VScroll( nType, lPage, nSteps )</code></td><td>Desplazamiento vertical</td></tr>
-<tr><td><code>HScroll( nType, lPage, nSteps )</code></td><td>Desplazamiento horizontal</td></tr>
-<tr><td><code>CheckStyle()</code></td><td>Aplicar estilo oscuro cuando el tema oscuro de Windows est&aacute; activo</td></tr>
+<tr><td><code>New( oDevice, oReport )</code></td><td>Create preview for a printer device and optional report</td></tr>
+<tr><td><code>Activate()</code></td><td>Show the preview window maximized</td></tr>
+<tr><td><code>BuildWindow()</code></td><td>Construct the preview window and toolbar</td></tr>
+<tr><td><code>BuildButtonBar()</code></td><td>Build the rebar toolbar with navigation buttons</td></tr>
+<tr><td><code>BuildMenu()</code></td><td>Build the zoom and two-page popup menus</td></tr>
+<tr><td><code>GoPage( nPage )</code></td><td>Go to a specific page number</td></tr>
+<tr><td><code>NextPage()</code></td><td>Move to the next page</td></tr>
+<tr><td><code>PrevPage()</code></td><td>Move to the previous page</td></tr>
+<tr><td><code>TopPage()</code></td><td>Move to the first page</td></tr>
+<tr><td><code>BottomPage()</code></td><td>Move to the last page</td></tr>
+<tr><td><code>Zoom( lMenu )</code></td><td>Toggle zoom mode or select zoom level from menu</td></tr>
+<tr><td><code>TwoPages( lMenu )</code></td><td>Toggle two-page view or select from menu</td></tr>
+<tr><td><code>PrintPage()</code></td><td>Print the current page</td></tr>
+<tr><td><code>SetFactor( nValue )</code></td><td>Set zoom factor directly</td></tr>
+<tr><td><code>SaveAs( lPDF, cFile, lView )</code></td><td>Save as PDF (<code>.T.</code>) or DOC (<code>.F.</code>)</td></tr>
+<tr><td><code>SaveAsMenu()</code></td><td>Show Save As type selection dialog</td></tr>
+<tr><td><code>ExportToMSWord()</code></td><td>Export current document to Microsoft Word</td></tr>
+<tr><td><code>ExportToMSExcel()</code></td><td>Export current report data to Excel (requires report with bInit/bToExcel)</td></tr>
+<tr><td><code>SendEmail()</code></td><td>Send the document as an email attachment</td></tr>
+<tr><td><code>SelPrinter( cPrinter )</code></td><td>Change output printer from within preview</td></tr>
+<tr><td><code>PaintMeta()</code></td><td>Repaint the current page metafile</td></tr>
+<tr><td><code>VScroll( nType, lPage, nSteps )</code></td><td>Vertical scrolling</td></tr>
+<tr><td><code>HScroll( nType, lPage, nSteps )</code></td><td>Horizontal scrolling</td></tr>
+<tr><td><code>CheckStyle()</code></td><td>Apply dark mode styling when Windows dark theme is active</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Vista Previa con Comando PRINTER</h2>
+<h2 id="example">Example: Print Preview with PRINTER Command</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -124,18 +124,18 @@ function DoPreview()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TPreview se usa autom&aacute;ticamente cuando se especifica <code>PRINTER ... PREVIEW</code>. Tambi&eacute;n puede instanciarse directamente pasando un dispositivo <code>TPrinter</code> y un objeto <code>TReport</code> opcional.</li>
-<li>La ventana de previsualizaci&oacute;n admite navegaci&oacute;n por teclado: teclas de flecha para desplazamiento, Re P&aacute;g/Av P&aacute;g para navegaci&oacute;n de p&aacute;ginas, y +/- para acercar/alejar.</li>
-<li>El modo oscuro se detecta y aplica autom&aacute;ticamente en Windows 11 cuando el tema del sistema est&aacute; configurado en oscuro.</li>
-<li>Las capacidades de exportaci&oacute;n (PDF, Word, Excel) dependen de que el dispositivo de impresi&oacute;n y el informe tengan los bloques de c&oacute;digo apropiados asignados.</li>
-<li><code>oLvw</code> (miniaturas en vista de lista) proporciona un selector visual de p&aacute;ginas en la barra lateral. Se puede ocultar mediante el classdata <code>lListViewHide</code>.</li>
+<li>TPreview is used automatically when <code>PRINTER ... PREVIEW</code> is specified. It can also be instantiated directly by passing a <code>TPrinter</code> device and optional <code>TReport</code> object.</li>
+<li>The preview window supports keyboard navigation: arrow keys for scrolling, Page Up/Down for page navigation, and +/- for zoom in/out.</li>
+<li>Dark mode is automatically detected and applied on Windows 11 when the system theme is set to dark.</li>
+<li>Export capabilities (PDF, Word, Excel) depend on the printer device and report having the appropriate code blocks assigned.</li>
+<li>The <code>oLvw</code> (list view thumbnails) provides a visual page selector sidebar. It can be hidden via <code>lListViewHide</code> class data.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/data/tpostgres.html">&larr; tpostgres</a> | <a href="../../es/printing/tprinter.html">tprinter &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

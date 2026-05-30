@@ -13,48 +13,46 @@
 
 <h1>TLex</h1>
 <p class="class-source">Fonte: <code>source/classes/tlex.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TFile</code></p>
+<p class="class-hierarchy">Inherits from: <code>TFile</code></p>
 
 <p>
-TLex é um analisador léxico (tokenizador) que lê texto-fonte de um arquivo ou string e o divide em tokens. Suporta caracteres separadores configuráveis, modos de pular-em-branco e pular-em-CRLF, tabelas de identificadores e mapeamento de IDs de token. A classe retorna tokens sequencialmente via <code>nGetToken()</code>, que retorna um ID numérico de token correspondente às entradas no array <code>aTokens</code>.
+TLex is a lexical analyzer (tokenizer) that reads source text from a file or string and breaks it into tokens. It supports configurable separator characters, skip-on-blank and skip-on-CRLF modes, identifier tables, and token ID mapping. The class returns tokens sequentially via <code>nGetToken()</code>, which returns a numeric token ID matching the entries in the <code>aTokens</code> array.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
-
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aTokens</code></td><td>Array</td><td>Array de definições de token (cada entrada: { cTokenString, nTokenId })</td></tr>
-<tr><td><code>aIds</code></td><td>Array</td><td>Array de strings de identificadores reconhecidos</td></tr>
-<tr><td><code>lSkipBlank</code></td><td>Lógico</td><td>Pular caracteres de espaço em branco ao tokenizar</td></tr>
-<tr><td><code>lSkipCRLF</code></td><td>Lógico</td><td>Pular caracteres de retorno de carro e avanço de linha</td></tr>
-<tr><td><code>cToken</code></td><td>Caractere</td><td>O último texto de token extraído</td></tr>
-<tr><td><code>cSeparators</code></td><td>Caractere</td><td>String de caracteres separadores usados para delimitar tokens</td></tr>
-<tr><td><code>uValue</code></td><td>Qualquer</td><td>Valor opcional associado ao token atual</td></tr>
-<tr><td><code>cText</code></td><td>Caractere</td><td>O texto-fonte completo sendo tokenizado</td></tr>
+<tr><td><code>aTokens</code></td><td>Array</td><td>Array of token definitions (each entry: { cTokenString, nTokenId })</td></tr>
+<tr><td><code>aIds</code></td><td>Array</td><td>Array of recognized identifier strings</td></tr>
+<tr><td><code>lSkipBlank</code></td><td>Logical</td><td>Skip whitespace characters when tokenizing</td></tr>
+<tr><td><code>lSkipCRLF</code></td><td>Logical</td><td>Skip carriage return and line feed characters</td></tr>
+<tr><td><code>cToken</code></td><td>Character</td><td>The last token text extracted</td></tr>
+<tr><td><code>cSeparators</code></td><td>Character</td><td>String of separator characters used to delimit tokens</td></tr>
+<tr><td><code>uValue</code></td><td>Any</td><td>Optional value associated with the current token</td></tr>
+<tr><td><code>cText</code></td><td>Character</td><td>The full source text being tokenized</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
-
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cFile, aTokens, aIds, cSeparators )</code></td><td>Cria um TLex a partir de um arquivo, com tabela de tokens, tabela de identificadores e separadores</td></tr>
-<tr><td><code>nGetToken()</code></td><td>Extrai o próximo token e retorna seu ID numérico (0 = não reconhecido, -1 = fim)</td></tr>
-<tr><td><code>lEoF()</code></td><td>Retorna .T. quando o fim do texto-fonte for alcançado</td></tr>
-<tr><td><code>SetText( c )</code></td><td>Define o texto-fonte a ser tokenizado (alternativa ao construtor baseado em arquivo)</td></tr>
-<tr><td><code>Add( cToken, nId )</code></td><td>Adiciona uma nova string de token com seu ID numérico à tabela de tokens</td></tr>
+<tr><td><code>New( cFile, aTokens, aIds, cSeparators )</code></td><td>Create a TLex from a file, with token table, identifier table, and separators</td></tr>
+<tr><td><code>nGetToken()</code></td><td>Extract the next token and return its numeric ID (0 = unrecognized, -1 = end)</td></tr>
+<tr><td><code>lEoF()</code></td><td>Return .T. when the end of the source text has been reached</td></tr>
+<tr><td><code>SetText( c )</code></td><td>Set the source text to be tokenized (alternative to file-based constructor)</td></tr>
+<tr><td><code>Add( cToken, nId )</code></td><td>Add a new token string with its numeric ID to the token table</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Tokenizar Script IF-THEN-ELSE</h2>
+<h2 id="example">Example: Tokenize IF-THEN-ELSE Script</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -63,7 +61,7 @@ function Main()
    local oLex, nToken
    local cScript := "IF x > 10 THEN print 'Hello' ELSE stop"
 
-   // Define os tokens: { string, id }
+   // Define tokens: { string, id }
    local aTokens := { ;
       { "IF",    1 }, ;
       { "THEN",  2 }, ;
@@ -72,12 +70,12 @@ function Main()
       { "print", 5 }, ;
       { "stop",  6 }  }
 
-   // Cria o lexer
+   // Create lexer
    oLex := TLex():New( , aTokens )
    oLex:SetText( cScript )
    oLex:lSkipBlank := .T.
 
-   // Tokeniza
+   // Tokenize
    while ! oLex:lEoF()
       nToken := oLex:nGetToken()
       if nToken == 0
@@ -89,17 +87,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TLex herda de TFile, permitindo texto-fonte baseado em arquivo. Use <code>SetText()</code> para tokenizar uma string em vez disso.</li>
-<li>O array <code>aTokens</code> mapeia padrões de string para IDs numéricos. <code>nGetToken()</code> retorna o ID do token correspondente, 0 para uma sequência não reconhecida, ou -1 no fim da entrada.</li>
-<li><code>cSeparators</code> define quais caracteres delimitam tokens. Os separadores padrão incluem espaço, tabulação e pontuação comum se não forem especificados.</li>
-<li>O membro DATA <code>cToken</code> sempre contém o último texto de token extraído, útil para mensagens de diagnóstico ou consultas à tabela de símbolos.</li>
+<li>TLex inherits from TFile, enabling file-based source text. Use <code>SetText()</code> to tokenize a string instead.</li>
+<li>The <code>aTokens</code> array maps string patterns to numeric IDs. <code>nGetToken()</code> returns the ID of the matched token, 0 for an unrecognized sequence, or -1 at end of input.</li>
+<li><code>cSeparators</code> defines which characters delimit tokens. Default separators include space, tab, and common punctuation if not specified.</li>
+<li>The <code>cToken</code> data member always holds the last extracted token text, useful for diagnostic messages or symbol table lookups.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tlayoutmanager.html">&larr; tlayoutmanager</a> | <a href="../../pt/utilities/tlibfile.html">tlibfile &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

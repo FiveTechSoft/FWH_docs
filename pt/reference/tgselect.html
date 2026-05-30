@@ -13,95 +13,95 @@
 
 <h1>TGSelector / TChooseGradient / TInk</h1>
 <p class="class-source">Fonte: <code>source/classes/tgselect.prg</code></p>
-<p class="class-hierarchy">TGSelector de TControl, TChooseGradient diálogo autônomo, TInk autônomo</p>
+<p class="class-hierarchy">TGSelector from TControl, TChooseGradient standalone dialog, TInk standalone</p>
 
 <p>
-TGSelector é um controle editor de barra de gradiente que permite aos usuários criar e editar
-visualmente gradientes de cores adicionando, movendo e removendo paradas de cor ("inks") ao longo de uma barra de gradiente.
-TChooseGradient fornece um invólucro de diálogo completo em torno de TGSelector com controles deslizantes RGB para
-edição precisa de cores. TInk representa uma única parada de cor dentro do gradiente.
+TGSelector is a gradient bar editor control that allows users to visually create and edit
+color gradients by adding, moving, and removing color stops ("inks") along a gradient bar.
+TChooseGradient provides a complete dialog wrapper around TGSelector with RGB sliders for
+precise color editing. TInk represents a single color stop within the gradient.
 </p>
 
 <h2 id="tgselector">TGSelector</h2>
 
-<p>Uma subclasse de TControl que exibe uma barra de gradiente interativa com paradas de cor móveis.</p>
+<p>A TControl subclass that displays an interactive gradient bar with movable color stops.</p>
 
-<h3 id="tgselector-data">Principais Membros DATA</h3>
+<h3 id="tgselector-data">Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aInks</code></td><td>Array</td><td>Array de objetos TInk representando as paradas de cor do gradiente</td></tr>
-<tr><td><code>aGradOut</code></td><td>Array</td><td>Array de gradiente de saída: <code>{ { nPercent, nColorStart, nColorEnd }, ... }</code></td></tr>
-<tr><td><code>oInkOver</code></td><td>Object</td><td>O TInk atualmente sob o cursor do mouse</td></tr>
-<tr><td><code>lChanged</code></td><td>Logical</td><td>Indica se o gradiente foi modificado</td></tr>
-<tr><td><code>bSelected</code></td><td>Code block</td><td>Avaliado quando uma ink é selecionada</td></tr>
-<tr><td><code>bChanged</code></td><td>Code block</td><td>Avaliado quando o gradiente é modificado</td></tr>
-<tr><td><code>nMargin</code></td><td>Numeric</td><td>Margem esquerda/direita em pixels (padrão 10)</td></tr>
+<tr><td><code>aInks</code></td><td>Array</td><td>Array of TInk objects representing gradient color stops</td></tr>
+<tr><td><code>aGradOut</code></td><td>Array</td><td>Output gradient array: <code>{ { nPercent, nColorStart, nColorEnd }, ... }</code></td></tr>
+<tr><td><code>oInkOver</code></td><td>Object</td><td>The TInk currently under the mouse cursor</td></tr>
+<tr><td><code>lChanged</code></td><td>Logical</td><td>Whether the gradient has been modified</td></tr>
+<tr><td><code>bSelected</code></td><td>Code block</td><td>Evaluated when an ink is selected</td></tr>
+<tr><td><code>bChanged</code></td><td>Code block</td><td>Evaluated when the gradient is modified</td></tr>
+<tr><td><code>nMargin</code></td><td>Numeric</td><td>Left/right margin in pixels (default 10)</td></tr>
 </tbody>
 </table>
 
-<h3 id="tgselector-methods">Métodos de TGSelector</h3>
+<h3 id="tgselector-methods">TGSelector Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nW, nH, oWnd, aInit )</code></td><td>Cria o seletor de gradiente. <code>aInit</code> é um array de gradiente inicial opcional.</td></tr>
-<tr><td><code>AddInk( nPct, nClr1, nClr2 )</code></td><td>Adiciona uma nova parada de cor na porcentagem indicada com as cores inicial/final</td></tr>
-<tr><td><code>InsInk( n, nPct, nClr1, nClr2 )</code></td><td>Insere uma parada de cor na posição n</td></tr>
-<tr><td><code>SetColorInk( nClr )</code></td><td>Altera a cor da ink atualmente selecionada</td></tr>
-<tr><td><code>BuildGradientArray()</code></td><td>Constrói o array de gradiente de saída a partir das posições atuais das inks. Retorna <code>aGradOut</code>.</td></tr>
-<tr><td><code>BuildInkFromArray( aInit )</code></td><td>Inicializa as inks a partir de um array de gradiente</td></tr>
+<tr><td><code>New( nTop, nLeft, nW, nH, oWnd, aInit )</code></td><td>Create the gradient selector. <code>aInit</code> is an optional initial gradient array.</td></tr>
+<tr><td><code>AddInk( nPct, nClr1, nClr2 )</code></td><td>Add a new color stop at the given percentage with start/end colors</td></tr>
+<tr><td><code>InsInk( n, nPct, nClr1, nClr2 )</code></td><td>Insert a color stop at position n</td></tr>
+<tr><td><code>SetColorInk( nClr )</code></td><td>Change the color of the currently selected ink</td></tr>
+<tr><td><code>BuildGradientArray()</code></td><td>Build the output gradient array from current ink positions. Returns <code>aGradOut</code>.</td></tr>
+<tr><td><code>BuildInkFromArray( aInit )</code></td><td>Initialize inks from a gradient array</td></tr>
 </tbody>
 </table>
 
 <h2 id="tchoosegradient">TChooseGradient</h2>
 
-<p>Um diálogo modal completo para editar gradientes com feedback visual e controles RGB.</p>
+<p>A complete modal dialog for editing gradients with visual feedback and RGB controls.</p>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( aInit, bCode, bOnOK, bOnCancel )</code></td><td>Abre o diálogo do editor de gradiente. <code>aInit</code> é o array de gradiente inicial. <code>bCode</code> é avaliado a cada alteração. <code>bOnOK</code>/<code>bOnCancel</code> são blocos de ação.</td></tr>
+<tr><td><code>New( aInit, bCode, bOnOK, bOnCancel )</code></td><td>Open the gradient editor dialog. <code>aInit</code> is the initial gradient array. <code>bCode</code> is evaluated on change. <code>bOnOK</code>/<code>bOnCancel</code> are action blocks.</td></tr>
 </tbody>
 </table>
 
 <h2 id="tink">TInk</h2>
 
-<p>Representa uma única parada de cor no gradiente.</p>
+<p>Represents a single color stop in the gradient.</p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nPorcentClr</code></td><td>Numeric</td><td>Posição percentual ao longo do gradiente (0.0 a 1.0)</td></tr>
-<tr><td><code>nColorStart</code></td><td>Numeric</td><td>Cor inicial (lado esquerdo da parada)</td></tr>
-<tr><td><code>nColorEnd</code></td><td>Numeric</td><td>Cor final (lado direito da parada)</td></tr>
-<tr><td><code>lSelected</code></td><td>Logical</td><td>Indica se esta ink está atualmente selecionada</td></tr>
-<tr><td><code>lMove</code></td><td>Logical</td><td>Indica se a ink pode ser movida (falso para inks de limite)</td></tr>
-<tr><td><code>lFirst</code></td><td>Logical</td><td>Indica se esta é a primeira ink (mais à esquerda) no gradiente</td></tr>
+<tr><td><code>nPorcentClr</code></td><td>Numeric</td><td>Percentage position along the gradient (0.0 to 1.0)</td></tr>
+<tr><td><code>nColorStart</code></td><td>Numeric</td><td>Start color (left side of the stop)</td></tr>
+<tr><td><code>nColorEnd</code></td><td>Numeric</td><td>End color (right side of the stop)</td></tr>
+<tr><td><code>lSelected</code></td><td>Logical</td><td>Whether this ink is currently selected</td></tr>
+<tr><td><code>lMove</code></td><td>Logical</td><td>Whether the ink can be moved (false for boundary inks)</td></tr>
+<tr><td><code>lFirst</code></td><td>Logical</td><td>Whether this is the first (leftmost) ink in the gradient</td></tr>
 </tbody>
 </table>
 
-<h2 id="free-function">Função Livre</h2>
+<h2 id="free-function">Free Function</h2>
 
 <table>
 <thead>
-<tr><th>Função</th><th>Descrição</th></tr>
+<tr><th>Function</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>ChooseGradient( aInit ) --> aGradOut</code></td><td>Abre o diálogo seletor de gradiente e retorna o array de gradiente resultante. Esta é a maneira mais simples de usar o editor de gradiente.</td></tr>
+<tr><td><code>ChooseGradient( aInit ) --> aGradOut</code></td><td>Opens the gradient picker dialog and returns the resulting gradient array. This is the simplest way to use the gradient editor.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo</h2>
+<h2 id="example">Example</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -109,31 +109,31 @@ function Main()
 
    local aGrad
 
-   // Gradiente inicial: preto para branco
+   // Initial gradient: black to white
    local aInit := { { 1, 0, nRGB( 255, 255, 255 ) } }
 
-   // Abre o diálogo seletor de gradiente
+   // Open the gradient picker dialog
    aGrad := ChooseGradient( aInit )
 
    if ! Empty( aGrad )
-      // Usa o gradiente: por exemplo, preenche o fundo de uma janela
+      // Use the gradient: e.g., fill a window background
       MsgInfo( "Gradient created with " + Str( Len( aGrad ) ) + " stops" )
    endif
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>A função <code>ChooseGradient()</code> é o ponto de entrada mais simples -- ela abre um diálogo completo com controles deslizantes RGB, um painel de cor e botões OK/Cancelar, e então retorna o array de gradiente resultante.</li>
-<li>O formato do array de gradiente de saída é <code>{ { nPercent, nColorStart, nColorEnd }, ... }</code>, que é diretamente utilizável por <code>GradientFill()</code> e outras funções de desenho de gradiente.</li>
-<li>Clicar com o botão direito em uma ink interior a remove (mescla seu espaço com os vizinhos).</li>
-<li>Clicar duas vezes em uma ink abre o seletor de cores do Windows (<code>ChooseColor()</code>) para editar sua cor.</li>
-<li>As inks podem ser arrastadas para a esquerda/direita para ajustar sua posição no gradiente.</li>
+<li>The <code>ChooseGradient()</code> function is the simplest entry point -- it opens a full dialog with RGB sliders, a color panel, and OK/Cancel buttons, then returns the resulting gradient array.</li>
+<li>The gradient output array format is <code>{ { nPercent, nColorStart, nColorEnd }, ... }</code>, which is directly usable by <code>GradientFill()</code> and other gradient drawing Funções.</li>
+<li>Right-clicking an interior ink removes it (merges its space with neighbors).</li>
+<li>Double-clicking an ink opens the Windows color picker (<code>ChooseColor()</code>) to edit its color.</li>
+<li>Inks can be dragged left/right to adjust their position in the gradient.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tgroupex.html">&larr; tgroupex</a> | <a href="../../pt/ui/theader.html">theader &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

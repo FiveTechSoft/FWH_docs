@@ -13,57 +13,57 @@
 
 <h1>TProgress</h1>
 <p class="class-source">Fonte: <code>source/classes/tprogres.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TProgress encapsula a barra de progresso do controle comum do Windows (msctls_progress32). Ela suporta
-indicação de progresso padrão com intervalo e posição configuráveis, incrementos de passo, orientação
-vertical e modo marquee (indeterminado). TProgress é adequada para mostrar o progresso de operações
-em janelas, diálogos e barras de status.
+TProgress wraps the Windows common control progress bar (msctls_progress32). It supports
+standard progress indication with configurable range and position, step increments, vertical
+orientation, and marquee (indeterminate) mode. TProgress is suitable for showing operation
+progress in windows, dialogs, and status bars.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nMin</code></td><td>Numeric</td><td>Valor mínimo do intervalo (padrão 0)</td></tr>
-<tr><td><code>nMax</code></td><td>Numeric</td><td>Valor máximo do intervalo (padrão determinado pelo sistema)</td></tr>
-<tr><td><code>nPos</code></td><td>Numeric</td><td>Posição atual</td></tr>
-<tr><td><code>nStep</code></td><td>Numeric</td><td>Valor de incremento do passo</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum range value (default 0)</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum range value (default determined by system)</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Current position</td></tr>
+<tr><td><code>nStep</code></td><td>Numeric</td><td>Step increment value</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, oWnd, nPos, nClrF, nClrB, lPixel, lDesign, nW, nH, cMsg, lVert, lMarquee )</code></td><td>Cria uma barra de progresso. Suporta modos vertical e marquee via <code>lVert</code> e <code>lMarquee</code>.</td></tr>
-<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine a partir de um modelo de recurso de diálogo</td></tr>
-<tr><td><code>SetPos( nPos )</code></td><td>Define a posição atual (alias <code>_nPosition</code>, <code>nPosition</code>)</td></tr>
-<tr><td><code>GetPos()</code></td><td>Retorna a posição atual</td></tr>
-<tr><td><code>SetRange( nMin, nMax )</code></td><td>Define os valores mínimo e máximo do intervalo</td></tr>
-<tr><td><code>SetStep( nStepInc )</code></td><td>Define o valor de incremento do passo</td></tr>
-<tr><td><code>StepIt()</code></td><td>Avança a posição pelo valor de passo atual</td></tr>
-<tr><td><code>DeltaPos( nIncrement )</code></td><td>Altera a posição por um valor relativo (positivo ou negativo)</td></tr>
-<tr><td><code>SetMarquee( lOnOff )</code></td><td>Ativa ou desativa o modo marquee (indeterminado)</td></tr>
+<tr><td><code>New( nTop, nLeft, oWnd, nPos, nClrF, nClrB, lPixel, lDesign, nW, nH, cMsg, lVert, lMarquee )</code></td><td>Create a progress bar. Supports vertical and marquee modes via <code>lVert</code> and <code>lMarquee</code>.</td></tr>
+<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine from a dialog resource template</td></tr>
+<tr><td><code>SetPos( nPos )</code></td><td>Set the current position (alias <code>_nPosition</code>, <code>nPosition</code>)</td></tr>
+<tr><td><code>GetPos()</code></td><td>Return the current position</td></tr>
+<tr><td><code>SetRange( nMin, nMax )</code></td><td>Set the minimum and maximum range values</td></tr>
+<tr><td><code>SetStep( nStepInc )</code></td><td>Set the step increment value</td></tr>
+<tr><td><code>StepIt()</code></td><td>Advance the position by the current step value</td></tr>
+<tr><td><code>DeltaPos( nIncrement )</code></td><td>Change the position by a relative amount (positive or negative)</td></tr>
+<tr><td><code>SetMarquee( lOnOff )</code></td><td>Enable or disable marquee (indeterminate) mode</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Comandos</h2>
+<h2 id="commands">Commands</h2>
 
-<pre><code class="language-harbour">// Barra de progresso padrão
+<pre><code class="language-harbour">// Standard progress bar
 DEFINE PROGRESS oProg OF oDlg
 
-// Barra de progresso marquee (indeterminada)
+// Marquee (indeterminate) progress bar
 DEFINE PROGRESS oProg OF oDlg MARQUEE</code></pre>
 
-<h2 id="example">Exemplo</h2>
+<h2 id="example">Example</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -90,18 +90,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>A barra de progresso usa a classe de controle comum do Windows <code>msctls_progress32</code>.</li>
-<li>O modo marquee (indeterminado) mostra uma barra de rolagem animada quando a duração da operação é desconhecida. Ative via <code>lMarquee := .T.</code> na criação ou chame <code>SetMarquee( .T. )</code> em tempo de execução.</li>
-<li>Barras de progresso verticais são criadas definindo <code>lVertical := .T.</code> (estilo <code>PBS_VERTICAL</code>).</li>
-<li>O método <code>StepIt()</code> avança a posição pelo valor definido via <code>SetStep()</code>. O passo padrão é 1.</li>
-<li>Use <code>DeltaPos()</code> para alterações de posição relativas sem modificar o valor do passo.</li>
+<li>The progress bar uses the Windows common control class <code>msctls_progress32</code>.</li>
+<li>Marquee mode (indeterminate) shows an animated scrolling bar when the operation length is unknown. Enable via <code>lMarquee := .T.</code> at creation or call <code>SetMarquee( .T. )</code> at runtime.</li>
+<li>Vertical progress bars are created by setting <code>lVertical := .T.</code> (style <code>PBS_VERTICAL</code>).</li>
+<li>The <code>StepIt()</code> method advances the position by the value set via <code>SetStep()</code>. The default step is 1.</li>
+<li>Use <code>DeltaPos()</code> for relative position changes without modifying the step value.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/printing/tprinter.html">&larr; tprinter</a> | <a href="../../pt/ui/tprogresswheel.html">tprogresswheel &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TDict - Diccionario de Datos - FWH Docs</title>
+<title>TDict - Data Dictionary - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,49 +11,49 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>TDict - Diccionario de Datos</h1>
+<h1>TDict - Data Dictionary</h1>
 <p class="class-source">Fuente: <code>source/classes/tdict.prg</code></p>
-<p class="class-hierarchy">Clase independiente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TDict implementa un sistema de diccionario de datos que gestiona una colección de tablas de base de datos (DBFs), menús e informes. Almacena metadatos en más de 15 tablas del sistema (<code>oTables</code>) que abarcan definiciones de tablas, definiciones de campos, índices, relaciones, menús, informes, usuarios y seguridad. El diccionario puede construir automáticamente las tablas del sistema que falten (<code>lAutoBuild</code>) y proporciona métodos para crear tablas, abrir bases de datos, cargar menús, ejecutar informes e importar archivos.
+TDict implements a data dictionary system that manages a collection of database tables (DBFs), menus, and reports. It stores metadata across 15+ system tables (<code>oTables</code>) covering table definitions, field definitions, indexes, relations, menus, reports, users, and security. The dictionary can auto-build missing system tables (<code>lAutoBuild</code>) and provides methods for creating tables, opening databases, loading menus, running reports, and importing files.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cPath</code></td><td>Carácter</td><td>Ruta base donde se almacenan los archivos del diccionario</td></tr>
-<tr><td><code>lAutoBuild</code></td><td>Lógico</td><td>.T. para crear automáticamente las tablas del sistema que falten</td></tr>
-<tr><td><code>oTables</code></td><td>Array</td><td>Array de más de 15 objetos TDatabase para las tablas del sistema</td></tr>
+<tr><td><code>cPath</code></td><td>Character</td><td>Base path where dictionary files are stored</td></tr>
+<tr><td><code>lAutoBuild</code></td><td>Logical</td><td>.T. to automatically create missing system tables</td></tr>
+<tr><td><code>oTables</code></td><td>Array</td><td>Array of 15+ TDatabase objects for system tables</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cPath )</code></td><td>Crea un nuevo diccionario de datos en la ruta indicada</td></tr>
-<tr><td><code>Activate()</code></td><td>Abre todas las tablas del sistema y activa el diccionario</td></tr>
-<tr><td><code>CreateTable( cTbl )</code></td><td>Crea una nueva tabla de usuario definida en el diccionario</td></tr>
-<tr><td><code>OpenDataBase( cDbName )</code></td><td>Abre una base de datos con nombre y todas sus tablas</td></tr>
-<tr><td><code>OpenTable( cTbl )</code></td><td>Abre una tabla específica por su nombre</td></tr>
-<tr><td><code>LoadMenu( cMenu )</code></td><td>Carga una definición de menú del diccionario; devuelve un TMenu</td></tr>
-<tr><td><code>Report( cReport )</code></td><td>Ejecuta un informe definido en el diccionario</td></tr>
-<tr><td><code>Import( cMask )</code></td><td>Importa al diccionario los archivos que coincidan con una máscara de archivos</td></tr>
-<tr><td><code>LoadWebBrowse( cTbl )</code></td><td>Carga la configuración de navegación web para una tabla</td></tr>
-<tr><td><code>LoadWebRecord( cTbl )</code></td><td>Carga la configuración del formulario de registro web para una tabla</td></tr>
-<tr><td><code>WebRecSave( cTbl )</code></td><td>Guarda la configuración de registro web para una tabla</td></tr>
+<tr><td><code>New( cPath )</code></td><td>Create a new data dictionary at the given path</td></tr>
+<tr><td><code>Activate()</code></td><td>Open all system tables and activate the dictionary</td></tr>
+<tr><td><code>CreateTable( cTbl )</code></td><td>Create a new user table defined in the dictionary</td></tr>
+<tr><td><code>OpenDataBase( cDbName )</code></td><td>Open a named database and all its tables</td></tr>
+<tr><td><code>OpenTable( cTbl )</code></td><td>Open a specific table by name</td></tr>
+<tr><td><code>LoadMenu( cMenu )</code></td><td>Load a menu definition from the dictionary; returns TMenu</td></tr>
+<tr><td><code>Report( cReport )</code></td><td>Run a report defined in the dictionary</td></tr>
+<tr><td><code>Import( cMask )</code></td><td>Import files matching a file mask into the dictionary</td></tr>
+<tr><td><code>LoadWebBrowse( cTbl )</code></td><td>Load web browse configuration for a table</td></tr>
+<tr><td><code>LoadWebRecord( cTbl )</code></td><td>Load web record form configuration for a table</td></tr>
+<tr><td><code>WebRecSave( cTbl )</code></td><td>Save web record configuration for a table</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Crear y Usar un Diccionario</h2>
+<h2 id="example">Example: Create and Use Dictionary</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -61,39 +61,39 @@ function Main()
 
    local oDict
 
-   // Crea un diccionario de datos en el directorio de datos
+   // Create a data dictionary in the data directory
    oDict := TDict():New( ".\data\" )
    oDict:lAutoBuild := .T.
    oDict:Activate()
 
-   // Crea una nueva tabla de usuario
+   // Create a new user table
    oDict:CreateTable( "INVOICES" )
 
-   // Abre una base de datos
+   // Open a database
    oDict:OpenDataBase( "SALES" )
 
-   // Carga un menú
+   // Load a menu
    DEFINE WINDOW oWnd TITLE "Dictionary Demo" SIZE 800, 600
    oDict:LoadMenu( "MAIN" ):Activate( oWnd )
 
-   // Ejecuta un informe
+   // Run a report
    oDict:Report( "CUSTOMER_LIST" )
 
    ACTIVATE WINDOW oWnd
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>El diccionario mantiene tablas del sistema para las definiciones de tablas (<code>_TABLES.DBF</code>), definiciones de campos (<code>_FIELDS.DBF</code>), índices (<code>_INDEXES.DBF</code>), relaciones, menús, informes, usuarios, grupos y permisos.</li>
-<li>Cuando <code>lAutoBuild</code> es <code>.T.</code>, cualquier tabla del sistema que falte se crea automáticamente al llamar a <code>Activate()</code>.</li>
-<li>Use <code>CreateTable()</code> para materializar una tabla definida por el usuario a partir de los metadatos del diccionario. La estructura de la tabla se lee de la tabla del sistema <code>_FIELDS</code>.</li>
-<li><code>LoadMenu()</code> lee las definiciones de menú del diccionario y devuelve un objeto <code>TMenu</code> completamente construido y listo para su activación.</li>
+<li>The dictionary maintains system tables for table definitions (<code>_TABLES.DBF</code>), field definitions (<code>_FIELDS.DBF</code>), indexes (<code>_INDEXES.DBF</code>), relations, menus, reports, users, groups, and permissions.</li>
+<li>When <code>lAutoBuild</code> is <code>.T.</code>, any missing system tables are automatically created when <code>Activate()</code> is called.</li>
+<li>Use <code>CreateTable()</code> to materialize a user-defined table based on the dictionary metadata. The table structure is read from the <code>_FIELDS</code> system table.</li>
+<li><code>LoadMenu()</code> reads menu definitions from the dictionary and returns a fully constructed <code>TMenu</code> object ready for activation.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/core/tdialog.html">&larr; tdialog</a> | <a href="../../es/ui/tdlgfind.html">tdlgfind &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

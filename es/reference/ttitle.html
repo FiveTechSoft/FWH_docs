@@ -13,53 +13,53 @@
 
 <h1>TTitle / TTitleText / TTitleImg</h1>
 <p class="class-source">Fuente: <code>source/classes/ttitle.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TTitle es un control decorativo de título / encabezado que combina fondos con degradado, elementos de texto e imágenes de mapa de bits en un único encabezado visual. Admite sombras, bordes, esquinas redondeadas, animación de imágenes, mezcla alfa y efectos de reflejo (espejo). El texto y las imágenes pueden añadirse de forma independiente mediante <code>AddText()</code> y <code>LoadBitmaps()</code>.
+TTitle is a decorative title / header control that combines gradient backgrounds, text elements, and bitmap images into a single visual header. It supports shadows, borders, rounded corners, image animation, alpha blending, and reflex (mirror) effects. Text and images can be added independently via <code>AddText()</code> and <code>LoadBitmaps()</code>.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aImgs</code></td><td>Array</td><td>Array de descriptores de imagen de 10 posiciones: fila, columna, hBitmap, hPalette, hasAlpha, alphaLevel, reflejo, transparente, anima, acción</td></tr>
-<tr><td><code>aText</code></td><td>Array</td><td>Array de descriptores de texto: fila, columna, texto, justificación, brocha, lápiz, sombra, fuente, color de texto</td></tr>
-<tr><td><code>aGrdBase</code></td><td>Array</td><td>Array de degradado para el área base (encabezado)</td></tr>
-<tr><td><code>aGrdBack</code></td><td>Array</td><td>Array de degradado para el fondo</td></tr>
-<tr><td><code>hBackBrush</code></td><td>Handle</td><td>Manejador interno de la brocha de patrón de fondo</td></tr>
-<tr><td><code>nShadow</code></td><td>Numeric</td><td>Dirección de la sombra: TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT</td></tr>
-<tr><td><code>nShadowIntensity</code></td><td>Numeric</td><td>Porcentaje de opacidad de la sombra (0-100)</td></tr>
-<tr><td><code>nShadowSize</code></td><td>Numeric</td><td>Distancia de difusión de la sombra en píxeles</td></tr>
-<tr><td><code>lBase</code></td><td>Logical</td><td>Pintar el área base estilo dock de Mac</td></tr>
-<tr><td><code>lBorder</code></td><td>Logical</td><td>Dibujar un borde alrededor del encabezado</td></tr>
-<tr><td><code>lRound</code></td><td>Logical</td><td>Usar esquinas redondeadas</td></tr>
-<tr><td><code>lVertical</code></td><td>Logical</td><td>Aplicar el degradado verticalmente (por defecto: verdadero)</td></tr>
-<tr><td><code>nClrLine1</code></td><td>Numeric</td><td>Color de la línea de borde 1</td></tr>
-<tr><td><code>nClrLine2</code></td><td>Numeric</td><td>Color de la línea de borde 2</td></tr>
+<tr><td><code>aImgs</code></td><td>Array</td><td>Array of 10-position image descriptors: row, col, hBitmap, hPalette, hasAlpha, alphaLevel, reflex, transparent, anima, action</td></tr>
+<tr><td><code>aText</code></td><td>Array</td><td>Array of text descriptors: row, col, text, justify, brush, pen, shadow, font, textColor</td></tr>
+<tr><td><code>aGrdBase</code></td><td>Array</td><td>Gradient array for the base (header) area</td></tr>
+<tr><td><code>aGrdBack</code></td><td>Array</td><td>Gradient array for the background</td></tr>
+<tr><td><code>hBackBrush</code></td><td>Handle</td><td>Internal background pattern brush handle</td></tr>
+<tr><td><code>nShadow</code></td><td>Numeric</td><td>Shadow direction: TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT</td></tr>
+<tr><td><code>nShadowIntensity</code></td><td>Numeric</td><td>Shadow opacity percentage (0-100)</td></tr>
+<tr><td><code>nShadowSize</code></td><td>Numeric</td><td>Shadow spread distance in pixels</td></tr>
+<tr><td><code>lBase</code></td><td>Logical</td><td>Paint the Mac-style dock base area</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Draw a border around the header</td></tr>
+<tr><td><code>lRound</code></td><td>Logical</td><td>Use rounded corners</td></tr>
+<tr><td><code>lVertical</code></td><td>Logical</td><td>Apply gradient vertically (default: true)</td></tr>
+<tr><td><code>nClrLine1</code></td><td>Numeric</td><td>Border line 1 color</td></tr>
+<tr><td><code>nClrLine2</code></td><td>Numeric</td><td>Border line 2 color</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nRow, nCol, nW, nH, cText, lBorder, lRound, lBase, lVertical, ... )</code></td><td>Crear un encabezado de título decorativo con degradado, sombra y texto</td></tr>
-<tr><td><code>AddText( nRow, nCol, cText, lBold, lStrike, lShadow, cAlign, oFont, nClr )</code></td><td>Añadir un elemento de texto al encabezado en las coordenadas indicadas</td></tr>
-<tr><td><code>LoadBitmaps( cFile, nRow, nCol, nW, nH, nAlpha, lReflex, lTransparent, lAnima, bAction, nAt )</code></td><td>Cargar un mapa de bits en el array de imágenes en la posición especificada</td></tr>
-<tr><td><code>AnimaImage()</code></td><td>Animar imágenes (efecto de desplazamiento hacia arriba para encabezados con varias imágenes)</td></tr>
-<tr><td><code>ChangeImg( cBitmap, nImg )</code></td><td>Reemplazar el mapa de bits en un índice de imagen dado</td></tr>
-<tr><td><code>LButtonDown( nRow, nCol, nFlags )</code></td><td>Gestionar el clic del ratón; disparar cualquier acción asociada a la imagen bajo el cursor</td></tr>
+<tr><td><code>New( oWnd, nRow, nCol, nW, nH, cText, lBorder, lRound, lBase, lVertical, ... )</code></td><td>Create a decorative title header with gradient, shadow and text</td></tr>
+<tr><td><code>AddText( nRow, nCol, cText, lBold, lStrike, lShadow, cAlign, oFont, nClr )</code></td><td>Add a text element to the header at the given coordinates</td></tr>
+<tr><td><code>LoadBitmaps( cFile, nRow, nCol, nW, nH, nAlpha, lReflex, lTransparent, lAnima, bAction, nAt )</code></td><td>Load a bitmap into the image array at the specified position</td></tr>
+<tr><td><code>AnimaImage()</code></td><td>Animate images (slide-up/scroll effect for multi-image headers)</td></tr>
+<tr><td><code>ChangeImg( cBitmap, nImg )</code></td><td>Replace the bitmap at a given image index</td></tr>
+<tr><td><code>LButtonDown( nRow, nCol, nFlags )</code></td><td>Handle mouse click; trigger any action associated with the image under the cursor</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Encabezado con Degradado, Logo y Sombra</h2>
+<h2 id="example">Example: Gradient Header with Logo and Shadow</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -81,18 +81,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>El encabezado consta de hasta tres capas visuales: el degradado de fondo (<code>aGrdBack</code>), el degradado base (<code>aGrdBase</code>, efecto opcional tipo dock) y el texto e imágenes superpuestos.</li>
-<li>La sombra se implementa desplazando una copia semitransparente del contenido del encabezado. La constante de dirección <code>nShadow</code> controla en qué cuadrante cae la sombra.</li>
-<li>Las imágenes almacenadas en <code>aImgs</code> pueden tener niveles alfa individuales, efectos de reflejo (espejo) y transiciones animadas.</li>
-<li>Cuando <code>lBase</code> es verdadero, se pinta una franja de degradado más oscura adicional en la parte inferior del encabezado (similar al Dock de macOS).</li>
-<li>Los bordes se dibujan con dos colores (<code>nClrLine1</code> y <code>nClrLine2</code>) para crear un efecto de bisel 3D.</li>
+<li>The header consists of up to three visual layers: background gradient (<code>aGrdBack</code>), base gradient (<code>aGrdBase</code>, optional dock-like effect), and overlaid text and images.</li>
+<li>Shadow is implemented by offsetting a semi-transparent copy of the header content. The <code>nShadow</code> direction constant controls which quadrant the shadow falls in.</li>
+<li>Images stored in <code>aImgs</code> can have individual alpha levels, reflex (mirror) effects, and animated transitions.</li>
+<li>When <code>lBase</code> is true, an additional darker gradient strip is painted at the bottom of the header (similar to the macOS Dock).</li>
+<li>Borders are drawn with two colors (<code>nClrLine1</code> and <code>nClrLine2</code>) to create a 3D bevel effect.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/utilities/ttimer.html">&larr; ttimer</a> | <a href="../../es/ui/ttmpicker.html">ttmpicker &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

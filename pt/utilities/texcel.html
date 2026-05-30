@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Integração com Excel - Documentação FWH</title>
+<title>Excel Integration - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,94 +11,94 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>Integração com Excel</h1>
+<h1>Excel Integration</h1>
 <p class="class-source">
 Fonte: <code>source/function/fwxlsxlb.prg</code>, <code>source/function/drxl.prg</code>, <code>source/function/readxlsx.prg</code>
 </p>
 
 <p>
-O FiveWin fornece três estratégias complementares para a integração com arquivos Excel, que vão
-desde a geração nativa de alta velocidade usando a biblioteca C <code>xlsxlibhb</code> (baseada em
-<code>libxlsxwriter</code>), passando pela automação OLE via <code>TOleAuto</code> para controle COM
-completo do Excel, até a análise direta de XML para ler arquivos <code>.xlsx</code> sem o Excel.
+FiveWin provides three complementary strategies for Excel file integration, ranging from
+high-speed native generation using the <code>xlsxlibhb</code> C library (based on
+<code>libxlsxwriter</code>), to OLE automation via <code>TOleAuto</code> for full Excel COM
+control, and direct XML parsing for reading <code>.xlsx</code> files without Excel.
 </p>
 
-<h2 id="strategies">Visão Geral das Estratégias</h2>
+<h2 id="strategies">Strategy Overview</h2>
 
 <table>
-<thead><tr><th>Estratégia</th><th>Fonte</th><th>Caso de Uso</th></tr></thead>
+<thead><tr><th>Strategy</th><th>Source</th><th>Use Case</th></tr></thead>
 <tbody>
-<tr><td><strong>XLSX Nativo (TWorkBook/TWorkSheet)</strong></td><td><code>fwxlsxlb.prg</code></td><td>Criação de alta performance, não requer Excel, suporta formatação e imagens</td></tr>
-<tr><td><strong>Automação OLE (FWDrXLSX)</strong></td><td><code>drxl.prg</code></td><td>Modelo de objetos COM completo do Excel para formatação legada e recursos avançados</td></tr>
-<tr><td><strong>Leitor XML (TXlsxReader)</strong></td><td><code>readxlsx.prg</code></td><td>Leitura de arquivos <code>.xlsx</code> via análise ZIP/XML, não requer Excel</td></tr>
+<tr><td><strong>Native XLSX (TWorkBook/TWorkSheet)</strong></td><td><code>fwxlsxlb.prg</code></td><td>High-performance creation, no Excel required, supports formatting and images</td></tr>
+<tr><td><strong>OLE Automation (FWDrXLSX)</strong></td><td><code>drxl.prg</code></td><td>Full Excel COM object model for legacy formatting and advanced features</td></tr>
+<tr><td><strong>XML Reader (TXlsxReader)</strong></td><td><code>readxlsx.prg</code></td><td>Reading <code>.xlsx</code> files via ZIP/XML parsing, no Excel required</td></tr>
 </tbody>
 </table>
 
 <!-- ================================================================ -->
-<h2 id="tworkbook">TWorkBook / TWorkSheet - Geração Nativa de XLSX</h2>
+<h2 id="tworkbook">TWorkBook / TWorkSheet - Native XLSX Generation</h2>
 
 <p>
-As classes <code>TWorkBook</code> e <code>TWorkSheet</code> fornecem uma interface orientada a
-objetos para a biblioteca C <code>xlsxlibhb</code>. Este é o método preferido para gerar
-planilhas grandes rapidamente sem qualquer dependência do Microsoft Excel.
+The <code>TWorkBook</code> and <code>TWorkSheet</code> classes provide an object-oriented
+interface to the <code>xlsxlibhb</code> C library. This is the preferred method for generating
+large spreadsheets quickly without any dependency on Microsoft Excel.
 </p>
 
-<h3>Classe TWorkBook</h3>
+<h3>TWorkBook Class</h3>
 
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cFile )</code></td><td>Cria uma nova pasta de trabalho. Se o arquivo existir, ele é apagado antes de criar um novo. Retorna nil em caso de falha.</td></tr>
-<tr><td><code>AddSheet( cName )</code></td><td>Adiciona uma nova planilha com o nome informado. Retorna um objeto <code>TWorkSheet</code>.</td></tr>
-<tr><td><code>Format( cPicture, cStyles, nAlign )</code></td><td>Cria um objeto <code>TFormat</code> para formatação de células.</td></tr>
-<tr><td><code>Close()</code></td><td>Finaliza e salva a pasta de trabalho em disco via <code>workbook_close()</code>.</td></tr>
+<tr><td><code>New( cFile )</code></td><td>Create a new workbook. If the file exists, it is erased before creating a new one. Returns nil on failure.</td></tr>
+<tr><td><code>AddSheet( cName )</code></td><td>Add a new worksheet with the given name. Returns a <code>TWorkSheet</code> object.</td></tr>
+<tr><td><code>Format( cPicture, cStyles, nAlign )</code></td><td>Create a <code>TFormat</code> object for cell formatting.</td></tr>
+<tr><td><code>Close()</code></td><td>Finalize and save the workbook to disk via <code>workbook_close()</code>.</td></tr>
 </tbody>
 </table>
 
-<h3>Classe TWorkSheet</h3>
+<h3>TWorkSheet Class</h3>
 
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>Say( nRow, nCol, uValue, oFormat, cPicture )</code></td><td>Escreve um valor em uma célula. Detecta automaticamente o tipo Harbour: numérico → <code>worksheet_write_number()</code>, data/datetime → <code>worksheet_write_datetime()</code>, lógico → <code>worksheet_write_boolean()</code>, string → <code>worksheet_write_string()</code> com conversão Ansi-para-UTF-8. Também aceita referências de célula como <code>"A1"</code> no parâmetro de linha.</td></tr>
-<tr><td><code>SayImage( nRow, nCol, cImage )</code></td><td>Insere uma imagem em uma célula. Suporta caminhos de arquivo e buffers de imagem. Redimensiona para caber em <code>aImageSize</code> (padrão 200x200px).</td></tr>
-<tr><td><code>SayFormula( nRow, nCol, cFormula, oFormat, cPicture )</code></td><td>Escreve uma string de fórmula em uma célula via <code>worksheet_write_formula()</code>.</td></tr>
-<tr><td><code>MergeRange( r1, c1, r2, c2, cValue, oFormat )</code></td><td>Mescla um intervalo de células e escreve um valor na região mesclada.</td></tr>
-<tr><td><code>RowHeight( nRow, nHeight, oFormat, lPixel )</code></td><td>Define a altura da linha (em unidades de caractere ou pixels).</td></tr>
-<tr><td><code>SetColumnSize( nColFrom, nColTo, nWidth, oFormat, lPixel )</code></td><td>Define a largura da coluna (em unidades de caractere ou pixels).</td></tr>
-<tr><td><code>Freeze( nRow, nCol )</code></td><td>Congela painéis na linha e/ou coluna especificada.</td></tr>
-<tr><td><code>HideZero()</code></td><td>Oculta valores zero na planilha.</td></tr>
-<tr><td><code>SetStruct( aStruct, nRow, aGroup )</code></td><td>Define cabeçalhos e estrutura de colunas para uma tabela de dados com agrupamento opcional.</td></tr>
-<tr><td><code>SetArrayData( aData, aStruct, aGroup )</code></td><td>Escreve um array 2D como uma tabela formatada com cabeçalhos.</td></tr>
-<tr><td><code>CreateFrom( uSrc )</code></td><td>Popula a planilha a partir do alias DBF atual ou de um conjunto de registros ADO.</td></tr>
-<tr><td><code>SetFooter( aFooter, nRow )</code></td><td>Adiciona uma linha de rodapé com fórmulas de soma a uma tabela estruturada.</td></tr>
-<tr><td><code>SetBrush( cImage )</code></td><td>Define uma imagem de fundo para a planilha (PNG/JPEG).</td></tr>
+<tr><td><code>Say( nRow, nCol, uValue, oFormat, cPicture )</code></td><td>Write a value to a cell. Automatically detects Harbour type: numeric → <code>worksheet_write_number()</code>, date/datetime → <code>worksheet_write_datetime()</code>, logical → <code>worksheet_write_boolean()</code>, string → <code>worksheet_write_string()</code> with Ansi-to-UTF-8 conversion. Also accepts cell references like <code>"A1"</code> as row parameter.</td></tr>
+<tr><td><code>SayImage( nRow, nCol, cImage )</code></td><td>Insert an image into a cell. Supports file paths and image buffers. Scales to fit <code>aImageSize</code> (default 200x200px).</td></tr>
+<tr><td><code>SayFormula( nRow, nCol, cFormula, oFormat, cPicture )</code></td><td>Write a formula string to a cell via <code>worksheet_write_formula()</code>.</td></tr>
+<tr><td><code>MergeRange( r1, c1, r2, c2, cValue, oFormat )</code></td><td>Merge a range of cells and write a value into the merged region.</td></tr>
+<tr><td><code>RowHeight( nRow, nHeight, oFormat, lPixel )</code></td><td>Set row height (in character units or pixels).</td></tr>
+<tr><td><code>SetColumnSize( nColFrom, nColTo, nWidth, oFormat, lPixel )</code></td><td>Set column width (in character units or pixels).</td></tr>
+<tr><td><code>Freeze( nRow, nCol )</code></td><td>Freeze panes at the specified row and/or column.</td></tr>
+<tr><td><code>HideZero()</code></td><td>Hide zero values in the sheet.</td></tr>
+<tr><td><code>SetStruct( aStruct, nRow, aGroup )</code></td><td>Define headers and column structure for a data table with optional grouping.</td></tr>
+<tr><td><code>SetArrayData( aData, aStruct, aGroup )</code></td><td>Write a 2D array as a formatted table with headers.</td></tr>
+<tr><td><code>CreateFrom( uSrc )</code></td><td>Populate the sheet from the current DBF alias or an ADO record set.</td></tr>
+<tr><td><code>SetFooter( aFooter, nRow )</code></td><td>Add a footer row with sum formulas to a structured table.</td></tr>
+<tr><td><code>SetBrush( cImage )</code></td><td>Set a background image for the worksheet (PNG/JPEG).</td></tr>
 </tbody>
 </table>
 
-<h3>Classe TFormat</h3>
+<h3>TFormat Class</h3>
 <p>
-A classe <code>TFormat</code> fornece formatação de células para <code>TWorkSheet:Say()</code>:
+The <code>TFormat</code> class provides cell formatting for <code>TWorkSheet:Say()</code>:
 </p>
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>Bold()</code></td><td>Aplica fonte em negrito</td></tr>
-<tr><td><code>Italic()</code></td><td>Aplica fonte em itálico</td></tr>
-<tr><td><code>Underline( n )</code></td><td>Define o estilo de sublinhado (1=simples, 2=duplo)</td></tr>
-<tr><td><code>Align( n1, n2, ... )</code></td><td>Define flags de alinhamento (1=esquerda, 2=centro, 3=direita, 10=centro vertical, etc.)</td></tr>
-<tr><td><code>SetFont( cName, nSize, nColor, cStyles )</code></td><td>Configura nome, tamanho, cor e estilos da fonte (B=negrito, I=itálico, S=tachado, U=sublinhado)</td></tr>
-<tr><td><code>SetColor( nFore, nBack )</code></td><td>Define as cores de primeiro plano (fonte) e de fundo</td></tr>
-<tr><td><code>Picture( cPicture )</code></td><td>Define o formato numérico (ex.: <code>"#,##0.00"</code> ou índice predefinido). Use <code>cPicture</code> para armazenar o código de formato ativo.</td></tr>
-<tr><td><code>SetBorder( nLine, nClr, cSide )</code></td><td>Define o estilo de borda. cSide: "T"=topo, "B"=base, "L"=esquerda, "R"=direita, ou omita para todos os lados</td></tr>
-<tr><td><code>TextWrap()</code></td><td>Habilita a quebra de texto dentro da célula</td></tr>
-<tr><td><code>FontRotate( nAngle )</code></td><td>Rotaciona o texto pelo ângulo informado</td></tr>
+<tr><td><code>Bold()</code></td><td>Apply bold font</td></tr>
+<tr><td><code>Italic()</code></td><td>Apply italic font</td></tr>
+<tr><td><code>Underline( n )</code></td><td>Set underline style (1=single, 2=double)</td></tr>
+<tr><td><code>Align( n1, n2, ... )</code></td><td>Set alignment flags (1=left, 2=center, 3=right, 10=vertical center, etc.)</td></tr>
+<tr><td><code>SetFont( cName, nSize, nColor, cStyles )</code></td><td>Configure font name, size, color, and styles (B=bold, I=italic, S=strikeout, U=underline)</td></tr>
+<tr><td><code>SetColor( nFore, nBack )</code></td><td>Set foreground (font) and background colors</td></tr>
+<tr><td><code>Picture( cPicture )</code></td><td>Set number format (e.g., <code>"#,##0.00"</code> or predefined index). Use <code>cPicture</code> to store the active format code.</td></tr>
+<tr><td><code>SetBorder( nLine, nClr, cSide )</code></td><td>Set border style. cSide: "T"=top, "B"=bottom, "L"=left, "R"=right, or omit for all sides</td></tr>
+<tr><td><code>TextWrap()</code></td><td>Enable text wrapping within the cell</td></tr>
+<tr><td><code>FontRotate( nAngle )</code></td><td>Rotate text by the given angle</td></tr>
 </tbody>
 </table>
 
 <div class="mermaid">
 sequenceDiagram
-    participant App as "Código da Aplicação"
+    participant App as "Application Code"
     participant TWS as "TWorkSheet:Say"
     participant CLIB as "xlsxlibhb (C)"
     App->>TWS: Say( row, col, value, oFormat )
@@ -111,49 +111,49 @@ sequenceDiagram
 </div>
 
 <!-- ================================================================ -->
-<h2 id="txlsxreader">TXlsxReader - Leitura Baseada em XML</h2>
+<h2 id="txlsxreader">TXlsxReader - XML-Based Reading</h2>
 
 <p>
-A classe <code>TXlsxReader</code> lê arquivos <code>.xlsx</code> tratando o arquivo como um arquivo
-ZIP e analisando os componentes OpenXML internos. Nenhuma instalação do Excel é necessária.
+The <code>TXlsxReader</code> class reads <code>.xlsx</code> files by treating the file as a ZIP
+archive and parsing the internal OpenXML components. No Excel installation is required.
 </p>
 
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cXlsx, cSheet )</code></td><td>Abre um arquivo <code>.xlsx</code> para leitura. Opcionalmente especifica o nome de uma planilha. Retorna nil se o arquivo não for encontrado ou for inválido.</td></tr>
-<tr><td><code>ReadData()</code></td><td>Lê todos os dados para <code>aData</code> (array 2D). Detecta automaticamente os tipos (N, D, T, L, C, M) e calcula a estrutura.</td></tr>
-<tr><td><code>ShowData()</code></td><td>Exibe a planilha em um diálogo XBrowse com detecção automática de tipos.</td></tr>
-<tr><td><code>Range( cRange )</code></td><td>Lê um intervalo específico (ex.: <code>"A1:C10"</code>) como um array 2D.</td></tr>
-<tr><td><code>Cells( nRow, nCol )</code></td><td>Lê uma única célula ou um conjunto de colunas de uma linha específica.</td></tr>
-<tr><td><code>SaveAs( cSave )</code></td><td>Salva os dados carregados em um novo arquivo <code>.xlsx</code> usando a biblioteca XLSX nativa.</td></tr>
-<tr><td><code>Close()</code></td><td>Libera os recursos internos.</td></tr>
+<tr><td><code>New( cXlsx, cSheet )</code></td><td>Open an <code>.xlsx</code> file for reading. Optionally specify a sheet name. Returns nil if the file is not found or invalid.</td></tr>
+<tr><td><code>ReadData()</code></td><td>Read all data into <code>aData</code> (2D array). Automatically detects types (N, D, T, L, C, M) and computes structure.</td></tr>
+<tr><td><code>ShowData()</code></td><td>Display the spreadsheet in an XBrowse dialog with automatic type detection.</td></tr>
+<tr><td><code>Range( cRange )</code></td><td>Read a specific range (e.g., <code>"A1:C10"</code>) as a 2D array.</td></tr>
+<tr><td><code>Cells( nRow, nCol )</code></td><td>Read a single cell or a set of columns from a specific row.</td></tr>
+<tr><td><code>SaveAs( cSave )</code></td><td>Save the loaded data to a new <code>.xlsx</code> file using the native XLSX library.</td></tr>
+<tr><td><code>Close()</code></td><td>Release internal resources.</td></tr>
 </tbody>
 </table>
 
-<h3>Membros DATA</h3>
+<h3>Data Members</h3>
 
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>nRows</code></td><td>Numérico</td><td>Número de linhas na planilha</td></tr>
-<tr><td><code>nCols</code></td><td>Numérico</td><td>Número de colunas na planilha</td></tr>
-<tr><td><code>aHead</code></td><td>Array</td><td>Linha de cabeçalho (primeira linha, se todos os valores forem caractere)</td></tr>
-<tr><td><code>aStruct</code></td><td>Array</td><td>Estrutura das colunas (nome, tipo, comprimento, decimais)</td></tr>
-<tr><td><code>aData</code></td><td>Array</td><td>Todas as linhas de dados (preenchidas após <code>ReadData()</code>)</td></tr>
-<tr><td><code>nSecs</code></td><td>Numérico</td><td>Segundos decorridos na leitura (somente leitura)</td></tr>
+<tr><td><code>nRows</code></td><td>Numeric</td><td>Number of rows in the sheet</td></tr>
+<tr><td><code>nCols</code></td><td>Numeric</td><td>Number of columns in the sheet</td></tr>
+<tr><td><code>aHead</code></td><td>Array</td><td>Header row (first row, if all character values)</td></tr>
+<tr><td><code>aStruct</code></td><td>Array</td><td>Column structure (name, type, length, decimals)</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>All data rows (populated after <code>ReadData()</code>)</td></tr>
+<tr><td><code>nSecs</code></td><td>Numeric</td><td>Elapsed seconds for reading (read-only)</td></tr>
 </tbody>
 </table>
 
 <p>
-As duas funções de conveniência encapsulam o leitor para uso em uma única linha:
+The two convenience Funções wrap the reader for one-liner usage:
 </p>
 
 <table>
-<thead><tr><th>Função</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Function</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>FW_ShowXlsx( cXlsx, cSheet )</code></td><td>Abre e exibe um arquivo <code>.xlsx</code> em um diálogo de navegação XBrowse.</td></tr>
-<tr><td><code>FW_OpenXlsx( cXlsx, cSheet )</code></td><td>Abre um arquivo <code>.xlsx</code> e retorna um objeto <code>TXlsxReader</code> para acesso programático.</td></tr>
+<tr><td><code>FW_ShowXlsx( cXlsx, cSheet )</code></td><td>Open and display an <code>.xlsx</code> file in an XBrowse browser dialog.</td></tr>
+<tr><td><code>FW_OpenXlsx( cXlsx, cSheet )</code></td><td>Open an <code>.xlsx</code> file and return a <code>TXlsxReader</code> object for programmatic access.</td></tr>
 </tbody>
 </table>
 
@@ -161,57 +161,57 @@ As duas funções de conveniência encapsulam o leitor para uso em uma única li
 <h2 id="ole">OLE Automation (FWDrXLSX)</h2>
 
 <p>
-Para ambientes onde o Microsoft Excel está instalado, a classe <code>FWDrXLSX</code> encapsula
-o modelo de objetos COM do Excel. A classe é carregada dinamicamente via <code>HB_FuncPtr()</code> para
-evitar dependências rígidas.
+For environments where Microsoft Excel is installed, the <code>FWDrXLSX</code> class wraps
+Excel's COM object model. The class is loaded dynamically via <code>HB_FuncPtr()</code> to
+avoid hard dependencies.
 </p>
 
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cFile )</code></td><td>Cria um novo arquivo Excel via OLE. Solicita um nome de arquivo se não for informado.</td></tr>
-<tr><td><code>Say( nRow, nCol, uValue, oFormat, cPicture )</code></td><td>Escreve um valor em uma célula. Aceita tanto coordenadas numéricas quanto referências de célula (ex.: <code>"A1"</code>).</td></tr>
-<tr><td><code>Format( cPicture, cStyles, nAlign )</code></td><td>Cria um objeto de formato (<code>FWDrXLSXFormat</code>) para a planilha OLE.</td></tr>
-<tr><td><code>SayRow( nRow, aValues, oFormat, aPicture )</code></td><td>Escreve um array de valores em uma linha.</td></tr>
-<tr><td><code>SayHeader( nRow, aHead )</code></td><td>Escreve uma linha de cabeçalho com formatação em negrito e borda inferior.</td></tr>
-<tr><td><code>SetColSizes( aSizes )</code></td><td>Define as larguras das colunas a partir de um array de estrutura.</td></tr>
-<tr><td><code>SetStruct( aStruct, nRow, aGroup )</code></td><td>Define uma tabela estruturada com cabeçalhos e dimensionamento de colunas.</td></tr>
-<tr><td><code>SetArrayData( aData, aStruct, aGroup )</code></td><td>Escreve um array 2D como uma tabela formatada.</td></tr>
-<tr><td><code>CreateFrom( uSrc )</code></td><td>Importa dados do alias DBF atual ou de um conjunto de registros ADO.</td></tr>
+<tr><td><code>New( cFile )</code></td><td>Create a new Excel file via OLE. Prompts for a filename if not provided.</td></tr>
+<tr><td><code>Say( nRow, nCol, uValue, oFormat, cPicture )</code></td><td>Write a value to a cell. Accepts both numeric coordinates and cell references (e.g., <code>"A1"</code>).</td></tr>
+<tr><td><code>Format( cPicture, cStyles, nAlign )</code></td><td>Create a format object (<code>FWDrXLSXFormat</code>) for the OLE sheet.</td></tr>
+<tr><td><code>SayRow( nRow, aValues, oFormat, aPicture )</code></td><td>Write an array of values to a row.</td></tr>
+<tr><td><code>SayHeader( nRow, aHead )</code></td><td>Write a header row with bold formatting and bottom border.</td></tr>
+<tr><td><code>SetColSizes( aSizes )</code></td><td>Set column widths from a structure array.</td></tr>
+<tr><td><code>SetStruct( aStruct, nRow, aGroup )</code></td><td>Define a structured table with headers and column sizing.</td></tr>
+<tr><td><code>SetArrayData( aData, aStruct, aGroup )</code></td><td>Write a 2D array as a formatted table.</td></tr>
+<tr><td><code>CreateFrom( uSrc )</code></td><td>Import data from the current DBF alias or an ADO record set.</td></tr>
 </tbody>
 </table>
 
 <p>
-Lógica de vinculação e seleção em tempo de execução:
+Runtime linking and selection logic:
 </p>
 
 <table>
-<thead><tr><th>Função</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Function</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>UseDrXlsx( lSet )</code></td><td>Retorna <code>.T.</code> se a automação OLE deve ser usada (drxl.prg vinculado e Excel não instalado). Opcionalmente define a preferência com um parâmetro lógico.</td></tr>
-<tr><td><code>DrXlsxLinked()</code></td><td>Retorna <code>.T.</code> se a classe <code>FWDrXLSX</code> está disponível em tempo de execução.</td></tr>
-<tr><td><code>DrXlsxObj( cFileXlsx )</code></td><td>Cria e retorna um objeto <code>FWDrXLSX</code> para o arquivo informado.</td></tr>
-<tr><td><code>DrXlsFormat( oXlsx )</code></td><td>Cria um objeto de formato anexado a uma instância <code>FWDrXLSX</code>.</td></tr>
+<tr><td><code>UseDrXlsx( lSet )</code></td><td>Returns <code>.T.</code> if OLE automation should be used (drxl.prg linked and Excel not installed). Optionally set the preference with a logical parameter.</td></tr>
+<tr><td><code>DrXlsxLinked()</code></td><td>Returns <code>.T.</code> if the <code>FWDrXLSX</code> class is available at runtime.</td></tr>
+<tr><td><code>DrXlsxObj( cFileXlsx )</code></td><td>Create and return an <code>FWDrXLSX</code> object for the given file.</td></tr>
+<tr><td><code>DrXlsFormat( oXlsx )</code></td><td>Create a format object attached to an <code>FWDrXLSX</code> instance.</td></tr>
 </tbody>
 </table>
 
 <!-- ================================================================ -->
-<h2 id="utility-functions">Funções Utilitárias</h2>
+<h2 id="utility-Funções">Utility Funções</h2>
 
 <table>
-<thead><tr><th>Função</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Function</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>XLSXLIBLinked()</code></td><td>Retorna <code>.T.</code> se a biblioteca nativa <code>xlsxlibhb</code> está disponível (verifica os ponteiros de função <code>XLSXLIB</code> ou <code>TWORKBOOK</code>).</td></tr>
-<tr><td><code>UseXLSXLIB( lSet )</code></td><td>Retorna <code>.T.</code> se a <code>xlsxlibhb</code> nativa deve ser preferida em relação ao OLE. Opcionalmente define a preferência.</td></tr>
-<tr><td><code>XlsxLibObj( cFile, cSheet )</code></td><td>Cria um objeto <code>TWorkSheet</code> usando a biblioteca nativa.</td></tr>
-<tr><td><code>XlsxObj( cFile, cSheet )</code></td><td>Fábrica inteligente: tenta a biblioteca nativa primeiro, recorre ao OLE e depois volta para a nativa. Retorna um objeto de planilha utilizável ou nil.</td></tr>
-<tr><td><code>cTempXlsx()</code></td><td>Gera um nome de arquivo temporário único com extensão <code>.xlsx</code> no diretório temporário do sistema.</td></tr>
-<tr><td><code>cGetFileXlsx( lTmp )</code></td><td>Abre um diálogo padrão de salvar arquivo para arquivos <code>.xlsx</code>. Se <code>lTmp</code> for <code>.T.</code> e o usuário cancelar, retorna um nome de arquivo temporário.</td></tr>
+<tr><td><code>XLSXLIBLinked()</code></td><td>Returns <code>.T.</code> if the <code>xlsxlibhb</code> native library is available (checks for <code>XLSXLIB</code> or <code>TWORKBOOK</code> function pointers).</td></tr>
+<tr><td><code>UseXLSXLIB( lSet )</code></td><td>Returns <code>.T.</code> if native <code>xlsxlibhb</code> should be preferred over OLE. Optionally set the preference.</td></tr>
+<tr><td><code>XlsxLibObj( cFile, cSheet )</code></td><td>Create a <code>TWorkSheet</code> object using the native library.</td></tr>
+<tr><td><code>XlsxObj( cFile, cSheet )</code></td><td>Smart factory: tries native library first, falls back to OLE, then back to native. Returns a usable worksheet object or nil.</td></tr>
+<tr><td><code>cTempXlsx()</code></td><td>Generate a unique temporary filename with <code>.xlsx</code> extension in the system temp directory.</td></tr>
+<tr><td><code>cGetFileXlsx( lTmp )</code></td><td>Open a standard file-save dialog for <code>.xlsx</code> files. If <code>lTmp</code> is <code>.T.</code> and the user cancels, returns a temporary filename.</td></tr>
 </tbody>
 </table>
 
 <!-- ================================================================ -->
-<h2 id="example">Exemplo: Criar uma Pasta de Trabalho e Escrever Células</h2>
+<h2 id="example">Example: Create a Workbook and Write Cells</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -219,7 +219,7 @@ function Main()
 
    local oBook, oSheet, oFmt, nRow := 1
 
-   // Cria uma nova pasta de trabalho
+   // Create a new workbook
    oBook := TWorkBook():New( "c:\temp\example.xlsx" )
 
    if oBook == nil
@@ -227,20 +227,20 @@ function Main()
       return nil
    endif
 
-   // Adiciona uma planilha
+   // Add a worksheet
    oSheet := oBook:AddSheet( "Employees" )
 
-   // Cria um formato de cabeçalho em negrito
+   // Create a bold header format
    oFmt := oBook:Format()
    oFmt:Bold():Align( 2, 10 ):SetBottom( 2 )
 
-   // Escreve os cabeçalhos
+   // Write headers
    oSheet:Say( nRow, 0, "ID",   oFmt )
    oSheet:Say( nRow, 1, "Name",     oFmt )
    oSheet:Say( nRow, 2, "Hired",    oFmt )
    oSheet:Say( nRow, 3, "Salary",   oFmt )
 
-   // Escreve as linhas de dados (auto-tipagem: N, C, D, N)
+   // Write data rows (auto-typing: N, C, D, N)
    oSheet:Say( ++nRow, 0, 1001 )
    oSheet:Say( nRow, 1, "John Smith" )
    oSheet:Say( nRow, 2, STOD( "20240315" ) )
@@ -251,18 +251,18 @@ function Main()
    oSheet:Say( nRow, 2, STOD( "20240110" ) )
    oSheet:Say( nRow, 3, 82000.00 )
 
-   // Congela a linha de cabeçalho
+   // Freeze header row
    oSheet:Freeze( 1, 0 )
 
-   // Finaliza e salva
+   // Finalize and save
    oBook:Close()
 
-   // Exibe o resultado
+   // Display result
    FW_ShowXlsx( "c:\temp\example.xlsx" )
 
 return nil</code></pre>
 
-<h2 id="example-read">Exemplo: Ler um Arquivo XLSX</h2>
+<h2 id="example-read">Example: Read an XLSX File</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -278,10 +278,10 @@ function ReadXlsx()
    ? "Rows:", oXlsx:nRows, "Cols:", oXlsx:nCols
    ? "Header:", oXlsx:aHead[ 1 ], oXlsx:aHead[ 2 ], oXlsx:aHead[ 3 ]
 
-   // Acessa uma célula específica
+   // Access specific cell
    MsgInfo( oXlsx:Cells( 2, 2 ), "Cell B2" )
 
-   // Lê um intervalo
+   // Read a range
    XBROWSER oXlsx:Range( "A1:D3" ) TITLE "Range A1:D3"
 
    oXlsx:Close()
@@ -289,29 +289,29 @@ function ReadXlsx()
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li><strong>XLSX Nativo</strong> (<code>TWorkBook</code>) é a abordagem recomendada para criar
-planilhas. Não possui dependências externas, suporta arquivos grandes e oferece controle total
-de formatação através da classe <code>TFormat</code>.</li>
-<li><strong>Automação OLE</strong> (<code>FWDrXLSX</code>) requer que o Microsoft Excel esteja
-instalado na máquina de destino. É adequada para código legado ou quando recursos específicos
-do Excel (macros, tabelas dinâmicas) são necessários.</li>
-<li><strong>TXlsxReader</strong> detecta automaticamente os tipos de dados a partir dos metadados
-XML do Excel, tratando strings (tabela de strings compartilhadas), números, datas, datetimes, booleanos e imagens.</li>
-<li>As funções <code>cTempXlsx()</code> e <code>cGetFileXlsx()</code> tratam o gerenciamento de
-arquivos temporários e a detecção de conflitos (arquivos atualmente abertos no Excel não podem ser sobrescritos).</li>
-<li>Quando ambas as bibliotecas nativa e OLE estão disponíveis, <code>UseXLSXLIB()</code> e
-<code>UseDrXlsx()</code> controlam qual estratégia é preferida. Por padrão, a biblioteca nativa
-é escolhida quando o Excel não está instalado.</li>
-<li>Os valores de string no XLSX nativo são automaticamente convertidos de ANSI para UTF-8 para a
-codificação adequada no XML do <code>.xlsx</code>. Dados de memo binários são detectados e substituídos por
+<li><strong>Native XLSX</strong> (<code>TWorkBook</code>) is the recommended approach for creating
+spreadsheets. It has no external dependencies, supports large files, and provides full
+formatting control through the <code>TFormat</code> class.</li>
+<li><strong>OLE Automation</strong> (<code>FWDrXLSX</code>) requires Microsoft Excel to be
+installed on the target machine. It is suitable for legacy code or when Excel-specific
+features (macros, pivot tables) are needed.</li>
+<li><strong>TXlsxReader</strong> automatically detects data types from the Excel XML metadata,
+handling strings (shared strings table), numbers, dates, datetimes, booleans, and images.</li>
+<li>The <code>cTempXlsx()</code> and <code>cGetFileXlsx()</code> Funções handle temporary file
+management and conflict detection (files currently open in Excel cannot be overwritten).</li>
+<li>When both native and OLE libraries are available, <code>UseXLSXLIB()</code> and
+<code>UseDrXlsx()</code> control which strategy is preferred. By default, the native library
+is chosen when Excel is not installed.</li>
+<li>String values in native XLSX are automatically converted from ANSI to UTF-8 for proper
+encoding in the <code>.xlsx</code> XML. Binary memo data is detected and replaced with
 <code>"&lt;binary data&gt;"</code>.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/printing/tereport.html">&larr; tereport</a> | <a href="../../pt/utilities/texplist.html">texplist &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

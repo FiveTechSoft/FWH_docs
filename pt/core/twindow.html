@@ -4,14 +4,14 @@
 
 <h1>TWindow</h1>
 <p>
-  <span class="badge badge-blue">Classe Base</span>
-  <span class="badge badge-green">Classe Raiz</span>
+  <span class="badge badge-blue">Core Class</span>
+  <span class="badge badge-green">Root Class</span>
   <span class="source-badge">source/classes/window.prg</span>
 </p>
-<p>TWindow é a classe raiz de toda a hierarquia de classes do FiveWin. Todo elemento visível em uma aplicação FiveWin &mdash; diálogos, controles, frames MDI, filhos MDI &mdash; herda de TWindow. Ela encapsula um <code>HWND</code> do Win32 e fornece a API fundamental para criação de janelas, tratamento de eventos, pintura, gerenciamento de coordenadas, arrastar e soltar, tooltips e muito mais.</p>
+<p>TWindow is the root class of the entire FiveWin class hierarchy. Every visible element in a FiveWin application &mdash; dialogs, controls, MDI frames, MDI children &mdash; ultimately inherits from TWindow. It wraps a Win32 <code>HWND</code> and provides the foundational API for window creation, event handling, painting, coordinate management, drag-and-drop, tooltips, and more.</p>
 
-<h2 id="inheritance">Hierarquia de Herança</h2>
-<p>TWindow está no topo da hierarquia. Todas as principais classes do FiveWin derivam dela direta ou indiretamente:</p>
+<h2 id="inheritance">Inheritance Hierarchy</h2>
+<p>TWindow sits at the top of the hierarchy. All major FiveWin classes derive from it directly or indirectly:</p>
 <div class="mermaid">
 classDiagram
     class TWindow {
@@ -39,90 +39,127 @@ classDiagram
     TDialog : +lTruePixel
 </div>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 <table>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
-<tr><td><code>hWnd</code></td><td>Numeric</td><td>0</td><td>Handle da janela Win32. Atribuído após <code>Create()</code> ou <code>Activate()</code>.</td></tr>
-<tr><td><code>cCaption</code></td><td>Character</td><td>nil</td><td>Texto da barra de título da janela.</td></tr>
-<tr><td><code>nTop, nLeft, nBottom, nRight</code></td><td>Numeric</td><td>0</td><td>Coordenadas da janela (pixels após criação).</td></tr>
-<tr><td><code>oFont</code></td><td>TFont</td><td>nil</td><td>Objeto de fonte usado para pintura e controles filhos.</td></tr>
-<tr><td><code>oBrush</code></td><td>TBrush</td><td>nil</td><td>Pincel de fundo. Definido via <code>SetColor()</code> ou explicitamente.</td></tr>
-<tr><td><code>oIcon</code></td><td>TIcon</td><td>nil</td><td>Ícone da janela (barra de título e barra de tarefas).</td></tr>
-<tr><td><code>oMenu</code></td><td>TMenu</td><td>nil</td><td>Objeto da barra de menu principal.</td></tr>
-<tr><td><code>oBar</code></td><td>TBar</td><td>nil</td><td>Barra de ferramentas (barra de botões) ancorada no topo.</td></tr>
-<tr><td><code>oMsgBar</code></td><td>TMsgBar</td><td>nil</td><td>Barra de status/mensagem na parte inferior.</td></tr>
-<tr><td><code>lVisible</code></td><td>Logical</td><td>.F.</td><td>Se a janela está atualmente visível.</td></tr>
-<tr><td><code>lActive</code></td><td>Logical</td><td>.T.</td><td>Se a janela está habilitada (aceita entrada).</td></tr>
-<tr><td><code>aControls</code></td><td>Array</td><td>{}</td><td>Array de objetos de controles filhos.</td></tr>
-<tr><td><code>nClrPane</code></td><td>Numeric</td><td>nil</td><td>Cor de fundo (painel).</td></tr>
-<tr><td><code>nClrText</code></td><td>Numeric</td><td>nil</td><td>Cor padrão do texto.</td></tr>
-<tr><td><code>oVScroll, oHScroll</code></td><td>TScrollBar</td><td>nil</td><td>Objetos de barra de rolagem vertical e horizontal.</td></tr>
-<tr><td><code>Cargo</code></td><td>Any</td><td>nil</td><td>Slot de dados de uso geral do usuário.</td></tr>
-<tr><td><code>cToolTip</code></td><td>Character</td><td>nil</td><td>Texto do tooltip exibido ao passar o mouse.</td></tr>
-<tr><td><code>aGradColors</code></td><td>Array</td><td>nil</td><td>Pares de cores gradientes para pintura do fundo.</td></tr>
-<tr><td><code>lUnicode</code></td><td>Logical</td><td>.F.</td><td>Se a janela usa a API Unicode (wide-char).</td></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>hWnd</code></td><td>Numeric</td><td>0</td><td>Win32 window handle. Assigned after <code>Create()</code> or <code>Activate()</code>.</td></tr>
+<tr><td><code>cCaption</code></td><td>Character</td><td>nil</td><td>Window title bar text.</td></tr>
+<tr><td><code>nTop, nLeft, nBottom, nRight</code></td><td>Numeric</td><td>0</td><td>Window coordinates (pixels after creation).</td></tr>
+<tr><td><code>oFont</code></td><td>TFont</td><td>nil</td><td>Font object used for painting and child controls.</td></tr>
+<tr><td><code>oBrush</code></td><td>TBrush</td><td>nil</td><td>Background brush. Set via <code>SetColor()</code> or explicitly.</td></tr>
+<tr><td><code>oIcon</code></td><td>TIcon</td><td>nil</td><td>Window icon (title bar and taskbar).</td></tr>
+<tr><td><code>oMenu</code></td><td>TMenu</td><td>nil</td><td>Main menu bar object.</td></tr>
+<tr><td><code>oBar</code></td><td>TBar</td><td>nil</td><td>Toolbar (button bar) docked at the top.</td></tr>
+<tr><td><code>oMsgBar</code></td><td>TMsgBar</td><td>nil</td><td>Status/message bar at the bottom.</td></tr>
+<tr><td><code>lVisible</code></td><td>Logical</td><td>.F.</td><td>Whether the window is currently shown.</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>.T.</td><td>Whether the window is enabled (accepts input).</td></tr>
+<tr><td><code>aControls</code></td><td>Array</td><td>{}</td><td>Array of child control objects.</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>nil</td><td>Background (pane) color.</td></tr>
+<tr><td><code>nClrText</code></td><td>Numeric</td><td>nil</td><td>Default text color.</td></tr>
+<tr><td><code>oVScroll, oHScroll</code></td><td>TScrollBar</td><td>nil</td><td>Vertical and horizontal scroll bar objects.</td></tr>
+<tr><td><code>Cargo</code></td><td>Any</td><td>nil</td><td>General-purpose user data slot.</td></tr>
+<tr><td><code>cToolTip</code></td><td>Character</td><td>nil</td><td>Tooltip text shown on hover.</td></tr>
+<tr><td><code>aGradColors</code></td><td>Array</td><td>nil</td><td>Gradient color pairs for background painting.</td></tr>
+<tr><td><code>lUnicode</code></td><td>Logical</td><td>.F.</td><td>Whether the window uses Unicode (wide-char) API.</td></tr>
+<tr><td><code>hAlphaColor</code></td><td>Numeric</td><td>nil</td><td>Alpha-blend overlay color (RGB value). When set, the window background is blended with this color at <code>hAlphaLevel</code> opacity.</td></tr>
+<tr><td><code>hAlphaLevel</code></td><td>Numeric</td><td>0</td><td>Alpha blend opacity level (0-255). Used with <code>hAlphaColor</code>.</td></tr>
+<tr><td><code>aMinMaxInfo</code></td><td>Array</td><td>nil</td><td>Array <code>{ nMinW, nMaxW, nMinH, nMaxH }</code> restricting min/max window size.</td></tr>
+<tr><td><code>l2007</code></td><td>Logical</td><td>.F.</td><td>Enable Office 2007-style theme for the window and its controls.</td></tr>
+<tr><td><code>l2010</code></td><td>Logical</td><td>.F.</td><td>Enable Office 2010-style theme.</td></tr>
+<tr><td><code>l2013</code></td><td>Logical</td><td>.F.</td><td>Enable Office 2013-style flat theme.</td></tr>
+<tr><td><code>l2015</code></td><td>Logical</td><td>.F.</td><td>Enable Office 2015-style theme.</td></tr>
+<tr><td><code>oTop</code></td><td>TControl</td><td>nil</td><td>Control docked to the top edge. <code>oClient</code> respects this slot during <code>AdjClient()</code>.</td></tr>
+<tr><td><code>oLeft</code></td><td>TControl</td><td>nil</td><td>Control docked to the left edge.</td></tr>
+<tr><td><code>oBottom</code></td><td>TControl</td><td>nil</td><td>Control docked to the bottom edge (above the message bar).</td></tr>
+<tr><td><code>oRight</code></td><td>TControl</td><td>nil</td><td>Control docked to the right edge.</td></tr>
+<tr><td><code>oClient</code></td><td>TControl</td><td>nil</td><td>Control that fills the remaining client area after all docked slots.</td></tr>
 </table>
 
-<h2 id="event-blocks">Blocos de Código de Eventos</h2>
-<p>TWindow expõe um rico conjunto de blocos de código que disparam em eventos Win32. Atribua um bloco para interceptar qualquer evento:</p>
+<h2 id="event-blocks">Event Code Blocks</h2>
+<p>TWindow exposes a rich set of code blocks that fire on Win32 events. Assign a block to hook into any event:</p>
 <table>
-<tr><th>Bloco de Código</th><th>Parâmetros</th><th>Descrição</th></tr>
-<tr><td><code>bInit</code></td><td><code>|Self|</code></td><td>Dispara após a criação da janela, antes do loop de mensagens.</td></tr>
-<tr><td><code>bPainted</code></td><td><code>|hDC, cPS, Self|</code></td><td>Pintura personalizada dentro do <code>WM_PAINT</code>.</td></tr>
-<tr><td><code>bLClicked</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Clique do botão esquerdo do mouse.</td></tr>
-<tr><td><code>bRClicked</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Clique do botão direito do mouse.</td></tr>
-<tr><td><code>bKeyDown</code></td><td><code>|nKey, nFlags, Self|</code></td><td>Tecla pressionada.</td></tr>
-<tr><td><code>bResized</code></td><td><code>|nSizeType, nWidth, nHeight|</code></td><td>Janela redimensionada.</td></tr>
-<tr><td><code>bMoved</code></td><td><code>|Self|</code></td><td>Janela movida.</td></tr>
-<tr><td><code>bValid</code></td><td><code>|Self|</code></td><td>Deve retornar <code>.T.</code> para permitir o fechamento.</td></tr>
-<tr><td><code>bGotFocus</code></td><td><code>|Self, hFrom|</code></td><td>Janela recebeu o foco.</td></tr>
-<tr><td><code>bLostFocus</code></td><td><code>|Self, hTo|</code></td><td>Janela perdeu o foco.</td></tr>
-<tr><td><code>bDropFiles</code></td><td><code>|hDrop, Self|</code></td><td>Arquivos soltos sobre a janela.</td></tr>
-<tr><td><code>bMouseWheel</code></td><td><code>|nDelta, nKeys|</code></td><td>Roda do mouse rolada.</td></tr>
+<tr><th>Code Block</th><th>Parameters</th><th>Description</th></tr>
+<tr><td><code>bInit</code></td><td><code>|Self|</code></td><td>Fires after window creation, before the message loop.</td></tr>
+<tr><td><code>bPainted</code></td><td><code>|hDC, cPS, Self|</code></td><td>Custom painting inside <code>WM_PAINT</code>.</td></tr>
+<tr><td><code>bLClicked</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Left mouse button click.</td></tr>
+<tr><td><code>bRClicked</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Right mouse button click.</td></tr>
+<tr><td><code>bKeyDown</code></td><td><code>|nKey, nFlags, Self|</code></td><td>Key pressed.</td></tr>
+<tr><td><code>bResized</code></td><td><code>|nSizeType, nWidth, nHeight|</code></td><td>Window resized.</td></tr>
+<tr><td><code>bMoved</code></td><td><code>|Self|</code></td><td>Window moved.</td></tr>
+<tr><td><code>bValid</code></td><td><code>|Self|</code></td><td>Must return <code>.T.</code> to allow closing.</td></tr>
+<tr><td><code>bGotFocus</code></td><td><code>|Self, hFrom|</code></td><td>Window received focus.</td></tr>
+<tr><td><code>bLostFocus</code></td><td><code>|Self, hTo|</code></td><td>Window lost focus.</td></tr>
+<tr><td><code>bDropFiles</code></td><td><code>|hDrop, Self|</code></td><td>Files dropped onto window.</td></tr>
+<tr><td><code>bMouseWheel</code></td><td><code>|nDelta, nKeys|</code></td><td>Mouse wheel scrolled.</td></tr>
+<tr><td><code>bKeyChar</code></td><td><code>|nKey, nFlags|</code></td><td>Character key pressed (WM_CHAR).</td></tr>
+<tr><td><code>bLButtonDown</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Left mouse button pressed.</td></tr>
+<tr><td><code>bLButtonUp</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Left mouse button released.</td></tr>
+<tr><td><code>bRButtonDown</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Right mouse button pressed.</td></tr>
+<tr><td><code>bMMoved</code></td><td><code>|nRow, nCol, nFlags|</code></td><td>Mouse moved over the client area.</td></tr>
+<tr><td><code>bWhen</code></td><td><code>|Self|</code></td><td>Must return <code>.T.</code> for window to receive focus.</td></tr>
+<tr><td><code>bPostEnd</code></td><td><code>|Self|</code></td><td>Fires after the window has been closed (WM_DESTROY processed).</td></tr>
+<tr><td><code>bDestroy</code></td><td><code>|Self|</code></td><td>Fires during WM_DESTROY.</td></tr>
+<tr><td><code>bHelp</code></td><td><code>|nHelpId, Self|</code></td><td>Fires on F1 or Help button.</td></tr>
+<tr><td><code>bTimer</code></td><td><code>|hWnd, nMsg, nId, nTime|</code></td><td>Fires on each WM_TIMER tick. Use <code>SetTimer()</code>.</td></tr>
+<tr><td><code>bCommand</code></td><td><code>|nCtrlId, nNotify|</code></td><td>General WM_COMMAND handler.</td></tr>
+<tr><td><code>bMeasureItem</code></td><td><code>|nId, nCtlType|</code></td><td>Returns <code>{ nW, nH }</code> for owner-drawn items.</td></tr>
+<tr><td><code>bDrawItem</code></td><td><code>|nId, nCtlType, hDC, aRect, nState|</code></td><td>Custom owner-draw rendering.</td></tr>
+<tr><td><code>bDragBegin</code></td><td><code>|nRow, nCol, oCtrl|</code></td><td>Fires when drag begins. Return .T. to allow.</td></tr>
+<tr><td><code>bDragOver</code></td><td><code>|nRow, nCol, oSource|</code></td><td>Dragged object moves over the window.</td></tr>
+<tr><td><code>bDrop</code></td><td><code>|nRow, nCol, oSource|</code></td><td>Dragged object dropped on the window.</td></tr>
 </table>
 
-<h2 id="methods">Principais Métodos</h2>
+<h2 id="methods">Key Methods</h2>
 
-<h3 id="new">New() &mdash; Construtor</h3>
+<h3 id="new">New() &mdash; Constructor</h3>
 <pre><code>METHOD New( nTop, nLeft, nBottom, nRight, cTitle, nStyle, oMenu,
       oBrush, oIcon, oWnd, lVScroll, lHScroll, nClrFore, nClrBack,
       oCursor, cBorder, lSysMenu, lCaption, lMin, lMax, lPixel,
       nExStyle, cVarName, nHelpId, lUnicode, nWidth, nHeight )</code></pre>
-<p>Cria uma nova instância de TWindow mas não a exibe. O handle da janela <code>hWnd</code> ainda não foi criado; isso acontece durante <code>Activate()</code>.</p>
+<p>Creates a new TWindow instance but does not show it. The window handle <code>hWnd</code> is not yet created; that happens during <code>Activate()</code>.</p>
 
 <h3 id="activate">Activate()</h3>
 <pre><code>METHOD Activate( cShow, bLClicked, bRClicked, bMoved, bResized,
       bPainted, bKeyDown, bInit, bUp, bDown, bPgUp, bPgDown,
       bLeft, bRight, bPgLeft, bPgRight, bValid, bDropFiles,
       bLButtonUp, lCentered, oMonitor )</code></pre>
-<p>Cria a janela Win32, exibe-a e entra no loop de mensagens. O parâmetro <code>cShow</code> pode ser <code>"MAXIMIZED"</code>, <code>"ICONIZED"</code> ou <code>"NORMAL"</code> (padrão). O método não retorna até que a janela seja fechada.</p>
+<p>Creates the Win32 window, shows it, and enters the message loop. The <code>cShow</code> parameter can be <code>"MAXIMIZED"</code>, <code>"ICONIZED"</code>, or <code>"NORMAL"</code> (default). The method does not return until the window is closed.</p>
 
 <h3 id="end">End()</h3>
-<p>Envia <code>WM_CLOSE</code> para a janela. Se <code>bValid</code> estiver definido, ele é avaliado primeiro; o fechamento é cancelado quando <code>bValid</code> retorna <code>.F.</code>.</p>
+<p>Sends <code>WM_CLOSE</code> to the window. If <code>bValid</code> is set, it is evaluated first; closing is cancelled when <code>bValid</code> returns <code>.F.</code>.</p>
 
-<h3 id="other-methods">Outros Métodos Essenciais</h3>
+<h3 id="other-methods">Other Essential Methods</h3>
 <table>
-<tr><th>Método</th><th>Descrição</th></tr>
-<tr><td><code>Center( oWnd )</code></td><td>Centraliza a janela na tela ou dentro do pai informado.</td></tr>
-<tr><td><code>Maximize()</code></td><td>Maximiza a janela via <code>ShowWindow( SW_MAXIMIZE )</code>.</td></tr>
-<tr><td><code>Minimize()</code></td><td>Minimiza a janela para a barra de tarefas.</td></tr>
-<tr><td><code>Restore()</code></td><td>Restaura uma janela minimizada ou maximizada para o estado normal.</td></tr>
-<tr><td><code>Move( nTop, nLeft, nWidth, nHeight )</code></td><td>Reposiciona e opcionalmente redimensiona a janela.</td></tr>
-<tr><td><code>SetText( cText )</code></td><td>Altera o texto da barra de título da janela.</td></tr>
-<tr><td><code>SetFont( oFont )</code></td><td>Atribui uma nova fonte e atualiza todos os controles filhos.</td></tr>
-<tr><td><code>SetColor( nClrText, nClrBack )</code></td><td>Define as cores de texto e fundo, criando um pincel.</td></tr>
-<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Redimensiona a janela para dimensões exatas em pixels.</td></tr>
-<tr><td><code>Enable() / Disable()</code></td><td>Habilita ou desabilita a interação do usuário.</td></tr>
-<tr><td><code>Show() / Hide()</code></td><td>Controla a visibilidade sem destruir a janela.</td></tr>
-<tr><td><code>Refresh()</code></td><td>Força uma repintura (<code>InvalidateRect</code> + <code>UpdateWindow</code>).</td></tr>
-<tr><td><code>AddControl( oCtrl )</code></td><td>Adiciona um controle filho ao <code>aControls</code>.</td></tr>
-<tr><td><code>DispBegin() / DispEnd()</code></td><td>Delimitam a pintura com buffer duplo para eliminar tremulação.</td></tr>
-<tr><td><code>CoorsUpdate()</code></td><td>Sincroniza <code>nTop/nLeft/nBottom/nRight</code> com o retângulo real da janela.</td></tr>
-<tr><td><code>GetCliRect()</code></td><td>Retorna o retângulo da área cliente como um array <code>{ nTop, nLeft, nBottom, nRight }</code>.</td></tr>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>Center( oWnd )</code></td><td>Centers the window on screen or within the given parent.</td></tr>
+<tr><td><code>Maximize()</code></td><td>Maximizes the window via <code>ShowWindow( SW_MAXIMIZE )</code>.</td></tr>
+<tr><td><code>Minimize()</code></td><td>Minimizes the window to the taskbar.</td></tr>
+<tr><td><code>Restore()</code></td><td>Restores a minimized or maximized window to normal state.</td></tr>
+<tr><td><code>Move( nTop, nLeft, nWidth, nHeight )</code></td><td>Repositions and optionally resizes the window.</td></tr>
+<tr><td><code>SetText( cText )</code></td><td>Changes the window caption / title bar text.</td></tr>
+<tr><td><code>SetFont( oFont )</code></td><td>Assigns a new font and refreshes all child controls.</td></tr>
+<tr><td><code>SetColor( nClrText, nClrBack )</code></td><td>Sets foreground and background colors, creating a brush.</td></tr>
+<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Resizes the window to exact pixel dimensions.</td></tr>
+<tr><td><code>Enable() / Disable()</code></td><td>Enables or disables user interaction.</td></tr>
+<tr><td><code>Show() / Hide()</code></td><td>Controls visibility without destroying the window.</td></tr>
+<tr><td><code>Refresh()</code></td><td>Forces a repaint (<code>InvalidateRect</code> + <code>UpdateWindow</code>).</td></tr>
+<tr><td><code>AddControl( oCtrl )</code></td><td>Adds a child control to <code>aControls</code>.</td></tr>
+<tr><td><code>DispBegin() / DispEnd()</code></td><td>Bracket double-buffered painting to eliminate flicker.</td></tr>
+<tr><td><code>CoorsUpdate()</code></td><td>Synchronizes <code>nTop/nLeft/nBottom/nRight</code> with the actual window rect.</td></tr>
+<tr><td><code>GetCliRect()</code></td><td>Returns the client area rectangle as an array <code>{ nTop, nLeft, nBottom, nRight }</code>.</td></tr>
+<tr><td><code>Create( cClass, nStyle, nExStyle )</code></td><td>Creates the Win32 window via CreateWindowEx().</td></tr>
+<tr><td><code>Resize( nW, nH )</code></td><td>Resize the window. Triggers bResized.</td></tr>
+<tr><td><code>SetMenu( oMenu )</code></td><td>Assign a TMenu as the main menu bar.</td></tr>
+<tr><td><code>DefControl( oCtrl )</code></td><td>Set the default focus control for the window.</td></tr>
+<tr><td><code>Destroy()</code></td><td>DestroyWindow() immediately; skips bValid.</td></tr>
+<tr><td><code>Say( nRow, nCol, cText, hDC, nClrT, nClrB, oFont, nAlign, lPixel )</code></td><td>Draw text directly on the window.</td></tr>
+<tr><td><code>GetDC() / ReleaseDC( hDC )</code></td><td>Obtain/release a device context for manual GDI drawing.</td></tr>
+<tr><td><code>SaveState( cSection, cFile )</code></td><td>Save window position, size, and state to INI.</td></tr>
+<tr><td><code>RestoreState( cSection, cFile )</code></td><td>Restore window position, size, and state from INI.</td></tr>
 </table>
 
-<h2 id="commands">Comandos: DEFINE WINDOW / ACTIVATE WINDOW</h2>
-<p>O FiveWin fornece comandos de preprocessador que se traduzem em chamadas de métodos de TWindow. Esta é a forma recomendada de criar janelas:</p>
+<h2 id="commands">Commands: DEFINE WINDOW / ACTIVATE WINDOW</h2>
+<p>FiveWin provides preprocessor commands that translate to TWindow method calls. This is the recommended way to create windows:</p>
 
 <h3 id="define-window">DEFINE WINDOW</h3>
 <pre><code>DEFINE WINDOW oWnd ;
@@ -162,7 +199,7 @@ classDiagram
    [ ON DROP bDropFiles ] ;
    [ CENTERED ]</code></pre>
 
-<h2 id="lifecycle">Ciclo de Vida da Janela</h2>
+<h2 id="lifecycle">Window Lifecycle</h2>
 <div class="mermaid">
 flowchart LR
     A["DEFINE WINDOW<br/>(TWindow:New)"] --> B["Build Menu,<br/>Toolbar, StatusBar"]
@@ -175,9 +212,9 @@ flowchart LR
     G -->|"bValid returns .F."| F
     H --> I["Activate() returns"]
 </div>
-<p>O ponto-chave é que <code>Activate()</code> é uma chamada bloqueante que executa o loop de mensagens do Windows. O código colocado após <code>ACTIVATE WINDOW</code> só executa depois que a janela é fechada.</p>
+<p>The key insight is that <code>Activate()</code> is a blocking call that runs the Windows message loop. Code placed after <code>ACTIVATE WINDOW</code> only runs after the window has been closed.</p>
 
-<h2 id="example-basic">Exemplo: Janela Principal com Menu, Barra de Ferramentas e Barra de Status</h2>
+<h2 id="example-basic">Example: Main Window with Menu, Toolbar, and StatusBar</h2>
 <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -232,8 +269,8 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-mdi">Exemplo: Aplicação MDI</h2>
-<p>MDI (Interface de Múltiplos Documentos) permite que uma janela frame principal hospede múltiplas janelas filhas. O FiveWin fornece <code>TMDIFrame</code> e <code>TMDIChild</code>, ambos derivados de TWindow:</p>
+<h2 id="example-mdi">Example: MDI Application</h2>
+<p>MDI (Multiple Document Interface) allows a main frame window to host multiple child windows. FiveWin provides <code>TMDIFrame</code> and <code>TMDIChild</code>, both derived from TWindow:</p>
 <pre><code>#include "FiveWin.ch"
 
 static oWnd
@@ -291,23 +328,39 @@ static function NewChild()
 
 return nil</code></pre>
 
-<h2 id="tips">Dicas de Uso</h2>
+<h2 id="tips">Usage Tips</h2>
 <ul>
-<li><strong>Pintura com buffer duplo</strong> &mdash; Envolva a pintura personalizada dentro de <code>DispBegin()</code> / <code>DispEnd()</code> para eliminar tremulação.</li>
-<li><strong>Persistência da posição da janela</strong> &mdash; Salve <code>nTop, nLeft, nBottom, nRight</code> em um arquivo INI no <code>bValid</code> e restaure-os no <code>New()</code>.</li>
-<li><strong>Fundos gradientes</strong> &mdash; Defina <code>aGradColors</code> como um array de pares de cores: <code>oWnd:SetGradient( { { 0.5, nRGB(40,40,50), nRGB(20,20,30) }, { 0.5, nRGB(20,20,30), nRGB(10,10,15) } } )</code>.</li>
-<li><strong>Unicode</strong> &mdash; Passe <code>UNICODE</code> no comando <code>DEFINE WINDOW</code>, ou chame <code>FW_SetUnicode( .T. )</code> globalmente, para usar as APIs Win32 de caracteres largos.</li>
-<li><strong>aControls</strong> &mdash; Itere os controles filhos via <code>AEval( oWnd:aControls, {|o| o:Refresh() } )</code> ou o método mais recente <code>ForEachControl()</code>.</li>
-<li><strong>Suporte a múltiplos monitores</strong> &mdash; Passe <code>oMonitor</code> para <code>Activate()</code> para abrir a janela em um monitor específico em configurações com múltiplas telas.</li>
+<li><strong>Double-buffered painting</strong> &mdash; Wrap custom painting inside <code>DispBegin()</code> / <code>DispEnd()</code> to eliminate flicker.</li>
+<li><strong>Window position persistence</strong> &mdash; Save <code>nTop, nLeft, nBottom, nRight</code> to an INI file in <code>bValid</code> and restore them in <code>New()</code>.</li>
+<li><strong>Gradient backgrounds</strong> &mdash; Set <code>aGradColors</code> to an array of color pairs: <code>oWnd:SetGradient( { { 0.5, nRGB(40,40,50), nRGB(20,20,30) }, { 0.5, nRGB(20,20,30), nRGB(10,10,15) } } )</code>.</li>
+<li><strong>Unicode</strong> &mdash; Pass <code>UNICODE</code> in the <code>DEFINE WINDOW</code> command, or call <code>FW_SetUnicode( .T. )</code> globally, to use wide-character Win32 APIs.</li>
+<li><strong>aControls</strong> &mdash; Iterate child controls via <code>AEval( oWnd:aControls, {|o| o:Refresh() } )</code> or the newer <code>ForEachControl()</code> method.</li>
+<li><strong>Monitor-aware</strong> &mdash; Pass <code>oMonitor</code> to <code>Activate()</code> to open the window on a specific monitor in multi-display setups.</li>
 </ul>
+
+<h2 id="docking">Docking Bars</h2>
+<p>TWindow provides dedicated docking slots for arranging controls around the window edges. Assign a control to the appropriate slot and call the corresponding adjustment method to create resizable layouts:</p>
+
+<table>
+<tr><th>Slot</th><th>Data</th><th>Adj Method</th><th>Position</th></tr>
+<tr><td>Top toolbar</td><td><code>oBar</code></td><td>Auto-docked</td><td>Top edge, full width</td></tr>
+<tr><td>Top dock</td><td><code>oTop</code></td><td><code>AdjTop()</code></td><td>Top edge, below <code>oBar</code></td></tr>
+<tr><td>Bottom dock</td><td><code>oBottom</code></td><td><code>AdjBottom()</code></td><td>Bottom edge, above <code>oMsgBar</code></td></tr>
+<tr><td>Left dock</td><td><code>oLeft</code></td><td><code>AdjLeft()</code></td><td>Left edge, between top and bottom</td></tr>
+<tr><td>Right dock</td><td><code>oRight</code></td><td><code>AdjRight()</code></td><td>Right edge, between top and bottom</td></tr>
+<tr><td>Client area</td><td><code>oClient</code></td><td><code>AdjClient()</code></td><td>Fills remaining space</td></tr>
+<tr><td>Status bar</td><td><code>oMsgBar</code></td><td>Auto-docked</td><td>Bottom edge</td></tr>
+</table>
+
+<p>The docking system follows a standard layout algorithm: the message bar occupies the bottom, the toolbar the top, then left/right docks claim their widths, and the client control fills whatever space remains. Assign a control to the slot and call <code>AdjClient()</code> (or the specific <code>Adj*()</code> method) to position it. In the <code>ON RESIZE</code> handler, call the methods again to adapt to size changes.</p>
 
 <h2 id="see-also">Veja Também</h2>
 <ul>
-<li><a href="tdialog.html">TDialog</a> &mdash; Caixas de diálogo modais e não-modais (herda de TWindow)</li>
-<li><a href="tcontrol.html">TControl</a> &mdash; Classe base para todos os controles UI (herda de TWindow)</li>
-<li><a href="../../pt/ui/tmenu.html">TMenu</a> &mdash; Sistema de menus</li>
+<li><a href="tdialog.html">TDialog</a> &mdash; Modal and modeless dialog boxes (inherits from TWindow)</li>
+<li><a href="tcontrol.html">TControl</a> &mdash; Base class for all UI controls (inherits from TWindow)</li>
+<li><a href="../../pt/ui/tmenu.html">TMenu</a> &mdash; Menu system</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

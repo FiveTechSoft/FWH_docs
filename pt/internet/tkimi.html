@@ -15,27 +15,27 @@
 <p class="class-source">Fonte: <code>source/classes/tkimi.prg</code></p>
 
 <p>
-TKimi é o cliente FiveWin para a <strong>API Moonshot Kimi</strong>. Apresenta um método
-<code>Send()</code> unificado que deteta automaticamente o tipo de entrada: texto simples, ficheiro
-de imagem local, URL de imagem ou pedido de streaming. Este design simplifica a integração eliminando
-a necessidade de chamar métodos diferentes para diferentes tipos de entrada. Os modelos Kimi oferecem
-fortes capacidades multilingues com janelas de contexto de 8K a 128K tokens.
+TKimi is FiveWin's client for the <strong>Moonshot Kimi API</strong>. It features a unified
+<code>Send()</code> method that automatically detects the input type: plain text, local image file,
+image URL, or streaming request. This design simplifies integration by eliminating the
+need to call different methods for different input types. Kimi models offer strong
+multilingual capabilities with context windows from 8K to 128K tokens.
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
-    subgraph "Aplicação FiveWin"
-        A[TKimi<br/>Send() Unificado]
+    subgraph "FiveWin Application"
+        A[TKimi<br/>Unified Send()]
     end
-    subgraph "Deteção de Entrada"
-        B[Texto Simples]
-        C[Ficheiro de Imagem Local]
-        D[URL de Imagem]
+    subgraph "Input Detection"
+        B[Plain Text]
+        C[Local Image File]
+        D[Image URL]
         E[Streaming<br/>Callback]
     end
-    subgraph "API Moonshot"
+    subgraph "Moonshot API"
         F["api.moonshot.ai/v1/chat/completions"]
     end
     A --> B
@@ -48,40 +48,40 @@ flowchart LR
     E --> F
 </div>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cKey</code></td><td>Caractere</td><td><code>""</code></td><td>Chave da API Moonshot. Lê a variável de ambiente <code>KIMI_API_KEY</code> se vazia.</td></tr>
-<tr><td><code>cModel</code></td><td>Caractere</td><td><code>"moonshot-v1-8k"</code></td><td>Nome do modelo: <code>moonshot-v1-8k</code>, <code>moonshot-v1-32k</code> ou <code>moonshot-v1-128k</code></td></tr>
-<tr><td><code>cPrompt</code></td><td>Caractere</td><td></td><td>Último prompt enviado à API</td></tr>
-<tr><td><code>cResponse</code></td><td>Caractere</td><td></td><td>Resposta JSON bruta da API</td></tr>
-<tr><td><code>cUrl</code></td><td>Caractere</td><td></td><td>URL do endpoint da API (auto-definido para endpoint Moonshot)</td></tr>
-<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>Handle easy do libcurl</td></tr>
-<tr><td><code>nError</code></td><td>Numérico</td><td><code>0</code></td><td>Código de erro curl (0 = sucesso)</td></tr>
-<tr><td><code>nHttpCode</code></td><td>Numérico</td><td><code>0</code></td><td>Código de estado da resposta HTTP</td></tr>
-<tr><td><code>nTemperature</code></td><td>Numérico</td><td><code>0.5</code></td><td>Temperatura de amostragem (0.0 - 2.0)</td></tr>
+<tr><td><code>cKey</code></td><td>Character</td><td><code>""</code></td><td>Moonshot API key. Reads <code>KIMI_API_KEY</code> env var if empty.</td></tr>
+<tr><td><code>cModel</code></td><td>Character</td><td><code>"moonshot-v1-8k"</code></td><td>Model name: <code>moonshot-v1-8k</code>, <code>moonshot-v1-32k</code>, or <code>moonshot-v1-128k</code></td></tr>
+<tr><td><code>cPrompt</code></td><td>Character</td><td></td><td>Last prompt sent to the API</td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Raw JSON response from the API</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td></td><td>API endpoint URL (auto-set to Moonshot endpoint)</td></tr>
+<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>libcurl easy handle</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>curl error code (0 = success)</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>HTTP response status code</td></tr>
+<tr><td><code>nTemperature</code></td><td>Numeric</td><td><code>0.5</code></td><td>Sampling temperature (0.0 - 2.0)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cKey, cModel )</code></td><td>Criar uma instância TKimi. Se <code>cKey</code> estiver vazio, lê <code>KIMI_API_KEY</code> do ambiente.</td></tr>
-<tr><td><code>Send( xInput, uOptional )</code></td><td>Método de envio unificado. Deteta automaticamente o tipo de entrada: string de texto simples, caminho de ficheiro local (envia como imagem), URL HTTP (envia como URL de imagem), ou se o segundo parâmetro for um bloco de código (streaming).</td></tr>
-<tr><td><code>GetValue()</code></td><td>Extrair a resposta de texto do JSON em <code>cResponse</code>. Navega <code>choices[1].message.content</code>.</td></tr>
-<tr><td><code>End()</code></td><td>Limpar o handle libcurl.</td></tr>
+<tr><td><code>New( cKey, cModel )</code></td><td>Create a TKimi instance. If <code>cKey</code> is empty, reads <code>KIMI_API_KEY</code> from the environment.</td></tr>
+<tr><td><code>Send( xInput, uOptional )</code></td><td>Unified send method. Auto-detects the input type: plain text string, local file path (sends as image), HTTP URL (sends as image URL), or if the second parameter is a codeblock (streaming).</td></tr>
+<tr><td><code>GetValue()</code></td><td>Extract the text response from the JSON in <code>cResponse</code>. Navigates <code>choices[1].message.content</code>.</td></tr>
+<tr><td><code>End()</code></td><td>Clean up the libcurl handle.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example-text">Exemplo: Prompt de Texto Simples</h2>
+<h2 id="example-text">Example: Plain Text Prompt</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -100,7 +100,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-image">Exemplo: Análise de URL de Imagem</h2>
+<h2 id="example-image">Example: Image URL Analysis</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -120,7 +120,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-stream">Exemplo: Resposta em Stream</h2>
+<h2 id="example-stream">Example: Streaming Response</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -140,18 +140,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O método <code>Send()</code> deteta tipos de entrada automaticamente: um caminho de ficheiro existente ativa upload de imagem, um URL começando com <code>"http"</code> ativa modo de URL de imagem, um bloco de código como segundo parâmetro ativa streaming, e texto simples envia um pedido de chat normal.</li>
-<li>TKimi requer a biblioteca <code>hb_curl</code>. Inclua <code>#include "hbcurl.ch"</code> para constantes curl.</li>
-<li>A chave da API pode ser lida da variável de ambiente <code>KIMI_API_KEY</code> passando uma chave vazia para <code>New()</code>.</li>
-<li>Modelos Kimi: <code>moonshot-v1-8k</code> (contexto 8K), <code>moonshot-v1-32k</code> (contexto 32K) e <code>moonshot-v1-128k</code> (contexto 128K).</li>
-<li>A verificação SSL está desativada por padrão para ampla compatibilidade.</li>
+<li>The <code>Send()</code> method detects input types automatically: an existing file path triggers image upload, a URL starting with <code>"http"</code> triggers image URL mode, a codeblock as second parameter enables streaming, and plain text sends a standard chat completion request.</li>
+<li>TKimi requires the <code>hb_curl</code> library. Include <code>#include "hbcurl.ch"</code> for curl constants.</li>
+<li>The API key can be read from the <code>KIMI_API_KEY</code> environment variable by passing an empty key to <code>New()</code>.</li>
+<li>Kimi models: <code>moonshot-v1-8k</code> (8K context), <code>moonshot-v1-32k</code> (32K context), and <code>moonshot-v1-128k</code> (128K context).</li>
+<li>SSL verification is disabled by default for broad compatibility.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tipaddress.html">&larr; tipaddress</a> | <a href="../../pt/ui/tknob.html">tknob &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

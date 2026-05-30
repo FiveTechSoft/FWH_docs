@@ -13,45 +13,45 @@
 
 <h1>TImageList</h1>
 <p class="class-source">Fonte: <code>source/classes/timaglst.prg</code></p>
-<p class="class-hierarchy">Classe independente (não derivada de TControl)</p>
+<p class="class-hierarchy">Standalone class (not derived from TControl)</p>
 
 <p>
-TImageList é um wrapper independente em torno da API Win32 HIMAGELIST para gerenciar coleções
-de ícones e bitmaps de tamanho igual. As listas de imagens são amplamente utilizadas por tree views, list views,
-controles de abas, barras de ferramentas e outros controles comuns para gerenciar conjuntos de ícones de forma eficiente.
+TImageList is a standalone wrapper around the Win32 HIMAGELIST API for managing collections
+of icons and bitmaps of equal size. Image lists are used extensively by tree views, list views,
+tab controls, toolbars, and other common controls to efficiently manage icon sets.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hImageList</code></td><td>Handle</td><td>Handle Win32 HIMAGELIST</td></tr>
-<tr><td><code>aBitmaps</code></td><td>Array</td><td>Array de objetos TBitmap adicionados à lista</td></tr>
+<tr><td><code>hImageList</code></td><td>Handle</td><td>Win32 HIMAGELIST handle</td></tr>
+<tr><td><code>aBitmaps</code></td><td>Array</td><td>Array of TBitmap objects added to the list</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nWidth, nHeight )</code></td><td>Cria uma nova lista de imagens. O tamanho padrão é 16x16 pixels.</td></tr>
-<tr><td><code>Add( oBmpImage, oBmpMask )</code></td><td>Adiciona uma imagem com bitmap de máscara opcional à lista. Retorna o índice da imagem.</td></tr>
-<tr><td><code>AddMasked( oBmpImage, nClrMask )</code></td><td>Adiciona uma imagem usando uma cor transparente como máscara. Retorna o índice da imagem.</td></tr>
-<tr><td><code>AddIcon( oIcon )</code></td><td>Adiciona um ícone (objeto TIcon ou nome de arquivo/recurso de ícone) à lista. Retorna o índice da imagem.</td></tr>
-<tr><td><code>AddImage( cFile )</code></td><td>Carrega e adiciona uma imagem a partir de um caminho de arquivo. Retorna o índice da imagem.</td></tr>
-<tr><td><code>ReadBitmap( cFile, nWidth, nImages, nClrTransparent )</code></td><td>Carrega uma faixa de bitmaps de um arquivo, dividida em <code>nImages</code> quadros, usando <code>nClrTransparent</code> como a cor de máscara transparente.</td></tr>
-<tr><td><code>SetBkColor( nColor )</code></td><td>Define a cor de fundo usada ao renderizar imagens mascaradas. Use CLR_NONE para fundo transparente.</td></tr>
-<tr><td><code>End()</code></td><td>Destrói a lista de imagens e libera todos os recursos associados.</td></tr>
+<tr><td><code>New( nWidth, nHeight )</code></td><td>Create a new image list. Default size is 16x16 pixels.</td></tr>
+<tr><td><code>Add( oBmpImage, oBmpMask )</code></td><td>Add an image with optional mask bitmap to the list. Returns the image index.</td></tr>
+<tr><td><code>AddMasked( oBmpImage, nClrMask )</code></td><td>Add an image using a transparent color as mask. Returns the image index.</td></tr>
+<tr><td><code>AddIcon( oIcon )</code></td><td>Add an icon (TIcon object or icon file/resource name) to the list. Returns the image index.</td></tr>
+<tr><td><code>AddImage( cFile )</code></td><td>Load and add an image from a file path. Returns the image index.</td></tr>
+<tr><td><code>ReadBitmap( cFile, nWidth, nImages, nClrTransparent )</code></td><td>Load a bitmap strip from a file, split into <code>nImages</code> frames, using <code>nClrTransparent</code> as the transparent mask color.</td></tr>
+<tr><td><code>SetBkColor( nColor )</code></td><td>Set the background color used when rendering masked images. Use CLR_NONE for transparent background.</td></tr>
+<tr><td><code>End()</code></td><td>Destroy the image list and release all associated resources.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Criar uma Lista de Imagens para uma Barra de Ferramentas</h2>
+<h2 id="example">Example: Creating an Image List for a Toolbar</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -61,33 +61,33 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "ImageList Demo" SIZE 500, 300
 
-   // Cria uma lista de imagens 24x24
+   // Create a 24x24 image list
    oImgList := TImageList():New( 24, 24 )
 
-   // Adiciona bitmaps mascarados (usando magenta como cor transparente)
+   // Add masked bitmaps (using magenta as transparent color)
    oImgList:AddMasked( TBitmap():Load( "bitmaps\new.bmp"  ), CLR_MAGENTA )
    oImgList:AddMasked( TBitmap():Load( "bitmaps\open.bmp" ), CLR_MAGENTA )
    oImgList:AddMasked( TBitmap():Load( "bitmaps\save.bmp" ), CLR_MAGENTA )
 
-   // Vincula a uma barra de botões de ferramentas
+   // Attach to a toolbar button bar
    oBar := TButtonBar():New( oWnd, , , oImgList )
 
    ACTIVATE WINDOW oWnd CENTERED
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TImageList é uma classe não visual e não herda de TControl. Ela gerencia o ciclo de vida de um handle Win32 HIMAGELIST que pode ser compartilhado entre múltiplos controles comuns.</li>
-<li>Todas as imagens em uma única lista de imagens devem ter o mesmo tamanho (largura e altura), o qual é especificado no momento da criação em <code>New()</code>.</li>
-<li>O método <code>AddMasked()</code> é a forma mais comum de adicionar bitmaps, usando uma cor transparente (tipicamente CLR_MAGENTA ou CLR_WHITE) para criar a máscara automaticamente.</li>
-<li><code>ReadBitmap()</code> é útil para carregar faixas de bitmaps (várias imagens dispostas horizontalmente em um único arquivo de bitmap). Especifique o número de imagens e a cor transparente para dividi-las automaticamente.</li>
-<li>Sempre chame <code>End()</code> quando a lista de imagens não for mais necessária para evitar vazamentos de handles GDI. A lista de imagens é frequentemente destruída automaticamente quando a janela pai é destruída.</li>
+<li>TImageList is a non-visual class and does not inherit from TControl. It manages the lifecycle of a Win32 HIMAGELIST handle that can be shared across multiple common controls.</li>
+<li>All images in a single image list must be the same size (width and height), which is specified at creation time in <code>New()</code>.</li>
+<li>The <code>AddMasked()</code> method is the most common way to add bitmaps, using a transparent color (typically CLR_MAGENTA or CLR_WHITE) to create the mask automatically.</li>
+<li><code>ReadBitmap()</code> is useful for loading bitmap strips (multiple images arranged horizontally in a single bitmap file). Specify the number of images and the transparent color to split them automatically.</li>
+<li>Always call <code>End()</code> when the image list is no longer needed to avoid GDI handle leaks. The image list is often destroyed automatically when the parent window is destroyed.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/timagebase64.html">&larr; timagebase64</a> | <a href="../../pt/data/tindex.html">tindex &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

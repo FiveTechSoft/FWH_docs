@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MariaDB / MySQL - FWH Docs</title>
+<title>MariaDB / MySQL - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -12,16 +12,16 @@
 <main id="content">
 
 <h1>MariaDB / MySQL</h1>
-<p class="class-source">Source: <code>source/classes/mariarec.prg</code> (FWMariaRecord), <code>source/classes/mariadb.prg</code> (FWMariaConnection)</p>
+<p class="class-source">Fonte: <code>source/classes/mariarec.prg</code> (FWMariaRecord), <code>source/classes/mariadb.prg</code> (FWMariaConnection)</p>
 
 <p>
-O FiveWin fornece suporte nativo a MariaDB/MySQL atraves da biblioteca cliente <code>libmariadb.dll</code> (32-bit) ou
-<code>libmariadb64.dll</code> (64-bit). As duas classes principais sao
-<code>FWMariaConnection</code> (gerencia a conexao TCP/IP e execucao de SQL) e
-<code>FWMariaRecord</code> (estende TDataRow para operacoes CRUD de registro unico com suporte automatico a Upsert).
+FiveWin provides native MariaDB/MySQL support through the <code>libmariadb.dll</code> (32-bit) or
+<code>libmariadb64.dll</code> (64-bit) client library. The two primary classes are
+<code>FWMariaConnection</code> (manages the TCP/IP connection and SQL execution) and
+<code>FWMariaRecord</code> (extends TDataRow for single-record CRUD operations with automatic Upsert support).
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart TB
@@ -47,12 +47,12 @@ flowchart TB
 <h2 id="connection">FWMariaConnection</h2>
 
 <p>
-A classe de conexao gerencia o vinculo com o servidor MariaDB/MySQL. Operacoes principais:
+The connection class manages the link to the MariaDB/MySQL server. Key operations:
 </p>
 
 <table>
 <thead>
-<tr><th>Method / DATA</th><th>Descrição</th></tr>
+<tr><th>Method / DATA</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New( cServer, cUser, cPassword, cDatabase, nPort )</code></td><td>Create and open a connection</td></tr>
@@ -75,15 +75,15 @@ A classe de conexao gerencia o vinculo com o servidor MariaDB/MySQL. Operacoes p
 <h2 id="fwmariarecord">FWMariaRecord</h2>
 
 <p>
-FWMariaRecord estende <code>TDataRow</code> para fornecer acesso a registro unico em uma tabela MariaDB.
-Gerencia o carregamento, edicao e salvamento de registros individuais com deteccao automatica de chave primaria.
+FWMariaRecord extends <code>TDataRow</code> to provide single-record access to a MariaDB table.
+It handles loading, editing, and saving individual records with automatic primary key detection.
 </p>
 
-<h3>Membros DATA Principais</h3>
+<h3>Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>oCn</code></td><td>Object</td><td>FWMariaConnection object</td></tr>
@@ -96,11 +96,11 @@ Gerencia o carregamento, edicao e salvamento de registros individuais com detecc
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New( oCn, cTable, cWhere )</code></td><td>Create and load a record. If cWhere is nil, loads blank.</td></tr>
@@ -112,7 +112,7 @@ Gerencia o carregamento, edicao e salvamento de registros individuais com detecc
 </tbody>
 </table>
 
-<h2 id="data-flow">Fluxo de Dados: Operacao de Salvamento</h2>
+<h2 id="data-flow">Data Flow: Save Operation</h2>
 
 <div class="mermaid">
 sequenceDiagram
@@ -136,7 +136,7 @@ sequenceDiagram
     Rec-->>App: lSaved = .T.
 </div>
 
-<h2 id="example-connect">Exemplo: Configuracao de Conexao</h2>
+<h2 id="example-connect">Example: Connection Setup</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -164,7 +164,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-query">Exemplo: Executar Consultas</h2>
+<h2 id="example-query">Example: Execute Queries</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -197,7 +197,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-crud">Exemplo: CRUD com FWMariaRecord</h2>
+<h2 id="example-crud">Example: CRUD with FWMariaRecord</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -241,7 +241,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-xbrowse">Exemplo: XBrowse com MariaDB</h2>
+<h2 id="example-xbrowse">Example: XBrowse with MariaDB</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -266,37 +266,37 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="dll-setup">Configuracao da DLL</h2>
+<h2 id="dll-setup">DLL Setup</h2>
 
 <p>
-O suporte a MariaDB do FiveWin requer a biblioteca cliente nativa:
+FiveWin's MariaDB support requires the native client library:
 </p>
 
 <ul>
-<li><strong>Aplicacoes 32-bit:</strong> <code>libmariadb.dll</code></li>
-<li><strong>Aplicacoes 64-bit:</strong> <code>libmariadb64.dll</code></li>
+<li><strong>32-bit applications:</strong> <code>libmariadb.dll</code></li>
+<li><strong>64-bit applications:</strong> <code>libmariadb64.dll</code></li>
 </ul>
 
 <p>
-Coloque a DLL apropriada no diretorio da sua aplicacao ou no PATH do sistema. Voce pode baixar
-o MariaDB Connector/C em <a href="https://mariadb.com/downloads/connectors/" target="_blank">mariadb.com</a>.
-O mesmo conector funciona para conectar a servidores MySQL.
+Place the appropriate DLL in your application directory or in the system PATH. You can download
+the MariaDB Connector/C from <a href="https://mariadb.com/downloads/connectors/" target="_blank">mariadb.com</a>.
+The same connector works for connecting to MySQL servers.
 </p>
 
-<h2 id="tips">Dicas</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-<li>FWMariaRecord detecta automaticamente chaves primarias usando flags de coluna da estrutura da tabela.
-    Isso habilita o mecanismo <code>Upsert()</code> para decidir entre INSERT e UPDATE.</li>
-<li>O DATA <code>nAutoIncFld</code> rastreia a posicao da coluna auto-incremento. Apos um INSERT,
-    o novo valor de auto-incremento e automaticamente atribuido ao registro.</li>
-<li>Campos de caractere sao preenchidos ate o comprimento definido quando <code>lUnicode</code> e .T.,
-    usando funcoes de string com suporte a UTF-8.</li>
-<li>Use <code>oCn:ValToSql()</code> para escapar valores com seguranca para strings SQL, prevenindo SQL injection.</li>
+<li>FWMariaRecord automatically detects primary keys using column flags from the table structure.
+    This enables the <code>Upsert()</code> mechanism to decide between INSERT and UPDATE.</li>
+<li>The <code>nAutoIncFld</code> DATA tracks the auto-increment column position. After an INSERT,
+    the new auto-increment value is automatically assigned to the record.</li>
+<li>Character fields are padded to their defined length when <code>lUnicode</code> is .T.,
+    using UTF-8 aware string Funções.</li>
+<li>Use <code>oCn:ValToSql()</code> to safely escape values for SQL strings, preventing SQL injection.</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

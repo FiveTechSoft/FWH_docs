@@ -13,51 +13,51 @@
 
 <h1>TImage</h1>
 <p class="class-source">Fonte: <code>source/classes/image.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TImage é um controle de imagem estendido que exibe bitmaps, ícones e metafiles dentro de uma janela ou diálogo. Ele estende TBitmap com capacidades adicionais: carregamento a partir de arquivos, recursos, buffers de memória e URLs; salvamento de imagens em vários formatos (BMP, PNG, JPG, GIF, TIFF); rotação; e um indicador de progresso integrado. TImage é o controle recomendado para exibir imagens estáticas em aplicações FiveWin.
+TImage is an extended image control that displays bitmaps, icons, and metafiles within a window or dialog. It extends TBitmap with additional capabilities: loading from files, resources, memory buffers, and URLs; saving images in various formats (BMP, PNG, JPG, GIF, TIFF); rotation; and a built-in progress indicator. TImage is the recommended control for displaying static images in FiveWin applications.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nProgress</code></td><td>Numeric</td><td>Porcentagem de progresso (0-100). Quando definido, uma barra de progresso é sobreposta à imagem.</td></tr>
-<tr><td><code>nFormat</code></td><td>Numeric</td><td>Identificador do formato de imagem usado ao salvar. Valores: 0=BMP, 1=JPG, 2=PNG, 3=GIF, 4=TIFF.</td></tr>
-<tr><td><code>cBmpFile</code></td><td>Character</td><td>Caminho do arquivo de origem da imagem exibida.</td></tr>
-<tr><td><code>cBmpRes</code></td><td>Character</td><td>Nome do recurso da imagem exibida (se carregada a partir de recursos).</td></tr>
-<tr><td><code>hBitmap</code></td><td>Numeric (Handle)</td><td>Handle do bitmap atualmente exibido.</td></tr>
-<tr><td><code>lStretch</code></td><td>Logical</td><td>Se <code>.T.</code>, a imagem é esticada para preencher as dimensões do controle.</td></tr>
-<tr><td><code>lAdjust</code></td><td>Logical</td><td>Se <code>.T.</code>, o tamanho do controle é ajustado para coincidir com as dimensões da imagem.</td></tr>
-<tr><td><code>nAngle</code></td><td>Numeric</td><td>Ângulo de rotação atual em graus.</td></tr>
+<tr><td><code>nProgress</code></td><td>Numeric</td><td>Progress percentage (0-100). When set, a progress bar is overlaid on the image.</td></tr>
+<tr><td><code>nFormat</code></td><td>Numeric</td><td>Image format identifier used when saving. Values: 0=BMP, 1=JPG, 2=PNG, 3=GIF, 4=TIFF.</td></tr>
+<tr><td><code>cBmpFile</code></td><td>Character</td><td>Source file path of the displayed image.</td></tr>
+<tr><td><code>cBmpRes</code></td><td>Character</td><td>Resource name of the displayed image (if loaded from resources).</td></tr>
+<tr><td><code>hBitmap</code></td><td>Numeric (Handle)</td><td>Handle to the currently displayed bitmap.</td></tr>
+<tr><td><code>lStretch</code></td><td>Logical</td><td>If <code>.T.</code>, the image is stretched to fit the control dimensions.</td></tr>
+<tr><td><code>lAdjust</code></td><td>Logical</td><td>If <code>.T.</code>, the control size adjusts to match the image dimensions.</td></tr>
+<tr><td><code>nAngle</code></td><td>Numeric</td><td>Current rotation angle in degrees.</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, cRes, cFile, oWnd, lNoBorder, lStretch, lAdjust, oFont, bClrGrad, ... )</code></td><td>Cria um novo controle de imagem. Aceita um nome de recurso (<code>cRes</code>) ou um caminho de arquivo (<code>cFile</code>). Parâmetros adicionais controlam a borda, o comportamento de esticamento e a cor de gradiente.</td></tr>
-<tr><td><code>Define( cRes, cFile, oWnd )</code></td><td>Construtor alternativo para criar o controle após a instanciação.</td></tr>
-<tr><td><code>LoadImage( cRes, cFile )</code></td><td>Carrega uma imagem a partir de um nome de recurso ou caminho de arquivo, substituindo a imagem atual.</td></tr>
-<tr><td><code>SaveImage( cFile, nFmt, nQuality )</code></td><td>Salva a imagem atual em um arquivo. <code>nFmt</code> especifica o formato (0=BMP, 1=JPG, 2=PNG, 3=GIF, 4=TIFF). <code>nQuality</code> aplica-se a JPG (0-100).</td></tr>
-<tr><td><code>LoadFromMemory( cBuf, nW, nH )</code></td><td>Carrega uma imagem a partir de um buffer de memória contendo dados de bitmap brutos.</td></tr>
-<tr><td><code>LoadFromURL( cUrl )</code></td><td>Baixa e exibe uma imagem a partir de uma URL. Os dados da imagem são obtidos por meio de uma requisição HTTP interna.</td></tr>
-<tr><td><code>RotateImage( nAngle )</code></td><td>Rotaciona a imagem exibida pelo ângulo especificado em graus. Cria um novo bitmap rotacionado.</td></tr>
-<tr><td><code>Progress( lOn )</code></td><td>Mostra ou oculta um indicador de progresso sobreposto à imagem. Sem argumentos, alterna a visibilidade.</td></tr>
-<tr><td><code>SetImage( hBmp )</code></td><td>Substitui a imagem exibida por um handle de bitmap. O bitmap anterior não é destruído (chame <code>DeleteObject()</code> se necessário).</td></tr>
-<tr><td><code>End()</code></td><td>Destrói o controle e libera o handle do bitmap.</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, cRes, cFile, oWnd, lNoBorder, lStretch, lAdjust, oFont, bClrGrad, ... )</code></td><td>Create a new image control. Accepts either a resource name (<code>cRes</code>) or file path (<code>cFile</code>). Additional parameters control border, stretch behavior, and gradient color.</td></tr>
+<tr><td><code>Define( cRes, cFile, oWnd )</code></td><td>Alternative constructor for creating the control after instantiation.</td></tr>
+<tr><td><code>LoadImage( cRes, cFile )</code></td><td>Load an image from a resource name or file path, replacing the current image.</td></tr>
+<tr><td><code>SaveImage( cFile, nFmt, nQuality )</code></td><td>Save the current image to a file. <code>nFmt</code> specifies the format (0=BMP, 1=JPG, 2=PNG, 3=GIF, 4=TIFF). <code>nQuality</code> applies to JPG (0-100).</td></tr>
+<tr><td><code>LoadFromMemory( cBuf, nW, nH )</code></td><td>Load an image from a memory buffer containing raw bitmap data.</td></tr>
+<tr><td><code>LoadFromURL( cUrl )</code></td><td>Download and display an image from a URL. The image data is fetched via an internal HTTP request.</td></tr>
+<tr><td><code>RotateImage( nAngle )</code></td><td>Rotate the displayed image by the specified angle in degrees. Creates a new rotated bitmap.</td></tr>
+<tr><td><code>Progress( lOn )</code></td><td>Show or hide an overlaid progress indicator on the image. With no arguments, toggles visibility.</td></tr>
+<tr><td><code>SetImage( hBmp )</code></td><td>Replace the displayed image with a bitmap handle. The previous bitmap is not destroyed (call <code>DeleteObject()</code> if needed).</td></tr>
+<tr><td><code>End()</code></td><td>Destroy the control and release the bitmap handle.</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Comandos: @ ... IMAGE</h2>
+<h2 id="commands">Commands: @ ... IMAGE</h2>
 
 <pre><code>@ nRow, nCol IMAGE oImg ;
    [ FILENAME cFile ] ;
@@ -69,7 +69,7 @@ TImage é um controle de imagem estendido que exibe bitmaps, ícones e metafiles
    [ ADJUST ] ;
    [ TRANSPARENT ]</code></pre>
 
-<h2 id="example">Exemplo: Carregar Imagem de Arquivo e Salvar como PNG</h2>
+<h2 id="example">Example: Load Image from File and Save as PNG</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -82,30 +82,30 @@ function Main()
    @ 20, 20 IMAGE oImg FILENAME "photo.bmp" ;
       SIZE 560, 400 OF oWnd STRETCH
 
-   @ 440, 20 BUTTON "Salvar como PNG" SIZE 120, 30 OF oWnd ;
+   @ 440, 20 BUTTON "Save as PNG" SIZE 120, 30 OF oWnd ;
       ACTION oImg:SaveImage( "photo.png", 2 )   // 2 = PNG
 
-   @ 440, 160 BUTTON "Rotacionar 90" SIZE 120, 30 OF oWnd ;
+   @ 440, 160 BUTTON "Rotate 90" SIZE 120, 30 OF oWnd ;
       ACTION oImg:RotateImage( 90 )
 
    ACTIVATE WINDOW oWnd CENTERED
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TImage herda de TControl, que herda de TWindow. Todos os métodos padrão de controle (<code>Move()</code>, <code>Refresh()</code>, <code>SetFocus()</code>, etc.) estão disponíveis.</li>
-<li>A cláusula <code>STRETCH</code> dimensiona a imagem para preencher as dimensões do controle. Sem ela, a imagem é desenhada em seu tamanho natural.</li>
-<li>A cláusula <code>ADJUST</code> redimensiona o controle para coincidir automaticamente com as dimensões da imagem carregada.</li>
-<li>Os formatos de imagem suportados para carregamento dependem das bibliotecas GDI+ disponíveis no sistema. BMP, PNG, JPG, GIF e TIFF são universalmente suportados no Windows moderno.</li>
-<li><code>SaveImage()</code> usa GDI+ para a conversão de formato. O parâmetro <code>nQuality</code> (1-100) controla o nível de compressão JPG; valores mais altos produzem melhor qualidade, mas arquivos maiores.</li>
-<li><code>LoadFromURL()</code> realiza um download HTTP bloqueante. Para carregamento de imagens de rede sem bloqueio, considere usar <code>TWebClient</code> ou <code>FW_CurlHttp()</code> para baixar os dados primeiro e, em seguida, <code>SetImage()</code>.</li>
-<li>A sobreposição de progresso é útil ao carregar imagens grandes ou durante o processamento em lote. Chame <code>oImg:Progress( .T. )</code> para ativar e, em seguida, defina <code>oImg:nProgress</code> para atualizar a porcentagem.</li>
+<li>TImage inherits from TControl, which inherits from TWindow. All standard control methods (<code>Move()</code>, <code>Refresh()</code>, <code>SetFocus()</code>, etc.) are available.</li>
+<li>The <code>STRETCH</code> clause scales the image to fill the control dimensions. Without it, the image is drawn at its natural size.</li>
+<li>The <code>ADJUST</code> clause resizes the control to match the loaded image's dimensions automatically.</li>
+<li>Image formats supported for loading depend on the GDI+ libraries available on the system. BMP, PNG, JPG, GIF, and TIFF are universally supported on modern Windows.</li>
+<li><code>SaveImage()</code> uses GDI+ for format conversion. The <code>nQuality</code> parameter (1-100) controls JPG compression level; higher values produce better quality but larger files.</li>
+<li><code>LoadFromURL()</code> performs a blocking HTTP download. For non-blocking network image loading, consider using <code>TWebClient</code> or <code>FW_CurlHttp()</code> to download the data first, then <code>SetImage()</code>.</li>
+<li>The progress overlay is useful when loading large images or during batch processing. Call <code>oImg:Progress( .T. )</code> to enable, then set <code>oImg:nProgress</code> to update the percentage.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/ticongroup.html">&larr; ticongroup</a> | <a href="../../pt/reference/timagebase64.html">timagebase64 &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

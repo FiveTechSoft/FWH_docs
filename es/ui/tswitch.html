@@ -13,24 +13,24 @@
 
 <h1>TSwitch</h1>
 <p class="class-source">Fuente: <code>source/classes/tswitch.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TSwitch es un control de interruptor con cuatro modos de renderizado: alternancia estándar, ovalado, estilo radio y casilla de verificación.
-Proporciona un interruptor moderno de encendido/apagado con colores personalizables, tamaño del indicador y apariencia del borde.
-El control admite efectos de desplazamiento del ratón, navegación por teclado y modo de solo lectura.
+TSwitch is a toggle switch control with four rendering modes: standard toggle, oval, radio-style, and check-box.
+It provides a modern on/off switch with customizable colors, thumb size, and border appearance.
+The control supports mouse hover effects, keyboard navigation, and read-only mode.
 </p>
 
-<h2 id="command">Sintaxis del Comando</h2>
+<h2 id="command">Command Syntax</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol SWITCH oSw VAR lVar SIZE nW, nH PIXEL OF oWnd ;
    COLORS nClrOn, nClrOff BORDER nClrBorder</code></pre>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>nBorderSize</code></td><td>Numeric</td><td>Border width of the switch track</td></tr>
@@ -44,11 +44,11 @@ El control admite efectos de desplazamiento del ratón, navegación por teclado 
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New( nRow, nCol, cCaption, bSetGet, oWnd, nWidth, nHeight, nHelpTopic, bChange, oFont, bValid, nClrFore, nClrBack, lDesign, lPixel, cMsg, lUpdate, bWhen, nBorderSize, nClrBorder, nThumbSize, nClrThumb, lRadStyle, lOval )</code></td><td>Create a new TSwitch control</td></tr>
@@ -63,23 +63,23 @@ El control admite efectos de desplazamiento del ratón, navegación por teclado 
 </tbody>
 </table>
 
-<h2 id="modes">Modos de Renderizado</h2>
+<h2 id="modes">Rendering Modes</h2>
 
 <p>TSwitch supports four visual rendering modes determined by the aspect ratio and style flags:</p>
 
 <table>
 <thead>
-<tr><th>Modo</th><th>Disparador</th><th>Descripción</th></tr>
+<tr><th>Mode</th><th>Trigger</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td>Alternancia est
-<tr><td>Ovalado</td><td><code>lOvalStyle := .T.</code></td><td>Pista redondeada en forma de p
-<tr><td>Estilo radio</td><td><code>lRadStyle := .T.</code></td><td>Indicador circular de encendido/apagado</td></tr>
-<tr><td>Casilla de verificaci
+<tr><td>Standard toggle</td><td>Width larger than height</td><td>Rectangular track with sliding thumb (default)</td></tr>
+<tr><td>Oval</td><td><code>lOvalStyle := .T.</code></td><td>Rounded/pill-shaped track with thumb</td></tr>
+<tr><td>Radio-style</td><td><code>lRadStyle := .T.</code></td><td>Circular on/off indicator</td></tr>
+<tr><td>Check-box</td><td>Width equals height</td><td>Square check-box style render</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Toggle with Colors</h2>
+<h2 id="example">Example: Toggle with Colors</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -101,18 +101,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TSwitch usa <code>bSetGet</code> para leer y escribir su estado l
-<li>La cl
-<li>Cuando <code>lReadOnly</code> se establece en <code>.T.</code>, los clics del rat
-<li>Los efectos de desplazamiento del rat
-<li>El control respeta el orden de tabulaci
+<li>TSwitch uses <code>bSetGet</code> to read and write its logical state. The <code>VAR</code> clause in the <code>SWITCH</code> command creates this code block automatically.</li>
+<li>The <code>COLORS</code> clause in the command syntax expects two colors: the first for the ON state track and the second for the OFF state track.</li>
+<li>When <code>lReadOnly</code> is set to <code>.T.</code>, mouse clicks and keyboard input are ignored but the switch can still be changed programmatically via <code>SetCheck()</code>, <code>Check()</code>, or <code>UnCheck()</code>.</li>
+<li>Mouse hover effects are enabled by default. The track and thumb change appearance when the mouse enters the control area.</li>
+<li>The control respects tab-stop order and responds to the Space key for toggling when focused.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/data/tstruct.html">&larr; tstruct</a> | <a href="../../es/reference/tsymbol.html">tsymbol &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

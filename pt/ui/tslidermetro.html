@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TSliderMetro - FWH Docs</title>
+<title>TSliderMetro - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,41 +13,41 @@
 
 <h1>TSliderMetro</h1>
 <p class="class-source">Fonte: <code>source/classes/sliderm.prg</code></p>
-<p class="class-hierarchy">Não herdada de TControl (classe independente)</p>
+<p class="class-hierarchy">Not inherited from TControl (standalone class)</p>
 
 <p>
-TSliderMetro implementa uma tela de deslizar-para-desbloquear no estilo Windows Metro / Modern UI. Ela exibe uma sobreposição de bitmap em tela cheia com os textos "FiveWin touch" e "Slide to unlock", e responde a gestos de arraste vertical. Arrastar o bitmap para cima revela a janela subjacente. Foi projetada para aplicações de quiosque ou tablet com suporte a toque.
+TSliderMetro implements a slide-to-unlock screen in the style of Windows Metro / Modern UI. It displays a full-screen bitmap overlay with "FiveWin touch" and "Slide to unlock" text, and responds to vertical drag gestures. Dragging the bitmap upward reveals the underlying window. It is designed for touch-enabled kiosk or tablet applications.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oBmp</code></td><td>Objeto</td><td>Instância de TBitmap que contém a imagem de fundo em tela cheia</td></tr>
-<tr><td><code>oFont1</code></td><td>Objeto</td><td>Fonte grande ("Segoe UI Light" 90pt negrito) para o texto do título</td></tr>
-<tr><td><code>oFont2</code></td><td>Objeto</td><td>Fonte média ("Segoe UI Light" 60pt negrito) para o texto de instrução</td></tr>
-<tr><td><code>lDrag</code></td><td>Lógico</td><td>Indica que uma operação de arraste está em andamento</td></tr>
+<tr><td><code>oBmp</code></td><td>Object</td><td>TBitmap instance holding the full-screen background image</td></tr>
+<tr><td><code>oFont1</code></td><td>Object</td><td>Large font ("Segoe UI Light" 90pt bold) for the title text</td></tr>
+<tr><td><code>oFont2</code></td><td>Object</td><td>Medium font ("Segoe UI Light" 60pt bold) for the instruction text</td></tr>
+<tr><td><code>lDrag</code></td><td>Logical</td><td>Indicates a drag operation is in progress</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cBmpFile, oWnd )</code></td><td>Cria uma sobreposição de deslizar-para-desbloquear. Carrega o bitmap de fundo e cria as fontes do título</td></tr>
-<tr><td><code>GoBottom()</code></td><td>Anima o bitmap de volta à posição bloqueada (nTop = 0)</td></tr>
-<tr><td><code>GoTop()</code></td><td>Anima o bitmap para cima, para fora da tela, desbloqueando a janela</td></tr>
-<tr><td><code>MouseMove( nRow, nCol )</code></td><td>Rastreia a distância de arraste vertical e reposiciona o bitmap de acordo</td></tr>
+<tr><td><code>New( cBmpFile, oWnd )</code></td><td>Create a slide-to-unlock overlay. Loads the background bitmap and creates the title fonts</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Animate the bitmap back to the locked position (nTop = 0)</td></tr>
+<tr><td><code>GoTop()</code></td><td>Animate the bitmap upward off-screen to unlock the window</td></tr>
+<tr><td><code>MouseMove( nRow, nCol )</code></td><td>Track vertical drag distance and reposition the bitmap accordingly</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Tela de Desbloqueio</h2>
+<h2 id="example">Example: Unlock Screen</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -63,19 +63,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TSliderMetro não é descendente de TControl; ela gerencia um TBitmap diretamente através do handle da janela.</li>
-<li>O bitmap de fundo deve corresponder às dimensões da janela para um efeito de tela cheia perfeito.</li>
-<li>O texto é desenhado sobre o bitmap usando <code>oBmp:Say()</code> no codeblock <code>bPainted</code> com cor branca e fontes Segoe UI Light.</li>
-<li>Arrastar o bitmap mais da metade para cima dispara <code>GoTop()</code>, que move o bitmap para fora da tela e habilita a janela subjacente.</li>
-<li>Arrastar menos da metade ou soltar abaixo do ponto médio dispara <code>GoBottom()</code>, que encaixa o bloqueio de volta no lugar.</li>
-<li><code>GoTop()</code> desabilita a janela de origem durante a animação e a reabilita quando concluída.</li>
+<li>TSliderMetro is not a TControl descendant; it manages a TBitmap directly via the window handle.</li>
+<li>The background bitmap should match the window dimensions for a seamless full-screen effect.</li>
+<li>Text is drawn on the bitmap using <code>oBmp:Say()</code> in the <code>bPainted</code> codeblock with white color and Segoe UI Light fonts.</li>
+<li>Dragging the bitmap more than halfway up triggers <code>GoTop()</code>, which moves the bitmap off-screen and enables the underlying window.</li>
+<li>Dragging less than halfway or releasing below the midpoint triggers <code>GoBottom()</code>, which snaps the lock back into place.</li>
+<li><code>GoTop()</code> disables the source window during animation and re-enables it when complete.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tslider.html">&larr; tslider</a> | <a href="../../pt/internet/tsmtp.html">tsmtp &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

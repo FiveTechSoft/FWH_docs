@@ -15,69 +15,69 @@
 <p class="class-source">Fonte: <code>source/classes/tproxy.prg</code></p>
 
 <p>
-TProxy é o servidor proxy TCP multi-protocolo do FiveWin. Escuta numa porta local,
-aceita ligações de entrada e encaminha tráfego para um servidor backend remoto.
-O proxy funciona de forma transparente para qualquer protocolo baseado em TCP (HTTP, POP3, SMTP, FTP,
-etc.) criando ligações de socket emparelhadas entre o cliente e o servidor backend
-e retransmitindo dados bidirecionalmente.
+TProxy is FiveWin's multi-protocol TCP proxy server. It listens on a local port,
+accepts incoming connections, and forwards traffic to a remote backend server.
+The proxy works transparently for any TCP-based protocol (HTTP, POP3, SMTP, FTP,
+etc.) by creating paired socket connections between the client and the backend
+server and relaying data bidirectionally.
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
-    subgraph "Cliente"
-        A[App Cliente]
+    subgraph "Client"
+        A[Client App]
     end
     subgraph "TProxy"
-        B[Socket de Escuta<br/>nPort]
-        C[Socket Cliente]
-        D[Socket Backend]
+        B[Listening Socket<br/>nPort]
+        C[Client Socket]
+        D[Backend Socket]
     end
     subgraph "Backend"
-        E[Servidor Remoto<br/>cServerIP]
+        E[Remote Server<br/>cServerIP]
     end
-    A -->|"liga-se ao<br/>porto local"| B
+    A -->|"connects to<br/>local port"| B
     B --> C
-    C -->|"retransmite dados"| D
-    D -->|"encaminha para"| E
-    E -->|"resposta"| D
-    D -->|"retransmite de volta"| C
-    C -->|"resposta"| A
+    C -->|"relays data"| D
+    D -->|"forwards to"| E
+    E -->|"response"| D
+    D -->|"relays back"| C
+    C -->|"response"| A
 </div>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oSocket</code></td><td>Objeto</td><td></td><td>TSocket principal a escutar por ligações de entrada</td></tr>
-<tr><td><code>cAddress</code></td><td>Caractere</td><td></td><td>Endereço IP local onde o proxy escuta (auto-detetado)</td></tr>
-<tr><td><code>cServerIP</code></td><td>Caractere</td><td><code>"194.224.203.2"</code></td><td>Endereço IP do servidor backend remoto para encaminhar tráfego</td></tr>
-<tr><td><code>nPort</code></td><td>Numérico</td><td><code>110</code></td><td>Porto local onde o proxy escuta</td></tr>
-<tr><td><code>lDebug</code></td><td>Lógico</td><td></td><td>Ativar registo de depuração para <code>cLogFile</code></td></tr>
-<tr><td><code>cLogFile</code></td><td>Caractere</td><td><code>"proxy.log"</code></td><td>Caminho para o ficheiro de registo de depuração</td></tr>
+<tr><td><code>oSocket</code></td><td>Object</td><td></td><td>Main TSocket listening for incoming connections</td></tr>
+<tr><td><code>cAddress</code></td><td>Character</td><td></td><td>Local IP address the proxy listens on (auto-detected)</td></tr>
+<tr><td><code>cServerIP</code></td><td>Character</td><td><code>"194.224.203.2"</code></td><td>Remote backend server IP address to forward traffic to</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td><code>110</code></td><td>Local port the proxy listens on</td></tr>
+<tr><td><code>lDebug</code></td><td>Logical</td><td></td><td>Enable debug logging to <code>cLogFile</code></td></tr>
+<tr><td><code>cLogFile</code></td><td>Character</td><td><code>"proxy.log"</code></td><td>Path to the debug log file</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nPort, cServerIP )</code></td><td>Criar uma instância do proxy. Cria o TSocket de escuta e configura o callback de aceitação. Padrão para porto 110 (POP3). Resolve nomes de anfitrião para endereços IP automaticamente.</td></tr>
-<tr><td><code>Activate()</code></td><td>Iniciar escuta por ligações de entrada. Delega para <code>oSocket:Listen()</code>.</td></tr>
-<tr><td><code>End()</code></td><td>Parar o proxy e liberar o socket de escuta. Delega para <code>oSocket:End()</code>.</td></tr>
-<tr><td><code>OnAccept()</code></td><td>Interno: Chamado quando um novo cliente se liga. Cria um socket de cliente emparelhado e socket backend, configura retransmissão bidirecional de dados com callbacks de leitura/fecho.</td></tr>
-<tr><td><code>OnRead( oSocket, oServer )</code></td><td>Interno: Chamado quando dados chegam do cliente. Encaminha os dados para o servidor backend.</td></tr>
+<tr><td><code>New( nPort, cServerIP )</code></td><td>Create a proxy instance. Creates the listening TSocket and sets up the accept callback. Defaults to port 110 (POP3). Resolves hostnames to IP addresses automatically.</td></tr>
+<tr><td><code>Activate()</code></td><td>Start listening for incoming connections. Delegates to <code>oSocket:Listen()</code>.</td></tr>
+<tr><td><code>End()</code></td><td>Stop the proxy and release the listening socket. Delegates to <code>oSocket:End()</code>.</td></tr>
+<tr><td><code>OnAccept()</code></td><td>Internal: Called when a new client connects. Creates a paired client socket and backend socket, sets up bidirectional data relay with read/close callbacks.</td></tr>
+<tr><td><code>OnRead( oSocket, oServer )</code></td><td>Internal: Called when data arrives from the client. Forwards the data to the backend server.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Proxy POP3</h2>
+<h2 id="example">Example: POP3 Proxy</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -97,23 +97,23 @@ function Main()
 return nil</code></pre>
 
 <p>
-Quando um cliente se liga ao porto 8080, TProxy cria uma ligação backend para
-<code>mail.example.com:8080</code> (mesmo porto) e retransmite todos os dados bidirecionalmente.
-Com <code>lDebug := .T.</code>, todo o tráfego é registado em <code>proxy.log</code>.
+When a client connects to port 8080, TProxy creates a backend connection to
+<code>mail.example.com:8080</code> (same port) and relays all data bidirectionally.
+With <code>lDebug := .T.</code>, all traffic is logged to <code>proxy.log</code>.
 </p>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TProxy é agnóstico quanto a protocolo — funciona com qualquer protocolo baseado em TCP, pois simplesmente retransmite bytes brutos entre cliente e servidor.</li>
-<li>O método <code>New()</code> aceita nomes de anfitrião e resolve-os para IPs usando <code>GetHostByName()</code>.</li>
-<li>Cada ligação de entrada cria dois objetos TSocket: um para o cliente e um para o backend. Ambos são limpos quando a ligação fecha.</li>
-<li>Definir <code>lDebug := .T.</code> regista todos os dados do cliente e servidor no ficheiro especificado por <code>cLogFile</code>.</li>
-<li>O porto do proxy padroniza para 110 (POP3) se não for especificado.</li>
+<li>TProxy is protocol-agnostic — it works with any TCP-based protocol since it simply relays raw bytes between client and server.</li>
+<li>The <code>New()</code> method accepts hostnames and resolves them to IPs using <code>GetHostByName()</code>.</li>
+<li>Each incoming connection creates two TSocket objects: one for the client and one for the backend. Both are cleaned up when the connection closes.</li>
+<li>Setting <code>lDebug := .T.</code> logs all client and server data to the file specified by <code>cLogFile</code>.</li>
+<li>The proxy port defaults to 110 (POP3) if not specified.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tprogresswheel.html">&larr; tprogresswheel</a> | <a href="../../pt/ui/tradio.html">tradio &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

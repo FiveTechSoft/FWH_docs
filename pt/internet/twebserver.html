@@ -15,32 +15,32 @@
 <p class="class-source">Fonte: <code>source/classes/twebserv.prg</code> (TWebServer), <code>source/classes/tsocket.prg</code> (TSocket)</p>
 
 <p>
-TWebServer é o servidor HTTP integrado do FiveWin que pode servir páginas HTML, processar solicitações GET/POST
-e mesclar conteúdo dinâmico em templates HTML. Ele é construído sobre o TSocket, que fornece
-comunicação de sockets TCP/IP de baixo nível usando a API Winsock do Windows.
+TWebServer is FiveWin's built-in HTTP server that can serve HTML pages, process GET/POST requests,
+and merge dynamic content into HTML templates. It is built on top of TSocket, which provides
+low-level TCP/IP socket communication using the Windows Winsock API.
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart TD
     subgraph "TWebServer"
-        A[oSocket<br/>Socket de Escuta]
+        A[oSocket<br/>Listening Socket]
         B[OnAccept]
         C[OnRead]
         D[OnGet / OnPost]
-        E[HtmlMerge<br/>Motor de Templates]
+        E[HtmlMerge<br/>Template Engine]
     end
-    subgraph "Camada TSocket"
+    subgraph "TSocket Layer"
         F[WSAStartup]
         G["Socket(AF_INET, SOCK_STREAM)"]
         H[Listen / Accept]
         I[SendData / GetData]
     end
-    subgraph "Clientes"
-        J[Navegador 1]
-        K[Navegador 2]
-        L[Cliente API]
+    subgraph "Clients"
+        J[Browser 1]
+        K[Browser 2]
+        L[API Client]
     end
 
     J -->|"HTTP GET/POST"| A
@@ -56,94 +56,94 @@ flowchart TD
     H --> I
 </div>
 
-<h2 id="twebserver">Classe TWebServer</h2>
+<h2 id="twebserver">TWebServer Class</h2>
 
-<h3>Membros DATA Principais</h3>
-
-<table>
-<thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
-</thead>
-<tbody>
-<tr><td><code>oSocket</code></td><td>TSocket</td><td></td><td>Objeto socket principal de escuta</td></tr>
-<tr><td><code>aSockets</code></td><td>Array</td><td></td><td>Array de objetos socket de clientes</td></tr>
-<tr><td><code>cAddress</code></td><td>Character</td><td></td><td>Endereço IP do servidor</td></tr>
-<tr><td><code>cDefPage</code></td><td>Character</td><td><code>"default.htm"</code></td><td>Página padrão a servir</td></tr>
-<tr><td><code>cDefPath</code></td><td>Character</td><td><code>"www"</code></td><td>Diretório raiz para páginas web</td></tr>
-<tr><td><code>cCookie</code></td><td>Character</td><td></td><td>Dados de cookie da solicitação atual</td></tr>
-<tr><td><code>lDebug</code></td><td>Logical</td><td><code>.F.</code></td><td>Habilitar registro de depuração</td></tr>
-<tr><td><code>cLogFile</code></td><td>Character</td><td><code>""</code></td><td>Caminho do arquivo de log</td></tr>
-<tr><td><code>cHtmlError</code></td><td>Character</td><td></td><td>HTML para exibir em erros de arquivo não encontrado</td></tr>
-</tbody>
-</table>
-
-<h3>Métodos</h3>
+<h3>Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nPort )</code></td><td>Criar servidor na porta especificada (padrão: 80). Cria diretório "www" se ausente.</td></tr>
-<tr><td><code>Activate()</code></td><td>Começar a ouvir conexões</td></tr>
-<tr><td><code>Explore( cHtmlFile )</code></td><td>Abrir a página no navegador padrão via ShellExecute</td></tr>
-<tr><td><code>OnAccept()</code></td><td>Tratar nova conexão de cliente (cria TSocket de cliente)</td></tr>
-<tr><td><code>OnRead( oSocket )</code></td><td>Ler dados recebidos, despachar para OnGet/OnPost</td></tr>
-<tr><td><code>OnGet( oClientSocket, cData )</code></td><td>Tratar solicitações HTTP GET</td></tr>
-<tr><td><code>OnPost( oClientSocket, cData )</code></td><td>Tratar solicitações HTTP POST</td></tr>
-<tr><td><code>HtmlMerge( cHtml, cParams, mSocket, cQuery )</code></td><td>Mesclar conteúdo dinâmico em templates HTML</td></tr>
-<tr><td><code>HtmlRead( cFileName )</code></td><td>Ler um arquivo HTML do disco</td></tr>
-<tr><td><code>FileExist( cFileName )</code></td><td>Verificar se um arquivo existe na raiz web</td></tr>
-<tr><td><code>End()</code></td><td>Parar o servidor e fechar todos os sockets</td></tr>
+<tr><td><code>oSocket</code></td><td>TSocket</td><td></td><td>Main listening socket object</td></tr>
+<tr><td><code>aSockets</code></td><td>Array</td><td></td><td>Array of client socket objects</td></tr>
+<tr><td><code>cAddress</code></td><td>Character</td><td></td><td>Server IP address</td></tr>
+<tr><td><code>cDefPage</code></td><td>Character</td><td><code>"default.htm"</code></td><td>Default page to serve</td></tr>
+<tr><td><code>cDefPath</code></td><td>Character</td><td><code>"www"</code></td><td>Root directory for web pages</td></tr>
+<tr><td><code>cCookie</code></td><td>Character</td><td></td><td>Current request cookie data</td></tr>
+<tr><td><code>lDebug</code></td><td>Logical</td><td><code>.F.</code></td><td>Enable debug logging</td></tr>
+<tr><td><code>cLogFile</code></td><td>Character</td><td><code>""</code></td><td>Log file path</td></tr>
+<tr><td><code>cHtmlError</code></td><td>Character</td><td></td><td>HTML to show on file-not-found errors</td></tr>
 </tbody>
 </table>
 
-<h2 id="tsocket">Classe TSocket</h2>
-
-<h3>Membros DATA Principais</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nPort</code></td><td>Numeric</td><td><code>0</code></td><td>Número da porta do socket</td></tr>
-<tr><td><code>cIPAddr</code></td><td>Character</td><td><code>""</code></td><td>Endereço IP do socket</td></tr>
-<tr><td><code>nSocket</code></td><td>Numeric</td><td><code>-1</code></td><td>Handle do socket Winsock</td></tr>
-<tr><td><code>nTimeOut</code></td><td>Numeric</td><td><code>30</code></td><td>Tempo limite em segundos</td></tr>
-<tr><td><code>nBackLog</code></td><td>Numeric</td><td><code>5</code></td><td>Tamanho do backlog de escuta</td></tr>
-<tr><td><code>bAccept</code></td><td>Block</td><td></td><td>Callback quando uma conexão é aceita</td></tr>
-<tr><td><code>bRead</code></td><td>Block</td><td></td><td>Callback quando há dados disponíveis para leitura</td></tr>
-<tr><td><code>bWrite</code></td><td>Block</td><td></td><td>Callback quando o socket está pronto para escrita</td></tr>
-<tr><td><code>bClose</code></td><td>Block</td><td></td><td>Callback quando o socket é fechado</td></tr>
-<tr><td><code>bConnect</code></td><td>Block</td><td></td><td>Callback do resultado de conexão de saída</td></tr>
-<tr><td><code>lDebug</code></td><td>Logical</td><td></td><td>Habilitar registro de depuração</td></tr>
-<tr><td><code>cLogFile</code></td><td>Character</td><td></td><td>Caminho do arquivo de log</td></tr>
+<tr><td><code>New( nPort )</code></td><td>Create server on specified port (default: 80). Creates "www" directory if missing.</td></tr>
+<tr><td><code>Activate()</code></td><td>Start listening for connections</td></tr>
+<tr><td><code>Explore( cHtmlFile )</code></td><td>Open the page in the default browser via ShellExecute</td></tr>
+<tr><td><code>OnAccept()</code></td><td>Handle new client connection (creates client TSocket)</td></tr>
+<tr><td><code>OnRead( oSocket )</code></td><td>Read incoming data, dispatch to OnGet/OnPost</td></tr>
+<tr><td><code>OnGet( oClientSocket, cData )</code></td><td>Handle HTTP GET requests</td></tr>
+<tr><td><code>OnPost( oClientSocket, cData )</code></td><td>Handle HTTP POST requests</td></tr>
+<tr><td><code>HtmlMerge( cHtml, cParams, mSocket, cQuery )</code></td><td>Merge dynamic content into HTML templates</td></tr>
+<tr><td><code>HtmlRead( cFileName )</code></td><td>Read an HTML file from disk</td></tr>
+<tr><td><code>FileExist( cFileName )</code></td><td>Check if a file exists in the web root</td></tr>
+<tr><td><code>End()</code></td><td>Stop the server and close all sockets</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h2 id="tsocket">TSocket Class</h2>
+
+<h3>Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nPort, oWnd, cIp )</code></td><td>Criar um socket. Chama WSAStartup se for o primeiro socket.</td></tr>
-<tr><td><code>Listen()</code></td><td>Começar a ouvir conexões de entrada</td></tr>
-<tr><td><code>Accept( nSocket, oWnd )</code></td><td>Aceitar uma conexão de entrada, retorna novo TSocket</td></tr>
-<tr><td><code>Connect( cIPAddr, nPort )</code></td><td>Conectar a um servidor remoto</td></tr>
-<tr><td><code>GetData()</code></td><td>Ler dados do socket</td></tr>
-<tr><td><code>SendData( cData )</code></td><td>Enviar dados de texto pelo socket</td></tr>
-<tr><td><code>SendFile( cFileName, nBlockSize )</code></td><td>Enviar um arquivo pelo socket</td></tr>
-<tr><td><code>SendChunk( nBlockSize )</code></td><td>Enviar dados em blocos (para transferências grandes)</td></tr>
-<tr><td><code>ClientIP()</code></td><td>Obter o endereço IP do cliente conectado</td></tr>
-<tr><td><code>Close()</code></td><td>Fechar o socket</td></tr>
-<tr><td><code>End()</code></td><td>Fechar e limpar</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td><code>0</code></td><td>Socket port number</td></tr>
+<tr><td><code>cIPAddr</code></td><td>Character</td><td><code>""</code></td><td>Socket IP address</td></tr>
+<tr><td><code>nSocket</code></td><td>Numeric</td><td><code>-1</code></td><td>Winsock socket handle</td></tr>
+<tr><td><code>nTimeOut</code></td><td>Numeric</td><td><code>30</code></td><td>Timeout in seconds</td></tr>
+<tr><td><code>nBackLog</code></td><td>Numeric</td><td><code>5</code></td><td>Listen backlog size</td></tr>
+<tr><td><code>bAccept</code></td><td>Block</td><td></td><td>Callback when a connection is accepted</td></tr>
+<tr><td><code>bRead</code></td><td>Block</td><td></td><td>Callback when data is available to read</td></tr>
+<tr><td><code>bWrite</code></td><td>Block</td><td></td><td>Callback when socket is ready to write</td></tr>
+<tr><td><code>bClose</code></td><td>Block</td><td></td><td>Callback when socket is closed</td></tr>
+<tr><td><code>bConnect</code></td><td>Block</td><td></td><td>Callback on outgoing connection result</td></tr>
+<tr><td><code>lDebug</code></td><td>Logical</td><td></td><td>Enable debug logging</td></tr>
+<tr><td><code>cLogFile</code></td><td>Character</td><td></td><td>Log file path</td></tr>
 </tbody>
 </table>
 
-<h2 id="example-basic">Exemplo: Servidor HTTP Básico</h2>
+<h3>Methods</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nPort, oWnd, cIp )</code></td><td>Create a socket. Calls WSAStartup if first socket.</td></tr>
+<tr><td><code>Listen()</code></td><td>Start listening for incoming connections</td></tr>
+<tr><td><code>Accept( nSocket, oWnd )</code></td><td>Accept an incoming connection, returns new TSocket</td></tr>
+<tr><td><code>Connect( cIPAddr, nPort )</code></td><td>Connect to a remote server</td></tr>
+<tr><td><code>GetData()</code></td><td>Read data from the socket</td></tr>
+<tr><td><code>SendData( cData )</code></td><td>Send string data through the socket</td></tr>
+<tr><td><code>SendFile( cFileName, nBlockSize )</code></td><td>Send a file through the socket</td></tr>
+<tr><td><code>SendChunk( nBlockSize )</code></td><td>Send data in chunks (for large transfers)</td></tr>
+<tr><td><code>ClientIP()</code></td><td>Get the connected client's IP address</td></tr>
+<tr><td><code>Close()</code></td><td>Close the socket</td></tr>
+<tr><td><code>End()</code></td><td>Close and clean up</td></tr>
+</tbody>
+</table>
+
+<h2 id="example-basic">Example: Basic HTTP Server</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -153,13 +153,13 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "FiveWin Web Server"
 
-   // Criar servidor web na porta 8080
+   // Create web server on port 8080
    oWS := TWebServer():New( 8080 )
    oWS:cDefPath := "www"
    oWS:cDefPage := "index.html"
    oWS:Activate()
 
-   // Abrir navegador
+   // Open browser
    oWS:Explore( "index.html" )
 
    ACTIVATE WINDOW oWnd ;
@@ -167,7 +167,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-dynamic">Exemplo: Conteúdo Dinâmico</h2>
+<h2 id="example-dynamic">Example: Dynamic Content</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -189,25 +189,25 @@ function Main()
 return nil</code></pre>
 
 <p>
-Crie <code>www/default.htm</code> com marcadores dinâmicos:
+Create <code>www/default.htm</code> with dynamic placeholders:
 </p>
 
 <pre><code class="language-html">&lt;html&gt;
 &lt;head&gt;&lt;title&gt;FiveWin WebServer&lt;/title&gt;&lt;/head&gt;
 &lt;body&gt;
-   &lt;h1&gt;Bem-vindo ao FiveWin WebServer&lt;/h1&gt;
-   &lt;p&gt;Hora do Servidor: &lt;%=Time()%&gt;&lt;/p&gt;
-   &lt;p&gt;Data: &lt;%=DToC(Date())%&gt;&lt;/p&gt;
-   &lt;p&gt;Registros em Customers: &lt;%=LTrim(Str(RecCount()))%&gt;&lt;/p&gt;
+   &lt;h1&gt;Welcome to FiveWin WebServer&lt;/h1&gt;
+   &lt;p&gt;Server Time: &lt;%=Time()%&gt;&lt;/p&gt;
+   &lt;p&gt;Date: &lt;%=DToC(Date())%&gt;&lt;/p&gt;
+   &lt;p&gt;Records in Customers: &lt;%=LTrim(Str(RecCount()))%&gt;&lt;/p&gt;
 
    &lt;form method="POST" action="search.htm"&gt;
-      Pesquisar: &lt;input type="text" name="query"&gt;
-      &lt;input type="submit" value="Ir"&gt;
+      Search: &lt;input type="text" name="query"&gt;
+      &lt;input type="submit" value="Go"&gt;
    &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-<h2 id="example-socket">Exemplo: Cliente de Socket TCP Bruto</h2>
+<h2 id="example-socket">Example: Raw TCP Socket Client</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -217,27 +217,27 @@ function Main()
 
    oSocket := TSocket():New( 0 )
 
-   // Conectar a um servidor remoto
+   // Connect to a remote server
    oSocket:Connect( "93.184.216.34", 80 )  // example.com
 
-   // Enviar solicitação HTTP
+   // Send HTTP request
    oSocket:SendData( ;
       "GET / HTTP/1.1" + CRLF + ;
       "Host: example.com" + CRLF + ;
       "Connection: close" + CRLF + CRLF )
 
-   // Ler resposta
+   // Read response
    oSocket:bRead := { |oSock|
       cResponse := oSock:GetData()
       ? cResponse
    }
 
    oSocket:bClose := { |oSock|
-      ? "Conexão fechada"
+      ? "Connection closed"
       oSock:End()
    }
 
-   // Processar eventos (em um app real, o loop de mensagens trata isso)
+   // Process events (in a real app, the message loop handles this)
    SysRefresh()
    Inkey( 5 )
 
@@ -245,7 +245,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-chat">Exemplo: Servidor de Chat Simples</h2>
+<h2 id="example-chat">Example: Simple Chat Server</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -265,7 +265,7 @@ function Main()
 
       oClient:bRead := { |oSock|
          local cMsg := oSock:GetData()
-         // Transmitir para todos os clientes
+         // Broadcast to all clients
          AEval( aClients, { |o| o:SendData( cMsg ) } )
       }
 
@@ -284,18 +284,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="tips">Notas</h2>
+<h2 id="tips">Notes</h2>
 
 <ul>
-<li>TWebServer cria um diretório <code>www</code> automaticamente se ele não existir, com uma página HTML padrão.</li>
-<li>O método <code>HtmlMerge()</code> processa tags <code>&lt;%=expressão%&gt;</code> em arquivos HTML, avaliando expressões Harbour e incorporando os resultados.</li>
-<li>Os dados de cookies das solicitações HTTP são analisados automaticamente e armazenados em <code>oWS:cCookie</code>.</li>
-<li>TSocket usa eventos de socket assíncrono do Windows (FD_READ, FD_WRITE, FD_ACCEPT, FD_CLOSE) via loop de mensagens, portanto funciona perfeitamente com a arquitetura orientada a eventos do FiveWin.</li>
-<li>Para uso em produção, considere usar um proxy reverso (nginx, Apache) na frente do TWebServer para terminação SSL e servir arquivos estáticos.</li>
+<li>TWebServer creates a <code>www</code> directory automatically if it does not exist, with a default HTML page.</li>
+<li>The <code>HtmlMerge()</code> method processes <code>&lt;%=expression%&gt;</code> tags in HTML files, evaluating Harbour expressions and embedding results.</li>
+<li>Cookie data from HTTP requests is automatically parsed and stored in <code>oWS:cCookie</code>.</li>
+<li>TSocket uses Windows async socket events (FD_READ, FD_WRITE, FD_ACCEPT, FD_CLOSE) via the message loop, so it works seamlessly with FiveWin's event-driven architecture.</li>
+<li>For production use, consider using a reverse proxy (nginx, Apache) in front of TWebServer for SSL termination and static file serving.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/internet/twebclient.html">&larr; twebclient</a> | <a href="../../pt/internet/twebsocketserver.html">twebsocketserver &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

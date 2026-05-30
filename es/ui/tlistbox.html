@@ -13,29 +13,29 @@
 
 <h1>TListBox</h1>
 <p class="class-source">Fuente: <code>source/classes/listbox.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TListBox envuelve el control de cuadro de lista estándar de Windows (<code>LISTBOX</code>). Muestra una lista desplazable de elementos de la cual el usuario puede seleccionar una o múltiples entradas. TListBox soporta elementos dibujados por el propietario con mapas de bits, reordenación por arrastrar y soltar, modos de selección múltiple, navegación por teclado y tooltips a nivel de elemento. Es el control de lista de una columna estándar en FiveWin. TListBox supports owner-drawn items with bitmaps, drag-and-drop reordering, multiple-selection modes, keyboard navigation, and item-level tooltips. It is the standard single-column list control in FiveWin.
+TListBox wraps the standard Windows list box control (<code>LISTBOX</code>). It displays a scrollable list of items from which the user can select one or multiple entries. TListBox supports owner-drawn items with bitmaps, drag-and-drop reordering, multiple-selection modes, keyboard navigation, and item-level tooltips. It is the standard single-column list control in FiveWin.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array de cadenas de caracteres mostradas en el cuadro de lista.</td></tr>
-<tr><td><code>aBitmaps</code></td><td>Array</td><td>Array de manejadores de mapa de bits o nombres de recurso para elementos con mapa de bits. Cada entrada corresponde a un elemento en <code>aItems</code>. Each entry corresponds to an item in <code>aItems</code>.</td></tr>
-<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloque de enlace de datos. Cuando se evalúa sin argumentos, devuelve el valor del elemento seleccionado; con un argumento, selecciona ese elemento.</td></tr>
-<tr><td><code>lOwnerDraw</code></td><td>Logical</td><td>Si es <code>.T.</code>, el cuadro de lista se dibuja por el propietario, permitiendo renderizado personalizado mediante <code>bDrawItem</code>.</td></tr>
-<tr><td><code>bDrawItem</code></td><td>Block</td><td>Bloque de código de dibujo personalizado para elementos dibujados por el propietario: <code>{ |nItem, hDC, aRect, nState, oLbx| ... }</code>.</td></tr>
-<tr><td><code>lMultiSelect</code></td><td>Logical</td><td>Si es <code>.T.</code>, se pueden seleccionar múltiples elementos a la vez.</td></tr>
-<tr><td><code>lDrag</code></td><td>Logical</td><td>Habilitar reordenación de elementos de lista por arrastrar y soltar.</td></tr>
-<tr><td><code>bChange</code></td><td>Block</td><td>Evaluado cuando cambia la selección: <code>{ |nItem, oLbx| ... }</code>.</td></tr>
-<tr><td><code>bValid</code></td><td>Block</td><td>Bloque de validación evaluado cuando el cuadro de lista pierde el foco.</td></tr>
-<tr><td><code>nAt</code></td><td>Numeric</td><td>Índice del elemento actualmente seleccionado (basado en 1). 0 significa ninguna selección.</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array of character strings displayed in the list box.</td></tr>
+<tr><td><code>aBitmaps</code></td><td>Array</td><td>Array of bitmap handles or resource names for owner-drawn bitmap items. Each entry corresponds to an item in <code>aItems</code>.</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Data-binding block. When evaluated with no arguments, returns the selected item value; with one argument, selects that item.</td></tr>
+<tr><td><code>lOwnerDraw</code></td><td>Logical</td><td>If <code>.T.</code>, the list box is owner-drawn, allowing custom item rendering via <code>bDrawItem</code>.</td></tr>
+<tr><td><code>bDrawItem</code></td><td>Block</td><td>Custom drawing code block for owner-drawn items: <code>{ |nItem, hDC, aRect, nState, oLbx| ... }</code>.</td></tr>
+<tr><td><code>lMultiSelect</code></td><td>Logical</td><td>If <code>.T.</code>, multiple items can be selected at once.</td></tr>
+<tr><td><code>lDrag</code></td><td>Logical</td><td>Enable mouse drag-and-drop reordering of list items.</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Evaluated when the selection changes: <code>{ |nItem, oLbx| ... }</code>.</td></tr>
+<tr><td><code>bValid</code></td><td>Block</td><td>Validation block evaluated when the list box loses focus.</td></tr>
+<tr><td><code>nAt</code></td><td>Numeric</td><td>Index of the currently selected item (1-based). 0 means no selection.</td></tr>
 </tbody>
 </table>
 
@@ -43,20 +43,20 @@ TListBox envuelve el control de cuadro de lista estándar de Windows (<code>LIST
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, bSetGet, aItems, nW, nH, oWnd, lMultiSel, lDrag, lOwner, oFont, bDraw, lPixel, lDesign, oIcon, cMsg, lUpdate, bChange, bValid, ... )</code></td><td>Crear un nuevo cuadro de lista. <code>aItems</code> is the initial item array. <code>bSetGet</code> binds the selected value to a variable.</td></tr>
-<tr><td><code>Add( cItem, nAt )</code></td><td>Agregar un nuevo elemento. If <code>nAt</code> is omitted, the item is appended at the end. If specified, it is inserted at that position.</td></tr>
-<tr><td><code>Del( nAt )</code></td><td>Eliminar el elemento en la posición <code>nAt</code> (1-based).</td></tr>
-<tr><td><code>Modify( cItem, nAt )</code></td><td>Reemplazar el elemento en la posición <code>nAt</code> con el nuevo texto <code>cItem</code>.</td></tr>
-<tr><td><code>Select( nItem )</code></td><td>Seleccionar programáticamente el elemento en la posición <code>nItem</code>.</td></tr>
-<tr><td><code>SetItems( aItems )</code></td><td>Reemplazar todos los elementos en el cuadro de lista con un nuevo array de cadenas.</td></tr>
-<tr><td><code>GetPos()</code></td><td>Devuelve el índice del elemento actualmente seleccionado (basado en 1). Devuelve 0 si no hay elemento seleccionado.</td></tr>
-<tr><td><code>GetSel()</code></td><td>Devuelve el texto del elemento seleccionado como cadena.</td></tr>
-<tr><td><code>nCount()</code></td><td>Devuelve el número total de elementos en el cuadro de lista.</td></tr>
-<tr><td><code>Clear()</code></td><td>Eliminar todos los elementos del cuadro de lista.</td></tr>
-<tr><td><code>End()</code></td><td>Destruir el control.</td></tr>
+<tr><td><code>New( nRow, nCol, bSetGet, aItems, nW, nH, oWnd, lMultiSel, lDrag, lOwner, oFont, bDraw, lPixel, lDesign, oIcon, cMsg, lUpdate, bChange, bValid, ... )</code></td><td>Create a new list box. <code>aItems</code> is the initial item array. <code>bSetGet</code> binds the selected value to a variable.</td></tr>
+<tr><td><code>Add( cItem, nAt )</code></td><td>Add a new item. If <code>nAt</code> is omitted, the item is appended at the end. If specified, it is inserted at that position.</td></tr>
+<tr><td><code>Del( nAt )</code></td><td>Delete the item at position <code>nAt</code> (1-based).</td></tr>
+<tr><td><code>Modify( cItem, nAt )</code></td><td>Replace the item at position <code>nAt</code> with new text <code>cItem</code>.</td></tr>
+<tr><td><code>Select( nItem )</code></td><td>Programmatically select the item at position <code>nItem</code>.</td></tr>
+<tr><td><code>SetItems( aItems )</code></td><td>Replace all items in the list box with a new array of strings.</td></tr>
+<tr><td><code>GetPos()</code></td><td>Return the index of the currently selected item (1-based). Returns 0 if no item is selected.</td></tr>
+<tr><td><code>GetSel()</code></td><td>Return the selected item text as a string.</td></tr>
+<tr><td><code>nCount()</code></td><td>Return the total number of items in the list box.</td></tr>
+<tr><td><code>Clear()</code></td><td>Remove all items from the list box.</td></tr>
+<tr><td><code>End()</code></td><td>Destroy the control.</td></tr>
 </tbody>
 </table>
 
@@ -74,7 +74,7 @@ TListBox envuelve el control de cuadro de lista estándar de Windows (<code>LIST
    [ BITMAPS aBitmaps ] ;
    [ OWNERDRAW ]</code></pre>
 
-<h2 id="example">Ejemplo: Cuadro de Lista de 3 Elementos</h2>
+<h2 id="example">Example: 3-Item Listbox</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -100,16 +100,16 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>TListBox hereda de TControl. Todos los métodos estándar del control están disponibles.</li>
-<li>Use <code>lMultiSelect := .T.</code> (o la cláusula <code>MULTISELECT</code>) para permitir al usuario seleccionar múltiples elementos usando Ctrl+clic o Shift+clic.</li>
-<li>El bloque <code>bDrawItem</code> habilita el renderizado personalizado. Cuando <code>lOwnerDraw</code> es <code>.T.</code>, el cuadro de lista se vuelve dibujado por el propietario y el bloque <code>bDrawItem</code> se llama para cada elemento visible durante el pintado. When <code>lOwnerDraw</code> is <code>.T.</code>, the list box becomes owner-drawn and the <code>bDrawItem</code> block is called for each visible item during paint.</li>
-<li>Los mapas de bits de elementos (<code>aBitmaps</code>) proporcionan un icono simple junto a cada elemento sin necesidad de owner-draw. Each element is a bitmap handle or resource name.</li>
-<li>La reordenación por arrastrar y soltar se habilita mediante la cláusula <code>DRAG</code>. Los elementos pueden arrastrarse a nuevas posiciones dentro de la lista. Items can be dragged to new positions within the list.</li>
-<li>Para navegación por teclado, el cuadro de lista maneja las flechas Arriba/Abajo, RePág/AvPág y las teclas Inicio/Fin automáticamente.</li>
+<li>TListBox inherits from TControl. All standard control methods are available.</li>
+<li>Use <code>lMultiSelect := .T.</code> (or the <code>MULTISELECT</code> clause) to allow the user to select multiple items using Ctrl+click or Shift+click.</li>
+<li>The <code>bDrawItem</code> block enables custom rendering. When <code>lOwnerDraw</code> is <code>.T.</code>, the list box becomes owner-drawn and the <code>bDrawItem</code> block is called for each visible item during paint.</li>
+<li>Item bitmaps (<code>aBitmaps</code>) provide a simple icon next to each item without needing owner-draw. Each element is a bitmap handle or resource name.</li>
+<li>Drag-and-drop reordering is enabled via the <code>DRAG</code> clause. Items can be dragged to new positions within the list.</li>
+<li>For keyboard navigation, the list box handles Up/Down arrows, PageUp/PageDown, and the Home/End keys automatically.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/utilities/tlinklist.html">&larr; tlinklist</a> | <a href="../../es/ui/tlistview.html">tlistview &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

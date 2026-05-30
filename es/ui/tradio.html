@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRadio - Documentaci&oacute;n FWH</title>
+<title>TRadio - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,47 +13,47 @@
 
 <h1>TRadio</h1>
 <p class="class-source">Fuente: <code>source/classes/radio.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TRadio implementa un bot&oacute;n de radio individual (estilo de bot&oacute;n de radio autom&aacute;tico). Los botones de radio se usan en grupos donde solo una opci&oacute;n puede seleccionarse a la vez. Normalmente son gestionados por un padre <code>TRadMenu</code> que maneja la exclusi&oacute;n mutua y la navegaci&oacute;n por teclado dentro del grupo.
+TRadio implements an individual radio button (auto radio button style). Radio buttons are used in groups where only one option can be selected at a time. They are typically managed by a <code>TRadMenu</code> parent that handles mutual exclusion and keyboard navigation within the group.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>lChecked</code></td><td>Logical</td><td>Estado marcado actual del bot&oacute;n de radio</td></tr>
-<tr><td><code>oRadMenu</code></td><td>Object</td><td>TRadMenu padre que gestiona este grupo de botones de radio</td></tr>
-<tr><td><code>nPos</code></td><td>Numeric</td><td>Posici&oacute;n/&iacute;ndice de este bot&oacute;n dentro del grupo</td></tr>
+<tr><td><code>lChecked</code></td><td>Logical</td><td>Current checked state of the radio button</td></tr>
+<tr><td><code>oRadMenu</code></td><td>Object</td><td>Parent TRadMenu that manages this radio button group</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Position/index of this button within the group</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, cPrompt, oWnd, bSetGet, lChecked, nPos, oRadMenu )</code></td><td>Crear un bot&oacute;n de radio; <code>bSetGet</code> es un bloque de c&oacute;digo SETGET para el valor seleccionado</td></tr>
-<tr><td><code>Redefine( nId, lChecked, nPos, oDlg, oRadMenu )</code></td><td>Redefinir desde un recurso de di&aacute;logo</td></tr>
-<tr><td><code>SetCheck( lOnOff )</code></td><td>Establecer el estado marcado y actualizar el control de bot&oacute;n de Windows</td></tr>
-<tr><td><code>IsChecked()</code></td><td>Consultar el estado marcado del bot&oacute;n desde Windows</td></tr>
-<tr><td><code>Check()</code></td><td>Establecer marcado a .T. (m&eacute;todo de conveniencia)</td></tr>
-<tr><td><code>UnCheck()</code></td><td>Establecer marcado a .F. (m&eacute;todo de conveniencia)</td></tr>
-<tr><td><code>Click()</code></td><td>Manejar clic: selecciona este bot&oacute;n en el TRadMenu padre y actualiza</td></tr>
+<tr><td><code>New( nRow, nCol, cPrompt, oWnd, bSetGet, lChecked, nPos, oRadMenu )</code></td><td>Create a radio button; <code>bSetGet</code> is a SETGET code block for the selected value</td></tr>
+<tr><td><code>Redefine( nId, lChecked, nPos, oDlg, oRadMenu )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>SetCheck( lOnOff )</code></td><td>Set the checked state and update Windows button control</td></tr>
+<tr><td><code>IsChecked()</code></td><td>Query the button's checked state from Windows</td></tr>
+<tr><td><code>Check()</code></td><td>Set checked to .T. (convenience method)</td></tr>
+<tr><td><code>UnCheck()</code></td><td>Set checked to .F. (convenience method)</td></tr>
+<tr><td><code>Click()</code></td><td>Handle click: selects this button in the parent TRadMenu and refreshes</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Comandos</h2>
+<h2 id="commands">Commands</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol RADIO oRad VAR nOpt PROMPT cText OF oDlg</code></pre>
 
-<h2 id="example">Ejemplo: Grupo de Radio con TRadMenu</h2>
+<h2 id="example">Example: Radio Group with TRadMenu</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -74,17 +74,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Cada TRadio es un control de Windows <code>BS_AUTORADIOBUTTON</code>. El primer bot&oacute;n en un grupo debe usar el par&aacute;metro <code>lGroup</code> (estilo <code>WS_GROUP</code>) para definir los l&iacute;mites del grupo.</li>
-<li>ACCESS <code>lChanged</code> compara el estado marcado actual con el valor original, &uacute;til para seguimiento de cambios.</li>
-<li>Los botones TRadio se crean t&iacute;picamente mediante el comando <code>RADIO</code>, que configura autom&aacute;ticamente el TRadMenu y los objetos TRadio individuales.</li>
-<li>La navegaci&oacute;n por teclado (teclas de flecha) dentro del grupo es gestionada por el TRadMenu padre.</li>
+<li>Each TRadio is an <code>BS_AUTORADIOBUTTON</code> Windows control. The first button in a group should use the <code>lGroup</code> parameter (<code>WS_GROUP</code> style) to define group boundaries.</li>
+<li>The <code>lChanged</code> ACCESS compares the current checked state to the original value, useful for change tracking.</li>
+<li>TRadio buttons are typically created via the <code>RADIO</code> command, which sets up the TRadMenu and individual TRadio objects automatically.</li>
+<li>Keyboard navigation (arrow keys) within the group is managed by the parent TRadMenu.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/internet/tproxy.html">&larr; tproxy</a> | <a href="../../es/ui/tradmenu.html">tradmenu &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

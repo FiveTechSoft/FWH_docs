@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMyTitle - Documenta&ccedil;&atilde;o FWH</title>
+<title>TMyTitle - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,51 +13,51 @@
 
 <h1>TMyTitle</h1>
 <p class="class-source">Fonte: <code>source/classes/tmytitle.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TMyTitle &eacute; um controle personalizado de barra de t&iacute;tulo com gradiente que pode ser colocado no topo de uma janela ou di&aacute;logo. Renderiza um fundo preenchido com gradiente (horizontal ou vertical) com texto do t&iacute;tulo, um bitmap de cabe&ccedil;alho opcional e um efeito semelhante a vidro. Suporta fontes personalizadas, cores de borda e atualiza&ccedil;&otilde;es em tempo de execu&ccedil;&atilde;o do texto e bitmap do t&iacute;tulo.
+TMyTitle is a custom gradient title bar control that can be placed at the top of a window or dialog. It renders a gradient-filled background (horizontal or vertical) with title text, an optional header bitmap, and a glass-like effect. It supports custom fonts, border colors, and runtime updates to the title text and bitmap.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cTitle</code></td><td>Character</td><td>Texto do t&iacute;tulo exibido na barra de gradiente</td></tr>
-<tr><td><code>cBitmap</code></td><td>Character</td><td>Caminho de arquivo ou nome de recurso de bitmap opcional</td></tr>
-<tr><td><code>nClrFore</code></td><td>Numeric</td><td>Cor do texto do t&iacute;tulo em primeiro plano</td></tr>
-<tr><td><code>nClrBegin</code></td><td>Numeric</td><td>Cor inicial do gradiente (padr&atilde;o azul claro)</td></tr>
-<tr><td><code>nClrEnd</code></td><td>Numeric</td><td>Cor final do gradiente (padr&atilde;o azul escuro)</td></tr>
-<tr><td><code>lVertical</code></td><td>Logical</td><td>Orienta&ccedil;&atilde;o do gradiente vertical (padr&atilde;o horizontal)</td></tr>
-<tr><td><code>lGlass</code></td><td>Logical</td><td>Habilitar efeito de gradiente estilo vidro</td></tr>
-<tr><td><code>lBorder</code></td><td>Logical</td><td>Desenhar uma borda ao redor da barra de t&iacute;tulo (padr&atilde;o <code>.T.</code>)</td></tr>
-<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Cor da borda (padr&atilde;o <code>CLR_BLACK</code>)</td></tr>
-<tr><td><code>oBitmap</code></td><td>Object</td><td>Objeto bitmap carregado (de arquivo ou recurso)</td></tr>
-<tr><td><code>oFontTitle</code></td><td>Object</td><td>Fonte usada para o texto do t&iacute;tulo</td></tr>
-<tr><td><code>nOffSetX</code></td><td>Numeric</td><td>Deslocamento horizontal do bitmap (padr&atilde;o 0)</td></tr>
-<tr><td><code>nOffSetY</code></td><td>Numeric</td><td>Deslocamento vertical do bitmap (padr&atilde;o 0)</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Title text displayed on the gradient bar</td></tr>
+<tr><td><code>cBitmap</code></td><td>Character</td><td>Optional bitmap file path or resource name</td></tr>
+<tr><td><code>nClrFore</code></td><td>Numeric</td><td>Title text foreground color</td></tr>
+<tr><td><code>nClrBegin</code></td><td>Numeric</td><td>Gradient start color (default light blue)</td></tr>
+<tr><td><code>nClrEnd</code></td><td>Numeric</td><td>Gradient end color (default dark blue)</td></tr>
+<tr><td><code>lVertical</code></td><td>Logical</td><td>Vertical gradient orientation (default horizontal)</td></tr>
+<tr><td><code>lGlass</code></td><td>Logical</td><td>Enable glass-style gradient effect</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Draw a border around the title bar (default <code>.T.</code>)</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Border color (default <code>CLR_BLACK</code>)</td></tr>
+<tr><td><code>oBitmap</code></td><td>Object</td><td>Loaded bitmap object (from file or resource)</td></tr>
+<tr><td><code>oFontTitle</code></td><td>Object</td><td>Font used for the title text</td></tr>
+<tr><td><code>nOffSetX</code></td><td>Numeric</td><td>Horizontal bitmap offset (default 0)</td></tr>
+<tr><td><code>nOffSetY</code></td><td>Numeric</td><td>Vertical bitmap offset (default 0)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nTop, nLeft, nH, nW, cTitle, nClrFore, nClrBegin, nClrEnd, nStyle, oFontTitle, lVertical, lBorder, nClrBorder, lGlass, cBitmap )</code></td><td>Criar um novo controle TMyTitle</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, cTitle, nClrFore, nClrBegin, nClrEnd, lVertical, lBorder, nClrBorder, lGlass, cBitmap, oFontTitle )</code></td><td>Redefinir a partir de recurso de di&aacute;logo</td></tr>
-<tr><td><code>SetBitmap( cBmp )</code></td><td>Alterar o bitmap do cabe&ccedil;alho em tempo de execu&ccedil;&atilde;o (arquivo ou recurso)</td></tr>
-<tr><td><code>SetTitle( cTitle )</code></td><td>Alterar o texto do t&iacute;tulo e atualizar</td></tr>
-<tr><td><code>SetFont( oFont )</code></td><td>Alterar a fonte do t&iacute;tulo</td></tr>
+<tr><td><code>New( oWnd, nTop, nLeft, nH, nW, cTitle, nClrFore, nClrBegin, nClrEnd, nStyle, oFontTitle, lVertical, lBorder, nClrBorder, lGlass, cBitmap )</code></td><td>Create a new TMyTitle control</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cTitle, nClrFore, nClrBegin, nClrEnd, lVertical, lBorder, nClrBorder, lGlass, cBitmap, oFontTitle )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>SetBitmap( cBmp )</code></td><td>Change the header bitmap at runtime (file or resource)</td></tr>
+<tr><td><code>SetTitle( cTitle )</code></td><td>Change the title text and refresh</td></tr>
+<tr><td><code>SetFont( oFont )</code></td><td>Change the title font</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Barra de T&iacute;tulo com Gradiente</h2>
+<h2 id="example">Example: Gradient Title Bar</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -76,17 +76,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>A fonte padr&atilde;o &eacute; Tahoma, tamanho -18, negrito. Uma fonte personalizada pode ser fornecida via par&acirc;metro <code>oFontTitle</code>.</li>
-<li>Quando <code>lGlass</code> &eacute; <code>.T.</code>, a barra usa um gradiente horizontal de duas passadas que cria um efeito de reflexo semelhante a vidro.</li>
-<li>Bitmaps podem ser carregados de arquivo (caminho com extens&atilde;o) ou de recurso (nome sem extens&atilde;o). O bitmap &eacute; desenhado no deslocamento <code>nOffSetX</code>, <code>nOffSetY</code> do canto superior esquerdo.</li>
-<li>O dimensionamento High-DPI &eacute; suportado via <code>nScale</code>, que &eacute; calculado automaticamente a partir do DPI l&oacute;gico da janela ativa.</li>
+<li>The default font is Tahoma, size -18, bold. A custom font can be supplied via the <code>oFontTitle</code> parameter.</li>
+<li>When <code>lGlass</code> is <code>.T.</code>, the bar uses a two-pass horizontal gradient that creates a glass-like reflection effect.</li>
+<li>Bitmaps can be loaded from file (path with extension) or from resource (name without extension). The bitmap is drawn at offset <code>nOffSetX</code>, <code>nOffSetY</code> from the top-left corner.</li>
+<li>High-DPI scaling is supported via <code>nScale</code>, which is automatically computed from the active window's logical DPI.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tmybox.html">&larr; tmybox</a> | <a href="../../pt/ui/tnavigator.html">tnavigator &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

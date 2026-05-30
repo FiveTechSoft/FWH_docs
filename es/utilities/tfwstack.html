@@ -6,38 +6,38 @@
 <p class="class-source">Fuente: <code>source/classes/fwstack.prg</code></p>
 
 <p>
-FWStack implementa una estructura de datos de pila clásica LIFO (Last-In, First-Out, último en entrar, primero en salir).
-Almacena los elementos en un array interno y proporciona operaciones de apilar (push), desapilar (pop) y consultar (peek).
-El constructor y el método Push() aceptan listas de argumentos de longitud variable, permitiendo
-añadir varios elementos en una sola llamada. FWStack es útil para operaciones de deshacer/rehacer,
-evaluación de expresiones y cualquier escenario que requiera una gestión de datos
-de tipo último-en-entrar-primero-en-salir.
+FWStack implements a classic LIFO (Last-In, First-Out) stack data structure.
+It stores items in an internal array and provides push, pop, and peek operations.
+The constructor and Push() method accept variable-length argument lists, allowing
+multiple items to be added in a single call. FWStack is useful for undo/redo
+operations, expression evaluation, and any scenario requiring last-in-first-out
+data management.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>aStack</code></td><td>Array</td><td>Array interno que contiene los elementos de la pila</td></tr>
+<tr><td><code>aStack</code></td><td>Array</td><td>Internal array holding stack items</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
-<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( item1, item2, ... )</code></td><td>Crea una pila inicializada con los elementos indicados (de abajo hacia arriba)</td></tr>
-<tr><td><code>Push( item1, item2, ... )</code></td><td>Apila uno o más elementos en la cima de la pila. Devuelve Self para encadenamiento.</td></tr>
-<tr><td><code>Pop()</code></td><td>Elimina y devuelve el elemento superior de la pila. Devuelve nil si la pila está vacía.</td></tr>
-<tr><td><code>Peek( n )</code></td><td>Devuelve el n-ésimo elemento desde la cima sin eliminarlo. n vale 1 por defecto (la cima). Un n negativo indexa desde el fondo (p. ej., -1 es el fondo). Devuelve nil si el índice está fuera de rango.</td></tr>
-<tr><td><code>Size()</code></td><td>Devuelve el número de elementos de la pila</td></tr>
-<tr><td><code>Clear()</code></td><td>Elimina todos los elementos de la pila. Devuelve Self para encadenamiento.</td></tr>
+<tr><td><code>New( item1, item2, ... )</code></td><td>Create a stack initialized with the given items (bottom to top)</td></tr>
+<tr><td><code>Push( item1, item2, ... )</code></td><td>Push one or more items onto the top of the stack. Returns Self for chaining.</td></tr>
+<tr><td><code>Pop()</code></td><td>Remove and return the top item from the stack. Returns nil if the stack is empty.</td></tr>
+<tr><td><code>Peek( n )</code></td><td>Return the nth item from the top without removing it. n defaults to 1 (the top). Negative n indexes from the bottom (e.g., -1 is bottom). Returns nil if the index is out of range.</td></tr>
+<tr><td><code>Size()</code></td><td>Return the number of items in the stack</td></tr>
+<tr><td><code>Clear()</code></td><td>Remove all items from the stack. Returns Self for chaining.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Apilar/Desapilar Valores</h2>
+<h2 id="example">Example: Push/Pop Values</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -45,44 +45,44 @@ function Main()
 
    local oStack := FWStack():New()
 
-   // Apilar varios elementos
+   // Push multiple items
    oStack:Push( 10, 20, 30, 40, 50 )
 
    ? "Stack size:", oStack:Size()       // 5
 
-   // Consultar el elemento superior sin eliminarlo
+   // Peek at top item without removing
    ? "Top item:", oStack:Peek()         // 50
 
-   // Consultar el elemento 2 desde la cima
+   // Peek at item 2 from top (0-indexed from the top)
    ? "Second from top:", oStack:Peek( 2 )  // 40
 
-   // Desapilar elementos
+   // Pop items
    while oStack:Size() > 0
       ? "Popped:", oStack:Pop()
    end
 
    ? "Stack is empty:", oStack:Size() == 0  // .T.
 
-   // Inicializar con elementos
+   // Initialize with items
    oStack := FWStack():New( "apple", "banana", "cherry" )
    ? oStack:Pop()   // "cherry"
    ? oStack:Pop()   // "banana"
    ? oStack:Pop()   // "apple"
-   ? oStack:Pop()   // nil (vacía)
+   ? oStack:Pop()   // nil (empty)
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Los métodos de FWStack que aceptan argumentos variables (New, Push) funcionan tanto con Harbour como con xHarbour. En xHarbour, aceptan un parámetro de tipo array en lugar de varargs.</li>
-<li>El método <code>Peek()</code> sin argumento devuelve el elemento superior sin eliminarlo. Con un argumento positivo n, busca n posiciones desde la cima (1 = cima). Con un argumento negativo, cuenta desde el fondo (-1 = fondo).</li>
-<li>Push() y Clear() devuelven Self, lo que permite encadenar métodos: <code>oStack:Clear():Push( 1, 2, 3 ):Push( 4 )</code>.</li>
-<li>Pop() devuelve nil cuando la pila está vacía -- compruebe con <code>oStack:Size() > 0</code> antes de desapilar.</li>
+<li>FWStack methods that accept variable arguments (New, Push) work with both Harbour and xHarbour. On xHarbour, they accept an array parameter instead of varargs.</li>
+<li>The <code>Peek()</code> method with no argument returns the top item without removing it. With a positive argument n, it looks n positions from the top (1 = top). With a negative argument, it counts from the bottom (-1 = bottom).</li>
+<li>Push() and Clear() return Self, enabling method chaining: <code>oStack:Clear():Push( 1, 2, 3 ):Push( 4 )</code>.</li>
+<li>Pop() returns nil when the stack is empty -- test with <code>oStack:Size() > 0</code> before popping.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/printing/tfwpdf.html">&larr; tfwpdf</a> | <a href="../../es/ui/tgantt.html">tgantt &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

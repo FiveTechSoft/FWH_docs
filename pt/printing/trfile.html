@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRFile - FWH Docs</title>
+<title>TRFile - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,51 +13,51 @@
 
 <h1>TRFile</h1>
 <p class="class-source">Fonte: <code>source/classes/rfile.prg</code></p>
-<p class="class-hierarchy">Classe independente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TRFile é um dispositivo de saída de relatório em arquivo de texto que implementa a mesma interface da TPrinter,
-permitindo que relatórios sejam gravados em um arquivo de texto simples em vez de uma impressora. Ele substitui
-o driver de dispositivo da TReport, fornecendo os métodos <code>Say()</code>, <code>StartPage()</code>, <code>EndPage()</code> e métodos de medição
-que operam sobre células de caractere em vez de pixels.
+TRFile is a text-file report output device that implements the same interface as TPrinter,
+allowing reports to be written to a plain text file instead of a printer. It substitutes as
+a device driver for TReport, providing <code>Say()</code>, <code>StartPage()</code>, <code>EndPage()</code>, and measurement
+methods that operate on character cells rather than pixels.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hDC</code></td><td>Numérico</td><td>Handle do arquivo de texto de saída</td></tr>
-<tr><td><code>aRows</code></td><td>Array</td><td>Array de strings de caracteres, uma por linha da página atual</td></tr>
-<tr><td><code>cDocument</code></td><td>Caractere</td><td>Nome do documento</td></tr>
-<tr><td><code>nHeight</code></td><td>Numérico</td><td>Altura da página em linhas de caractere</td></tr>
-<tr><td><code>nWidth</code></td><td>Numérico</td><td>Largura da página em colunas de caractere</td></tr>
-<tr><td><code>lPrint</code></td><td>Lógico</td><td>Habilita a saída (padrão .T.)</td></tr>
+<tr><td><code>hDC</code></td><td>Numeric</td><td>File handle for the output text file</td></tr>
+<tr><td><code>aRows</code></td><td>Array</td><td>Array of character strings, one per row of the current page</td></tr>
+<tr><td><code>cDocument</code></td><td>Character</td><td>Document name</td></tr>
+<tr><td><code>nHeight</code></td><td>Numeric</td><td>Page height in character rows</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Page width in character columns</td></tr>
+<tr><td><code>lPrint</code></td><td>Logical</td><td>Enable output (default .T.)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cFile )</code></td><td>Abre <code>cFile</code> para gravação e cria um dispositivo TRFile</td></tr>
-<tr><td><code>Say( nRow, nCol, cText, oFont, nMaxSize, u6, u7, nPad )</code></td><td>Grava texto na linha e coluna especificadas no buffer de caracteres</td></tr>
-<tr><td><code>StartPage()</code></td><td>Inicia uma nova página; limpa o buffer de linhas</td></tr>
-<tr><td><code>EndPage()</code></td><td>Descarrega o buffer da página atual para o arquivo</td></tr>
-<tr><td><code>End()</code></td><td>Fecha o arquivo de saída</td></tr>
-<tr><td><code>SetHeight( nHeight )</code></td><td>Define a altura da página em linhas de caractere e reinicializa o buffer</td></tr>
-<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Define as dimensões da página em células de caractere</td></tr>
-<tr><td><code>GetTextWidth( cText )</code></td><td>Retorna <code>Len( cText )</code> (largura baseada em caracteres)</td></tr>
-<tr><td><code>GetTextHeight()</code></td><td>Sempre retorna 1 (altura de uma única linha de caractere)</td></tr>
+<tr><td><code>New( cFile )</code></td><td>Open <code>cFile</code> for writing and create a TRFile device</td></tr>
+<tr><td><code>Say( nRow, nCol, cText, oFont, nMaxSize, u6, u7, nPad )</code></td><td>Write text to the specified row and column in the character buffer</td></tr>
+<tr><td><code>StartPage()</code></td><td>Begin a new page; clears the row buffer</td></tr>
+<tr><td><code>EndPage()</code></td><td>Flush the current page buffer to the file</td></tr>
+<tr><td><code>End()</code></td><td>Close the output file</td></tr>
+<tr><td><code>SetHeight( nHeight )</code></td><td>Set page height in character rows and reinitialize buffer</td></tr>
+<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Set page dimensions in character cells</td></tr>
+<tr><td><code>GetTextWidth( cText )</code></td><td>Returns <code>Len( cText )</code> (character-based width)</td></tr>
+<tr><td><code>GetTextHeight()</code></td><td>Always returns 1 (single character row height)</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Gravar Relatório de Texto em Arquivo</h2>
+<h2 id="example">Example: Write Text Report to File</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -68,7 +68,7 @@ function WriteTextReport()
    oFile:SetSize( 80, 66 )
 
    oFile:StartPage()
-   oFile:Say( 1, 30, "Relatório Mensal" )
+   oFile:Say( 1, 30, "Monthly Report" )
    oFile:Say( 3, 1,  Replicate( "-", 80 ) )
    oFile:Say( 5, 1,  "Item" )
    oFile:Say( 5, 40, "Amount" )
@@ -83,17 +83,17 @@ function WriteTextReport()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TRFile pode ser usada como substituta direta da TPrinter na TReport definindo <code>oReport:oDevice := TRFile():New( "out.txt" )</code>.</li>
-<li>O posicionamento do texto é baseado em caracteres: linha 1, coluna 1 é o canto superior esquerdo.</li>
-<li>Fontes, bitmaps, linhas e caixas não são suportados (os métodos são VIRTUAL).</li>
-<li>Cada página é armazenada em buffer em <code>aRows</code> e descarregada em disco em <code>EndPage()</code>.</li>
+<li>TRFile can be used as a drop-in replacement for TPrinter in TReport by setting <code>oReport:oDevice := TRFile():New( "out.txt" )</code>.</li>
+<li>Text positioning is character-based: row 1, column 1 is the top-left corner.</li>
+<li>Fonts, bitmaps, lines, and boxes are not supported (methods are VIRTUAL).</li>
+<li>Each page is buffered in <code>aRows</code> and flushed to disk on <code>EndPage()</code>.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/utilities/trestore.html">&larr; trestore</a> | <a href="../../pt/printing/trgroup.html">trgroup &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

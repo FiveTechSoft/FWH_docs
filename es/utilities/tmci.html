@@ -13,48 +13,48 @@
 
 <h1>TMci</h1>
 <p class="class-source">Fuente: <code>source/classes/tmci.prg</code></p>
-<p class="class-hierarchy">Clase independiente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TMci proporciona control de reproducción multimedia a través de la API Windows Media Control Interface (MCI). Admite la reproducción de archivos de audio y vídeo, incluyendo vídeo AVI, audio de CD, WAV, MIDI y otros dispositivos compatibles con MCI. La clase puede reproducir medios en una ventana o a pantalla completa.
+TMci provides multimedia playback control through the Windows Media Control Interface (MCI) API. It supports audio and video file playback including AVI video, CD audio, WAV, MIDI, and other MCI-compatible devices. The class can play media in a window or full-screen.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nError</code></td><td>Numérico</td><td>Último código de error MCI; cero indica éxito</td></tr>
-<tr><td><code>nId</code></td><td>Numérico</td><td>Identificador del dispositivo MCI asignado al abrir</td></tr>
-<tr><td><code>cType</code></td><td>Carácter</td><td>Tipo de dispositivo: "AVIVideo", "CDAudio", "WaveAudio", "Sequencer", etc.</td></tr>
-<tr><td><code>cFileName</code></td><td>Carácter</td><td>Ruta al archivo multimedia que se está reproduciendo</td></tr>
-<tr><td><code>oWnd</code></td><td>Objeto</td><td>Ventana padre para la reproducción de vídeo</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td>Last MCI error code; zero indicates success</td></tr>
+<tr><td><code>nId</code></td><td>Numeric</td><td>MCI device identifier assigned on open</td></tr>
+<tr><td><code>cType</code></td><td>Character</td><td>Device type: "AVIVideo", "CDAudio", "WaveAudio", "Sequencer", etc.</td></tr>
+<tr><td><code>cFileName</code></td><td>Character</td><td>Path to the multimedia file being played</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Parent window for video playback</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cDev, cFile )</code></td><td>Crea un nuevo objeto MCI para el tipo de dispositivo y archivo multimedia indicados</td></tr>
-<tr><td><code>lOpen()</code></td><td>Abre el dispositivo MCI; devuelve .T. si tiene éxito</td></tr>
-<tr><td><code>Play( nFrom, nTo, hWnd )</code></td><td>Reproduce un segmento desde <code>nFrom</code> hasta <code>nTo</code>, opcionalmente en un manejador de ventana</td></tr>
-<tr><td><code>PlayFull()</code></td><td>Reproduce los medios en modo pantalla completa</td></tr>
-<tr><td><code>SetWindow( oWnd )</code></td><td>Establece la ventana padre para la salida de vídeo</td></tr>
-<tr><td><code>Position()</code></td><td>Devuelve la posición actual de reproducción</td></tr>
-<tr><td><code>Length()</code></td><td>Devuelve la duración total del medio</td></tr>
-<tr><td><code>SendStr( cMci )</code></td><td>Envía una cadena de comando MCI sin procesar directamente al dispositivo</td></tr>
-<tr><td><code>cGetError()</code></td><td>Devuelve una descripción legible del último error</td></tr>
-<tr><td><code>End()</code></td><td>Cierra el dispositivo MCI y libera los recursos</td></tr>
+<tr><td><code>New( cDev, cFile )</code></td><td>Create a new MCI object for the given device type and media file</td></tr>
+<tr><td><code>lOpen()</code></td><td>Open the MCI device; returns .T. on success</td></tr>
+<tr><td><code>Play( nFrom, nTo, hWnd )</code></td><td>Play a segment from <code>nFrom</code> to <code>nTo</code>, optionally in a window handle</td></tr>
+<tr><td><code>PlayFull()</code></td><td>Play media in full-screen mode</td></tr>
+<tr><td><code>SetWindow( oWnd )</code></td><td>Set the parent window for video output</td></tr>
+<tr><td><code>Position()</code></td><td>Return the current playback position</td></tr>
+<tr><td><code>Length()</code></td><td>Return the total media length</td></tr>
+<tr><td><code>SendStr( cMci )</code></td><td>Send a raw MCI command string directly to the device</td></tr>
+<tr><td><code>cGetError()</code></td><td>Return a human-readable description of the last error</td></tr>
+<tr><td><code>End()</code></td><td>Close the MCI device and release resources</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Reproducir un archivo AVI</h2>
+<h2 id="example">Example: Play AVI File</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -80,18 +80,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>El parámetro <code>cType</code> determina qué controlador MCI se carga. Entre los tipos comunes se incluyen "AVIVideo", "WaveAudio", "CDAudio" y "Sequencer" (MIDI).</li>
-<li>Llame a <code>lOpen()</code> antes de cualquier operación de reproducción. Compruebe el valor devuelto para confirmar que el dispositivo se abrió correctamente.</li>
-<li>Use <code>Play()</code> con un manejador de ventana para incrustar el vídeo en la interfaz de su aplicación, o <code>PlayFull()</code> para la reproducción a pantalla completa.</li>
-<li>El método <code>SendStr()</code> ofrece acceso de bajo nivel a cualquier cadena de comando MCI para operaciones avanzadas no cubiertas por los métodos de la clase.</li>
-<li>Llame siempre a <code>End()</code> al terminar para liberar el dispositivo MCI y evitar fugas de recursos.</li>
+<li>The <code>cType</code> parameter determines which MCI driver is loaded. Common types include "AVIVideo", "WaveAudio", "CDAudio", and "Sequencer" (MIDI).</li>
+<li>Call <code>lOpen()</code> before any playback operation. Check the return value to confirm the device was opened successfully.</li>
+<li>Use <code>Play()</code> with a window handle to embed video in your application UI, or <code>PlayFull()</code> for full-screen playback.</li>
+<li>The <code>SendStr()</code> method provides low-level access to any MCI command string for advanced operations not covered by the class methods.</li>
+<li>Always call <code>End()</code> when finished to release the MCI device and avoid resource leaks.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/data/tmariarecord.html">&larr; tmariarecord</a> | <a href="../../es/core/tmdi.html">tmdi &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

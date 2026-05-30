@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TBlock - Bloco de Código a Partir de String de Expressão - Documentação FWH</title>
+<title>TBlock - Code Block From Expression String - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,45 +11,45 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>TBlock - Bloco de Código a Partir de String de Expressão</h1>
+<h1>TBlock - Code Block From Expression String</h1>
 <p class="class-source">
 Fonte: <code>source/classes/block.prg</code>
 </p>
 
 <p>
-TBlock cria blocos de código Harbour (bBlock) a partir de strings de expressão de caracteres em tempo de execução.
-Isso permite a avaliação dinâmica de expressões inseridas pelo usuário ou lidas de arquivos de
-configuração. A classe compila a string de expressão usando o operador <code>&amp;</code> (macro)
-do Harbour e armazena o bloco de código resultante. O método <code>Eval()</code> avalia o
-bloco com parâmetros opcionais, enquanto <code>Exec()</code> o executa para efeitos colaterais.
+TBlock creates Harbour code blocks (bBlock) from character expression strings at runtime.
+This enables dynamic evaluation of expressions entered by the user or read from configuration
+files. The class compiles the expression string using Harbour's <code>&amp;</code> (macro)
+operator and stores the resulting code block. The <code>Eval()</code> method evaluates the
+block with optional parameters, while <code>Exec()</code> runs it for side effects.
 </p>
 
 <h3>DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cExpression</code></td><td>Character</td><td>A string de expressão a partir da qual o bloco de código foi compilado</td></tr>
-<tr><td><code>bBlock</code></td><td>Codeblock</td><td>O bloco de código compilado pronto para avaliação</td></tr>
+<tr><td><code>cExpression</code></td><td>Character</td><td>The expression string from which the code block was compiled</td></tr>
+<tr><td><code>bBlock</code></td><td>Codeblock</td><td>The compiled code block ready for evaluation</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos Principais</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cExpr )</code></td><td>Cria um objeto TBlock a partir da string de expressão cExpr. Compila-a em bBlock</td></tr>
-<tr><td><code>Eval( uPar1 .. uPar5 )</code></td><td>Avalia o bloco de código com até cinco parâmetros e retorna o resultado</td></tr>
-<tr><td><code>Exec( uPar1 .. uPar5 )</code></td><td>Avalia o bloco de código para efeitos colaterais (o valor de retorno é descartado)</td></tr>
+<tr><td><code>New( cExpr )</code></td><td>Create a TBlock object from expression string cExpr. Compiles it into bBlock</td></tr>
+<tr><td><code>Eval( uPar1 .. uPar5 )</code></td><td>Evaluate the code block with up to five parameters and return the result</td></tr>
+<tr><td><code>Exec( uPar1 .. uPar5 )</code></td><td>Evaluate the code block for side effects (return value is discarded)</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Avaliação de Expressão em Tempo de Execução</h3>
+<h3>Example: Runtime Expression Evaluation</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -57,7 +57,7 @@ function Main()
 
    local cExpr, oBlock, nResult
 
-   // Obtém a expressão da entrada do usuário
+   // Get expression from user input
    cExpr := "2 + 3 * 4"
 
    oBlock := TBlock():New( cExpr )
@@ -66,26 +66,26 @@ function Main()
       ? cExpr + " = " + Str( nResult )    // 14
    endif
 
-   // Expressão com parâmetros
+   // Expression with parameters
    oBlock := TBlock():New( "x + y" )
    if oBlock:bBlock != nil
       nResult := oBlock:Eval( 10, 20 )
       ? "x + y = " + Str( nResult )       // 30
    endif
 
-   // Expressão de arquivo de configuração
+   // Expression from config file
    local cConfigExpr := "Year( Date() ) - 2000"
    oBlock := TBlock():New( cConfigExpr )
    ? "Year offset:", oBlock:Eval()
 
-   // Exec com efeitos colaterais
+   // Exec with side effects
    oBlock := TBlock():New( "MsgInfo( 'Hello from TBlock!' )" )
    oBlock:Exec()
 
 return nil</code></pre>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tbitmap.html">&larr; tbitmap</a> | <a href="../../pt/reference/tblockchain.html">tblockchain &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

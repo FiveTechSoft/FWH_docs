@@ -1,17 +1,17 @@
-﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TButton / TBtnBmp - DocumentaÃ§Ã£o FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TButton / TBtnBmp - Documentação FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TButton / TBtnBmp</h1>
-<p class="subtitle">BotÃµes push padrÃ£o e botÃµes bitmap para diÃ¡logos e barras de ferramentas</p>
+<p class="subtitle">Standard push buttons and bitmap buttons for dialogs and toolbars</p>
 
 <h2 id="tbutton">TButton</h2>
 
-<p><strong>Fonte:</strong> <code>source/classes/button.prg</code> &nbsp;|&nbsp; <strong>Classe pai:</strong> <code>TControl</code></p>
+<p><strong>Fonte:</strong> <code>source/classes/button.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<p><code>TButton</code> encapsula o controle de botÃ£o push padrÃ£o do Windows. Ã‰ o elemento interativo mais bÃ¡sico â€” um retÃ¢ngulo rotulado que executa uma aÃ§Ã£o quando clicado. BotÃµes podem ser designados como botÃ£o <em>padrÃ£o</em> (ativado por Enter) ou botÃ£o <em>cancelar</em> (ativado por Escape).</p>
+<p><code>TButton</code> wraps the standard Windows push button control. It is the most basic interactive element -- a labeled rectangle that executes an action when clicked. Buttons can be designated as the <em>default</em> button (activated by Enter) or the <em>cancel</em> button (activated by Escape).</p>
 
-<h3 id="tbutton-hierarchy">Hierarquia de Classe</h3>
+<h3 id="tbutton-hierarchy">Class Hierarchy</h3>
 
 <div class="mermaid">
 graph TD
@@ -38,29 +38,29 @@ graph TD
 <h3 id="tbutton-properties">TButton Properties</h3>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>bAction</code></td><td>Block</td><td>Bloco de cÃ³digo executado quando o botÃ£o Ã© clicado</td></tr>
-<tr><td><code>lDefault</code></td><td>Logical</td><td>Se <code>.T.</code>, este Ã© o botÃ£o padrÃ£o (tecla Enter o ativa)</td></tr>
-<tr><td><code>lCancel</code></td><td>Logical</td><td>Se <code>.T.</code>, este Ã© o botÃ£o cancelar (tecla Escape o ativa)</td></tr>
-<tr><td><code>cCaption</code></td><td>String</td><td>Texto exibido na face do botÃ£o</td></tr>
-<tr><td><code>lProcessing</code></td><td>Logical</td><td>ProteÃ§Ã£o interna de reentrada â€” evita que cliques duplos disparem a aÃ§Ã£o duas vezes</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed when the button is clicked</td></tr>
+<tr><td><code>lDefault</code></td><td>Logical</td><td>If <code>.T.</code>, this is the default button (Enter key activates it)</td></tr>
+<tr><td><code>lCancel</code></td><td>Logical</td><td>If <code>.T.</code>, this is the cancel button (Escape key activates it)</td></tr>
+<tr><td><code>cCaption</code></td><td>String</td><td>Text displayed on the button face</td></tr>
+<tr><td><code>lProcessing</code></td><td>Logical</td><td>Internal reentrancy guard -- prevents double-clicks from firing the action twice</td></tr>
 </tbody>
 </table>
 
 <h3 id="tbutton-methods">TButton Methods</h3>
 
 <table>
-<thead><tr><th>MÃ©todo</th><th>DescriÃ§Ã£o</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, cCaption, oWnd, bAction, nWidth, nHeight, ... )</code></td><td>Construtor. Cria um novo botÃ£o na posiÃ§Ã£o fornecida.</td></tr>
-<tr><td><code>ReDefine( nId, bAction, oWnd, ... )</code></td><td>Redefinir um botÃ£o a partir de um recurso de diÃ¡logo (arquivo RC).</td></tr>
-<tr><td><code>Click()</code></td><td>Disparar programaticamente a aÃ§Ã£o do botÃ£o.</td></tr>
-<tr><td><code>SetFocus()</code></td><td>Mover o foco do teclado para este botÃ£o.</td></tr>
+<tr><td><code>New( nRow, nCol, cCaption, oWnd, bAction, nWidth, nHeight, ... )</code></td><td>Constructor. Creates a new button at the given position.</td></tr>
+<tr><td><code>ReDefine( nId, bAction, oWnd, ... )</code></td><td>Redefine a button from a dialog resource (RC file).</td></tr>
+<tr><td><code>Click()</code></td><td>Programmatically trigger the button's action.</td></tr>
+<tr><td><code>SetFocus()</code></td><td>Move keyboard focus to this button.</td></tr>
 </tbody>
 </table>
 
-<h3 id="tbutton-command">Sintaxe do Comando TButton</h3>
+<h3 id="tbutton-command">TButton Command Syntax</h3>
 
 <pre><code class="language-harbour">@ nRow, nCol BUTTON oBtn PROMPT "text" ;
    [ OF oWnd ] ;
@@ -71,13 +71,13 @@ graph TD
    [ FONT oFont ] ;
    [ WHEN bWhen ]</code></pre>
 
-<h3 id="tbutton-states">MÃ¡quina de Estados do BotÃ£o</h3>
+<h3 id="tbutton-states">Button State Machine</h3>
 
 <div class="mermaid">
 stateDiagram-v2
     [*] --> Normal
     Normal --> Focused : Tab / SetFocus()
-    Focused --> Pressed : Click / Space / Enter(padrÃ£o)
+    Focused --> Pressed : Click / Space / Enter(default)
     Pressed --> ActionExecuted : bAction fires
     ActionExecuted --> Normal : Action complete
     Focused --> Normal : Tab away
@@ -90,27 +90,27 @@ stateDiagram-v2
 
 <h2 id="tbtnbmp">TBtnBmp</h2>
 
-<p><strong>Fonte:</strong> <code>source/classes/btnbmp.prg</code> &nbsp;|&nbsp; <strong>Classe pai:</strong> <code>TControl</code></p>
+<p><strong>Fonte:</strong> <code>source/classes/btnbmp.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<p><code>TBtnBmp</code> Ã© um botÃ£o bitmap desenhado pelo proprietÃ¡rio que suporta mÃºltiplos estados visuais (normal, pressionado, mouse sobre, desabilitado). Ã‰ o tipo de botÃ£o usado em barras de ferramentas (<code>TButtonBar</code>) e em qualquer lugar onde vocÃª precise de botÃµes grÃ¡ficos com Ã­cones. It is the button type used in toolbars (<code>TButtonBar</code>) and anywhere you need graphical buttons with icons.</p>
+<p><code>TBtnBmp</code> is an owner-drawn bitmap button that supports multiple visual states (normal, pressed, mouse-over, disabled). It is the button type used in toolbars (<code>TButtonBar</code>) and anywhere you need graphical buttons with icons.</p>
 
 <h3 id="tbtnbmp-properties">TBtnBmp Properties</h3>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>cResName</code></td><td>String</td><td>Nome do recurso para o bitmap do botÃ£o</td></tr>
-<tr><td><code>cBmpFile</code></td><td>String</td><td>Caminho para um arquivo BMP/PNG externo para a imagem do botÃ£o</td></tr>
+<tr><td><code>cResName</code></td><td>String</td><td>Resource name for the button bitmap</td></tr>
+<tr><td><code>cBmpFile</code></td><td>String</td><td>Path to an external BMP/PNG file for the button image</td></tr>
 <tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on click</td></tr>
-<tr><td><code>lBtnUp</code></td><td>Logical</td><td>Estado de pressionamento atual (interno)</td></tr>
-<tr><td><code>lGroup</code></td><td>Logical</td><td>Se <code>.T.</code>, inicia um novo grupo de botÃµes da barra de ferramentas</td></tr>
-<tr><td><code>lPressed</code></td><td>Logical</td><td>Para botÃµes tipo alternar, indica o estado ativado</td></tr>
-<tr><td><code>cToolTip</code></td><td>String</td><td>Texto de dica exibido ao passar o mouse</td></tr>
-<tr><td><code>lFlat</code></td><td>Logical</td><td>AparÃªncia plana (borda apenas ao passar o mouse)</td></tr>
+<tr><td><code>lBtnUp</code></td><td>Logical</td><td>Current pressed state (internal)</td></tr>
+<tr><td><code>lGroup</code></td><td>Logical</td><td>If <code>.T.</code>, starts a new group of toolbar buttons</td></tr>
+<tr><td><code>lPressed</code></td><td>Logical</td><td>For toggle-style buttons, indicates the toggled-on state</td></tr>
+<tr><td><code>cToolTip</code></td><td>String</td><td>Tooltip text shown on mouse hover</td></tr>
+<tr><td><code>lFlat</code></td><td>Logical</td><td>Flat appearance (border only on hover)</td></tr>
 </tbody>
 </table>
 
-<h3 id="tbtnbmp-command">Sintaxe do Comando TBtnBmp</h3>
+<h3 id="tbtnbmp-command">TBtnBmp Command Syntax</h3>
 
 <pre><code class="language-harbour">@ nRow, nCol BTNBMP oBtn ;
    [ OF oWnd ] ;
@@ -122,25 +122,25 @@ stateDiagram-v2
    [ PROMPT cText ] ;
    [ WHEN bWhen ]</code></pre>
 
-<h2 id="bitmap-states">Sistema de Bitmaps de 4 Estados</h2>
+<h2 id="bitmap-states">4-State Bitmap System</h2>
 
-<p><code>TBtnBmp</code> suporta quatro estados visuais distintos, cada um com seu prÃ³prio bitmap. O botÃ£o alterna automaticamente entre eles com base na interaÃ§Ã£o do usuÃ¡rio: The button automatically switches between them based on user interaction:</p>
+<p><code>TBtnBmp</code> supports four distinct visual states, each with its own bitmap. The button automatically switches between them based on user interaction:</p>
 
 <table>
-<thead><tr><th>State</th><th>Constant</th><th>Position</th><th>DescriÃ§Ã£o</th></tr></thead>
+<thead><tr><th>State</th><th>Constant</th><th>Position</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td>Normal</td><td><code>BTN_UP</code></td><td>1</td><td>AparÃªncia padrÃ£o quando o botÃ£o estÃ¡ ocioso e habilitado</td></tr>
-<tr><td>Pressed</td><td><code>BTN_DOWN</code></td><td>2</td><td>AparÃªncia enquanto o usuÃ¡rio clica ou mantÃ©m o botÃ£o do mouse pressionado</td></tr>
-<tr><td>Disabled</td><td><code>BTN_DISABLE</code></td><td>3</td><td>AparÃªncia quando o botÃ£o estÃ¡ inativo (<code>lActive := .F.</code>)</td></tr>
-<tr><td>Hover</td><td><code>BTN_OVER</code></td><td>4</td><td>AparÃªncia quando o cursor do mouse estÃ¡ sobre o botÃ£o</td></tr>
+<tr><td>Normal</td><td><code>BTN_UP</code></td><td>1</td><td>Default appearance when the button is idle and enabled</td></tr>
+<tr><td>Pressed</td><td><code>BTN_DOWN</code></td><td>2</td><td>Appearance while the user clicks or holds the mouse button down</td></tr>
+<tr><td>Disabled</td><td><code>BTN_DISABLE</code></td><td>3</td><td>Appearance when the button is inactive (<code>lActive := .F.</code>)</td></tr>
+<tr><td>Hover</td><td><code>BTN_OVER</code></td><td>4</td><td>Appearance when the mouse cursor hovers over the button</td></tr>
 </tbody>
 </table>
 
-<p>Para botÃµes baseados em recursos, os IDs de bitmap seguem as convenÃ§Ãµes Borland: the normal bitmap uses the base ID, the pressed bitmap uses <code>base_id + 10000</code>, the disabled bitmap uses <code>base_id + 20000</code>, and the hover bitmap uses <code>base_id + 30000</code>. File-based buttons use four separate files or a multi-image strip, specified via the <code>FILENAME</code> clause.</p>
+<p>For resource-based buttons, bitmap IDs follow Borland conventions: the normal bitmap uses the base ID, the pressed bitmap uses <code>base_id + 10000</code>, the disabled bitmap uses <code>base_id + 20000</code>, and the hover bitmap uses <code>base_id + 30000</code>. File-based buttons use four separate files or a multi-image strip, specified via the <code>FILENAME</code> clause.</p>
 
-<h3 id="bitmap-advanced">OpÃ§Ãµes AvanÃ§adas de RenderizaÃ§Ã£o</h3>
+<h3 id="bitmap-advanced">Advanced Rendering Options</h3>
 
-<p>Melhorias visuais adicionais estÃ£o disponÃ­veis atravÃ©s dos membros DATA do TBtnBmp:</p>
+<p>Additional visual enhancements are available through TBtnBmp DATA members:</p>
 
 <ul>
 <li><code>lGDIP</code> -- Enables GDI+ alpha-blended rendering, providing anti-aliased edges and smooth transparency for PNG and 32-bit BMP bitmaps.</li>
@@ -148,9 +148,9 @@ stateDiagram-v2
 <li><code>bAlphaLevel</code> -- A codeblock that returns a custom alpha value (0-255) per state, enabling granular transparency control for each button state independently.</li>
 </ul>
 
-<h2 id="buttonbar">BUTTONBAR (Barra de Ferramentas)</h2>
+<h2 id="buttonbar">BUTTONBAR (Toolbar)</h2>
 
-<p>O comando <code>DEFINE BUTTONBAR</code> cria um contÃªiner <code>TButtonBar</code> que hospeda botÃµes <code>TBtnBmp</code> como uma barra de ferramentas no topo de uma janela.</p>
+<p>The <code>DEFINE BUTTONBAR</code> command creates a <code>TButtonBar</code> container that hosts <code>TBtnBmp</code> buttons as a toolbar at the top of a window.</p>
 
 <pre><code class="language-harbour">DEFINE BUTTONBAR oBar OF oWnd SIZE nBtnW, nBtnH [ 2007 | 2010 | 2013 | 2015 ]
 
@@ -170,9 +170,9 @@ DEFINE BUTTON oBtn3 OF oBar ;
    ACTION PrintReport() ;
    GROUP                      // visual separator before this button</code></pre>
 
-<h2 id="examples">Exemplos de CÃ³digo</h2>
+<h2 id="examples">Code Examples</h2>
 
-<h3>Exemplo 1: BotÃµes de DiÃ¡logo PadrÃ£o</h3>
+<h3>Example 1: Standard Dialog Buttons</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -200,7 +200,7 @@ FUNCTION TestButtons()
    ACTIVATE DIALOG oDlg CENTERED
 RETURN NIL</code></pre>
 
-<h3>Exemplo 2: BotÃµes Bitmap</h3>
+<h3>Example 2: Bitmap Buttons</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -228,7 +228,7 @@ FUNCTION TestBmpButtons()
    ACTIVATE WINDOW oWnd
 RETURN NIL</code></pre>
 
-<h3>Exemplo 3: Barra de Ferramentas Completa</h3>
+<h3>Example 3: Complete Toolbar</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -260,20 +260,20 @@ RETURN NIL</code></pre>
 <h2 id="tips">Tips</h2>
 
 <ul>
-  <li>Use <code>&amp;</code> no PROMPT para definir uma tecla aceleradora: <code>"&amp;Save"</code> makes Alt+S activate the button.</li>
-  <li>Apenas um botÃ£o por diÃ¡logo deve ser <code>DEFAULT</code> e um deve ser <code>CANCEL</code>.</li>
-  <li>Para uma aparÃªncia moderna de barra de ferramentas, use o estilo <code>2015</code> em <code>DEFINE BUTTONBAR</code>.</li>
-  <li>TBtnBmp suporta arquivos PNG com transparÃªncia alfa para Ã­cones de alta qualidade.</li>
-  <li>Use a clÃ¡usula <code>GROUP</code> para inserir um separador visual entre grupos lÃ³gicos de botÃµes da barra de ferramentas.</li>
+  <li>Use <code>&amp;</code> in the PROMPT to define an accelerator key: <code>"&amp;Save"</code> makes Alt+S activate the button.</li>
+  <li>Only one button per dialog should be <code>DEFAULT</code> and one should be <code>CANCEL</code>.</li>
+  <li>For modern toolbar looks, use the <code>2015</code> style on <code>DEFINE BUTTONBAR</code>.</li>
+  <li>TBtnBmp supports PNG files with alpha transparency for high-quality icons.</li>
+  <li>Use the <code>GROUP</code> clause to insert a visual separator between logical groups of toolbar buttons.</li>
 </ul>
 
-<h2 id="see-also">Veja tambÃ©m</h2>
+<h2 id="see-also">Veja Também</h2>
 <ul>
-  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- classe pai</li>
-  <li><a href="../../pt/ui/tmenu.html">TMenu</a> -- menus frequentemente emparelhados com barras de ferramentas</li>
-  <li><a href="../../pt/core/tdialog.html">TDialog</a> -- contÃªiner tÃ­pico para TButton</li>
+  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../pt/ui/tmenu.html">TMenu</a> -- menus often paired with toolbars</li>
+  <li><a href="../../pt/core/tdialog.html">TDialog</a> -- typical container for TButton</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta pÃ¡gina</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

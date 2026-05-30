@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TCBrowse - DocumentaÃ§Ã£o FWH</title>
+<title>TCBrowse - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,33 +13,33 @@
 
 <h1>TCBrowse</h1>
 <p class="class-source">Fonte: <code>source/classes/tcbrowse.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TWBrowse</code></p>
+<p class="class-hierarchy">Inherits from: <code>TWBrowse</code></p>
 
 <p>
-TCBrowse Ã© um controle de navegaÃ§Ã£o baseado em colunas que estende TWBrowse com suporte multi-coluna, reordenaÃ§Ã£o de colunas por arrasto, colunas congeladas, busca incremental, ediÃ§Ã£o inline, colunas de bitmap e geraÃ§Ã£o de relatÃ³rios integrada. with multi-column
+TCBrowse is a column-based browse control that extends TWBrowse with multi-column
 support, column drag-reorder, frozen columns, incremental seek, inline editing,
 bitmap columns, and built-in report generation. It can be bound to both arrays and
 DBF objects, making it a versatile data-browsing control for tabular data.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aColumns</code></td><td>Array</td><td>Array de objetos TCColumn que definem cada coluna</td></tr>
-<tr><td><code>aArray</code></td><td>Array</td><td>Array de dados ao navegar dados de array</td></tr>
-<tr><td><code>lNoHScroll</code></td><td>Logical</td><td>Ocultar barra de rolagem horizontal</td></tr>
-<tr><td><code>nFreeze</code></td><td>Numeric</td><td>NÃºmero de colunas congeladas Ã  esquerda (0 = nenhuma)</td></tr>
-<tr><td><code>nColOrder</code></td><td>Numeric</td><td>Ãndice da coluna de ordenaÃ§Ã£o atual</td></tr>
-<tr><td><code>aImages</code></td><td>Array</td><td>Array de nomes de arquivo de bitmap para colunas de imagem</td></tr>
+<tr><td><code>aColumns</code></td><td>Array</td><td>Array of TCColumn objects defining each column</td></tr>
+<tr><td><code>aArray</code></td><td>Array</td><td>Data array when browsing array data</td></tr>
+<tr><td><code>lNoHScroll</code></td><td>Logical</td><td>Hide horizontal scroll bar</td></tr>
+<tr><td><code>nFreeze</code></td><td>Numeric</td><td>Number of leftmost frozen columns (0 = none)</td></tr>
+<tr><td><code>nColOrder</code></td><td>Numeric</td><td>Current sort column index</td></tr>
+<tr><td><code>aImages</code></td><td>Array</td><td>Array of bitmap file names for image columns</td></tr>
 <tr><td><code>aBitmaps</code></td><td>Array</td><td>Array of bitmap handles for image columns</td></tr>
-<tr><td><code>oDbf</code></td><td>Object</td><td>Objeto TDatabase vinculado (ao navegar DBF)</td></tr>
-<tr><td><code>lColDrag</code></td><td>Logical</td><td>Habilitar reordenaÃ§Ã£o de colunas por arrasto</td></tr>
-<tr><td><code>cSeek</code></td><td>Character</td><td>String de busca incremental</td></tr>
-<tr><td><code>bSeekChange</code></td><td>Codeblock</td><td>Bloco de cÃ³digo disparado quando a string de busca muda</td></tr>
+<tr><td><code>oDbf</code></td><td>Object</td><td>Bound TDatabase object (when browsing DBF)</td></tr>
+<tr><td><code>lColDrag</code></td><td>Logical</td><td>Enable column drag-reorder</td></tr>
+<tr><td><code>cSeek</code></td><td>Character</td><td>Incremental seek string</td></tr>
+<tr><td><code>bSeekChange</code></td><td>Codeblock</td><td>Codeblock fired when seek string changes</td></tr>
 </tbody>
 </table>
 
@@ -47,26 +47,26 @@ DBF objects, making it a versatile data-browsing control for tabular data.
 
 <table>
 <thead>
-<tr><th>MÃ©todo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, bLine, aHeaders, aColSizes, oWnd, cField, uVal1, uVal2, bChange, bLDblClick, bRClick, oFont, oCursor, nClrFore, nClrBack, cMsg, lUpdate, cAlias, lPixel, bWhen, lDesign, bValid )</code></td><td>Criar um novo controle TCBrowse</td></tr>
-<tr><td><code>ReDefine( nId, bLine, oDlg, aHeaders, aColSizes, ... )</code></td><td>Redefinir a partir de recurso de diÃ¡logo</td></tr>
-<tr><td><code>AddColumn( oColumn )</code></td><td>Adicionar um TCColumn ao navegador</td></tr>
-<tr><td><code>SetArray( aArray )</code></td><td>Definir a fonte de dados como um array</td></tr>
-<tr><td><code>SetoDBF( oDbf )</code></td><td>Definir a fonte de dados como um objeto TDatabase</td></tr>
-<tr><td><code>LoadFields()</code></td><td>Criar colunas automaticamente a partir da estrutura DBF atual</td></tr>
-<tr><td><code>Report( cTitle, lPreview )</code></td><td>Gerar um relatÃ³rio impresso a partir dos dados do navegador</td></tr>
-<tr><td><code>ResetSeek()</code></td><td>Redefinir o buffer de busca incremental</td></tr>
-<tr><td><code>Seek( nKey )</code></td><td>Realizar busca incremental ao pressionar uma tecla</td></tr>
-<tr><td><code>SwitchCols( nCol1, nCol2 )</code></td><td>Trocar duas definiÃ§Ãµes de coluna</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, bLine, aHeaders, aColSizes, oWnd, cField, uVal1, uVal2, bChange, bLDblClick, bRClick, oFont, oCursor, nClrFore, nClrBack, cMsg, lUpdate, cAlias, lPixel, bWhen, lDesign, bValid )</code></td><td>Create a new TCBrowse control</td></tr>
+<tr><td><code>ReDefine( nId, bLine, oDlg, aHeaders, aColSizes, ... )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>AddColumn( oColumn )</code></td><td>Add a TCColumn to the browse</td></tr>
+<tr><td><code>SetArray( aArray )</code></td><td>Set the data source to an array</td></tr>
+<tr><td><code>SetoDBF( oDbf )</code></td><td>Set the data source to a TDatabase object</td></tr>
+<tr><td><code>LoadFields()</code></td><td>Auto-create columns from the current DBF structure</td></tr>
+<tr><td><code>Report( cTitle, lPreview )</code></td><td>Generate a printed report from browse data</td></tr>
+<tr><td><code>ResetSeek()</code></td><td>Reset the incremental seek buffer</td></tr>
+<tr><td><code>Seek( nKey )</code></td><td>Perform incremental seek on key press</td></tr>
+<tr><td><code>SwitchCols( nCol1, nCol2 )</code></td><td>Swap two column definitions</td></tr>
 <tr><td><code>Exchange( nCol1, nCol2 )</code></td><td>Swap columns visually and refresh</td></tr>
-<tr><td><code>SetOrder( nColumn )</code></td><td>Definir ordem de classificaÃ§Ã£o por coluna</td></tr>
-<tr><td><code>lEditCol( nCol, uVar, cPicture, bValid, nClrFore, nClrBack, cMsg, cError )</code></td><td>Editar uma cÃ©lula no local</td></tr>
+<tr><td><code>SetOrder( nColumn )</code></td><td>Set sort order by column</td></tr>
+<tr><td><code>lEditCol( nCol, uVar, cPicture, bValid, nClrFore, nClrBack, cMsg, cError )</code></td><td>Edit a cell in-place</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Navegador de 3 Colunas</h2>
+<h2 id="example">Example: 3-Column Browse</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -108,8 +108,8 @@ return nil</code></pre>
 <li>TCBrowse supports ClipMore context objects (<code>oCtx</code>) for advanced filtering and context management.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tcalinfo.html">&larr; tcalinfo</a> | <a href="../../pt/ui/tccolumn.html">tccolumn &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -15,75 +15,75 @@
 <p class="class-source">Fonte: <code>source/classes/tras.prg</code></p>
 
 <p>
-TRas é a classe de Serviço de Acesso Remoto (RAS) do FiveWin para gerir ligações dial-up
-no Windows. Encapsula a API RAS do Windows para iniciar ligações telefónicas, monitorizar
-o estado da ligação e desligar. TRas suporta modos de ligação manual e automático (bloqueante)
-com salvaguardas baseadas em timeout.
+TRas is FiveWin's Remote Access Service (RAS) class for managing dial-up connections
+on Windows. It wraps the Windows RAS API to initiate phone connections, monitor
+connection status, and hang up. TRas supports both manual and automatic (blocking)
+connection modes with timeout-based fail-safes.
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
-    subgraph "Aplicação FiveWin"
+    subgraph "FiveWin Application"
         A[TRas]
-        B[oWnd<br/>Handle da Janela]
+        B[oWnd<br/>Window Handle]
     end
-    subgraph "API RAS do Windows"
+    subgraph "Windows RAS API"
         C[RaDial]
         D[RaGetConSt]
         E[RaHangUp]
         F[RaGetError]
     end
-    subgraph "Linha Telefónica / Modem"
-        G[Ligação Dial-up]
+    subgraph "Phone Line / Modem"
+        G[Dial-up Connection]
     end
-    A -->|"inicia chamada"| C
-    A -->|"consulta estado"| D
-    A -->|"termina"| E
-    A -->|"detalhes de erro"| F
+    A -->|"initiates call"| C
+    A -->|"polls status"| D
+    A -->|"terminates"| E
+    A -->|"error details"| F
     C --> G
     D --> A
 </div>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hRas</code></td><td>Numérico</td><td><code>0</code></td><td>Handle de ligação RAS retornado por RaDial</td></tr>
-<tr><td><code>cPhone</code></td><td>Caractere</td><td><code>""</code></td><td>Número de telefone a marcar</td></tr>
-<tr><td><code>cUser</code></td><td>Caractere</td><td><code>""</code></td><td>Nome de utilizador para autenticação</td></tr>
-<tr><td><code>cPass</code></td><td>Caractere</td><td><code>""</code></td><td>Palavra-passe para autenticação</td></tr>
-<tr><td><code>cStatus</code></td><td>Caractere</td><td><code>""</code></td><td>String legível do estado da ligação</td></tr>
-<tr><td><code>nStatus</code></td><td>Numérico</td><td><code>0</code></td><td>Código numérico do estado da ligação RAS</td></tr>
-<tr><td><code>nTimeout</code></td><td>Numérico</td><td><code>60</code></td><td>Timeout em segundos para modo de espera automática</td></tr>
-<tr><td><code>lOperation</code></td><td>Lógico</td><td><code>.F.</code></td><td>Se a última operação foi bem-sucedida</td></tr>
-<tr><td><code>cError</code></td><td>Caractere</td><td><code>""</code></td><td>Última mensagem de erro</td></tr>
-<tr><td><code>cDevType</code></td><td>Caractere</td><td><code>""</code></td><td>Tipo de dispositivo (ex.: "modem")</td></tr>
-<tr><td><code>cDevName</code></td><td>Caractere</td><td><code>""</code></td><td>Nome do dispositivo</td></tr>
-<tr><td><code>bStatus</code></td><td>Bloco</td><td></td><td>Bloco de código de callback invocado em cada mudança de estado</td></tr>
-<tr><td><code>aMsgStatus</code></td><td>Array</td><td></td><td>Mapeamento interno de códigos de estado RAS para strings descritivas</td></tr>
+<tr><td><code>hRas</code></td><td>Numeric</td><td><code>0</code></td><td>RAS connection handle returned by RaDial</td></tr>
+<tr><td><code>cPhone</code></td><td>Character</td><td><code>""</code></td><td>Phone number to dial</td></tr>
+<tr><td><code>cUser</code></td><td>Character</td><td><code>""</code></td><td>Username for authentication</td></tr>
+<tr><td><code>cPass</code></td><td>Character</td><td><code>""</code></td><td>Password for authentication</td></tr>
+<tr><td><code>cStatus</code></td><td>Character</td><td><code>""</code></td><td>Human-readable connection status string</td></tr>
+<tr><td><code>nStatus</code></td><td>Numeric</td><td><code>0</code></td><td>Numeric RAS connection status code</td></tr>
+<tr><td><code>nTimeout</code></td><td>Numeric</td><td><code>60</code></td><td>Timeout in seconds for auto-wait mode</td></tr>
+<tr><td><code>lOperation</code></td><td>Logical</td><td><code>.F.</code></td><td>Whether the last operation succeeded</td></tr>
+<tr><td><code>cError</code></td><td>Character</td><td><code>""</code></td><td>Last error message</td></tr>
+<tr><td><code>cDevType</code></td><td>Character</td><td><code>""</code></td><td>Device type (e.g. "modem")</td></tr>
+<tr><td><code>cDevName</code></td><td>Character</td><td><code>""</code></td><td>Device name</td></tr>
+<tr><td><code>bStatus</code></td><td>Block</td><td></td><td>Callback codeblock invoked on each status change</td></tr>
+<tr><td><code>aMsgStatus</code></td><td>Array</td><td></td><td>Internal mapping of RAS status codes to descriptive strings</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cPhone, cUser, cPass )</code></td><td>Criar uma instância RAS. Requer um handle de janela válido, número de telefone, nome de utilizador e palavra-passe. Valida todos os parâmetros na construção.</td></tr>
-<tr><td><code>Call( lMode, bStatus )</code></td><td>Iniciar a ligação dial-up. Se <code>lMode</code> for <code>.T.</code> (espera automática), bloqueia até ligar ou timeout. Opcionalmente define o callback <code>bStatus</code>.</td></tr>
-<tr><td><code>Status()</code></td><td>Consultar o estado atual da ligação e atualizar todos os membros DATA de estado. Invoca o callback <code>bStatus</code> se definido.</td></tr>
-<tr><td><code>HangUp()</code></td><td>Terminar a ligação RAS. Chama <code>RaHangUp()</code> com o handle armazenado.</td></tr>
+<tr><td><code>New( oWnd, cPhone, cUser, cPass )</code></td><td>Create a RAS instance. Requires a valid window handle, phone number, username, and password. Validates all parameters on construction.</td></tr>
+<tr><td><code>Call( lMode, bStatus )</code></td><td>Initiate the dial-up connection. If <code>lMode</code> is <code>.T.</code> (auto-wait), blocks until connected or timeout. Optionally sets <code>bStatus</code> callback.</td></tr>
+<tr><td><code>Status()</code></td><td>Poll the current connection status and update all status DATA members. Invokes <code>bStatus</code> callback if set.</td></tr>
+<tr><td><code>HangUp()</code></td><td>Terminate the RAS connection. Calls <code>RaHangUp()</code> with the stored handle.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Dial-up com Espera Automática</h2>
+<h2 id="example">Example: Dial-up with Auto-Wait</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -110,39 +110,39 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="status">Valores de Estado da Ligação</h2>
+<h2 id="status">Connection Status Values</h2>
 
 <table>
 <thead>
-<tr><th>Código</th><th>Descrição</th></tr>
+<tr><th>Code</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>0</code></td><td>A abrir porta de comunicação</td></tr>
-<tr><td><code>1</code></td><td>Porta aberta</td></tr>
-<tr><td><code>2</code></td><td>A ligar ao dispositivo</td></tr>
-<tr><td><code>3</code></td><td>Dispositivo ligado, a fazer chamada</td></tr>
-<tr><td><code>4</code></td><td>Todos os dispositivos ligados</td></tr>
-<tr><td><code>5</code></td><td>A verificar nome de utilizador e palavra-passe</td></tr>
-<tr><td><code>6</code></td><td>Nome de utilizador e palavra-passe aceites</td></tr>
-<tr><td><code>7</code></td><td>A tentar autenticação novamente</td></tr>
-<tr><td><code>8</code></td><td>Callback de autenticação em curso</td></tr>
-<tr><td><code>14</code></td><td>Autenticado</td></tr>
-<tr><td><code>8192</code></td><td>Ligado com sucesso</td></tr>
-<tr><td><code>8193</code></td><td>Desligado</td></tr>
+<tr><td><code>0</code></td><td>Opening communication port</td></tr>
+<tr><td><code>1</code></td><td>Port opened</td></tr>
+<tr><td><code>2</code></td><td>Connecting to device</td></tr>
+<tr><td><code>3</code></td><td>Device connected, placing call</td></tr>
+<tr><td><code>4</code></td><td>All devices connected</td></tr>
+<tr><td><code>5</code></td><td>Verifying username and password</td></tr>
+<tr><td><code>6</code></td><td>Username and password accepted</td></tr>
+<tr><td><code>7</code></td><td>Retrying authentication</td></tr>
+<tr><td><code>8</code></td><td>Authentication callback in progress</td></tr>
+<tr><td><code>14</code></td><td>Authenticated</td></tr>
+<tr><td><code>8192</code></td><td>Connected successfully</td></tr>
+<tr><td><code>8193</code></td><td>Disconnected</td></tr>
 </tbody>
 </table>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TRas requer um handle de janela ou diálogo FiveWin válido (<code>oWnd:hWnd</code>) para a API RAS publicar notificações de estado da ligação.</li>
-<li>No modo de espera automática (<code>Call( .T. )</code>), o método consulta o estado da ligação num ciclo até ligar, o timeout expirar ou <code>lPanic</code> ser definido como <code>.T.</code>.</li>
-<li>O bloco de código de callback <code>bStatus</code> é invocado em cada mudança de estado, permitindo atualizações da interface durante o processo de ligação.</li>
-<li>Verifique sempre <code>lOperation</code> após a construção e <code>Call()</code> para confirmar o sucesso.</li>
+<li>TRas requires a valid FiveWin window or dialog handle (<code>oWnd:hWnd</code>) for the RAS API to post connection status notifications.</li>
+<li>In auto-wait mode (<code>Call( .T. )</code>), the method polls the connection status in a loop until connected, the timeout expires, or <code>lPanic</code> is set to <code>.T.</code>.</li>
+<li>The <code>bStatus</code> callback codeblock is invoked on every status change, allowing UI updates during the connection process.</li>
+<li>Always check <code>lOperation</code> after construction and <code>Call()</code> to verify success.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/transformer.html">&larr; transformer</a> | <a href="../../pt/ui/trating.html">trating &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

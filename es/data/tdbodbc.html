@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TDbOdbc / TDbOdbcDirect - Documentaci&oacute;n FWH</title>
+<title>TDbOdbc / TDbOdbcDirect - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -15,95 +15,95 @@
 <p class="class-source">Fuente: <code>source/classes/tdbodbc.prg</code> / <code>source/classes/tdbodbcd.prg</code></p>
 
 <p>
-TDbOdbc proporciona acceso ODBC compatible con RDD a bases de datos SQL. Envuelve manejadores de sentencias ODBC
-y presenta una interfaz similar a DBF (GoTop, Skip, FieldGet, etc.), permitiendo navegar por tablas SQL
-usando los mismos patrones de navegaci&oacute;n que los archivos DBF. TDbOdbcDirect es una alternativa
-m&aacute;s ligera que funciona directamente con conexiones ODBC compatibles con TDatabase sin la capa completa de emulaci&oacute;n RDD.
+TDbOdbc provides RDD-compatible ODBC access to SQL databases. It wraps ODBC statement handles
+and presents a DBF-like interface (GoTop, Skip, FieldGet, etc.), making it possible to browse
+SQL tables using the same navigation patterns as DBF files. TDbOdbcDirect is a lighter
+alternative that works directly with TDatabase-compatible ODBC connections without the full RDD emulation layer.
 </p>
 
-<h2 id="tdbodbc">TDbOdbc - Miembros DATA Principales</h2>
+<h2 id="tdbodbc">TDbOdbc - Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hStmt</code></td><td>Handle</td><td>Manejador de sentencia ODBC</td></tr>
-<tr><td><code>oOdbc</code></td><td>Object</td><td>Objeto de conexi&oacute;n TODBC</td></tr>
-<tr><td><code>aFields</code></td><td>Array</td><td>Array de definiciones de campo</td></tr>
-<tr><td><code>aFldPrimary</code></td><td>Array</td><td>Nombres de campos de clave primaria</td></tr>
-<tr><td><code>aBuffer</code></td><td>Array</td><td>Buffer del registro actual</td></tr>
-<tr><td><code>aIndex</code></td><td>Array</td><td>Definici&oacute;n de &iacute;ndice/orden de clasificaci&oacute;n</td></tr>
-<tr><td><code>cSource</code></td><td>Car&aacute;cter</td><td>Nombre de tabla de origen o SQL</td></tr>
-<tr><td><code>cSelect</code></td><td>Car&aacute;cter</td><td>Sentencia SELECT generada</td></tr>
-<tr><td><code>cOrder</code></td><td>Car&aacute;cter</td><td>Cl&aacute;usula ORDER BY actual</td></tr>
-<tr><td><code>cFilter</code></td><td>Car&aacute;cter</td><td>Filtro WHERE actual</td></tr>
-<tr><td><code>nRecno</code></td><td>Num&eacute;rico</td><td>N&uacute;mero de registro actual</td></tr>
-<tr><td><code>nFields</code></td><td>Num&eacute;rico</td><td>N&uacute;mero de campos</td></tr>
-<tr><td><code>lBof / lEof</code></td><td>L&oacute;gico</td><td>Indicadores de l&iacute;mite</td></tr>
-<tr><td><code>lReadOnly</code></td><td>L&oacute;gico</td><td>Modo de solo lectura</td></tr>
-<tr><td><code>lFound</code></td><td>L&oacute;gico</td><td>Resultado del &uacute;ltimo Seek</td></tr>
+<tr><td><code>hStmt</code></td><td>Handle</td><td>ODBC statement handle</td></tr>
+<tr><td><code>oOdbc</code></td><td>Object</td><td>TODBC connection object</td></tr>
+<tr><td><code>aFields</code></td><td>Array</td><td>Array of field definition arrays</td></tr>
+<tr><td><code>aFldPrimary</code></td><td>Array</td><td>Primary key field names</td></tr>
+<tr><td><code>aBuffer</code></td><td>Array</td><td>Current record buffer</td></tr>
+<tr><td><code>aIndex</code></td><td>Array</td><td>Index/sort order definition</td></tr>
+<tr><td><code>cSource</code></td><td>Character</td><td>Source table name or SQL</td></tr>
+<tr><td><code>cSelect</code></td><td>Character</td><td>Generated SELECT statement</td></tr>
+<tr><td><code>cOrder</code></td><td>Character</td><td>Current ORDER BY clause</td></tr>
+<tr><td><code>cFilter</code></td><td>Character</td><td>Current WHERE filter</td></tr>
+<tr><td><code>nRecno</code></td><td>Numeric</td><td>Current record number</td></tr>
+<tr><td><code>nFields</code></td><td>Numeric</td><td>Number of fields</td></tr>
+<tr><td><code>lBof / lEof</code></td><td>Logical</td><td>Boundary indicators</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Read-only mode</td></tr>
+<tr><td><code>lFound</code></td><td>Logical</td><td>Result of last Seek</td></tr>
 </tbody>
 </table>
 
-<h2 id="tdbodbc-methods">TDbOdbc - M&eacute;todos</h2>
+<h2 id="tdbodbc-methods">TDbOdbc - Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cSource, oOdbc, nArea, cAlias, lShared, lReadOnly )</code></td><td>Crear y abrir acceso a tabla ODBC</td></tr>
-<tr><td><code>End()</code></td><td>Cerrar manejador de sentencia y liberar recursos</td></tr>
-<tr><td><code>Execute( cCommand )</code></td><td>Ejecutar un comando SQL directamente</td></tr>
-<tr><td><code>GoTop() / GoBottom()</code></td><td>Navegar al primer/&uacute;ltimo registro</td></tr>
-<tr><td><code>Skip( nRecs )</code></td><td>Moverse relativamente n registros</td></tr>
-<tr><td><code>GoTo( nRecNo )</code></td><td>Ir a un registro espec&iacute;fico por ID</td></tr>
-<tr><td><code>FieldGet( nField )</code></td><td>Obtener valor de campo del buffer actual</td></tr>
-<tr><td><code>FieldPut( nField, uValue )</code></td><td>Establecer valor de campo (marca para actualizaci&oacute;n)</td></tr>
-<tr><td><code>FieldName( nField )</code></td><td>Obtener nombre de columna SQL</td></tr>
-<tr><td><code>FieldType( nField )</code></td><td>Obtener tipo de campo compatible con DBF</td></tr>
-<tr><td><code>FieldLen( nField )</code></td><td>Obtener longitud de campo</td></tr>
-<tr><td><code>FieldDec( nField )</code></td><td>Obtener decimales de campo</td></tr>
-<tr><td><code>FieldPos( cFieldName )</code></td><td>Obtener posici&oacute;n de campo por nombre</td></tr>
-<tr><td><code>FCount()</code></td><td>N&uacute;mero de campos</td></tr>
-<tr><td><code>Seek( cExpression )</code></td><td>Buscar expresi&oacute;n en el orden actual</td></tr>
-<tr><td><code>SetOrder( cOrder )</code></td><td>Establecer cl&aacute;usula ORDER BY</td></tr>
-<tr><td><code>SetFilter( cFilter )</code></td><td>Establecer cl&aacute;usula de filtro WHERE</td></tr>
-<tr><td><code>Update( lForced )</code></td><td>Escribir cambios pendientes en la base de datos</td></tr>
-<tr><td><code>Append()</code></td><td>Agregar un nuevo registro vac&iacute;o</td></tr>
-<tr><td><code>Delete()</code></td><td>Eliminar registro actual</td></tr>
-<tr><td><code>GenDbf( cFile, lWithData, cRdd )</code></td><td>Generar un archivo DBF desde el conjunto de resultados SQL</td></tr>
-<tr><td><code>Refresh( lComplete )</code></td><td>Volver a obtener datos del servidor</td></tr>
+<tr><td><code>New( cSource, oOdbc, nArea, cAlias, lShared, lReadOnly )</code></td><td>Create and open ODBC table access</td></tr>
+<tr><td><code>End()</code></td><td>Close statement handle and release resources</td></tr>
+<tr><td><code>Execute( cCommand )</code></td><td>Execute an SQL command directly</td></tr>
+<tr><td><code>GoTop() / GoBottom()</code></td><td>Navigate to first/last record</td></tr>
+<tr><td><code>Skip( nRecs )</code></td><td>Move relative by n records</td></tr>
+<tr><td><code>GoTo( nRecNo )</code></td><td>Go to a specific record by ID</td></tr>
+<tr><td><code>FieldGet( nField )</code></td><td>Get field value from current buffer</td></tr>
+<tr><td><code>FieldPut( nField, uValue )</code></td><td>Set field value (marks for update)</td></tr>
+<tr><td><code>FieldName( nField )</code></td><td>Get SQL column name</td></tr>
+<tr><td><code>FieldType( nField )</code></td><td>Get DBF-compatible field type</td></tr>
+<tr><td><code>FieldLen( nField )</code></td><td>Get field length</td></tr>
+<tr><td><code>FieldDec( nField )</code></td><td>Get field decimal places</td></tr>
+<tr><td><code>FieldPos( cFieldName )</code></td><td>Get field position by name</td></tr>
+<tr><td><code>FCount()</code></td><td>Number of fields</td></tr>
+<tr><td><code>Seek( cExpression )</code></td><td>Seek for expression in current order</td></tr>
+<tr><td><code>SetOrder( cOrder )</code></td><td>Set ORDER BY clause</td></tr>
+<tr><td><code>SetFilter( cFilter )</code></td><td>Set WHERE filter clause</td></tr>
+<tr><td><code>Update( lForced )</code></td><td>Write pending changes to database</td></tr>
+<tr><td><code>Append()</code></td><td>Add a new empty record</td></tr>
+<tr><td><code>Delete()</code></td><td>Delete current record</td></tr>
+<tr><td><code>GenDbf( cFile, lWithData, cRdd )</code></td><td>Generate a DBF file from the SQL result set</td></tr>
+<tr><td><code>Refresh( lComplete )</code></td><td>Re-fetch data from server</td></tr>
 </tbody>
 </table>
 
-<h2 id="tdbodbc-direct">TDbOdbcDirect - Datos y M&eacute;todos Principales</h2>
+<h2 id="tdbodbc-direct">TDbOdbcDirect - Key DATA and Methods</h2>
 
 <table>
 <thead>
-<tr><th>Miembro</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Member</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cSelect, oConnect )</code></td><td>Crear objeto con sentencia SELECT y conexi&oacute;n TODBC</td></tr>
-<tr><td><code>Open()</code></td><td>Abrir el cursor y comenzar la obtenci&oacute;n de datos</td></tr>
-<tr><td><code>Execute( cCommand )</code></td><td>Ejecutar SQL a trav&eacute;s del objeto de conexi&oacute;n</td></tr>
-<tr><td><code>FieldGet( nField )</code></td><td>Obtener valor de campo mediante alias DBF</td></tr>
-<tr><td><code>FieldName( nField )</code></td><td>Obtener nombre de campo</td></tr>
-<tr><td><code>FieldType( nField )</code></td><td>Obtener tipo de campo</td></tr>
-<tr><td><code>FieldLen( nField )</code></td><td>Obtener longitud de campo</td></tr>
-<tr><td><code>FieldPos( cField )</code></td><td>Obtener posici&oacute;n de campo por nombre</td></tr>
-<tr><td><code>FCount()</code></td><td>N&uacute;mero de campos</td></tr>
-<tr><td><code>GoTop() / GoBottom() / Skip( nRecs )</code></td><td>Navegaci&oacute;n</td></tr>
-<tr><td><code>RecNo() / GoTo( nRecNo )</code></td><td>Posicionar por n&uacute;mero de registro</td></tr>
-<tr><td><code>AddNew() / Edit() / Update()</code></td><td>Edici&oacute;n de registros</td></tr>
-<tr><td><code>Refresh()</code></td><td>Volver a obtener datos del servidor</td></tr>
-<tr><td><code>AutoFill( oWnd, nInterval, bEval )</code></td><td>Actualizaci&oacute;n autom&aacute;tica de datos en un temporizador</td></tr>
-<tr><td><code>End()</code></td><td>Cerrar cursor y liberar</td></tr>
+<tr><td><code>New( cSelect, oConnect )</code></td><td>Create object with SELECT statement and TODBC connection</td></tr>
+<tr><td><code>Open()</code></td><td>Open the cursor and start fetching</td></tr>
+<tr><td><code>Execute( cCommand )</code></td><td>Execute SQL through the connection object</td></tr>
+<tr><td><code>FieldGet( nField )</code></td><td>Get field value via DBF alias</td></tr>
+<tr><td><code>FieldName( nField )</code></td><td>Get field name</td></tr>
+<tr><td><code>FieldType( nField )</code></td><td>Get field type</td></tr>
+<tr><td><code>FieldLen( nField )</code></td><td>Get field length</td></tr>
+<tr><td><code>FieldPos( cField )</code></td><td>Get field position by name</td></tr>
+<tr><td><code>FCount()</code></td><td>Number of fields</td></tr>
+<tr><td><code>GoTop() / GoBottom() / Skip( nRecs )</code></td><td>Navigation</td></tr>
+<tr><td><code>RecNo() / GoTo( nRecNo )</code></td><td>Position by record number</td></tr>
+<tr><td><code>AddNew() / Edit() / Update()</code></td><td>Record editing</td></tr>
+<tr><td><code>Refresh()</code></td><td>Re-fetch data from server</td></tr>
+<tr><td><code>AutoFill( oWnd, nInterval, bEval )</code></td><td>Auto-refresh data on a timer</td></tr>
+<tr><td><code>End()</code></td><td>Close cursor and release</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Exploraci&oacute;n de Tabla ODBC</h2>
+<h2 id="example">Example: ODBC Table Browse</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -138,18 +138,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TDbOdbc emula la interfaz RDD de DBF sobre ODBC, admitiendo navegaci&oacute;n, edici&oacute;n, filtrado y ordenaci&oacute;n usando constructos SQL de forma transparente.</li>
-<li>Las claves primarias se detectan autom&aacute;ticamente mediante <code>SQLPrimaryKeys()</code> y se utilizan para sentencias UPDATE/DELETE.</li>
-<li>El m&eacute;todo <code>GenDbf()</code> permite exportar cualquier conjunto de resultados ODBC a un archivo DBF para uso sin conexi&oacute;n.</li>
-<li>TDbOdbcDirect es m&aacute;s ligero y adecuado para acceso SQL directo de solo lectura o simple sin la emulaci&oacute;n RDD completa.</li>
-<li>Ambas clases trabajan con el objeto de conexi&oacute;n <code>TODBC</code> para la gesti&oacute;n de fuentes de datos ODBC.</li>
+<li>TDbOdbc emulates the DBF RDD interface over ODBC, supporting navigation, editing, filtering, and sorting using SQL constructs transparently.</li>
+<li>Primary keys are auto-detected via <code>SQLPrimaryKeys()</code> and used for UPDATE/DELETE statements.</li>
+<li>The <code>GenDbf()</code> method allows exporting any ODBC result set to a DBF file for offline use.</li>
+<li>TDbOdbcDirect is more lightweight and suitable for read-only or simple direct SQL access patterns without full RDD emulation.</li>
+<li>Both classes work with the <code>TODBC</code> connection object for ODBC data source management.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/utilities/tdbg.html">&larr; tdbg</a> | <a href="../../es/data/tdbodbcdirect.html">tdbodbcdirect &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

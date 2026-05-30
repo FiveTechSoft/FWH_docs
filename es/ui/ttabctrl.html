@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTabControl - FWH Docs</title>
+<title>TTabControl - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,48 +13,48 @@
 
 <h1>TTabControl</h1>
 <p class="class-source">Fuente: <code>source/classes/ttabctrl.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TTabControl encapsula el control común estándar de Windows <code>SysTabControl32</code>. Muestra una fila de pestañas seleccionables, cada una con un texto, y notifica a la aplicación cuando el usuario hace clic en una pestaña mediante un bloque de código de acción. TTabControl es un control de pestañas ligero sin gestión de páginas integrada: dispara una acción al cambiar de selección y deja la lógica de cambio de página a la aplicación. Para el cambio automático de páginas, consulte <a href="ttabs.html">TTabs</a> o <a href="tpages.html">TPages</a>.
+TTabControl wraps the standard Windows <code>SysTabControl32</code> common control. It displays a row of selectable tabs, each with a prompt, and notifies the application when the user clicks a tab via an action code block. TTabControl is a lightweight tab control without built-in page management — it fires an action on selection change and leaves the page-switching logic to the application. For automatic page switching, see <a href="ttabs.html">TTabs</a> or <a href="tpages.html">TPages</a>.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aPrompts</code></td><td>Array</td><td>Array de cadenas de caracteres mostradas como etiquetas de las pestañas.</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Bloque de código evaluado cuando el usuario hace clic en una pestaña: <code>{ |nOption, oCtrl| ... }</code>.</td></tr>
-<tr><td><code>nOption</code></td><td>Numeric</td><td>Índice de la pestaña actualmente seleccionada (empezando en 1).</td></tr>
-<tr><td><code>nClrText</code></td><td>Numeric</td><td>Color del texto de las etiquetas de las pestañas (valor RGB).</td></tr>
-<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Color de relleno del fondo (valor RGB).</td></tr>
-<tr><td><code>hFont</code></td><td>Numeric (Handle)</td><td>Handle de la fuente usada para el texto de las etiquetas de las pestañas.</td></tr>
-<tr><td><code>oFont</code></td><td>TFont</td><td>Objeto de fuente usado para el texto de las etiquetas de las pestañas.</td></tr>
-<tr><td><code>cMsg</code></td><td>Character</td><td>Texto de la barra de mensajes que se muestra cuando el control de pestañas recibe el foco.</td></tr>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of character strings displayed as tab labels.</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block evaluated when the user clicks a tab: <code>{ |nOption, oCtrl| ... }</code>.</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Index of the currently selected tab (1-based).</td></tr>
+<tr><td><code>nClrText</code></td><td>Numeric</td><td>Text color for tab labels (RGB value).</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Background fill color (RGB value).</td></tr>
+<tr><td><code>hFont</code></td><td>Numeric (Handle)</td><td>Handle of the font used for tab label text.</td></tr>
+<tr><td><code>oFont</code></td><td>TFont</td><td>Font object used for tab label text.</td></tr>
+<tr><td><code>cMsg</code></td><td>Character</td><td>Message bar text displayed when the tab control receives focus.</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, aPrompts, bAction, oWnd, nClrT, nClrP, oFont, lPixel, lDesign, nW, nH, cMsg )</code></td><td>Crea un nuevo control de pestañas. <code>aPrompts</code> es un array de cadenas con las etiquetas de las pestañas. <code>bAction</code> se invoca al seleccionar una pestaña.</td></tr>
-<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine desde un recurso de diálogo. Enlaza con un SysTabControl32 existente mediante su ID de control.</td></tr>
-<tr><td><code>Add( cPrompt )</code></td><td>Añade una nueva pestaña al final con el texto de etiqueta indicado.</td></tr>
-<tr><td><code>DelItem( nItem )</code></td><td>Elimina la pestaña en la posición <code>nItem</code> (empezando en 1).</td></tr>
-<tr><td><code>SetPrompts( aPrompts )</code></td><td>Reemplaza todas las etiquetas de las pestañas con un nuevo array de cadenas.</td></tr>
-<tr><td><code>SetOption( nOption )</code></td><td>Selecciona una pestaña por su índice de forma programática.</td></tr>
-<tr><td><code>End()</code></td><td>Destruye el control.</td></tr>
+<tr><td><code>New( nRow, nCol, aPrompts, bAction, oWnd, nClrT, nClrP, oFont, lPixel, lDesign, nW, nH, cMsg )</code></td><td>Create a new tab control. <code>aPrompts</code> is an array of tab label strings. <code>bAction</code> is called on tab selection.</td></tr>
+<tr><td><code>ReDefine( nId, oWnd )</code></td><td>Redefine from a dialog resource. Links to an existing SysTabControl32 by its control ID.</td></tr>
+<tr><td><code>Add( cPrompt )</code></td><td>Add a new tab at the end with the given label text.</td></tr>
+<tr><td><code>DelItem( nItem )</code></td><td>Remove the tab at position <code>nItem</code> (1-based).</td></tr>
+<tr><td><code>SetPrompts( aPrompts )</code></td><td>Replace all tab labels with a new array of strings.</td></tr>
+<tr><td><code>SetOption( nOption )</code></td><td>Programmatically select a tab by its index.</td></tr>
+<tr><td><code>End()</code></td><td>Destroy the control.</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Comandos: @ ... TAB</h2>
+<h2 id="commands">Commands: @ ... TAB</h2>
 
 <pre><code>@ nRow, nCol TAB oTab ;
    ITEMS aItems ;
@@ -64,7 +64,7 @@ TTabControl encapsula el control común estándar de Windows <code>SysTabControl
    [ ON CHANGE bChange ] ;
    [ COLOR nClrText, nClrPane ]</code></pre>
 
-<h2 id="example">Ejemplo: control con 3 pestañas y acción</h2>
+<h2 id="example">Example: 3-Tab Control with Action</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -86,19 +86,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TTabControl hereda de TControl. Todos los métodos estándar del control están disponibles.</li>
-<li>A diferencia de <a href="ttabs.html">TTabs</a> (que gestiona los controles hijos mediante el cambio de páginas), TTabControl solo encapsula la tira de pestañas en sí. La aplicación debe gestionar los cambios de contenido en respuesta a <code>bAction</code>.</li>
-<li>Use <code>nOption</code> para leer en cualquier momento el índice de la pestaña actualmente seleccionada, o <code>SetOption()</code> para cambiarlo de forma programática.</li>
-<li>Las etiquetas de las pestañas se establecen mediante <code>aPrompts</code> en el constructor o con <code>SetPrompts()</code> en tiempo de ejecución. Se pueden añadir o eliminar pestañas individuales con <code>Add()</code> y <code>DelItem()</code>.</li>
-<li>Para la gestión automática de páginas con controles hijos que se muestran u ocultan según la pestaña seleccionada, use <a href="tfolder.html">TFolder</a> en su lugar.</li>
-<li>Las pestañas se pueden reposicionar en tiempo de diseño usando <code>Move()</code>, <code>SetSize()</code> y <code>SetPos()</code>.</li>
+<li>TTabControl inherits from TControl. All standard control methods are available.</li>
+<li>Unlike <a href="ttabs.html">TTabs</a> (which manages child controls through page switching), TTabControl only wraps the tab strip itself. The application must handle content changes in response to <code>bAction</code>.</li>
+<li>Use <code>nOption</code> to read the currently selected tab index at any time, or <code>SetOption()</code> to change it programmatically.</li>
+<li>Tab labels are set via <code>aPrompts</code> in the constructor or <code>SetPrompts()</code> at runtime. Individual tabs can be added or removed with <code>Add()</code> and <code>DelItem()</code>.</li>
+<li>For automatic page management with child controls that show/hide based on the selected tab, use <a href="tfolder.html">TFolder</a> instead.</li>
+<li>Tabs can be repositioned at design time using <code>Move()</code>, <code>SetSize()</code>, and <code>SetPos()</code>.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/ttabcontrol.html">&larr; ttabcontrol</a> | <a href="../../es/data/ttable.html">ttable &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

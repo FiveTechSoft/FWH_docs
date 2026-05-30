@@ -13,55 +13,55 @@
 
 <h1>TFtpServer</h1>
 <p class="class-source">Fuente: <code>source/classes/tftpserv.prg</code></p>
-<p class="class-hierarchy">Clase independiente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TFtpServer implementa un servidor FTP básico usando TSocket. Escucha en el puerto 21 y maneja comandos FTP estándar (USER, PASS, STOR, RETR, LIST, CWD, PWD, QUIT). Soporta acceso anónimo y sirve archivos desde un directorio raíz configurable.
+TFtpServer implements a basic FTP server using TSocket. It listens on port 21 and handles standard FTP commands (USER, PASS, STOR, RETR, LIST, CWD, PWD, QUIT). Supports anonymous access and serves files from a configurable root directory.
 </p>
 
-<h2 id="data-fs">Miembros DATA Principales</h2>
-<table><thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<h2 id="data-fs">Key DATA Members</h2>
+<table><thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>oSocket</code></td><td>Objeto</td><td>TSocket de escucha principal</td></tr>
-<tr><td><code>cRootDir</code></td><td>Carácter</td><td>Directorio FTP por defecto (por defecto "ftp")</td></tr>
-<tr><td><code>nPort</code></td><td>Numérico</td><td>Puerto de escucha (por defecto 21)</td></tr>
-<tr><td><code>lDebug</code></td><td>Lógico</td><td>Habilita registro de depuración en <code>cLogFile</code></td></tr>
+<tr><td><code>oSocket</code></td><td>Object</td><td>Main listening TSocket</td></tr>
+<tr><td><code>cRootDir</code></td><td>Character</td><td>Default FTP directory (default "ftp")</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td>Listening port (default 21)</td></tr>
+<tr><td><code>lDebug</code></td><td>Logical</td><td>Enable debug logging to <code>cLogFile</code></td></tr>
 </tbody></table>
 
-<h2 id="methods-fs">Métodos Principales</h2>
-<table><thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<h2 id="methods-fs">Methods</h2>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( nPort )</code></td><td>Crea el servidor; crea el directorio raíz si no existe</td></tr>
-<tr><td><code>Activate()</code></td><td>Inicia la escucha de clientes</td></tr>
-<tr><td><code>End()</code></td><td>Detiene el servidor</td></tr>
-<tr><td><code>OnAccept()</code></td><td>Maneja nuevas conexiones de clientes</td></tr>
-<tr><td><code>OnRead( oSocket )</code></td><td>Procesa comandos FTP de un cliente</td></tr>
+<tr><td><code>New( nPort )</code></td><td>Create server; creates root dir if missing</td></tr>
+<tr><td><code>Activate()</code></td><td>Start listening for clients</td></tr>
+<tr><td><code>End()</code></td><td>Stop the server</td></tr>
+<tr><td><code>OnAccept()</code></td><td>Handle new client connections</td></tr>
+<tr><td><code>OnRead( oSocket )</code></td><td>Process FTP commands from a client</td></tr>
 </tbody></table>
 
 <h1>TFTP</h1>
 <p class="class-source">Fuente: <code>source/classes/tftp.prg</code></p>
-<p>Cliente FTP vía WinINet. Soporta listado de directorios, eliminación de archivos, renombrado y gestión de directorios.</p>
-<table><thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<p>FTP client via WinINet. Supports directory listing, file deletion, rename, and directory management.</p>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cFTPSite, oInternet, cUser, cPass )</code></td><td>Conecta a un sitio FTP</td></tr>
-<tr><td><code>Directory( cMask )</code></td><td>Devuelve un array de registros de archivos remotos</td></tr>
-<tr><td><code>DeleteFile( cFile )</code></td><td>Elimina un archivo remoto</td></tr>
-<tr><td><code>RenameFile( cOld, cNew )</code></td><td>Renombra un archivo remoto</td></tr>
+<tr><td><code>New( cFTPSite, oInternet, cUser, cPass )</code></td><td>Connect to an FTP site</td></tr>
+<tr><td><code>Directory( cMask )</code></td><td>Return array of remote file records</td></tr>
+<tr><td><code>DeleteFile( cFile )</code></td><td>Delete a remote file</td></tr>
+<tr><td><code>RenameFile( cOld, cNew )</code></td><td>Rename a remote file</td></tr>
 </tbody></table>
 
 <h1>TFTPFile</h1>
 <p class="class-source">Fuente: <code>source/classes/tftpfile.prg</code></p>
-<p>Gestiona transferencias individuales de archivos remotos. Soporta modos ASCII y binario.</p>
-<table><thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<p>Manages individual remote file transfers. Supports ASCII and binary modes.</p>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cFileName, oFTP )</code></td><td>Crea un objeto de archivo</td></tr>
-<tr><td><code>OpenRead() / OpenWrite()</code></td><td>Abre para lectura o escritura</td></tr>
-<tr><td><code>Read( nBytes ) / Write( cData )</code></td><td>Lee o escribe datos</td></tr>
-<tr><td><code>Seek( nBytes, nFrom )</code></td><td>Posiciona en una ubicación</td></tr>
-<tr><td><code>End()</code></td><td>Cierra el manejador del archivo</td></tr>
+<tr><td><code>New( cFileName, oFTP )</code></td><td>Create a file object</td></tr>
+<tr><td><code>OpenRead() / OpenWrite()</code></td><td>Open for reading or writing</td></tr>
+<tr><td><code>Read( nBytes ) / Write( cData )</code></td><td>Read or write data</td></tr>
+<tr><td><code>Seek( nBytes, nFrom )</code></td><td>Seek to a position</td></tr>
+<tr><td><code>End()</code></td><td>Close the file handle</td></tr>
 </tbody></table>
 
-<h2 id="example">Ejemplo: Iniciar Servidor FTP</h2>
+<h2 id="example">Example: Start FTP Server</h2>
 <pre><code class="language-harbour">#include "FiveWin.ch"
 function Main()
    local oServer
@@ -71,16 +71,16 @@ function Main()
    oServer:Activate()
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 <ul>
-<li>TFtpServer solo soporta inicio de sesión anónimo; no se exige autenticación con contraseña.</li>
-<li>Comandos manejados: NOOP, USER, PASS, QUIT, CWD, CDUP, PWD, PORT, TYPE, RETR, STOR, LIST, SYST.</li>
-<li>El cliente TFTP usa WinINet, requiriendo componentes de Internet Explorer.</li>
-<li>TFTPFile soporta modos de transferencia binario (<code>lBinary := .T.</code>) y ASCII.</li>
+<li>TFtpServer supports anonymous login only; no password authentication is enforced.</li>
+<li>Commands handled: NOOP, USER, PASS, QUIT, CWD, CDUP, PWD, PORT, TYPE, RETR, STOR, LIST, SYST.</li>
+<li>TFTP client uses WinINet, requiring Internet Explorer components.</li>
+<li>TFTPFile supports binary (<code>lBinary := .T.</code>) and ASCII transfer modes.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/internet/tftpfile.html">&larr; tftpfile</a> | <a href="../../es/internet/tftpsession.html">tftpsession &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

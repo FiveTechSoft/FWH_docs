@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Impressão de Etiquetas - FWH Docs</title>
+<title>Label Printing - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,44 +11,44 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>Impressão de Etiquetas</h1>
-<p class="class-source">Fontes: <code>samples/labels/source/LABEL.PRG</code>, <code>LITEM.PRG</code>, <code>PDLABEL.PRG</code> &mdash; por Manuel Calero Solis (1995)</p>
+<h1>Label Printing</h1>
+<p class="class-source">Sources: <code>samples/labels/source/LABEL.PRG</code>, <code>LITEM.PRG</code>, <code>PDLABEL.PRG</code> &mdash; by Manuel Calero Solis (1995)</p>
 
 <p>
-A FWH inclui um sistema completo de impressão de etiquetas em <code>samples/labels/</code> com 17 programas de exemplo e código-fonte completo. Ele imprime etiquetas em um layout de grade (por exemplo, 2 na horizontal, 7 na vertical) com quebras de página automáticas, posicionamento e suporte a bitmaps. As etiquetas podem ser enviadas para impressora, janela de pré-visualização ou arquivo de texto.
+FWH includes a complete label printing system in <code>samples/labels/</code> with 17 sample programs and full source code. It prints labels in a grid layout (e.g. 2 across, 7 down) with automatic page breaks, positioning, and bitmap support. Labels can output to printer, preview window, or text file.
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 <div class="mermaid">
 graph LR
-  A["Comando LABEL"] --> B["Motor TLabel"]
+  A["LABEL Command"] --> B["TLabel Engine"]
   B --> C["TPrinter"]
-  B --> D["TRFile (texto)"]
-  B --> E["Diálogo de Pré-visualização"]
+  B --> D["TRFile (text)"]
+  B --> E["Preview Dialog"]
   F["TLItem"] --> B
-  G["Comando LBLITEM"] --> F
+  G["LBLITEM Command"] --> F
 </div>
 
-<h2 id="commands">Comandos (include/label.ch)</h2>
+<h2 id="commands">Commands (include/label.ch)</h2>
 
 <h3>LABEL</h3>
 <pre><code class="language-harbour">LABEL oLabel ;
    SIZE nWidth, nHeight ;          // mm
-   SEPARATORS nH, nV ;              // espaçamento horizontal, vertical em mm
-   ON LINE nCount ;                 // etiquetas por linha
-   FONT aFonts PEN aPens ;         // arrays opcionais de fonte/caneta
+   SEPARATORS nH, nV ;              // horizontal, vertical gap in mm
+   ON LINE nCount ;                 // labels per row
+   FONT aFonts PEN aPens ;         // optional font/pen arrays
    TO PRINTER | PREVIEW | FILE cFile | DEVICE oDevice ;
    CAPTION cTitle</code></pre>
 
 <h3>LBLITEM</h3>
 <pre><code class="language-harbour">LBLITEM DATA bData1, bData2, ... ;
-   AT nCol ;                        // deslocamento da coluna
-   SIZE nChars ;                    // largura em caracteres
+   AT nCol ;                        // column offset
+   SIZE nChars ;                    // width in characters
    PICTURE cPict1, cPict2, ... ;
-   FONT uFont ;                     // índice ou nome da fonte
+   FONT uFont ;                     // font index or name
    LEFT | CENTER | RIGHT ;
-   SHADOW ;                         // fundo cinza
-   GRID nPen                        // linha de grade inferior</code></pre>
+   SHADOW ;                         // gray background
+   GRID nPen                        // bottom grid line</code></pre>
 
 <h3>ACTIVATE LABEL</h3>
 <pre><code class="language-harbour">ACTIVATE LABEL oLabel ;
@@ -59,49 +59,49 @@ graph LR
    ON STARTLABEL bStartLabel ON ENDLABEL bEndLabel ;
    ON CHANGE bChange</code></pre>
 
-<h2 id="tlabel">Classe TLabel</h2>
-<p>Motor principal de etiquetas. Gerencia o layout de grade das etiquetas, quebras de página, fontes e dispositivo de saída.</p>
+<h2 id="tlabel">TLabel Class</h2>
+<p>Core label engine. Manages label grid layout, page breaks, fonts, and output device.</p>
 
 <table>
-<tr><th>DATA</th><th>Descrição</th></tr>
-<tr><td><code>oDevice</code></td><td>Dispositivo de saída (TPrinter, TRFile ou tela)</td></tr>
-<tr><td><code>nLblWidth / nLblHeight</code></td><td>Dimensões da etiqueta em pixels</td></tr>
-<tr><td><code>nHSeparator / nVSeparator</code></td><td>Espaçamento horizontal/vertical entre etiquetas</td></tr>
-<tr><td><code>nLblOnLine</code></td><td>Etiquetas por linha ao longo da página</td></tr>
-<tr><td><code>aoItems</code></td><td>Array de objetos TLItem (campos da etiqueta)</td></tr>
-<tr><td><code>aFont / aPen</code></td><td>Arrays de fonte e caneta (escalados para o dispositivo)</td></tr>
-<tr><td><code>nLeftMargin / nRightMargin / nTopMargin / nDnMargin</code></td><td>Margens da página em pixels</td></tr>
+<tr><th>DATA</th><th>Description</th></tr>
+<tr><td><code>oDevice</code></td><td>Output device (TPrinter, TRFile, or screen)</td></tr>
+<tr><td><code>nLblWidth / nLblHeight</code></td><td>Label dimensions in pixels</td></tr>
+<tr><td><code>nHSeparator / nVSeparator</code></td><td>Horizontal/vertical gap between labels</td></tr>
+<tr><td><code>nLblOnLine</code></td><td>Labels per row across the page</td></tr>
+<tr><td><code>aoItems</code></td><td>Array of TLItem objects (label fields)</td></tr>
+<tr><td><code>aFont / aPen</code></td><td>Font and pen arrays (scaled to device)</td></tr>
+<tr><td><code>nLeftMargin / nRightMargin / nTopMargin / nDnMargin</code></td><td>Page margins in pixels</td></tr>
 </table>
 
 <table>
-<tr><th>Método</th><th>Descrição</th></tr>
-<tr><td><code>New(nW,nH,hSep,vSep,nPerLine,aFont,aPen,...)</code></td><td>Construtor, cria o dispositivo, escala as unidades</td></tr>
-<tr><td><code>AddItem(oItem)</code></td><td>Adiciona um TLItem à etiqueta</td></tr>
-<tr><td><code>Activate(bFor,bWhile,bInit,...)</code></td><td>Define os hooks e inicia o loop de impressão</td></tr>
-<tr><td><code>Say(nRow,nCol,xText,nFont,nPad)</code></td><td>Imprime texto com alinhamento à esquerda/centro/direita</td></tr>
-<tr><td><code>SayBitmap(nRow,nCol,cBmp,nW,nH)</code></td><td>Renderiza bitmap na posição</td></tr>
-<tr><td><code>Box(nRow,nCol,nBottom,nRight,nPen)</code></td><td>Desenha retângulo</td></tr>
-<tr><td><code>Line(nTop,nLeft,nBottom,nRight,nPen)</code></td><td>Desenha linha</td></tr>
-<tr><td><code>Shadow(nH,nItem,nLine)</code></td><td>Preenchimento de fundo cinza atrás de uma etiqueta</td></tr>
-<tr><td><code>Grid(nH,nItem,nLine)</code></td><td>Linha de grade horizontal ao longo da etiqueta</td></tr>
-<tr><td><code>Margin(nVal,nType)</code></td><td>Define margens individuais</td></tr>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>New(nW,nH,hSep,vSep,nPerLine,aFont,aPen,...)</code></td><td>Constructor, creates device, scales units</td></tr>
+<tr><td><code>AddItem(oItem)</code></td><td>Append a TLItem to the label</td></tr>
+<tr><td><code>Activate(bFor,bWhile,bInit,...)</code></td><td>Set hooks and start the print loop</td></tr>
+<tr><td><code>Say(nRow,nCol,xText,nFont,nPad)</code></td><td>Print text with left/center/right alignment</td></tr>
+<tr><td><code>SayBitmap(nRow,nCol,cBmp,nW,nH)</code></td><td>Render bitmap at position</td></tr>
+<tr><td><code>Box(nRow,nCol,nBottom,nRight,nPen)</code></td><td>Draw rectangle</td></tr>
+<tr><td><code>Line(nTop,nLeft,nBottom,nRight,nPen)</code></td><td>Draw line</td></tr>
+<tr><td><code>Shadow(nH,nItem,nLine)</code></td><td>Gray background fill behind a label</td></tr>
+<tr><td><code>Grid(nH,nItem,nLine)</code></td><td>Horizontal grid line across label</td></tr>
+<tr><td><code>Margin(nVal,nType)</code></td><td>Set individual margins</td></tr>
 </table>
 
-<h2 id="tlitem">Classe TLItem</h2>
-<p>Representa um campo de dados dentro de uma etiqueta. Criado pelo comando LBLITEM.</p>
+<h2 id="tlitem">TLItem Class</h2>
+<p>Represents one data field within a label. Created by the LBLITEM command.</p>
 
 <table>
-<tr><th>DATA</th><th>Descrição</th></tr>
-<tr><td><code>aData</code></td><td>Array de blocos de código que retornam valores a imprimir</td></tr>
-<tr><td><code>aPicture</code></td><td>Cláusulas PICTURE por bloco de dados</td></tr>
-<tr><td><code>bDataFont</code></td><td>Bloco de código que retorna o índice da fonte</td></tr>
-<tr><td><code>nWidth / nDataHeight</code></td><td>Dimensões do campo em pixels</td></tr>
-<tr><td><code>nCol</code></td><td>Deslocamento opcional da coluna a partir da borda esquerda</td></tr>
-<tr><td><code>nPad</code></td><td>Alinhamento: RPT_LEFT(1), RPT_RIGHT(2), RPT_CENTER(3)</td></tr>
-<tr><td><code>lShadow / lGrid</code></td><td>Habilita fundo sombreado / linha de grade inferior</td></tr>
+<tr><th>DATA</th><th>Description</th></tr>
+<tr><td><code>aData</code></td><td>Array of code blocks returning values to print</td></tr>
+<tr><td><code>aPicture</code></td><td>PICTURE clauses per data block</td></tr>
+<tr><td><code>bDataFont</code></td><td>Code block returning font index</td></tr>
+<tr><td><code>nWidth / nDataHeight</code></td><td>Field dimensions in pixels</td></tr>
+<tr><td><code>nCol</code></td><td>Optional column offset from left edge</td></tr>
+<tr><td><code>nPad</code></td><td>Alignment: RPT_LEFT(1), RPT_RIGHT(2), RPT_CENTER(3)</td></tr>
+<tr><td><code>lShadow / lGrid</code></td><td>Enable shadow background / bottom grid line</td></tr>
 </table>
 
-<h2 id="example">Exemplo: Etiqueta de Endereço Simples</h2>
+<h2 id="example">Example: Simple Address Label</h2>
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "label.ch"
 
@@ -109,7 +109,7 @@ FUNCTION Label01()
    local oLabel
    USE TEST NEW SHARED ALIAS "TEST"
 
-   // etiquetas de 89x23mm, 2 por linha, pré-visualização
+   // 89x23mm labels, 2 per row, preview
    LABEL oLabel SIZE 89, 23 ;
       SEPARATORS 5, 2 ;
       ON LINE 2 ;
@@ -126,8 +126,8 @@ FUNCTION Label01()
    CLOSE TEST
 RETURN NIL</code></pre>
 
-<h2 id="qr">Etiquetas com Códigos QR</h2>
-<p>Combine a impressão de etiquetas com códigos QR usando <code>FW_BarCodeBmp()</code> + <code>SayBitmap()</code>:</p>
+<h2 id="qr">Labels with QR Codes</h2>
+<p>Combine label printing with QR codes using <code>FW_BarCodeBmp()</code> + <code>SayBitmap()</code>:</p>
 <pre><code class="language-harbour">REQUEST FWZEBRA
 
 LABEL oLabel SIZE 100, 60 ;
@@ -149,28 +149,28 @@ ACTIVATE LABEL oLabel ;
 
 END LABEL oLabel</code></pre>
 
-<h2 id="samples">Programas de Exemplo</h2>
-<p>O diretório <code>samples/labels/</code> contém 17 exemplos prontos para executar:</p>
+<h2 id="samples">Sample Programs</h2>
+<p>The <code>samples/labels/</code> directory contains 17 ready-to-run examples:</p>
 <ul>
-<li><code>LABEL01.PRG</code> até <code>LABEL17.PRG</code> &mdash; exemplos progressivos abrangendo etiquetas de endereço, etiquetas de produto, códigos de barras, múltiplas páginas, saída para arquivo e pré-visualização</li>
-<li><code>DEMO.PRG</code> &mdash; demonstração combinada</li>
-<li><code>source/LABEL.PRG</code> &mdash; classe do motor TLabel</li>
-<li><code>source/LITEM.PRG</code> &mdash; classe de campo de dados TLItem</li>
-<li><code>source/PDLABEL.PRG</code> &mdash; funções auxiliares de comando</li>
-<li><code>include/LABEL.CH</code> &mdash; definições #xcommand</li>
-<li><code>ilabel/</code> &mdash; subsistema de etiquetas italiano (ILABELS.PRG, MLABEL.PRG)</li>
+<li><code>LABEL01.PRG</code> through <code>LABEL17.PRG</code> &mdash; progressive examples covering address labels, product labels, barcodes, multi-page, file output, and preview</li>
+<li><code>DEMO.PRG</code> &mdash; combined demonstration</li>
+<li><code>source/LABEL.PRG</code> &mdash; TLabel engine class</li>
+<li><code>source/LITEM.PRG</code> &mdash; TLItem data field class</li>
+<li><code>source/PDLABEL.PRG</code> &mdash; command helper Funções</li>
+<li><code>include/LABEL.CH</code> &mdash; #xcommand definitions</li>
+<li><code>ilabel/</code> &mdash; Italian label subsystem (ILABELS.PRG, MLABEL.PRG)</li>
 </ul>
 
-<h2 id="tips">Dicas</h2>
+<h2 id="tips">Tips</h2>
 <ul>
-<li>As etiquetas são medidas em milímetros por padrão. Use <code>TO PRINTER</code> para impressão direta ou <code>PREVIEW</code> para pré-visualização na tela.</li>
-<li>Os hooks <code>ON STARTLABEL</code> e <code>ON ENDLABEL</code> são o melhor lugar para adicionar desenhos personalizados (imagens, códigos de barras, códigos QR).</li>
-<li>Para códigos QR nas etiquetas, gere um bitmap com <code>FW_BarCodeBmp()</code> e renderize-o via <code>oLabel:SayBitmap()</code> dentro de um hook STARTLABEL.</li>
-<li>Para impressão de etiquetas autônoma sem o sistema TLabel, use <code>TPrinter</code> diretamente: defina o tamanho do papel, percorra os registros, chame <code>Say()</code> para cada campo e gerencie as posições manualmente.</li>
+<li>Labels are measured in millimeters by default. Use <code>TO PRINTER</code> for direct printing or <code>PREVIEW</code> for on-screen preview.</li>
+<li>The <code>ON STARTLABEL</code> and <code>ON ENDLABEL</code> hooks are the best place to add custom drawings (images, barcodes, QR codes).</li>
+<li>For QR codes on labels, generate a bitmap with <code>FW_BarCodeBmp()</code> and render it via <code>oLabel:SayBitmap()</code> inside a STARTLABEL hook.</li>
+<li>For standalone label printing without the TLabel system, use <code>TPrinter</code> directly: set paper size, loop records, call <code>Say()</code> for each field, and manage positions manually.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tknob.html">&larr; tknob</a> | <a href="../../pt/utilities/tlayout.html">tlayout &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

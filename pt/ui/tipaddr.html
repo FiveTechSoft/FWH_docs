@@ -13,42 +13,42 @@
 
 <h1>TIPAddress</h1>
 <p class="class-source">Fonte: <code>source/classes/tipaddr.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TIPAddress encapsula o controle comum de endereço IP do Win32, fornecendo um campo de entrada especializado para endereços IPv4 em notação decimal pontuada. Cada um dos quatro octetos é editado em um segmento de campo separado, com validação integrada e restrições de intervalo opcionais por campo.
+TIPAddress wraps the Win32 IP address common control, providing a specialized input field for entering IPv4 addresses in dotted-decimal notation. Each of the four octets is edited in a separate field segment, with built-in validation and optional per-field range constraints.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cIPAddress</code></td><td>Character</td><td>O endereço IP atual como uma string (ex.: <code>"192.168.1.1"</code>)</td></tr>
-<tr><td><code>aFieldRanges</code></td><td>Array</td><td>Array de arrays de intervalo <code>{ nMin, nMax }</code> para cada um dos quatro campos de octeto</td></tr>
+<tr><td><code>cIPAddress</code></td><td>Character</td><td>The current IP address as a string (e.g., <code>"192.168.1.1"</code>)</td></tr>
+<tr><td><code>aFieldRanges</code></td><td>Array</td><td>Array of <code>{ nMin, nMax }</code> range arrays for each of the four octet fields</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, cIP, nW, nH )</code></td><td>Cria um novo controle de entrada de endereço IP</td></tr>
-<tr><td><code>SetAddress( cIP )</code></td><td>Define o endereço IP do controle a partir de uma string decimal pontuada</td></tr>
-<tr><td><code>GetAddress()</code></td><td>Retorna o endereço IP atual como uma string decimal pontuada (ex.: <code>"192.168.1.1"</code>)</td></tr>
-<tr><td><code>ClearAddress()</code></td><td>Limpa os quatro campos de octeto, deixando-os em branco</td></tr>
-<tr><td><code>IsBlank()</code></td><td>Retorna <code>.T.</code> se todos os quatro octetos estiverem vazios</td></tr>
-<tr><td><code>SetRange( nField, nMin, nMax )</code></td><td>Define os valores mínimo e máximo para um campo de octeto específico (1-4)</td></tr>
-<tr><td><code>SetFocus( nField )</code></td><td>Define o foco do teclado para um campo de octeto específico (1-4)</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, cIP, nW, nH )</code></td><td>Create a new IP address input control</td></tr>
+<tr><td><code>SetAddress( cIP )</code></td><td>Set the control's IP address from a dotted-decimal string</td></tr>
+<tr><td><code>GetAddress()</code></td><td>Return the current IP address as a dotted-decimal string (e.g., <code>"192.168.1.1"</code>)</td></tr>
+<tr><td><code>ClearAddress()</code></td><td>Clear all four octet fields to blank</td></tr>
+<tr><td><code>IsBlank()</code></td><td>Return <code>.T.</code> if all four octets are empty</td></tr>
+<tr><td><code>SetRange( nField, nMin, nMax )</code></td><td>Set the minimum and maximum values for a specific octet field (1-4)</td></tr>
+<tr><td><code>SetFocus( nField )</code></td><td>Set keyboard focus to a specific octet field (1-4)</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Entrada de Endereço IP com Intervalos de Campo</h2>
+<h2 id="example">Example: IP Address Input with Field Ranges</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -62,7 +62,7 @@ function Main()
       SIZE 120, 25 OF oWnd ;
       ADDRESS "192.168.1.1"
 
-   // Restringe o primeiro octeto a intervalos privados válidos
+   // Restrict the first octet to valid private ranges
    oIP:SetRange( 1, 10, 192 )
    oIP:SetRange( 4, 1, 254 )
 
@@ -70,18 +70,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TIPAddress encapsula o controle comum <code>SysIPAddress32</code> do Win32. Ele trata apenas endereços IPv4.</li>
-<li>Use <code>SetRange( nField, nMin, nMax )</code> para restringir octetos individuais. <code>nField</code> começa em 1 (1 = octeto mais à esquerda, 4 = mais à direita).</li>
-<li>O método <code>GetAddress()</code> retorna uma string vazia se o controle estiver em branco; use <code>IsBlank()</code> para verificar antes de ler.</li>
-<li>A navegação entre os campos de octeto é automática: pressionar <kbd>.</kbd> (ponto) ou <kbd>→</kbd> move para o próximo campo.</li>
-<li>A cláusula ADDRESS no comando <code>@ ... IPADDRESS</code> define o valor IP inicial.</li>
+<li>TIPAddress wraps the Win32 <code>SysIPAddress32</code> common control. It handles IPv4 addresses only.</li>
+<li>Use <code>SetRange( nField, nMin, nMax )</code> to constrain individual octets. <code>nField</code> is 1-based (1 = leftmost octet, 4 = rightmost).</li>
+<li>The <code>GetAddress()</code> method returns an empty string if the control is blank; use <code>IsBlank()</code> to check before reading.</li>
+<li>Navigation between octet fields is automatic: pressing <kbd>.</kbd> (period) or <kbd>→</kbd> moves to the next field.</li>
+<li>The ADDRESS clause in the <code>@ ... IPADDRESS</code> command sets the initial IP value.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/internet/tinternet.html">&larr; tinternet</a> | <a href="../../pt/ui/tipaddress.html">tipaddress &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

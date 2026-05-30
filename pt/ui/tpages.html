@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TPages - Documenta&ccedil;&atilde;o FWH</title>
+<title>TPages - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,44 +13,44 @@
 
 <h1>TPages</h1>
 <p class="class-source">Fonte: <code>source/classes/tpages.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code>, usa <code>TPagesDialog</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code>, uses <code>TPagesDialog</code></p>
 
 <p>
-TPages &eacute; um cont&ecirc;iner de p&aacute;ginas com abas que gerencia uma cole&ccedil;&atilde;o de p&aacute;ginas de di&aacute;logo dentro de uma &uacute;nica &aacute;rea de janela pai. Cada p&aacute;gina &eacute; um di&aacute;logo hospedado dentro do cont&ecirc;iner, e o usu&aacute;rio alterna entre p&aacute;ginas programaticamente ou via controles de abas associados. Internamente funciona com TPagesDialog para renderizar cada superf&iacute;cie de p&aacute;gina.
+TPages is a tab-page container control that manages a collection of dialog pages within a single parent window area. Each page is a dialog hosted inside the container, and the user switches between pages programmatically or via associated tab controls. Internally it works with TPagesDialog to render each page surface.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nOption</code></td><td>Numeric</td><td>&Iacute;ndice da p&aacute;gina atualmente selecionada (base 1)</td></tr>
-<tr><td><code>aDialogs</code></td><td>Array</td><td>Array de objetos de di&aacute;logo filho, um por p&aacute;gina</td></tr>
-<tr><td><code>aPages</code></td><td>Array</td><td>Array de defini&ccedil;&otilde;es de p&aacute;gina <code>{ cTitle, nId, bInit }</code></td></tr>
-<tr><td><code>bChange</code></td><td>Block</td><td>Bloco de c&oacute;digo executado quando a p&aacute;gina ativa muda</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Index of the currently selected page (1-based)</td></tr>
+<tr><td><code>aDialogs</code></td><td>Array</td><td>Array of child dialog objects, one per page</td></tr>
+<tr><td><code>aPages</code></td><td>Array</td><td>Array of page definition arrays <code>{ cTitle, nId, bInit }</code></td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Code block executed when the active page changes</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nBottom, nRight, oWnd )</code></td><td>Criar um novo cont&ecirc;iner TPages dentro de uma janela</td></tr>
-<tr><td><code>Redefine( nId, oWnd, aDialogs, nOption, bChange )</code></td><td>Recriar a partir de um controle de recurso de di&aacute;logo</td></tr>
-<tr><td><code>AddPage( cPage )</code></td><td>Adicionar uma nova p&aacute;gina com o t&iacute;tulo fornecido</td></tr>
-<tr><td><code>DelPage( nPage )</code></td><td>Remover a p&aacute;gina no &iacute;ndice especificado</td></tr>
-<tr><td><code>SetOption( n )</code></td><td>Alternar para a p&aacute;gina no &iacute;ndice <code>n</code></td></tr>
-<tr><td><code>GoPrev()</code></td><td>Alternar para a p&aacute;gina anterior</td></tr>
-<tr><td><code>GoNext()</code></td><td>Alternar para a pr&oacute;xima p&aacute;gina</td></tr>
+<tr><td><code>New( nRow, nCol, nBottom, nRight, oWnd )</code></td><td>Create a new TPages container within a window</td></tr>
+<tr><td><code>Redefine( nId, oWnd, aDialogs, nOption, bChange )</code></td><td>Recreate from a dialog resource control</td></tr>
+<tr><td><code>AddPage( cPage )</code></td><td>Add a new page with the given title</td></tr>
+<tr><td><code>DelPage( nPage )</code></td><td>Remove the page at the specified index</td></tr>
+<tr><td><code>SetOption( n )</code></td><td>Switch to the page at index <code>n</code></td></tr>
+<tr><td><code>GoPrev()</code></td><td>Switch to the previous page</td></tr>
+<tr><td><code>GoNext()</code></td><td>Switch to the next page</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Cont&ecirc;iner de Duas P&aacute;ginas</h2>
+<h2 id="example">Example: Two-Page Container</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -75,17 +75,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Cada p&aacute;gina &eacute; implementada como um di&aacute;logo filho n&atilde;o modal. Acesse os controles filhos atrav&eacute;s do objeto de di&aacute;logo correspondente em <code>aDialogs</code>.</li>
-<li>Use <code>bChange</code> para realizar valida&ccedil;&atilde;o ou atualizar o estado da interface quando o usu&aacute;rio alternar p&aacute;ginas.</li>
-<li><code>TPagesDialog</code> &eacute; a classe de di&aacute;logo interna usada para cada superf&iacute;cie de p&aacute;gina; normalmente n&atilde;o &eacute; instanciada diretamente.</li>
-<li>O cont&ecirc;iner executa o bloco de c&oacute;digo <code>bChange</code> com o novo &iacute;ndice de op&ccedil;&atilde;o cada vez que a p&aacute;gina &eacute; alternada.</li>
+<li>Each page is implemented as a modeless child dialog. Access child controls through the corresponding dialog object in <code>aDialogs</code>.</li>
+<li>Use <code>bChange</code> to perform validation or update UI state when the user switches pages.</li>
+<li><code>TPagesDialog</code> is the internal dialog class used for each page surface; it is not typically instantiated directly.</li>
+<li>The container fires the <code>bChange</code> code block with the new option index each time the page is switched.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tpager.html">&larr; tpager</a> | <a href="../../pt/ui/tpanel.html">tpanel &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

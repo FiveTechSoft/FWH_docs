@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TSplitter - FWH Docs</title>
+<title>TSplitter - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,44 +13,43 @@
 
 <h1>TSplitter</h1>
 <p class="class-source">Fuente: <code>source/classes/splitter.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TSplitter proporciona una barra divisoria arrastrable que permite a los usuarios
-redimensionar paneles de controles adyacentes en tiempo de ejecución. Se utiliza
-habitualmente para crear diseños de paneles divididos redimensionables (por ejemplo,
-una vista de árbol a la izquierda y un área de edición a la derecha) donde el
-usuario puede arrastrar el divisor para asignar más o menos espacio a cada panel.
+TSplitter provides a draggable divider bar that allows users to resize adjacent
+control panels at runtime. It is commonly used to create resizable split-pane
+layouts (e.g. a tree view on the left and an edit area on the right) where the
+user can drag the splitter to allocate more or less space to each pane.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>lVertical</code></td><td>Lógico</td><td>Divisor vertical (paneles izquierdo/derecho) frente a horizontal (superior/inferior)</td></tr>
-<tr><td><code>aPrevCtrols</code></td><td>Array</td><td>Controles del lado previo (izquierda/arriba) a redimensionar</td></tr>
-<tr><td><code>aHindCtrols</code></td><td>Array</td><td>Controles del lado posterior (derecha/abajo) a redimensionar</td></tr>
-<tr><td><code>nFirst</code></td><td>Numérico</td><td>Posición inicial del divisor en píxeles</td></tr>
+<tr><td><code>lVertical</code></td><td>Logical</td><td>Vertical splitter (left/right panes) vs horizontal (top/bottom)</td></tr>
+<tr><td><code>aPrevCtrols</code></td><td>Array</td><td>Controls on the previous side (left/top) to be resized</td></tr>
+<tr><td><code>aHindCtrols</code></td><td>Array</td><td>Controls on the hind side (right/bottom) to be resized</td></tr>
+<tr><td><code>nFirst</code></td><td>Numeric</td><td>Initial position of the splitter in pixels</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, lVert, aPrev, lAdjPrev, aHind, lAdjHind, bMargin1, bMargin2, oWnd, bChange )</code></td><td>Crea un nuevo control TSplitter</td></tr>
-<tr><td><code>SetPosition( n )</code></td><td>Establece la posición del divisor mediante código</td></tr>
-<tr><td><code>AdjClient()</code></td><td>Ajusta el área cliente de la ventana padre teniendo en cuenta el divisor</td></tr>
+<tr><td><code>New( nRow, nCol, lVert, aPrev, lAdjPrev, aHind, lAdjHind, bMargin1, bMargin2, oWnd, bChange )</code></td><td>Create a new TSplitter control</td></tr>
+<tr><td><code>SetPosition( n )</code></td><td>Set the splitter position programmatically</td></tr>
+<tr><td><code>AdjClient()</code></td><td>Adjust the parent window client area accounting for the splitter</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Divisor Vertical Entre Árbol y Edición</h2>
+<h2 id="example">Example: Vertical Splitter Between Tree and Edit</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -76,18 +75,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TSplitter rastrea automáticamente el movimiento del ratón y redimensiona los controles previos y posteriores a medida que el usuario arrastra la barra divisoria.</li>
-<li>El parámetro <code>lVert</code> determina la orientación: <code>.T.</code> para vertical (paneles izquierdo/derecho), <code>.F.</code> para horizontal (paneles superior/inferior).</li>
-<li><code>aPrevCtrols</code> y <code>aHindCtrols</code> aceptan bien un único objeto de control o bien un array de controles a redimensionar conjuntamente.</li>
-<li>El bloque de código <code>bChange</code> se dispara cada vez que el usuario termina de arrastrar hasta una nueva posición, permitiendo que el código de la aplicación responda al cambio de diseño.</li>
-<li>Utilice <code>AdjClient()</code> para que el divisor participe en la lógica de redimensionamiento del área cliente de la ventana, asegurando que se reposicione correctamente cuando la ventana cambia de tamaño.</li>
+<li>TSplitter automatically tracks mouse movement and resizes the previous and hind controls as the user drags the splitter bar.</li>
+<li>The <code>lVert</code> parameter determines orientation: <code>.T.</code> for vertical (left/right panes), <code>.F.</code> for horizontal (top/bottom panes).</li>
+<li><code>aPrevCtrols</code> and <code>aHindCtrols</code> accept either a single control object or an array of controls to be resized together.</li>
+<li>The <code>bChange</code> code block is fired each time the user finishes dragging to a new position, allowing application code to respond to the layout change.</li>
+<li>Use <code>AdjClient()</code> to make the splitter participate in the window's client-area resize logic, ensuring it repositions correctly when the window is resized.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/internet/tsocket.html">&larr; tsocket</a> | <a href="../../es/data/tsqlerror.html">tsqlerror &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

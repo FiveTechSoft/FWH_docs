@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TXImage - FWH Docs</title>
+<title>TXImage - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,68 +13,68 @@
 
 <h1>TXImage</h1>
 <p class="class-source">Fuente: <code>source/classes/ximage.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TXImage es un control visor de imágenes extendido que admite zoom, rotación, brillo, contraste, corrección gamma, mezcla alfa (alpha blending), conversión a escala de grises y efectos de desenfoque. Proporciona un menú contextual emergente integrado con opciones para guardar, imprimir, copiar al portapapeles y navegar entre imágenes.
+TXImage is an extended image viewer control that supports zoom, rotation, brightness, contrast, gamma correction, alpha blending, grayscale conversion, and blur effects. It provides a built-in popup context menu with options for saving, printing, copying to clipboard, and image navigation.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cImageFile</code></td><td>Carácter</td><td>Ruta o identificador de la imagen cargada</td></tr>
-<tr><td><code>nZoom</code></td><td>Numérico</td><td>Porcentaje de zoom (100 = tamaño original)</td></tr>
-<tr><td><code>nRotate</code></td><td>Numérico</td><td>Ángulo de rotación en grados</td></tr>
-<tr><td><code>nSize</code></td><td>Numérico</td><td>Dimensión de la imagen para el ajuste basado en tamaño</td></tr>
-<tr><td><code>cAlign</code></td><td>Carácter</td><td>Cadena de alineación (p. ej., "C" para centrar)</td></tr>
-<tr><td><code>nGamma</code></td><td>Numérico</td><td>Valor de corrección gamma</td></tr>
-<tr><td><code>nBrightness</code></td><td>Numérico</td><td>Ajuste de brillo</td></tr>
-<tr><td><code>nContrast</code></td><td>Numérico</td><td>Ajuste de contraste</td></tr>
-<tr><td><code>nAlpha</code></td><td>Numérico</td><td>Nivel de transparencia alfa (0-255)</td></tr>
-<tr><td><code>lGray</code></td><td>Lógico</td><td>Mostrar la imagen en escala de grises</td></tr>
-<tr><td><code>nBlur</code></td><td>Numérico</td><td>Radio de desenfoque</td></tr>
+<tr><td><code>cImageFile</code></td><td>Character</td><td>Path or identifier of the loaded image</td></tr>
+<tr><td><code>nZoom</code></td><td>Numeric</td><td>Zoom percentage (100 = original size)</td></tr>
+<tr><td><code>nRotate</code></td><td>Numeric</td><td>Rotation angle in degrees</td></tr>
+<tr><td><code>nSize</code></td><td>Numeric</td><td>Image dimension for size-based fitting</td></tr>
+<tr><td><code>cAlign</code></td><td>Character</td><td>Alignment string (e.g., "C" for center)</td></tr>
+<tr><td><code>nGamma</code></td><td>Numeric</td><td>Gamma correction value</td></tr>
+<tr><td><code>nBrightness</code></td><td>Numeric</td><td>Brightness adjustment</td></tr>
+<tr><td><code>nContrast</code></td><td>Numeric</td><td>Contrast adjustment</td></tr>
+<tr><td><code>nAlpha</code></td><td>Numeric</td><td>Alpha transparency level (0-255)</td></tr>
+<tr><td><code>lGray</code></td><td>Logical</td><td>Display the image in grayscale</td></tr>
+<tr><td><code>nBlur</code></td><td>Numeric</td><td>Blur radius</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nW, nH, bImage, oWnd )</code></td><td>Crea un nuevo control TXImage. <code>bImage</code> puede ser un nombre de archivo, un manejador de bitmap o un bloque de código que devuelve una imagen.</td></tr>
-<tr><td><code>Center()</code></td><td>Centra la imagen dentro del área del control</td></tr>
-<tr><td><code>FitWidth()</code></td><td>Escala la imagen para ajustarla al ancho del control</td></tr>
-<tr><td><code>FitHeight()</code></td><td>Escala la imagen para ajustarla al alto del control</td></tr>
-<tr><td><code>FitRect()</code></td><td>Escala la imagen para que quepa por completo dentro del control</td></tr>
-<tr><td><code>FitOrglSize()</code></td><td>Restaura la imagen a sus dimensiones originales en píxeles</td></tr>
-<tr><td><code>Zoom( n )</code></td><td>Establece el nivel de zoom a <code>n</code> por ciento</td></tr>
-<tr><td><code>Rotate( nDeg )</code></td><td>Rota la imagen <code>nDeg</code> grados</td></tr>
-<tr><td><code>SetSource( uNew )</code></td><td>Reemplaza la imagen mostrada por una nueva fuente</td></tr>
-<tr><td><code>Paste()</code></td><td>Pega una imagen desde el portapapeles</td></tr>
-<tr><td><code>CopyToClipBoard()</code></td><td>Copia la imagen actual al portapapeles</td></tr>
-<tr><td><code>Save( lAsViewed, cFile )</code></td><td>Guarda la imagen en disco. Si <code>lAsViewed</code> es <code>.T.</code>, se conservan los ajustes (zoom, efectos).</td></tr>
+<tr><td><code>New( nTop, nLeft, nW, nH, bImage, oWnd )</code></td><td>Create a new TXImage control. <code>bImage</code> can be a file name, bitmap handle, or a code block returning an image.</td></tr>
+<tr><td><code>Center()</code></td><td>Center the image within the control area</td></tr>
+<tr><td><code>FitWidth()</code></td><td>Scale the image to fit the control width</td></tr>
+<tr><td><code>FitHeight()</code></td><td>Scale the image to fit the control height</td></tr>
+<tr><td><code>FitRect()</code></td><td>Scale the image to fit entirely within the control</td></tr>
+<tr><td><code>FitOrglSize()</code></td><td>Restore the image to its original pixel dimensions</td></tr>
+<tr><td><code>Zoom( n )</code></td><td>Set the zoom level to <code>n</code> percent</td></tr>
+<tr><td><code>Rotate( nDeg )</code></td><td>Rotate the image by <code>nDeg</code> degrees</td></tr>
+<tr><td><code>SetSource( uNew )</code></td><td>Replace the displayed image with a new source</td></tr>
+<tr><td><code>Paste()</code></td><td>Paste an image from the clipboard</td></tr>
+<tr><td><code>CopyToClipBoard()</code></td><td>Copy the current image to the clipboard</td></tr>
+<tr><td><code>Save( lAsViewed, cFile )</code></td><td>Save the image to disk. If <code>lAsViewed</code> is <code>.T.</code>, adjustments (zoom, effects) are preserved.</td></tr>
 </tbody>
 </table>
 
-<h2 id="free-functions">Funciones Libres</h2>
+<h2 id="free-Funciones">Free Funciones</h2>
 
 <table>
 <thead>
-<tr><th>Función</th><th>Descripción</th></tr>
+<tr><th>Function</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>XImage( uImage, cTitle )</code></td><td>Muestra una imagen en una ventana de diálogo visor independiente</td></tr>
-<tr><td><code>XImageArray( aImages, cTitle )</code></td><td>Muestra un conjunto de imágenes navegable en un diálogo visor</td></tr>
+<tr><td><code>XImage( uImage, cTitle )</code></td><td>Display an image in a standalone viewer dialog window</td></tr>
+<tr><td><code>XImageArray( aImages, cTitle )</code></td><td>Display a navigable array of images in a viewer dialog</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Visor de Imágenes con Menú Contextual</h2>
+<h2 id="example">Example: Image Viewer with Context Menu</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -82,7 +82,7 @@ function Main()
 
    local oWnd, oImg
 
-   DEFINE WINDOW oWnd TITLE "Visor de Imágenes" SIZE 800, 600
+   DEFINE WINDOW oWnd TITLE "Image Viewer" SIZE 800, 600
 
    @ 10, 10 XIMAGE oImg FILE "photo.jpg" ;
       SIZE 760, 540 OF oWnd
@@ -94,17 +94,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TXImage proporciona un menú contextual emergente integrado que se activa con el clic derecho, ofreciendo opciones de zoom, rotación, guardar, imprimir, copiar y ajuste en tiempo de ejecución.</li>
-<li>La función libre <code>XImage()</code> abre un diálogo modal con un control TXImage y todas las acciones estándar de la barra de herramientas. Use <code>XImageArray()</code> para navegar entre varias imágenes.</li>
-<li>Los ajustes de imagen (zoom, rotación, brillo, contraste, gamma, desenfoque, escala de grises, alfa) se aplican en memoria y no modifican el archivo de origen original salvo que se guarden explícitamente con <code>Save()</code>.</li>
-<li>El parámetro <code>bImage</code> de <code>New()</code> acepta una cadena con el nombre de archivo, un manejador de bitmap (HBITMAP) o un bloque de código que devuelve cualquiera de ambos.</li>
+<li>TXImage provides a built-in popup context menu activated by right-click, offering zoom, rotate, save, print, copy, and fit options at runtime.</li>
+<li>The free function <code>XImage()</code> opens a modal dialog with a TXImage control and all standard toolbar actions. Use <code>XImageArray()</code> for browsing through multiple images.</li>
+<li>Image adjustments (zoom, rotation, brightness, contrast, gamma, blur, grayscale, alpha) are applied in memory and do not modify the original source file unless explicitly saved with <code>Save()</code>.</li>
+<li>The <code>bImage</code> parameter in <code>New()</code> accepts a filename string, a bitmap handle (HBITMAP), or a code block that returns either.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/txbrowse.html">&larr; txbrowse</a> | <a href="../../es/utilities/txmlwriter.html">txmlwriter &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

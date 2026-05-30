@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TBtnFlat - DocumentaÃ§Ã£o FWH</title>
+<title>TBtnFlat - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,29 +13,29 @@
 
 <h1>TBtnFlat</h1>
 <p class="class-source">Fonte: <code>source/classes/btnflat.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TBtnFlat Ã© um botÃ£o plano sem bordas com efeito de destaque ao passar o mouse. Desenha seu tÃ­tulo centralizado sobre um fundo de cor sÃ³lida e reage a cliques do mouse atravÃ©s de um bloco de cÃ³digo de aÃ§Ã£o. O botÃ£o pode opcionalmente exibir uma borda, e suas cores de texto e painel sÃ£o totalmente personalizÃ¡veis. It draws its caption centered over a solid color background and reacts to mouse clicks via a code block action. The button can optionally display a border, and its text and pane colors are fully customizable.
+TBtnFlat is a flat borderless button with a hover highlight effect. It draws its caption centered over a solid color background and reacts to mouse clicks via a code block action. The button can optionally display a border, and its text and pane colors are fully customizable.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cCaption</code></td><td>Character</td><td>Texto do tÃ­tulo do botÃ£o</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Bloco de cÃ³digo executado quando o botÃ£o Ã© clicado</td></tr>
-<tr><td><code>nClrText</code></td><td>Numeric</td><td>Cor do texto (valor RGB, padrÃ£o CLR_WHITE)</td></tr>
-<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Cor de fundo do painel (valor RGB, padrÃ£o CLR_BLUE)</td></tr>
-<tr><td><code>oFont</code></td><td>Object</td><td>Objeto de fonte para o texto do tÃ­tulo</td></tr>
-<tr><td><code>lBorder</code></td><td>Logical</td><td>Mostrar uma borda ao redor do botÃ£o</td></tr>
-<tr><td><code>lTransparent</code></td><td>Logical</td><td>Fundo transparente (sem preenchimento)</td></tr>
-<tr><td><code>lPressed</code></td><td>Logical</td><td>Se o botÃ£o estÃ¡ atualmente pressionado</td></tr>
-<tr><td><code>nClrTextDis</code></td><td>Numeric</td><td>Cor do texto quando desabilitado</td></tr>
-<tr><td><code>nClrPaneDis</code></td><td>Numeric</td><td>Cor do painel quando desabilitado</td></tr>
+<tr><td><code>cCaption</code></td><td>Character</td><td>Button caption text</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed when the button is clicked</td></tr>
+<tr><td><code>nClrText</code></td><td>Numeric</td><td>Text color (RGB value, default CLR_WHITE)</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Background pane color (RGB value, default CLR_BLUE)</td></tr>
+<tr><td><code>oFont</code></td><td>Object</td><td>Font object for the caption text</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Show a border around the button</td></tr>
+<tr><td><code>lTransparent</code></td><td>Logical</td><td>Transparent background (no fill)</td></tr>
+<tr><td><code>lPressed</code></td><td>Logical</td><td>Whether the button is currently pressed</td></tr>
+<tr><td><code>nClrTextDis</code></td><td>Numeric</td><td>Text color when disabled</td></tr>
+<tr><td><code>nClrPaneDis</code></td><td>Numeric</td><td>Pane color when disabled</td></tr>
 </tbody>
 </table>
 
@@ -43,20 +43,20 @@ TBtnFlat Ã© um botÃ£o plano sem bordas com efeito de destaque ao passar o mo
 
 <table>
 <thead>
-<tr><th>MÃ©todo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nW, nH, cPrompt, oWnd, oFont, bAction, bWhen, lUpdate, lBorder, nClrText, nClrPane, lCancel, lDefault )</code></td><td>Criar um novo botÃ£o plano</td></tr>
-<tr><td><code>ReDefine( nId, bAction, oWnd, ... )</code></td><td>Redefinir a partir de um recurso de diÃ¡logo</td></tr>
-<tr><td><code>Click()</code></td><td>Executar a aÃ§Ã£o do botÃ£o (avalia bWhen, depois bAction)</td></tr>
-<tr><td><code>Paint()</code></td><td>Desenhar o fundo do botÃ£o e o tÃ­tulo centralizado</td></tr>
-<tr><td><code>LButtonDown( nRow, nCol, nFlags )</code></td><td>Manipular pressionamento do mouse com rastreamento de estado</td></tr>
-<tr><td><code>LButtonUp( nRow, nCol )</code></td><td>Manipular liberaÃ§Ã£o do mouse e disparar clique se dentro do controle</td></tr>
-<tr><td><code>DrawMultiLine( cText, oFont, nColor, nAlign )</code></td><td>Desenhar texto de tÃ­tulo multilinha com alinhamento</td></tr>
+<tr><td><code>New( nTop, nLeft, nW, nH, cPrompt, oWnd, oFont, bAction, bWhen, lUpdate, lBorder, nClrText, nClrPane, lCancel, lDefault )</code></td><td>Create a new flat button</td></tr>
+<tr><td><code>ReDefine( nId, bAction, oWnd, ... )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>Click()</code></td><td>Execute the button action (evaluates bWhen, then bAction)</td></tr>
+<tr><td><code>Paint()</code></td><td>Draw the button background and centered caption</td></tr>
+<tr><td><code>LButtonDown( nRow, nCol, nFlags )</code></td><td>Handle mouse down with working state tracking</td></tr>
+<tr><td><code>LButtonUp( nRow, nCol )</code></td><td>Handle mouse up and trigger click if within control</td></tr>
+<tr><td><code>DrawMultiLine( cText, oFont, nColor, nAlign )</code></td><td>Draw multi-line caption text with alignment</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: BotÃ£o Plano com Destaque</h2>
+<h2 id="example">Example: Flat Button with Hover</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -80,15 +80,15 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>TBtnFlat nÃ£o usa a pintura padrÃ£o do controle de botÃ£o do Windows; desenha o tÃ­tulo usando funÃ§Ãµes de texto GDI com controle total de alinhamento.</li>
-<li>Defina <code>lBorder</code> como .T. para desenhar uma borda colorida ao redor do botÃ£o usando <code>nClrText</code>.</li>
-<li>Quando <code>lDefault</code> Ã© .T., o botÃ£o recebe o estilo <code>BS_DEFPUSHBUTTON</code> e responde Ã  tecla Enter.</li>
-<li>Use <code>lCancel</code> para que o botÃ£o responda Ã  tecla Escape.</li>
-<li>O botÃ£o calcula automaticamente sua largura a partir do texto do tÃ­tulo se a largura fornecida for muito pequena.</li>
+<li>TBtnFlat does not use the standard Windows button control painting; it draws the caption using GDI text Funções with full alignment control.</li>
+<li>Set <code>lBorder</code> to .T. to draw a colored border around the button using <code>nClrText</code>.</li>
+<li>When <code>lDefault</code> is .T., the button receives the <code>BS_DEFPUSHBUTTON</code> style and responds to the Enter key.</li>
+<li>Use <code>lCancel</code> to let the button respond to the Escape key.</li>
+<li>The button automatically calculates its width from the caption text if the provided width is too small.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tbtnclr.html">&larr; tbtnclr</a> | <a href="../../pt/ui/tbutton.html">tbutton &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

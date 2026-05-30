@@ -13,68 +13,68 @@
 
 <h1>TExplorerList / TItemListbar</h1>
 <p class="class-source">Fuente: <code>source/classes/texplist.prg</code></p>
-<p class="class-hierarchy">TExplorerList hereda de: <code>TControl</code>. TItemListbar es una clase de colaboración interna para los elementos individuales.</p>
+<p class="class-hierarchy">TExplorerList inherits from: <code>TControl</code>. TItemListbar is an internal collaboration class for individual items.</p>
 
 <p>
-TExplorerList es un control de lista de navegación vertical con elementos expandibles/contraíbles, similar al árbol de carpetas del Explorador de Windows o a la barra de Outlook. Cada elemento puede mostrar un bitmap, texto y elementos hijos opcionales con sangría. El control admite navegación por teclado, efectos de paso del ratón, resaltado de selección con degradado y desplazamiento vertical para el contenido que excede el área visible.
+TExplorerList is a vertical navigation list control with expandable/collapsible items, similar to the Windows Explorer folder tree or Outlook bar. Each item can display a bitmap, text, and optional child items with indentation. The control supports keyboard navigation, mouse hover effects, gradient selection highlighting, and vertical scrolling for overflow content.
 </p>
 
-<h2 id="data">Miembros DATA Principales (TExplorerList)</h2>
+<h2 id="data">Key DATA Members (TExplorerList)</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array de objetos TItemListbar</td></tr>
-<tr><td><code>bChange</code></td><td>Block</td><td>Bloque de código ejecutado cuando cambia el elemento seleccionado</td></tr>
-<tr><td><code>oItemSelected</code></td><td>Object</td><td>Elemento TItemListbar actualmente seleccionado</td></tr>
-<tr><td><code>oVScroll</code></td><td>Object</td><td>Control de barra de desplazamiento vertical</td></tr>
-<tr><td><code>nSeparation</code></td><td>Numeric</td><td>Espaciado vertical entre elementos de nivel superior (predeterminado 15)</td></tr>
-<tr><td><code>nVirtualHeight</code></td><td>Numeric</td><td>Altura virtual total de todos los elementos</td></tr>
-<tr><td><code>nVirtualTop</code></td><td>Numeric</td><td>Desplazamiento de scroll actual en píxeles virtuales</td></tr>
-<tr><td><code>nFade</code></td><td>Numeric</td><td>Nivel alfa para la animación de fundido (0-255)</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array of TItemListbar objects</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Code block executed when the selected item changes</td></tr>
+<tr><td><code>oItemSelected</code></td><td>Object</td><td>Currently selected TItemListbar item</td></tr>
+<tr><td><code>oVScroll</code></td><td>Object</td><td>Vertical scroll bar control</td></tr>
+<tr><td><code>nSeparation</code></td><td>Numeric</td><td>Vertical spacing between top-level items (default 15)</td></tr>
+<tr><td><code>nVirtualHeight</code></td><td>Numeric</td><td>Total virtual height of all items</td></tr>
+<tr><td><code>nVirtualTop</code></td><td>Numeric</td><td>Current scroll offset in virtual pixels</td></tr>
+<tr><td><code>nFade</code></td><td>Numeric</td><td>Alpha level for fade animation (0-255)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, oWnd, lPixel, lDesign, nWidth, nHeight, nSeparation )</code></td><td>Crea el control de lista del explorador</td></tr>
-<tr><td><code>AddItem( cText, cBitmap, aGradSel, aGradOver, aGradOverSel, nClrInSel, nClrOutSel, nClrInOverSel, nClrOutOverSel, nClrInOver, nClrOutOver, nClrText, bAction )</code></td><td>Añade un nuevo elemento con texto, bitmap y colores de degradado/paso del ratón</td></tr>
-<tr><td><code>DelItem( uVal )</code></td><td>Elimina un elemento por posición o por referencia de objeto</td></tr>
-<tr><td><code>GetItem( nPos )</code></td><td>Devuelve el elemento en la posición indicada</td></tr>
-<tr><td><code>SetOption( n )</code></td><td>Selecciona un elemento por índice</td></tr>
-<tr><td><code>GoDown( nSkip ) / GoUp( nSkip )</code></td><td>Navega al siguiente/anterior elemento visible</td></tr>
-<tr><td><code>CheckScroll()</code></td><td>Recalcula el rango de desplazamiento según las posiciones de los elementos</td></tr>
+<tr><td><code>New( nTop, nLeft, oWnd, lPixel, lDesign, nWidth, nHeight, nSeparation )</code></td><td>Create the explorer list control</td></tr>
+<tr><td><code>AddItem( cText, cBitmap, aGradSel, aGradOver, aGradOverSel, nClrInSel, nClrOutSel, nClrInOverSel, nClrOutOverSel, nClrInOver, nClrOutOver, nClrText, bAction )</code></td><td>Add a new item with text, bitmap, and gradient/hover colors</td></tr>
+<tr><td><code>DelItem( uVal )</code></td><td>Delete an item by position or object reference</td></tr>
+<tr><td><code>GetItem( nPos )</code></td><td>Return the item at the given position</td></tr>
+<tr><td><code>SetOption( n )</code></td><td>Select an item by index</td></tr>
+<tr><td><code>GoDown( nSkip ) / GoUp( nSkip )</code></td><td>Navigate to the next/previous visible item</td></tr>
+<tr><td><code>CheckScroll()</code></td><td>Recalculate scroll range based on item positions</td></tr>
 </tbody>
 </table>
 
-<h2 id="itemlistbar">TItemListbar (Objetos de Elemento)</h2>
+<h2 id="itemlistbar">TItemListbar (Item Objects)</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cText</code></td><td>Character</td><td>Texto a mostrar</td></tr>
-<tr><td><code>hBitmap</code></td><td>Handle</td><td>Handle del bitmap del elemento</td></tr>
-<tr><td><code>lSelected</code></td><td>Logical</td><td>Indica si este elemento está actualmente seleccionado</td></tr>
-<tr><td><code>lOver</code></td><td>Logical</td><td>Indica si el ratón está pasando sobre este elemento</td></tr>
-<tr><td><code>lOpened</code></td><td>Logical</td><td>Indica si los elementos hijos están expandidos</td></tr>
-<tr><td><code>lParent</code></td><td>Logical</td><td>Indica si este elemento tiene hijos</td></tr>
-<tr><td><code>nLevel</code></td><td>Numeric</td><td>Profundidad de jerarquía (0 = nivel superior)</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Bloque de código ejecutado al hacer clic en el elemento</td></tr>
+<tr><td><code>cText</code></td><td>Character</td><td>Display text</td></tr>
+<tr><td><code>hBitmap</code></td><td>Handle</td><td>Item bitmap handle</td></tr>
+<tr><td><code>lSelected</code></td><td>Logical</td><td>Is this item currently selected</td></tr>
+<tr><td><code>lOver</code></td><td>Logical</td><td>Is the mouse hovering over this item</td></tr>
+<tr><td><code>lOpened</code></td><td>Logical</td><td>Are child items expanded</td></tr>
+<tr><td><code>lParent</code></td><td>Logical</td><td>Does this item have children</td></tr>
+<tr><td><code>nLevel</code></td><td>Numeric</td><td>Hierarchy depth (0 = top-level)</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed when item is clicked</td></tr>
 </tbody>
 </table>
 
-<p>TItemListbar admite <code>AddItem()</code> para crear elementos hijos, <code>OpenClose()</code> para expandir/contraer los hijos y <code>Click()</code> para disparar acciones.</p>
+<p>TItemListbar supports <code>AddItem()</code> to create child items, <code>OpenClose()</code> to expand/collapse children, and <code>Click()</code> to trigger actions.</p>
 
-<h2 id="example">Ejemplo: Lista de Navegación con Grupos</h2>
+<h2 id="example">Example: Navigation List with Groups</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -99,17 +99,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Añada elementos hijos llamando a <code>AddItem()</code> sobre un objeto TItemListbar padre. Los elementos hijos se sangran 10 píxeles por nivel.</li>
-<li>Los elementos se dibujan con fondos en degradado y esquinas redondeadas en tres estados: normal, al pasar el ratón, y seleccionado+al pasar el ratón.</li>
-<li>Navegación por teclado: flechas Arriba/Abajo, +/- para expandir/contraer, Enter para disparar la acción, Inicio/Fin para el primer/último elemento.</li>
-<li>La animación de fundido (<code>FadeOn</code>/<code>FadeOff</code>) proporciona retroalimentación visual en los eventos de entrada/salida del ratón.</li>
+<li>Add child items by calling <code>AddItem()</code> on a parent TItemListbar object. Child items are indented by 10 pixels per level.</li>
+<li>Items are rendered with gradient backgrounds and rounded corners in three states: normal, hover, and selected+hover.</li>
+<li>Keyboard navigation: Up/Down arrows, +/- to expand/collapse, Enter to trigger action, Home/End for first/last item.</li>
+<li>The fade animation (<code>FadeOn</code>/<code>FadeOff</code>) provides visual feedback on mouse enter/leave events.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/utilities/texcel.html">&larr; texcel</a> | <a href="../../es/ui/texplorerbar.html">texplorerbar &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

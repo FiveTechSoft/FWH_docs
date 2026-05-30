@@ -2,8 +2,8 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>Unicode e Internacionalización</h1>
-<p>FiveWin proporciona un sistema integral de internacionalización (i18n) con dos componentes principales: un sistema de traducción de cadenas multiidioma (<code>FWString</code>) y soporte Unicode para mostrar caracteres no ASCII en ventanas y controles. Esta página cubre ambos sistemas en detalle, incluyendo consideraciones de codificación y ejemplos prácticos.</p>
+<h1>Unicode &amp; Internationalization</h1>
+<p>FiveWin provides a comprehensive internationalization (i18n) system with two main components: a multi-language string translation system (<code>FWString</code>) and Unicode support for displaying non-ASCII characters in windows and controls. This page covers both systems in detail, including encoding considerations and practical examples.</p>
 
 <div class="mermaid">
 graph TD
@@ -27,56 +27,56 @@ graph TD
 </div>
 
 <!-- ================================================================ -->
-<h2 id="fwstring">FWString() - El Sistema de Traducción</h2>
-<p>El sistema de traducción de FiveWin está construido sobre un array estático llamado <code>aStrings</code> definido en <code>source\function\strings.prg</code>. Cada elemento es un array de cadenas: el índice 1 es inglés, 2 es español, 3 es francés, 4 es portugués, 5 es alemán, 6 es italiano. Cuando se llama a <code>FWString("algún texto")</code>, busca el texto en inglés en el array y devuelve la traducción para el idioma actual.</p>
+<h2 id="fwstring">FWString() - The Translation System</h2>
+<p>FiveWin's translation system is built on a static array called <code>aStrings</code> defined in <code>source\function\strings.prg</code>. Each element is an array of strings: index 1 is English, 2 is Spanish, 3 is French, 4 is Portuguese, 5 is German, 6 is Italian. When you call <code>FWString("some text")</code>, it looks up the English text in the array and returns the translation for the current language.</p>
 
-<h3>Cómo Funciona</h3>
+<h3>How It Works</h3>
 <ol>
-<li>Al iniciar, <code>FWLanguageID()</code> detecta automáticamente el idioma desde <code>HB_LangSelect()</code> y lo mapea a un índice de idioma (1=EN, 2=ES, 3=FR, 4=PT, 5=DE, 6=IT).</li>
-<li>Todas las cadenas internas de la UI de FiveWin (menús, botones, mensajes, etiquetas del previsualizador de informes) pasan por <code>FWString()</code>.</li>
-<li>Cuando el idioma actual es inglés (índice 1), <code>FWString()</code> devuelve la cadena de entrada inmediatamente (no necesita búsqueda).</li>
-<li>Para otros idiomas, busca en <code>aStrings</code> una coincidencia sin distinción de mayúsculas/minúsculas del texto en inglés y devuelve la cadena traducida en el índice del idioma actual.</li>
-<li>Si la cadena no se encuentra, se añade a una lista de "cadenas faltantes" y se devuelve el texto original en inglés.</li>
+<li>On startup, <code>FWLanguageID()</code> auto-detects the language from <code>HB_LangSelect()</code> and maps it to a language index (1=EN, 2=ES, 3=FR, 4=PT, 5=DE, 6=IT).</li>
+<li>All FiveWin internal UI strings (menus, buttons, messages, report previewer labels) go through <code>FWString()</code>.</li>
+<li>When the current language is English (index 1), <code>FWString()</code> returns the input string immediately (no lookup needed).</li>
+<li>For other languages, it searches <code>aStrings</code> for a case-insensitive match on the English text and returns the translated string at the current language index.</li>
+<li>If the string is not found, it is added to a "missing strings" list and the original English text is returned.</li>
 </ol>
 
-<h3>Cadenas Incorporadas</h3>
-<p>FiveWin incluye traducciones para cientos de cadenas comunes de UI: etiquetas de botones (Ok, Cancel, Save, Print), elementos de menú (File, Edit, View, Help), títulos de diálogos, mensajes de error, etiquetas del previsualizador de informes (First, Previous, Next, Last, Zoom), etiquetas del navegador de datos (Add, Edit, Del, Search, Filter), y más.</p>
+<h3>Built-in Strings</h3>
+<p>FiveWin includes translations for hundreds of common UI strings: button labels (Ok, Cancel, Save, Print), menu items (File, Edit, View, Help), dialog titles, error messages, report preview labels (First, Previous, Next, Last, Zoom), data browser labels (Add, Edit, Del, Search, Filter), and more.</p>
 
-<h3>Funciones Principales</h3>
+<h3>Key Funciones</h3>
 <table>
-<thead><tr><th>Function</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Function</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>FWString( cString )</code></td><td>Traduce una cadena en inglés al idioma actual. Devuelve la original si no se encuentra traducción.</td></tr>
-<tr><td><code>FWSetLanguage( nLang )</code></td><td>Establece el idioma activo. Devuelve el ID del idioma anterior. nLang: 1=EN, 2=ES, 3=FR, 4=PT, 5=DE, 6=IT, 7+ = personalizado.</td></tr>
-<tr><td><code>FWLanguageID()</code></td><td>Devuelve el índice del idioma actual. Detecta automáticamente desde HB_LangSelect() en la primera llamada.</td></tr>
-<tr><td><code>FWAddString( aString )</code></td><td>Añade una entrada de traducción. aString puede ser { "English", "Spanish", "French", ... } o una cadena delimitada por pipes "English|Spanish|French|...".</td></tr>
-<tr><td><code>FWSetString( nLang, aString )</code></td><td>Establece una traducción para un índice de idioma específico. aString: { "ClaveInglés", "ValorTraducido" }. También acepta arrays de arrays.</td></tr>
-<tr><td><code>FWAddLanguage( aLang, nLang )</code></td><td>Añade una columna completa de nuevo idioma. aLang es un array con todas las cadenas traducidas. nLang es el índice destino (se asigna automáticamente si es nil).</td></tr>
-<tr><td><code>FWLoadStrings( cFileName )</code></td><td>Carga traducciones adicionales desde un archivo en formato INI (por defecto: "fwstrings.ini" en el directorio de la aplicación).</td></tr>
-<tr><td><code>FWSaveStrings( cFileName )</code></td><td>Guarda todas las traducciones actuales en un archivo en formato INI.</td></tr>
-<tr><td><code>FWMissingStrings()</code></td><td>Devuelve un array de cadenas que fueron solicitadas pero no encontradas. Escribe el archivo "missing.str".</td></tr>
-<tr><td><code>FWEditStrings()</code></td><td>Abre un editor interactivo XBrowse para todas las cadenas de traducción (herramienta de desarrollo).</td></tr>
+<tr><td><code>FWString( cString )</code></td><td>Translates an English string to the current language. Returns the original if no translation found.</td></tr>
+<tr><td><code>FWSetLanguage( nLang )</code></td><td>Sets the active language. Returns the previous language ID. nLang: 1=EN, 2=ES, 3=FR, 4=PT, 5=DE, 6=IT, 7+ = custom.</td></tr>
+<tr><td><code>FWLanguageID()</code></td><td>Returns the current language index. Auto-detects from HB_LangSelect() on first call.</td></tr>
+<tr><td><code>FWAddString( aString )</code></td><td>Adds a translation entry. aString can be { "English", "Spanish", "French", ... } or a pipe-delimited string "English|Spanish|French|...".</td></tr>
+<tr><td><code>FWSetString( nLang, aString )</code></td><td>Sets a translation for a specific language index. aString: { "EnglishKey", "TranslatedValue" }. Can also accept arrays of arrays.</td></tr>
+<tr><td><code>FWAddLanguage( aLang, nLang )</code></td><td>Adds an entire new language column. aLang is an array of all translated strings. nLang is the target index (auto-assigned if nil).</td></tr>
+<tr><td><code>FWLoadStrings( cFileName )</code></td><td>Loads additional translations from an INI-format file (default: "fwstrings.ini" in app directory).</td></tr>
+<tr><td><code>FWSaveStrings( cFileName )</code></td><td>Saves all current translations to an INI-format file.</td></tr>
+<tr><td><code>FWMissingStrings()</code></td><td>Returns array of strings that were requested but not found. Writes "missing.str" file.</td></tr>
+<tr><td><code>FWEditStrings()</code></td><td>Opens an interactive XBrowse editor for all translation strings (dev tool).</td></tr>
 </tbody>
 </table>
 
 <!-- ================================================================ -->
-<h2 id="fwsetlanguage">FWSetLanguage() - Establecer el Idioma Activo</h2>
+<h2 id="fwsetlanguage">FWSetLanguage() - Setting the Active Language</h2>
 
-<h3>Referencia de IDs de Idioma</h3>
+<h3>Language ID Reference</h3>
 <table>
-<thead><tr><th>ID</th><th>Idioma</th><th>Código HB_LangSelect()</th></tr></thead>
+<thead><tr><th>ID</th><th>Language</th><th>HB_LangSelect() Code</th></tr></thead>
 <tbody>
-<tr><td>1</td><td>Inglés</td><td>EN</td></tr>
-<tr><td>2</td><td>Español</td><td>ES</td></tr>
-<tr><td>3</td><td>Francés</td><td>FR</td></tr>
-<tr><td>4</td><td>Portugués</td><td>PT</td></tr>
-<tr><td>5</td><td>Alemán</td><td>DE</td></tr>
-<tr><td>6</td><td>Italiano</td><td>IT</td></tr>
-<tr><td>7+</td><td>Personalizado (añadido vía FWAddLanguage)</td><td>--</td></tr>
+<tr><td>1</td><td>English</td><td>EN</td></tr>
+<tr><td>2</td><td>Spanish</td><td>ES</td></tr>
+<tr><td>3</td><td>French</td><td>FR</td></tr>
+<tr><td>4</td><td>Portuguese</td><td>PT</td></tr>
+<tr><td>5</td><td>German</td><td>DE</td></tr>
+<tr><td>6</td><td>Italian</td><td>IT</td></tr>
+<tr><td>7+</td><td>Custom (added via FWAddLanguage)</td><td>--</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo: Establecer Idioma al Inicio</h3>
+<h3>Example: Set Language at Startup</h3>
 <pre><code class="language-harbour">function Main()
    // Set to Spanish
    FWSetLanguage( 2 )
@@ -92,10 +92,10 @@ graph TD
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="fwloadstrings">FWLoadStrings() - Cargar Traducciones Personalizadas</h2>
-<p>Se pueden cargar traducciones adicionales desde un archivo INI en tiempo de ejecución. El archivo usa una sección <code>[strings]</code> con entradas numeradas, donde cada valor contiene traducciones separadas por pipes.</p>
+<h2 id="fwloadstrings">FWLoadStrings() - Loading Custom Translations</h2>
+<p>You can load additional translations from an INI file at runtime. The file uses a <code>[strings]</code> section with numbered entries, where each value contains pipe-separated translations.</p>
 
-<h3>Formato del Archivo INI (fwstrings.ini)</h3>
+<h3>INI File Format (fwstrings.ini)</h3>
 <pre><code class="language-ini">[strings]
 1=Customer|Cliente|Client|Cliente|Kunde|Cliente
 2=Invoice|Factura|Facture|Fatura|Rechnung|Fattura
@@ -103,7 +103,7 @@ return nil</code></pre>
 4=Total Amount|Importe Total|Montant Total|Valor Total|Gesamtbetrag|Importo Totale
 5=Due Date|Fecha Vencimiento|Date Echeance|Data Vencimento|Faelligkeitsdatum|Data Scadenza</code></pre>
 
-<h3>Ejemplo: Cargar Traducciones Personalizadas</h3>
+<h3>Example: Load Custom Translations</h3>
 <pre><code class="language-harbour">function Main()
    // Load application-specific translations
    FWLoadStrings( "c:\myapp\translations.ini" )
@@ -119,9 +119,9 @@ return nil</code></pre>
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="custom-translations">Añadir Traducciones Personalizadas Programáticamente</h2>
+<h2 id="custom-translations">Adding Custom Translations Programmatically</h2>
 
-<h3>FWAddString() - Añadir Entradas Individuales</h3>
+<h3>FWAddString() - Add Individual Entries</h3>
 <pre><code class="language-harbour">// Add a single translation (all 6 languages)
 FWAddString( { "Customer", "Cliente", "Client", "Cliente", "Kunde", "Cliente" } )
 
@@ -135,7 +135,7 @@ FWAddString( { ;
    { "Product",  "Producto", "Produit", "Produto", "Produkt", "Prodotto" } ;
 } )</code></pre>
 
-<h3>FWSetString() - Establecer Traducción para un Idioma Específico</h3>
+<h3>FWSetString() - Set Translation for Specific Language</h3>
 <pre><code class="language-harbour">// Set Spanish (language 2) translations
 FWSetString( 2, { "Customer", "Cliente" } )
 FWSetString( 2, { "Invoice",  "Factura" } )
@@ -147,7 +147,7 @@ FWSetString( 2, { ;
    { "Product",  "Producto" } ;
 } )</code></pre>
 
-<h3>FWAddLanguage() - Añadir un Idioma Completamente Nuevo</h3>
+<h3>FWAddLanguage() - Add an Entirely New Language</h3>
 <pre><code class="language-harbour">// Add Japanese as language 7
 // The array must match the order of the English strings in aStrings
 local aJapanese := { ;
@@ -164,10 +164,10 @@ FWSetString( nJapanese, { "Print", "Print" } )
 FWSetLanguage( nJapanese )   // Switch to Japanese</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="fw-setunicode">FW_SetUnicode() - Modo Unicode</h2>
-<p>Por defecto, FiveWin crea ventanas y controles usando las versiones ANSI ("A") de las funciones de la API de Windows (ej., <code>CreateWindowExA</code>). Cuando se habilita el modo Unicode con <code>FW_SetUnicode(.T.)</code>, FiveWin cambia a las funciones de la API Wide ("W") (ej., <code>CreateWindowExW</code>), permitiendo que las ventanas y controles muestren caracteres de cualquier idioma -- chino, japonés, coreano, árabe, hindi, y más.</p>
+<h2 id="fw-setunicode">FW_SetUnicode() - Unicode Mode</h2>
+<p>By default, FiveWin creates windows and controls using the ANSI ("A") versions of Windows API Funciones (e.g., <code>CreateWindowExA</code>). When you enable Unicode mode with <code>FW_SetUnicode(.T.)</code>, FiveWin switches to the Wide ("W") API Funciones (e.g., <code>CreateWindowExW</code>), allowing windows and controls to display characters from any language -- Chinese, Japanese, Korean, Arabic, Hindi, and more.</p>
 
-<h3>Cómo Afecta el Modo Unicode a FiveWin</h3>
+<h3>How Unicode Mode Affects FiveWin</h3>
 <div class="mermaid">
 graph LR
     A["FW_SetUnicode(.T.)"] --> B["Window Creation"]
@@ -180,25 +180,25 @@ graph LR
     E --> I["DialogBoxIndirectW()"]
 </div>
 
-<p>Cuando el modo Unicode está activo:</p>
+<p>When Unicode mode is active:</p>
 <ul>
-<li>Todas las nuevas ventanas y controles se crean con llamadas API de caracteres anchos (wide).</li>
-<li>El texto se maneja internamente como UTF-8 en Harbour y se convierte a UTF-16 para las llamadas a la API de Windows.</li>
-<li>Cada TWindow/TControl tiene un DATA <code>lUnicode</code> que hereda del ajuste global.</li>
-<li>TClipBoard detecta automáticamente texto UTF-8 y usa el formato CF_UNICODETEXT.</li>
-<li>Los controles SAY, campos GET, menús y cuadros de mensaje soportan texto Unicode.</li>
+<li>All new windows and controls are created with wide-character API calls.</li>
+<li>Text is internally handled as UTF-8 in Harbour and converted to UTF-16 for Windows API calls.</li>
+<li>Each TWindow/TControl has an <code>lUnicode</code> DATA that inherits from the global setting.</li>
+<li>TClipBoard auto-detects UTF-8 text and uses CF_UNICODETEXT format.</li>
+<li>SAY controls, GET fields, menus, and message boxes all support Unicode text.</li>
 </ul>
 
-<h3>Referencia de Funciones</h3>
+<h3>Function Reference</h3>
 <table>
-<thead><tr><th>Function</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Function</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>FW_SetUnicode( [lOnOff] )</code></td><td>Establece u obtiene el modo Unicode. Llamar con .T. para habilitar, .F. para deshabilitar. Llamar sin parámetro para consultar el estado actual.</td></tr>
-<tr><td><code>FW_IsUTF8( cStr )</code></td><td>Devuelve .T. si la cadena contiene secuencias multibyte UTF-8 válidas.</td></tr>
+<tr><td><code>FW_SetUnicode( [lOnOff] )</code></td><td>Sets or gets Unicode mode. Call with .T. to enable, .F. to disable. Call without parameter to query current state.</td></tr>
+<tr><td><code>FW_IsUTF8( cStr )</code></td><td>Returns .T. if the string contains valid UTF-8 multi-byte sequences.</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo: Habilitar Unicode</h3>
+<h3>Example: Enable Unicode</h3>
 <pre><code class="language-harbour">function Main()
    // Enable Unicode BEFORE creating any windows
    FW_SetUnicode( .T. )
@@ -217,24 +217,24 @@ graph LR
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="utf8-functions">Funciones Utilitarias UTF-8</h2>
-<p>Al trabajar en modo Unicode, las cadenas en Harbour se almacenan como UTF-8. FiveWin proporciona funciones auxiliares para la manipulación de cadenas UTF-8 que manejan correctamente los caracteres multibyte.</p>
+<h2 id="utf8-Funciones">UTF-8 Utility Funciones</h2>
+<p>When working in Unicode mode, strings in Harbour are stored as UTF-8. FiveWin provides helper Funciones for UTF-8 string manipulation that correctly handle multi-byte characters.</p>
 
-<h3>Funciones de Cadenas UTF-8</h3>
+<h3>UTF-8 String Funciones</h3>
 <table>
-<thead><tr><th>Function</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Function</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>FW_UTF8LEFT( cStr, nLeft )</code></td><td>Devuelve los nLeft <em>caracteres</em> más a la izquierda (no bytes) de una cadena UTF-8.</td></tr>
-<tr><td><code>FW_UTF8RIGHT( cStr, nLen )</code></td><td>Devuelve los nLen caracteres más a la derecha de una cadena UTF-8.</td></tr>
-<tr><td><code>FW_UTF8SUBSTR( cStr, nPos, nLen )</code></td><td>Extrae una subcadena por posición de carácter (no posición de byte).</td></tr>
-<tr><td><code>FW_UTF8STUFF( cSrc, nPos, nDelete, cInsert )</code></td><td>Inserta/reemplaza caracteres en una cadena UTF-8 por posición de carácter.</td></tr>
-<tr><td><code>FW_UTF8PADCHAR( cStr, nChars )</code></td><td>Rellena una cadena UTF-8 hasta nChars caracteres.</td></tr>
-<tr><td><code>FW_UTF8PADBYTE( cText, nBytes )</code></td><td>Rellena una cadena UTF-8 hasta nBytes bytes totales.</td></tr>
+<tr><td><code>FW_UTF8LEFT( cStr, nLeft )</code></td><td>Returns leftmost nLeft <em>characters</em> (not bytes) from a UTF-8 string.</td></tr>
+<tr><td><code>FW_UTF8RIGHT( cStr, nLen )</code></td><td>Returns rightmost nLen characters from a UTF-8 string.</td></tr>
+<tr><td><code>FW_UTF8SUBSTR( cStr, nPos, nLen )</code></td><td>Extracts a substring by character position (not byte position).</td></tr>
+<tr><td><code>FW_UTF8STUFF( cSrc, nPos, nDelete, cInsert )</code></td><td>Inserts/replaces characters in a UTF-8 string by character position.</td></tr>
+<tr><td><code>FW_UTF8PADCHAR( cStr, nChars )</code></td><td>Pads a UTF-8 string to nChars characters.</td></tr>
+<tr><td><code>FW_UTF8PADBYTE( cText, nBytes )</code></td><td>Pads a UTF-8 string to nBytes total bytes.</td></tr>
 </tbody>
 </table>
 
-<h3>Por Qué Se Necesitan las Funciones UTF-8</h3>
-<p>Las funciones estándar de cadenas de Harbour (Left, Right, SubStr, Len) operan sobre bytes, no sobre caracteres. Un solo carácter Unicode en UTF-8 puede ocupar de 1 a 4 bytes. Usar <code>Left( cUTF8, 3 )</code> podría cortar un carácter multibyte por la mitad, produciendo texto ilegible. Use <code>FW_UTF8LEFT( cUTF8, 3 )</code> en su lugar para obtener exactamente 3 caracteres independientemente de la longitud en bytes.</p>
+<h3>Why UTF-8 Funciones Are Needed</h3>
+<p>Standard Harbour string Funciones (Left, Right, SubStr, Len) operate on bytes, not characters. A single Unicode character in UTF-8 can be 1-4 bytes. Using <code>Left( cUTF8, 3 )</code> might cut a multi-byte character in half, producing garbled text. Use <code>FW_UTF8LEFT( cUTF8, 3 )</code> instead to get exactly 3 characters regardless of byte length.</p>
 
 <pre><code class="language-harbour">// Example: UTF-8 character-safe operations
 local cText := "Hello"  // Mixed ASCII + multi-byte
@@ -248,16 +248,16 @@ local cLast  := FW_UTF8RIGHT( cText, 2 )
 local cMid   := FW_UTF8SUBSTR( cText, 2, 3 )</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="encoding">Codificación OEM vs ANSI vs UTF-8</h2>
-<p>Comprender los tres sistemas de codificación es fundamental para la correcta visualización de texto en aplicaciones FiveWin, especialmente al mezclar salida de consola, interfaz gráfica de Windows y E/S de archivos.</p>
+<h2 id="encoding">OEM vs ANSI vs UTF-8 Encoding</h2>
+<p>Understanding the three encoding systems is critical for correct text display in FiveWin applications, especially when mixing console output, Windows GUI, and file I/O.</p>
 
-<h3>Resumen de Codificaciones</h3>
+<h3>Encoding Overview</h3>
 <table>
-<thead><tr><th>Codificación</th><th>Cuándo Se Usa</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Encoding</th><th>When Used</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><strong>OEM (DOS)</strong></td><td>Salida de consola, archivos DBF, datos heredados</td><td>El juego de caracteres original del IBM PC (CP437, CP850, etc.). Los caracteres por encima de 127 son caracteres de dibujo de líneas y acentuados específicos de la página de códigos.</td></tr>
-<tr><td><strong>ANSI (Windows)</strong></td><td>Controles de Windows, funciones API "A"</td><td>Windows-1252 o página de códigos específica del locale. Los caracteres por encima de 127 incluyen letras acentuadas para idiomas de Europa occidental.</td></tr>
-<tr><td><strong>UTF-8</strong></td><td>Modo Unicode, datos modernos, web/JSON</td><td>Codificación de longitud variable (1-4 bytes por carácter). Compatible con ASCII para caracteres 0-127. Se usa con funciones API "W" (convertido a UTF-16).</td></tr>
+<tr><td><strong>OEM (DOS)</strong></td><td>Console output, DBF files, legacy data</td><td>The original IBM PC character set (CP437, CP850, etc.). Characters above 127 are line-drawing and accented characters specific to the codepage.</td></tr>
+<tr><td><strong>ANSI (Windows)</strong></td><td>Windows controls, "A" API Funciones</td><td>Windows-1252 or locale-specific codepage. Characters above 127 include accented letters for Western European languages.</td></tr>
+<tr><td><strong>UTF-8</strong></td><td>Unicode mode, modern data, web/JSON</td><td>Variable-length encoding (1-4 bytes per character). ASCII-compatible for chars 0-127. Used with "W" API Funciones (converted to UTF-16).</td></tr>
 </tbody>
 </table>
 
@@ -273,28 +273,28 @@ graph TD
     E -->|"UTF8ToAnsi() or hb_UTF8ToStr()"| D
 </div>
 
-<h3>Funciones de Conversión</h3>
+<h3>Conversion Funciones</h3>
 <table>
-<thead><tr><th>Función</th><th>Desde</th><th>Hacia</th><th>Notas</th></tr></thead>
+<thead><tr><th>Function</th><th>From</th><th>To</th><th>Notes</th></tr></thead>
 <tbody>
-<tr><td><code>hb_oemToAnsi( cStr )</code></td><td>OEM</td><td>ANSI</td><td>Integrada en Harbour. Convierte datos DOS/DBF para visualización en Windows.</td></tr>
-<tr><td><code>hb_AnsiToOem( cStr )</code></td><td>ANSI</td><td>OEM</td><td>Integrada en Harbour. Convierte texto de Windows para almacenamiento en DBF.</td></tr>
-<tr><td><code>hb_StrToUTF8( cStr )</code></td><td>ANSI</td><td>UTF-8</td><td>Integrada en Harbour. Para pasar texto ANSI a contextos UTF-8.</td></tr>
-<tr><td><code>hb_UTF8ToStr( cStr )</code></td><td>UTF-8</td><td>ANSI</td><td>Integrada en Harbour. Puede perder caracteres que no estén en la página de códigos ANSI.</td></tr>
-<tr><td><code>utf8toutf16( cStr )</code></td><td>UTF-8</td><td>UTF-16LE</td><td>Para llamadas API "W" de Windows. Usado internamente por el modo Unicode de FiveWin.</td></tr>
+<tr><td><code>hb_oemToAnsi( cStr )</code></td><td>OEM</td><td>ANSI</td><td>Harbour built-in. Converts DOS/DBF data for Windows display.</td></tr>
+<tr><td><code>hb_AnsiToOem( cStr )</code></td><td>ANSI</td><td>OEM</td><td>Harbour built-in. Converts Windows text for DBF storage.</td></tr>
+<tr><td><code>hb_StrToUTF8( cStr )</code></td><td>ANSI</td><td>UTF-8</td><td>Harbour built-in. For passing ANSI text to UTF-8 contexts.</td></tr>
+<tr><td><code>hb_UTF8ToStr( cStr )</code></td><td>UTF-8</td><td>ANSI</td><td>Harbour built-in. May lose characters not in the ANSI codepage.</td></tr>
+<tr><td><code>utf8toutf16( cStr )</code></td><td>UTF-8</td><td>UTF-16LE</td><td>For Windows "W" API calls. Used internally by FiveWin Unicode mode.</td></tr>
 </tbody>
 </table>
 
-<h3>Cuándo Usar Cada Codificación</h3>
+<h3>When to Use Which Encoding</h3>
 <ul>
-<li><strong>Lectura de archivos DBF:</strong> Los datos típicamente están codificados en OEM. Si se muestran en un control SAY o GET en modo no Unicode, use <code>hb_oemToAnsi()</code>. En modo Unicode, convierta mediante <code>hb_oemToAnsi()</code> y luego <code>hb_StrToUTF8()</code>.</li>
-<li><strong>Visualización en controles de Windows:</strong> En modo ANSI (por defecto), los controles esperan cadenas ANSI. En modo Unicode (<code>FW_SetUnicode(.T.)</code>), los controles aceptan UTF-8 que FiveWin convierte a UTF-16 internamente.</li>
-<li><strong>API REST / datos JSON:</strong> Siempre UTF-8. Si se muestra en FiveWin sin Unicode, convierta primero a ANSI. En modo Unicode, use directamente.</li>
-<li><strong>MsgInfo / MsgAlert:</strong> Estos usan el ajuste Unicode de la ventana. En modo Unicode, pase cadenas UTF-8. En modo ANSI, pase cadenas ANSI.</li>
-<li><strong>Escritura en archivos:</strong> Elija la codificación según el destino: OEM para compatibilidad con DBF, UTF-8 para intercambio moderno, ANSI para archivos Windows heredados.</li>
+<li><strong>Reading from DBF files:</strong> Data is typically OEM-encoded. If displaying in a SAY or GET control in non-Unicode mode, use <code>hb_oemToAnsi()</code>. In Unicode mode, convert via <code>hb_oemToAnsi()</code> then <code>hb_StrToUTF8()</code>.</li>
+<li><strong>Displaying in Windows controls:</strong> In ANSI mode (default), controls expect ANSI strings. In Unicode mode (<code>FW_SetUnicode(.T.)</code>), controls accept UTF-8 which FiveWin converts to UTF-16 internally.</li>
+<li><strong>REST API / JSON data:</strong> Always UTF-8. If displaying in non-Unicode FiveWin, convert to ANSI first. In Unicode mode, use directly.</li>
+<li><strong>MsgInfo / MsgAlert:</strong> These use the window's Unicode setting. In Unicode mode, pass UTF-8 strings. In ANSI mode, pass ANSI strings.</li>
+<li><strong>Writing to files:</strong> Choose encoding based on target: OEM for DBF compatibility, UTF-8 for modern interchange, ANSI for legacy Windows files.</li>
 </ul>
 
-<h3>Consideraciones de Página de Códigos</h3>
+<h3>Codepage Considerations</h3>
 <pre><code class="language-harbour">// Set Harbour codepage for proper OEM/ANSI conversion
 REQUEST HB_CODEPAGE_ESWIN   // Spanish Windows codepage
 HB_CDPSELECT( "ESWIN" )     // Select it
@@ -308,8 +308,8 @@ REQUEST HB_LANG_ES
 HB_LANGSELECT( "ES" )</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="multilang-app">Aplicación Multiidioma Completa</h2>
-<p>Este ejemplo muestra una aplicación completa con un selector de idioma que cambia dinámicamente el idioma de la UI para todos los controles de FiveWin y cadenas personalizadas.</p>
+<h2 id="multilang-app">Complete Multi-Language Application</h2>
+<p>This example shows a complete application with a language selector that dynamically switches the UI language for all FiveWin controls and custom strings.</p>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -394,10 +394,10 @@ function RefreshUI()
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="custom-translations-file">Añadir Traducciones Personalizadas vía Archivo INI</h2>
-<p>Para aplicaciones más grandes o cuando las traducciones son gestionadas por personas que no son desarrolladores, use un archivo INI para almacenar traducciones que se cargan al inicio.</p>
+<h2 id="custom-translations-file">Adding Custom Translations via INI File</h2>
+<p>For larger applications or when translations are managed by non-developers, use an INI file to store translations that are loaded at startup.</p>
 
-<h3>Paso 1: Crear el archivo de traducciones</h3>
+<h3>Step 1: Create the translations file</h3>
 <pre><code class="language-ini">; File: translations.ini
 ; Format: n=English|Spanish|French|Portuguese|German|Italian
 
@@ -413,7 +413,7 @@ return nil</code></pre>
 9=Shipping|Envio|Expedition|Envio|Versand|Spedizione
 10=Notes|Notas|Notes|Notas|Anmerkungen|Note</code></pre>
 
-<h3>Paso 2: Cargar al iniciar la aplicación</h3>
+<h3>Step 2: Load at application startup</h3>
 <pre><code class="language-harbour">function Main()
    // Load custom translations
    FWLoadStrings( cFilePath( GetModuleFileName( GetInstance() ) ) + "translations.ini" )
@@ -429,7 +429,7 @@ return nil</code></pre>
 
 return nil</code></pre>
 
-<h3>Paso 3: Guardar la preferencia de idioma cuando el usuario la cambia</h3>
+<h3>Step 3: Save language preference when user changes it</h3>
 <pre><code class="language-harbour">function ChangeLanguage( nNewLang )
    local oIni := TIni():New( "myapp.ini" )
 
@@ -442,8 +442,8 @@ return nil</code></pre>
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="missing-strings">Encontrar Traducciones Faltantes</h2>
-<p>Durante el desarrollo, use <code>FWMissingStrings()</code> para descubrir qué cadenas en su aplicación carecen de traducciones.</p>
+<h2 id="missing-strings">Finding Missing Translations</h2>
+<p>During development, use <code>FWMissingStrings()</code> to discover which strings in your application lack translations.</p>
 
 <pre><code class="language-harbour">// At the end of a test run:
 function CheckTranslations()
@@ -468,15 +468,15 @@ function CheckTranslations()
 
 return nil</code></pre>
 
-<h3>Editor Interactivo de Cadenas</h3>
+<h3>Interactive String Editor</h3>
 <pre><code class="language-harbour">// Opens an XBrowse grid with all translation strings
 // You can edit translations directly and they take effect immediately
 FWEditStrings()</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="best-practices">Mejores Prácticas</h2>
+<h2 id="best-practices">Best Practices</h2>
 
-<h3>1. Siempre use FWString() para texto visible al usuario</h3>
+<h3>1. Always use FWString() for user-visible text</h3>
 <pre><code class="language-harbour">// GOOD: translatable
 @ 1, 1 SAY FWString( "Customer" ) OF oDlg
 MsgInfo( FWString( "Record saved successfully" ) )
@@ -485,14 +485,14 @@ MsgInfo( FWString( "Record saved successfully" ) )
 @ 1, 1 SAY "Customer" OF oDlg
 MsgInfo( "Record saved successfully" )</code></pre>
 
-<h3>2. Habilitar Unicode temprano</h3>
+<h3>2. Enable Unicode early</h3>
 <pre><code class="language-harbour">// Call FW_SetUnicode(.T.) BEFORE creating any windows
 function Main()
    FW_SetUnicode( .T. )  // First thing!
    // ... create windows after this
 return nil</code></pre>
 
-<h3>3. Usar la página de códigos correcta para sus datos</h3>
+<h3>3. Use correct codepage for your data</h3>
 <pre><code class="language-harbour">// For applications using DBF with accented characters:
 REQUEST HB_CODEPAGE_ESWIN
 HB_CDPSELECT( "ESWIN" )
@@ -500,7 +500,7 @@ HB_CDPSELECT( "ESWIN" )
 // For UTF-8 data (JSON, REST APIs, modern databases):
 FW_SetUnicode( .T. )</code></pre>
 
-<h3>4. Manejar la codificación en los límites de datos</h3>
+<h3>4. Handle encoding at data boundaries</h3>
 <pre><code class="language-harbour">// Reading from DBF (OEM) to display in Unicode window:
 local cName := Customers->Name              // OEM encoded
 cName := hb_oemToAnsi( cName )              // Convert to ANSI
@@ -511,15 +511,15 @@ local cData := hb_jsonDecode( cResponse )    // Already UTF-8
 // In Unicode mode, display directly
 // In ANSI mode: cData := hb_UTF8ToStr( cData )</code></pre>
 
-<h3>5. Probar con escrituras no latinas</h3>
-<p>Al construir aplicaciones internacionales, pruebe con texto chino, árabe o cirílico para verificar que el modo Unicode está correctamente habilitado y que todos los controles se muestran correctamente. Preste especial atención a:</p>
+<h3>5. Test with non-Latin scripts</h3>
+<p>When building international applications, test with Chinese, Arabic, or Cyrillic text to verify that Unicode mode is properly enabled and all controls display correctly. Pay special attention to:</p>
 <ul>
-<li>Campos GET (la longitud de entrada puede diferir del ancho de visualización con caracteres multibyte)</li>
-<li>Anchos de columnas de XBrowse (el auto-dimensionamiento puede necesitar ajustes)</li>
-<li>Salida de impresora (asegúrese de que la fuente seleccionada soporte los caracteres requeridos)</li>
-<li>E/S de archivos (guarde como UTF-8, no ANSI, si los datos contienen caracteres no latinos)</li>
+<li>GET fields (input length may differ from display width with multi-byte characters)</li>
+<li>XBrowse column widths (auto-size may need adjustment)</li>
+<li>Printer output (ensure the selected font supports the required characters)</li>
+<li>File I/O (save as UTF-8, not ANSI, if the data contains non-Latin characters)</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

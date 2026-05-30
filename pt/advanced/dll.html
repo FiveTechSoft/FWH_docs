@@ -1,45 +1,45 @@
-﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DLL &amp; Chamadas à API do Windows - Documentação FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DLL &amp; Windows API Calls - Documentação FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>DLL &amp; Chamadas à API do Windows</h1>
-<p>O FiveWin e o Harbour fornecem múltiplos mecanismos para chamar funções da API do Windows e DLLs externas diretamente do seu código PRG. Isso vai desde os wrappers nativos do FiveWin para chamadas de API comuns, passando pelo suporte a chamadas de DLL do Harbour, até código C inline via <code>#pragma BEGINDUMP</code>. Esta página cobre todas as abordagens com exemplos práticos.</p>
+<h1>DLL &amp; Windows API Calls</h1>
+<p>FiveWin and Harbour provide multiple mechanisms for calling Windows API Funções and external DLLs directly from your PRG code. This ranges from FiveWin's built-in wrappers for common API calls, to Harbour's DLL calling support, to inline C code via <code>#pragma BEGINDUMP</code>. This page covers all approaches with practical examples.</p>
 
 <div class="mermaid">
 graph TD
-    A[Código PRG Harbour] --> B{Chamando Código Externo}
-    B --> C[Wrappers de API do FiveWin]
-    B --> D[Comando DLL32 FUNCTION]
+    A[Harbour PRG Code] --> B{Calling External Code}
+    B --> C[FiveWin API Wrappers]
+    B --> D[DLL32 FUNCTION Command]
     B --> E["#pragma BEGINDUMP"]
-    C --> F[API do Windows - user32, kernel32, gdi32]
-    D --> G[Qualquer DLL Externa]
-    E --> H[Código C Inline]
+    C --> F[Windows API - user32, kernel32, gdi32]
+    D --> G[Any External DLL]
+    E --> H[Inline C Code]
     H --> I["hb_retni(), hb_parc(), etc."]
-    H --> J[Chamadas diretas à API do Windows]
-    H --> K[Bibliotecas C personalizadas]
+    H --> J[Direct Windows API calls]
+    H --> K[Custom C libraries]
 </div>
 
 <!-- ================================================================ -->
-<h2 id="fivewin-wrappers">Wrappers de API do FiveWin</h2>
-<p>O FiveWin encapsula previamente centenas de funções da API do Windows para que você possa chamá-las diretamente do código PRG sem nenhuma declaração de DLL ou código C. Estas são implementadas como funções C HB_FUNC() dentro dos arquivos-fonte do FiveWin (em <code>source\winapi\</code> e <code>source\internal\</code>).</p>
+<h2 id="fivewin-wrappers">FiveWin API Wrappers</h2>
+<p>FiveWin pre-wraps hundreds of Windows API Funções so you can call them directly from PRG code without any DLL declaration or C code. These are implemented as HB_FUNC() C Funções inside FiveWin's source files (in <code>source\winapi\</code> and <code>source\internal\</code>).</p>
 
-<h3>Funções Comuns da API do Windows Disponíveis no FiveWin</h3>
+<h3>Common Windows API Funções Available in FiveWin</h3>
 <table>
-<thead><tr><th>Categoria</th><th>Funções</th></tr></thead>
+<thead><tr><th>Category</th><th>Funções</th></tr></thead>
 <tbody>
-<tr><td>Gerenciamento de Janelas</td><td><code>CreateWindow()</code>, <code>ShowWindow()</code>, <code>MoveWindow()</code>, <code>SetWindowText()</code>, <code>GetWindowText()</code>, <code>DestroyWindow()</code>, <code>IsWindow()</code>, <code>GetActiveWindow()</code>, <code>SetFocus()</code></td></tr>
-<tr><td>Caixas de Mensagem</td><td><code>MsgInfo()</code>, <code>MsgAlert()</code>, <code>MsgYesNo()</code>, <code>MsgStop()</code>, <code>MsgNoYes()</code>, <code>MsgGet()</code>, <code>MsgBeep()</code></td></tr>
-<tr><td>Desenho GDI</td><td><code>GetDC()</code>, <code>ReleaseDC()</code>, <code>CreatePen()</code>, <code>CreateSolidBrush()</code>, <code>SelectObject()</code>, <code>DeleteObject()</code>, <code>LineTo()</code>, <code>Rectangle()</code>, <code>Ellipse()</code>, <code>SetPixel()</code></td></tr>
-<tr><td>Sistema de Arquivos</td><td><code>GetModuleFileName()</code>, <code>GetTempPath()</code>, <code>GetWindowsDir()</code>, <code>GetSystemDir()</code>, <code>GetDiskFreeSpace()</code></td></tr>
-<tr><td>Informações do Sistema</td><td><code>GetSystemMetrics()</code>, <code>GetVersionEx()</code>, <code>GetComputerName()</code>, <code>GetUserName()</code>, <code>IsWow64()</code></td></tr>
-<tr><td>Registro</td><td><code>RegOpenKeyEx()</code>, <code>RegCloseKey()</code>, <code>RegCreateKey()</code>, <code>RegDeleteKey()</code></td></tr>
-<tr><td>Área de Transferência</td><td><code>OpenClipboard()</code>, <code>CloseClipboard()</code>, <code>SetClipboardData()</code>, <code>GetClpData()</code>, <code>EmptyClipboard()</code></td></tr>
-<tr><td>Processo</td><td><code>GetInstance()</code>, <code>ShellExecute()</code>, <code>WinExec()</code>, <code>ExitProcess()</code>, <code>Sleep()</code></td></tr>
+<tr><td>Window Management</td><td><code>CreateWindow()</code>, <code>ShowWindow()</code>, <code>MoveWindow()</code>, <code>SetWindowText()</code>, <code>GetWindowText()</code>, <code>DestroyWindow()</code>, <code>IsWindow()</code>, <code>GetActiveWindow()</code>, <code>SetFocus()</code></td></tr>
+<tr><td>Message Boxes</td><td><code>MsgInfo()</code>, <code>MsgAlert()</code>, <code>MsgYesNo()</code>, <code>MsgStop()</code>, <code>MsgNoYes()</code>, <code>MsgGet()</code>, <code>MsgBeep()</code></td></tr>
+<tr><td>GDI Drawing</td><td><code>GetDC()</code>, <code>ReleaseDC()</code>, <code>CreatePen()</code>, <code>CreateSolidBrush()</code>, <code>SelectObject()</code>, <code>DeleteObject()</code>, <code>LineTo()</code>, <code>Rectangle()</code>, <code>Ellipse()</code>, <code>SetPixel()</code></td></tr>
+<tr><td>File System</td><td><code>GetModuleFileName()</code>, <code>GetTempPath()</code>, <code>GetWindowsDir()</code>, <code>GetSystemDir()</code>, <code>GetDiskFreeSpace()</code></td></tr>
+<tr><td>System Info</td><td><code>GetSystemMetrics()</code>, <code>GetVersionEx()</code>, <code>GetComputerName()</code>, <code>GetUserName()</code>, <code>IsWow64()</code></td></tr>
+<tr><td>Registry</td><td><code>RegOpenKeyEx()</code>, <code>RegCloseKey()</code>, <code>RegCreateKey()</code>, <code>RegDeleteKey()</code></td></tr>
+<tr><td>Clipboard</td><td><code>OpenClipboard()</code>, <code>CloseClipboard()</code>, <code>SetClipboardData()</code>, <code>GetClpData()</code>, <code>EmptyClipboard()</code></td></tr>
+<tr><td>Process</td><td><code>GetInstance()</code>, <code>ShellExecute()</code>, <code>WinExec()</code>, <code>ExitProcess()</code>, <code>Sleep()</code></td></tr>
 <tr><td>Timer</td><td><code>SetTimer()</code>, <code>KillTimer()</code></td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Usando Wrappers de API do FiveWin</h3>
+<h3>Example: Using FiveWin API Wrappers</h3>
 <pre><code class="language-harbour">function SystemInfo()
    ? "Computer:", GetComputerName()
    ? "User:", GetUserName()
@@ -58,10 +58,10 @@ function LaunchApp()
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="dll-command">Chamada de Funções de DLL</h2>
-<p>O FiveWin fornece o comando <code>DLL FUNCTION</code> (de <code>DLL.ch</code>) para declarar e chamar funções de qualquer DLL externa em tempo de execução. Isso usa o mecanismo interno de chamada de DLL do FiveWin que trata a serialização de parâmetros entre as convenções de chamada do Harbour e do C.</p>
+<h2 id="dll-command">DLL Function Calling</h2>
+<p>FiveWin provides the <code>DLL FUNCTION</code> command (from <code>DLL.ch</code>) to declare and call Funções from any external DLL at runtime. This uses FiveWin's internal DLL calling engine that handles parameter marshaling between Harbour and C calling conventions.</p>
 
-<h3>Sintaxe do Comando DLL.ch</h3>
+<h3>DLL.ch Command Syntax</h3>
 <pre><code class="language-harbour">#include "DLL.ch"
 
 // Declare a DLL function
@@ -73,7 +73,7 @@ DLL FUNCTION &lt;FuncName&gt;( [&lt;Params,...&gt;] ) AS &lt;ReturnType&gt; ;
 // Return types: LONG, DWORD, BOOL, LPSTR, VOID, DOUBLE, WORD, BYTE
 // Parameter types: passed by value or by reference (@)</code></pre>
 
-<h3>Exemplo: Chamar MessageBoxA de user32.dll</h3>
+<h3>Example: Call MessageBoxA from user32.dll</h3>
 <pre><code class="language-harbour">#include "DLL.ch"
 
 // Declare the function
@@ -95,7 +95,7 @@ function TestMsgBox()
 
 return nil</code></pre>
 
-<h3>Exemplo: Chamar GetSystemMetrics</h3>
+<h3>Example: Call GetSystemMetrics</h3>
 <pre><code class="language-harbour">#include "DLL.ch"
 
 DLL FUNCTION GetSysMetrics( nIndex AS LONG ) AS LONG ;
@@ -114,7 +114,7 @@ function ScreenInfo()
 
 return nil</code></pre>
 
-<h3>Exemplo: Chamar uma DLL Personalizada</h3>
+<h3>Example: Call a Custom DLL</h3>
 <pre><code class="language-harbour">#include "DLL.ch"
 
 // Loading DLL handle first for multiple calls
@@ -126,7 +126,7 @@ function UseCustomDLL()
       return nil
    endif
 
-   // Declare functions using the handle
+   // Declare Funções using the handle
    DLL FUNCTION CalcSum( n1 AS LONG, n2 AS LONG ) AS LONG ;
       PASCAL FROM "CalcSum" LIB hDll
 
@@ -140,7 +140,7 @@ function UseCustomDLL()
 
 return nil</code></pre>
 
-<h3>Exemplo: Chamar Função de DLL com Saída de String</h3>
+<h3>Example: Call DLL Function with String Output</h3>
 <pre><code class="language-harbour">#include "DLL.ch"
 
 DLL FUNCTION GetTempPathA( nBufferLen AS DWORD, @cBuffer AS LPSTR ) AS DWORD ;
@@ -158,62 +158,62 @@ function GetTemp()
 return nil</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="pragma-begindump">Código C Inline com #pragma BEGINDUMP</h2>
-<p>O <code>#pragma BEGINDUMP / ENDDUMP</code> do Harbour permite incorporar código C diretamente nos seus arquivos PRG. O código C é compilado pelo compilador C (BCC32, MSVC, MinGW) durante o processo de build. Esta é a abordagem mais poderosa e flexível para interface com APIs do Windows, criação de funções críticas em desempenho, ou encapsulamento de bibliotecas C.</p>
+<h2 id="pragma-begindump">Inline C Code with #pragma BEGINDUMP</h2>
+<p>Harbour's <code>#pragma BEGINDUMP / ENDDUMP</code> allows embedding C code directly in your PRG files. The C code is compiled by the C compiler (BCC32, MSVC, MinGW) during the build process. This is the most powerful and flexible approach for interfacing with Windows APIs, creating performance-critical Funções, or wrapping C libraries.</p>
 
 <div class="mermaid">
 sequenceDiagram
-    participant PRG as Código PRG
-    participant HRB as Compilador Harbour
-    participant C as Compilador C
+    participant PRG as PRG Code
+    participant HRB as Harbour Compiler
+    participant C as C Compiler
     participant Link as Linker
-    PRG->>HRB: Compilar .prg para .c
-    Note over HRB: Seções #pragma BEGINDUMP<br/>copiadas literalmente para a saída .c
-    HRB->>C: Arquivo .c de saída
-    C->>Link: Compilar para .obj
-    Link->>Link: Linkar com funções de hbapi.h
+    PRG->>HRB: Compile .prg to .c
+    Note over HRB: #pragma BEGINDUMP sections<br/>copied verbatim to .c output
+    HRB->>C: Output .c file
+    C->>Link: Compile to .obj
+    Link->>Link: Link with hbapi.h Funções
 </div>
 
-<h3>Como Funciona</h3>
-<p>Quando o compilador Harbour encontra <code>#pragma BEGINDUMP</code>, ele para de traduzir código PRG e copia tudo literalmente para o arquivo C de saída até encontrar <code>#pragma ENDDUMP</code>. Isso permite que você escreva funções C que podem ser chamadas do PRG usando a macro <code>HB_FUNC()</code>.</p>
+<h3>How It Works</h3>
+<p>When the Harbour compiler encounters <code>#pragma BEGINDUMP</code>, it stops translating PRG code and copies everything verbatim to the output C file until it sees <code>#pragma ENDDUMP</code>. This allows you to write C Funções that are callable from PRG using the <code>HB_FUNC()</code> macro.</p>
 
-<h3>Funções-Chave da API do Harbour (hbapi.h)</h3>
+<h3>Key Harbour API Funções (hbapi.h)</h3>
 <table>
-<thead><tr><th>Função C</th><th>Descrição</th></tr></thead>
+<thead><tr><th>C Function</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td colspan="2"><strong>Obtendo Parâmetros (do PRG para o C)</strong></td></tr>
-<tr><td><code>hb_parc( n )</code></td><td>Obtém o parâmetro n como string C (char*)</td></tr>
-<tr><td><code>hb_parni( n )</code></td><td>Obtém o parâmetro n como int</td></tr>
-<tr><td><code>hb_parnl( n )</code></td><td>Obtém o parâmetro n como long</td></tr>
-<tr><td><code>hb_parnd( n )</code></td><td>Obtém o parâmetro n como double</td></tr>
-<tr><td><code>hb_parl( n )</code></td><td>Obtém o parâmetro n como BOOL (lógico)</td></tr>
-<tr><td><code>hb_parclen( n )</code></td><td>Obtém o comprimento do parâmetro string</td></tr>
-<tr><td><code>hb_pcount()</code></td><td>Número de parâmetros passados</td></tr>
-<tr><td><code>hb_parptr( n )</code></td><td>Obtém o parâmetro n como ponteiro void</td></tr>
-<tr><td colspan="2"><strong>Retornando Valores (do C para o PRG)</strong></td></tr>
-<tr><td><code>hb_retc( str )</code></td><td>Retorna uma string C</td></tr>
-<tr><td><code>hb_retclen( str, len )</code></td><td>Retorna uma string de comprimento especificado</td></tr>
-<tr><td><code>hb_retni( n )</code></td><td>Retorna um int</td></tr>
-<tr><td><code>hb_retnl( n )</code></td><td>Retorna um long</td></tr>
-<tr><td><code>hb_retnd( d )</code></td><td>Retorna um double</td></tr>
-<tr><td><code>hb_retl( b )</code></td><td>Retorna um lógico (.T./.F.)</td></tr>
-<tr><td><code>hb_retptr( p )</code></td><td>Retorna um ponteiro</td></tr>
-<tr><td><code>hb_ret()</code></td><td>Retorna NIL</td></tr>
-<tr><td colspan="2"><strong>Armazenando Resultados em Parâmetros por Referência</strong></td></tr>
-<tr><td><code>hb_storc( str, n )</code></td><td>Armazena string no parâmetro n (passado por @)</td></tr>
-<tr><td><code>hb_stornl( val, n )</code></td><td>Armazena long no parâmetro n</td></tr>
-<tr><td><code>hb_storni( val, n )</code></td><td>Armazena int no parâmetro n</td></tr>
-<tr><td><code>hb_storl( val, n )</code></td><td>Armazena lógico no parâmetro n</td></tr>
-<tr><td colspan="2"><strong>Verificação de Tipo</strong></td></tr>
-<tr><td><code>HB_ISCHAR( n )</code></td><td>O parâmetro n é uma string?</td></tr>
-<tr><td><code>HB_ISNUM( n )</code></td><td>O parâmetro n é numérico?</td></tr>
-<tr><td><code>HB_ISLOG( n )</code></td><td>O parâmetro n é lógico?</td></tr>
-<tr><td><code>HB_ISNIL( n )</code></td><td>O parâmetro n é NIL?</td></tr>
-<tr><td><code>HB_ISARRAY( n )</code></td><td>O parâmetro n é um array?</td></tr>
+<tr><td colspan="2"><strong>Getting Parameters (from PRG to C)</strong></td></tr>
+<tr><td><code>hb_parc( n )</code></td><td>Get parameter n as C string (char*)</td></tr>
+<tr><td><code>hb_parni( n )</code></td><td>Get parameter n as int</td></tr>
+<tr><td><code>hb_parnl( n )</code></td><td>Get parameter n as long</td></tr>
+<tr><td><code>hb_parnd( n )</code></td><td>Get parameter n as double</td></tr>
+<tr><td><code>hb_parl( n )</code></td><td>Get parameter n as BOOL (logical)</td></tr>
+<tr><td><code>hb_parclen( n )</code></td><td>Get string parameter length</td></tr>
+<tr><td><code>hb_pcount()</code></td><td>Number of parameters passed</td></tr>
+<tr><td><code>hb_parptr( n )</code></td><td>Get parameter n as void pointer</td></tr>
+<tr><td colspan="2"><strong>Returning Values (from C to PRG)</strong></td></tr>
+<tr><td><code>hb_retc( str )</code></td><td>Return a C string</td></tr>
+<tr><td><code>hb_retclen( str, len )</code></td><td>Return a string of specified length</td></tr>
+<tr><td><code>hb_retni( n )</code></td><td>Return an int</td></tr>
+<tr><td><code>hb_retnl( n )</code></td><td>Return a long</td></tr>
+<tr><td><code>hb_retnd( d )</code></td><td>Return a double</td></tr>
+<tr><td><code>hb_retl( b )</code></td><td>Return a logical (.T./.F.)</td></tr>
+<tr><td><code>hb_retptr( p )</code></td><td>Return a pointer</td></tr>
+<tr><td><code>hb_ret()</code></td><td>Return NIL</td></tr>
+<tr><td colspan="2"><strong>Storing Results in Reference Parameters</strong></td></tr>
+<tr><td><code>hb_storc( str, n )</code></td><td>Store string in parameter n (passed by @)</td></tr>
+<tr><td><code>hb_stornl( val, n )</code></td><td>Store long in parameter n</td></tr>
+<tr><td><code>hb_storni( val, n )</code></td><td>Store int in parameter n</td></tr>
+<tr><td><code>hb_storl( val, n )</code></td><td>Store logical in parameter n</td></tr>
+<tr><td colspan="2"><strong>Type Checking</strong></td></tr>
+<tr><td><code>HB_ISCHAR( n )</code></td><td>Is parameter n a string?</td></tr>
+<tr><td><code>HB_ISNUM( n )</code></td><td>Is parameter n numeric?</td></tr>
+<tr><td><code>HB_ISLOG( n )</code></td><td>Is parameter n logical?</td></tr>
+<tr><td><code>HB_ISNIL( n )</code></td><td>Is parameter n NIL?</td></tr>
+<tr><td><code>HB_ISARRAY( n )</code></td><td>Is parameter n an array?</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: HB_FUNC Básico</h3>
+<h3>Example: Basic HB_FUNC</h3>
 <pre><code class="language-c">// myutils.prg
 
 function Main()
@@ -259,7 +259,7 @@ HB_FUNC( GETCPUCOUNT )
 
 #pragma ENDDUMP</code></pre>
 
-<h3>Exemplo: Chamar MessageBoxA Diretamente</h3>
+<h3>Example: Call MessageBoxA Directly</h3>
 <pre><code class="language-c">// msgbox_api.prg
 
 function Main()
@@ -286,7 +286,7 @@ HB_FUNC( MYMESSAGEBOX )
 
 #pragma ENDDUMP</code></pre>
 
-<h3>Exemplo: Trabalhando com Estruturas</h3>
+<h3>Example: Working with Structures</h3>
 <pre><code class="language-c">// sysinfo.prg
 
 function Main()
@@ -330,9 +330,9 @@ HB_FUNC( GETOSVERSION )
 #pragma ENDDUMP</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="advanced-patterns">Padrões Avançados</h2>
+<h2 id="advanced-patterns">Advanced Patterns</h2>
 
-<h3>Passando Arrays Entre PRG e C</h3>
+<h3>Passing Arrays Between PRG and C</h3>
 <pre><code class="language-c">// arrays.prg
 
 function Main()
@@ -363,7 +363,7 @@ HB_FUNC( ARRAYSUM )
 
 #pragma ENDDUMP</code></pre>
 
-<h3>Funções de Callback (Procedimentos de Janela)</h3>
+<h3>Callback Funções (Window Procedures)</h3>
 <pre><code class="language-c">// Custom window subclassing from C
 #pragma BEGINDUMP
 
@@ -407,8 +407,8 @@ HB_FUNC( UNSUBCLASSWINDOW )
 #pragma ENDDUMP</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="linking">Linkando com Bibliotecas Externas</h2>
-<p>Quando seu código C chama funções de bibliotecas externas, você precisa linkar essas bibliotecas no seu script de build.</p>
+<h2 id="linking">Linking with External Libraries</h2>
+<p>When your C code calls Funções from external libraries, you need to link those libraries in your build script.</p>
 
 <h3>Borland C++ (BCC32)</h3>
 <pre><code class="language-batch">REM In your buildh.bat or b32.bat, add import libraries:
@@ -420,41 +420,41 @@ ilink32 myapp.obj, myapp.exe, , FiveHC.lib hbvm.lib ... ws2_32.lib wininet.lib</
 cl /c myapp.c
 link myapp.obj FiveH64.lib ... ws2_32.lib wininet.lib /OUT:myapp.exe</code></pre>
 
-<h3>Dicas para #pragma BEGINDUMP</h3>
+<h3>Tips for #pragma BEGINDUMP</h3>
 <ul>
-<li>Sempre inclua <code>&lt;hbapi.h&gt;</code> para a macro HB_FUNC e funções de parâmetros.</li>
-<li>Inclua <code>&lt;hbapiitm.h&gt;</code> para manipulação de itens do Harbour (arrays, hashes).</li>
-<li>Inclua <code>&lt;hbapierr.h&gt;</code> para tratamento de erros a partir do código C.</li>
-<li>Inclua <code>&lt;windows.h&gt;</code> para tipos e funções da API do Windows.</li>
-<li>Use <code>hb_xgrab()</code>/<code>hb_xfree()</code> para alocação de memória gerenciada pelo Harbour.</li>
-<li>Nomes de funções em <code>HB_FUNC()</code> devem ser em MAIÚSCULAS -- eles mapeiam para nomes de funções PRG em maiúsculas.</li>
-<li>Para builds 64-bit, use <code>hb_parnll()</code>/<code>hb_retnll()</code> para valores do tamanho de ponteiros, e faça cast de handles para <code>HB_PTRUINT</code>.</li>
-<li>Evite suposições de ponteiros 32-bit em código 64-bit: sempre use <code>( HWND ) hb_parnll()</code> em vez de <code>( HWND ) hb_parnl()</code> para handles.</li>
+<li>Always include <code>&lt;hbapi.h&gt;</code> for the HB_FUNC macro and parameter Funções.</li>
+<li>Include <code>&lt;hbapiitm.h&gt;</code> for Harbour item manipulation (arrays, hashes).</li>
+<li>Include <code>&lt;hbapierr.h&gt;</code> for error handling from C code.</li>
+<li>Include <code>&lt;windows.h&gt;</code> for Windows API types and Funções.</li>
+<li>Use <code>hb_xgrab()</code>/<code>hb_xfree()</code> for Harbour-managed memory allocation.</li>
+<li>Function names in <code>HB_FUNC()</code> must be UPPERCASE -- they map to uppercase PRG function names.</li>
+<li>For 64-bit builds, use <code>hb_parnll()</code>/<code>hb_retnll()</code> for pointer-sized values, and cast handles to <code>HB_PTRUINT</code>.</li>
+<li>Avoid mixing 32-bit pointer assumptions in 64-bit code: always use <code>( HWND ) hb_parnll()</code> instead of <code>( HWND ) hb_parnl()</code> for handles.</li>
 </ul>
 
 <!-- ================================================================ -->
-<h2 id="comparison">Comparação das Abordagens</h2>
+<h2 id="comparison">Comparison of Approaches</h2>
 <table>
-<thead><tr><th>Abordagem</th><th>Melhor Para</th><th>Prós</th><th>Contras</th></tr></thead>
+<thead><tr><th>Approach</th><th>Best For</th><th>Pros</th><th>Cons</th></tr></thead>
 <tbody>
-<tr><td>Wrappers do FiveWin</td><td>APIs comuns do Windows</td><td>Mais fácil de usar, já disponível, bem testado</td><td>Limitado ao que o FiveWin encapsula</td></tr>
-<tr><td>DLL FUNCTION</td><td>DLLs de terceiros, carregamento em tempo de execução</td><td>Não precisa de compilador C, carregamento dinâmico</td><td>Suporte limitado de tipos, overhead em tempo de execução</td></tr>
-<tr><td>#pragma BEGINDUMP</td><td>Código C personalizado, APIs complexas, desempenho</td><td>Todo o poder do C, binding em tempo de compilação, melhor desempenho</td><td>Requer compilador C, mais complexo</td></tr>
+<tr><td>FiveWin Wrappers</td><td>Common Windows APIs</td><td>Easiest to use, already available, well-tested</td><td>Limited to what FiveWin wraps</td></tr>
+<tr><td>DLL FUNCTION</td><td>Third-party DLLs, runtime loading</td><td>No C compiler needed, dynamic loading</td><td>Limited type support, runtime overhead</td></tr>
+<tr><td>#pragma BEGINDUMP</td><td>Custom C code, complex APIs, performance</td><td>Full C power, compile-time binding, best performance</td><td>Requires C compiler, more complex</td></tr>
 </tbody>
 </table>
 
-<h3>Guia de Decisão</h3>
+<h3>Decision Guide</h3>
 <div class="mermaid">
 graph TD
-    A{Precisa chamar código externo?} -->|API Win comum| B[Use wrapper do FiveWin]
-    A -->|DLL de terceiros em tempo de execução| C[Use DLL FUNCTION]
-    A -->|Lógica C personalizada / desempenho| D["Use #pragma BEGINDUMP"]
-    A -->|Struct/callback complexo| D
-    B --> E[Apenas chame a função diretamente]
-    C --> F[Declare com DLL.ch e chame]
-    D --> G[Escreva HB_FUNC no bloco C]
+    A{Need to call external code?} -->|Common Win API| B[Use FiveWin wrapper]
+    A -->|Third-party DLL at runtime| C[Use DLL FUNCTION]
+    A -->|Custom C logic / performance| D["Use #pragma BEGINDUMP"]
+    A -->|Complex struct/callback| D
+    B --> E[Just call the function directly]
+    C --> F[Declare with DLL.ch and call]
+    D --> G[Write HB_FUNC in C block]
 </div>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

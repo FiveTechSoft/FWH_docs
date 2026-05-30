@@ -15,12 +15,12 @@
 <p class="class-source">Fonte: <code>source/classes/topenai.prg</code> (TOpenAI), <code>source/classes/chatgpt.prg</code> (TChatGPT)</p>
 
 <p>
-O FiveWin fornece duas classes para integração com a API da OpenAI: <strong>TOpenAI</strong> (completa,
-com visão, streaming e suporte a imagens) e <strong>TChatGPT</strong> (wrapper mais simples para completações
-de chat básicas). Ambas usam a biblioteca <code>hb_curl</code> do Harbour para comunicação HTTPS.
+FiveWin provides two classes for integrating with the OpenAI API: <strong>TOpenAI</strong> (full-featured
+with vision, streaming, and image support) and <strong>TChatGPT</strong> (simpler wrapper for basic chat
+completions). Both use Harbour's <code>hb_curl</code> library for HTTPS communication.
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
@@ -47,49 +47,49 @@ flowchart LR
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cKey</code></td><td>Character</td><td><code>""</code></td><td>Chave API da OpenAI</td></tr>
-<tr><td><code>cModel</code></td><td>Character</td><td><code>"gpt-4o-mini"</code></td><td>Modelo a utilizar</td></tr>
-<tr><td><code>cPrompt</code></td><td>Character</td><td></td><td>Último prompt enviado</td></tr>
-<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Resposta JSON bruta da API</td></tr>
-<tr><td><code>cUrl</code></td><td>Character</td><td></td><td>URL do endpoint da API</td></tr>
-<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>Handle easy do libcurl</td></tr>
-<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>Código de erro curl (0 = sucesso)</td></tr>
-<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>Código de status da resposta HTTP</td></tr>
-<tr><td><code>nTemperature</code></td><td>Numeric</td><td><code>0.5</code></td><td>Temperatura de amostragem (0.0 - 2.0)</td></tr>
+<tr><td><code>cKey</code></td><td>Character</td><td><code>""</code></td><td>OpenAI API key</td></tr>
+<tr><td><code>cModel</code></td><td>Character</td><td><code>"gpt-4o-mini"</code></td><td>Model to use</td></tr>
+<tr><td><code>cPrompt</code></td><td>Character</td><td></td><td>Last prompt sent</td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Raw JSON response from API</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td></td><td>API endpoint URL</td></tr>
+<tr><td><code>hCurl</code></td><td>Handle</td><td></td><td>libcurl easy handle</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>curl error code (0 = success)</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>HTTP response status code</td></tr>
+<tr><td><code>nTemperature</code></td><td>Numeric</td><td><code>0.5</code></td><td>Sampling temperature (0.0 - 2.0)</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cKey, cModel )</code></td><td>Criar instância. Se cKey estiver vazio, lê a variável de ambiente OPENAI_API_KEY.</td></tr>
-<tr><td><code>Send( cPrompt )</code></td><td>Enviar um prompt de texto, retornar resposta JSON bruta</td></tr>
-<tr><td><code>SendStream( cPrompt, bCallback )</code></td><td>Enviar prompt com streaming; bCallback recebe fragmentos</td></tr>
-<tr><td><code>SendImage( cImageFileName, cPrompt )</code></td><td>Enviar um arquivo de imagem local com um prompt (API de Visão)</td></tr>
-<tr><td><code>SendImageURL( cImageUrl, cPrompt )</code></td><td>Enviar uma URL de imagem com um prompt (API de Visão)</td></tr>
-<tr><td><code>GetValue()</code></td><td>Extrair a resposta de texto do JSON de cResponse</td></tr>
-<tr><td><code>End()</code></td><td>Limpar o handle do curl</td></tr>
+<tr><td><code>New( cKey, cModel )</code></td><td>Create instance. If cKey is empty, reads OPENAI_API_KEY env var.</td></tr>
+<tr><td><code>Send( cPrompt )</code></td><td>Send a text prompt, return raw JSON response</td></tr>
+<tr><td><code>SendStream( cPrompt, bCallback )</code></td><td>Send prompt with streaming; bCallback receives chunks</td></tr>
+<tr><td><code>SendImage( cImageFileName, cPrompt )</code></td><td>Send a local image file with a prompt (Vision API)</td></tr>
+<tr><td><code>SendImageURL( cImageUrl, cPrompt )</code></td><td>Send an image URL with a prompt (Vision API)</td></tr>
+<tr><td><code>GetValue()</code></td><td>Extract the text response from cResponse JSON</td></tr>
+<tr><td><code>End()</code></td><td>Clean up curl handle</td></tr>
 </tbody>
 </table>
 
 <h2 id="tchatgpt">TChatGPT Class</h2>
 
 <p>
-TChatGPT é uma alternativa mais simples com menos recursos, adequada para interações básicas de prompt/resposta.
+TChatGPT is a simpler alternative with fewer features, suitable for basic prompt/response interactions.
 </p>
 
 <h3>DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>cKey</code></td><td>Character</td><td><code>""</code></td><td>OpenAI API key</td></tr>
@@ -103,22 +103,22 @@ TChatGPT é uma alternativa mais simples com menos recursos, adequada para inter
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cKey )</code></td><td>Criar instância com chave API</td></tr>
-<tr><td><code>Send()</code></td><td>Enviar cPrompt, armazenar resposta em cResponse</td></tr>
-<tr><td><code>GetValue( cKey1, cKey2, ... )</code></td><td>Navegar resposta JSON por caminho de chaves. Argumentos variáveis.</td></tr>
-<tr><td><code>Reset()</code></td><td>Reiniciar estado do curl para a próxima solicitação</td></tr>
-<tr><td><code>End()</code></td><td>Limpar o handle do curl</td></tr>
+<tr><td><code>New( cKey )</code></td><td>Create instance with API key</td></tr>
+<tr><td><code>Send()</code></td><td>Send cPrompt, store response in cResponse</td></tr>
+<tr><td><code>GetValue( cKey1, cKey2, ... )</code></td><td>Navigate JSON response by key path. Variable args.</td></tr>
+<tr><td><code>Reset()</code></td><td>Reset curl state for next request</td></tr>
+<tr><td><code>End()</code></td><td>Clean up curl handle</td></tr>
 </tbody>
 </table>
 
-<h2 id="example-basic">Exemplo: Prompt/Resposta Básico (TOpenAI)</h2>
+<h2 id="example-basic">Example: Basic Prompt/Response (TOpenAI)</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -145,7 +145,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-stream">Exemplo: Resposta em Streaming</h2>
+<h2 id="example-stream">Example: Streaming Response</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -168,7 +168,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-vision">Exemplo: Visão (Analisar uma Imagem)</h2>
+<h2 id="example-vision">Example: Vision (Analyze an Image)</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -198,7 +198,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-chatgpt">Exemplo: TChatGPT (Wrapper Simples)</h2>
+<h2 id="example-chatgpt">Example: TChatGPT (Simple Wrapper)</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -231,7 +231,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-temperature">Exemplo: Ajustando a Temperatura</h2>
+<h2 id="example-temperature">Example: Adjusting Temperature</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -255,52 +255,52 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="models">Modelos Suportados</h2>
+<h2 id="models">Supported Models</h2>
 
 <table>
 <thead>
-<tr><th>Model</th><th>Descrição</th></tr>
+<tr><th>Model</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>gpt-4o</code></td><td>Modelo mais capaz, suporta texto + visão</td></tr>
-<tr><td><code>gpt-4o-mini</code></td><td>Rápido, econômico (padrão no FWH)</td></tr>
-<tr><td><code>gpt-4-turbo</code></td><td>GPT-4 Turbo com janela de contexto grande</td></tr>
-<tr><td><code>gpt-3.5-turbo</code></td><td>Modelo rápido legado</td></tr>
+<tr><td><code>gpt-4o</code></td><td>Most capable model, supports text + vision</td></tr>
+<tr><td><code>gpt-4o-mini</code></td><td>Fast, cost-effective (default in FWH)</td></tr>
+<tr><td><code>gpt-4-turbo</code></td><td>GPT-4 Turbo with large context window</td></tr>
+<tr><td><code>gpt-3.5-turbo</code></td><td>Legacy fast model</td></tr>
 </tbody>
 </table>
 
-<h2 id="tips">Dicas</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-<li>Armazene sua chave API na variável de ambiente <code>OPENAI_API_KEY</code> em vez de codificá-la diretamente.</li>
-<li>TOpenAI:New() lê automaticamente do ambiente se nenhuma chave for passada.</li>
-<li>A biblioteca <code>hb_curl</code> deve estar vinculada. Use <code>#include "hbcurl.ch"</code> para as constantes.</li>
-<li>A verificação SSL é desabilitada por padrão (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) por compatibilidade.</li>
-<li>Use <code>SendStream()</code> para respostas longas para obter saída em tempo real em vez de esperar a resposta completa.</li>
-<li>O método <code>GetValue()</code> trata o parsing JSON internamente. Para TOpenAI retorna <code>choices[1].message.content</code>. Para TChatGPT, passe o caminho de chaves como argumentos.</li>
+<li>Store your API key in the <code>OPENAI_API_KEY</code> environment variable rather than hardcoding it.</li>
+<li>TOpenAI:New() automatically reads from the environment if no key is passed.</li>
+<li>The <code>hb_curl</code> library must be linked. Use <code>#include "hbcurl.ch"</code> for constants.</li>
+<li>SSL verification is disabled by default (<code>HB_CURLOPT_SSL_VERIFYPEER = .F.</code>) for compatibility.</li>
+<li>Use <code>SendStream()</code> for long responses to get real-time output instead of waiting for the complete response.</li>
+<li>The <code>GetValue()</code> method handles JSON parsing internally. For TOpenAI it returns <code>choices[1].message.content</code>. For TChatGPT, pass the key path as arguments.</li>
 </ul>
 
-<h2 id="ollama">TOLlama (IA Local)</h2>
+<h2 id="ollama">TOLlama (Local AI)</h2>
 <p class="source-badge">Fonte: <code>source/classes/tollama.prg</code></p>
-<p><span class="badge badge-green">IA Local</span> Conecta-se a um servidor <a href="https://ollama.ai">Ollama</a> local. Não necessita de chave API - executa modelos de IA na sua própria máquina.</p>
+<p><span class="badge badge-green">Local AI</span> Connects to a local <a href="https://ollama.ai">Ollama</a> server. No API key needed - runs AI models on your own machine.</p>
 
 <table>
-<tr><th>DATA</th><th>Padrão</th><th>Descrição</th></tr>
-<tr><td><code>cModel</code></td><td></td><td>Nome do modelo (ex. "llama3", "mistral", "codellama")</td></tr>
-<tr><td><code>cUrl</code></td><td>"http://localhost:11434"</td><td>URL do servidor Ollama</td></tr>
-<tr><td><code>cPrompt</code></td><td></td><td>Prompt atual</td></tr>
-<tr><td><code>cResponse</code></td><td></td><td>Resposta da API</td></tr>
-<tr><td><code>aAgents</code></td><td></td><td>Array de definições de agentes</td></tr>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>cModel</code></td><td></td><td>Model name (e.g. "llama3", "mistral", "codellama")</td></tr>
+<tr><td><code>cUrl</code></td><td>"http://localhost:11434"</td><td>Ollama server URL</td></tr>
+<tr><td><code>cPrompt</code></td><td></td><td>Current prompt</td></tr>
+<tr><td><code>cResponse</code></td><td></td><td>API response</td></tr>
+<tr><td><code>aAgents</code></td><td></td><td>Array of agent definitions</td></tr>
 </table>
 
 <table>
-<tr><th>Método</th><th>Parâmetros</th><th>Descrição</th></tr>
-<tr><td><code>New()</code></td><td>cModel</td><td>Construtor. Define o nome do modelo.</td></tr>
-<tr><td><code>Send()</code></td><td>cPrompt</td><td>Enviar prompt e aguardar resposta completa</td></tr>
-<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Enviar com streaming - bCallback recebe fragmentos em tempo real</td></tr>
-<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Enviar imagem + prompt (para modelos de visão como llava)</td></tr>
-<tr><td><code>GetValue()</code></td><td></td><td>Extrair texto de resposta do JSON</td></tr>
-<tr><td><code>End()</code></td><td></td><td>Limpar handle CURL</td></tr>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
+<tr><td><code>New()</code></td><td>cModel</td><td>Constructor. Sets model name.</td></tr>
+<tr><td><code>Send()</code></td><td>cPrompt</td><td>Send prompt and wait for full response</td></tr>
+<tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Send with streaming - bCallback receives chunks in real-time</td></tr>
+<tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Send image + prompt (for vision models like llava)</td></tr>
+<tr><td><code>GetValue()</code></td><td></td><td>Extract response text from JSON</td></tr>
+<tr><td><code>End()</code></td><td></td><td>Cleanup CURL handle</td></tr>
 </table>
 
 <pre><code>local oAI := TOLlama():New( "llama3" )
@@ -316,10 +316,10 @@ oAI:End()</code></pre>
 
 <h2 id="deepseek">TDeepSeek</h2>
 <p class="source-badge">Fonte: <code>source/classes/tdeepseek.prg</code></p>
-<p><span class="badge badge-blue">IA na Nuvem</span> Cliente API DeepSeek. Conhecido por suas fortes capacidades de codificação e raciocínio.</p>
+<p><span class="badge badge-blue">Cloud AI</span> DeepSeek API client. Known for strong coding and reasoning capabilities.</p>
 
 <table>
-<tr><th>DATA</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
 <tr><td><code>cKey</code></td><td>""</td><td>API key from DeepSeek</td></tr>
 <tr><td><code>cModel</code></td><td>"deepseek-chat"</td><td>Model: "deepseek-chat" or "deepseek-reasoner"</td></tr>
 <tr><td><code>cUrl</code></td><td></td><td>API endpoint</td></tr>
@@ -332,10 +332,10 @@ oAI:End()</code></pre>
 
 <h2 id="gemini">TGemini (Google)</h2>
 <p class="source-badge">Fonte: <code>source/classes/tgemini.prg</code></p>
-<p><span class="badge badge-blue">IA na Nuvem</span> Cliente API Google Gemini. Suporta texto, imagens e upload de arquivos.</p>
+<p><span class="badge badge-blue">Cloud AI</span> Google Gemini API client. Supports text, images, and file uploads.</p>
 
 <table>
-<tr><th>DATA</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
 <tr><td><code>cKey</code></td><td>""</td><td>Google API key</td></tr>
 <tr><td><code>cModel</code></td><td>"gemini-2.0-flash"</td><td>Model name</td></tr>
 <tr><td><code>cUrl</code></td><td>googleapis.com/v1beta/models</td><td>API endpoint</td></tr>
@@ -344,7 +344,7 @@ oAI:End()</code></pre>
 </table>
 
 <table>
-<tr><th>Método</th><th>Parâmetros</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
 <tr><td><code>New()</code></td><td>cKey, cModel</td><td>Constructor</td></tr>
 <tr><td><code>Send()</code></td><td>uContent, cPrompt, bCallback</td><td>Send text, image or file with prompt</td></tr>
 <tr><td><code>UploadFile()</code></td><td>cFileName, lDeleteAfter</td><td>Upload file to Gemini for analysis</td></tr>
@@ -359,17 +359,17 @@ oAI:End()</code></pre>
 
 <h2 id="grok">TGrok (xAI)</h2>
 <p class="source-badge">Fonte: <code>source/classes/tgrok.prg</code></p>
-<p><span class="badge badge-blue">IA na Nuvem</span> Cliente API xAI Grok. Suporta texto, imagens e streaming.</p>
+<p><span class="badge badge-blue">Cloud AI</span> xAI Grok API client. Supports text, images, and streaming.</p>
 
 <table>
-<tr><th>DATA</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
 <tr><td><code>cKey</code></td><td>""</td><td>xAI API key</td></tr>
 <tr><td><code>cModel</code></td><td>"grok-3-latest"</td><td>Model name</td></tr>
 <tr><td><code>nTemperature</code></td><td>0.5</td><td>Response creativity</td></tr>
 </table>
 
 <table>
-<tr><th>Método</th><th>Parâmetros</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Parameters</th><th>Description</th></tr>
 <tr><td><code>Send()</code></td><td>cPrompt</td><td>Send text prompt</td></tr>
 <tr><td><code>SendStream()</code></td><td>cPrompt, bCallback</td><td>Streaming response</td></tr>
 <tr><td><code>SendImage()</code></td><td>cImageFile, cPrompt</td><td>Send image file + prompt</td></tr>
@@ -383,10 +383,10 @@ oAI:End()</code></pre>
 
 <h2 id="kimi">TKimi (Moonshot)</h2>
 <p class="source-badge">Fonte: <code>source/classes/tkimi.prg</code></p>
-<p><span class="badge badge-blue">IA na Nuvem</span> Cliente API Moonshot Kimi. Fortes capacidades multilíngues.</p>
+<p><span class="badge badge-blue">Cloud AI</span> Moonshot Kimi API client. Strong multilingual capabilities.</p>
 
 <table>
-<tr><th>DATA</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Default</th><th>Description</th></tr>
 <tr><td><code>cKey</code></td><td>""</td><td>Moonshot API key</td></tr>
 <tr><td><code>cModel</code></td><td>"moonshot-v1-8k"</td><td>Model: moonshot-v1-8k, -32k, -128k</td></tr>
 <tr><td><code>nTemperature</code></td><td>0.5</td><td>Response creativity</td></tr>
@@ -397,7 +397,7 @@ oAI:Send( "Translate this to Chinese: Hello World" )
 MsgInfo( oAI:GetValue() )
 oAI:End()</code></pre>
 
-<h2 id="ai-comparison">Comparação de Classes de IA</h2>
+<h2 id="ai-comparison">AI Classes Comparison</h2>
 <table>
 <tr><th>Class</th><th>Provider</th><th>Local/Cloud</th><th>Vision</th><th>Streaming</th><th>Default Model</th></tr>
 <tr><td><code>TOpenAI</code></td><td>OpenAI</td><td>Cloud</td><td>Yes</td><td>Yes</td><td>gpt-4o-mini</td></tr>
@@ -429,21 +429,21 @@ graph TD
 
 <h2 id="transformer">Transformer (Neural Network in Harbour)</h2>
 <p class="source-badge">Fonte: <code>source/classes/transformer.prg</code></p>
-<p><span class="badge badge-purple">Avançado</span> Uma rede neural Transformer completa implementada em Harbour puro. Suporta treinamento, propagação para frente/trás, atenção multi-cabeça e predição de texto.</p>
+<p><span class="badge badge-purple">Advanced</span> A full Transformer neural network implemented in pure Harbour. Supports training, forward/backward propagation, multi-head attention, and text prediction.</p>
 
 <table>
-<tr><th>DATA</th><th>Descrição</th></tr>
-<tr><td><code>d_model</code></td><td>Dimensão do modelo (tamanho do embedding)</td></tr>
-<tr><td><code>n_heads</code></td><td>Número de cabeças de atenção</td></tr>
-<tr><td><code>num_layers</code></td><td>Número de camadas do transformer</td></tr>
-<tr><td><code>vocab_size</code></td><td>Tamanho do vocabulário</td></tr>
-<tr><td><code>max_seq_len</code></td><td>Comprimento máximo da sequência</td></tr>
-<tr><td><code>aVocab</code></td><td>Array de vocabulário (palavras)</td></tr>
-<tr><td><code>Embedding, Positional</code></td><td>Matrizes de embedding e codificação posicional</td></tr>
+<tr><th>DATA</th><th>Description</th></tr>
+<tr><td><code>d_model</code></td><td>Model dimension (embedding size)</td></tr>
+<tr><td><code>n_heads</code></td><td>Number of attention heads</td></tr>
+<tr><td><code>num_layers</code></td><td>Number of transformer layers</td></tr>
+<tr><td><code>vocab_size</code></td><td>Vocabulary size</td></tr>
+<tr><td><code>max_seq_len</code></td><td>Maximum sequence length</td></tr>
+<tr><td><code>aVocab</code></td><td>Vocabulary array (words)</td></tr>
+<tr><td><code>Embedding, Positional</code></td><td>Embedding and positional encoding matrices</td></tr>
 </table>
 
 <table>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 <tr><td><code>New()</code></td><td>Constructor: num_layers, d_model, n_heads, vocab_size, max_seq_len, hEmbeddings, aVocab</td></tr>
 <tr><td><code>Forward()</code></td><td>Forward pass: src_indices, pos_indices &rarr; output</td></tr>
 <tr><td><code>Backward()</code></td><td>Backward pass: compute gradients for training</td></tr>
@@ -475,7 +475,7 @@ local oT := TransformerClassifier():New( 1, 6, 2, 2, vocab )
 
 <h2 id="neural">TNeuralNetwork (Classic Neural Network)</h2>
 <p class="source-badge">Fonte: <code>source/classes/tneuralnet.prg</code></p>
-<p>Rede neural feedforward clássica com retropropagação. Boa para reconhecimento de padrões simples.</p>
+<p>Classic feedforward neural network with backpropagation. Good for simple pattern recognition.</p>
 
 <pre><code>// XOR training example
 local oNN := TNeuralNetwork():New( 2, { 2 }, 1 )  // 2 inputs, 1 hidden layer with 2 neurons, 1 output
@@ -492,7 +492,7 @@ next
 
 <h2 id="embeddings">TEmbeddings (Semantic Similarity)</h2>
 <p class="source-badge">Fonte: <code>source/classes/tembeddings.prg</code></p>
-<p>Embeddings de texto para comparação de similaridade semântica. Usa APIs do HuggingFace ou OpenAI.</p>
+<p>Text embeddings for semantic similarity comparison. Uses HuggingFace or OpenAI APIs.</p>
 
 <pre><code>local oE1 := TEmbeddings():New()
 local oE2 := TEmbeddings():New()
@@ -506,7 +506,7 @@ oE3:GetEmbeddings( "I saw Peter" )
 ? oE1 - oE3   // Low similarity (different topics)</code></pre>
 
 <h2 id="agents">AI Agents (TOLlama + TAgent)</h2>
-<p>Agentes de IA combinam LLMs com ferramentas (funções) que a IA pode chamar. A IA decide qual ferramenta usar com base na solicitação do usuário.</p>
+<p>AI agents combine LLMs with tools (Funções) that the AI can call. The AI decides which tool to use based on the user's request.</p>
 
 <pre><code>local oLlama := TOLlama():New()
 local oAgent
@@ -527,40 +527,40 @@ AAdd( oLlama:aAgents, oAgent )
 oLlama:Send( "What time is it?" )       // -> calls get_time
 oLlama:Send( "Create a folder test" )   // -> calls create_folder</code></pre>
 
-<h2 id="samples-list">Referência de Exemplos de IA</h2>
-<p>Todos os exemplos de IA estão na pasta <code>samples/ai/</code>:</p>
+<h2 id="samples-list">AI Samples Reference</h2>
+<p>All AI samples are in the <code>samples/ai/</code> folder:</p>
 
 <table>
-<tr><th>Sample</th><th>Descrição</th><th>AI Class</th></tr>
-<tr><td><code>ollama1.prg</code> - <code>ollama5.prg</code></td><td>IA local: chat básico, streaming, análise de imagens</td><td>TOLlama</td></tr>
-<tr><td><code>openai1.prg</code>, <code>openai2.prg</code></td><td>OpenAI: prompts de texto e imagem</td><td>TOpenAI</td></tr>
-<tr><td><code>chatgpt.prg</code></td><td>Diálogo interativo ChatGPT com voz</td><td>TChatGPT</td></tr>
-<tr><td><code>deepseek1.prg</code></td><td>DeepSeek: geração de código SQL</td><td>TDeepSeek</td></tr>
-<tr><td><code>gemini1.prg</code> - <code>gemini6.prg</code></td><td>Google Gemini: texto, imagens, arquivos, tokens</td><td>TGemini</td></tr>
-<tr><td><code>grok1.prg</code></td><td>xAI Grok: prompt básico</td><td>TGrok</td></tr>
-<tr><td><code>kimi1.prg</code></td><td>Moonshot Kimi: multilíngue</td><td>TKimi</td></tr>
-<tr><td><code>ai.prg</code></td><td>Diálogo de IA interativo com síntese de voz (64 bits)</td><td>TOpenAI</td></tr>
-<tr><td><code>vision.prg</code></td><td>IDE visual de formulários com IA</td><td>Múltiplos</td></tr>
-<tr><td><code>agents.prg</code></td><td>Agentes de IA com chamada de ferramentas</td><td>TOLlama + TAgent</td></tr>
-<tr><td><code>agentdb.prg</code>, <code>agentdb2.prg</code></td><td>Agentes de IA para operações de banco de dados</td><td>TOLlama + TAgent</td></tr>
-<tr><td><code>agentdoc.prg</code>, <code>agentdoc2.prg</code></td><td>Agentes de IA para criação de documentos</td><td>TOLlama + TAgent</td></tr>
-<tr><td><code>agentweb.prg</code></td><td>Agente de IA para operações web</td><td>TOLlama + TAgent</td></tr>
-<tr><td><code>autogpt.prg</code></td><td>Execução autônoma de tarefas com IA</td><td>TOpenAI</td></tr>
-<tr><td><code>transf1.prg</code> - <code>transf5.prg</code></td><td>Transformer: próxima palavra, sentimento, treinamento</td><td>Transformer</td></tr>
-<tr><td><code>transformer.prg</code></td><td>Demo completa de transformer</td><td>Transformer</td></tr>
-<tr><td><code>neural.prg</code></td><td>Rede neural: treinamento XOR</td><td>TNeuralNetwork</td></tr>
-<tr><td><code>neuralnet.prg</code></td><td>Visualização de rede neural</td><td>TNet</td></tr>
-<tr><td><code>nn.prg</code> - <code>nn4c.prg</code></td><td>Vários exemplos de redes neurais</td><td>TNeuralNetwork</td></tr>
-<tr><td><code>perceptron.prg</code></td><td>Perceptron básico</td><td>Personalizado</td></tr>
-<tr><td><code>embeddings1.prg</code>, <code>embeddings2.prg</code></td><td>Similaridade de texto com embeddings</td><td>TEmbeddings</td></tr>
-<tr><td><code>llm.prg</code></td><td>Exemplo de integração LLM</td><td>TOLlama</td></tr>
-<tr><td><code>llama3.prg</code></td><td>Recursos específicos do Llama 3</td><td>TOLlama</td></tr>
-<tr><td><code>llava.prg</code></td><td>Modelo de visão LLaVA</td><td>TOLlama</td></tr>
-<tr><td><code>phi4.prg</code></td><td>Modelo Microsoft Phi-4</td><td>TOLlama</td></tr>
+<tr><th>Sample</th><th>Description</th><th>AI Class</th></tr>
+<tr><td><code>ollama1.prg</code> - <code>ollama5.prg</code></td><td>Local AI: basic chat, streaming, image analysis</td><td>TOLlama</td></tr>
+<tr><td><code>openai1.prg</code>, <code>openai2.prg</code></td><td>OpenAI: text and image prompts</td><td>TOpenAI</td></tr>
+<tr><td><code>chatgpt.prg</code></td><td>Interactive ChatGPT dialog with voice</td><td>TChatGPT</td></tr>
+<tr><td><code>deepseek1.prg</code></td><td>DeepSeek: SQL code generation</td><td>TDeepSeek</td></tr>
+<tr><td><code>gemini1.prg</code> - <code>gemini6.prg</code></td><td>Google Gemini: text, images, files, tokens</td><td>TGemini</td></tr>
+<tr><td><code>grok1.prg</code></td><td>xAI Grok: basic prompt</td><td>TGrok</td></tr>
+<tr><td><code>kimi1.prg</code></td><td>Moonshot Kimi: multilingual</td><td>TKimi</td></tr>
+<tr><td><code>ai.prg</code></td><td>Interactive AI dialog with voice synthesis (64-bit)</td><td>TOpenAI</td></tr>
+<tr><td><code>vision.prg</code></td><td>Visual forms IDE with AI</td><td>Multiple</td></tr>
+<tr><td><code>agents.prg</code></td><td>AI agents with tool calling</td><td>TOLlama + TAgent</td></tr>
+<tr><td><code>agentdb.prg</code>, <code>agentdb2.prg</code></td><td>AI agents for database operations</td><td>TOLlama + TAgent</td></tr>
+<tr><td><code>agentdoc.prg</code>, <code>agentdoc2.prg</code></td><td>AI agents for document creation</td><td>TOLlama + TAgent</td></tr>
+<tr><td><code>agentweb.prg</code></td><td>AI agent for web operations</td><td>TOLlama + TAgent</td></tr>
+<tr><td><code>autogpt.prg</code></td><td>Autonomous AI task execution</td><td>TOpenAI</td></tr>
+<tr><td><code>transf1.prg</code> - <code>transf5.prg</code></td><td>Transformer: next word, sentiment, training</td><td>Transformer</td></tr>
+<tr><td><code>transformer.prg</code></td><td>Complete transformer demo</td><td>Transformer</td></tr>
+<tr><td><code>neural.prg</code></td><td>Neural network: XOR training</td><td>TNeuralNetwork</td></tr>
+<tr><td><code>neuralnet.prg</code></td><td>Neural network visualization</td><td>TNet</td></tr>
+<tr><td><code>nn.prg</code> - <code>nn4c.prg</code></td><td>Various neural network examples</td><td>TNeuralNetwork</td></tr>
+<tr><td><code>perceptron.prg</code></td><td>Basic perceptron</td><td>Custom</td></tr>
+<tr><td><code>embeddings1.prg</code>, <code>embeddings2.prg</code></td><td>Text similarity with embeddings</td><td>TEmbeddings</td></tr>
+<tr><td><code>llm.prg</code></td><td>LLM integration example</td><td>TOLlama</td></tr>
+<tr><td><code>llama3.prg</code></td><td>Llama 3 specific features</td><td>TOLlama</td></tr>
+<tr><td><code>llava.prg</code></td><td>LLaVA vision model</td><td>TOLlama</td></tr>
+<tr><td><code>phi4.prg</code></td><td>Microsoft Phi-4 model</td><td>TOLlama</td></tr>
 </table>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/internet/tollama.html">&larr; tollama</a> | <a href="../../pt/data/tordinfo.html">tordinfo &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

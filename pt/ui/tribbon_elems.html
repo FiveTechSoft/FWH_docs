@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRbGroup / TRBtn / TRPanel - Elementos de Fita - Documenta&ccedil;&atilde;o FWH</title>
+<title>TRbGroup / TRBtn / TRPanel - Ribbon Elements - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,112 +11,112 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>TRbGroup / TRBtn / TRPanel &mdash; Elementos de Fita</h1>
-<p class="class-source">Fontes: <code>source/classes/trbgroup.prg</code>, <code>source/classes/trbtn.prg</code>, <code>source/classes/trpanel.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code> (todos os tr&ecirc;s)</p>
+<h1>TRbGroup / TRBtn / TRPanel — Ribbon Elements</h1>
+<p class="class-source">Fonte: <code>source/classes/trbgroup.prg</code>, <code>source/classes/trbtn.prg</code>, <code>source/classes/trpanel.prg</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code> (all three)</p>
 
 <p>
-TRbGroup, TRBtn e TRPanel s&atilde;o os blocos de constru&ccedil;&atilde;o do sistema de barra de fitas. TRbGroup representa um grupo nomeado de bot&otilde;es dentro de uma fita. TRBtn &eacute; um bot&atilde;o de fita individual suportando layouts normal, popup e split-popup. TRPanel &eacute; um painel leve usado como cont&ecirc;iner para controles de fita. Juntos fornecem a interface de usu&aacute;rio de fita estilo Office 2007/2010.
+TRbGroup, TRBtn and TRPanel are the building blocks of the ribbon bar system. TRbGroup represents a named group of buttons inside a ribbon. TRBtn is an individual ribbon button supporting normal, popup and split-popup layouts. TRPanel is a lightweight panel used as a container for ribbon controls. Together they provide the Office 2007/2010-style ribbon user interface.
 </p>
 
 <h2 id="trbgroup">TRbGroup</h2>
 
-<h3 id="trbgroup-data">Principais Membros DATA</h3>
+<h3 id="trbgroup-data">Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aGradSel</code></td><td>Array</td><td>Array gradiente para o estado selecionado/ao passar o mouse</td></tr>
-<tr><td><code>aGradCaption</code></td><td>Array</td><td>Array gradiente para a &aacute;rea de legenda do grupo</td></tr>
-<tr><td><code>aGradDisable</code></td><td>Array</td><td>Array gradiente para o estado desabilitado</td></tr>
-<tr><td><code>bAction</code></td><td>Codeblock</td><td>Bloco de c&oacute;digo executado ao clicar no r&oacute;tulo do grupo</td></tr>
-<tr><td><code>hBrushSel</code></td><td>Handle</td><td>Handle do pincel para o fundo do estado selecionado</td></tr>
-<tr><td><code>lMOver</code></td><td>Logical</td><td>Indicador de estado de mouse sobre</td></tr>
-<tr><td><code>lEnable</code></td><td>Logical</td><td>Estado habilitado/desabilitado do grupo</td></tr>
+<tr><td><code>aGradSel</code></td><td>Array</td><td>Gradient array for the selected/hovered state</td></tr>
+<tr><td><code>aGradCaption</code></td><td>Array</td><td>Gradient array for the group caption area</td></tr>
+<tr><td><code>aGradDisable</code></td><td>Array</td><td>Gradient array for the disabled state</td></tr>
+<tr><td><code>bAction</code></td><td>Codeblock</td><td>Code block executed when the group label is clicked</td></tr>
+<tr><td><code>hBrushSel</code></td><td>Handle</td><td>Brush handle for the selected state background</td></tr>
+<tr><td><code>lMOver</code></td><td>Logical</td><td>Mouse-over state flag</td></tr>
+<tr><td><code>lEnable</code></td><td>Logical</td><td>Enable/disable state of the group</td></tr>
 </tbody>
 </table>
 
-<h3 id="trbgroup-methods">M&eacute;todos</h3>
+<h3 id="trbgroup-methods">Methods</h3>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nRow, nCol, nHeight, nWidth, nIndex, cPrompt, bAction, ... )</code></td><td>Criar um novo grupo de fita. Aceita arrays gradientes, pinc&eacute;is e texto de legenda.</td></tr>
-<tr><td><code>AddButton( nRow, nCol, nH, nW, cPrompt, bAction, cType, ... )</code></td><td>Adicionar um bot&atilde;o ao grupo com par&acirc;metros de layout, popup e agrupamento.</td></tr>
-<tr><td><code>AddSeparator( nCol )</code></td><td>Inserir um separador visual na coluna especificada.</td></tr>
-<tr><td><code>Enable( lStatus )</code></td><td>Habilitar ou desabilitar todo o grupo.</td></tr>
-<tr><td><code>Paint()</code></td><td>Renderizar o fundo, legenda, bordas e bot&otilde;es filhos do grupo.</td></tr>
+<tr><td><code>New( oWnd, nRow, nCol, nHeight, nWidth, nIndex, cPrompt, bAction, ... )</code></td><td>Create a new ribbon group. Accepts gradient arrays, brushes, and caption text</td></tr>
+<tr><td><code>AddButton( nRow, nCol, nH, nW, cPrompt, bAction, cType, ... )</code></td><td>Add a button to the group with layout, popup, and grouping parameters</td></tr>
+<tr><td><code>AddSeparator( nCol )</code></td><td>Insert a visual separator at the specified column</td></tr>
+<tr><td><code>Enable( lStatus )</code></td><td>Enable or disable the entire group</td></tr>
+<tr><td><code>Paint()</code></td><td>Render the group background, caption, borders and child buttons</td></tr>
 </tbody>
 </table>
 
 <h2 id="trbtn">TRBtn</h2>
 
-<h3 id="trbtn-data">Principais Membros DATA</h3>
+<h3 id="trbtn-data">Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>bAction</code></td><td>Codeblock</td><td>Bloco de c&oacute;digo executado ao clicar</td></tr>
-<tr><td><code>cName</code></td><td>Character</td><td>Nome identificador do bot&atilde;o</td></tr>
-<tr><td><code>hBitmap1</code></td><td>Handle</td><td>Handle de bitmap principal para a face do bot&atilde;o</td></tr>
-<tr><td><code>oPopup</code></td><td>Object</td><td>Objeto de menu popup para bot&otilde;es popup/split-popup</td></tr>
-<tr><td><code>nLayout</code></td><td>Numeric</td><td>Dire&ccedil;&atilde;o de layout: TOP, LEFT, BOTTOM, RIGHT, MOSTLEFT, MOSTRIGHT, CENTER</td></tr>
-<tr><td><code>nTypeButton</code></td><td>Numeric</td><td>Tipo de bot&atilde;o: NORMAL (0), POPUP (1), SPLITPOPUP (2), SAYBUTTON (3)</td></tr>
-<tr><td><code>lMOver</code></td><td>Logical</td><td>O mouse est&aacute; sobre o bot&atilde;o</td></tr>
-<tr><td><code>lPressed</code></td><td>Logical</td><td>O bot&atilde;o est&aacute; atualmente pressionado</td></tr>
-<tr><td><code>lSelected</code></td><td>Logical</td><td>O bot&atilde;o est&aacute; em estado selecionado</td></tr>
-<tr><td><code>lGrouping</code></td><td>Logical</td><td>O bot&atilde;o participa de agrupamento visual com bot&otilde;es adjacentes</td></tr>
-<tr><td><code>lBorder</code></td><td>Logical</td><td>Mostrar ou ocultar a borda do bot&atilde;o</td></tr>
+<tr><td><code>bAction</code></td><td>Codeblock</td><td>Code block executed on click</td></tr>
+<tr><td><code>cName</code></td><td>Character</td><td>Button identifier name</td></tr>
+<tr><td><code>hBitmap1</code></td><td>Handle</td><td>Primary bitmap handle for the button face</td></tr>
+<tr><td><code>oPopup</code></td><td>Object</td><td>Popup menu object for popup/split-popup buttons</td></tr>
+<tr><td><code>nLayout</code></td><td>Numeric</td><td>Layout direction: TOP, LEFT, BOTTOM, RIGHT, MOSTLEFT, MOSTRIGHT, CENTER</td></tr>
+<tr><td><code>nTypeButton</code></td><td>Numeric</td><td>Button type: NORMAL (0), POPUP (1), SPLITPOPUP (2), SAYBUTTON (3)</td></tr>
+<tr><td><code>lMOver</code></td><td>Logical</td><td>Mouse is hovering over the button</td></tr>
+<tr><td><code>lPressed</code></td><td>Logical</td><td>Button is currently pressed</td></tr>
+<tr><td><code>lSelected</code></td><td>Logical</td><td>Button is in selected state</td></tr>
+<tr><td><code>lGrouping</code></td><td>Logical</td><td>Button participates in visual grouping with adjacent buttons</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Show or hide the button border</td></tr>
 </tbody>
 </table>
 
-<h3 id="trbtn-methods">M&eacute;todos</h3>
+<h3 id="trbtn-methods">Methods</h3>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nWidth, nHeight, cName, bAction, oWnd, ... )</code></td><td>Criar um novo bot&atilde;o de fita com bitmap, layout, agrupamento e par&acirc;metros de tooltip.</td></tr>
-<tr><td><code>ReDefine( nID, cName, bAction, oWnd, ... )</code></td><td>Redefinir um bot&atilde;o de fita a partir de um recurso de di&aacute;logo.</td></tr>
-<tr><td><code>Click()</code></td><td>Executar a a&ccedil;&atilde;o do bot&atilde;o</td></tr>
-<tr><td><code>ShowPopup()</code></td><td>Exibir o menu popup associado</td></tr>
-<tr><td><code>Disable() / Enable()</code></td><td>Desabilitar ou habilitar o bot&atilde;o com atualiza&ccedil;&atilde;o visual</td></tr>
+<tr><td><code>New( nTop, nLeft, nWidth, nHeight, cName, bAction, oWnd, ... )</code></td><td>Create a new ribbon button with bitmap, layout, grouping and tooltip parameters</td></tr>
+<tr><td><code>ReDefine( nID, cName, bAction, oWnd, ... )</code></td><td>Redefine a ribbon button from a dialog resource</td></tr>
+<tr><td><code>Click()</code></td><td>Execute the button action</td></tr>
+<tr><td><code>ShowPopup()</code></td><td>Display the associated popup menu</td></tr>
+<tr><td><code>Disable() / Enable()</code></td><td>Disable or enable the button with visual refresh</td></tr>
 </tbody>
 </table>
 
 <h2 id="trpanel">TRPanel</h2>
 
-<h3 id="trpanel-data">Principais Membros DATA</h3>
+<h3 id="trpanel-data">Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hBack</code></td><td>Handle</td><td>Handle de pincel de fundo, herdado da janela pai</td></tr>
+<tr><td><code>hBack</code></td><td>Handle</td><td>Background brush handle, inherited from parent window</td></tr>
 </tbody>
 </table>
 
-<h3 id="trpanel-methods">M&eacute;todos</h3>
+<h3 id="trpanel-methods">Methods</h3>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd )</code></td><td>Criar um novo painel de fita como cont&ecirc;iner filho</td></tr>
-<tr><td><code>Paint()</code></td><td>Preencher o fundo do painel usando o pincel armazenado</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd )</code></td><td>Create a new ribbon panel as a child container</td></tr>
+<tr><td><code>Paint()</code></td><td>Fill the panel background using the stored brush</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Grupo de Fita com Tr&ecirc;s Bot&otilde;es</h2>
+<h2 id="example">Example: Ribbon Group with Three Buttons</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -150,18 +150,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TRbGroup atua como cont&ecirc;iner para inst&acirc;ncias de TRBtn e desenha a legenda e borda do grupo.</li>
-<li>TRBtn suporta tr&ecirc;s tipos visuais: NORMAL (alvo de &uacute;nico clique), POPUP (clique mostra popup) e SPLITPOPUP (clique executa a&ccedil;&atilde;o, seta mostra popup).</li>
-<li>A propriedade <code>nLayout</code> controla a posi&ccedil;&atilde;o do texto em rela&ccedil;&atilde;o ao bitmap: TOP, LEFT, BOTTOM, RIGHT, MOSTLEFT, MOSTRIGHT ou CENTER.</li>
-<li>TRPanel &eacute; o cont&ecirc;iner mais simples; desenha um ret&acirc;ngulo preenchido usando o pincel da janela pai.</li>
-<li>Arrays gradientes seguem o formato <code>{ { fraction, color1, color2 }, ... }</code> usado em todo FWH.</li>
+<li>TRbGroup acts as a container for TRBtn instances and draws the group caption and border.</li>
+<li>TRBtn supports three visual types: NORMAL (single click target), POPUP (click shows popup), and SPLITPOPUP (click executes action, arrow shows popup).</li>
+<li>The <code>nLayout</code> property controls text position relative to the bitmap: TOP, LEFT, BOTTOM, RIGHT, MOSTLEFT, MOSTRIGHT or CENTER.</li>
+<li>TRPanel is the simplest container; it draws a filled rectangle using the parent window brush.</li>
+<li>Gradient arrays follow the <code>{ { fraction, color1, color2 }, ... }</code> format used throughout FWH.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tribbon.html">&larr; tribbon</a> | <a href="../../pt/ui/tribbon_extra.html">tribbon_extra &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

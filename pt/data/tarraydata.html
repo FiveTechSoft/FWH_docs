@@ -15,84 +15,84 @@
 <p class="class-source">Fonte: <code>source/classes/tarrdata.prg</code></p>
 
 <p>
-TArrayData fornece uma interface de fonte de dados uniforme sobre arrays Harbour, tabelas DBF e
-consultas MariaDB/MySQL. Atua como uma ponte entre dados e XBrowse, permitindo que qualquer fonte
-de dados seja navegada, ordenada, filtrada e editada usando a mesma API. Internamente, os dados são
-armazenados como um array de linhas com uma definição de estrutura de campos correspondente.
+TArrayData provides a uniform data source interface over Harbour arrays, DBF tables, and
+MariaDB/MySQL queries. It acts as a bridge between data and XBrowse, allowing any data source
+to be browsed, sorted, filtered, and edited using the same API. Internally, data is stored as
+an array of row arrays with a matching field structure definition.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aData</code></td><td>Array</td><td>Array de linhas contendo todos os dados</td></tr>
-<tr><td><code>aStruct</code></td><td>Array</td><td>Array de estrutura de campos (compatível com DbStruct())</td></tr>
-<tr><td><code>nAt</code></td><td>Numérico</td><td>Posição atual da linha (base 1)</td></tr>
-<tr><td><code>nSrcType</code></td><td>Numérico</td><td>Tipo de origem: <code>SRC_ARR</code> (0), <code>SRC_DBF</code> (1), <code>SRC_MYQ</code> (2)</td></tr>
-<tr><td><code>nOrder</code></td><td>Numérico</td><td>Posição atual da coluna de ordenação</td></tr>
-<tr><td><code>lDesc</code></td><td>Lógico</td><td>Flag de ordem de ordenação descendente</td></tr>
-<tr><td><code>lReadOnly</code></td><td>Lógico</td><td>Modo só de leitura</td></tr>
-<tr><td><code>cFilter</code></td><td>Caractere</td><td>Expressão de filtro ativa</td></tr>
-<tr><td><code>bFilter</code></td><td>Bloco</td><td>Bloco de código de filtro</td></tr>
-<tr><td><code>lFound</code></td><td>Lógico</td><td>Resultado da última operação Seek</td></tr>
-<tr><td><code>bEdit</code></td><td>Bloco</td><td>Bloco de código para edição de registo</td></tr>
-<tr><td><code>bKeyCount</code></td><td>Bloco</td><td>Bloco de código que retorna contagem de registos</td></tr>
-<tr><td><code>cAlias</code></td><td>Caractere</td><td>Nome do alias (padrão <code>"ARRAY"</code>)</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>Array of row arrays containing all data</td></tr>
+<tr><td><code>aStruct</code></td><td>Array</td><td>Field structure array (compatible with DbStruct())</td></tr>
+<tr><td><code>nAt</code></td><td>Numeric</td><td>Current row position (1-based)</td></tr>
+<tr><td><code>nSrcType</code></td><td>Numeric</td><td>Source type: <code>SRC_ARR</code> (0), <code>SRC_DBF</code> (1), <code>SRC_MYQ</code> (2)</td></tr>
+<tr><td><code>nOrder</code></td><td>Numeric</td><td>Current sort column position</td></tr>
+<tr><td><code>lDesc</code></td><td>Logical</td><td>Descending sort order flag</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Read-only mode</td></tr>
+<tr><td><code>cFilter</code></td><td>Character</td><td>Active filter expression</td></tr>
+<tr><td><code>bFilter</code></td><td>Block</td><td>Filter code block</td></tr>
+<tr><td><code>lFound</code></td><td>Logical</td><td>Result of last Seek operation</td></tr>
+<tr><td><code>bEdit</code></td><td>Block</td><td>Code block for record editing</td></tr>
+<tr><td><code>bKeyCount</code></td><td>Block</td><td>Code block returning record count</td></tr>
+<tr><td><code>cAlias</code></td><td>Character</td><td>Alias name (default <code>"ARRAY"</code>)</td></tr>
 </tbody>
 </table>
 
-<h2 id="constructors">Construtores</h2>
+<h2 id="constructors">Constructors</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( aData, aStruct )</code></td><td>Criar a partir de array e definição de estrutura</td></tr>
-<tr><td><code>fromDBF( cAlias, bFor, bWhile, nNext, nRec, lRest )</code></td><td>Carregar dados de DBF com filtro opcional</td></tr>
-<tr><td><code>fromMYSQL( oCn, cTable, cWhere )</code></td><td>Carregar dados de tabela MariaDB/MySQL</td></tr>
-<tr><td><code>fromQuery( oCn, cSql, aParams )</code></td><td>Carregar de resultado de consulta SQL</td></tr>
-<tr><td><code>fromFIELD( cAlias, aStruct, cField )</code></td><td>Carregar de um campo memo contendo dados de array</td></tr>
+<tr><td><code>New( aData, aStruct )</code></td><td>Create from array and structure definition</td></tr>
+<tr><td><code>fromDBF( cAlias, bFor, bWhile, nNext, nRec, lRest )</code></td><td>Load data from DBF with optional filter</td></tr>
+<tr><td><code>fromMYSQL( oCn, cTable, cWhere )</code></td><td>Load data from MariaDB/MySQL table</td></tr>
+<tr><td><code>fromQuery( oCn, cSql, aParams )</code></td><td>Load from SQL query result</td></tr>
+<tr><td><code>fromFIELD( cAlias, aStruct, cField )</code></td><td>Load from a memo field containing array data</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>FieldGet( n )</code></td><td>Obter valor de campo por posição da linha atual</td></tr>
-<tr><td><code>FieldPut( nFld, uValue )</code></td><td>Definir valor de campo na linha atual</td></tr>
-<tr><td><code>FieldPos( cFld )</code></td><td>Obter posição do campo por nome</td></tr>
-<tr><td><code>FieldName( n )</code></td><td>Obter nome do campo por posição</td></tr>
-<tr><td><code>FieldType( n )</code></td><td>Obter tipo do campo por posição</td></tr>
-<tr><td><code>FieldLen( n )</code></td><td>Obter comprimento do campo por posição</td></tr>
-<tr><td><code>FieldDec( n )</code></td><td>Obter casas decimais do campo por posição</td></tr>
-<tr><td><code>FieldPic( n, c )</code></td><td>Obter/definir formato de imagem do campo</td></tr>
-<tr><td><code>FCount()</code></td><td>Número de campos</td></tr>
-<tr><td><code>GoTop() / GoBottom() / Skip( n )</code></td><td>Navegar dentro dos dados</td></tr>
-<tr><td><code>RecNo() / GoTo( nRecNo )</code></td><td>Posicionar por número de registo</td></tr>
-<tr><td><code>KeyNo() / KeyGoTo( nKeyNo )</code></td><td>Posição absoluta (base 1)</td></tr>
-<tr><td><code>RecCount() / LastRec()</code></td><td>Número total de registos</td></tr>
-<tr><td><code>Bof() / Eof()</code></td><td>Verificações de limite</td></tr>
-<tr><td><code>Seek( uVal, lSoft, lWild )</code></td><td>Procurar valor na coluna de ordenação atual</td></tr>
-<tr><td><code>SetOrder( cCol, u, lDescend )</code></td><td>Definir coluna e direção de ordenação</td></tr>
-<tr><td><code>SetFilter( cFilter )</code></td><td>Definir expressão de filtro</td></tr>
-<tr><td><code>Append( aRow, nAt )</code></td><td>Adicionar uma nova linha</td></tr>
-<tr><td><code>Delete()</code></td><td>Eliminar registo atual</td></tr>
-<tr><td><code>SetXBrowse( oBrw, aCols, lAutoSort, lAutoCols )</code></td><td>Vincular a XBrowse com definição automática de colunas</td></tr>
-<tr><td><code>Record( cFieldList, lNew )</code></td><td>Obter um TDataRow para edição</td></tr>
-<tr><td><code>Edit()</code></td><td>Editar registo atual via TDataRow</td></tr>
-<tr><td><code>SaveData()</code></td><td>Salvar dados de volta à origem (DBF ou MySQL)</td></tr>
+<tr><td><code>FieldGet( n )</code></td><td>Get field value by position from current row</td></tr>
+<tr><td><code>FieldPut( nFld, uValue )</code></td><td>Set field value in current row</td></tr>
+<tr><td><code>FieldPos( cFld )</code></td><td>Get field position by name</td></tr>
+<tr><td><code>FieldName( n )</code></td><td>Get field name by position</td></tr>
+<tr><td><code>FieldType( n )</code></td><td>Get field type by position</td></tr>
+<tr><td><code>FieldLen( n )</code></td><td>Get field length by position</td></tr>
+<tr><td><code>FieldDec( n )</code></td><td>Get field decimals by position</td></tr>
+<tr><td><code>FieldPic( n, c )</code></td><td>Get/set field picture format</td></tr>
+<tr><td><code>FCount()</code></td><td>Number of fields</td></tr>
+<tr><td><code>GoTop() / GoBottom() / Skip( n )</code></td><td>Navigate within data</td></tr>
+<tr><td><code>RecNo() / GoTo( nRecNo )</code></td><td>Position by record number</td></tr>
+<tr><td><code>KeyNo() / KeyGoTo( nKeyNo )</code></td><td>Absolute position (1-based)</td></tr>
+<tr><td><code>RecCount() / LastRec()</code></td><td>Total number of records</td></tr>
+<tr><td><code>Bof() / Eof()</code></td><td>Boundary checks</td></tr>
+<tr><td><code>Seek( uVal, lSoft, lWild )</code></td><td>Search for value in current sort column</td></tr>
+<tr><td><code>SetOrder( cCol, u, lDescend )</code></td><td>Set sort column and direction</td></tr>
+<tr><td><code>SetFilter( cFilter )</code></td><td>Set filter expression</td></tr>
+<tr><td><code>Append( aRow, nAt )</code></td><td>Append a new row</td></tr>
+<tr><td><code>Delete()</code></td><td>Delete current record</td></tr>
+<tr><td><code>SetXBrowse( oBrw, aCols, lAutoSort, lAutoCols )</code></td><td>Bind to XBrowse with automatic column definition</td></tr>
+<tr><td><code>Record( cFieldList, lNew )</code></td><td>Get a TDataRow for editing</td></tr>
+<tr><td><code>Edit()</code></td><td>Edit current record via TDataRow</td></tr>
+<tr><td><code>SaveData()</code></td><td>Save data back to source (DBF or MySQL)</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Array para XBrowse com Ordenação</h2>
+<h2 id="example">Example: Array to XBrowse with Sort</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -120,17 +120,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TArrayData é a fonte de dados padrão usada por XBrowse quando <code>oBrw:SetArrayData()</code> é chamado. É criado internamente por XBrowse a partir de qualquer array de dados.</li>
-<li>Quando carregado de DBF, os dados são uma captura instantânea. As alterações não são escritas de volta a menos que <code>SaveData()</code> seja chamado, que atualiza os registos DBF originais.</li>
-<li>Os construtores <code>fromMYSQL()</code> e <code>fromQuery()</code> requerem um objeto <code>FWMariaConnection</code> e mantêm uma ligação ativa para escrever alterações de volta.</li>
-<li>A ordenação cria um índice ordenado internamente; a ordem original de <code>aData</code> é preservada em <code>aNatural</code>.</li>
+<li>TArrayData is the default data source used by XBrowse when <code>oBrw:SetArrayData()</code> is called. It is created internally by XBrowse from any data array.</li>
+<li>When loaded from DBF, the data is a snapshot. Changes are not written back unless <code>SaveData()</code> is called, which updates the original DBF records.</li>
+<li>The <code>fromMYSQL()</code> and <code>fromQuery()</code> constructors require a <code>FWMariaConnection</code> object and maintain a live link for writing back changes.</li>
+<li>Sorting creates a sorted index internally; the original <code>aData</code> order is preserved in <code>aNatural</code>.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tanimate.html">&larr; tanimate</a> | <a href="../../pt/ui/tautoget.html">tautoget &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

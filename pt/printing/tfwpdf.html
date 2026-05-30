@@ -13,75 +13,75 @@
 
 <h1>FWPdf</h1>
 <p class="class-source">Fonte: <code>source/classes/fwpdf.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TPdf</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPdf</code></p>
 
 <p>
-FWPdf é uma classe aprimorada de geração de PDF que estende <code>TPdf</code> com funcionalidades adicionais como
-suporte a Unicode, renderização de texto RTF, gráficos de pizza, preenchimentos gradientes, códigos de barras,
-impressão de imagens, hiperligações e suporte a múltiplas unidades de coordenadas (pontos, polegadas, centímetros,
-milímetros). Fornece uma API completa de alto nível para criar documentos PDF profissionais.
+FWPdf is an enhanced PDF generation class that extends <code>TPdf</code> with additional features such as
+Unicode support, RTF text rendering, pie charts, gradient fills, barcodes, image printing,
+hyperlinks, and multi-unit coordinate support (points, inches, centimeters, millimeters).
+It provides a complete high-level API for creating professional PDF documents.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>lUnicode</code></td><td>Lógico</td><td>Ativar codificação UTF-8 para texto PDF</td></tr>
-<tr><td><code>hTrueType</code></td><td>Hash</td><td>Cache de fontes TrueType carregadas (nome da face para handle)</td></tr>
-<tr><td><code>aPhySize</code></td><td>Array</td><td>Dimensões físicas da página em mm: <code>{ nWidth, nHeight }</code></td></tr>
-<tr><td><code>cAuthor</code></td><td>Caractere</td><td>Metadados do autor do documento PDF</td></tr>
-<tr><td><code>cCreator</code></td><td>Caractere</td><td>Metadados do criador do documento PDF</td></tr>
-<tr><td><code>cTitle</code></td><td>Caractere</td><td>Metadados do título do documento PDF</td></tr>
-<tr><td><code>cSubject</code></td><td>Caractere</td><td>Metadados do assunto do documento PDF</td></tr>
-<tr><td><code>lTimeStamp</code></td><td>Lógico</td><td>Incluir timestamp de criação (padrão <code>.T.</code>)</td></tr>
-<tr><td><code>oFont</code></td><td>Objeto</td><td>Objeto de fonte padrão (Courier 10)</td></tr>
-<tr><td><code>oPrn</code></td><td>TPrinter</td><td>Dispositivo de impressão opcional para tradução de coordenadas</td></tr>
-<tr><td><code>bPreview</code></td><td>Bloco</td><td>Bloco de código para abrir PDF após salvar (padrão: ShellExecute)</td></tr>
-<tr><td><code>nOrient</code></td><td>Numérico</td><td>1 = Retrato, 2 = Paisagem</td></tr>
+<tr><td><code>lUnicode</code></td><td>Logical</td><td>Enable UTF-8 encoding for PDF text</td></tr>
+<tr><td><code>hTrueType</code></td><td>Hash</td><td>Cache of loaded TrueType fonts (face name to handle)</td></tr>
+<tr><td><code>aPhySize</code></td><td>Array</td><td>Physical page dimensions in mm: <code>{ nWidth, nHeight }</code></td></tr>
+<tr><td><code>cAuthor</code></td><td>Character</td><td>PDF document author metadata</td></tr>
+<tr><td><code>cCreator</code></td><td>Character</td><td>PDF document creator metadata</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>PDF document title metadata</td></tr>
+<tr><td><code>cSubject</code></td><td>Character</td><td>PDF document subject metadata</td></tr>
+<tr><td><code>lTimeStamp</code></td><td>Logical</td><td>Include creation date timestamp (default <code>.T.</code>)</td></tr>
+<tr><td><code>oFont</code></td><td>Object</td><td>Default font object (Courier 10)</td></tr>
+<tr><td><code>oPrn</code></td><td>TPrinter</td><td>Optional printer device for coordinate translation</td></tr>
+<tr><td><code>bPreview</code></td><td>Block</td><td>Code block to open PDF after save (default: ShellExecute)</td></tr>
+<tr><td><code>nOrient</code></td><td>Numeric</td><td>1 = Portrait, 2 = Landscape</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cFileName, cPassword, cOwnerPassword, nPermission, lPreview )</code></td><td>Criar documento PDF aprimorado com suporte a Unicode</td></tr>
-<tr><td><code>Save( cFileName )</code></td><td>Salvar PDF com metadados, permissões e timestamp</td></tr>
-<tr><td><code>StartPage()</code></td><td>Iniciar uma nova página com sincronização automática de tamanho</td></tr>
-<tr><td><code>SetPage( nPageSize )</code></td><td>Definir tamanho da página com dimensões físicas</td></tr>
-<tr><td><code>GetPhySize( cUnits )</code></td><td>Obter dimensões da página em PIX, IN, CM ou MM</td></tr>
-<tr><td><code>DefineFont( cFaceName, nSize, lEmbed, lBold, lItalic, nEsc )</code></td><td>Definir uma fonte com suporte a negrito/itálico/escapamento</td></tr>
-<tr><td><code>LoadTrueType( cFaceName, lBold, lItalic, lEmbed )</code></td><td>Carregar explicitamente uma fonte TrueType</td></tr>
-<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad, cUnits )</code></td><td>Desenhar texto com suporte a unidades</td></tr>
-<tr><td><code>SayRTF( nRow, nCol, cText, nWidth, nHeight, cUnits )</code></td><td>Renderizar conteúdo de texto rico (RTF)</td></tr>
-<tr><td><code>SayText( nRow, nCol, cText, nWidth, nHeight, oFont, cAlign, nClrText, nClrBack, cUnits, nClrPen, nPenSize )</code></td><td>Desenhar texto formatado numa caixa delimitadora com alinhamento</td></tr>
-<tr><td><code>Line( nTop, nLeft, nBottom, nRight, oPen, cUnits )</code></td><td>Desenhar uma linha com suporte a unidades</td></tr>
-<tr><td><code>Rect( nTop, nLeft, nBottom, nRight, oPen, oBrush, aText, cUnits )</code></td><td>Desenhar retângulo com preenchimento opcional de pincel e texto</td></tr>
-<tr><td><code>RoundBox( nTop, nLeft, nBottom, nRight, nWidth, nHeight, oPen, oBrush, aText, cUnits )</code></td><td>Desenhar retângulo arredondado com preenchimento</td></tr>
-<tr><td><code>Ellipse( nTop, nLeft, nBottom, nRight, nClrBorder, oBrush, aText, cUnits )</code></td><td>Desenhar uma elipse ou círculo</td></tr>
-<tr><td><code>GradientFill( aRect, aGrad, lVert, cUnits )</code></td><td>Preencher uma região com cores gradientes</td></tr>
-<tr><td><code>PieChart( aRect, aValues, aColors, aPen, nStartAngle, nInnerDia, aLabels, oFont, cUnits )</code></td><td>Desenhar um gráfico de pizza/rosquinha com rótulos</td></tr>
-<tr><td><code>PrintImage( nRow, nCol, uImage, nWidth, nHeight, lStretch, nAlpha, lTransp, lGray, cUnits, cAlign, cURL )</code></td><td>Imprimir uma imagem com alpha, transparência, escala de cinza e hiperligação opcional</td></tr>
-<tr><td><code>PrintBarcode( cText, nRow, nCol, nWidth, nHeight, cUnits, cType, nClrText, nClrBack, lVertical, lTransparent )</code></td><td>Imprimir um código de barras no PDF</td></tr>
-<tr><td><code>PrintGraph( nRow, nCol, oGraph, nWidth, nHeight, cUnits )</code></td><td>Imprimir um objeto de gráfico TGraph</td></tr>
-<tr><td><code>PrintChart( nRow, nCol, oTable, nWidth, nHeight, cType, aColors, cTitle, cUnits )</code></td><td>Imprimir um gráfico a partir de uma tabela TArrayData</td></tr>
-<tr><td><code>PrintTable( nRow, nCol, oTable, nWidth, nHeight, oFont, lBorder, cTitle, cUnits )</code></td><td>Imprimir uma tabela de dados com bordas e título opcionais</td></tr>
-<tr><td><code>SetLinkToURL( aRect, cURL, cUnits )</code></td><td>Adicionar uma anotação de hiperligação a um retângulo</td></tr>
-<tr><td><code>GetTextWidth( cText, oFont, cUnits )</code></td><td>Medir largura do texto em unidades especificadas</td></tr>
-<tr><td><code>GetTextHeight( cText, oFont, cUnits )</code></td><td>Medir altura do texto em unidades especificadas</td></tr>
-<tr><td><code>Units2Pix( ... )</code></td><td>Converter de unidades especificadas para pontos PDF</td></tr>
-<tr><td><code>Pix2Units( ... )</code></td><td>Converter de pontos PDF para unidades especificadas</td></tr>
-<tr><td><code>End()</code></td><td>Fechar e liberar o documento PDF</td></tr>
+<tr><td><code>New( cFileName, cPassword, cOwnerPassword, nPermission, lPreview )</code></td><td>Create enhanced PDF document with Unicode support</td></tr>
+<tr><td><code>Save( cFileName )</code></td><td>Save PDF with metadata, permissions, and time stamp</td></tr>
+<tr><td><code>StartPage()</code></td><td>Start a new page with automatic size sync</td></tr>
+<tr><td><code>SetPage( nPageSize )</code></td><td>Set page size with physical dimensions</td></tr>
+<tr><td><code>GetPhySize( cUnits )</code></td><td>Get page dimensions in PIX, IN, CM, or MM</td></tr>
+<tr><td><code>DefineFont( cFaceName, nSize, lEmbed, lBold, lItalic, nEsc )</code></td><td>Define a font with bold/italic/escapement support</td></tr>
+<tr><td><code>LoadTrueType( cFaceName, lBold, lItalic, lEmbed )</code></td><td>Explicitly load a TrueType font</td></tr>
+<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad, cUnits )</code></td><td>Draw text with unit support</td></tr>
+<tr><td><code>SayRTF( nRow, nCol, cText, nWidth, nHeight, cUnits )</code></td><td>Render rich text (RTF) content</td></tr>
+<tr><td><code>SayText( nRow, nCol, cText, nWidth, nHeight, oFont, cAlign, nClrText, nClrBack, cUnits, nClrPen, nPenSize )</code></td><td>Draw formatted text in a bounding box with alignment</td></tr>
+<tr><td><code>Line( nTop, nLeft, nBottom, nRight, oPen, cUnits )</code></td><td>Draw a line with unit support</td></tr>
+<tr><td><code>Rect( nTop, nLeft, nBottom, nRight, oPen, oBrush, aText, cUnits )</code></td><td>Draw rectangle with optional brush fill and text</td></tr>
+<tr><td><code>RoundBox( nTop, nLeft, nBottom, nRight, nWidth, nHeight, oPen, oBrush, aText, cUnits )</code></td><td>Draw rounded rectangle with fill</td></tr>
+<tr><td><code>Ellipse( nTop, nLeft, nBottom, nRight, nClrBorder, oBrush, aText, cUnits )</code></td><td>Draw an ellipse or circle</td></tr>
+<tr><td><code>GradientFill( aRect, aGrad, lVert, cUnits )</code></td><td>Fill a region with gradient colors</td></tr>
+<tr><td><code>PieChart( aRect, aValues, aColors, aPen, nStartAngle, nInnerDia, aLabels, oFont, cUnits )</code></td><td>Draw a pie/donut chart with labels</td></tr>
+<tr><td><code>PrintImage( nRow, nCol, uImage, nWidth, nHeight, lStretch, nAlpha, lTransp, lGray, cUnits, cAlign, cURL )</code></td><td>Print an image with alpha, transparency, grayscale, and optional hyperlink</td></tr>
+<tr><td><code>PrintBarcode( cText, nRow, nCol, nWidth, nHeight, cUnits, cType, nClrText, nClrBack, lVertical, lTransparent )</code></td><td>Print a barcode on the PDF</td></tr>
+<tr><td><code>PrintGraph( nRow, nCol, oGraph, nWidth, nHeight, cUnits )</code></td><td>Print a TGraph chart object</td></tr>
+<tr><td><code>PrintChart( nRow, nCol, oTable, nWidth, nHeight, cType, aColors, cTitle, cUnits )</code></td><td>Print a chart from a TArrayData table</td></tr>
+<tr><td><code>PrintTable( nRow, nCol, oTable, nWidth, nHeight, oFont, lBorder, cTitle, cUnits )</code></td><td>Print a data table with optional borders and title</td></tr>
+<tr><td><code>SetLinkToURL( aRect, cURL, cUnits )</code></td><td>Add a hyperlink annotation to a rectangle</td></tr>
+<tr><td><code>GetTextWidth( cText, oFont, cUnits )</code></td><td>Measure text width in specified units</td></tr>
+<tr><td><code>GetTextHeight( cText, oFont, cUnits )</code></td><td>Measure text height in specified units</td></tr>
+<tr><td><code>Units2Pix( ... )</code></td><td>Convert from specified units to PDF points</td></tr>
+<tr><td><code>Pix2Units( ... )</code></td><td>Convert from PDF points to specified units</td></tr>
+<tr><td><code>End()</code></td><td>Close and release the PDF document</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: PDF Rico com Imagem, Gráfico e Gradiente</h2>
+<h2 id="example">Example: Rich PDF with Image, Chart, and Gradient</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -116,18 +116,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>FWPdf herda todos os métodos de <code>TPdf</code> e os estende com sobrecargas conscientes de unidades. O parâmetro <code>cUnits</code> aceita <code>"P"</code> (pontos), <code>"I"</code> (polegadas), <code>"C"</code> (centímetros) ou <code>"M"</code> (milímetros).</li>
-<li>Unicode está ativo por padrão baseado em <code>FW_SetUnicode()</code>. Quando ativo, a codificação UTF-8 é usada para todo o texto PDF.</li>
-<li>Metadados (autor, título, assunto, criador) são incorporados no PDF e visíveis nas propriedades do documento.</li>
-<li>Preenchimentos gradientes suportam gradientes lineares com múltiplas paragens de cor e rácios.</li>
-<li>Os tipos de código de barras incluem Code 128, Code 39, EAN-13 e outros.</li>
+<li>FWPdf inherits all methods from <code>TPdf</code> and extends them with unit-aware overloads. The <code>cUnits</code> parameter accepts <code>"P"</code> (points), <code>"I"</code> (inches), <code>"C"</code> (centimeters), or <code>"M"</code> (millimeters).</li>
+<li>Unicode is enabled by default based on <code>FW_SetUnicode()</code>. When active, UTF-8 encoding is used for all PDF text.</li>
+<li>Metadata (author, title, subject, creator) is embedded in the PDF and visible in document properties.</li>
+<li>Gradient fills support linear gradients with multiple color stops and ratios.</li>
+<li>Barcode types include Code 128, Code 39, EAN-13, and others.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ai/tfwlanguagemodel.html">&larr; tfwlanguagemodel</a> | <a href="../../pt/utilities/tfwstack.html">tfwstack &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -13,21 +13,21 @@
 
 <h1>TIPAddress</h1>
 <p class="class-source">Fuente: <code>source/classes/tipaddr.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TIPAddress envuelve el control común de dirección IP de Win32, proporcionando un campo de entrada especializado para ingresar direcciones IPv4 en notación decimal separada por puntos. Cada uno de los cuatro octetos se edita en un segmento de campo separado, con validación incorporada y restricciones de rango opcionales por campo. Each of the four octets is edited in a separate field segment, with built-in validation and optional per-field range constraints.
+TIPAddress wraps the Win32 IP address common control, providing a specialized input field for entering IPv4 addresses in dotted-decimal notation. Each of the four octets is edited in a separate field segment, with built-in validation and optional per-field range constraints.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cIPAddress</code></td><td>Character</td><td>La dirección IP actual como cadena (ej., <code>"192.168.1.1"</code>)</td></tr>
-<tr><td><code>aFieldRanges</code></td><td>Array</td><td>Array de arrays de rango <code>{ nMin, nMax }</code> para cada uno de los cuatro campos de octeto</td></tr>
+<tr><td><code>cIPAddress</code></td><td>Character</td><td>The current IP address as a string (e.g., <code>"192.168.1.1"</code>)</td></tr>
+<tr><td><code>aFieldRanges</code></td><td>Array</td><td>Array of <code>{ nMin, nMax }</code> range arrays for each of the four octet fields</td></tr>
 </tbody>
 </table>
 
@@ -35,20 +35,20 @@ TIPAddress envuelve el control común de dirección IP de Win32, proporcionando 
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, cIP, nW, nH )</code></td><td>Crear un nuevo control de entrada de dirección IP</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, cIP, nW, nH )</code></td><td>Create a new IP address input control</td></tr>
 <tr><td><code>SetAddress( cIP )</code></td><td>Set the control's IP address from a dotted-decimal string</td></tr>
-<tr><td><code>GetAddress()</code></td><td>Devuelve la dirección IP actual como cadena decimal separada por puntos (ej., <code>"192.168.1.1"</code>)</td></tr>
-<tr><td><code>ClearAddress()</code></td><td>Limpiar los cuatro campos de octeto</td></tr>
-<tr><td><code>IsBlank()</code></td><td>Devuelve <code>.T.</code> si los cuatro octetos están vacíos</td></tr>
-<tr><td><code>SetRange( nField, nMin, nMax )</code></td><td>Establecer los valores mínimo y máximo para un campo de octeto específico (1-4)</td></tr>
-<tr><td><code>SetFocus( nField )</code></td><td>Establecer el foco del teclado en un campo de octeto específico (1-4)</td></tr>
+<tr><td><code>GetAddress()</code></td><td>Return the current IP address as a dotted-decimal string (e.g., <code>"192.168.1.1"</code>)</td></tr>
+<tr><td><code>ClearAddress()</code></td><td>Clear all four octet fields to blank</td></tr>
+<tr><td><code>IsBlank()</code></td><td>Return <code>.T.</code> if all four octets are empty</td></tr>
+<tr><td><code>SetRange( nField, nMin, nMax )</code></td><td>Set the minimum and maximum values for a specific octet field (1-4)</td></tr>
+<tr><td><code>SetFocus( nField )</code></td><td>Set keyboard focus to a specific octet field (1-4)</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Entrada de Dirección IP con Rangos de Campo</h2>
+<h2 id="example">Example: IP Address Input with Field Ranges</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -73,15 +73,15 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>TIPAddress envuelve el control común <code>SysIPAddress32</code> de Win32. Solo maneja direcciones IPv4.</li>
-<li>Use <code>SetRange( nField, nMin, nMax )</code> para restringir octetos individuales. <code>nField</code> está basado en 1 (1 = octeto más a la izquierda, 4 = más a la derecha). <code>nField</code> is 1-based (1 = leftmost octet, 4 = rightmost).</li>
-<li>El método <code>GetAddress()</code> devuelve una cadena vacía si el control está en blanco; use <code>IsBlank()</code> para verificar antes de leer.</li>
-<li>La navegación entre campos de octeto es automática: presionar <kbd>.</kbd> (punto) o <kbd>→</kbd> mueve al siguiente campo.</li>
-<li>La cláusula ADDRESS en el comando <code>@ ... IPADDRESS</code> establece el valor IP inicial.</li>
+<li>TIPAddress wraps the Win32 <code>SysIPAddress32</code> common control. It handles IPv4 addresses only.</li>
+<li>Use <code>SetRange( nField, nMin, nMax )</code> to constrain individual octets. <code>nField</code> is 1-based (1 = leftmost octet, 4 = rightmost).</li>
+<li>The <code>GetAddress()</code> method returns an empty string if the control is blank; use <code>IsBlank()</code> to check before reading.</li>
+<li>Navigation between octet fields is automatic: pressing <kbd>.</kbd> (period) or <kbd>→</kbd> moves to the next field.</li>
+<li>The ADDRESS clause in the <code>@ ... IPADDRESS</code> command sets the initial IP value.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/internet/tinternet.html">&larr; tinternet</a> | <a href="../../es/ui/tipaddress.html">tipaddress &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

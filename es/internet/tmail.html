@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMail - Documentaci&oacute;n FWH</title>
+<title>TMail - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -15,13 +15,13 @@
 <p class="class-source">Fuente: <code>source/classes/tmail.prg</code></p>
 
 <p>
-TMail es la clase de correo electr&oacute;nico MAPI (Messaging API) de FiveWin. Utiliza la interfaz Simple MAPI
-de Windows para enviar correos electr&oacute;nicos a trav&eacute;s del cliente de correo predeterminado (como Microsoft Outlook,
-Windows Mail o cualquier aplicaci&oacute;n de correo compatible con MAPI). TMail soporta asunto, texto
-del cuerpo, m&uacute;ltiples destinatarios, archivos adjuntos, confirmaciones de lectura e informaci&oacute;n del remitente.
+TMail is FiveWin's MAPI (Messaging API) email class. It uses the Windows Simple MAPI
+interface to send emails through the default email client (such as Microsoft Outlook,
+Windows Mail, or any MAPI-compliant email application). TMail supports subject, body
+text, multiple recipients, file attachments, read receipts, and originator information.
 </p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
@@ -48,42 +48,42 @@ flowchart LR
     D --> G
 </div>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cSubject</code></td><td>Car&aacute;cter</td><td><code>""</code></td><td>L&iacute;nea de asunto del correo</td></tr>
-<tr><td><code>cNoteText</code></td><td>Car&aacute;cter</td><td><code>""</code></td><td>Texto del cuerpo del correo</td></tr>
-<tr><td><code>cMsgType</code></td><td>Car&aacute;cter</td><td></td><td>Tipo de mensaje (opcional, ej., "IPM.Note")</td></tr>
-<tr><td><code>cConversationID</code></td><td>Car&aacute;cter</td><td><code>""</code></td><td>Identificador de hilo de conversaci&oacute;n</td></tr>
-<tr><td><code>dDate</code></td><td>Fecha</td><td><code>Date()</code></td><td>Fecha del mensaje</td></tr>
-<tr><td><code>cTime</code></td><td>Car&aacute;cter</td><td><code>Time()</code></td><td>Hora del mensaje</td></tr>
-<tr><td><code>lReceipt</code></td><td>L&oacute;gico</td><td><code>.F.</code></td><td>Solicitar confirmaci&oacute;n de lectura</td></tr>
-<tr><td><code>lFromUser</code></td><td>L&oacute;gico</td><td><code>.T.</code></td><td>Preguntar al usuario antes de enviar</td></tr>
-<tr><td><code>aOrigin</code></td><td>Array</td><td><code>{}</code></td><td>Informaci&oacute;n de direcci&oacute;n del remitente</td></tr>
-<tr><td><code>aRecipients</code></td><td>Array</td><td><code>{}</code></td><td>Array de direcciones de destinatarios</td></tr>
-<tr><td><code>aFiles</code></td><td>Array</td><td><code>{}</code></td><td>Array de rutas de archivos para adjuntar</td></tr>
-<tr><td><code>nRetCode</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>C&oacute;digo de retorno de MAPISendMail (0 = &eacute;xito)</td></tr>
+<tr><td><code>cSubject</code></td><td>Character</td><td><code>""</code></td><td>Email subject line</td></tr>
+<tr><td><code>cNoteText</code></td><td>Character</td><td><code>""</code></td><td>Email body text</td></tr>
+<tr><td><code>cMsgType</code></td><td>Character</td><td></td><td>Message type (optional, e.g. "IPM.Note")</td></tr>
+<tr><td><code>cConversationID</code></td><td>Character</td><td><code>""</code></td><td>Conversation thread identifier</td></tr>
+<tr><td><code>dDate</code></td><td>Date</td><td><code>Date()</code></td><td>Message date</td></tr>
+<tr><td><code>cTime</code></td><td>Character</td><td><code>Time()</code></td><td>Message time</td></tr>
+<tr><td><code>lReceipt</code></td><td>Logical</td><td><code>.F.</code></td><td>Request a read receipt</td></tr>
+<tr><td><code>lFromUser</code></td><td>Logical</td><td><code>.T.</code></td><td>Prompt user before sending</td></tr>
+<tr><td><code>aOrigin</code></td><td>Array</td><td><code>{}</code></td><td>Originator address information</td></tr>
+<tr><td><code>aRecipients</code></td><td>Array</td><td><code>{}</code></td><td>Array of recipient addresses</td></tr>
+<tr><td><code>aFiles</code></td><td>Array</td><td><code>{}</code></td><td>Array of file paths to attach</td></tr>
+<tr><td><code>nRetCode</code></td><td>Numeric</td><td><code>0</code></td><td>Return code from MAPISendMail (0 = success)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cSubject, cNoteText, cMsgType, cConversationID, dDate, cTime, lReceipt, lFromUser, aOrigin, aRecipients, aFiles )</code></td><td>Crear un nuevo mensaje de correo con todos los par&aacute;metros opcionales. Valores predeterminados: asunto vac&iacute;o, cuerpo vac&iacute;o, fecha de hoy, hora actual, sin confirmaci&oacute;n, preguntar al usuario.</td></tr>
-<tr><td><code>Activate()</code></td><td>Enviar el correo a trav&eacute;s de MAPI. Llama a <code>MAPISendMail()</code> con todas las propiedades configuradas. Almacena el c&oacute;digo de retorno en <code>nRetCode</code>.</td></tr>
-<tr><td><code>End()</code></td><td>Cerrar sesi&oacute;n de MAPI. Llama a <code>MAPILogOff()</code>.</td></tr>
+<tr><td><code>New( cSubject, cNoteText, cMsgType, cConversationID, dDate, cTime, lReceipt, lFromUser, aOrigin, aRecipients, aFiles )</code></td><td>Create a new mail message with all optional parameters. Defaults: empty subject, empty body, today's date, current time, no receipt, prompt user.</td></tr>
+<tr><td><code>Activate()</code></td><td>Send the email via MAPI. Calls <code>MAPISendMail()</code> with all configured properties. Stores the return code in <code>nRetCode</code>.</td></tr>
+<tr><td><code>End()</code></td><td>Log off from the MAPI session. Calls <code>MAPILogOff()</code>.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Enviar Correo con Archivos Adjuntos</h2>
+<h2 id="example">Example: Send Email with Attachments</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -120,37 +120,37 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="codes">C&oacute;digos de Retorno MAPI</h2>
+<h2 id="codes">MAPI Return Codes</h2>
 
 <table>
 <thead>
-<tr><th>C&oacute;digo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Code</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>0</code></td><td>&Eacute;xito</td></tr>
-<tr><td><code>1</code></td><td>Usuario cancel&oacute;</td></tr>
-<tr><td><code>2</code></td><td>Fallo general</td></tr>
-<tr><td><code>3</code></td><td>Fallo de inicio de sesi&oacute;n</td></tr>
-<tr><td><code>4</code></td><td>Disco lleno</td></tr>
-<tr><td><code>5</code></td><td>Memoria insuficiente</td></tr>
-<tr><td><code>6</code></td><td>Acceso denegado</td></tr>
-<tr><td><code>14</code></td><td>Destinatario desconocido</td></tr>
-<tr><td><code>15</code></td><td>Tipo de destinatario incorrecto</td></tr>
+<tr><td><code>0</code></td><td>Success</td></tr>
+<tr><td><code>1</code></td><td>User aborted</td></tr>
+<tr><td><code>2</code></td><td>General failure</td></tr>
+<tr><td><code>3</code></td><td>Login failure</td></tr>
+<tr><td><code>4</code></td><td>Disk full</td></tr>
+<tr><td><code>5</code></td><td>Insufficient memory</td></tr>
+<tr><td><code>6</code></td><td>Access denied</td></tr>
+<tr><td><code>14</code></td><td>Unknown recipient</td></tr>
+<tr><td><code>15</code></td><td>Bad recipient type</td></tr>
 </tbody>
 </table>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TMail utiliza el cliente MAPI predeterminado instalado en el sistema. Outlook, Windows Mail, Thunderbird (con plugin MAPI) y la mayor&iacute;a de los clientes de correo soportan MAPI.</li>
-<li>Cuando <code>lFromUser</code> es <code>.T.</code> (predeterminado), se abre la ventana de redacci&oacute;n del cliente de correo para que el usuario revise y env&iacute;e. Cuando es <code>.F.</code>, el correo se env&iacute;a silenciosamente.</li>
-<li>El array <code>aFiles</code> acepta rutas completas a archivos. Los adjuntos pueden ser de cualquier tipo de archivo compatible con el cliente de correo del destinatario.</li>
-<li>Los destinatarios en <code>aRecipients</code> pueden ser cadenas de direcci&oacute;n de correo simples o estructuras de destinatario MAPI con campos de nombre y direcci&oacute;n.</li>
-<li>Verifique <code>nRetCode</code> despu&eacute;s de <code>Activate()</code> para determinar si el env&iacute;o fue exitoso.</li>
+<li>TMail uses the default MAPI client installed on the system. Outlook, Windows Mail, Thunderbird (with MAPI plugin), and most email clients support MAPI.</li>
+<li>When <code>lFromUser</code> is <code>.T.</code> (default), the email client's compose window opens for the user to review and send. When <code>.F.</code>, the email is sent silently.</li>
+<li>The <code>aFiles</code> array accepts full paths to files. Attachments can be any file type supported by the recipient's email client.</li>
+<li>Recipients in <code>aRecipients</code> can be simple email address strings or MAPI recipient structures with name and address fields.</li>
+<li>Check <code>nRetCode</code> after <code>Activate()</code> to determine if the send was successful.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/data/tlocks.html">&larr; tlocks</a> | <a href="../../es/data/tmariaconnect.html">tmariaconnect &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

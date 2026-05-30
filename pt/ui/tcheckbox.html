@@ -1,43 +1,43 @@
-﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCheckBox / TRadio - DocumentaÃ§Ã£o FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCheckBox / TRadio - Documentação FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TCheckBox / TRadio</h1>
-<p class="subtitle">Caixas de seleÃ§Ã£o booleanas e grupos de botÃµes de rÃ¡dio mutuamente exclusivos</p>
+<p class="subtitle">Boolean checkboxes and mutually-exclusive radio button groups</p>
 
 <h2 id="tcheckbox">TCheckBox</h2>
 
-<p><strong>Fonte:</strong> <code>source/classes/checkbox.prg</code> &nbsp;|&nbsp; <strong>Classe pai:</strong> <code>TControl</code></p>
+<p><strong>Fonte:</strong> <code>source/classes/checkbox.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<p><code>TCheckBox</code> encapsula o controle de caixa de seleÃ§Ã£o padrÃ£o do Windows. Vincula-se a uma variÃ¡vel lÃ³gica -- <code>.T.</code> quando marcado, <code>.F.</code> quando desmarcado. Caixas de seleÃ§Ã£o sÃ£o independentes; qualquer nÃºmero pode estar marcado simultaneamente.</p>
+<p><code>TCheckBox</code> wraps the standard Windows checkbox control. It binds to a logical variable -- <code>.T.</code> when checked, <code>.F.</code> when unchecked. Checkboxes are independent; any number can be checked simultaneously.</p>
 
-<h3 id="tcheckbox-properties">Propriedades de TCheckBox</h3>
+<h3 id="tcheckbox-properties">TCheckBox Properties</h3>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloco de vinculação de dados que lê/escreve a variável lógica</td></tr>
-<tr><td><code>cCaption</code></td><td>String</td><td>Texto exibido ao lado da caixa de seleção</td></tr>
-<tr><td><code>lChecked</code></td><td>Logical</td><td>Estado atual de marcação</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Data-binding block that reads/writes the logical variable</td></tr>
+<tr><td><code>cCaption</code></td><td>String</td><td>Text displayed beside the checkbox</td></tr>
+<tr><td><code>lChecked</code></td><td>Logical</td><td>Current checked state</td></tr>
 </tbody>
 </table>
 
-<h3 id="tcheckbox-methods">Métodos de TCheckBox</h3>
+<h3 id="tcheckbox-methods">TCheckBox Methods</h3>
 
 <table>
-<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, cCaption, bSetGet, oWnd, ... )</code></td><td>Construtor.</td></tr>
-<tr><td><code>Click()</code></td><td>Alterna o estado de marcação e avalia <code>bSetGet</code>.</td></tr>
-<tr><td><code>Check()</code></td><td>Define o estado de marcação como <code>.T.</code></td></tr>
-<tr><td><code>UnCheck()</code></td><td>Define o estado de marcação como <code>.F.</code></td></tr>
-<tr><td><code>SetCheck( lOnOff )</code></td><td>Define o estado de marcação com o valor informado.</td></tr>
-<tr><td><code>lIsChecked()</code></td><td>Retorna o estado visual de marcação atual a partir da API do Windows.</td></tr>
-<tr><td><code>Refresh()</code></td><td>Relê a variável vinculada e atualiza o estado visual.</td></tr>
+<tr><td><code>New( nRow, nCol, cCaption, bSetGet, oWnd, ... )</code></td><td>Constructor.</td></tr>
+<tr><td><code>Click()</code></td><td>Toggle the check state and evaluate <code>bSetGet</code>.</td></tr>
+<tr><td><code>Check()</code></td><td>Set checked state to <code>.T.</code></td></tr>
+<tr><td><code>UnCheck()</code></td><td>Set checked state to <code>.F.</code></td></tr>
+<tr><td><code>SetCheck( lOnOff )</code></td><td>Set checked state to the given value.</td></tr>
+<tr><td><code>lIsChecked()</code></td><td>Returns the current visual check state from the Windows API.</td></tr>
+<tr><td><code>Refresh()</code></td><td>Re-read the bound variable and update the visual state.</td></tr>
 </tbody>
 </table>
 
-<h3 id="tcheckbox-command">Comando TCheckBox</h3>
+<h3 id="tcheckbox-command">TCheckBox Command</h3>
 
 <pre><code class="language-harbour">@ nRow, nCol CHECKBOX oChk VAR lVar ;
    PROMPT "Label text" ;
@@ -47,26 +47,26 @@
    [ WHEN bWhen ] ;
    [ FONT oFont ]</code></pre>
 
-<h2 id="tradio">TRadio e TRadMenu</h2>
+<h2 id="tradio">TRadio and TRadMenu</h2>
 
-<p><strong>Fonte:</strong> <code>source/classes/radio.prg</code> &nbsp;|&nbsp; <strong>Classe pai:</strong> <code>TControl</code></p>
+<p><strong>Fonte:</strong> <code>source/classes/radio.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<p><code>TRadio</code> representa um botÃ£o de rÃ¡dio individual. BotÃµes de rÃ¡dio sÃ£o <em>mutuamente exclusivos</em> dentro de um grupo -- selecionar um desmarca todos os outros. O grupo Ã© gerenciado por um objeto <code>TRadMenu</code>, que se vincula a uma variÃ¡vel numÃ©rica indicando qual opÃ§Ã£o estÃ¡ selecionada (baseada em 1).</p>
+<p><code>TRadio</code> represents a single radio button. Radio buttons are <em>mutually exclusive</em> within a group -- selecting one deselects all others. The group is managed by a <code>TRadMenu</code> object, which binds to a numeric variable indicating which option is selected (1-based).</p>
 
-<h3 id="tradio-architecture">Arquitetura do Grupo de RÃ¡dio</h3>
+<h3 id="tradio-architecture">Radio Group Architecture</h3>
 
 <div class="mermaid">
 graph TD
     RADMENU["TRadMenu<br/>nOption = 2<br/>bSetGet: {|u| nChoice}"]
 
     RADMENU --> R1["TRadio 1<br/>nPos = 1<br/>'Standard'"]
-    RADMENU --> R2["TRadio 2<br/>nPos = 2<br/>'Express' (selecionado)"]
+    RADMENU --> R2["TRadio 2<br/>nPos = 2<br/>'Express' (selected)"]
     RADMENU --> R3["TRadio 3<br/>nPos = 3<br/>'Overnight'"]
 
     R2 -.->|"Click"| RADMENU
     RADMENU -.->|"Select(Self)"| R2
-    RADMENU -.->|"Desmarcar outros"| R1
-    RADMENU -.->|"Desmarcar outros"| R3
+    RADMENU -.->|"Deselect others"| R1
+    RADMENU -.->|"Deselect others"| R3
 
     style RADMENU fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
     style R2 fill:#1c2129,stroke:#3fb950,stroke-width:2px,color:#e6edf3
@@ -74,18 +74,18 @@ graph TD
     style R3 fill:#1c2129,stroke:#30363d,stroke-width:1px,color:#8b949e
 </div>
 
-<h3 id="tradio-properties">Propriedades de TRadio</h3>
+<h3 id="tradio-properties">TRadio Properties</h3>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>oRadMenu</code></td><td>Object</td><td>Referência ao <code>TRadMenu</code> que possui este botão de rádio</td></tr>
-<tr><td><code>nPos</code></td><td>Numeric</td><td>Índice de posição dentro do grupo. Quando este rádio está selecionado, <code>TRadMenu:nOption</code> é igual a <code>nPos</code>.</td></tr>
-<tr><td><code>cCaption</code></td><td>String</td><td>Texto exibido ao lado do botão de rádio</td></tr>
+<tr><td><code>oRadMenu</code></td><td>Object</td><td>Reference to the <code>TRadMenu</code> that owns this radio button</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Position index within the group. When this radio is selected, <code>TRadMenu:nOption</code> equals <code>nPos</code>.</td></tr>
+<tr><td><code>cCaption</code></td><td>String</td><td>Text displayed beside the radio button</td></tr>
 </tbody>
 </table>
 
-<h3 id="tradio-command">Comando Radio</h3>
+<h3 id="tradio-command">Radio Command</h3>
 
 <pre><code class="language-harbour">@ nRow, nCol RADIO oRad VAR nChoice ;
    PROMPT "Option text" ;
@@ -93,25 +93,25 @@ graph TD
    [ WHEN bWhen ] ;
    [ ON CHANGE bChange ]</code></pre>
 
-<p>Quando vários comandos <code>RADIO</code> compartilham o mesmo <code>VAR</code>, o FiveWin os agrupa automaticamente em um <code>TRadMenu</code>.</p>
+<p>When multiple <code>RADIO</code> commands share the same <code>VAR</code>, FiveWin automatically groups them into a <code>TRadMenu</code>.</p>
 
-<h2 id="checkbox-vs-radio">Checkbox vs. Radio: Quando Usar Cada Um</h2>
+<h2 id="checkbox-vs-radio">Checkbox vs. Radio: When to Use Which</h2>
 
 <div class="mermaid">
 graph LR
-    Q{"O usuário precisa..."}
-    Q -->|"ligar/desligar"| CB["Use TCheckBox<br/>Independente, qualquer combinação OK"]
-    Q -->|"escolher 1 de N"| RB["Use grupo TRadio<br/>Mutuamente exclusivo"]
-    Q -->|"selecionar vários de uma lista"| ML["Use grupo TCheckBox<br/>ou TXBrowse com marcas de seleção"]
+    Q{"User needs to..."}
+    Q -->|"toggle on/off"| CB["Use TCheckBox<br/>Independent, any combo OK"]
+    Q -->|"choose 1 of N"| RB["Use TRadio group<br/>Mutually exclusive"]
+    Q -->|"select multiple from list"| ML["Use TCheckBox group<br/>or TXBrowse with checkmarks"]
 
     style CB fill:#1c2129,stroke:#3fb950,color:#e6edf3
     style RB fill:#1c2129,stroke:#58a6ff,color:#e6edf3
     style ML fill:#1c2129,stroke:#d29922,color:#e6edf3
 </div>
 
-<h2 id="examples">Exemplos de CÃ³digo</h2>
+<h2 id="examples">Code Examples</h2>
 
-<h3>Exemplo 1: Caixas de SeleÃ§Ã£o para OpÃ§Ãµes</h3>
+<h3>Example 1: Checkboxes for Options</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -141,7 +141,7 @@ FUNCTION PrintOptions()
    ACTIVATE DIALOG oDlg CENTERED
 RETURN NIL</code></pre>
 
-<h3>Exemplo 2: Grupo de BotÃµes de RÃ¡dio</h3>
+<h3>Example 2: Radio Button Group</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -172,7 +172,7 @@ STATIC FUNCTION ShowShippingCost( nMethod )
             LTrim( Str( aCosts[ nMethod ], 8, 2 ) ) )
 RETURN NIL</code></pre>
 
-<h3>Exemplo 3: Caixas e RÃ¡dios Misturados em um DiÃ¡logo de ConfiguraÃ§Ãµes</h3>
+<h3>Example 3: Mixed Checkboxes and Radios in a Settings Dialog</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -226,26 +226,26 @@ FUNCTION AppSettings()
    ACTIVATE DIALOG oDlg CENTERED
 RETURN NIL</code></pre>
 
-<h2 id="tips">Dicas</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-  <li><strong>Checkbox</strong> vincula-se a uma variÃ¡vel <em>lÃ³gica</em>. <strong>Grupo de rádio</strong> vincula-se a uma variÃ¡vel <em>numÃ©rica</em> (o Ã­ndice da opÃ§Ã£o).</li>
-  <li>FiveWin agrupa automaticamente comandos <code>RADIO</code> consecutivos que compartilham o mesmo <code>VAR</code> em um <code>TRadMenu</code>.</li>
-  <li>Use <code>&amp;</code> no PROMPT para definir um acelerador de tecla Alt: <code>"&amp;Landscape"</code> significa que Alt+L o alterna.</li>
-  <li>Para uma caixa de seleção vinculada a um campo lógico DBF, use <code>FieldWBlock( "ACTIVE", Select() )</code> como o <code>bSetGet</code>.</li>
-  <li>A cláusula <code>ON CHANGE</code> dispara após cada mudança de estado, útil para habilitar/desabilitar controles dependentes.</li>
-  <li>Os botões de rádio suportam navegação por teclas de seta dentro do grupo automaticamente.</li>
-  <li>Para mais de 5-6 opções, considere usar um <code>TComboBox</code> em vez de um longo grupo de rádio.</li>
+  <li><strong>Checkbox</strong> binds to a <em>logical</em> variable. <strong>Radio group</strong> binds to a <em>numeric</em> variable (the option index).</li>
+  <li>FiveWin auto-groups consecutive <code>RADIO</code> commands sharing the same <code>VAR</code> into a <code>TRadMenu</code>.</li>
+  <li>Use <code>&amp;</code> in the PROMPT to set an Alt-key accelerator: <code>"&amp;Landscape"</code> means Alt+L toggles it.</li>
+  <li>For a checkbox bound to a DBF logical field, use <code>FieldWBlock( "ACTIVE", Select() )</code> as the <code>bSetGet</code>.</li>
+  <li>The <code>ON CHANGE</code> clause fires after each state change, useful for enabling/disabling dependent controls.</li>
+  <li>Radio buttons support arrow-key navigation within the group automatically.</li>
+  <li>For more than 5-6 options, consider using a <code>TComboBox</code> instead of a long radio group.</li>
 </ul>
 
-<h2 id="see-also">Veja tambÃ©m</h2>
+<h2 id="see-also">Veja Também</h2>
 <ul>
-  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- classe pai</li>
-  <li><a href="../../pt/ui/tcombobox.html">TComboBox</a> -- alternativa para selecionar um entre muitos itens</li>
-  <li><a href="../../pt/ui/tget.html">TGet</a> -- controles de entrada de texto</li>
-  <li><a href="../../pt/ui/tfolder.html">TFolder</a> -- controle de abas frequentemente usado para organizar caixas de seleção e rádios</li>
+  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../pt/ui/tcombobox.html">TComboBox</a> -- alternative for selecting one of many items</li>
+  <li><a href="../../pt/ui/tget.html">TGet</a> -- text input controls</li>
+  <li><a href="../../pt/ui/tfolder.html">TFolder</a> -- tab control often used to organize checkboxes and radios</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta pÃ¡gina</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

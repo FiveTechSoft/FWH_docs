@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TScrollMsg - FWH Docs</title>
+<title>TScrollMsg - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,41 +13,41 @@
 
 <h1>TScrollMsg</h1>
 <p class="class-source">Fonte: <code>source/classes/scrolmsg.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TPanel</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
 
 <p>
-O TScrollMsg é um controle de texto de rolagem automática (marquee). Ele rola continuamente o texto horizontalmente (estilo fita de ticker) ou verticalmente (estilo créditos rolantes). Um temporizador conduz a rolagem incremental de pixels, e o texto se enrola perfeitamente quando atinge o final. Ele suporta velocidade configurável, cores, bordas e atualizações de texto em tempo de execução.
+TScrollMsg is an auto-scrolling marquee text control. It continuously scrolls text either horizontally (ticker-tape style) or vertically (scrolling credits style). A timer drives incremental pixel scrolling, and the text wraps around seamlessly when it reaches the end. It supports configurable speed, colors, borders, and runtime text updates.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cText</code></td><td>Character</td><td>O texto a ser rolado (somente leitura, use <code>SetText()</code> para atualizar)</td></tr>
-<tr><td><code>lVertical</code></td><td>Logical</td><td>Rolagem vertical quando <code>.T.</code> (padrão), horizontal quando <code>.F.</code></td></tr>
-<tr><td><code>nSpeed</code></td><td>Numeric</td><td>Velocidade de rolagem em pixels por tick (padrão 2)</td></tr>
-<tr><td><code>lBorder</code></td><td>Logical</td><td>Desenhar uma borda ao redor do controle (padrão <code>.T.</code>)</td></tr>
-<tr><td><code>nScrollPix</code></td><td>Numeric</td><td>Deslocamento atual da rolagem em pixels (protegido)</td></tr>
-<tr><td><code>nTextSize</code></td><td>Numeric</td><td>Dimensão de texto em cache para cálculo de quebra (protegido)</td></tr>
+<tr><td><code>cText</code></td><td>Character</td><td>The text to scroll (read-only, use <code>SetText()</code> to update)</td></tr>
+<tr><td><code>lVertical</code></td><td>Logical</td><td>Vertical scrolling when <code>.T.</code> (default), horizontal when <code>.F.</code></td></tr>
+<tr><td><code>nSpeed</code></td><td>Numeric</td><td>Scroll speed in pixels per tick (default 2)</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Draw a border around the control (default <code>.T.</code>)</td></tr>
+<tr><td><code>nScrollPix</code></td><td>Numeric</td><td>Current pixel scroll offset (protected)</td></tr>
+<tr><td><code>nTextSize</code></td><td>Numeric</td><td>Cached text dimension for wrap calculation (protected)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, cText, oWnd, oFont, nSpeed, nClrText, nClrBack, lHoriz, lPixels, lDesign, cVarName, lNoBorder )</code></td><td>Criar um novo controle marquee TScrollMsg</td></tr>
-<tr><td><code>SetText( cText )</code></td><td>Alterar o texto rolante em tempo de execução e reiniciar a rolagem</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, cText, oWnd, oFont, nSpeed, nClrText, nClrBack, lHoriz, lPixels, lDesign, cVarName, lNoBorder )</code></td><td>Create a new TScrollMsg marquee control</td></tr>
+<tr><td><code>SetText( cText )</code></td><td>Change the scrolling text at runtime and restart scroll</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Marquee Horizontal</h2>
+<h2 id="example">Example: Horizontal Marquee</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -65,18 +65,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Observações</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O intervalo do temporizador do marquee é fixo em 18 ms (aproximadamente 55 fps). Ajuste <code>nSpeed</code> (pixels por tick) para controlar a velocidade efetiva da rolagem.</li>
-<li>Ao rolar verticalmente, o texto quebra usando <code>DT_WORDBREAK</code>. A rolagem horizontal usa uma única linha com <code>DT_SINGLELINE</code>.</li>
-<li>Passe <code>lHoriz := .T.</code> para ativar a rolagem horizontal; o padrão é vertical.</li>
-<li>O controle cria e ativa automaticamente seu temporizador na primeira pintura e o destrói em <code>Destroy()</code>.</li>
-<li>Defina <code>lNoBorder := .T.</code> para suprimir o contorno da caixa ao redor.</li>
+<li>The marquee timer interval is fixed at 18 ms (approximately 55 fps). Adjust <code>nSpeed</code> (pixels per tick) to control the effective scroll velocity.</li>
+<li>When scrolling vertically, text wraps using <code>DT_WORDBREAK</code>. Horizontal scrolling uses a single line with <code>DT_SINGLELINE</code>.</li>
+<li>Pass <code>lHoriz := .T.</code> to enable horizontal scrolling; the default is vertical.</li>
+<li>The control automatically creates and activates its timer on first paint and destroys it on <code>Destroy()</code>.</li>
+<li>Set <code>lNoBorder := .T.</code> to suppress the surrounding box outline.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tscrollmetro.html">&larr; tscrollmetro</a> | <a href="../../pt/ui/tscrollpanel.html">tscrollpanel &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

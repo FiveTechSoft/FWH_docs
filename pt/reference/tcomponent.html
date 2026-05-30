@@ -12,11 +12,11 @@
 <main id="content">
 
 <h1>TComponent / TDataBaseComp / TDbfComp</h1>
-<p class="class-source">Fontes: <code>source/classes/tcompone.prg</code>, <code>source/classes/tdbasecomp.prg</code>, <code>source/classes/tdbfcomp.prg</code></p>
+<p class="class-source">Sources: <code>source/classes/tcompone.prg</code>, <code>source/classes/tdbasecomp.prg</code>, <code>source/classes/tdbfcomp.prg</code></p>
 <p class="class-hierarchy">TComponent FROM TControl; TDataBaseComp FROM TComponent; TDbfComp FROM TComponent</p>
 
 <p>
-As classes de componentes fornecem um modelo de composição orientado a objetos para o FiveWin. TComponent encapsula um objeto Harbour arbitrário (<code>oObject</code>) e delega mensagens a ele, atuando como inspetor/contêiner. TDataBaseComp estende isso para tabelas de banco de dados com eventos CRUD, e TDbfComp adiciona suporte a índices e relações específicos de DBF. Todos os três suportam inspeção de propriedades/eventos por meio dos arrays <code>aProperties</code> e <code>aEvents</code>.
+The component classes provide an object-oriented composition model for FiveWin. TComponent wraps an arbitrary Harbour object (<code>oObject</code>) and delegates messages to it, acting as an inspector/container. TDataBaseComp extends this for database tables with CRUD events, and TDbfComp adds DBF-specific index and relation support. All three support property/event inspection via <code>aProperties</code> and <code>aEvents</code> arrays.
 </p>
 
 <div class="mermaid">
@@ -42,92 +42,92 @@ classDiagram
 
 <h2 id="tcomponent">TComponent</h2>
 
-<p>TComponent herda de TControl e encapsula um objeto alvo (<code>oObject</code>). Seu manipulador de erros (<code>Error()</code>) delega automaticamente mensagens desconhecidas ao <code>oObject</code>, de modo que você pode interagir com o objeto encapsulado de forma transparente através do componente.</p>
+<p>TComponent inherits from TControl and wraps a target object (<code>oObject</code>). Its error handler (<code>Error()</code>) automatically delegates unknown messages to <code>oObject</code>, so you can interact with the wrapped object transparently through the component.</p>
 
-<h3>Principais DATA</h3>
+<h3>Key DATA</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oObject</code></td><td>Object</td><td>O objeto Harbour encapsulado</td></tr>
-<tr><td><code>aProperties</code></td><td>Array</td><td>Array de descritores de propriedades para o inspetor</td></tr>
-<tr><td><code>aEvents</code></td><td>Array</td><td>Array de descritores de eventos (pares de codeblock)</td></tr>
-<tr><td><code>bInspect</code></td><td>Block</td><td>Codeblock avaliado quando a inspeção é solicitada</td></tr>
+<tr><td><code>oObject</code></td><td>Object</td><td>The wrapped Harbour object</td></tr>
+<tr><td><code>aProperties</code></td><td>Array</td><td>Array of property descriptors for the inspector</td></tr>
+<tr><td><code>aEvents</code></td><td>Array</td><td>Array of event descriptors (codeblock pairs)</td></tr>
+<tr><td><code>bInspect</code></td><td>Block</td><td>Codeblock evaluated when inspection is requested</td></tr>
 </tbody>
 </table>
 
-<h3>Principais METHODs</h3>
+<h3>Key METHODs</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nId, oObject )</code></td><td>Cria um componente encapsulando oObject</td></tr>
-<tr><td><code>Error( ... )</code></td><td>Manipulador de erros que delega automaticamente para oObject</td></tr>
+<tr><td><code>New( oWnd, nId, oObject )</code></td><td>Create a component wrapping oObject</td></tr>
+<tr><td><code>Error( ... )</code></td><td>Error handler auto-delegates to oObject</td></tr>
 </tbody>
 </table>
 
 <h2 id="tdatabasecomp">TDataBaseComp</h2>
 
-<p>TDataBaseComp estende TComponent para acesso a tabelas de banco de dados. Fornece navegação e edição orientadas a eventos com callbacks OnOpen, OnSkip e OnSave.</p>
+<p>TDataBaseComp extends TComponent for database table access. It provides event-driven navigation and editing with OnOpen, OnSkip, and OnSave callbacks.</p>
 
-<h3>Principais DATA</h3>
+<h3>Key DATA</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cFile</code></td><td>Character</td><td>Caminho do arquivo de banco de dados</td></tr>
-<tr><td><code>cAlias</code></td><td>Character</td><td>Alias da área de trabalho</td></tr>
-<tr><td><code>cDriver</code></td><td>Character</td><td>Nome do driver RDD (ex.: "DBFCDX")</td></tr>
-<tr><td><code>OnOpen</code></td><td>Block</td><td>Codeblock avaliado quando a tabela é aberta</td></tr>
-<tr><td><code>OnSkip</code></td><td>Block</td><td>Codeblock avaliado na navegação de registros</td></tr>
-<tr><td><code>OnSave</code></td><td>Block</td><td>Codeblock avaliado quando um registro é salvo</td></tr>
+<tr><td><code>cFile</code></td><td>Character</td><td>Database file path</td></tr>
+<tr><td><code>cAlias</code></td><td>Character</td><td>Work area alias</td></tr>
+<tr><td><code>cDriver</code></td><td>Character</td><td>RDD driver name (e.g. "DBFCDX")</td></tr>
+<tr><td><code>OnOpen</code></td><td>Block</td><td>Codeblock evaluated when the table is opened</td></tr>
+<tr><td><code>OnSkip</code></td><td>Block</td><td>Codeblock evaluated on record navigation</td></tr>
+<tr><td><code>OnSave</code></td><td>Block</td><td>Codeblock evaluated when a record is saved</td></tr>
 </tbody>
 </table>
 
-<h3>Principais METHODs</h3>
+<h3>Key METHODs</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>CreateFromCode()</code></td><td>Cria o componente programaticamente a partir de código</td></tr>
-<tr><td><code>Skip( n )</code></td><td>Move n registros para frente/para trás</td></tr>
-<tr><td><code>Append()</code></td><td>Adiciona um registro em branco</td></tr>
-<tr><td><code>Delete()</code></td><td>Marca o registro atual como excluído</td></tr>
-<tr><td><code>Save()</code></td><td>Grava as alterações pendentes em disco</td></tr>
+<tr><td><code>CreateFromCode()</code></td><td>Programmatically create the component from code</td></tr>
+<tr><td><code>Skip( n )</code></td><td>Move n records forward/backward</td></tr>
+<tr><td><code>Append()</code></td><td>Append a blank record</td></tr>
+<tr><td><code>Delete()</code></td><td>Mark the current record as deleted</td></tr>
+<tr><td><code>Save()</code></td><td>Commit pending changes to disk</td></tr>
 </tbody>
 </table>
 
 <h2 id="tdbfcomp">TDbfComp</h2>
 
-<p>TDbfComp estende TComponent para operações específicas de DBF, incluindo gerenciamento de índices e relações.</p>
+<p>TDbfComp extends TComponent for DBF-specific operations, including index management and relations.</p>
 
-<h3>Principais DATA (propriedades SETGET)</h3>
+<h3>Key DATA (SETGET properties)</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cIndexName</code></td><td>Character</td><td>Nome do arquivo de índice</td></tr>
-<tr><td><code>cTagName</code></td><td>Character</td><td>Nome da tag do índice</td></tr>
-<tr><td><code>aRelations</code></td><td>Array</td><td>Array de definições de relação com tabelas filhas</td></tr>
-<tr><td><code>lOpened</code></td><td>Logical (SETGET)</td><td>.T. se a tabela estiver aberta</td></tr>
-<tr><td><code>lSelected</code></td><td>Logical (SETGET)</td><td>.T. se a área de trabalho estiver selecionada</td></tr>
-<tr><td><code>cAlias</code></td><td>Character (SETGET)</td><td>Nome do alias da área de trabalho</td></tr>
-<tr><td><code>cFileName</code></td><td>Character (SETGET)</td><td>Caminho do arquivo DBF</td></tr>
-<tr><td><code>nWorkArea</code></td><td>Numeric (SETGET)</td><td>Número da área de trabalho</td></tr>
+<tr><td><code>cIndexName</code></td><td>Character</td><td>Index file name</td></tr>
+<tr><td><code>cTagName</code></td><td>Character</td><td>Index tag name</td></tr>
+<tr><td><code>aRelations</code></td><td>Array</td><td>Array of relation definitions to child tables</td></tr>
+<tr><td><code>lOpened</code></td><td>Logical (SETGET)</td><td>.T. if the table is open</td></tr>
+<tr><td><code>lSelected</code></td><td>Logical (SETGET)</td><td>.T. if the work area is selected</td></tr>
+<tr><td><code>cAlias</code></td><td>Character (SETGET)</td><td>Work area alias name</td></tr>
+<tr><td><code>cFileName</code></td><td>Character (SETGET)</td><td>DBF file path</td></tr>
+<tr><td><code>nWorkArea</code></td><td>Numeric (SETGET)</td><td>Work area number</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Componente de Banco de Dados</h2>
+<h2 id="example">Example: Database Component</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -137,7 +137,7 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "Component Demo" SIZE 600, 400
 
-   // Cria um TDataBaseComp encapsulando uma tabela de clientes
+   // Create a TDataBaseComp wrapping a customer table
    oComp := TDataBaseComp():New( oWnd, 101 )
    oComp:cFile   := "customers.dbf"
    oComp:cDriver := "DBFCDX"
@@ -152,17 +152,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O manipulador de erros do TComponent intercepta qualquer acesso a método ou dado não definido no próprio componente e o encaminha para <code>oObject</code>. Isso faz com que o objeto encapsulado pareça fazer parte do componente.</li>
-<li>Os arrays <code>aProperties</code> e <code>aEvents</code> foram projetados para uso com o inspetor de propriedades do FiveWin, permitindo a edição visual em tempo de design das propriedades do componente.</li>
-<li>Os blocos de evento do TDataBaseComp (OnOpen, OnSkip, OnSave) são disparados automaticamente durante operações de navegação e edição, permitindo que você se conecte ao ciclo de vida dos dados sem sobrescrever métodos.</li>
-<li>As propriedades SETGET do TDbfComp fornecem validação em tempo de execução ao obter ou definir o estado da área de trabalho.</li>
+<li>TComponent's error handler intercepts any method or data access not defined on the component itself and forwards it to <code>oObject</code>. This makes the wrapped object appear as if it were part of the component.</li>
+<li>The <code>aProperties</code> and <code>aEvents</code> arrays are designed for use with the FiveWin property inspector, enabling visual design-time editing of component properties.</li>
+<li>TDataBaseComp event blocks (OnOpen, OnSkip, OnSave) fire automatically during navigation and editing operations, allowing you to hook into the data lifecycle without overriding methods.</li>
+<li>TDbfComp SETGET properties provide runtime validation when getting or setting work area state.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/utilities/tcomobject.html">&larr; tcomobject</a> | <a href="../../pt/core/tcontrol.html">tcontrol &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

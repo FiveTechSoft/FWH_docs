@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TCalendar - DocumentaciÃ³n FWH</title>
+<title>TCalendar - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,7 +13,7 @@
 
 <h1>TCalendar</h1>
 <p class="class-source">Fuente: <code>source/classes/tcalenda.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
 TCalendar wraps the Windows month calendar common control for date selection.
@@ -21,26 +21,26 @@ It supports single and multi-select date ranges, week number display, day state 
 today indicator suppression, and extensive color customization of all calendar elements.
 </p>
 
-<h2 id="command">Sintaxis del Comando</h2>
+<h2 id="command">Command Syntax</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol CALENDAR oCal VAR dDate OF oWnd SIZE nW, nH ON CHANGE bBlock</code></pre>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescripciÃ³n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>dDate</code></td><td>Date</td><td>Fecha actualmente seleccionada</td></tr>
-<tr><td><code>dDateEnd</code></td><td>Date</td><td>Fecha final en modo de selecciÃ³n mÃºltiple</td></tr>
-<tr><td><code>lMultiselect</code></td><td>Logical</td><td>Habilitar selecciÃ³n mÃºltiple de fechas</td></tr>
-<tr><td><code>lWeekNumbers</code></td><td>Logical</td><td>Mostrar columna de nÃºmero de semana</td></tr>
-<tr><td><code>lNoToday</code></td><td>Logical</td><td>Ocultar el pie de fecha "Hoy"</td></tr>
-<tr><td><code>lNoTodayCircle</code></td><td>Logical</td><td>Ocultar el cÃ­rculo alrededor de la fecha de hoy's date</td></tr>
-<tr><td><code>bAction</code></td><td>Code block</td><td>Ejecutado al hacer doble clic</td></tr>
-<tr><td><code>bLDblClick</code></td><td>Code block</td><td>Manejador de doble clic izquierdo</td></tr>
-<tr><td><code>aDayState</code></td><td>Array</td><td>Array de mapas de bits de estado de dÃ­a para negrita/resaltado</td></tr>
+<tr><td><code>dDate</code></td><td>Date</td><td>Currently selected date</td></tr>
+<tr><td><code>dDateEnd</code></td><td>Date</td><td>End date in multi-select mode</td></tr>
+<tr><td><code>lMultiselect</code></td><td>Logical</td><td>Enable multiple date selection</td></tr>
+<tr><td><code>lWeekNumbers</code></td><td>Logical</td><td>Show week number column</td></tr>
+<tr><td><code>lNoToday</code></td><td>Logical</td><td>Hide the "Today" date footer</td></tr>
+<tr><td><code>lNoTodayCircle</code></td><td>Logical</td><td>Hide the circle around today's date</td></tr>
+<tr><td><code>bAction</code></td><td>Code block</td><td>Executed on double-click</td></tr>
+<tr><td><code>bLDblClick</code></td><td>Code block</td><td>Left double-click handler</td></tr>
+<tr><td><code>aDayState</code></td><td>Array</td><td>Array of day state bitmaps for bold/highlight</td></tr>
 </tbody>
 </table>
 
@@ -48,33 +48,33 @@ today indicator suppression, and extensive color customization of all calendar e
 
 <table>
 <thead>
-<tr><th>MÃ©todo</th><th>DescripciÃ³n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, bSetGet, bSetGet2, oWnd, nWidth, nHeight, bValid, nClrFore, nClrBack, oFont, lDesign, oCursor, lPixel, cMsg, lUpdate, lMultiselect, bWhen, bChange, nHelpId, bAction, bLDblClick, lWeekNumbers, lNoTodayCircle, lNoToday, lDayState )</code></td><td>Crear un nuevo control TCalendar</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, bSetGet, bSetGet2, oWnd, nHelpId, nClrFore, nClrBack, oFont, oCursor, cMsg, lUpdate, lMultiselect, bWhen, bValid, bChanged, bAction, bLDblClick )</code></td><td>Redefinir desde recurso de diÃ¡logo</td></tr>
-<tr><td><code>GetDate()</code></td><td>Recuperar la fecha actualmente seleccionada</td></tr>
-<tr><td><code>SetDate( dDate )</code></td><td>Establecer el calendario en una fecha especÃ­fica</td></tr>
-<tr><td><code>SetRange( dDateStart, dDateEnd, nFlags )</code></td><td>Restringir el rango de fechas seleccionables</td></tr>
-<tr><td><code>GetDateRange()</code></td><td>Recuperar las fechas de inicio/fin seleccionadas en modo multiselecciÃ³n</td></tr>
-<tr><td><code>GetRange()</code></td><td>Recuperar las fechas mÃ­nima y mÃ¡xima permitidas actuales</td></tr>
-<tr><td><code>SetColor( nFlag, nColor )</code></td><td>Establecer color de un elemento del calendario (MCSC_BACKGROUND, MCSC_TEXT, etc.)</td></tr>
-<tr><td><code>SetFirstDayOfWeek( nDay )</code></td><td>Establecer el primer dÃ­a de la semana (0=Lunes..6=Domingo)</td></tr>
-<tr><td><code>SetWeekNumbers( lOnOff )</code></td><td>Mostrar u ocultar la columna de nÃºmero de semana</td></tr>
-<tr><td><code>SetArrayDayState( nMonth, nDay )</code></td><td>Establecer banderas de estado de dÃ­a para un mes y dÃ­a especÃ­ficos</td></tr>
-<tr><td><code>SetBackGround( nColor )</code></td><td>Establecer el color de fondo del calendario</td></tr>
-<tr><td><code>SetTextClr( nColor )</code></td><td>Establecer el color de texto del calendario</td></tr>
-<tr><td><code>SetTitleBk( nColor )</code></td><td>Establecer el color de fondo de la barra de tÃ­tulo</td></tr>
-<tr><td><code>SetTitleText( nColor )</code></td><td>Establecer el color de texto de la barra de tÃ­tulo</td></tr>
-<tr><td><code>SetToday( dDate )</code></td><td>Establecer la fecha de "hoy" programÃ¡ticamente</td></tr>
-<tr><td><code>GetToday()</code></td><td>Recuperar la fecha de "hoy" actual</td></tr>
-<tr><td><code>SetMaxSelCount( nDays )</code></td><td>Establecer mÃ¡ximo de dÃ­as seleccionables en modo multiselecciÃ³n</td></tr>
-<tr><td><code>SetCurrentView( nId )</code></td><td>Establecer la vista actual (mensual, anual, etc.)</td></tr>
-<tr><td><code>GetCurrentView()</code></td><td>Obtener el identificador de vista actual</td></tr>
+<tr><td><code>New( nRow, nCol, bSetGet, bSetGet2, oWnd, nWidth, nHeight, bValid, nClrFore, nClrBack, oFont, lDesign, oCursor, lPixel, cMsg, lUpdate, lMultiselect, bWhen, bChange, nHelpId, bAction, bLDblClick, lWeekNumbers, lNoTodayCircle, lNoToday, lDayState )</code></td><td>Create a new TCalendar control</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, bSetGet, bSetGet2, oWnd, nHelpId, nClrFore, nClrBack, oFont, oCursor, cMsg, lUpdate, lMultiselect, bWhen, bValid, bChanged, bAction, bLDblClick )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>GetDate()</code></td><td>Retrieve the currently selected date</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the calendar to a specific date</td></tr>
+<tr><td><code>SetRange( dDateStart, dDateEnd, nFlags )</code></td><td>Restrict selectable date range</td></tr>
+<tr><td><code>GetDateRange()</code></td><td>Retrieve the selected start/end dates in multi-select mode</td></tr>
+<tr><td><code>GetRange()</code></td><td>Retrieve the current minimum and maximum allowed dates</td></tr>
+<tr><td><code>SetColor( nFlag, nColor )</code></td><td>Set color of a calendar element (MCSC_BACKGROUND, MCSC_TEXT, etc.)</td></tr>
+<tr><td><code>SetFirstDayOfWeek( nDay )</code></td><td>Set the first day of the week (0=Monday..6=Sunday)</td></tr>
+<tr><td><code>SetWeekNumbers( lOnOff )</code></td><td>Show or hide week number column</td></tr>
+<tr><td><code>SetArrayDayState( nMonth, nDay )</code></td><td>Set day state flags for a specific month and day</td></tr>
+<tr><td><code>SetBackGround( nColor )</code></td><td>Set the calendar background color</td></tr>
+<tr><td><code>SetTextClr( nColor )</code></td><td>Set the calendar text color</td></tr>
+<tr><td><code>SetTitleBk( nColor )</code></td><td>Set the title bar background color</td></tr>
+<tr><td><code>SetTitleText( nColor )</code></td><td>Set the title bar text color</td></tr>
+<tr><td><code>SetToday( dDate )</code></td><td>Set the "today" date programmatically</td></tr>
+<tr><td><code>GetToday()</code></td><td>Retrieve the current "today" date</td></tr>
+<tr><td><code>SetMaxSelCount( nDays )</code></td><td>Set maximum selectable days in multi-select mode</td></tr>
+<tr><td><code>SetCurrentView( nId )</code></td><td>Set the current view (monthly, yearly, etc.)</td></tr>
+<tr><td><code>GetCurrentView()</code></td><td>Get the current view identifier</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Calendario con Callback de Cambio</h2>
+<h2 id="example">Example: Calendar with Change Callback</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -102,14 +102,14 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>TCalendar envuelve el control comÃºn <code>SysMonthCal32</code> de Win32. El control ajusta automÃ¡ticamente su tamaÃ±o mÃ­nimo basado en la fuente y el nÃºmero de meses visibles.</li>
-<li>En modo multiselecciÃ³n (<code>lMultiselect := .T.</code>), use <code>bSetGet2</code> para enlazar la variable de fecha final y <code>GetDateRange()</code> para recuperar ambas fechas de inicio y fin.</li>
-<li>Los estados de dÃ­a permiten que dÃ­as individuales se rendericen en negrita (gris = GRAY, negrita = BOLD). Use <code>SetArrayDayState()</code> para configurar estados por mes.</li>
-<li>Las constantes <code>MCSC_*</code> para personalizaciÃ³n de color son: <code>MCSC_BACKGROUND</code> (0), <code>MCSC_TEXT</code> (1), <code>MCSC_TITLEBK</code> (2), <code>MCSC_TITLETEXT</code> (3), <code>MCSC_MONTHBK</code> (4), <code>MCSC_TRAILINGTEXT</code> (5).</li>
+<li>TCalendar wraps the Win32 <code>SysMonthCal32</code> common control. The control automatically adjusts its minimum size based on the font and number of visible months.</li>
+<li>In multi-select mode (<code>lMultiselect := .T.</code>), use <code>bSetGet2</code> to bind the end date variable and <code>GetDateRange()</code> to retrieve both start and end dates.</li>
+<li>Day states allow individual days to be rendered in bold (grayed = GRAY, bold = BOLD). Use <code>SetArrayDayState()</code> to configure states per month.</li>
+<li>The <code>MCSC_*</code> constants for color customization are: <code>MCSC_BACKGROUND</code> (0), <code>MCSC_TEXT</code> (1), <code>MCSC_TITLEBK</code> (2), <code>MCSC_TITLETEXT</code> (3), <code>MCSC_MONTHBK</code> (4), <code>MCSC_TRAILINGTEXT</code> (5).</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/reference/tc5tooltip.html">&larr; tc5tooltip</a> | <a href="../../es/ui/tcalex.html">tcalex &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

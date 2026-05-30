@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recursos (GDI) - Documentación FWH</title>
+<title>Resources (GDI) - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,22 +11,22 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>Recursos GDI</h1>
+<h1>GDI Resources</h1>
 
 <p>
-FiveWin encapsula los objetos GDI (Graphics Device Interface) de Windows en clases de Harbour. Estos
-objetos representan fuentes, brochas, cursores, iconos, bitmaps e imágenes. Todos los recursos GDI
-deben liberarse cuando ya no se necesiten llamando a <code>:End()</code> para evitar fugas de recursos.
-Esta página también cubre TIni (gestión de archivos INI) y TReg32 (acceso al Registro de Windows).
+FiveWin wraps the Windows GDI (Graphics Device Interface) objects into Harbour classes. These
+objects represent fonts, brushes, cursors, icons, bitmaps, and images. All GDI resources
+must be released when no longer needed by calling <code>:End()</code> to prevent resource leaks.
+This page also covers TIni (INI file management) and TReg32 (Windows Registry access).
 </p>
 
-<h2 id="resource-lifecycle">Ciclo de Vida de los Recursos</h2>
+<h2 id="resource-lifecycle">Resource Lifecycle</h2>
 
 <div class="mermaid">
 flowchart LR
-    A[DEFINE / New] --> B[Usar en Controles<br/>Ventanas, Diálogos]
+    A[DEFINE / New] --> B[Use in Controls<br/>Windows, Dialogs]
     B --> C[":End() / Release()"]
-    C --> D[Handle GDI Liberado]
+    C --> D[GDI Handle Freed]
 
     style A fill:#2d6a4f,color:#fff
     style C fill:#d32f2f,color:#fff
@@ -36,49 +36,49 @@ flowchart LR
 <h2 id="tfont">TFont</h2>
 <p class="class-source">Fuente: <code>source/classes/font.prg</code></p>
 
-<h3>Miembros DATA Principales</h3>
+<h3>Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cFaceName</code></td><td>Character</td><td>Nombre de la fuente (ej. "Arial", "Segoe UI")</td></tr>
-<tr><td><code>hFont</code></td><td>Numeric</td><td>Handle HFONT de Windows</td></tr>
-<tr><td><code>lBold</code></td><td>Logical</td><td>Peso negrita</td></tr>
-<tr><td><code>lItalic</code></td><td>Logical</td><td>Estilo cursiva</td></tr>
-<tr><td><code>lUnderline</code></td><td>Logical</td><td>Decoración subrayado</td></tr>
-<tr><td><code>lStrikeOut</code></td><td>Logical</td><td>Decoración tachado</td></tr>
-<tr><td><code>nWeight</code></td><td>Numeric</td><td>Peso de la fuente (400=normal, 700=negrita)</td></tr>
-<tr><td><code>nCharSet</code></td><td>Numeric</td><td>Conjunto de caracteres (0=ANSI, 1=DEFAULT, 255=OEM)</td></tr>
-<tr><td><code>nEscapement</code></td><td>Numeric</td><td>Ángulo del texto en décimas de grado</td></tr>
-<tr><td><code>nOrientation</code></td><td>Numeric</td><td>Ángulo de orientación de caracteres</td></tr>
-<tr><td><code>nInpHeight</code></td><td>Numeric</td><td>Altura solicitada (negativo = tamaño en puntos)</td></tr>
+<tr><td><code>cFaceName</code></td><td>Character</td><td>Font face name (e.g. "Arial", "Segoe UI")</td></tr>
+<tr><td><code>hFont</code></td><td>Numeric</td><td>Windows HFONT handle</td></tr>
+<tr><td><code>lBold</code></td><td>Logical</td><td>Bold weight</td></tr>
+<tr><td><code>lItalic</code></td><td>Logical</td><td>Italic style</td></tr>
+<tr><td><code>lUnderline</code></td><td>Logical</td><td>Underline decoration</td></tr>
+<tr><td><code>lStrikeOut</code></td><td>Logical</td><td>Strikeout decoration</td></tr>
+<tr><td><code>nWeight</code></td><td>Numeric</td><td>Font weight (400=normal, 700=bold)</td></tr>
+<tr><td><code>nCharSet</code></td><td>Numeric</td><td>Character set (0=ANSI, 1=DEFAULT, 255=OEM)</td></tr>
+<tr><td><code>nEscapement</code></td><td>Numeric</td><td>Text angle in tenths of degrees</td></tr>
+<tr><td><code>nOrientation</code></td><td>Numeric</td><td>Character orientation angle</td></tr>
+<tr><td><code>nInpHeight</code></td><td>Numeric</td><td>Requested height (negative = point size)</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos Principales</h3>
+<h3>Key Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cFaceName, nWidth, nHeight, lFromUser, lBold, ... )</code></td><td>Crea una fuente (o devuelve una instancia en caché)</td></tr>
-<tr><td><code>Choose( @nRGBColor )</code></td><td>Muestra el diálogo de selección de fuente, devuelve la fuente seleccionada</td></tr>
-<tr><td><code>nSize()</code></td><td>Obtiene el tamaño de la fuente en puntos</td></tr>
-<tr><td><code>Bold( lBold )</code></td><td>Crea una nueva fuente con negrita alternada</td></tr>
-<tr><td><code>Italic( lItalic )</code></td><td>Crea una nueva fuente con cursiva alternada</td></tr>
-<tr><td><code>Modify( nHeight, lBold, lItalic, lUnderline, lStrikeOut, nEsc )</code></td><td>Crea una copia modificada</td></tr>
-<tr><td><code>Rotate( nRotateBy )</code></td><td>Crea una copia rotada</td></tr>
-<tr><td><code>Clone()</code></td><td>Comparte el mismo handle (conteo de referencias)</td></tr>
-<tr><td><code>Activate( hDC )</code></td><td>Selecciona la fuente en un contexto de dispositivo</td></tr>
-<tr><td><code>DeActivate( hDC )</code></td><td>Restaura la fuente anterior</td></tr>
-<tr><td><code>End()</code></td><td>Libera el handle de la fuente</td></tr>
+<tr><td><code>New( cFaceName, nWidth, nHeight, lFromUser, lBold, ... )</code></td><td>Create a font (or return cached instance)</td></tr>
+<tr><td><code>Choose( @nRGBColor )</code></td><td>Show font picker dialog, return selected font</td></tr>
+<tr><td><code>nSize()</code></td><td>Get font size in points</td></tr>
+<tr><td><code>Bold( lBold )</code></td><td>Create a new font with bold toggled</td></tr>
+<tr><td><code>Italic( lItalic )</code></td><td>Create a new font with italic toggled</td></tr>
+<tr><td><code>Modify( nHeight, lBold, lItalic, lUnderline, lStrikeOut, nEsc )</code></td><td>Create a modified copy</td></tr>
+<tr><td><code>Rotate( nRotateBy )</code></td><td>Create a rotated copy</td></tr>
+<tr><td><code>Clone()</code></td><td>Share the same handle (reference counting)</td></tr>
+<tr><td><code>Activate( hDC )</code></td><td>Select font into a device context</td></tr>
+<tr><td><code>DeActivate( hDC )</code></td><td>Restore previous font</td></tr>
+<tr><td><code>End()</code></td><td>Release the font handle</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo</h3>
+<h3>Example</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -86,23 +86,23 @@ function Main()
 
    local oFont, oFontBig, oFontItalic
 
-   // Definición estándar mediante comando
+   // Standard definition via command
    DEFINE FONT oFont NAME "Segoe UI" SIZE 0, -14
 
-   // Variante negrita
+   // Bold variant
    DEFINE FONT oFontBig NAME "Segoe UI" SIZE 0, -20 BOLD
 
-   // Cursiva mediante método
+   // Italic via method
    oFontItalic := oFont:Italic( .T. )
 
-   // Usar en un diálogo
+   // Use in a dialog
    DEFINE DIALOG oDlg TITLE "Font Demo" SIZE 400, 200 FONT oFont
    @ 1, 1 SAY "Normal text" OF oDlg
    @ 2, 1 SAY "Bold text" OF oDlg FONT oFontBig
    @ 3, 1 SAY "Italic text" OF oDlg FONT oFontItalic
    ACTIVATE DIALOG oDlg CENTER
 
-   // Selector de fuente
+   // Font picker
    // local oChosen := oFont:Choose()
 
    oFont:End()
@@ -115,43 +115,43 @@ return nil</code></pre>
 <h2 id="tbrush">TBrush</h2>
 <p class="class-source">Fuente: <code>source/classes/brush.prg</code></p>
 
-<h3>Miembros DATA Principales</h3>
+<h3>Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hBrush</code></td><td>Numeric</td><td>Handle HBRUSH de Windows</td></tr>
-<tr><td><code>cStyle</code></td><td>Character</td><td>Nombre del estilo de brocha</td></tr>
-<tr><td><code>nRGBColor</code></td><td>Numeric</td><td>Valor RGB del color sólido</td></tr>
-<tr><td><code>cBmpFile</code></td><td>Character</td><td>Archivo de bitmap para relleno de patrón</td></tr>
-<tr><td><code>cBmpRes</code></td><td>Character</td><td>Nombre del recurso de bitmap</td></tr>
-<tr><td><code>aGrad</code></td><td>Array</td><td>Array de definición de degradado</td></tr>
-<tr><td><code>nResizeMode</code></td><td>Numeric</td><td>0=sin redimensionar, 1=estirar, 2=mosaico</td></tr>
+<tr><td><code>hBrush</code></td><td>Numeric</td><td>Windows HBRUSH handle</td></tr>
+<tr><td><code>cStyle</code></td><td>Character</td><td>Brush style name</td></tr>
+<tr><td><code>nRGBColor</code></td><td>Numeric</td><td>Solid color RGB value</td></tr>
+<tr><td><code>cBmpFile</code></td><td>Character</td><td>Bitmap file for pattern fill</td></tr>
+<tr><td><code>cBmpRes</code></td><td>Character</td><td>Bitmap resource name</td></tr>
+<tr><td><code>aGrad</code></td><td>Array</td><td>Gradient definition array</td></tr>
+<tr><td><code>nResizeMode</code></td><td>Numeric</td><td>0=no resize, 1=stretch, 2=tile</td></tr>
 </tbody>
 </table>
 
-<h3>Estilos de Brocha</h3>
+<h3>Brush Styles</h3>
 
 <table>
 <thead>
-<tr><th>Estilo</th><th>Descripción</th></tr>
+<tr><th>Style</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>"HORIZONTAL"</code></td><td>Líneas de trama horizontales</td></tr>
-<tr><td><code>"VERTICAL"</code></td><td>Líneas de trama verticales</td></tr>
-<tr><td><code>"FDIAGONAL"</code></td><td>Trama diagonal hacia adelante</td></tr>
-<tr><td><code>"BDIAGONAL"</code></td><td>Trama diagonal hacia atrás</td></tr>
-<tr><td><code>"CROSS"</code></td><td>Trama cruzada</td></tr>
-<tr><td><code>"DIAGCROSS"</code></td><td>Trama cruzada diagonal</td></tr>
-<tr><td><code>"BORLAND"</code></td><td>Degradado estilo Borland</td></tr>
-<tr><td><code>"BRICKS"</code></td><td>Patrón de ladrillos</td></tr>
-<tr><td><code>"TILED"</code></td><td>Patrón de bitmap en mosaico</td></tr>
+<tr><td><code>"HORIZONTAL"</code></td><td>Horizontal hatch lines</td></tr>
+<tr><td><code>"VERTICAL"</code></td><td>Vertical hatch lines</td></tr>
+<tr><td><code>"FDIAGONAL"</code></td><td>Forward diagonal hatch</td></tr>
+<tr><td><code>"BDIAGONAL"</code></td><td>Backward diagonal hatch</td></tr>
+<tr><td><code>"CROSS"</code></td><td>Cross hatch</td></tr>
+<tr><td><code>"DIAGCROSS"</code></td><td>Diagonal cross hatch</td></tr>
+<tr><td><code>"BORLAND"</code></td><td>Borland-style gradient</td></tr>
+<tr><td><code>"BRICKS"</code></td><td>Brick pattern</td></tr>
+<tr><td><code>"TILED"</code></td><td>Tiled bitmap pattern</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo</h3>
+<h3>Example</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -159,13 +159,13 @@ function Main()
 
    local oWnd, oBrush
 
-   // Brocha de color sólido
+   // Solid color brush
    DEFINE BRUSH oBrush COLOR nRGB( 30, 40, 60 )
 
-   // Brocha con patrón de trama
+   // Hatch pattern brush
    // DEFINE BRUSH oBrush STYLE "DIAGCROSS" COLOR CLR_BLUE
 
-   // Brocha de bitmap
+   // Bitmap brush
    // DEFINE BRUSH oBrush FILE "marble.bmp"
 
    DEFINE WINDOW oWnd TITLE "Brush Demo" BRUSH oBrush
@@ -179,11 +179,11 @@ return nil</code></pre>
 <h2 id="tcursor">TCursor</h2>
 
 <p>
-TCursor encapsula los handles de cursor de Windows. Los cursores predefinidos se pueden cargar
-por nombre, o cursores personalizados desde archivos de recursos.
+TCursor wraps Windows cursor handles. Predefined cursors can be loaded by name, or custom
+cursors from resource files.
 </p>
 
-<h3>Ejemplo</h3>
+<h3>Example</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -191,13 +191,13 @@ function Main()
 
    local oCursor
 
-   // Cursor predefinido
+   // Predefined cursor
    DEFINE CURSOR oCursor HAND
 
-   // Desde recurso
+   // From resource
    // DEFINE CURSOR oCursor RESOURCE "MyCursor"
 
-   // Asignar a un control
+   // Assign to a control
    // oBtn:oCursor := oCursor
 
    oCursor:End()
@@ -208,11 +208,11 @@ return nil</code></pre>
 <h2 id="ticon">TIcon</h2>
 
 <p>
-TIcon encapsula los handles de icono de Windows (HICON). Los iconos se pueden cargar desde recursos
-compilados en el ejecutable o desde archivos .ico en disco.
+TIcon wraps Windows icon handles (HICON). Icons can be loaded from resources compiled into the
+executable or from .ico files on disk.
 </p>
 
-<h3>Ejemplo</h3>
+<h3>Example</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -220,10 +220,10 @@ function Main()
 
    local oWnd, oIcon
 
-   // Desde recurso (compilado en el .exe)
+   // From resource (compiled into .exe)
    DEFINE ICON oIcon RESOURCE "APPICON"
 
-   // Desde archivo
+   // From file
    // DEFINE ICON oIcon FILE "myapp.ico"
 
    DEFINE WINDOW oWnd TITLE "Icon Demo" ICON oIcon
@@ -238,46 +238,46 @@ return nil</code></pre>
 <p class="class-source">Fuente: <code>source/classes/bitmap.prg</code></p>
 
 <p>
-TBitmap es un control que muestra imágenes bitmap (BMP, PNG, JPG, GIF, ICO). Hereda de TControl,
-por lo que se puede colocar en ventanas y diálogos. Soporta desplazamiento, estiramiento, transparencia y mezcla alfa.
+TBitmap is a control that displays bitmap images (BMP, PNG, JPG, GIF, ICO). It extends TControl,
+so it can be placed on windows and dialogs. Supports scrolling, stretching, transparency, and alpha blending.
 </p>
 
-<h3>Miembros DATA Principales</h3>
+<h3>Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hBitmap</code></td><td>Numeric</td><td>Handle HBITMAP de Windows</td></tr>
-<tr><td><code>hPalette</code></td><td>Numeric</td><td>Handle de paleta de colores</td></tr>
-<tr><td><code>cBmpFile</code></td><td>Character</td><td>Ruta del archivo bitmap de origen</td></tr>
-<tr><td><code>cResName</code></td><td>Character</td><td>Nombre del recurso</td></tr>
-<tr><td><code>lStretch</code></td><td>Logical</td><td>Estirar imagen para ajustar al control</td></tr>
-<tr><td><code>lScroll</code></td><td>Logical</td><td>Habilitar desplazamiento</td></tr>
-<tr><td><code>lTransparent</code></td><td>Logical</td><td>Fondo transparente</td></tr>
-<tr><td><code>lHasAlpha</code></td><td>Logical</td><td>La imagen tiene canal alfa</td></tr>
-<tr><td><code>nZoom</code></td><td>Numeric</td><td>Nivel de zoom (1 = 100%)</td></tr>
-<tr><td><code>nImgWidth</code></td><td>Numeric</td><td>Ancho original de la imagen</td></tr>
-<tr><td><code>nImgHeight</code></td><td>Numeric</td><td>Alto original de la imagen</td></tr>
+<tr><td><code>hBitmap</code></td><td>Numeric</td><td>Windows HBITMAP handle</td></tr>
+<tr><td><code>hPalette</code></td><td>Numeric</td><td>Color palette handle</td></tr>
+<tr><td><code>cBmpFile</code></td><td>Character</td><td>Source bitmap file path</td></tr>
+<tr><td><code>cResName</code></td><td>Character</td><td>Resource name</td></tr>
+<tr><td><code>lStretch</code></td><td>Logical</td><td>Stretch image to fit control</td></tr>
+<tr><td><code>lScroll</code></td><td>Logical</td><td>Enable scrolling</td></tr>
+<tr><td><code>lTransparent</code></td><td>Logical</td><td>Transparent background</td></tr>
+<tr><td><code>lHasAlpha</code></td><td>Logical</td><td>Image has alpha channel</td></tr>
+<tr><td><code>nZoom</code></td><td>Numeric</td><td>Zoom level (1 = 100%)</td></tr>
+<tr><td><code>nImgWidth</code></td><td>Numeric</td><td>Original image width</td></tr>
+<tr><td><code>nImgHeight</code></td><td>Numeric</td><td>Original image height</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos Principales</h3>
+<h3>Key Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>LoadFromClipboard( oWnd )</code></td><td>Cargar bitmap desde el portapapeles</td></tr>
-<tr><td><code>CopyToClipboard()</code></td><td>Copiar bitmap al portapapeles</td></tr>
-<tr><td><code>LoadFromString( cString )</code></td><td>Cargar bitmap desde una cadena binaria</td></tr>
-<tr><td><code>Zoom( nZoom )</code></td><td>Establecer nivel de zoom</td></tr>
+<tr><td><code>LoadFromClipboard( oWnd )</code></td><td>Load bitmap from clipboard</td></tr>
+<tr><td><code>CopyToClipboard()</code></td><td>Copy bitmap to clipboard</td></tr>
+<tr><td><code>LoadFromString( cString )</code></td><td>Load bitmap from a binary string</td></tr>
+<tr><td><code>Zoom( nZoom )</code></td><td>Set zoom level</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo</h3>
+<h3>Example</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -289,7 +289,7 @@ function Main()
 
    @ 1, 1 BITMAP oBmp FILE "photo.bmp" OF oDlg SIZE 250, 180 STRETCH
 
-   // o desde recurso:
+   // or from reFuente:
    // @ 1, 1 BITMAP oBmp RESOURCE "LOGO" OF oDlg SIZE 250, 180
 
    ACTIVATE DIALOG oDlg CENTER
@@ -301,34 +301,34 @@ return nil</code></pre>
 <p class="class-source">Fuente: <code>source/classes/image.prg</code></p>
 
 <p>
-TImage extiende TBitmap con soporte de la biblioteca FreeImage, permitiendo cargar y guardar
-muchos formatos de imagen: BMP, PNG, JPEG, GIF, TIFF, WebP, ICO, PSD, RAW, y más. También puede
-cargar imágenes desde URLs.
+TImage extends TBitmap with FreeImage library support, enabling loading and saving of many
+image formats: BMP, PNG, JPEG, GIF, TIFF, WebP, ICO, PSD, RAW, and more. It can also load
+images from URLs.
 </p>
 
-<h3>Métodos Adicionales (más allá de TBitmap)</h3>
+<h3>Additional Methods (beyond TBitmap)</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>LoadImage( cResName, cBmpFile, cResFile )</code></td><td>Cargar cualquier formato mediante FreeImage</td></tr>
-<tr><td><code>SaveImage( cFile, nFormat, nQuality )</code></td><td>Guardar en cualquier formato soportado</td></tr>
-<tr><td><code>LoadFromURL( cUrl )</code></td><td>Descargar y mostrar una imagen desde una URL</td></tr>
-<tr><td><code>LoadFromMemory( cBuffer, nWidth, nHeight )</code></td><td>Cargar desde un buffer de memoria</td></tr>
-<tr><td><code>RotateImage( nAngle )</code></td><td>Rotar la imagen n grados</td></tr>
-<tr><td><code>Progress( lProgress )</code></td><td>Mostrar/ocultar progreso de carga</td></tr>
+<tr><td><code>LoadImage( cResName, cBmpFile, cResFile )</code></td><td>Load any format via FreeImage</td></tr>
+<tr><td><code>SaveImage( cFile, nFormat, nQuality )</code></td><td>Save to any supported format</td></tr>
+<tr><td><code>LoadFromURL( cUrl )</code></td><td>Download and display an image from a URL</td></tr>
+<tr><td><code>LoadFromMemory( cBuffer, nWidth, nHeight )</code></td><td>Load from a memory buffer</td></tr>
+<tr><td><code>RotateImage( nAngle )</code></td><td>Rotate the image by n degrees</td></tr>
+<tr><td><code>Progress( lProgress )</code></td><td>Show/hide loading progress</td></tr>
 </tbody>
 </table>
 
-<h3>DLL FreeImage</h3>
+<h3>FreeImage DLL</h3>
 <p>
-TImage requiere <code>freeimage.dll</code> (32-bit) o <code>freeimage64.dll</code> (64-bit)
-en el directorio de la aplicación o en el PATH del sistema.
+TImage requires <code>freeimage.dll</code> (32-bit) or <code>freeimage64.dll</code> (64-bit)
+in the application directory or system PATH.
 </p>
 
-<h3>Ejemplo</h3>
+<h3>Example</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -338,16 +338,16 @@ function Main()
 
    DEFINE DIALOG oDlg TITLE "Image Demo" SIZE 800, 600
 
-   // Cargar cualquier formato (PNG, JPG, GIF, WebP, etc.)
+   // Load any format (PNG, JPG, GIF, WebP, etc.)
    @ 1, 1 IMAGE oImg FILE "photo.png" OF oDlg SIZE 350, 250 STRETCH
 
-   // Cargar desde URL (después de iniciar el diálogo)
+   // Load from URL (after dialog init)
    // oImg:LoadFromURL( "https://example.com/image.jpg" )
 
-   // Guardar en diferente formato
+   // Save to different format
    // oImg:SaveImage( "output.jpg", FIF_JPEG, 85 )
 
-   // Rotar
+   // Rotate
    // oImg:RotateImage( 90 )
 
    ACTIVATE DIALOG oDlg CENTER
@@ -359,40 +359,40 @@ return nil</code></pre>
 <p class="class-source">Fuente: <code>source/classes/ini.prg</code></p>
 
 <p>
-TIni gestiona archivos de configuración INI de Windows. Utiliza las funciones de la API de Windows
-<code>GetPrivateProfileString()</code> y <code>WritePrivateProfileString()</code> para un acceso
-confiable a archivos INI.
+TIni manages Windows INI configuration files. It uses the Windows API Funciones
+<code>GetPrivateProfileString()</code> and <code>WritePrivateProfileString()</code> for reliable
+INI file access.
 </p>
 
-<h3>Miembros DATA Principales</h3>
+<h3>Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cIniFile</code></td><td>Character</td><td>Ruta del archivo INI</td></tr>
-<tr><td><code>lAutoSet</code></td><td>Logical</td><td>Auto-guardar en Get (escribir valor por defecto si falta)</td></tr>
+<tr><td><code>cIniFile</code></td><td>Character</td><td>INI file path</td></tr>
+<tr><td><code>lAutoSet</code></td><td>Logical</td><td>Auto-save on Get (write default if missing)</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cIniFile )</code></td><td>Crear gestor INI (agrega extensión ".ini" si falta)</td></tr>
-<tr><td><code>Get( cSection, cEntry, uDefault, @uVar )</code></td><td>Leer un valor (auto-detecta tipo desde el valor por defecto)</td></tr>
-<tr><td><code>Set( cSection, cEntry, uValue )</code></td><td>Escribir un valor</td></tr>
-<tr><td><code>Sections()</code></td><td>Obtener array con todos los nombres de sección</td></tr>
-<tr><td><code>DelSection( cSection )</code></td><td>Eliminar una sección completa</td></tr>
-<tr><td><code>DelEntry( cSection, cEntry )</code></td><td>Eliminar una entrada individual</td></tr>
+<tr><td><code>New( cIniFile )</code></td><td>Create INI manager (adds ".ini" extension if missing)</td></tr>
+<tr><td><code>Get( cSection, cEntry, uDefault, @uVar )</code></td><td>Read a value (auto-detect type from default)</td></tr>
+<tr><td><code>Set( cSection, cEntry, uValue )</code></td><td>Write a value</td></tr>
+<tr><td><code>Sections()</code></td><td>Get array of all section names</td></tr>
+<tr><td><code>DelSection( cSection )</code></td><td>Delete an entire section</td></tr>
+<tr><td><code>DelEntry( cSection, cEntry )</code></td><td>Delete a single entry</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo</h3>
+<h3>Example</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -402,25 +402,25 @@ function Main()
 
    oIni := TIni():New( "myapp.ini" )
 
-   // Leer configuraciones (con valores por defecto)
+   // Read settings (with defaults)
    oIni:Get( "Database", "Server",   "localhost", @cServer )
    oIni:Get( "Database", "Port",     3306,        @nPort )
    oIni:Get( "App",      "Debug",    "N",         @cDebug )
 
    lDebug := ( cDebug == "Y" )
 
-   // Escribir configuraciones
+   // Write settings
    oIni:Set( "App", "LastRun", DToC( Date() ) + " " + Time() )
    oIni:Set( "App", "Version", FWVersion() )
 
-   // Eliminar
+   // Delete
    oIni:DelEntry( "Temp", "CacheFile" )
 
    ? "Server:", cServer, "Port:", nPort
 
 return nil</code></pre>
 
-<p>Esto crea/lee un archivo INI como:</p>
+<p>This creates/reads an INI file like:</p>
 
 <pre><code>[Database]
 Server=localhost
@@ -436,58 +436,58 @@ Version=FWH 26.05</code></pre>
 <p class="class-source">Fuente: <code>source/classes/reg32.prg</code></p>
 
 <p>
-TReg32 proporciona acceso de lectura/escritura al Registro de Windows. Encapsula las funciones
-de la API del Registro de Windows (RegOpenKeyEx, RegQueryValueEx, RegSetValueEx, etc.).
+TReg32 provides read/write access to the Windows Registry. It wraps the Windows Registry API
+Funciones (RegOpenKeyEx, RegQueryValueEx, RegSetValueEx, etc.).
 </p>
 
-<h3>Miembros DATA Principales</h3>
+<h3>Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cRegKey</code></td><td>Character</td><td>Ruta de la clave del registro</td></tr>
-<tr><td><code>nKey</code></td><td>Numeric</td><td>Clave raíz (HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE, etc.)</td></tr>
-<tr><td><code>nHandle</code></td><td>Numeric</td><td>Handle de la clave abierta</td></tr>
-<tr><td><code>nError</code></td><td>Numeric</td><td>Último código de error (0 = éxito)</td></tr>
-<tr><td><code>lError</code></td><td>Logical</td><td>Indicador de error</td></tr>
+<tr><td><code>cRegKey</code></td><td>Character</td><td>Registry key path</td></tr>
+<tr><td><code>nKey</code></td><td>Numeric</td><td>Root key (HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE, etc.)</td></tr>
+<tr><td><code>nHandle</code></td><td>Numeric</td><td>Open key handle</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td>Last error code (0 = success)</td></tr>
+<tr><td><code>lError</code></td><td>Logical</td><td>Error flag</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nKey, cRegKey )</code></td><td>Abrir una clave de registro existente</td></tr>
-<tr><td><code>Create( nKey, cRegKey )</code></td><td>Crear una nueva clave de registro (o abrir si existe)</td></tr>
-<tr><td><code>Get( cSubKey, @uVar )</code></td><td>Leer un valor</td></tr>
-<tr><td><code>GetBinary( cSubKey )</code></td><td>Leer datos binarios</td></tr>
-<tr><td><code>Set( cSubKey, uVar, nType )</code></td><td>Escribir un valor (REG_SZ, REG_DWORD, REG_BINARY)</td></tr>
-<tr><td><code>Delete( cSubKey )</code></td><td>Eliminar una subclave</td></tr>
-<tr><td><code>Close()</code></td><td>Cerrar el handle de la clave del registro</td></tr>
+<tr><td><code>New( nKey, cRegKey )</code></td><td>Open an existing registry key</td></tr>
+<tr><td><code>Create( nKey, cRegKey )</code></td><td>Create a new registry key (or open if exists)</td></tr>
+<tr><td><code>Get( cSubKey, @uVar )</code></td><td>Read a value</td></tr>
+<tr><td><code>GetBinary( cSubKey )</code></td><td>Read binary data</td></tr>
+<tr><td><code>Set( cSubKey, uVar, nType )</code></td><td>Write a value (REG_SZ, REG_DWORD, REG_BINARY)</td></tr>
+<tr><td><code>Delete( cSubKey )</code></td><td>Delete a subkey</td></tr>
+<tr><td><code>Close()</code></td><td>Close the registry key handle</td></tr>
 </tbody>
 </table>
 
-<h3>Constantes de Clave Raíz</h3>
+<h3>Root Key Constants</h3>
 
 <table>
 <thead>
-<tr><th>Constante</th><th>Descripción</th></tr>
+<tr><th>Constant</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>HKEY_CLASSES_ROOT</code></td><td>Asociaciones de archivos y clases COM</td></tr>
-<tr><td><code>HKEY_CURRENT_USER</code></td><td>Configuraciones del usuario actual</td></tr>
-<tr><td><code>HKEY_LOCAL_MACHINE</code></td><td>Configuraciones de toda la máquina (requiere admin)</td></tr>
-<tr><td><code>HKEY_USERS</code></td><td>Todos los perfiles de usuario</td></tr>
-<tr><td><code>HKEY_CURRENT_CONFIG</code></td><td>Configuración de hardware actual</td></tr>
+<tr><td><code>HKEY_CLASSES_ROOT</code></td><td>File associations and COM classes</td></tr>
+<tr><td><code>HKEY_CURRENT_USER</code></td><td>Current user settings</td></tr>
+<tr><td><code>HKEY_LOCAL_MACHINE</code></td><td>Machine-wide settings (requires admin)</td></tr>
+<tr><td><code>HKEY_USERS</code></td><td>All user profiles</td></tr>
+<tr><td><code>HKEY_CURRENT_CONFIG</code></td><td>Current hardware configuration</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo</h3>
+<h3>Example</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -497,7 +497,7 @@ function Main()
 
    local oReg, cValue := ""
 
-   // Leer un valor del registro
+   // Read a registry value
    oReg := TReg32():New( HKEY_CURRENT_USER, ;
       "Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" )
 
@@ -507,7 +507,7 @@ function Main()
       oReg:Close()
    endif
 
-   // Crear y escribir un valor
+   // Create and write a value
    oReg := TReg32():Create( HKEY_CURRENT_USER, "Software\MyApp" )
    if oReg:nError == 0
       oReg:Set( "LastRun", DToC( Date() ) + " " + Time() )
@@ -515,7 +515,7 @@ function Main()
       oReg:Close()
    endif
 
-   // Leerlo de vuelta
+   // Read it back
    oReg := TReg32():New( HKEY_CURRENT_USER, "Software\MyApp" )
    if oReg:nError == 0
       oReg:Get( "LastRun", @cValue )
@@ -526,18 +526,18 @@ function Main()
 return nil</code></pre>
 
 <!-- ===== RESOURCE MANAGEMENT ===== -->
-<h2 id="management">Mejores Prácticas de Gestión de Recursos</h2>
+<h2 id="management">Resource Management Best Practices</h2>
 
 <ul>
-<li><strong>Siempre llame a :End()</strong> en los recursos GDI (TFont, TBrush, TIcon, TBitmap, TImage) cuando termine de usarlos. Windows tiene un conjunto limitado de handles GDI.</li>
-<li><strong>Caché de fuentes:</strong> TFont almacena fuentes en caché internamente. Crear la misma fuente dos veces devuelve el mismo objeto con un conteo de referencias incrementado. Llamar a :End() decrementa el conteo y solo libera el handle cuando llega a cero.</li>
-<li><strong>Brocha para ventanas:</strong> Al asignar una brocha a una ventana, la ventana toma posesión. La brocha se libera cuando la ventana es destruida.</li>
-<li><strong>TIni y TReg32</strong> no usan handles GDI, pero TReg32:Close() debe llamarse para liberar el handle de la clave del registro.</li>
-<li>Use <code>GDI_GetObjectCount()</code> durante el desarrollo para monitorear el uso de handles GDI y detectar fugas.</li>
+<li><strong>Always call :End()</strong> on GDI resources (TFont, TBrush, TIcon, TBitmap, TImage) when you are done with them. Windows has a limited pool of GDI handles.</li>
+<li><strong>Font caching:</strong> TFont internally caches fonts. Creating the same font twice returns the same object with an incremented reference count. Calling :End() decrements the count and only frees the handle when it reaches zero.</li>
+<li><strong>Brush for windows:</strong> When assigning a brush to a window, the window takes ownership. The brush is freed when the window is destroyed.</li>
+<li><strong>TIni and TReg32</strong> do not use GDI handles, but TReg32:Close() should be called to release the registry key handle.</li>
+<li>Use <code>GDI_GetObjectCount()</code> during development to monitor GDI handle usage and detect leaks.</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

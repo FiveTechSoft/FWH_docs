@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRColumn - FWH Docs</title>
+<title>TRColumn - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,59 +13,59 @@
 
 <h1>TRColumn</h1>
 <p class="class-source">Fonte: <code>source/classes/rcolumn.prg</code></p>
-<p class="class-hierarchy">Classe independente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TRColumn representa uma única coluna dentro de um TReport. Define como os dados são obtidos, formatados
-e exibidos para cada coluna em um relatório impresso. As colunas suportam totais, totais acumulados,
-campos memo, imagens, barras de progresso e gráficos embutidos.
+TRColumn represents a single column within a TReport. It defines how data is retrieved, formatted,
+and displayed for each column in a printed report. Columns support totals, cumulative totals,
+memo fields, images, progress bars, and inline charts.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oReport</code></td><td>Objeto</td><td>Objeto TReport pai ao qual esta coluna pertence</td></tr>
-<tr><td><code>aData</code></td><td>Array</td><td>Array de codeblocks que obtêm os valores dos campos para cada linha</td></tr>
-<tr><td><code>aTitle</code></td><td>Array</td><td>Linhas do cabeçalho da coluna</td></tr>
-<tr><td><code>aPicture</code></td><td>Array</td><td>Cláusulas picture para formatação dos dados da coluna</td></tr>
-<tr><td><code>nWidth</code></td><td>Numérico</td><td>Largura da coluna em unidades do relatório</td></tr>
-<tr><td><code>nTotal</code></td><td>Numérico</td><td>Acumulador de total corrente</td></tr>
-<tr><td><code>lTotal</code></td><td>Lógico</td><td>Habilita a exibição do total da coluna</td></tr>
-<tr><td><code>lMemo</code></td><td>Lógico</td><td>Trata a coluna como texto memo de múltiplas linhas</td></tr>
-<tr><td><code>lImage</code></td><td>Lógico</td><td>Trata a coluna como exibição de imagem</td></tr>
-<tr><td><code>lProgBar</code></td><td>Lógico</td><td>Renderiza a coluna como uma barra de progresso</td></tr>
-<tr><td><code>lCumTotal</code></td><td>Lógico</td><td>Habilita o total acumulado corrente</td></tr>
-<tr><td><code>nAlignTitle</code></td><td>Numérico</td><td>Alinhamento do texto do título</td></tr>
-<tr><td><code>bDataFont</code></td><td>Codeblock</td><td>Seletor de fonte dos dados (retorna o índice da fonte)</td></tr>
-<tr><td><code>bColor</code></td><td>Codeblock</td><td>Codeblock de cor condicional</td></tr>
-<tr><td><code>cChartStyle</code></td><td>Caractere</td><td>Estilo de gráfico embutido ("BAR", "PIE", etc.)</td></tr>
+<tr><td><code>oReport</code></td><td>Object</td><td>Parent TReport object this column belongs to</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>Array of codeblocks retrieving field values for each line</td></tr>
+<tr><td><code>aTitle</code></td><td>Array</td><td>Column heading lines</td></tr>
+<tr><td><code>aPicture</code></td><td>Array</td><td>Picture clauses for formatting column data</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Column width in report units</td></tr>
+<tr><td><code>nTotal</code></td><td>Numeric</td><td>Running total accumulator</td></tr>
+<tr><td><code>lTotal</code></td><td>Logical</td><td>Enable column total display</td></tr>
+<tr><td><code>lMemo</code></td><td>Logical</td><td>Treat column as multi-line memo text</td></tr>
+<tr><td><code>lImage</code></td><td>Logical</td><td>Treat column as image display</td></tr>
+<tr><td><code>lProgBar</code></td><td>Logical</td><td>Render column as a progress bar</td></tr>
+<tr><td><code>lCumTotal</code></td><td>Logical</td><td>Enable cumulative running total</td></tr>
+<tr><td><code>nAlignTitle</code></td><td>Numeric</td><td>Title text alignment</td></tr>
+<tr><td><code>bDataFont</code></td><td>Codeblock</td><td>Data font selector (returns font index)</td></tr>
+<tr><td><code>bColor</code></td><td>Codeblock</td><td>Conditional color codeblock</td></tr>
+<tr><td><code>cChartStyle</code></td><td>Character</td><td>Inline chart style ("BAR", "PIE", etc.)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( aTitle, nCol, aData, nSize, aPicture, bFont, lTotal, bTotalExpr, cFmt, lShadow, lGrid, nPen, oReport, lCumTotal )</code></td><td>Cria uma nova instância de TRColumn</td></tr>
-<tr><td><code>SayTitle( nRow, nCol, nLine )</code></td><td>Renderiza o título da coluna na posição especificada</td></tr>
-<tr><td><code>SayData( nRow, nCol, nLine )</code></td><td>Renderiza o valor do dado na posição especificada</td></tr>
-<tr><td><code>SayTotal( nRow, nCol )</code></td><td>Renderiza o valor do total na posição especificada</td></tr>
-<tr><td><code>Stabilize( nOrder )</code></td><td>Calcula as dimensões da coluna e a prepara para renderização</td></tr>
-<tr><td><code>LineCount()</code></td><td>Retorna o número de linhas que esta coluna ocupa</td></tr>
-<tr><td><code>DrawChart( oRect )</code></td><td>Desenha um gráfico embutido (barra/pizza) dentro da área da coluna</td></tr>
-<tr><td><code>DrawProgBar( oRect )</code></td><td>Desenha uma barra de progresso dentro da área da coluna</td></tr>
-<tr><td><code>Separator( nRow, lForced )</code></td><td>Desenha uma linha separadora na linha indicada</td></tr>
+<tr><td><code>New( aTitle, nCol, aData, nSize, aPicture, bFont, lTotal, bTotalExpr, cFmt, lShadow, lGrid, nPen, oReport, lCumTotal )</code></td><td>Create a new TRColumn instance</td></tr>
+<tr><td><code>SayTitle( nRow, nCol, nLine )</code></td><td>Render column title at the specified position</td></tr>
+<tr><td><code>SayData( nRow, nCol, nLine )</code></td><td>Render data value at the specified position</td></tr>
+<tr><td><code>SayTotal( nRow, nCol )</code></td><td>Render total value at the specified position</td></tr>
+<tr><td><code>Stabilize( nOrder )</code></td><td>Calculate column dimensions and prepare for rendering</td></tr>
+<tr><td><code>LineCount()</code></td><td>Return the number of lines this column occupies</td></tr>
+<tr><td><code>DrawChart( oRect )</code></td><td>Draw an inline chart (bar/pie) within the column area</td></tr>
+<tr><td><code>DrawProgBar( oRect )</code></td><td>Draw a progress bar within the column area</td></tr>
+<tr><td><code>Separator( nRow, lForced )</code></td><td>Draw a separator line at the given row</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Coluna com Total</h2>
+<h2 id="example">Example: Column with Total</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "report.ch"
@@ -88,19 +88,19 @@ function BuildReport()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TRColumn é criada implicitamente ao usar o comando <code>COLUMN</code> dentro de um bloco <code>REPORT</code>.</li>
-<li>Defina <code>lTotal := .T.</code> para habilitar a totalização automática para colunas numéricas.</li>
-<li>A flag <code>lCumTotal</code> acumula totais entre os grupos em vez de reiniciar a cada grupo.</li>
-<li>Colunas memo (<code>lMemo := .T.</code>) suportam quebra de texto em múltiplas linhas dentro da largura da coluna.</li>
-<li>Colunas de imagem (<code>lImage := .T.</code>) exibem bitmaps obtidos pelo codeblock de dados.</li>
-<li>As colunas suportam gráficos de barras embutidos através dos membros DATA <code>cChartStyle</code> e <code>chartdata</code>.</li>
+<li>TRColumn is created implicitly when using the <code>COLUMN</code> command inside a <code>REPORT</code> block.</li>
+<li>Set <code>lTotal := .T.</code> to enable automatic totaling for numeric columns.</li>
+<li>The <code>lCumTotal</code> flag accumulates totals across groups rather than resetting per group.</li>
+<li>Memo columns (<code>lMemo := .T.</code>) support multi-line text wrapping within the column width.</li>
+<li>Image columns (<code>lImage := .T.</code>) display bitmaps retrieved by the data codeblock.</li>
+<li>Columns support inline bar charts via <code>cChartStyle</code> and <code>chartdata</code> data members.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/trbtn.html">&larr; trbtn</a> | <a href="../../pt/reference/trdd.html">trdd &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -3,21 +3,21 @@
 <main id="content">
 
 <h1>TGet / TMGet</h1>
-<p class="subtitle">Controles de entrada de texto com formatação PICTURE, validação e edição multi-linha</p>
+<p class="subtitle">Text input controls with PICTURE formatting, validation, and multi-line editing</p>
 
-<h2 id="tget-overview">Visão Geral do TGet</h2>
+<h2 id="tget-overview">TGet Overview</h2>
 
-<p><strong>Fonte:</strong> <code>source/classes/tget.prg</code> &nbsp;|&nbsp; <strong>Pai:</strong> <code>TControl</code></p>
+<p><strong>Fonte:</strong> <code>source/classes/tget.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<p><code>TGet</code> é o equivalente FiveWin do comando clássico GET do Clipper -- um controle de entrada de texto de linha única que suporta máscaras PICTURE, blocos de validação e vinculação de dados via <code>bSetGet</code>. É o carro-chefe dos formulários de entrada de dados.</p>
+<p><code>TGet</code> is the FiveWin equivalent of the classic Clipper GET command -- a single-line text input control that supports PICTURE masks, validation blocks, and data binding via <code>bSetGet</code>. It is the workhorse of data-entry forms.</p>
 
-<h2 id="tmget-overview">Visão Geral do TMGet</h2>
+<h2 id="tmget-overview">TMGet Overview</h2>
 
-<p><strong>Fonte:</strong> <code>source/classes/mget.prg</code> &nbsp;|&nbsp; <strong>Pai:</strong> <code>TControl</code></p>
+<p><strong>Fonte:</strong> <code>source/classes/mget.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<p><code>TMGet</code> (também conhecido como memo GET) oferece edição de texto multi-linha. É usado para campos de texto livre como notas, comentários e descrições. Ele encapsula o controle EDIT do Windows com o estilo <code>ES_MULTILINE</code>.</p>
+<p><code>TMGet</code> (also known as a memo GET) provides multi-line text editing. It is used for free-form text fields such as notes, comments, and descriptions. It wraps the Windows EDIT control with the <code>ES_MULTILINE</code> style.</p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 graph TD
@@ -54,54 +54,54 @@ graph TD
     style TMGet fill:#1c2129,stroke:#58a6ff,stroke-width:2px,color:#e6edf3
 </div>
 
-<h2 id="tget-properties">Principais Propriedades do TGet</h2>
+<h2 id="tget-properties">TGet Key Properties</h2>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloco de vinculação de dados. <code>Eval( bSetGet )</code> lê o valor; <code>Eval( bSetGet, x )</code> escreve.</td></tr>
-<tr><td><code>cPicture</code></td><td>String</td><td>Máscara PICTURE controlando a formatação de entrada (ex: <code>"@E 999,999.99"</code>, <code>"@!"</code>, <code>"99/99/9999"</code>)</td></tr>
-<tr><td><code>bValid</code></td><td>Block</td><td>Bloco de validação avaliado quando o usuário sai do GET. Deve retornar <code>.T.</code> para permitir a saída.</td></tr>
-<tr><td><code>bWhen</code></td><td>Block</td><td>Bloco de condição avaliado quando o foco se aproxima. Se <code>.F.</code>, o GET é pulado (somente leitura).</td></tr>
-<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Quando <code>.T.</code>, o campo não é editável.</td></tr>
-<tr><td><code>lPassword</code></td><td>Logical</td><td>Quando <code>.T.</code>, a entrada é mascarada com caracteres de ponto.</td></tr>
-<tr><td><code>cCueText</code></td><td>String</td><td>Texto de placeholder exibido quando o GET está vazio e sem foco (marca d'água).</td></tr>
-<tr><td><code>lSpinner</code></td><td>Logical</td><td>Quando <code>.T.</code>, adiciona setas de incremento/decremento para entrada numérica.</td></tr>
-<tr><td><code>nMin</code></td><td>Numeric</td><td>Valor mínimo para o spinner.</td></tr>
-<tr><td><code>nMax</code></td><td>Numeric</td><td>Valor máximo para o spinner.</td></tr>
-<tr><td><code>bChange</code></td><td>Block</td><td>Bloco avaliado cada vez que o texto muda (atualização em tempo real).</td></tr>
-<tr><td><code>lRight</code></td><td>Logical</td><td>Alinhar o texto à direita (útil para campos numéricos).</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Data-binding block. <code>Eval( bSetGet )</code> reads the value; <code>Eval( bSetGet, x )</code> writes it.</td></tr>
+<tr><td><code>cPicture</code></td><td>String</td><td>PICTURE mask controlling input formatting (e.g. <code>"@E 999,999.99"</code>, <code>"@!"</code>, <code>"99/99/9999"</code>)</td></tr>
+<tr><td><code>bValid</code></td><td>Block</td><td>Validation block evaluated when the user leaves the GET. Must return <code>.T.</code> to allow exit.</td></tr>
+<tr><td><code>bWhen</code></td><td>Block</td><td>Condition block evaluated when focus approaches. If <code>.F.</code>, the GET is skipped (read-only).</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>When <code>.T.</code>, the field is not editable.</td></tr>
+<tr><td><code>lPassword</code></td><td>Logical</td><td>When <code>.T.</code>, input is masked with bullet characters.</td></tr>
+<tr><td><code>cCueText</code></td><td>String</td><td>Placeholder text shown when the GET is empty and unfocused (watermark).</td></tr>
+<tr><td><code>lSpinner</code></td><td>Logical</td><td>When <code>.T.</code>, adds up/down spinner arrows for numeric input.</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum value for spinner.</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum value for spinner.</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Block evaluated each time the text changes (live update).</td></tr>
+<tr><td><code>lRight</code></td><td>Logical</td><td>Right-align the text (useful for numeric fields).</td></tr>
 </tbody>
 </table>
 
-<h2 id="tmget-properties">Principais Propriedades do TMGet</h2>
+<h2 id="tmget-properties">TMGet Key Properties</h2>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>bSetGet</code></td><td>Block</td><td>Bloco de vinculação de dados, igual ao TGet.</td></tr>
-<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Quando <code>.T.</code>, o memo não é editável.</td></tr>
-<tr><td><code>lWordWrap</code></td><td>Logical</td><td>Quando <code>.T.</code>, o texto quebra na borda direita em vez de rolar horizontalmente.</td></tr>
-<tr><td><code>nMaxChars</code></td><td>Numeric</td><td>Número máximo de caracteres permitidos.</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>Data-binding block, same as TGet.</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>When <code>.T.</code>, the memo is not editable.</td></tr>
+<tr><td><code>lWordWrap</code></td><td>Logical</td><td>When <code>.T.</code>, text wraps at the right edge instead of scrolling horizontally.</td></tr>
+<tr><td><code>nMaxChars</code></td><td>Numeric</td><td>Maximum number of characters allowed.</td></tr>
 </tbody>
 </table>
 
-<h2 id="picture-masks">Máscaras PICTURE Comuns</h2>
+<h2 id="picture-masks">Common PICTURE Masks</h2>
 
 <table>
-<thead><tr><th>Máscara</th><th>Efeito</th><th>Exemplo Entrada/Saída</th></tr></thead>
+<thead><tr><th>Mask</th><th>Effect</th><th>Example Input/Output</th></tr></thead>
 <tbody>
-<tr><td><code>"@!"</code></td><td>Forçar maiúsculas</td><td><code>hello</code> &rarr; <code>HELLO</code></td></tr>
-<tr><td><code>"999,999.99"</code></td><td>Numérico com separadores de milhar</td><td><code>1234.50</code> &rarr; <code>  1,234.50</code></td></tr>
-<tr><td><code>"@E 999,999.99"</code></td><td>Numérico europeu (ponto=milhares, vírgula=decimal)</td><td><code>1234.50</code> &rarr; <code>  1.234,50</code></td></tr>
-<tr><td><code>"99/99/9999"</code></td><td>Máscara de data</td><td><code>03242026</code> &rarr; <code>03/24/2026</code></td></tr>
-<tr><td><code>"(999)999-9999"</code></td><td>Número de telefone EUA</td><td><code>5551234567</code> &rarr; <code>(555)123-4567</code></td></tr>
-<tr><td><code>"@K"</code></td><td>Limpar campo quando a primeira tecla é pressionada</td><td>Seleciona todo o texto ao entrar</td></tr>
-<tr><td><code>"@S15"</code></td><td>Rolar dentro de largura de exibição de 15 caracteres</td><td>Texto longo rola horizontalmente</td></tr>
+<tr><td><code>"@!"</code></td><td>Force uppercase</td><td><code>hello</code> &rarr; <code>HELLO</code></td></tr>
+<tr><td><code>"999,999.99"</code></td><td>Numeric with comma separators</td><td><code>1234.50</code> &rarr; <code>  1,234.50</code></td></tr>
+<tr><td><code>"@E 999,999.99"</code></td><td>European numeric (dot=thousands, comma=decimal)</td><td><code>1234.50</code> &rarr; <code>  1.234,50</code></td></tr>
+<tr><td><code>"99/99/9999"</code></td><td>Date mask</td><td><code>03242026</code> &rarr; <code>03/24/2026</code></td></tr>
+<tr><td><code>"(999)999-9999"</code></td><td>US phone number</td><td><code>5551234567</code> &rarr; <code>(555)123-4567</code></td></tr>
+<tr><td><code>"@K"</code></td><td>Clear field when first key is pressed</td><td>Selects all text on entry</td></tr>
+<tr><td><code>"@S15"</code></td><td>Scroll within 15-char display width</td><td>Long text scrolls horizontally</td></tr>
 </tbody>
 </table>
 
-<h2 id="validation">Fluxo de Validação</h2>
+<h2 id="validation">Validation Flow</h2>
 
 <div class="mermaid">
 sequenceDiagram
@@ -131,9 +131,9 @@ sequenceDiagram
     end
 </div>
 
-<h2 id="commands">Sintaxe de Comandos</h2>
+<h2 id="commands">Command Syntax</h2>
 
-<h3>GET de Linha Única</h3>
+<h3>Single-line GET</h3>
 <pre><code class="language-harbour">@ nRow, nCol GET oGet VAR cVar ;
    [ OF oWnd ] ;
    [ SIZE nWidth, nHeight ] ;
@@ -148,7 +148,7 @@ sequenceDiagram
    [ FONT oFont ] ;
    [ RIGHT ]</code></pre>
 
-<h3>GET Memo Multi-Linha</h3>
+<h3>Multi-line Memo GET</h3>
 <pre><code class="language-harbour">@ nRow, nCol GET oMGet VAR cMemo MEMO ;
    [ OF oWnd ] ;
    [ SIZE nWidth, nHeight ] ;
@@ -157,9 +157,9 @@ sequenceDiagram
    [ HSCROLL ] ;
    [ NO WORDWRAP ]</code></pre>
 
-<h2 id="examples">Exemplos de Código</h2>
+<h2 id="examples">Code Examples</h2>
 
-<h3>Exemplo 1: Formulário de Entrada de Dados com Vários Tipos de GET</h3>
+<h3>Example 1: Data Entry Form with Various GET Types</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -223,7 +223,7 @@ FUNCTION CustomerForm()
    RELEASE FONT oFont
 RETURN NIL</code></pre>
 
-<h3>Exemplo 2: GET Validado com WHEN Dinâmico</h3>
+<h3>Example 2: Validated GET with Dynamic WHEN</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -282,26 +282,26 @@ STATIC FUNCTION ValidateCode( cCode, cDesc )
    ENDIF
 RETURN .T.</code></pre>
 
-<h2 id="tips">Dicas e Boas Práticas</h2>
+<h2 id="tips">Tips and Best Practices</h2>
 
 <ul>
-  <li>O bloco <code>bSetGet</code> é criado automaticamente pelo comando <code>GET var</code>. Para vincular a um campo: <code>GET FieldWBlock( "NAME", Select() )</code>.</li>
-  <li>Use <code>CUETEXT</code> (placeholder) para dar ao usuário uma dica sobre o formato de entrada esperado.</li>
-  <li>O bloco <code>bValid</code> pode exibir uma mensagem e retornar <code>.F.</code> para impedir que o usuário saia do campo.</li>
-  <li>Para GETs numéricos, sempre forneça um PICTURE para controlar casas decimais e separadores de milhar.</li>
-  <li>A cláusula SPINNER adiciona setas de incremento/decremento; combine com <code>MIN</code>/<code>MAX</code> para restringir o intervalo.</li>
-  <li>TMGet suporta <code>HSCROLL</code> para adicionar uma barra de rolagem horizontal, e <code>NO WORDWRAP</code> para desabilitar a quebra de linha.</li>
-  <li>Ao usar GETs em um diálogo, o FiveWin gerencia a ordem de tabulação automaticamente com base na ordem de criação.</li>
+  <li>The <code>bSetGet</code> block is created automatically by the <code>GET var</code> command. To bind to a field: <code>GET FieldWBlock( "NAME", Select() )</code>.</li>
+  <li>Use <code>CUETEXT</code> (placeholder) to give the user a hint about expected input format.</li>
+  <li>The <code>bValid</code> block can display a message and return <code>.F.</code> to prevent the user from leaving the field.</li>
+  <li>For numeric GETs, always provide a PICTURE to control decimal places and thousands separators.</li>
+  <li>The SPINNER clause adds increment/decrement arrows; combine with <code>MIN</code>/<code>MAX</code> to constrain the range.</li>
+  <li>TMGet supports <code>HSCROLL</code> to add a horizontal scroll bar, and <code>NO WORDWRAP</code> to disable wrapping.</li>
+  <li>When using GETs in a dialog, FiveWin handles Tab-order automatically based on creation order.</li>
 </ul>
 
 <h2 id="see-also">Veja Também</h2>
 <ul>
-  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- classe pai</li>
-  <li><a href="../../pt/ui/tcombobox.html">TComboBox</a> -- alternativa de seleção drop-down à entrada de texto</li>
-  <li><a href="../../pt/ui/txbrowse.html">TXBrowse</a> -- usa TGet internamente para edição de células</li>
-  <li><a href="../../pt/reference/commands.html">Comandos</a> -- referência completa de comandos</li>
+  <li><a href="../../pt/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../pt/ui/tcombobox.html">TComboBox</a> -- drop-down selection alternative to text input</li>
+  <li><a href="../../pt/ui/txbrowse.html">TXBrowse</a> -- uses TGet internally for cell editing</li>
+  <li><a href="../../pt/reference/commands.html">Commands</a> -- full command reference</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

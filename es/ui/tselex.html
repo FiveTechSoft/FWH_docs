@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TSelex / TSelector - FWH Docs</title>
+<title>TSelex / TSelector - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,84 +13,84 @@
 
 <h1>TSelex / TSelector</h1>
 <p class="class-source">Fuente: <code>source/classes/tselex.prg</code>, <code>source/classes/selector.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code> (ambos)</p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code> (both)</p>
 
 <p>
-TSelex es un control deslizante segmentado con un pulsador arrastrable que permite a los usuarios elegir entre un conjunto discreto de opciones. TSelector es un control de dial circular/radial para seleccionar un valor a lo largo de un arco. Ambos proporcionan selección visual con renderizado de degradado e interacción por teclado/ratón.
+TSelex is a segmented slider control with a draggable thumb that lets users pick from a discrete set of options. TSelector is a circular / radial dial control for selecting a value along an arc. Both provide visual selection with gradient rendering and keyboard/mouse interaction.
 </p>
 
-<h2 id="tselex">TSelex — Deslizador Segmentado</h2>
+<h2 id="tselex">TSelex — Segmented Slider</h2>
 
-<h3 id="tselex-data">Miembros DATA Principales</h3>
-
-<table>
-<thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
-</thead>
-<tbody>
-<tr><td><code>aOptions</code></td><td>Array</td><td>Array de etiquetas de opciones mostradas a lo largo de la pista</td></tr>
-<tr><td><code>bOnSelect</code></td><td>Codeblock</td><td>Bloque de código ejecutado cuando se selecciona una opción</td></tr>
-<tr><td><code>nOption</code></td><td>Numérico</td><td>Índice de la opción actualmente seleccionada (basado en 1)</td></tr>
-<tr><td><code>nClrThumb</code></td><td>Numérico</td><td>Color del pulsador (RGB)</td></tr>
-<tr><td><code>aGradOut</code></td><td>Array</td><td>Degradado para el área exterior de la pista</td></tr>
-<tr><td><code>aGradIn</code></td><td>Array</td><td>Degradado para el área interior de la pista</td></tr>
-<tr><td><code>nRound</code></td><td>Numérico</td><td>Radio de esquina para el fondo de la pista</td></tr>
-</tbody>
-</table>
-
-<h3 id="tselex-methods">Métodos</h3>
+<h3 id="tselex-data">Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, oWnd, lPixel, aOptions, bOnSelect, ... )</code></td><td>Crear un deslizador segmentado con parámetros de degradado y pulsador</td></tr>
-<tr><td><code>SetOption( nOption )</code></td><td>Seleccionar programáticamente una opción por índice</td></tr>
-<tr><td><code>GoNext( lRefresh )</code></td><td>Mover la selección a la siguiente opción</td></tr>
-<tr><td><code>GoPrev( lRefresh )</code></td><td>Mover la selección a la opción anterior</td></tr>
-<tr><td><code>AddOption( cText )</code></td><td>Añadir una nueva opción al deslizador</td></tr>
-<tr><td><code>InsertOption( cText, nPos )</code></td><td>Insertar una opción en una posición específica</td></tr>
-<tr><td><code>DelOption( nOption )</code></td><td>Eliminar una opción por índice</td></tr>
-<tr><td><code>SetText( cText, nOption )</code></td><td>Cambiar el texto de una opción existente</td></tr>
+<tr><td><code>aOptions</code></td><td>Array</td><td>Array of option labels displayed along the track</td></tr>
+<tr><td><code>bOnSelect</code></td><td>Codeblock</td><td>Code block fired when an option is selected</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Currently selected option index (1-based)</td></tr>
+<tr><td><code>nClrThumb</code></td><td>Numeric</td><td>Thumb color (RGB)</td></tr>
+<tr><td><code>aGradOut</code></td><td>Array</td><td>Gradient for the outer track area</td></tr>
+<tr><td><code>aGradIn</code></td><td>Array</td><td>Gradient for the inner track area</td></tr>
+<tr><td><code>nRound</code></td><td>Numeric</td><td>Corner radius for the track background</td></tr>
 </tbody>
 </table>
 
-<h2 id="tselector">TSelector — Dial Radial</h2>
-
-<h3 id="tselector-data">Miembros DATA Principales</h3>
+<h3 id="tselex-methods">Methods</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nPos</code></td><td>Numérico</td><td>Posición angular actual en radianes</td></tr>
-<tr><td><code>nArc</code></td><td>Numérico</td><td>Longitud total del arco en radianes</td></tr>
-<tr><td><code>nRadius</code></td><td>Numérico</td><td>Radio del dial en píxeles</td></tr>
-<tr><td><code>nMin</code></td><td>Numérico</td><td>Valor mínimo del rango del dial</td></tr>
-<tr><td><code>nMax</code></td><td>Numérico</td><td>Valor máximo del rango del dial</td></tr>
-<tr><td><code>nMarks</code></td><td>Numérico</td><td>Número de marcas a lo largo del arco (0 = ninguna)</td></tr>
-<tr><td><code>lExact</code></td><td>Lógico</td><td>Snap a la marca más cercana al arrastrar</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, oWnd, lPixel, aOptions, bOnSelect, ... )</code></td><td>Create a segmented slider with gradient and thumb parameters</td></tr>
+<tr><td><code>SetOption( nOption )</code></td><td>Programmatically select an option by index</td></tr>
+<tr><td><code>GoNext( lRefresh )</code></td><td>Move selection to the next option</td></tr>
+<tr><td><code>GoPrev( lRefresh )</code></td><td>Move selection to the previous option</td></tr>
+<tr><td><code>AddOption( cText )</code></td><td>Append a new option to the slider</td></tr>
+<tr><td><code>InsertOption( cText, nPos )</code></td><td>Insert an option at a specific position</td></tr>
+<tr><td><code>DelOption( nOption )</code></td><td>Remove an option by index</td></tr>
+<tr><td><code>SetText( cText, nOption )</code></td><td>Change the text of an existing option</td></tr>
 </tbody>
 </table>
 
-<h3 id="tselector-methods">Métodos</h3>
+<h2 id="tselector">TSelector — Radial Dial</h2>
+
+<h3 id="tselector-data">Key DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, bSetGet, nAngle1, nAngle2, nMin, nMax, nMarks, lExact, oWnd, ... )</code></td><td>Crear un dial radial con rango angular y límites de valor</td></tr>
-<tr><td><code>Set( nVal )</code></td><td>Establecer el dial a un valor específico</td></tr>
-<tr><td><code>nGetPos( nVal )</code></td><td>Convertir un valor a su posición angular</td></tr>
-<tr><td><code>nGetVal( nPos )</code></td><td>Convertir una posición angular a su valor correspondiente</td></tr>
-<tr><td><code>PlaceMark( nPos, nStep )</code></td><td>Colocar una marca visual en una posición</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Current angular position in radians</td></tr>
+<tr><td><code>nArc</code></td><td>Numeric</td><td>Total arc length in radians</td></tr>
+<tr><td><code>nRadius</code></td><td>Numeric</td><td>Dial radius in pixels</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum value of the dial range</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum value of the dial range</td></tr>
+<tr><td><code>nMarks</code></td><td>Numeric</td><td>Number of tick marks along the arc (0 = none)</td></tr>
+<tr><td><code>lExact</code></td><td>Logical</td><td>Snap to nearest tick mark when dragging</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Deslizador Segmentado y Dial Radial</h2>
+<h3 id="tselector-methods">Methods</h3>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nRow, nCol, bSetGet, nAngle1, nAngle2, nMin, nMax, nMarks, lExact, oWnd, ... )</code></td><td>Create a radial dial with angular range and value bounds</td></tr>
+<tr><td><code>Set( nVal )</code></td><td>Set the dial to a specific value</td></tr>
+<tr><td><code>nGetPos( nVal )</code></td><td>Convert a value to its angular position</td></tr>
+<tr><td><code>nGetVal( nPos )</code></td><td>Convert an angular position to its corresponding value</td></tr>
+<tr><td><code>PlaceMark( nPos, nStep )</code></td><td>Place a visual tick mark at a position</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Segmented Slider and Radial Dial</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -111,18 +111,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Las pistas de TSelex se renderizan con dos capas de degradado (<code>aGradOut</code> = pista exterior, <code>aGradIn</code> = resalte interior).</li>
-<li>El pulsador se dibuja como un rectángulo redondeado; su tamaño se controla mediante <code>nWidthThumb</code> / <code>nHeightThumb</code>.</li>
-<li>TSelector utiliza un sistema de coordenadas angulares. Los ángulos se especifican en grados; el constructor los convierte a radianes internamente.</li>
-<li>Cuando <code>lExact</code> es verdadero y hay marcas definidas, el dial se ajusta a la marca más cercana al soltar el ratón.</li>
-<li>Ambos controles soportan navegación por teclado (teclas de flecha para TSelex, flechas para TSelector).</li>
+<li>TSelex tracks are rendered with two gradient layers (<code>aGradOut</code> = outer track, <code>aGradIn</code> = inner highlight).</li>
+<li>The thumb is drawn as a rounded rectangle; its size is controlled by <code>nWidthThumb</code> / <code>nHeightThumb</code>.</li>
+<li>TSelector uses an angular coordinate system. Angles are specified in degrees; the constructor converts them to radians internally.</li>
+<li>When <code>lExact</code> is true and marks are defined, the dial snaps to the nearest mark on mouse release.</li>
+<li>Both controls support keyboard navigation (arrow keys for TSelex, arrows for TSelector).</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/reference/tselector.html">&larr; tselector</a> | <a href="../../es/ai/tsemanticindex.html">tsemanticindex &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

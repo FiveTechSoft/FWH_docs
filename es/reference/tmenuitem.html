@@ -13,49 +13,49 @@
 
 <h1>TMenuItem</h1>
 <p class="class-source">Fuente: <code>source/classes/menuitem.prg</code></p>
-<p class="class-hierarchy">Clase independiente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TMenuItem representa una sola entrada dentro de un objeto TMenu. Cada elemento tiene un texto, una acción opcional
-(bloque de código), un estado marcado/sin marcar, un estado habilitado/deshabilitado y una condición WHEN para la
-visibilidad dinámica. Los elementos también pueden actuar como separadores o abrir submenús.
+TMenuItem represents a single entry within a TMenu object. Each item has a prompt, an optional action
+(code block), a checked/unchecked state, an enabled/disabled state, and a WHEN condition for dynamic
+visibility. Items can also act as separators or open submenus.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cPrompt</code></td><td>Character</td><td>Texto del elemento de menú, con &amp; para el subrayado del acelerador</td></tr>
-<tr><td><code>nId</code></td><td>Numeric</td><td>ID de comando del elemento de menú</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Bloque de código ejecutado al seleccionar</td></tr>
-<tr><td><code>bWhen</code></td><td>Block</td><td>Bloque de código evaluado para habilitar/deshabilitar el elemento dinámicamente</td></tr>
-<tr><td><code>lChecked</code></td><td>Logical</td><td>Indica si el elemento muestra una marca de verificación</td></tr>
-<tr><td><code>lActive</code></td><td>Logical</td><td>Indica si el elemento está habilitado (se puede pulsar)</td></tr>
-<tr><td><code>lSeparator</code></td><td>Logical</td><td>.T. para una barra separadora</td></tr>
-<tr><td><code>oMenu</code></td><td>Object</td><td>Objeto TMenu padre que contiene este elemento</td></tr>
+<tr><td><code>cPrompt</code></td><td>Character</td><td>Menu item text, with &amp; for accelerator underline</td></tr>
+<tr><td><code>nId</code></td><td>Numeric</td><td>Command ID for the menu item</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on selection</td></tr>
+<tr><td><code>bWhen</code></td><td>Block</td><td>Code block evaluated to enable/disable item dynamically</td></tr>
+<tr><td><code>lChecked</code></td><td>Logical</td><td>Whether the item shows a check mark</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>Whether the item is enabled (clickable)</td></tr>
+<tr><td><code>lSeparator</code></td><td>Logical</td><td>.T. for a separator bar</td></tr>
+<tr><td><code>oMenu</code></td><td>Object</td><td>Parent TMenu object containing this item</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cPrompt, cMsg, lChecked, lActive, bAction, bWhen, ... )</code></td><td>Crea un nuevo elemento de menú</td></tr>
-<tr><td><code>ReDefine( cPrompt, ... )</code></td><td>Redefine un elemento de menú desde un recurso</td></tr>
-<tr><td><code>SetCheck( lOn )</code></td><td>Activa/desactiva la marca de verificación</td></tr>
-<tr><td><code>Enable()</code></td><td>Habilita el elemento de menú</td></tr>
-<tr><td><code>Disable()</code></td><td>Deshabilita (atenúa) el elemento de menú</td></tr>
-<tr><td><code>SetPrompt( cText )</code></td><td>Cambia el texto del elemento de menú en tiempo de ejecución</td></tr>
+<tr><td><code>New( cPrompt, cMsg, lChecked, lActive, bAction, bWhen, ... )</code></td><td>Create a new menu item</td></tr>
+<tr><td><code>ReDefine( cPrompt, ... )</code></td><td>Redefine a menu item from a resource</td></tr>
+<tr><td><code>SetCheck( lOn )</code></td><td>Toggle the check mark on/off</td></tr>
+<tr><td><code>Enable()</code></td><td>Enable the menu item</td></tr>
+<tr><td><code>Disable()</code></td><td>Disable (gray out) the menu item</td></tr>
+<tr><td><code>SetPrompt( cText )</code></td><td>Change the menu item text at runtime</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Elemento de menú con acción y marca de verificación</h2>
+<h2 id="example">Example: Menu Item with Action and Check</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -88,18 +88,18 @@ function buildMenu( oItemStatus )
 
 return oMenu</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Use la cláusula <code>CHECKED</code> en el comando <code>MENUITEM</code> para crear un elemento que esté marcado inicialmente.</li>
-<li>El bloque <code>bWhen</code> se evalúa cada vez que se abre el menú. Si devuelve .F., el elemento se deshabilita.</li>
-<li><code>SetPrompt()</code> permite cambiar el texto del menú dinámicamente, útil para listas de archivos recientes o indicadores de estado.</li>
-<li>Los elementos separadores se crean con el comando <code>SEPARATOR</code>; no tienen acción ni texto.</li>
-<li>El menú padre asigna a cada elemento de menú un <code>nId</code> único, usado para el enrutamiento de comandos y la asignación de aceleradores.</li>
+<li>Use the <code>CHECKED</code> clause in the <code>MENUITEM</code> command to create an item that is initially checked.</li>
+<li>The <code>bWhen</code> block is evaluated each time the menu is opened. If it returns .F., the item is disabled.</li>
+<li><code>SetPrompt()</code> allows dynamic menu text changes, useful for recent-file lists or state indicators.</li>
+<li>Separator items are created with the <code>SEPARATOR</code> command; they have no action or prompt.</li>
+<li>Each menu item is assigned a unique <code>nId</code> by the parent menu, used for command routing and accelerator mapping.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tmenu.html">&larr; tmenu</a> | <a href="../../es/reference/tmetafil.html">tmetafil &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

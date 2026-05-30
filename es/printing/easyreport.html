@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EasyReport - FWH Docs</title>
+<title>EasyReport - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -12,22 +12,22 @@
 <main id="content">
 
 <h1>EasyReport</h1>
-<p class="class-source">Fuente: <code>source/classes/esreport.prg</code> (motor FW_EReport), <code>source/classes/tereport.prg</code> (dise&ntilde;ador visual TEReport), <code>include/easyrep.ch</code> (comandos)</p>
+<p class="class-source">Fuente: <code>source/classes/esreport.prg</code> (FW_EReport engine), <code>source/classes/tereport.prg</code> (TEReport visual designer), <code>include/easyrep.ch</code> (commands)</p>
 
 <p>
-EasyReport es un dise&ntilde;ador visual WYSIWYG de informes totalmente integrado en FiveWin para Harbour (FWH).
-Creado originalmente por Timm Sodtalbers bajo el nombre VRD (Visual Report Designer) entre 2000 y 2004,
-fue adoptado y mejorado por FiveTech Software. EasyReport permite a los usuarios finales dise&ntilde;ar, editar e imprimir
-informes visualmente sin escribir una sola l&iacute;nea de c&oacute;digo, mientras que los desarrolladores mantienen
-control program&aacute;tico completo sobre la vinculaci&oacute;n de datos y la salida.
+EasyReport is a visual WYSIWYG report designer fully integrated into FiveWin for Harbour (FWH).
+Originally created by Timm Sodtalbers under the name VRD (Visual Report Designer) between 2000 and 2004,
+it was adopted and enhanced by FiveTech Software. EasyReport allows end-users to design, edit, and print
+reports visually without writing a single line of code, while developers retain full programmatic control
+over data binding and output.
 </p>
 <p>
-Los informes se almacenan como archivos <code>.vrd</code> de estilo INI con archivos de &aacute;rea complementarios (<code>.v01</code>, <code>.v02</code>, etc.).
-El motor lee estas definiciones en tiempo de ejecuci&oacute;n y genera la salida a trav&eacute;s de la clase <code>TPrinter</code> de FWH,
-soportando vista previa de impresi&oacute;n, impresi&oacute;n directa y salida PDF.
+Reports are stored as <code>.vrd</code> INI-style files with companion area files (<code>.v01</code>, <code>.v02</code>, etc.).
+The engine reads these definitions at runtime and renders output through FWH's <code>TPrinter</code> class,
+supporting print preview, direct printing, and PDF output.
 </p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 graph LR
@@ -40,15 +40,15 @@ graph LR
 </div>
 
 <p>
-El flujo de trabajo es sencillo: el dise&ntilde;ador visual (<code>TEReport</code>) crea y edita archivos de definici&oacute;n
-de informes <code>.vrd</code>. Al momento de imprimir, el motor <code>FW_EReport</code> lee el archivo <code>.vrd</code>,
-procesa las &aacute;reas y elementos del informe, y renderiza todo a trav&eacute;s de <code>TPrinter</code>. La salida puede
-ir a vista previa, una impresora f&iacute;sica o un archivo PDF.
+The workflow is straightforward: the visual designer (<code>TEReport</code>) creates and edits <code>.vrd</code> report
+definition files. At print time, the <code>FW_EReport</code> engine reads the <code>.vrd</code> file, processes report
+areas and items, and renders everything through <code>TPrinter</code>. Output can go to preview, a physical
+printer, or a PDF file.
 </p>
 
-<h2 id="commands">Comandos</h2>
+<h2 id="commands">Commands</h2>
 
-<p>Todos los comandos est&aacute;n definidos en <code>include/easyrep.ch</code>. Incl&uacute;yalo con <code>#include "EasyRep.ch"</code>.</p>
+<p>All commands are defined in <code>include/easyrep.ch</code>. Include it with <code>#include "EasyRep.ch"</code>.</p>
 
 <h3>EASYREPORT</h3>
 
@@ -68,26 +68,26 @@ ir a vista previa, una impresora f&iacute;sica o un archivo PDF.
    [ PAPERSIZE aSize ] ;
    [ FILE cFile ]</code></pre>
 
-<p>Abre un archivo de informe y crea un objeto <code>FW_EReport</code>. Este es el comando inicial para cualquier trabajo de impresi&oacute;n con EasyReport.</p>
+<p>Opens a report file and creates an <code>FW_EReport</code> object. This is the starting command for any EasyReport print job.</p>
 
 <table>
 <thead>
-<tr><th>Cl&aacute;usula</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Clause</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>NAME cReportFile</code></td><td>Ruta al archivo de informe <code>.vrd</code> (obligatorio)</td></tr>
-<tr><td><code>PREVIEW lPreview</code></td><td>Mostrar vista previa en lugar de enviar a la impresora</td></tr>
-<tr><td><code>TO cPrinter</code></td><td>Nombre de la impresora destino</td></tr>
-<tr><td><code>OF oWnd</code></td><td>Ventana padre</td></tr>
-<tr><td><code>MODAL</code></td><td>Ventana de vista previa modal</td></tr>
-<tr><td><code>PRINTIDS</code></td><td>Imprimir los IDs de elementos en el informe (para depuraci&oacute;n)</td></tr>
-<tr><td><code>NOPRINT</code></td><td>No imprimir realmente (ejecuci&oacute;n en seco)</td></tr>
-<tr><td><code>NOEXPR</code></td><td>No evaluar expresiones en los elementos del informe</td></tr>
-<tr><td><code>PRINTDIALOG lPrintDialog</code></td><td>Mostrar el di&aacute;logo de impresi&oacute;n de Windows</td></tr>
-<tr><td><code>COPIES nCopies</code></td><td>N&uacute;mero de copias a imprimir</td></tr>
-<tr><td><code>PRINTOBJECT oPrn</code></td><td>Usar un objeto TPrinter existente</td></tr>
-<tr><td><code>PAPERSIZE aSize</code></td><td>Array de tama&ntilde;o de papel personalizado</td></tr>
-<tr><td><code>FILE cFile</code></td><td>Ruta del archivo de salida (para PDF)</td></tr>
+<tr><td><code>NAME cReportFile</code></td><td>Path to the <code>.vrd</code> report file (required)</td></tr>
+<tr><td><code>PREVIEW lPreview</code></td><td>Show print preview instead of sending to printer</td></tr>
+<tr><td><code>TO cPrinter</code></td><td>Target printer name</td></tr>
+<tr><td><code>OF oWnd</code></td><td>Parent window</td></tr>
+<tr><td><code>MODAL</code></td><td>Modal preview window</td></tr>
+<tr><td><code>PRINTIDS</code></td><td>Print item IDs on the report (for debugging)</td></tr>
+<tr><td><code>NOPRINT</code></td><td>Do not actually print (dry run)</td></tr>
+<tr><td><code>NOEXPR</code></td><td>Do not evaluate expressions in report items</td></tr>
+<tr><td><code>PRINTDIALOG lPrintDialog</code></td><td>Show the Windows print dialog</td></tr>
+<tr><td><code>COPIES nCopies</code></td><td>Number of copies to print</td></tr>
+<tr><td><code>PRINTOBJECT oPrn</code></td><td>Use an existing TPrinter object</td></tr>
+<tr><td><code>PAPERSIZE aSize</code></td><td>Custom paper size array</td></tr>
+<tr><td><code>FILE cFile</code></td><td>Output file path (for PDF)</td></tr>
 </tbody>
 </table>
 
@@ -99,7 +99,7 @@ ir a vista previa, una impresora f&iacute;sica o un archivo PDF.
    [ ITEMVALUES aStrings ] ;
    [ PAGEBREAK ]</code></pre>
 
-<p>Imprime un &aacute;rea del informe. Use <code>ITEMIDS</code> e <code>ITEMVALUES</code> para suministrar datos a elementos espec&iacute;ficos dentro del &aacute;rea. Ll&aacute;melo dentro de un bucle <code>DO WHILE</code> para &aacute;reas de detalle.</p>
+<p>Prints a report area. Use <code>ITEMIDS</code> and <code>ITEMVALUES</code> to supply data for specific items within the area. Call this inside a <code>DO WHILE</code> loop for detail areas.</p>
 
 <h3>PRINTITEM</h3>
 
@@ -108,16 +108,16 @@ ir a vista previa, una impresora f&iacute;sica o un archivo PDF.
    OF oVRD ;
    [ ENTRY nEntry ]</code></pre>
 
-<p>Imprime un elemento individual dentro de un &aacute;rea. &Uacute;til cuando necesita control detallado sobre elementos individuales.</p>
+<p>Prints a single item within an area. Useful when you need fine-grained control over individual items.</p>
 
 <h3>PRITEMLIST</h3>
 
 <pre><code class="language-harbour">PRITEMLIST AREA nArea OF oVRD ;
    ITEMIDS aIDs ITEMVALUES aStrings</code></pre>
 
-<p>Imprime una lista de elementos dentro de un &aacute;rea, haciendo coincidir IDs con valores.</p>
+<p>Prints a list of items within an area, matching IDs to values.</p>
 
-<h3>Otros Comandos</h3>
+<h3>Other Commands</h3>
 
 <pre><code class="language-harbour">PRINTREST AREA nArea OF oVRD      // Print remaining items of an area
 
@@ -125,7 +125,7 @@ PAGEBREAK oVRD                    // Force a page break
 
 END EASYREPORT oVRD               // End the report and finalize output</code></pre>
 
-<h3>ER QUICK (Impresi&oacute;n R&aacute;pida)</h3>
+<h3>ER QUICK (Quick Print)</h3>
 
 <pre><code class="language-harbour">ER QUICK oVRD NAME cReportFile ;
    [ PREVIEW lPreview ] ;
@@ -136,180 +136,180 @@ END EASYREPORT oVRD               // End the report and finalize output</code></
    [ COPIES nCopies ] ;
    [ ACTION uAction ]</code></pre>
 
-<p>Un comando de atajo que llama a <code>FWER_PrReport()</code> para abrir, llenar y cerrar un informe en un solo comando. La cl&aacute;usula <code>ACTION</code> recibe el objeto <code>oVRD</code> como par&aacute;metro de bloque de c&oacute;digo.</p>
+<p>A shortcut command that calls <code>FWER_PrReport()</code> to open, fill, and close a report in a single command. The <code>ACTION</code> clause receives the <code>oVRD</code> object as a code block parameter.</p>
 
-<h2 id="data">Miembros DATA Principales</h2>
-
-<table>
-<thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
-</thead>
-<tbody>
-<tr><td><code>cReportName</code></td><td>Character</td><td>Ruta completa al archivo de informe <code>.vrd</code></td></tr>
-<tr><td><code>cTitle</code></td><td>Character</td><td>T&iacute;tulo del informe</td></tr>
-<tr><td><code>cDefIni</code></td><td>Character</td><td>Archivo de definici&oacute;n INI principal</td></tr>
-<tr><td><code>cRDD</code></td><td>Character</td><td>Nombre del controlador de base de datos reemplazable</td></tr>
-<tr><td><code>cPrinter</code></td><td>Character</td><td>Nombre de la impresora destino</td></tr>
-<tr><td><code>Cargo</code></td><td>Array/Any</td><td>Valores de datos primarios para elementos del informe (t&iacute;picamente un array de cadenas)</td></tr>
-<tr><td><code>Cargo2</code></td><td>Array/Any</td><td>Datos adicionales (campos memo, valores secundarios)</td></tr>
-<tr><td><code>Cargo3</code></td><td>Any</td><td>Espacio adicional para datos del usuario</td></tr>
-<tr><td><code>Cargo4</code></td><td>Any</td><td>Espacio adicional para datos del usuario</td></tr>
-<tr><td><code>Cargo5</code></td><td>Any</td><td>Espacio adicional para datos del usuario</td></tr>
-<tr><td><code>nTopMargin</code></td><td>Numeric</td><td>Margen superior del papel</td></tr>
-<tr><td><code>nLeftMargin</code></td><td>Numeric</td><td>Margen izquierdo del papel</td></tr>
-<tr><td><code>nPageBreak</code></td><td>Numeric</td><td>Posici&oacute;n vertical donde ocurre un salto de p&aacute;gina</td></tr>
-<tr><td><code>nOrientation</code></td><td>Numeric</td><td>Orientaci&oacute;n de la p&aacute;gina: 1 = Vertical, 2 = Horizontal</td></tr>
-<tr><td><code>nNextRow</code></td><td>Numeric</td><td>Posici&oacute;n vertical actual de impresi&oacute;n (usar para c&aacute;lculos de salto de p&aacute;gina)</td></tr>
-<tr><td><code>nLastPrintedRow</code></td><td>Numeric</td><td>Fila del &uacute;ltimo elemento impreso</td></tr>
-<tr><td><code>nCurArea</code></td><td>Numeric</td><td>&Aacute;rea actual siendo procesada (predeterminado: 1)</td></tr>
-<tr><td><code>nCopies</code></td><td>Numeric</td><td>N&uacute;mero de copias a imprimir</td></tr>
-<tr><td><code>nPaperSize</code></td><td>Numeric</td><td>Constante de tama&ntilde;o de papel</td></tr>
-<tr><td><code>nPaperWidth</code></td><td>Numeric</td><td>Ancho del papel</td></tr>
-<tr><td><code>nPaperHeight</code></td><td>Numeric</td><td>Alto del papel</td></tr>
-<tr><td><code>lPreview</code></td><td>Logical</td><td>Modo de vista previa activo</td></tr>
-<tr><td><code>lDialogCancel</code></td><td>Logical</td><td><code>.T.</code> si el usuario cancel&oacute; el di&aacute;logo de impresi&oacute;n</td></tr>
-<tr><td><code>lShowInfo</code></td><td>Logical</td><td>Mostrar cuadro de mensaje informativo durante la impresi&oacute;n</td></tr>
-<tr><td><code>lAutoPageBreak</code></td><td>Logical</td><td>Saltos de p&aacute;gina autom&aacute;ticos habilitados</td></tr>
-<tr><td><code>lPrintIDs</code></td><td>Logical</td><td>Imprimir IDs de elementos (modo depuraci&oacute;n)</td></tr>
-<tr><td><code>aAreaInis</code></td><td>Array</td><td>Todos los archivos INI de &aacute;reas</td></tr>
-<tr><td><code>aFonts</code></td><td>Array</td><td>Todas las fuentes con propiedades (array de 20 x 10)</td></tr>
-<tr><td><code>aColors</code></td><td>Array</td><td>Todos los colores definidos en el informe</td></tr>
-<tr><td><code>aAreaTop</code></td><td>Array</td><td>Posiciones superiores de todas las &aacute;reas</td></tr>
-<tr><td><code>aAreaHeight</code></td><td>Array</td><td>Alturas de todas las &aacute;reas (usadas para c&aacute;lculos de salto de p&aacute;gina)</td></tr>
-<tr><td><code>aErrors</code></td><td>Array</td><td>Mensajes de error acumulados durante la impresi&oacute;n</td></tr>
-<tr><td><code>oPrn</code></td><td>TPrinter</td><td>El objeto de impresora subyacente</td></tr>
-<tr><td><code>bTransExpr</code></td><td>Code block</td><td>Bloque de traducci&oacute;n de expresiones personalizado</td></tr>
-</tbody>
-</table>
-
-<h2 id="methods">M&eacute;todos Principales</h2>
-
-<h3>Constructor y Ciclo de Vida</h3>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cReportName, lPreview, cPrinter, oWnd, lModal, lPrintIDs, lNoPrint, lNoExpr, cAreaPath, lPrintDialog, nCopies, lCheck, oPrint, aSize, cTitle, cPreviewDir, lAutoBreak, lShowInfo, cFileOut )</code></td><td>Constructor. Abre el archivo <code>.vrd</code>, inicializa la impresora, fuentes y &aacute;reas.</td></tr>
-<tr><td><code>End( lPrintArea )</code></td><td>Finalizar el informe: imprimir &aacute;reas de pie de p&aacute;gina, cerrar la impresora, liberar recursos.</td></tr>
-<tr><td><code>PageBreak( lPrintArea )</code></td><td>Forzar un salto de p&aacute;gina. Imprime el pie de p&aacute;gina, inicia nueva p&aacute;gina, imprime el encabezado de p&aacute;gina.</td></tr>
-<tr><td><code>PrintDialog()</code></td><td>Mostrar el di&aacute;logo de impresi&oacute;n de Windows. Devuelve <code>.F.</code> si se cancela.</td></tr>
+<tr><td><code>cReportName</code></td><td>Character</td><td>Full path to the <code>.vrd</code> report file</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Report title</td></tr>
+<tr><td><code>cDefIni</code></td><td>Character</td><td>Main INI definition file</td></tr>
+<tr><td><code>cRDD</code></td><td>Character</td><td>Replaceable database driver name</td></tr>
+<tr><td><code>cPrinter</code></td><td>Character</td><td>Target printer name</td></tr>
+<tr><td><code>Cargo</code></td><td>Array/Any</td><td>Primary data values for report items (typically an array of strings)</td></tr>
+<tr><td><code>Cargo2</code></td><td>Array/Any</td><td>Additional data (memo fields, secondary values)</td></tr>
+<tr><td><code>Cargo3</code></td><td>Any</td><td>Additional user data slot</td></tr>
+<tr><td><code>Cargo4</code></td><td>Any</td><td>Additional user data slot</td></tr>
+<tr><td><code>Cargo5</code></td><td>Any</td><td>Additional user data slot</td></tr>
+<tr><td><code>nTopMargin</code></td><td>Numeric</td><td>Top paper margin</td></tr>
+<tr><td><code>nLeftMargin</code></td><td>Numeric</td><td>Left paper margin</td></tr>
+<tr><td><code>nPageBreak</code></td><td>Numeric</td><td>Vertical position where a page break occurs</td></tr>
+<tr><td><code>nOrientation</code></td><td>Numeric</td><td>Page orientation: 1 = Portrait, 2 = Landscape</td></tr>
+<tr><td><code>nNextRow</code></td><td>Numeric</td><td>Current vertical print position (use for page break calculations)</td></tr>
+<tr><td><code>nLastPrintedRow</code></td><td>Numeric</td><td>Row of the last printed item</td></tr>
+<tr><td><code>nCurArea</code></td><td>Numeric</td><td>Current area being processed (default: 1)</td></tr>
+<tr><td><code>nCopies</code></td><td>Numeric</td><td>Number of copies to print</td></tr>
+<tr><td><code>nPaperSize</code></td><td>Numeric</td><td>Paper size constant</td></tr>
+<tr><td><code>nPaperWidth</code></td><td>Numeric</td><td>Paper width</td></tr>
+<tr><td><code>nPaperHeight</code></td><td>Numeric</td><td>Paper height</td></tr>
+<tr><td><code>lPreview</code></td><td>Logical</td><td>Preview mode active</td></tr>
+<tr><td><code>lDialogCancel</code></td><td>Logical</td><td><code>.T.</code> if user cancelled the print dialog</td></tr>
+<tr><td><code>lShowInfo</code></td><td>Logical</td><td>Show info message box during printing</td></tr>
+<tr><td><code>lAutoPageBreak</code></td><td>Logical</td><td>Automatic page breaks enabled</td></tr>
+<tr><td><code>lPrintIDs</code></td><td>Logical</td><td>Print item IDs (debug mode)</td></tr>
+<tr><td><code>aAreaInis</code></td><td>Array</td><td>All area INI files</td></tr>
+<tr><td><code>aFonts</code></td><td>Array</td><td>All fonts with properties (20 x 10 array)</td></tr>
+<tr><td><code>aColors</code></td><td>Array</td><td>All colors defined in the report</td></tr>
+<tr><td><code>aAreaTop</code></td><td>Array</td><td>Top positions of all areas</td></tr>
+<tr><td><code>aAreaHeight</code></td><td>Array</td><td>Heights of all areas (used for page break calculations)</td></tr>
+<tr><td><code>aErrors</code></td><td>Array</td><td>Error messages accumulated during printing</td></tr>
+<tr><td><code>oPrn</code></td><td>TPrinter</td><td>The underlying printer object</td></tr>
+<tr><td><code>bTransExpr</code></td><td>Code block</td><td>Custom expression translator block</td></tr>
 </tbody>
 </table>
 
-<h3>M&eacute;todos de Impresi&oacute;n</h3>
+<h2 id="methods">Key Methods</h2>
+
+<h3>Constructor &amp; Lifecycle</h3>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>AreaStart( nArea, lPrintArea, aIDs, aStrings, lPageBreak )</code></td><td>Inicializar e imprimir un &aacute;rea. Llamado por el comando <code>PRINTAREA</code>.</td></tr>
-<tr><td><code>PrintArea( nArea, nAddToTop, lPageBreak )</code></td><td>Imprimir todos los elementos de un &aacute;rea.</td></tr>
-<tr><td><code>PrintItem( nArea, nItemID, cValue, nAddToTop, lMemo, nEntry )</code></td><td>Imprimir un solo elemento con un valor espec&iacute;fico.</td></tr>
-<tr><td><code>PrintItemList( nArea, aIDs, aStrings, nAddToTop )</code></td><td>Imprimir m&uacute;ltiples elementos por ID con valores correspondientes.</td></tr>
-<tr><td><code>PrintRest( nArea, nAddToTop, lPageBreak )</code></td><td>Imprimir elementos restantes a&uacute;n no impresos en un &aacute;rea.</td></tr>
-<tr><td><code>PrintUserFields( nArea, nAddToTop )</code></td><td>Imprimir campos definidos por el usuario en un &aacute;rea.</td></tr>
-<tr><td><code>PrMultiAreas( aArea, lPrintArea )</code></td><td>Imprimir m&uacute;ltiples &aacute;reas a la vez.</td></tr>
+<tr><td><code>New( cReportName, lPreview, cPrinter, oWnd, lModal, lPrintIDs, lNoPrint, lNoExpr, cAreaPath, lPrintDialog, nCopies, lCheck, oPrint, aSize, cTitle, cPreviewDir, lAutoBreak, lShowInfo, cFileOut )</code></td><td>Constructor. Opens the <code>.vrd</code> file, initializes the printer, fonts, and areas.</td></tr>
+<tr><td><code>End( lPrintArea )</code></td><td>Finalize the report: print footer areas, close the printer, release resources.</td></tr>
+<tr><td><code>PageBreak( lPrintArea )</code></td><td>Force a page break. Prints page footer, starts new page, prints page header.</td></tr>
+<tr><td><code>PrintDialog()</code></td><td>Show the Windows print dialog. Returns <code>.F.</code> if cancelled.</td></tr>
 </tbody>
 </table>
 
-<h3>M&eacute;todos de Salida</h3>
+<h3>Printing Methods</h3>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad )</code></td><td>Imprimir texto en una posici&oacute;n espec&iacute;fica.</td></tr>
-<tr><td><code>SayMemo( nTop, nLeft, nWidth, nHeight, cText, oFont, nColor, nPad, lVariHeight )</code></td><td>Imprimir un campo memo con ajuste de l&iacute;nea autom&aacute;tico.</td></tr>
-<tr><td><code>SayMemoJust( nTop, nLeft, nWidth, nHeight, cText, oFont, nColor, nOrient, lVariHeight )</code></td><td>Imprimir un campo memo justificado.</td></tr>
-<tr><td><code>DrawBox( nTop, nLeft, nBottom, nRight )</code></td><td>Dibujar un cuadro en el informe.</td></tr>
+<tr><td><code>AreaStart( nArea, lPrintArea, aIDs, aStrings, lPageBreak )</code></td><td>Initialize and print an area. Called by the <code>PRINTAREA</code> command.</td></tr>
+<tr><td><code>PrintArea( nArea, nAddToTop, lPageBreak )</code></td><td>Print all items in an area.</td></tr>
+<tr><td><code>PrintItem( nArea, nItemID, cValue, nAddToTop, lMemo, nEntry )</code></td><td>Print a single item with a specific value.</td></tr>
+<tr><td><code>PrintItemList( nArea, aIDs, aStrings, nAddToTop )</code></td><td>Print multiple items by ID with corresponding values.</td></tr>
+<tr><td><code>PrintRest( nArea, nAddToTop, lPageBreak )</code></td><td>Print remaining items not yet printed in an area.</td></tr>
+<tr><td><code>PrintUserFields( nArea, nAddToTop )</code></td><td>Print user-defined fields in an area.</td></tr>
+<tr><td><code>PrMultiAreas( aArea, lPrintArea )</code></td><td>Print multiple areas at once.</td></tr>
 </tbody>
 </table>
 
-<h3>Informaci&oacute;n de &Aacute;reas y Elementos</h3>
+<h3>Output Methods</h3>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>AreaTitle( nArea )</code></td><td>Obtener el t&iacute;tulo de un &aacute;rea.</td></tr>
-<tr><td><code>AreaWidth( nArea )</code></td><td>Obtener el ancho de un &aacute;rea.</td></tr>
-<tr><td><code>AreaHeight( nArea )</code></td><td>Obtener la altura de un &aacute;rea.</td></tr>
-<tr><td><code>GetItem( nArea, nItemID )</code></td><td>Obtener un objeto elemento por &aacute;rea e ID.</td></tr>
-<tr><td><code>GetEntryNr( nArea, nItemID )</code></td><td>Obtener el n&uacute;mero de entrada de un elemento.</td></tr>
-<tr><td><code>CountItems( nArea, nMode )</code></td><td>Contar elementos en un &aacute;rea.</td></tr>
-<tr><td><code>GetAllItemIDs( nArea )</code></td><td>Obtener un array con todos los IDs de elementos en un &aacute;rea.</td></tr>
+<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad )</code></td><td>Print text at a specific position.</td></tr>
+<tr><td><code>SayMemo( nTop, nLeft, nWidth, nHeight, cText, oFont, nColor, nPad, lVariHeight )</code></td><td>Print a memo field with word wrapping.</td></tr>
+<tr><td><code>SayMemoJust( nTop, nLeft, nWidth, nHeight, cText, oFont, nColor, nOrient, lVariHeight )</code></td><td>Print a justified memo field.</td></tr>
+<tr><td><code>DrawBox( nTop, nLeft, nBottom, nRight )</code></td><td>Draw a box on the report.</td></tr>
 </tbody>
 </table>
 
-<h3>M&eacute;todos de Expresiones y Datos</h3>
+<h3>Area &amp; Item Information</h3>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>SetExpression( cName, cExpression, cInfo )</code></td><td>Definir una expresi&oacute;n con nombre para usar en el informe.</td></tr>
-<tr><td><code>GetExpression( cName )</code></td><td>Recuperar el valor de una expresi&oacute;n con nombre.</td></tr>
-<tr><td><code>DelExpression( cName )</code></td><td>Eliminar una expresi&oacute;n con nombre.</td></tr>
-<tr><td><code>EvalExpression( cText )</code></td><td>Evaluar una cadena de expresi&oacute;n.</td></tr>
-<tr><td><code>EvalFormula( oItem )</code></td><td>Evaluar la f&oacute;rmula de un elemento.</td></tr>
+<tr><td><code>AreaTitle( nArea )</code></td><td>Get the title of an area.</td></tr>
+<tr><td><code>AreaWidth( nArea )</code></td><td>Get the width of an area.</td></tr>
+<tr><td><code>AreaHeight( nArea )</code></td><td>Get the height of an area.</td></tr>
+<tr><td><code>GetItem( nArea, nItemID )</code></td><td>Get an item object by area and ID.</td></tr>
+<tr><td><code>GetEntryNr( nArea, nItemID )</code></td><td>Get the entry number of an item.</td></tr>
+<tr><td><code>CountItems( nArea, nMode )</code></td><td>Count items in an area.</td></tr>
+<tr><td><code>GetAllItemIDs( nArea )</code></td><td>Get an array of all item IDs in an area.</td></tr>
 </tbody>
 </table>
 
-<h3>M&eacute;todos de Base de Datos</h3>
+<h3>Expression &amp; Data Methods</h3>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>OpenDatabases()</code></td><td>Abrir todas las bases de datos referenciadas por el informe.</td></tr>
-<tr><td><code>CloseDatabases()</code></td><td>Cerrar todas las bases de datos abiertas por el informe.</td></tr>
-<tr><td><code>DBSum( cDatabase, cField, nLen, nDec, cFor, lPrevious, lCount )</code></td><td>Calcular una SUMA sobre un campo de base de datos.</td></tr>
-<tr><td><code>DBCount( cDatabase, cFor )</code></td><td>Contar registros en una base de datos.</td></tr>
-<tr><td><code>DBValue( cField, cDatabase, lPrevious )</code></td><td>Obtener el valor de un campo de base de datos.</td></tr>
-<tr><td><code>DBPrevValue( cField, cDatabase )</code></td><td>Obtener el valor del campo del registro anterior.</td></tr>
+<tr><td><code>SetExpression( cName, cExpression, cInfo )</code></td><td>Define a named expression for use in the report.</td></tr>
+<tr><td><code>GetExpression( cName )</code></td><td>Retrieve a named expression value.</td></tr>
+<tr><td><code>DelExpression( cName )</code></td><td>Delete a named expression.</td></tr>
+<tr><td><code>EvalExpression( cText )</code></td><td>Evaluate an expression string.</td></tr>
+<tr><td><code>EvalFormula( oItem )</code></td><td>Evaluate an item's formula.</td></tr>
 </tbody>
 </table>
 
-<h3>M&eacute;todos de Conversi&oacute;n</h3>
+<h3>Database Methods</h3>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>ToPix( nValue, lHeight )</code></td><td>Convertir un valor de medida a p&iacute;xeles.</td></tr>
-<tr><td><code>ToMmInch( nValue, lHeight )</code></td><td>Convertir un valor en p&iacute;xeles a mm o pulgadas.</td></tr>
-<tr><td><code>SetPaperSize( aSize )</code></td><td>Establecer un tama&ntilde;o de papel personalizado.</td></tr>
-<tr><td><code>GetTextWidth( cText, oFont )</code></td><td>Medir el ancho del texto para una fuente dada.</td></tr>
+<tr><td><code>OpenDatabases()</code></td><td>Open all databases referenced by the report.</td></tr>
+<tr><td><code>CloseDatabases()</code></td><td>Close all databases opened by the report.</td></tr>
+<tr><td><code>DBSum( cDatabase, cField, nLen, nDec, cFor, lPrevious, lCount )</code></td><td>Calculate a SUM on a database field.</td></tr>
+<tr><td><code>DBCount( cDatabase, cFor )</code></td><td>Count records in a database.</td></tr>
+<tr><td><code>DBValue( cField, cDatabase, lPrevious )</code></td><td>Get the value of a database field.</td></tr>
+<tr><td><code>DBPrevValue( cField, cDatabase )</code></td><td>Get the previous record's field value.</td></tr>
 </tbody>
 </table>
 
-<h2 id="functions">Funciones</h2>
+<h3>Conversion Methods</h3>
 
 <table>
 <thead>
-<tr><th>Funci&oacute;n</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>EReport( oParent, lBar, lMenu, l16 )</code></td><td>Abre el dise&ntilde;ador visual de informes. Puede incrustarse en una ventana padre (<code>oParent</code>). Definido en <code>source/function/ereport.prg</code>.</td></tr>
-<tr><td><code>FW_EReport()</code></td><td>Alias de <code>EReport()</code>. El nombre <code>VRD()</code> tambi&eacute;n se traduce a este mediante el archivo de cabecera.</td></tr>
-<tr><td><code>FWER_PrReport( cReportName, lPreview, cPrinter, oWnd, lModal, lPrintIDs, lNoPrint, lNoExpr, cFilePath, lPrintDialog, nCopies, lCheck, bReportSource, cTitle, cPreviewDir, lAutoBreak )</code></td><td>Imprimir un informe program&aacute;ticamente. Acepta un bloque de c&oacute;digo (<code>bReportSource</code>) que recibe el objeto <code>oVRD</code> para llenar datos. Maneja el ciclo de vida completo: abrir, llenar, cerrar.</td></tr>
-<tr><td><code>FWER_GetGroup( cGroup, nMode, cPath, cExt )</code></td><td>Obtener todos los t&iacute;tulos y/o archivos de informe pertenecientes a un grupo de informes.</td></tr>
+<tr><td><code>ToPix( nValue, lHeight )</code></td><td>Convert a measurement value to pixels.</td></tr>
+<tr><td><code>ToMmInch( nValue, lHeight )</code></td><td>Convert a pixel value to mm or inches.</td></tr>
+<tr><td><code>SetPaperSize( aSize )</code></td><td>Set a custom paper size.</td></tr>
+<tr><td><code>GetTextWidth( cText, oFont )</code></td><td>Measure text width for a given font.</td></tr>
 </tbody>
 </table>
 
-<h2 id="areas">&Aacute;reas del Informe</h2>
+<h2 id="Funciones">Funciones</h2>
+
+<table>
+<thead>
+<tr><th>Function</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>EReport( oParent, lBar, lMenu, l16 )</code></td><td>Opens the visual report designer. Can be embedded in a parent window (<code>oParent</code>). Defined in <code>source/function/ereport.prg</code>.</td></tr>
+<tr><td><code>FW_EReport()</code></td><td>Alias for <code>EReport()</code>. The <code>VRD()</code> name is also translated to this via the header file.</td></tr>
+<tr><td><code>FWER_PrReport( cReportName, lPreview, cPrinter, oWnd, lModal, lPrintIDs, lNoPrint, lNoExpr, cFilePath, lPrintDialog, nCopies, lCheck, bReportSource, cTitle, cPreviewDir, lAutoBreak )</code></td><td>Print a report programmatically. Accepts a code block (<code>bReportSource</code>) that receives the <code>oVRD</code> object for filling data. Handles the full lifecycle: open, fill, close.</td></tr>
+<tr><td><code>FWER_GetGroup( cGroup, nMode, cPath, cExt )</code></td><td>Get all report titles and/or files belonging to a report group.</td></tr>
+</tbody>
+</table>
+
+<h2 id="areas">Report Areas</h2>
 
 <p>
-Un informe EasyReport se divide en hasta seis &aacute;reas l&oacute;gicas. Cada &aacute;rea tiene su propio archivo INI
-(ej., <code>.v01</code>, <code>.v02</code>) y contiene elementos (texto, im&aacute;genes, c&oacute;digos de barras, cuadros, l&iacute;neas, etc.).
+An EasyReport report is divided into up to six logical areas. Each area has its own INI file
+(e.g., <code>.v01</code>, <code>.v02</code>) and contains items (text, images, barcodes, boxes, lines, etc.).
 </p>
 
 <div class="mermaid">
@@ -324,101 +324,101 @@ graph TB
 
 <table>
 <thead>
-<tr><th>&Aacute;rea</th><th>Nombre</th><th>Uso T&iacute;pico</th></tr>
+<tr><th>Area</th><th>Name</th><th>Typical Use</th></tr>
 </thead>
 <tbody>
-<tr><td>1</td><td>Encabezado del Informe</td><td>Logo de la empresa, t&iacute;tulo del informe, fecha. Se imprime una vez en la primera p&aacute;gina.</td></tr>
-<tr><td>2</td><td>Encabezado de P&aacute;gina</td><td>Encabezados de columnas, n&uacute;mero de p&aacute;gina. Se imprime en la parte superior de cada p&aacute;gina.</td></tr>
-<tr><td>3</td><td>Detalle</td><td>Filas de datos. Se repite para cada registro del conjunto de datos.</td></tr>
-<tr><td>4</td><td>Detalle Variable</td><td>Contenido de altura variable como campos memo, notas, descripciones.</td></tr>
-<tr><td>5</td><td>Pie de P&aacute;gina</td><td>Totales de p&aacute;gina, n&uacute;meros de p&aacute;gina. Se imprime en la parte inferior de cada p&aacute;gina.</td></tr>
-<tr><td>6</td><td>Pie del Informe</td><td>Totales generales, firmas. Se imprime una vez al final.</td></tr>
+<tr><td>1</td><td>Report Header</td><td>Company logo, report title, date. Printed once on the first page.</td></tr>
+<tr><td>2</td><td>Page Header</td><td>Column headers, page number. Printed at the top of every page.</td></tr>
+<tr><td>3</td><td>Detail</td><td>Data rows. Repeated for each record in your dataset.</td></tr>
+<tr><td>4</td><td>Detail Variable</td><td>Variable-height content such as memo fields, notes, descriptions.</td></tr>
+<tr><td>5</td><td>Page Footer</td><td>Page totals, page numbers. Printed at the bottom of every page.</td></tr>
+<tr><td>6</td><td>Report Footer</td><td>Grand totals, signatures. Printed once at the end.</td></tr>
 </tbody>
 </table>
 
 <p>
-Cada elemento dentro de un &aacute;rea tiene un ID num&eacute;rico &uacute;nico (ej., 101, 102, 301). Al imprimir program&aacute;ticamente,
-se referencian los elementos por estos IDs usando los arrays <code>ITEMIDS</code> e <code>ITEMVALUES</code>.
+Each item within an area has a unique numeric ID (e.g., 101, 102, 301). When printing programmatically,
+you reference items by these IDs using <code>ITEMIDS</code> and <code>ITEMVALUES</code> arrays.
 </p>
 
-<h2 id="designer">Dise&ntilde;ador Visual (TEReport)</h2>
+<h2 id="designer">Visual Designer (TEReport)</h2>
 
 <p>
-El dise&ntilde;ador visual es una aplicaci&oacute;n MDI completa que permite a los usuarios crear y editar definiciones de informes.
-Ejec&uacute;telo llamando a <code>EReport()</code> o agregando un bot&oacute;n de men&uacute;/barra de herramientas en su aplicaci&oacute;n.
+The visual designer is a full MDI application that lets users create and edit report definitions.
+Launch it by calling <code>EReport()</code> or adding a menu/toolbar button in your application.
 </p>
 
-<p>La interfaz del dise&ntilde;ador proporciona:</p>
+<p>The designer interface provides:</p>
 
 <ul>
-<li><strong>Panel de &aacute;reas</strong> -- muestra todas las &aacute;reas del informe con sus l&iacute;mites, arrastre para redimensionar</li>
-<li><strong>Panel de elementos</strong> -- agregue etiquetas de texto, campos, im&aacute;genes, c&oacute;digos de barras, l&iacute;neas, cuadros a cualquier &aacute;rea</li>
-<li><strong>Panel de propiedades</strong> -- configure fuente, color, alineaci&oacute;n, posici&oacute;n, tama&ntilde;o, expresiones para cada elemento</li>
-<li><strong>Regla</strong> -- regla visual para posicionamiento preciso (mm o pulgadas)</li>
-<li><strong>Vista previa</strong> -- vista previa instant&aacute;nea del dise&ntilde;o del informe</li>
-<li><strong>Deshacer/Rehacer</strong> -- soporte completo de deshacer y rehacer para todos los cambios</li>
-<li><strong>Integraci&oacute;n con bases de datos</strong> -- defina conexiones de base de datos y mapeo de campos dentro del dise&ntilde;ador</li>
-<li><strong>Configuraci&oacute;n general</strong> -- tama&ntilde;o de papel, orientaci&oacute;n, m&aacute;rgenes, fuentes, idioma</li>
+<li><strong>Area panel</strong> -- displays all report areas with their boundaries, drag to resize</li>
+<li><strong>Items panel</strong> -- add text labels, fields, images, barcodes, lines, boxes to any area</li>
+<li><strong>Properties panel</strong> -- set font, color, alignment, position, size, expressions for each item</li>
+<li><strong>Ruler</strong> -- visual ruler for precise positioning (mm or inches)</li>
+<li><strong>Preview</strong> -- instant preview of the report layout</li>
+<li><strong>Undo/Redo</strong> -- full undo and redo support for all changes</li>
+<li><strong>Database integration</strong> -- define database connections and field mappings within the designer</li>
+<li><strong>General settings</strong> -- paper size, orientation, margins, fonts, language</li>
 </ul>
 
 <p>
-El dise&ntilde;ador soporta la creaci&oacute;n de nuevos informes desde cero, la apertura de archivos <code>.vrd</code> existentes,
-y el guardado en el formato est&aacute;ndar de EasyReport. Tambi&eacute;n proporciona funcionalidad de respaldo y "Guardar Como".
+The designer supports creating new reports from scratch, opening existing <code>.vrd</code> files,
+and saving in the standard EasyReport format. It also provides backup and "Save As" functionality.
 </p>
 
-<h2 id="report-files">Formato de Archivo de Informe</h2>
+<h2 id="report-files">Report File Format</h2>
 
 <p>
-EasyReport almacena los informes como un conjunto de archivos de texto de estilo INI:
+EasyReport stores reports as a set of INI-style text files:
 </p>
 
 <table>
 <thead>
-<tr><th>Archivo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>File</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>ReportName.vrd</code></td><td>Definici&oacute;n principal del informe: configuraci&oacute;n general, tama&ntilde;o de papel, orientaci&oacute;n, m&aacute;rgenes, fuentes, colores, referencias de base de datos, n&uacute;mero de &aacute;reas.</td></tr>
-<tr><td><code>ReportName.v01</code></td><td>Definici&oacute;n del &Aacute;rea 1 (Encabezado del Informe): posiciones de elementos, tama&ntilde;os, tipos, fuentes, colores, expresiones.</td></tr>
-<tr><td><code>ReportName.v02</code></td><td>Definici&oacute;n del &Aacute;rea 2 (Encabezado de P&aacute;gina)</td></tr>
-<tr><td><code>ReportName.v03</code></td><td>Definici&oacute;n del &Aacute;rea 3 (Detalle)</td></tr>
-<tr><td><code>ReportName.v04</code></td><td>Definici&oacute;n del &Aacute;rea 4 (Detalle Variable)</td></tr>
-<tr><td><code>ReportName.v05</code></td><td>Definici&oacute;n del &Aacute;rea 5 (Pie de P&aacute;gina)</td></tr>
-<tr><td><code>ReportName.v06</code></td><td>Definici&oacute;n del &Aacute;rea 6 (Pie del Informe)</td></tr>
+<tr><td><code>ReportName.vrd</code></td><td>Main report definition: general settings, paper size, orientation, margins, fonts, colors, database references, number of areas.</td></tr>
+<tr><td><code>ReportName.v01</code></td><td>Area 1 definition (Report Header): item positions, sizes, types, fonts, colors, expressions.</td></tr>
+<tr><td><code>ReportName.v02</code></td><td>Area 2 definition (Page Header)</td></tr>
+<tr><td><code>ReportName.v03</code></td><td>Area 3 definition (Detail)</td></tr>
+<tr><td><code>ReportName.v04</code></td><td>Area 4 definition (Detail Variable)</td></tr>
+<tr><td><code>ReportName.v05</code></td><td>Area 5 definition (Page Footer)</td></tr>
+<tr><td><code>ReportName.v06</code></td><td>Area 6 definition (Report Footer)</td></tr>
 </tbody>
 </table>
 
 <p>
-Los archivos <code>.vrd</code> y sus archivos de &aacute;rea complementarios son texto plano y pueden distribuirse
-junto con su aplicaci&oacute;n. El motor los lee en tiempo de ejecuci&oacute;n usando funciones est&aacute;ndar de archivos INI.
+The <code>.vrd</code> file and its companion area files are plain text and can be distributed alongside
+your application. The engine reads them at runtime using standard INI file Funciones.
 </p>
 
-<h2 id="languages">Soporte Multi-Idioma</h2>
+<h2 id="languages">Multi-Language Support</h2>
 
 <p>
-EasyReport soporta 7 idiomas para su interfaz de usuario (di&aacute;logos de impresi&oacute;n, ventana de vista previa, mensajes):
+EasyReport supports 7 languages for its user interface (print dialogs, preview window, messages):
 </p>
 
 <table>
 <thead>
-<tr><th>&Iacute;ndice</th><th>Idioma</th></tr>
+<tr><th>Index</th><th>Language</th></tr>
 </thead>
 <tbody>
-<tr><td>1</td><td>Ingl&eacute;s (English)</td></tr>
-<tr><td>2</td><td>Alem&aacute;n (Deutsch)</td></tr>
-<tr><td>3</td><td>Italiano (Italiano)</td></tr>
-<tr><td>4</td><td>Espa&ntilde;ol (Espa&ntilde;ol)</td></tr>
-<tr><td>5</td><td>Portugu&eacute;s europeo (Portugu&ecirc;s EU)</td></tr>
-<tr><td>6</td><td>Portugu&eacute;s brasile&ntilde;o (Portugu&ecirc;s BR)</td></tr>
-<tr><td>7</td><td>Franc&eacute;s (Fran&ccedil;ais)</td></tr>
+<tr><td>1</td><td>English</td></tr>
+<tr><td>2</td><td>German (Deutsch)</td></tr>
+<tr><td>3</td><td>Italian (Italiano)</td></tr>
+<tr><td>4</td><td>Spanish (Espa&ntilde;ol)</td></tr>
+<tr><td>5</td><td>Portuguese - European (Portugu&ecirc;s EU)</td></tr>
+<tr><td>6</td><td>Portuguese - Brazilian (Portugu&ecirc;s BR)</td></tr>
+<tr><td>7</td><td>French (Fran&ccedil;ais)</td></tr>
 </tbody>
 </table>
 
 <p>
-El idioma se configura en el archivo <code>VRD.INI</code> bajo <code>[General] Language=n</code>.
-El dise&ntilde;ador tambi&eacute;n incluye una base de datos de idiomas (<code>language.dbf</code>) para sus propias cadenas de interfaz.
+The language is configured in the <code>VRD.INI</code> file under <code>[General] Language=n</code>.
+The designer also includes a language database (<code>language.dbf</code>) for its own UI strings.
 </p>
 
-<h2 id="example-designer">Ejemplo: Abrir el Dise&ntilde;ador Visual</h2>
+<h2 id="example-designer">Example: Opening the Visual Designer</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "EasyRep.ch"
@@ -441,7 +441,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-simple">Ejemplo: Informe Simple desde DBF</h2>
+<h2 id="example-simple">Example: Simple Report from DBF</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "EasyRep.ch"
@@ -472,15 +472,15 @@ function PrintClients( lPreview, oWnd )
 return nil</code></pre>
 
 <p>
-El array <code>ITEMIDS</code> contiene los IDs num&eacute;ricos asignados a los elementos en el dise&ntilde;ador visual.
-El array <code>ITEMVALUES</code> proporciona los valores de datos correspondientes. El motor los empareja
-por posici&oacute;n: el elemento 101 recibe el primer valor, el elemento 102 recibe el segundo, y as&iacute; sucesivamente.
+The <code>ITEMIDS</code> array contains the numeric IDs assigned to items in the visual designer.
+The <code>ITEMVALUES</code> array provides the corresponding data values. The engine matches them
+by position: item 101 gets the first value, item 102 gets the second, and so on.
 </p>
 
-<h2 id="example-order">Ejemplo: Formulario de Pedido con Saltos de P&aacute;gina</h2>
+<h2 id="example-order">Example: Order Form with Page Breaks</h2>
 
-<p>Este ejemplo de <code>samples/EasyReport/examples/SourceExample1.prg</code> demuestra un formulario
-de pedido completo con encabezado, l&iacute;neas de detalle, contenido memo, saltos de p&aacute;gina autom&aacute;ticos y un pie con totales.</p>
+<p>This example from <code>samples/EasyReport/examples/SourceExample1.prg</code> demonstrates a complete
+order form with header, detail lines, memo content, automatic page breaks, and a footer with totals.</p>
 
 <pre><code class="language-harbour">// EasyReport: Order form
 
@@ -547,7 +547,7 @@ FUNCTION PrintOrder( lPreview )
 
 RETURN .T.</code></pre>
 
-<h2 id="example-quick">Ejemplo: Impresi&oacute;n R&aacute;pida con ER QUICK</h2>
+<h2 id="example-quick">Example: Quick Print with ER QUICK</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "EasyRep.ch"
@@ -573,13 +573,13 @@ function FillReport( oVRD )
 
 return nil</code></pre>
 
-<h2 id="integration">Integraci&oacute;n de EasyReport en su Aplicaci&oacute;n</h2>
+<h2 id="integration">Integrating EasyReport into Your Application</h2>
 
 <p>
-Hay varias formas de integrar EasyReport en una aplicaci&oacute;n FWH existente:
+There are several ways to integrate EasyReport into an existing FWH application:
 </p>
 
-<h3>Elemento de Men&uacute;</h3>
+<h3>Menu Item</h3>
 
 <pre><code class="language-harbour">MENU oMenu
    MENUITEM "File"
@@ -591,7 +591,7 @@ Hay varias formas de integrar EasyReport en una aplicaci&oacute;n FWH existente:
    ENDMENU
 ENDMENU</code></pre>
 
-<h3>Bot&oacute;n de Barra de Herramientas</h3>
+<h3>Toolbar Button</h3>
 
 <pre><code class="language-harbour">DEFINE BUTTONBAR oBar OF oWnd 2010
 
@@ -601,17 +601,17 @@ DEFINE BUTTON OF oBar PROMPT "Designer" ;
 DEFINE BUTTON OF oBar PROMPT "Preview" ;
    ACTION PrintReport( .T., oWnd )</code></pre>
 
-<h3>Incrustaci&oacute;n en una Ventana Hija</h3>
+<h3>Embedding in a Child Window</h3>
 
 <pre><code class="language-harbour">// Open the designer embedded in a parent window
 EReport( oParentWnd )</code></pre>
 
-<h2 id="page-break-logic">L&oacute;gica de Salto de P&aacute;gina</h2>
+<h2 id="page-break-logic">Page Break Logic</h2>
 
 <p>
-Al imprimir registros de detalle en un bucle, frecuentemente necesita verificar si la siguiente &aacute;rea caber&aacute; en la
-p&aacute;gina actual. Use <code>oVRD:nNextRow</code> y <code>oVRD:nPageBreak</code> junto con
-<code>oVRD:aAreaHeight</code> para un control preciso:
+When printing detail records in a loop, you often need to check if the next area will fit on the
+current page. Use <code>oVRD:nNextRow</code> and <code>oVRD:nPageBreak</code> together with
+<code>oVRD:aAreaHeight</code> for precise control:
 </p>
 
 <pre><code class="language-harbour">DO WHILE ! Eof()
@@ -630,72 +630,72 @@ p&aacute;gina actual. Use <code>oVRD:nNextRow</code> y <code>oVRD:nPageBreak</co
 
 ENDDO</code></pre>
 
-<h2 id="examples-dir">Directorio de Ejemplos</h2>
+<h2 id="examples-dir">Examples Directory</h2>
 
 <p>
-El directorio <code>samples/EasyReport/examples/</code> contiene 15 plantillas de informe (archivos <code>.vrd</code>)
-y 6 ejemplos de c&oacute;digo fuente (archivos <code>.prg</code>) que cubren una amplia variedad de escenarios:
+The <code>samples/EasyReport/examples/</code> directory contains 15 report templates (<code>.vrd</code> files)
+and 6 source code examples (<code>.prg</code> files) covering a wide range of scenarios:
 </p>
 
 <table>
 <thead>
-<tr><th>Archivo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>File</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>Sample00.vrd</code> - <code>Sample02.vrd</code></td><td>Plantillas de informe b&aacute;sicas para comenzar</td></tr>
-<tr><td><code>EasyReportExample1.vrd</code></td><td>Formulario de pedido con encabezado, detalle, im&aacute;genes, c&oacute;digos de barras y totales (6 &aacute;reas)</td></tr>
-<tr><td><code>EasyReportExample2.vrd</code></td><td>Informe multi-&aacute;rea con integraci&oacute;n de base de datos (5 &aacute;reas)</td></tr>
-<tr><td><code>EasyReportExample3.vrd</code></td><td>Informe con expresiones calculadas y f&oacute;rmulas</td></tr>
-<tr><td><code>EasyReportExample4.vrd</code></td><td>Ejemplo de formato y dise&ntilde;o complejo</td></tr>
-<tr><td><code>CompexReport1.vrd</code></td><td>Informe avanzado con m&uacute;ltiples &aacute;reas de detalle</td></tr>
-<tr><td><code>Form1.vrd</code></td><td>Dise&ntilde;o de informe tipo formulario</td></tr>
-<tr><td><code>Report01.vrd</code></td><td>Informe columnar est&aacute;ndar</td></tr>
-<tr><td><code>EasyReport Inch Example.vrd</code></td><td>Informe usando medidas en pulgadas</td></tr>
-<tr><td><code>StandAloneExample1.vrd</code> - <code>3.vrd</code></td><td>Informes independientes que usan conexiones de base de datos integradas</td></tr>
-<tr><td><code>StandAloneForm1.vrd</code></td><td>Formulario independiente con datos incrustados</td></tr>
-<tr><td><code>SourceExample1.prg</code></td><td>Impresi&oacute;n de formulario de pedido con PRINTAREA y datos Cargo</td></tr>
-<tr><td><code>SourceExample2.prg</code> - <code>4.prg</code></td><td>Ejemplos adicionales de impresi&oacute;n program&aacute;tica</td></tr>
-<tr><td><code>EasyReportExample3.prg</code></td><td>Informe con evaluaci&oacute;n de expresiones</td></tr>
-<tr><td><code>ERStartScript1.prg</code></td><td>Ejemplo de script de inicio para el dise&ntilde;ador</td></tr>
+<tr><td><code>Sample00.vrd</code> - <code>Sample02.vrd</code></td><td>Basic report templates for getting started</td></tr>
+<tr><td><code>EasyReportExample1.vrd</code></td><td>Order form with header, detail, images, barcodes, and totals (6 areas)</td></tr>
+<tr><td><code>EasyReportExample2.vrd</code></td><td>Multi-area report with database integration (5 areas)</td></tr>
+<tr><td><code>EasyReportExample3.vrd</code></td><td>Report with computed expressions and formulas</td></tr>
+<tr><td><code>EasyReportExample4.vrd</code></td><td>Complex formatting and layout example</td></tr>
+<tr><td><code>CompexReport1.vrd</code></td><td>Advanced report with multiple detail areas</td></tr>
+<tr><td><code>Form1.vrd</code></td><td>Form-style report layout</td></tr>
+<tr><td><code>Report01.vrd</code></td><td>Standard columnar report</td></tr>
+<tr><td><code>EasyReport Inch Example.vrd</code></td><td>Report using inch measurements</td></tr>
+<tr><td><code>StandAloneExample1.vrd</code> - <code>3.vrd</code></td><td>Standalone reports that use built-in database connections</td></tr>
+<tr><td><code>StandAloneForm1.vrd</code></td><td>Standalone form with embedded data</td></tr>
+<tr><td><code>SourceExample1.prg</code></td><td>Order form printing with PRINTAREA and Cargo data</td></tr>
+<tr><td><code>SourceExample2.prg</code> - <code>4.prg</code></td><td>Additional programmatic printing examples</td></tr>
+<tr><td><code>EasyReportExample3.prg</code></td><td>Report with expression evaluation</td></tr>
+<tr><td><code>ERStartScript1.prg</code></td><td>Startup script example for the designer</td></tr>
 </tbody>
 </table>
 
 <p>
-Los archivos adicionales en el directorio de ejemplos incluyen im&aacute;genes bitmap (<code>.bmp</code>, <code>.jpg</code>),
-un archivo de texto para contenido memo, y archivos de base de datos (<code>.dbf</code>) usados por los informes independientes.
+Additional files in the examples directory include bitmap images (<code>.bmp</code>, <code>.jpg</code>),
+a text file for memo content, and database files (<code>.dbf</code>) used by the standalone reports.
 </p>
 
-<h2 id="tips">Consejos y Mejores Pr&aacute;cticas</h2>
+<h2 id="tips">Tips and Best Practices</h2>
 
-<h3>Flujo de Trabajo de Dise&ntilde;o</h3>
+<h3>Design Workflow</h3>
 
 <ol>
-<li>Comience abriendo el dise&ntilde;ador con <code>EReport()</code> y creando un nuevo informe.</li>
-<li>Defina el tama&ntilde;o de papel, orientaci&oacute;n y m&aacute;rgenes en la Configuraci&oacute;n General.</li>
-<li>Agregue &aacute;reas (encabezado, encabezado de p&aacute;gina, detalle, pie) seg&uacute;n sea necesario.</li>
-<li>Coloque elementos en cada &aacute;rea y asigne IDs num&eacute;ricos a los elementos que recibir&aacute;n datos program&aacute;ticamente.</li>
-<li>Guarde el archivo <code>.vrd</code> y anote los IDs de los elementos.</li>
-<li>Escriba c&oacute;digo usando los comandos <code>EASYREPORT</code> / <code>PRINTAREA</code> / <code>END EASYREPORT</code>, haciendo coincidir los IDs con los datos.</li>
-<li>Pruebe con <code>PREVIEW .T.</code> antes de enviar a una impresora f&iacute;sica.</li>
+<li>Start by opening the designer with <code>EReport()</code> and creating a new report.</li>
+<li>Define your paper size, orientation, and margins in General Settings.</li>
+<li>Add areas (header, page header, detail, footer) as needed.</li>
+<li>Place items in each area and assign numeric IDs to items that will receive data programmatically.</li>
+<li>Save the <code>.vrd</code> file and note the item IDs.</li>
+<li>Write code using <code>EASYREPORT</code> / <code>PRINTAREA</code> / <code>END EASYREPORT</code> commands, matching IDs to data.</li>
+<li>Test with <code>PREVIEW .T.</code> before sending to a physical printer.</li>
 </ol>
 
-<h3>Consejos Generales</h3>
+<h3>General Tips</h3>
 
 <ul>
-<li>Siempre verifique <code>oVRD:lDialogCancel</code> despu&eacute;s de abrir un informe con <code>PRINTDIALOG</code> -- el usuario puede haber cancelado.</li>
-<li>Use <code>oVRD:Cargo</code> para pasar datos est&aacute;ticos (direcciones, t&iacute;tulos, fechas) e <code>ITEMIDS/ITEMVALUES</code> para datos din&aacute;micos por registro.</li>
-<li>Para campos memo, use <code>oVRD:Cargo2</code> e impr&iacute;malos en el &Aacute;rea 4 (Detalle Variable) para auto-dimensionamiento.</li>
-<li>Implemente verificaciones de salto de p&aacute;gina antes de imprimir cada registro de detalle para evitar que los elementos se corten en el l&iacute;mite de la p&aacute;gina.</li>
-<li>Use <code>PRINTIDS</code> durante el desarrollo para ver los IDs de los elementos impresos en el informe, facilitando el mapeo de IDs en su c&oacute;digo.</li>
-<li>El par&aacute;metro <code>lCheck</code> permite una ejecuci&oacute;n en seco para calcular el total de p&aacute;ginas antes de la impresi&oacute;n real, &uacute;til para pies de p&aacute;gina "P&aacute;gina X de Y".</li>
-<li>Los archivos de informe (<code>.vrd</code> y <code>.v0x</code>) son archivos INI de texto plano -- pueden ser versionados y comparados.</li>
-<li>Distribuya los archivos de informe con su aplicaci&oacute;n y permita a los usuarios finales personalizar los dise&ntilde;os usando el dise&ntilde;ador sin recompilar.</li>
+<li>Always check <code>oVRD:lDialogCancel</code> after opening a report with <code>PRINTDIALOG</code> -- the user may have cancelled.</li>
+<li>Use <code>oVRD:Cargo</code> for passing static data (addresses, titles, dates) and <code>ITEMIDS/ITEMVALUES</code> for dynamic per-record data.</li>
+<li>For memo fields, use <code>oVRD:Cargo2</code> and print them in Area 4 (Detail Variable) for auto-sizing.</li>
+<li>Implement page break checks before printing each detail record to avoid items being cut off at the page boundary.</li>
+<li>Use <code>PRINTIDS</code> during development to see item IDs printed on the report, making it easy to map IDs in your code.</li>
+<li>The <code>lCheck</code> parameter allows a dry run to calculate total pages before the actual print, useful for "Page X of Y" footers.</li>
+<li>Report files (<code>.vrd</code> and <code>.v0x</code>) are plain text INI files -- they can be version-controlled and diff'd.</li>
+<li>Distribute the report files with your application and let end-users customize layouts using the designer without recompiling.</li>
 </ul>
 
-<h3>Compatibilidad con Versiones Anteriores</h3>
+<h3>Legacy Compatibility</h3>
 
 <p>
-Los nombres de clase VRD originales son soportados a trav&eacute;s de traducciones del preprocesador en <code>easyrep.ch</code>:
+The original VRD class names are supported through preprocessor translations in <code>easyrep.ch</code>:
 </p>
 
 <pre><code class="language-harbour">#xtranslate VRD()                        => FW_EReport()
@@ -704,11 +704,11 @@ Los nombres de clase VRD originales son soportados a trav&eacute;s de traduccion
 #xtranslate VRDBARCODE()                 => FWER_BarCode()</code></pre>
 
 <p>
-El c&oacute;digo existente que usa la convenci&oacute;n de nombres <code>VRD</code> anterior seguir&aacute; funcionando sin cambios.
+Existing code using the older <code>VRD</code> naming convention will continue to work without changes.
 </p>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

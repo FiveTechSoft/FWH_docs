@@ -13,7 +13,7 @@
 
 <h1>TDatePick</h1>
 <p class="class-source">Fonte: <code>source/classes/tdtpicke.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
 TDatePick wraps the Windows date and time picker common control (<code>SysDateTimePick32</code>).
@@ -21,16 +21,16 @@ It provides a drop-down calendar for date selection and supports both date-only 
 modes with configurable display formats, range restrictions, and multi-select capability.
 </p>
 
-<h2 id="command">Sintaxe do Comando</h2>
+<h2 id="command">Command Syntax</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol DTPICKER oDtp VAR dDate SIZE nW, nH PIXEL OF oWnd ;
    PICTURE cFmt ON CHANGE bBlock</code></pre>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>lDateTime</code></td><td>Logical</td><td>Enable date-time mode (T value) instead of date-only</td></tr>
@@ -48,11 +48,11 @@ modes with configurable display formats, range restrictions, and multi-select ca
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, bSetGet, oWnd, nWidth, nHeight, bValid, nClrFore, nClrBack, oFont, lDesign, oCursor, lPixel, cMsg, lUpdate, bWhen, bChange, nHelpId, cPic, nStyle )</code></td><td>Criar um novo controle TDatePick</td></tr>
-<tr><td><code>ReDefine( nId, bSetGet, oWnd, nHelpId, nClrFore, nClrBack, oFont, oCursor, cMsg, lUpdate, bWhen, bValid, bChanged, cPic )</code></td><td>Redefinir a partir de recurso de diálogo</td></tr>
+<tr><td><code>New( nRow, nCol, bSetGet, oWnd, nWidth, nHeight, bValid, nClrFore, nClrBack, oFont, lDesign, oCursor, lPixel, cMsg, lUpdate, bWhen, bChange, nHelpId, cPic, nStyle )</code></td><td>Create a new TDatePick control</td></tr>
+<tr><td><code>ReDefine( nId, bSetGet, oWnd, nHelpId, nClrFore, nClrBack, oFont, oCursor, cMsg, lUpdate, bWhen, bValid, bChanged, cPic )</code></td><td>Redefine from dialog resource</td></tr>
 <tr><td><code>SetDate( dDate, lEmpty )</code></td><td>Set the picker to a specific date (optionally allow empty)</td></tr>
 <tr><td><code>GetDate()</code></td><td>Retrieve the currently selected date or datetime value</td></tr>
 <tr><td><code>SetRange( dFrom, dUpto )</code></td><td>Restrict the selectable date range</td></tr>
@@ -64,9 +64,9 @@ modes with configurable display formats, range restrictions, and multi-select ca
 </tbody>
 </table>
 
-<h2 id="example">Exemplos</h2>
+<h2 id="example">Examples</h2>
 
-<h3>Seletor de Data com Formato</h3>
+<h3>Date Picker with Format</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -89,7 +89,7 @@ function Main()
 
 return nil</code></pre>
 
-<h3>Seletor de Data-Hora</h3>
+<h3>Date-Time Picker</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -112,15 +112,15 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>Quando a variável vinculada é do tipo <code>T</code> (DateTime), o controle muda automaticamente para o modo data-hora (<code>lDateTime := .T.</code>) e exibe a porção de hora.</li>
-<li>A cláusula <code>PICTURE</code> aceita strings de formato de data/hora padrão: <code>dd/mm/yyyy</code>, <code>mm/dd/yyyy</code>, <code>yyyy-mm-dd</code>, and appending <code>HH:MM:SS</code> for time display.</li>
-<li>Use <code>SetRange()</code> para restringir o intervalo de datas que o usuário pode selecionar. The drop-down calendar will gray out dates outside this range.</li>
-<li>O método <code>Open()</code> abre programaticamente o calendário MonthCal suspenso, que é útil para fluxos de validação ou re-seleção.</li>
-<li>As opções de seleção múltipla (<code>lMultiSelect</code>, <code>lWeekNumbers</code>) aplicam-se ao calendário suspenso e são definidas antes da criação do controle.</li>
+<li>When the bound variable is of type <code>T</code> (DateTime), the control automatically switches to date-time mode (<code>lDateTime := .T.</code>) and displays the time portion.</li>
+<li>The <code>PICTURE</code> clause accepts standard date/time format strings: <code>dd/mm/yyyy</code>, <code>mm/dd/yyyy</code>, <code>yyyy-mm-dd</code>, and appending <code>HH:MM:SS</code> for time display.</li>
+<li>Use <code>SetRange()</code> to restrict the date range the user can select. The drop-down calendar will gray out dates outside this range.</li>
+<li>The <code>Open()</code> method programmatically opens the drop-down MonthCal calendar, which is useful for validation or re-selection flows.</li>
+<li>Multi-select options (<code>lMultiSelect</code>, <code>lWeekNumbers</code>) apply to the drop-down calendar and are set before the control is created.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tdosprn.html">&larr; tdosprn</a> | <a href="../../pt/ui/tedit.html">tedit &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

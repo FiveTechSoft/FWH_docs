@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THeader - FWH Docs</title>
+<title>THeader - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,7 +13,7 @@
 
 <h1>THeader</h1>
 <p class="class-source">Fonte: <code>source/classes/theader.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
 THeader is a wrapper for the Win32 SysHeader32 common control. It provides a clickable,
@@ -23,35 +23,35 @@ and fire an action when clicked. The control supports hot-track highlighting and
 column resizing.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aPrompts</code></td><td>Array</td><td>Matriz de strings de legenda do cabeçalho da coluna</td></tr>
-<tr><td><code>aSizes</code></td><td>Array</td><td>Matriz de larguras de coluna em pixels</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Bloco de código executado ao clicar na coluna. Recebe o índice nItem e Self.</td></tr>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of column header caption strings</td></tr>
+<tr><td><code>aSizes</code></td><td>Array</td><td>Array of column widths in pixels</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on column click. Receives nItem index and Self.</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nTop, nLeft, nW, nH, aPrompts, aSizes, oFont, nClrFore, nClrBack, bAction )</code></td><td>Criar um novo controle THeader</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, aPrompts, aSizes, oFont, nClrFore, nClrBack, bAction )</code></td><td>Redefinir a partir de recurso de diálogo</td></tr>
-<tr><td><code>InsertItem( nIndex, cCaption, nWidth, nAlign )</code></td><td>Inserir uma nova coluna na posição especificada</td></tr>
-<tr><td><code>SetItem( nIndex, cCaption, nWidth, nAlign, nSort )</code></td><td>Modificar as propriedades de uma coluna existente</td></tr>
-<tr><td><code>GetItem( nIndex )</code></td><td>Recuperar informações da coluna (legenda, largura, alinhamento)</td></tr>
+<tr><td><code>New( oWnd, nTop, nLeft, nW, nH, aPrompts, aSizes, oFont, nClrFore, nClrBack, bAction )</code></td><td>Create a new THeader control</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, aPrompts, aSizes, oFont, nClrFore, nClrBack, bAction )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>InsertItem( nIndex, cCaption, nWidth, nAlign )</code></td><td>Insert a new column at the specified position</td></tr>
+<tr><td><code>SetItem( nIndex, cCaption, nWidth, nAlign, nSort )</code></td><td>Modify an existing column's properties</td></tr>
+<tr><td><code>GetItem( nIndex )</code></td><td>Retrieve column information (caption, width, alignment)</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Cabeçalho de Três Colunas com Ação de Clique</h2>
+<h2 id="example">Example: Three-Column Header with Click Action</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -71,19 +71,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Observações</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O THeader encapsula o controle comum <code>SysHeader32</code> (ou <code>SysHeader</code> no Clipper). Ele é registrado com a classe de janela <code>WC_HEADER</code>.</li>
-<li>As colunas suportam realce de rastreamento (<code>HDS_HOTTRACK</code>) e redimensionamento com arrasto completo (<code>HDS_FULLDRAG</code>).</li>
-<li>Quando o modo temático está ativo (<code>IsAppThemed()</code>), o controle aplica o estilo <code>HDS_FLAT</code> para uma aparência moderna.</li>
-<li>O bloco de código <code>bAction</code> é disparado em notificações <code>HDN_ITEMCLICK</code>, recebendo o índice da coluna (base 1) e o objeto THeader como parâmetros.</li>
-<li>Use <code>SetItem()</code> com o parâmetro <code>nSort</code> para exibir um indicador de seta de classificação (para cima ou para baixo) em uma coluna.</li>
-<li>O alinhamento da coluna é controlado pelo parâmetro <code>nAlign</code> em <code>InsertItem()</code>/<code>SetItem()</code>, usando as constantes <code>HDF_LEFT</code>, <code>HDF_CENTER</code> ou <code>HDF_RIGHT</code>.</li>
+<li>THeader wraps the <code>SysHeader32</code> common control (or <code>SysHeader</code> on Clipper). It is registered with the <code>WC_HEADER</code> window class.</li>
+<li>Columns support hot-track highlighting (<code>HDS_HOTTRACK</code>) and full-drag resizing (<code>HDS_FULLDRAG</code>).</li>
+<li>When the themed mode is active (<code>IsAppThemed()</code>), the control applies the <code>HDS_FLAT</code> style for a modern appearance.</li>
+<li>The <code>bAction</code> code block fires on <code>HDN_ITEMCLICK</code> notifications, receiving the column index (1-based) and the THeader object as parameters.</li>
+<li>Use <code>SetItem()</code> with the <code>nSort</code> parameter to display a sort arrow indicator (up or down) on a column.</li>
+<li>Column alignment is controlled by the <code>nAlign</code> parameter in <code>InsertItem()</code>/<code>SetItem()</code>, using <code>HDF_LEFT</code>, <code>HDF_CENTER</code>, or <code>HDF_RIGHT</code> constants.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tgselect.html">&larr; tgselect</a> | <a href="../../pt/ai/thftask.html">thftask &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

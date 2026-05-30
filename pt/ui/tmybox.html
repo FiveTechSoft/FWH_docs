@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMyBox - FWH Docs</title>
+<title>TMyBox - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,47 +13,47 @@
 
 <h1>TMyBox</h1>
 <p class="class-source">Fonte: <code>source/classes/tmybox.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TMyBox é um controle de caixa de grupo (group box) colorida com título personalizável. Diferente da caixa de grupo padrão, TMyBox suporta cores personalizadas para o texto do título, o fundo do título e a borda, além de alinhamento centralizado opcional do título e renderização com meia largura.
+TMyBox is a colored group box control with a customizable title. Unlike the standard group box, TMyBox supports custom colors for the title text, title background, and border, along with optional centered title alignment and half-width rendering.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cTitle</code></td><td>Caractere</td><td>Texto do título exibido no cabeçalho da caixa</td></tr>
-<tr><td><code>nClrTitleText</code></td><td>Numérico</td><td>Cor do texto do título (valor RGB)</td></tr>
-<tr><td><code>nClrTitleBack</code></td><td>Numérico</td><td>Cor de preenchimento do fundo do título (valor RGB)</td></tr>
-<tr><td><code>nClrBorder</code></td><td>Numérico</td><td>Cor da linha da borda (valor RGB)</td></tr>
-<tr><td><code>lTitleCenter</code></td><td>Lógico</td><td>Centraliza o texto do título horizontalmente na caixa</td></tr>
-<tr><td><code>lHalfWidth</code></td><td>Lógico</td><td>Renderiza a caixa com metade da largura especificada</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Title text displayed in the box header</td></tr>
+<tr><td><code>nClrTitleText</code></td><td>Numeric</td><td>Title text color (RGB value)</td></tr>
+<tr><td><code>nClrTitleBack</code></td><td>Numeric</td><td>Title background fill color (RGB value)</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Border line color (RGB value)</td></tr>
+<tr><td><code>lTitleCenter</code></td><td>Logical</td><td>Center the title text horizontally on the box</td></tr>
+<tr><td><code>lHalfWidth</code></td><td>Logical</td><td>Render the box at half the specified width</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nT, nL, nH, nW, cTitle, nClrTT, nClrTB, nClrB )</code></td><td>Cria uma nova caixa de grupo colorida com valores de cor opcionais</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, cTitle )</code></td><td>Redefine a partir de um recurso de diálogo pelo ID do controle</td></tr>
-<tr><td><code>SetTitle( c )</code></td><td>Altera o texto do título em tempo de execução</td></tr>
-<tr><td><code>Paint()</code></td><td>Desenha a borda da caixa, o fundo do título e o texto do título</td></tr>
+<tr><td><code>New( oWnd, nT, nL, nH, nW, cTitle, nClrTT, nClrTB, nClrB )</code></td><td>Create a new colored group box with optional color values</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cTitle )</code></td><td>Redefine from a dialog resource by control ID</td></tr>
+<tr><td><code>SetTitle( c )</code></td><td>Change the title text at runtime</td></tr>
+<tr><td><code>Paint()</code></td><td>Draw the box border, title background, and title text</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Comandos</h2>
+<h2 id="commands">Commands</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol MYBOX oBox TITLE cText SIZE nW, nH OF oDlg</code></pre>
 
-<h2 id="example">Exemplo: Caixa com Título Azul</h2>
+<h2 id="example">Example: Blue-Titled Box</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -75,17 +75,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TMyBox é puramente visual e não recorta (clip) controles filhos; ela desenha apenas um quadro decorativo e o título.</li>
-<li>Defina os valores de cor como <code>nil</code> no construtor para usar as cores padrão do sistema para cada elemento.</li>
-<li>O sinalizador <code>lHalfWidth</code> é útil quando a caixa é colocada em um diálogo redimensionável e deve adaptar-se ao espaço disponível.</li>
-<li>Use <code>SetTitle()</code> para atualizar o título dinamicamente, por exemplo quando o idioma ou o contexto mudam.</li>
+<li>TMyBox is purely visual and does not clip child controls; it draws a decorative frame and title only.</li>
+<li>Set color values to <code>nil</code> in the constructor to use system default colors for each element.</li>
+<li>The <code>lHalfWidth</code> flag is useful when the box is placed in a resizable dialog and should adapt to the available space.</li>
+<li>Use <code>SetTitle()</code> to update the title dynamically, for example when the language or context changes.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tmultiget.html">&larr; tmultiget</a> | <a href="../../pt/ui/tmytitle.html">tmytitle &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

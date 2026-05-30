@@ -1,23 +1,23 @@
-﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TMenu - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TMenu - Documentação FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TMenu / TMenuItem</h1>
-<p class="subtitle">Menus suspensos, menus popup e menus de contexto</p>
+<p class="subtitle">Pull-down menus, popup menus, and context menus</p>
 
 <p><strong>Fonte:</strong> <code>source/classes/menu.prg</code> &nbsp;|&nbsp; <strong>Header:</strong> <code>FiveWin.ch</code></p>
 
-<h2 id="overview">Visão Geral</h2>
+<h2 id="overview">Overview</h2>
 
-<p><code>TMenu</code> gerencia uma barra de menu ou menu popup, enquanto <code>TMenuItem</code> representa um item individual dentro de um menu. Os menus do FiveWin suportam popups hierarquicos, separadores, marcas de verificacao, teclas de atalho, bitmaps e estilos visuais modernos (2007, 2010, 2013, 2015).</p>
+<p><code>TMenu</code> manages a menu bar or popup menu, while <code>TMenuItem</code> represents an individual item within a menu. FiveWin menus support hierarchical popups, separators, checkmarks, accelerator keys, bitmaps, and modern visual styles (2007, 2010, 2013, 2015).</p>
 
-<p>Existem dois padroes principais de uso:</p>
+<p>There are two main usage patterns:</p>
 <ul>
-  <li><strong>Barra de menu</strong> -- vinculada a uma janela via <code>DEFINE MENU oMenu OF oWnd</code></li>
-  <li><strong>Menu popup / contexto</strong> -- exibido em uma posicao via <code>ACTIVATE POPUP oMenu AT nRow, nCol OF oWnd</code></li>
+  <li><strong>Menu bar</strong> -- attached to a window via <code>DEFINE MENU oMenu OF oWnd</code></li>
+  <li><strong>Popup / context menu</strong> -- shown at a position via <code>ACTIVATE POPUP oMenu AT nRow, nCol OF oWnd</code></li>
 </ul>
 
-<h2 id="architecture">Estrutura do Menu</h2>
+<h2 id="architecture">Menu Structure</h2>
 
 <div class="mermaid">
 graph TD
@@ -46,41 +46,41 @@ graph TD
     style MI_HELP fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
 </div>
 
-<h2 id="tmenu-properties">Propriedades Principais do TMenu</h2>
+<h2 id="tmenu-properties">TMenu Key Properties</h2>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>aMenuItems</code></td><td>Array</td><td>Array de objetos <code>TMenuItem</code> neste menu</td></tr>
-<tr><td><code>oWnd</code></td><td>Object</td><td>Janela pai proprietaria do menu</td></tr>
-<tr><td><code>hMenu</code></td><td>Handle</td><td>Handle HMENU do Windows</td></tr>
-<tr><td><code>l2007</code></td><td>Logical</td><td>Estilo visual Office 2007</td></tr>
-<tr><td><code>l2010</code></td><td>Logical</td><td>Estilo visual Office 2010</td></tr>
-<tr><td><code>l2013</code></td><td>Logical</td><td>Estilo visual Office 2013</td></tr>
-<tr><td><code>l2015</code></td><td>Logical</td><td>Estilo visual Office 2015 (flat moderno)</td></tr>
-<tr><td><code>lPopup</code></td><td>Logical</td><td><code>.T.</code> se este e um menu popup (contexto) em vez de uma barra de menu</td></tr>
+<tr><td><code>aMenuItems</code></td><td>Array</td><td>Array of <code>TMenuItem</code> objects in this menu</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>Parent window that owns the menu</td></tr>
+<tr><td><code>hMenu</code></td><td>Handle</td><td>Windows HMENU handle</td></tr>
+<tr><td><code>l2007</code></td><td>Logical</td><td>Office 2007 visual style</td></tr>
+<tr><td><code>l2010</code></td><td>Logical</td><td>Office 2010 visual style</td></tr>
+<tr><td><code>l2013</code></td><td>Logical</td><td>Office 2013 visual style</td></tr>
+<tr><td><code>l2015</code></td><td>Logical</td><td>Office 2015 (modern flat) visual style</td></tr>
+<tr><td><code>lPopup</code></td><td>Logical</td><td><code>.T.</code> if this is a popup (context) menu rather than a menu bar</td></tr>
 </tbody>
 </table>
 
-<h2 id="tmenuitem-properties">Propriedades Principais do TMenuItem</h2>
+<h2 id="tmenuitem-properties">TMenuItem Key Properties</h2>
 
 <table>
-<thead><tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>cPrompt</code></td><td>String</td><td>Texto exibido para o item. Use <code>&amp;</code> para sublinhar a tecla de atalho.</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Bloco de codigo executado quando este item e selecionado</td></tr>
-<tr><td><code>bWhen</code></td><td>Block</td><td>Bloco de condicao; o item fica desabilitado quando retorna <code>.F.</code></td></tr>
-<tr><td><code>lChecked</code></td><td>Logical</td><td>Quando <code>.T.</code>, uma marca de verificacao aparece ao lado do item</td></tr>
-<tr><td><code>lActive</code></td><td>Logical</td><td>Quando <code>.F.</code>, o item fica desabilitado (acinzentado)</td></tr>
-<tr><td><code>oMenu</code></td><td>Object</td><td>Se este item abre um sub-popup, aponta para aquele <code>TMenu</code></td></tr>
-<tr><td><code>cBmpFile</code></td><td>String</td><td>Caminho para um arquivo bitmap exibido ao lado do item</td></tr>
-<tr><td><code>nVirtKey</code></td><td>Numeric</td><td>Tecla virtual para o atalho de teclado (ex.: <code>VK_F5</code>)</td></tr>
+<tr><td><code>cPrompt</code></td><td>String</td><td>Text displayed for the item. Use <code>&amp;</code> for accelerator underline.</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed when this item is selected</td></tr>
+<tr><td><code>bWhen</code></td><td>Block</td><td>Condition block; item is grayed when it returns <code>.F.</code></td></tr>
+<tr><td><code>lChecked</code></td><td>Logical</td><td>When <code>.T.</code>, a checkmark appears beside the item</td></tr>
+<tr><td><code>lActive</code></td><td>Logical</td><td>When <code>.F.</code>, the item is disabled (grayed out)</td></tr>
+<tr><td><code>oMenu</code></td><td>Object</td><td>If this item opens a sub-popup, this points to that <code>TMenu</code></td></tr>
+<tr><td><code>cBmpFile</code></td><td>String</td><td>Path to a bitmap file shown beside the item</td></tr>
+<tr><td><code>nVirtKey</code></td><td>Numeric</td><td>Virtual key for the keyboard accelerator (e.g. <code>VK_F5</code>)</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Sintaxe de Comandos</h2>
+<h2 id="commands">Command Syntax</h2>
 
-<h3>Barra de Menu</h3>
+<h3>Menu Bar</h3>
 <pre><code class="language-harbour">DEFINE MENU oMenu OF oWnd [ 2007 | 2010 | 2013 | 2015 ]
 
    MENUITEM "&amp;File"
@@ -100,7 +100,7 @@ graph TD
 
 ENDMENU</code></pre>
 
-<h3>Menu de Contexto Popup</h3>
+<h3>Popup Context Menu</h3>
 <pre><code class="language-harbour">DEFINE MENU oPopup POPUP [ 2015 ]
    MENUITEM "Edit"   ACTION EditRecord()
    MENUITEM "Delete" ACTION DeleteRecord()
@@ -111,7 +111,7 @@ ENDMENU
 // Activate on right-click
 ACTIVATE POPUP oPopup AT nRow, nCol OF oWnd</code></pre>
 
-<h2 id="menu-lifecycle">Ciclo de Vida dos Eventos do Menu</h2>
+<h2 id="menu-lifecycle">Menu Event Lifecycle</h2>
 
 <div class="mermaid">
 sequenceDiagram
@@ -135,9 +135,9 @@ sequenceDiagram
     Note over Menu,Item: For checkable items,<br/>lChecked is toggled<br/>before bAction fires
 </div>
 
-<h2 id="examples">Exemplos de Codigo</h2>
+<h2 id="examples">Code Examples</h2>
 
-<h3>Exemplo 1: Menu Completo de Aplicacao</h3>
+<h3>Example 1: Complete Application Menu</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -200,7 +200,7 @@ FUNCTION Main()
    ACTIVATE WINDOW oWnd
 RETURN NIL</code></pre>
 
-<h3>Exemplo 2: Menu de Contexto com Clique Direito</h3>
+<h3>Example 2: Right-Click Context Menu</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -231,7 +231,7 @@ FUNCTION ShowContextMenu( oWnd, oBrw, nRow, nCol )
    ACTIVATE POPUP oMenu AT nRow, nCol OF oWnd
 RETURN NIL</code></pre>
 
-<h3>Exemplo 3: Menu Dinamico com bWhen</h3>
+<h3>Example 3: Dynamic Menu with bWhen</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -257,39 +257,39 @@ FUNCTION BuildDynamicMenu( oWnd )
    ENDMENU
 RETURN NIL</code></pre>
 
-<h2 id="styles">Estilos Visuais</h2>
+<h2 id="styles">Visual Styles</h2>
 
-<p>O FiveWin suporta multiplos estilos de renderizacao de menus, controlados por flags no comando <code>DEFINE MENU</code>:</p>
+<p>FiveWin supports multiple menu rendering styles controlled by flags on the <code>DEFINE MENU</code> command:</p>
 
 <table>
-<thead><tr><th>Estilo</th><th>Aparencia</th></tr></thead>
+<thead><tr><th>Style</th><th>Appearance</th></tr></thead>
 <tbody>
-<tr><td>(padrao)</td><td>Aparencia classica do Windows</td></tr>
-<tr><td><code>2007</code></td><td>Gradiente Office 2007 com selecoes arredondadas</td></tr>
-<tr><td><code>2010</code></td><td>Gradiente mais suave do Office 2010</td></tr>
-<tr><td><code>2013</code></td><td>Office 2013 flat com barra de destaque colorida</td></tr>
-<tr><td><code>2015</code></td><td>Aparencia flat moderna, recomendada para novas aplicacoes</td></tr>
+<tr><td>(default)</td><td>Classic Windows look</td></tr>
+<tr><td><code>2007</code></td><td>Office 2007 gradient with rounded selections</td></tr>
+<tr><td><code>2010</code></td><td>Office 2010 softer gradient</td></tr>
+<tr><td><code>2013</code></td><td>Office 2013 flat with colored accent bar</td></tr>
+<tr><td><code>2015</code></td><td>Modern flat appearance, recommended for new applications</td></tr>
 </tbody>
 </table>
 
-<h2 id="tips">Dicas</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-  <li>Use <code>&amp;</code> no texto do <code>MENUITEM</code> para definir a tecla de atalho Alt: <code>"&amp;File"</code> significa Alt+F.</li>
-  <li>Use <code>ACCELERATOR</code> para atribuir atalhos de teclado como Ctrl+S, F5, etc.</li>
-  <li>A clausula <code>CHECK</code> torna um item de menu alternavel; cada clique inverte <code>lChecked</code>.</li>
-  <li>Use <code>RESOURCE</code> ou <code>FILENAME</code> para exibir um pequeno icone ao lado do item de menu.</li>
-  <li>O bloco <code>bWhen</code> e avaliado cada vez que o popup abre, permitindo habilitar/desabilitar itens dinamicamente.</li>
-  <li>Para menus muito longos, considere blocos <code>MENU...ENDMENU</code> aninhados para criar sub-popups.</li>
+  <li>Use <code>&amp;</code> in <code>MENUITEM</code> text to set the Alt-key accelerator: <code>"&amp;File"</code> means Alt+F.</li>
+  <li>Use <code>ACCELERATOR</code> to assign keyboard shortcuts like Ctrl+S, F5, etc.</li>
+  <li>The <code>CHECK</code> clause makes a menu item toggleable; each click flips <code>lChecked</code>.</li>
+  <li>Use <code>RESOURCE</code> or <code>FILENAME</code> to display a small icon beside the menu item.</li>
+  <li>The <code>bWhen</code> block is evaluated each time the popup opens, so items gray/ungray dynamically.</li>
+  <li>For very long menus, consider nested <code>MENU...ENDMENU</code> blocks to create sub-popups.</li>
 </ul>
 
 <h2 id="see-also">Veja Também</h2>
 <ul>
-  <li><a href="../../pt/core/twindow.html">TWindow</a> -- menus sao vinculados a janelas</li>
-  <li><a href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a> -- botoes de barra de ferramentas frequentemente espelham acoes de menu</li>
-  <li><a href="../../pt/reference/commands.html">Comandos</a> -- referencia completa de comandos</li>
+  <li><a href="../../pt/core/twindow.html">TWindow</a> -- menus are attached to windows</li>
+  <li><a href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a> -- toolbar buttons often mirror menu actions</li>
+  <li><a href="../../pt/reference/commands.html">Commands</a> -- full command reference</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

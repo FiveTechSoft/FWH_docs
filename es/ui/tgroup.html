@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TGroup - FWH Docs</title>
+<title>TGroup - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,46 +13,46 @@
 
 <h1>TGroup</h1>
 <p class="class-source">Fuente: <code>source/classes/group.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TGroup proporciona un control de caja de grupo (group box) que agrupa visualmente controles relacionados dentro de un marco rectangular con una etiqueta opcional en la esquina superior izquierda. Admite bordes 3D grabados o elevados, fondos transparentes, colores de texto y panel personalizados, y puede alojar controles hijos. Las cajas de grupo se usan habitualmente en diálogos para organizar los campos de entrada en secciones lógicas.
+TGroup provides a group box control that visually groups related controls inside a rectangular frame with an optional label in the upper-left corner. It supports 3D etched or raised borders, transparent backgrounds, custom text and pane colors, and can host child controls. Group boxes are commonly used in dialogs to organize input fields into logical sections.
 </p>
 
-<h2 id="data">Miembros DATA Clave</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cCaption</code></td><td>Carácter</td><td>Texto de la etiqueta que se muestra en la esquina superior izquierda del marco de la caja de grupo.</td></tr>
-<tr><td><code>aControls</code></td><td>Array</td><td>Array de controles hijos alojados dentro del área de la caja de grupo.</td></tr>
-<tr><td><code>lTransparent</code></td><td>Lógico</td><td>Si es <code>.T.</code>, el fondo de la caja de grupo es transparente, permitiendo que se vea el fondo del control padre.</td></tr>
-<tr><td><code>nClrText</code></td><td>Numérico</td><td>Color del texto de la etiqueta (valor RGB).</td></tr>
-<tr><td><code>nClrPane</code></td><td>Numérico</td><td>Color de relleno del fondo del área de la caja de grupo (valor RGB).</td></tr>
-<tr><td><code>l3D</code></td><td>Lógico</td><td>Si es <code>.T.</code>, el borde se dibuja con un efecto 3D grabado o elevado. El valor por defecto es <code>.T.</code>.</td></tr>
-<tr><td><code>cMsg</code></td><td>Carácter</td><td>Texto de la barra de mensajes que se muestra cuando la caja de grupo recibe el foco.</td></tr>
-<tr><td><code>lDesign</code></td><td>Lógico</td><td>Si es <code>.T.</code>, el control opera en modo diseño, permitiendo el reposicionamiento de los hijos.</td></tr>
+<tr><td><code>cCaption</code></td><td>Character</td><td>Label text displayed in the upper-left corner of the group box frame.</td></tr>
+<tr><td><code>aControls</code></td><td>Array</td><td>Array of child controls hosted inside the group box area.</td></tr>
+<tr><td><code>lTransparent</code></td><td>Logical</td><td>If <code>.T.</code>, the group box background is transparent, allowing the parent background to show through.</td></tr>
+<tr><td><code>nClrText</code></td><td>Numeric</td><td>Text color for the caption label (RGB value).</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Background fill color for the group box area (RGB value).</td></tr>
+<tr><td><code>l3D</code></td><td>Logical</td><td>If <code>.T.</code>, the border is drawn with a 3D etched or raised effect. Default is <code>.T.</code>.</td></tr>
+<tr><td><code>cMsg</code></td><td>Character</td><td>Message bar text displayed when the group box receives focus.</td></tr>
+<tr><td><code>lDesign</code></td><td>Logical</td><td>If <code>.T.</code>, the control operates in design mode, allowing child repositioning.</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight, cLabel, oWnd, lPixel, lDesign, nClrT, nClrP, cMsg, lTransparent, oFont, l3D )</code></td><td>Crea una nueva caja de grupo. Las coordenadas definen el rectángulo del marco. <code>cLabel</code> es el texto de la etiqueta. El marco se dibuja con un borde 3D grabado por defecto.</td></tr>
-<tr><td><code>ReDefine( nId, cLabel, oWnd )</code></td><td>Redefine una caja de grupo a partir de un recurso de diálogo. El control se enlaza con una caja de grupo Win32 existente mediante su ID de control.</td></tr>
-<tr><td><code>Paint()</code></td><td>Dibuja el marco, la etiqueta y el fondo de la caja de grupo. Gestiona el renderizado del borde 3D y el relleno transparente.</td></tr>
-<tr><td><code>SetCaption( cCaption )</code></td><td>Cambia dinámicamente el texto de la etiqueta de la caja de grupo.</td></tr>
-<tr><td><code>End()</code></td><td>Destruye el control y lo elimina de la ventana padre.</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, cLabel, oWnd, lPixel, lDesign, nClrT, nClrP, cMsg, lTransparent, oFont, l3D )</code></td><td>Create a new group box. Coordinates define the frame rectangle. <code>cLabel</code> is the caption text. The frame is drawn with a 3D etched border by default.</td></tr>
+<tr><td><code>ReDefine( nId, cLabel, oWnd )</code></td><td>Redefine a group box from a dialog resource. The control is linked to an existing Win32 group box by its control ID.</td></tr>
+<tr><td><code>Paint()</code></td><td>Draw the group box frame, caption, and background. Handles 3D border rendering and transparent fill.</td></tr>
+<tr><td><code>SetCaption( cCaption )</code></td><td>Change the group box caption text dynamically.</td></tr>
+<tr><td><code>End()</code></td><td>Destroy the control and remove it from the parent window.</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Comandos: @ ... GROUP</h2>
+<h2 id="commands">Commands: @ ... GROUP</h2>
 
 <pre><code>@ nRow, nCol GROUP oGrp ;
    PROMPT cText ;
@@ -62,7 +62,7 @@ TGroup proporciona un control de caja de grupo (group box) que agrupa visualment
    [ TRANSPARENT ] ;
    [ NO3D ]</code></pre>
 
-<h2 id="example">Ejemplo: Grupo con Etiqueta</h2>
+<h2 id="example">Example: Group with Label</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -85,18 +85,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TGroup hereda de TControl. Todos los métodos estándar (<code>Move()</code>, <code>Refresh()</code>, <code>SetFocus()</code>, etc.) están disponibles.</li>
-<li>Use <code>TRANSPARENT</code> cuando la caja de grupo se coloque sobre un fondo de degradado o de mapa de bits. El interior será transparente y la etiqueta se dibujará directamente sobre el fondo del control padre.</li>
-<li>La cláusula <code>NO3D</code> (o establecer <code>l3D := .F.</code>) dibuja un borde plano simple en lugar del aspecto 3D grabado por defecto.</li>
-<li>Los controles colocados dentro de la caja de grupo son hijos de la caja de grupo solo si se usa la sintaxis <code>@ ... OF oGroup</code>. De lo contrario, son hijos del diálogo padre.</li>
-<li>Use <code>COLOR nClrText, nClrPane</code> para personalizar el color del texto de la etiqueta y el relleno del fondo.</li>
+<li>TGroup inherits from TControl. All standard methods (<code>Move()</code>, <code>Refresh()</code>, <code>SetFocus()</code>, etc.) are available.</li>
+<li>Use <code>TRANSPARENT</code> when the group box is placed over a gradient or bitmap background. The interior will be see-through, and the caption will draw directly on the parent background.</li>
+<li>The <code>NO3D</code> clause (or setting <code>l3D := .F.</code>) draws a simple flat border instead of the default etched 3D look.</li>
+<li>Controls placed inside the group box are children of the group box only if the <code>@ ... OF oGroup</code> syntax is used. Otherwise, they are children of the parent dialog.</li>
+<li>Use <code>COLOR nClrText, nClrPane</code> to customize the caption text color and the background fill.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/internet/tgrok.html">&larr; tgrok</a> | <a href="../../es/ui/tgroupex.html">tgroupex &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

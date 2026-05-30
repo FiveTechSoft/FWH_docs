@@ -12,30 +12,29 @@
 <main id="content">
 
 <h1>TRecSet</h1>
-<p class="class-source">Fonte: <code>source/classes/trecset.prg</code> &mdash; Desde FWH 14.07</p>
+<p class="class-source">Fonte: <code>source/classes/trecset.prg</code> &mdash; Since FWH 14.07</p>
 
 <p>
-TRecSet é o wrapper do FiveWin para objetos ADO (ActiveX Data Objects) RecordSet. Fornece uma
-interface amigável ao Harbour para aceder a qualquer fonte de dados suportada por fornecedores ADO
--- incluindo Microsoft Access (.mdb/.accdb), SQL Server, ficheiros Excel e qualquer base de dados
-compatível com OLE DB. TRecSet usa <code>TOleAuto</code> internamente para comunicar com o objeto COM
-ADODB.RecordSet.
+TRecSet is FiveWin's wrapper around ADO (ActiveX Data Objects) RecordSet objects. It provides a
+Harbour-friendly interface to access any data source supported by ADO providers -- including Microsoft
+Access (.mdb/.accdb), SQL Server, Excel files, and any OLE DB-compatible database. TRecSet uses
+<code>TOleAuto</code> internally to communicate with the ADODB.RecordSet COM object.
 </p>
 
 <div class="mermaid">
 flowchart LR
-    subgraph "Aplicação Harbour"
+    subgraph "Harbour Application"
         A[TRecSet]
     end
-    subgraph "Camada COM"
+    subgraph "COM Layer"
         B[TOleAuto<br/>ADODB.RecordSet]
         C[ADODB.Connection]
     end
-    subgraph "Fontes de Dados"
+    subgraph "Data Sources"
         D[Access .mdb/.accdb]
         E[SQL Server]
         F[Excel .xls/.xlsx]
-        G[Qualquer Fornecedor OLE DB]
+        G[Any OLE DB Provider]
     end
     A --> B
     B --> C
@@ -45,23 +44,23 @@ flowchart LR
     C --> G
 </div>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oRs</code></td><td>TOleAuto</td><td>O objeto COM ADODB.RecordSet subjacente</td></tr>
-<tr><td><code>aStruct</code></td><td>Array</td><td>Array de estrutura de campos (compatível com DbStruct())</td></tr>
-<tr><td><code>cTable</code></td><td>Caractere</td><td>Nome da tabela de origem</td></tr>
-<tr><td><code>lReadOnly</code></td><td>Lógico</td><td>Modo de acesso só de leitura</td></tr>
-<tr><td><code>lFound</code></td><td>Lógico</td><td>Resultado da última operação Seek/Find</td></tr>
-<tr><td><code>lPadRead</code></td><td>Lógico</td><td>Preencher campos de caracteres ao comprimento total na leitura</td></tr>
-<tr><td><code>lTrimRead</code></td><td>Lógico</td><td>Remover espaços de campos de caracteres na leitura</td></tr>
-<tr><td><code>hFieldPos</code></td><td>Hash</td><td>Hash de nomes de campos para posições (insensível a maiúsculas/minúsculas)</td></tr>
-<tr><td><code>bEdit</code></td><td>Bloco</td><td>Bloco de código para edição de registo</td></tr>
-<tr><td><code>cDBMS</code></td><td>Caractere</td><td>Nome do sistema de gestão de base de dados</td></tr>
+<tr><td><code>oRs</code></td><td>TOleAuto</td><td>The underlying ADODB.RecordSet COM object</td></tr>
+<tr><td><code>aStruct</code></td><td>Array</td><td>Field structure array (compatible with DbStruct())</td></tr>
+<tr><td><code>cTable</code></td><td>Character</td><td>Source table name</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Read-only access mode</td></tr>
+<tr><td><code>lFound</code></td><td>Logical</td><td>Result of last Seek/Find operation</td></tr>
+<tr><td><code>lPadRead</code></td><td>Logical</td><td>Pad character fields to full length on read</td></tr>
+<tr><td><code>lTrimRead</code></td><td>Logical</td><td>Trim character fields on read</td></tr>
+<tr><td><code>hFieldPos</code></td><td>Hash</td><td>Hash of field names to positions (case-insensitive)</td></tr>
+<tr><td><code>bEdit</code></td><td>Block</td><td>Code block for record editing</td></tr>
+<tr><td><code>cDBMS</code></td><td>Character</td><td>Database management system name</td></tr>
 </tbody>
 </table>
 
@@ -69,53 +68,53 @@ flowchart LR
 
 <table>
 <thead>
-<tr><th>CLASSDATA</th><th>Descrição</th></tr>
+<tr><th>CLASSDATA</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>DefaultConnection</code></td><td>Ligação ADO padrão para todas as novas instâncias</td></tr>
-<tr><td><code>AllMsgAsFields</code></td><td>Tratar nomes de mensagens como nomes de campos (padrão <code>.T.</code>)</td></tr>
-<tr><td><code>nMemoSizeLimit</code></td><td>Campos maiores que isto são tratados como memo (padrão 80)</td></tr>
+<tr><td><code>DefaultConnection</code></td><td>Default ADO connection for all new instances</td></tr>
+<tr><td><code>AllMsgAsFields</code></td><td>Treat message names as field names (default <code>.T.</code>)</td></tr>
+<tr><td><code>nMemoSizeLimit</code></td><td>Fields wider than this are treated as memo (default 80)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oRs, cSql, oCn, nCursorType, nLockType )</code></td><td>Criar TRecSet a partir de RecordSet existente, SQL ou ligação</td></tr>
-<tr><td><code>Open( cSql, oCn, nCursorType, nLockType, nOpt )</code></td><td>Abrir o RecordSet com consulta SQL ou nome de tabela</td></tr>
-<tr><td><code>Close()</code></td><td>Fechar o RecordSet</td></tr>
-<tr><td><code>End()</code></td><td>Fechar e liberar o objeto RecordSet</td></tr>
-<tr><td><code>FieldGet( uFld )</code></td><td>Obter valor de campo por nome ou posição</td></tr>
-<tr><td><code>FieldPut( nFld, uValue )</code></td><td>Definir valor de campo</td></tr>
-<tr><td><code>FieldPos( cFld )</code></td><td>Obter posição do campo por nome</td></tr>
-<tr><td><code>FieldName( nFld )</code></td><td>Obter nome do campo por posição</td></tr>
-<tr><td><code>FieldType( ncFld, cNew )</code></td><td>Obter/definir tipo de campo</td></tr>
-<tr><td><code>FieldLen( ncFld, nNew )</code></td><td>Obter/definir comprimento do campo</td></tr>
-<tr><td><code>FieldDec( ncFld, nNew )</code></td><td>Obter/definir casas decimais do campo</td></tr>
-<tr><td><code>FieldPic( ncFld, cNewPic )</code></td><td>Obter/definir formato de imagem do campo</td></tr>
-<tr><td><code>FCount()</code></td><td>Número de campos</td></tr>
-<tr><td><code>Save( nStatus )</code></td><td>Salvar alterações pendentes no registo</td></tr>
-<tr><td><code>Commit()</code></td><td>Confirmar transação</td></tr>
-<tr><td><code>Delete()</code></td><td>Eliminar registo atual</td></tr>
-<tr><td><code>Append( aCols, aVals )</code></td><td>Adicionar um novo registo com valores de campo opcionais</td></tr>
-<tr><td><code>Seek( uSeek, lSoft, lWildSeek )</code></td><td>Procurar um valor na ordem de ordenação atual</td></tr>
-<tr><td><code>Find()</code></td><td>Encontrar registo correspondente a critérios (alias para Locate)</td></tr>
-<tr><td><code>SetOrder( cOrder )</code></td><td>Definir ordem de ordenação (sintaxe SQL ORDER BY)</td></tr>
-<tr><td><code>SetFilter( c )</code></td><td>Definir filtro do recordset ADO</td></tr>
-<tr><td><code>ClearFilter()</code></td><td>Remover filtro</td></tr>
-<tr><td><code>MoveFirst() / MoveLast() / MoveNext() / MovePrevious()</code></td><td>Navegação de registos</td></tr>
-<tr><td><code>GoTop() / GoBottom() / Skip( n )</code></td><td>Navegação compatível com DBF</td></tr>
-<tr><td><code>RecordCount()</code></td><td>Número total de registos</td></tr>
-<tr><td><code>RecNo() / GoTo( n )</code></td><td>Posicionamento baseado em bookmark</td></tr>
-<tr><td><code>SetXBrowse( oBrw, aCols, lAutoSort, lAddCols )</code></td><td>Vincular a XBrowse com configuração automática de colunas</td></tr>
+<tr><td><code>New( oRs, cSql, oCn, nCursorType, nLockType )</code></td><td>Create TRecSet from existing RecordSet, SQL, or connection</td></tr>
+<tr><td><code>Open( cSql, oCn, nCursorType, nLockType, nOpt )</code></td><td>Open the RecordSet with SQL query or table name</td></tr>
+<tr><td><code>Close()</code></td><td>Close the RecordSet</td></tr>
+<tr><td><code>End()</code></td><td>Close and release the RecordSet object</td></tr>
+<tr><td><code>FieldGet( uFld )</code></td><td>Get field value by name or position</td></tr>
+<tr><td><code>FieldPut( nFld, uValue )</code></td><td>Set field value</td></tr>
+<tr><td><code>FieldPos( cFld )</code></td><td>Get field position by name</td></tr>
+<tr><td><code>FieldName( nFld )</code></td><td>Get field name by position</td></tr>
+<tr><td><code>FieldType( ncFld, cNew )</code></td><td>Get/set field type</td></tr>
+<tr><td><code>FieldLen( ncFld, nNew )</code></td><td>Get/set field length</td></tr>
+<tr><td><code>FieldDec( ncFld, nNew )</code></td><td>Get/set field decimal places</td></tr>
+<tr><td><code>FieldPic( ncFld, cNewPic )</code></td><td>Get/set field picture format</td></tr>
+<tr><td><code>FCount()</code></td><td>Number of fields</td></tr>
+<tr><td><code>Save( nStatus )</code></td><td>Save pending changes to the record</td></tr>
+<tr><td><code>Commit()</code></td><td>Commit transaction</td></tr>
+<tr><td><code>Delete()</code></td><td>Delete current record</td></tr>
+<tr><td><code>Append( aCols, aVals )</code></td><td>Add a new record with optional field values</td></tr>
+<tr><td><code>Seek( uSeek, lSoft, lWildSeek )</code></td><td>Search for a value in the current sort order</td></tr>
+<tr><td><code>Find()</code></td><td>Find record matching criteria (alias for Locate)</td></tr>
+<tr><td><code>SetOrder( cOrder )</code></td><td>Set sort order (SQL ORDER BY syntax)</td></tr>
+<tr><td><code>SetFilter( c )</code></td><td>Set ADO recordset filter</td></tr>
+<tr><td><code>ClearFilter()</code></td><td>Remove filter</td></tr>
+<tr><td><code>MoveFirst() / MoveLast() / MoveNext() / MovePrevious()</code></td><td>Record navigation</td></tr>
+<tr><td><code>GoTop() / GoBottom() / Skip( n )</code></td><td>DBF-compatible navigation</td></tr>
+<tr><td><code>RecordCount()</code></td><td>Total number of records</td></tr>
+<tr><td><code>RecNo() / GoTo( n )</code></td><td>Bookmark-based positioning</td></tr>
+<tr><td><code>SetXBrowse( oBrw, aCols, lAutoSort, lAddCols )</code></td><td>Bind to XBrowse with automatic column setup</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Abrir SQL e Vincular XBrowse</h2>
+<h2 id="example">Example: Open SQL and Bind XBrowse</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -143,7 +142,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-edit">Exemplo: Editar Registos</h2>
+<h2 id="example-edit">Example: Edit Records</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -167,8 +166,37 @@ function Main()
 
 return nil</code></pre>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2 id="ado-provider-chains">ADO Provider Priority Chains</h2>
+
+<p>
+TRecSet auto-detects the best available OLE DB provider for each RDBMS when a
+connection string does not specify a provider explicitly. The framework tries
+providers in priority order, selecting the first one that is installed on the
+system:
+</p>
+
+<table>
+<thead>
+<tr><th>RDBMS</th><th>Priority Chain (highest to lowest)</th></tr>
+</thead>
+<tbody>
+<tr><td>SQL Server</td><td><code>MSOLEDBSQL</code> &rarr; <code>SQLNCLI11</code> &rarr; <code>SQLNCLI10</code> &rarr; <code>SQLNCLI</code> &rarr; <code>SQLOLEDB</code></td></tr>
+<tr><td>MySQL ODBC</td><td><code>8.3</code> &rarr; <code>8.0</code> &rarr; <code>5.3</code> &rarr; <code>5.2w</code> &rarr; <code>5.1</code> &rarr; <code>3.51</code></td></tr>
+<tr><td>Oracle</td><td><code>OraOLEDB.Oracle</code> &rarr; <code>MSDAORA</code></td></tr>
+<tr><td>PostgreSQL</td><td><code>PostgreSQL OLE DB Provider</code></td></tr>
+<tr><td>SQLite</td><td><code>Microsoft OLE DB Provider for ODBC Drivers</code> &rarr; <code>SQLite3 ODBC Driver</code></td></tr>
+</tbody>
+</table>
+
+<p>
+Use <code>FW_RDBMSName( oCn )</code> to detect the active RDBMS after a connection
+has been established. This function returns a string identifying the database
+management system currently in use, which is useful for writing portable code
+that adapts SQL syntax or provider-specific features at runtime.
+</p>
+
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/trebar.html">&larr; trebar</a> | <a href="../../pt/reference/trect.html">trect &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

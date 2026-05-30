@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TActiveX - DocumentaÃ§Ã£o FWH</title>
+<title>TActiveX - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,25 +13,30 @@
 
 <h1>TActiveX</h1>
 <p class="class-source">Fonte: <code>source/classes/activex.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TActiveX Ã© o contÃªiner ActiveX/COM do FiveWin que permite incorporar componentes ActiveX (como WebBrowser, Windows Media Player, Adobe Reader ou qualquer componente COM registrado) dentro de janelas e diÃ¡logos do FiveWin. Fornece acesso direto ao objeto OleObject subjacente para invocar mÃ©todos, ler e escrever propriedades e manipular eventos.</p>
+TActiveX is FiveWin's ActiveX/COM container control that enables embedding
+ActiveX components (such as WebBrowser, Windows Media Player, Adobe Reader,
+or any registered COM component) inside FiveWin windows and dialogs. It
+provides direct access to the underlying <code>OleObject</code> for invoking
+methods, reading and writing properties, and handling events.
+</p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hActiveX</code></td><td>Handle</td><td>Manipulador da janela do controle ActiveX incorporado</td></tr>
-<tr><td><code>cProgID</code></td><td>Character</td><td>String ProgID (ex. "Shell.Explorer", "WMPlayer.OCX")</td></tr>
-<tr><td><code>aProperties</code></td><td>Array</td><td>Lista de nomes de propriedades navegÃ¡veis via OLE</td></tr>
-<tr><td><code>aMethods</code></td><td>Array</td><td>Lista de nomes de mÃ©todos navegÃ¡veis via OLE</td></tr>
-<tr><td><code>aEvents</code></td><td>Array</td><td>Lista de nomes de eventos fornecidos pelo controle</td></tr>
-<tr><td><code>bOnEvent</code></td><td>Block</td><td>Bloco de cÃ³digo executado em cada evento disparado</td></tr>
-<tr><td><code>oOleAuto</code></td><td>Object</td><td>Objeto de automaÃ§Ã£o OLE subjacente</td></tr>
+<tr><td><code>hActiveX</code></td><td>Handle</td><td>Window handle of the embedded ActiveX control</td></tr>
+<tr><td><code>cProgID</code></td><td>Character</td><td>ProgID string (e.g. "Shell.Explorer", "WMPlayer.OCX")</td></tr>
+<tr><td><code>aProperties</code></td><td>Array</td><td>List of property names browsable via OLE</td></tr>
+<tr><td><code>aMethods</code></td><td>Array</td><td>List of method names browsable via OLE</td></tr>
+<tr><td><code>aEvents</code></td><td>Array</td><td>List of event names provided by the control</td></tr>
+<tr><td><code>bOnEvent</code></td><td>Block</td><td>Code block executed on each fired event</td></tr>
+<tr><td><code>oOleAuto</code></td><td>Object</td><td>Underlying OLE automation object</td></tr>
 </tbody>
 </table>
 
@@ -39,19 +44,19 @@ TActiveX Ã© o contÃªiner ActiveX/COM do FiveWin que permite incorporar compo
 
 <table>
 <thead>
-<tr><th>MÃ©todo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cProgID, nRow, nCol, nW, nH )</code></td><td>Criar uma nova instÃ¢ncia do controle ActiveX</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, cProgID )</code></td><td>Redefinir a partir de um placeholder de recurso de diÃ¡logo</td></tr>
-<tr><td><code>Do( cMethod, ... )</code></td><td>Invoca um mÃ©todo do objeto OLE subjacente</td></tr>
-<tr><td><code>GetProp( cName )</code></td><td>LÃª um valor de propriedade do objeto OLE</td></tr>
-<tr><td><code>SetProp( cName, uVal )</code></td><td>Escreve um valor de propriedade no objeto OLE</td></tr>
-<tr><td><code>OnEvent( nEvent, aParams )</code></td><td>Manipulador de eventos chamado em cada evento ActiveX</td></tr>
+<tr><td><code>New( oWnd, cProgID, nRow, nCol, nW, nH )</code></td><td>Create a new ActiveX control instance</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cProgID )</code></td><td>Redefine from a dialog resource placeholder</td></tr>
+<tr><td><code>Do( cMethod, ... )</code></td><td>Invoke a method of the underlying OLE object</td></tr>
+<tr><td><code>GetProp( cName )</code></td><td>Read a property value from the OLE object</td></tr>
+<tr><td><code>SetProp( cName, uVal )</code></td><td>Write a property value to the OLE object</td></tr>
+<tr><td><code>OnEvent( nEvent, aParams )</code></td><td>Event handler called on each ActiveX event</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Incorporar um Controle WebBrowser</h2>
+<h2 id="example">Example: Embedding a WebBrowser Control</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -63,7 +68,7 @@ function Main()
 
    oActiveX := TActiveX():New( oWnd, "Shell.Explorer", 10, 10, 780, 550 )
 
-   // Navegar para uma URL usando o objeto OLE
+   // Navigate to a URL using the OLE object
    oActiveX:Do( "Navigate2", "https://fivetechsoft.com" )
 
    oWnd:oClient := oActiveX
@@ -75,15 +80,15 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>O controle ActiveX deve estar registrado no sistema local. Use <code>cProgID</code> para especificar o ProgID COM (ex. <code>"Shell.Explorer"</code>, <code>"WMPlayer.OCX"</code>). Use <code>cProgID</code> to specify the COM ProgID (e.g. <code>"Shell.Explorer"</code>, <code>"WMPlayer.OCX"</code>).</li>
-<li>Use <code>oOleAuto</code> para chamadas diretas de automaÃ§Ã£o COM quando for necessÃ¡ria mais flexibilidade do que <code>Do()</code> / <code>GetProp()</code> / <code>SetProp()</code> fornecem.</li>
-<li>Defina <code>bOnEvent</code> como um bloco de cÃ³digo com um ou dois parÃ¢metros para interceptar eventos. O bloco recebe o nÃºmero do evento e um array opcional de parÃ¢metros.</li>
-<li>O controle tambÃ©m pode ser colocado via editor de recursos inserindo um controle personalizado e depois chamando <code>ReDefine()</code> em tempo de execuÃ§Ã£o.</li>
-<li>TActiveX suporta despacho de sumidouro de eventos; declare <code>aEvents</code> para enumerar eventos suportados em tempo de execuÃ§Ã£o.</li>
+<li>The ActiveX control is registered on the local system. Use <code>cProgID</code> to specify the COM ProgID (e.g. <code>"Shell.Explorer"</code>, <code>"WMPlayer.OCX"</code>).</li>
+<li>Use <code>oOleAuto</code> for direct COM automation calls when more flexibility is needed than <code>Do()</code> / <code>GetProp()</code> / <code>SetProp()</code> provide.</li>
+<li>Set <code>bOnEvent</code> to a code block with one or two parameters to intercept events. The block receives the event number and an optional array of parameters.</li>
+<li>The control can also be placed via resource editor by inserting a custom control and then calling <code>ReDefine()</code> at runtime.</li>
+<li>TActiveX supports event sink dispatching; declare <code>aEvents</code> to enumerate supported events at runtime.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tacctable.html">&larr; tacctable</a> | <a href="../../pt/internet/tai.html">tai &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTimePick - FWH Docs</title>
+<title>TTimePick - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,7 +13,7 @@
 
 <h1>TTimePick</h1>
 <p class="class-source">Fonte: <code>source/classes/ttmpicke.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
 TTimePick wraps the Windows date and time picker common control configured for time-only selection.
@@ -21,29 +21,29 @@ It provides an intuitive interface for selecting hours, minutes, and seconds usi
 or direct keyboard input. The control operates on a time string in "HH:MM:SS" format.
 </p>
 
-<h2 id="command">Sintaxe do Comando</h2>
+<h2 id="command">Command Syntax</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol TMPICKER oTmp VAR cTime SIZE nW, nH PIXEL OF oWnd ;
    ON CHANGE bBlock</code></pre>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, bSetGet, oWnd, nWidth, nHeight, bValid, nClrFore, nClrBack, oFont, lDesign, oCursor, lPixel, cMsg, lUpdate, bWhen, bChange, nHelpId )</code></td><td>Criar um novo controle TTimePick</td></tr>
-<tr><td><code>ReDefine( nId, bSetGet, oWnd, nHelpId, nClrFore, nClrBack, oFont, oCursor, cMsg, lUpdate, bWhen, bValid, bChanged )</code></td><td>Redefinir a partir de recurso de diálogo</td></tr>
-<tr><td><code>SetTime( cHour )</code></td><td>Definir o valor da hora usando uma string no formato "HH:MM:SS"</td></tr>
-<tr><td><code>GetTime()</code></td><td>Recuperar a hora atual como uma string formatada</td></tr>
-<tr><td><code>cText( uVal )</code></td><td>Obter ou definir o texto da hora formatada (acessador SETGET)</td></tr>
-<tr><td><code>Refresh()</code></td><td>Atualizar o controle a partir da variável vinculada</td></tr>
-<tr><td><code>Change()</code></td><td>Executar o bloco de código bChange</td></tr>
+<tr><td><code>New( nRow, nCol, bSetGet, oWnd, nWidth, nHeight, bValid, nClrFore, nClrBack, oFont, lDesign, oCursor, lPixel, cMsg, lUpdate, bWhen, bChange, nHelpId )</code></td><td>Create a new TTimePick control</td></tr>
+<tr><td><code>ReDefine( nId, bSetGet, oWnd, nHelpId, nClrFore, nClrBack, oFont, oCursor, cMsg, lUpdate, bWhen, bValid, bChanged )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>SetTime( cHour )</code></td><td>Set the time value using a string in "HH:MM:SS" format</td></tr>
+<tr><td><code>GetTime()</code></td><td>Retrieve the current time as a formatted string</td></tr>
+<tr><td><code>cText( uVal )</code></td><td>Get or set the formatted time text (SETGET accessor)</td></tr>
+<tr><td><code>Refresh()</code></td><td>Refresh the control from the bound variable</td></tr>
+<tr><td><code>Change()</code></td><td>Execute the bChange code block</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Seletor de Hora com Retorno de Alteração</h2>
+<h2 id="example">Example: Time Picker with Change Callback</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -66,18 +66,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Observações</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O TTimePick encapsula o mesmo controle comum Win32 <code>SysDateTimePick32</code> que o TDatePick, mas o configura para exibição somente de hora (horas:minutos:segundos).</li>
-<li>A variável vinculada é uma string de caracteres no formato <code>"HH:MM:SS"</code> (relógio de 24 horas). Use a sintaxe de comando <code>VAR cTime</code> para vinculá-la automaticamente.</li>
-<li>A navegação de hora é feita através das setas de seleção incremental no lado direito do controle, que incrementam ou decrementam o segmento de hora atualmente em foco (horas, minutos ou segundos).</li>
-<li>Os usuários também podem clicar diretamente em um segmento (horas, minutos ou segundos) e digitar um novo valor.</li>
-<li>O acessador SETGET <code>cText</code> permite obter ou definir a hora como uma string em um formato diferente, se necessário, embora o controle internamente use o formato de hora do sistema.</li>
+<li>TTimePick wraps the same Win32 <code>SysDateTimePick32</code> common control as TDatePick but configures it for time-only display (hours:minutes:seconds).</li>
+<li>The bound variable is a character string in <code>"HH:MM:SS"</code> format (24-hour clock). Use the <code>VAR cTime</code> command syntax to bind it automatically.</li>
+<li>Time navigation is done via the up/down spinner arrows on the right side of the control, which increment or decrement the currently focused time segment (hours, minutes, or seconds).</li>
+<li>Users can also click directly on a segment (hours, minutes, or seconds) and type a new value.</li>
+<li>The <code>cText</code> SETGET accessor allows getting or setting the time as a string in a different format if needed, though the control internally uses the system time format.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/ttitle.html">&larr; ttitle</a> | <a href="../../pt/ui/ttoast.html">ttoast &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

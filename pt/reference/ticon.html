@@ -13,48 +13,48 @@
 
 <h1>TIcon</h1>
 <p class="class-source">Fonte: <code>source/classes/icon.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TIcon é um controle para exibir ícones do Windows (.ico) a partir de arquivos ou recursos do programa.
-Ele suporta ações de clique, troca dinâmica de ícones, exibição de borda e liberação adequada de
-recursos. TIcon é comumente usado para indicadores de barra de ferramentas, ícones de status e elementos
-decorativos em janelas e diálogos.
+TIcon is a control for displaying Windows icons (.ico) from files or program resources.
+It supports click actions, dynamic icon switching, border display, and proper resource
+cleanup. TIcon is commonly used for toolbar indicators, status icons, and decorative
+elements in windows and dialogs.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hIcon</code></td><td>Numérico (Handle)</td><td>Handle do ícone do Windows (HICON)</td></tr>
-<tr><td><code>cIcoFile</code></td><td>Caractere</td><td>Caminho para o arquivo .ico</td></tr>
-<tr><td><code>cResName</code></td><td>Caractere</td><td>Nome do recurso de ícone no executável</td></tr>
+<tr><td><code>hIcon</code></td><td>Numeric (Handle)</td><td>Windows icon handle (HICON)</td></tr>
+<tr><td><code>cIcoFile</code></td><td>Character</td><td>Path to the .ico file</td></tr>
+<tr><td><code>cResName</code></td><td>Character</td><td>Name of the icon resource in the executable</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, cRes, cFile, lBorder, bClick, oWnd )</code></td><td>Cria um controle de ícone. Forneça <code>cRes</code> (nome do recurso) ou <code>cFile</code> (caminho do arquivo .ico).</td></tr>
-<tr><td><code>ReDefine( nId, cRes, cFile, bClick, lUpdate, oDlg )</code></td><td>Redefine a partir de um template de recurso de diálogo</td></tr>
-<tr><td><code>SetName( cResName )</code></td><td>Troca para um recurso de ícone diferente pelo nome. Destrói o handle do ícone antigo.</td></tr>
-<tr><td><code>SetFile( cIcoFile )</code></td><td>Troca para um arquivo .ico diferente. Destrói o handle do ícone antigo.</td></tr>
-<tr><td><code>End()</code></td><td>Destrói o handle do ícone e chama o End() da superclasse</td></tr>
+<tr><td><code>New( nRow, nCol, cRes, cFile, lBorder, bClick, oWnd )</code></td><td>Create an icon control. Provide either <code>cRes</code> (resource name) or <code>cFile</code> (.ico file path).</td></tr>
+<tr><td><code>ReDefine( nId, cRes, cFile, bClick, lUpdate, oDlg )</code></td><td>Redefine from a dialog resource template</td></tr>
+<tr><td><code>SetName( cResName )</code></td><td>Switch to a different icon resource by name. Destroys the old icon handle.</td></tr>
+<tr><td><code>SetFile( cIcoFile )</code></td><td>Switch to a different .ico file. Destroys the old icon handle.</td></tr>
+<tr><td><code>End()</code></td><td>Destroy the icon handle and call the superclass End()</td></tr>
 </tbody>
 </table>
 
-<h2 id="command">Comando ICON</h2>
+<h2 id="command">ICON Command</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol ICON oIcon OF oWnd FILE cFile</code></pre>
 
-<h2 id="example">Exemplo</h2>
+<h2 id="example">Example</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -64,28 +64,28 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "Icon Demo" SIZE 300, 200
 
-   // Exibe um ícone a partir de um arquivo
+   // Display an icon from a file
    @ 10, 10 ICON oIcon OF oWnd FILE "myapp.ico"
 
-   // Torna o ícone clicável
+   // Make the icon clickable
    oIcon:bLClicked := {|| MsgInfo( "Icon clicked!" ) }
 
    ACTIVATE WINDOW oWnd CENTERED
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O ícone é carregado a partir de um arquivo (<code>cIcoFile</code> via <code>ExtractIcon()</code>) ou de um recurso do programa (<code>cResName</code> via <code>LoadIcon()</code>). Um dos dois deve ser fornecido.</li>
-<li>O tamanho padrão do ícone é 32x32 pixels, determinado pelas constantes da classe <code>ICO_CHARPIX_H</code> (14) e <code>ICO_CHARPIX_W</code> (8) multiplicadas pelas coordenadas de linha/coluna.</li>
-<li>Use <code>SetName()</code> e <code>SetFile()</code> para alterar o ícone exibido em tempo de execução. Ambos os métodos destroem corretamente o handle do ícone anterior para evitar vazamentos de recursos.</li>
-<li>Atribua um bloco de código a <code>bLClicked</code> para tratar eventos de clique no ícone.</li>
-<li>O método <code>Destroy()</code> garante que o handle do ícone seja liberado via <code>DestroyIcon()</code> quando o controle é destruído.</li>
+<li>The icon is loaded from either a file (<code>cIcoFile</code> via <code>ExtractIcon()</code>) or a program resource (<code>cResName</code> via <code>LoadIcon()</code>). One of the two must be provided.</li>
+<li>The default icon size is 32x32 pixels, determined by the class constants <code>ICO_CHARPIX_H</code> (14) and <code>ICO_CHARPIX_W</code> (8) multiplied by row/column coordinates.</li>
+<li>Use <code>SetName()</code> and <code>SetFile()</code> to change the displayed icon at runtime. Both methods properly destroy the previous icon handle to prevent resource leaks.</li>
+<li>Assign a code block to <code>bLClicked</code> to handle click events on the icon.</li>
+<li>The <code>Destroy()</code> method ensures the icon handle is released via <code>DestroyIcon()</code> when the control is destroyed.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ai/thtmlpage.html">&larr; thtmlpage</a> | <a href="../../pt/ui/ticonget.html">ticonget &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTrackBar - FWH Docs</title>
+<title>TTrackBar - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,43 +13,43 @@
 
 <h1>TTrackBar</h1>
 <p class="class-source">Fonte: <code>source/classes/trackbar.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TTrackBar encapsula o controle comum trackbar (slider) do Win32. Permite ao usuário selecionar um valor numérico arrastando um cursor ao longo de uma trilha, com marcas de graduação opcionais. É comumente usado para controles de volume, sliders de brilho e qualquer entrada de valor dentro de um intervalo.
+TTrackBar wraps the Win32 trackbar common control (slider). It allows the user to select a numeric value by dragging a thumb along a track, with optional tick marks. It is commonly used for volume controls, brightness sliders, and any ranged value input.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nMin</code></td><td>Numérico</td><td>Valor mínimo do intervalo do trackbar</td></tr>
-<tr><td><code>nMax</code></td><td>Numérico</td><td>Valor máximo do intervalo do trackbar</td></tr>
-<tr><td><code>nPos</code></td><td>Numérico</td><td>Posição atual do cursor</td></tr>
-<tr><td><code>nFreq</code></td><td>Numérico</td><td>Frequência das marcas de graduação</td></tr>
-<tr><td><code>bChange</code></td><td>Bloco</td><td>Bloco de código executado quando a posição muda</td></tr>
+<tr><td><code>nMin</code></td><td>Numeric</td><td>Minimum value of the trackbar range</td></tr>
+<tr><td><code>nMax</code></td><td>Numeric</td><td>Maximum value of the trackbar range</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Current thumb position</td></tr>
+<tr><td><code>nFreq</code></td><td>Numeric</td><td>Tick mark frequency</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Code block executed when the position changes</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, nW, nH, nMin, nMax, nPos, nFreq )</code></td><td>Cria um novo controle trackbar</td></tr>
-<tr><td><code>SetPos( n )</code></td><td>Define o cursor na posição <code>n</code></td></tr>
-<tr><td><code>GetPos()</code></td><td>Retorna a posição atual do cursor</td></tr>
-<tr><td><code>SetRange( nMin, nMax )</code></td><td>Define os valores mínimo e máximo do intervalo</td></tr>
-<tr><td><code>SetTicFreq( n )</code></td><td>Define a frequência das marcas de graduação</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, nW, nH, nMin, nMax, nPos, nFreq )</code></td><td>Create a new trackbar control</td></tr>
+<tr><td><code>SetPos( n )</code></td><td>Set the thumb to position <code>n</code></td></tr>
+<tr><td><code>GetPos()</code></td><td>Return the current thumb position</td></tr>
+<tr><td><code>SetRange( nMin, nMax )</code></td><td>Set the minimum and maximum range values</td></tr>
+<tr><td><code>SetTicFreq( n )</code></td><td>Set the tick-mark frequency</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Controle de Volume 0-255</h2>
+<h2 id="example">Example: Volume Control 0-255</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -57,7 +57,7 @@ function Main()
 
    local oWnd, oTrack, nVol := 128
 
-   DEFINE WINDOW oWnd TITLE "Controle de Volume" SIZE 400, 150
+   DEFINE WINDOW oWnd TITLE "Volume Control" SIZE 400, 150
 
    @ 40, 20 TRACKBAR oTrack VAR nVol ;
       SIZE 360, 30 OF oWnd ;
@@ -68,17 +68,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TTrackBar encapsula o trackbar nativo do Win32 (<code>TRACKBAR_CLASS</code>). Suporta orientações tanto horizontal quanto vertical, dependendo das dimensões passadas para <code>New()</code>.</li>
-<li>A cláusula <code>VAR</code> vincula uma variável numérica que é atualizada automaticamente quando o usuário move o cursor.</li>
-<li>Use <code>SetTicFreq()</code> para exibir marcas de graduação em intervalos regulares. Uma frequência de 0 oculta todas as marcas de graduação.</li>
-<li>A cláusula <code>ON CHANGE</code> define <code>bChange</code>, que é disparado continuamente enquanto o usuário arrasta o cursor.</li>
+<li>TTrackBar wraps the native Win32 trackbar (<code>TRACKBAR_CLASS</code>). It supports both horizontal and vertical orientations depending on the dimensions passed to <code>New()</code>.</li>
+<li>The <code>VAR</code> clause binds a numeric variable that is updated automatically when the user moves the thumb.</li>
+<li>Use <code>SetTicFreq()</code> to show tick marks at regular intervals. A frequency of 0 hides all tick marks.</li>
+<li>The <code>ON CHANGE</code> clause sets <code>bChange</code>, which fires continuously as the user drags the thumb.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/ttoolbar.html">&larr; ttoolbar</a> | <a href="../../pt/ai/ttransformer.html">ttransformer &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

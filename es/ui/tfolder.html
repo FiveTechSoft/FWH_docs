@@ -1,34 +1,34 @@
-﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TFolder - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TFolder - Documentación FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TFolder</h1>
-<p class="subtitle">Control de pestañas para organizar diálogos complejos en páginas</p>
+<p class="subtitle">Tab folder control for organizing complex dialogs into pages</p>
 
-<p><strong>Fuente:</strong> <code>source/classes/folder.prg</code> &nbsp;|&nbsp; <strong>Padre:</strong> <code>TControl</code></p>
+<p><strong>Fuente:</strong> <code>source/classes/folder.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<h2 id="overview">Visión General</h2>
+<h2 id="overview">Overview</h2>
 
-<p><code>TFolder</code> implementa un control de pestañas de Windows. Cada página de pestaña es un objeto <code>TDialog</code> independiente, por lo que puede colocar cualquier control en cada página usando la sintaxis estándar de diálogos. El folder gestiona qué página es visible cuando el usuario hace clic en una pestaña.</p>
+<p><code>TFolder</code> implements a Windows tab control. Each tab page is an independent <code>TDialog</code> object, so you can place any controls on each page using standard dialog syntax. The folder manages which page is visible when the user clicks a tab.</p>
 
-<p>Características principales:</p>
+<p>Key features:</p>
 <ul>
-  <li>Cada página es un <code>TDialog</code> completo -- se puede colocar cualquier control en ella</li>
-  <li>Iconos en las pestañas mediante <code>oImageList</code></li>
-  <li>Cambio de página programático mediante <code>nOption</code></li>
-  <li>Pestañas arriba o abajo</li>
-  <li>Agregar/eliminar páginas dinámicamente en tiempo de ejecución</li>
+  <li>Each page is a full <code>TDialog</code> -- any control can be placed on it</li>
+  <li>Tab icons via <code>oImageList</code></li>
+  <li>Programmatic page switching via <code>nOption</code></li>
+  <li>Tabs at top or bottom</li>
+  <li>Dynamic page adding/removing at runtime</li>
 </ul>
 
-<h2 id="architecture">Composición de Páginas</h2>
+<h2 id="architecture">Page Composition</h2>
 
 <div class="mermaid">
 graph TD
-    PARENT["TDialog / TWindow<br/>(Padre)"] --> FOLDER["TFolder"]
+    PARENT["TDialog / TWindow<br/>(Parent)"] --> FOLDER["TFolder"]
 
-    FOLDER --> TAB1["Pestaña 1: General"]
-    FOLDER --> TAB2["Pestaña 2: Detalles"]
-    FOLDER --> TAB3["Pestaña 3: Notas"]
+    FOLDER --> TAB1["Tab 1: General"]
+    FOLDER --> TAB2["Tab 2: Details"]
+    FOLDER --> TAB3["Tab 3: Notes"]
 
     TAB1 --> DLG1["aDialogs[1]<br/>TDialog"]
     TAB2 --> DLG2["aDialogs[2]<br/>TDialog"]
@@ -44,35 +44,35 @@ graph TD
     style DLG3 fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
 </div>
 
-<h2 id="properties">Propiedades Clave</h2>
+<h2 id="properties">Key Properties</h2>
 
 <table>
-<thead><tr><th>Propiedad</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>aPrompts</code></td><td>Array</td><td>Array de cadenas para cada etiqueta de pestaña (ej. <code>{"General", "Detalles", "Notas"}</code>)</td></tr>
-<tr><td><code>aDialogs</code></td><td>Array</td><td>Array de objetos <code>TDialog</code>, uno por página de pestaña</td></tr>
-<tr><td><code>nOption</code></td><td>Numeric</td><td>Índice de la pestaña seleccionada actualmente (basado en 1). Establezca este valor para cambiar de página programáticamente.</td></tr>
-<tr><td><code>oImageList</code></td><td>Object</td><td><code>TImageList</code> opcional que proporciona iconos para cada pestaña</td></tr>
-<tr><td><code>bChange</code></td><td>Block</td><td>Bloque de código ejecutado cuando el usuario cambia de pestaña</td></tr>
-<tr><td><code>lBottom</code></td><td>Logical</td><td>Cuando es <code>.T.</code>, las pestañas aparecen en la parte inferior en lugar de arriba</td></tr>
-<tr><td><code>nTabHeight</code></td><td>Numeric</td><td>Altura de la franja de pestañas en píxeles</td></tr>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of strings for each tab label (e.g. <code>{"General", "Details", "Notes"}</code>)</td></tr>
+<tr><td><code>aDialogs</code></td><td>Array</td><td>Array of <code>TDialog</code> objects, one per tab page</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Index of the currently selected tab (1-based). Set this to switch pages programmatically.</td></tr>
+<tr><td><code>oImageList</code></td><td>Object</td><td>Optional <code>TImageList</code> providing icons for each tab</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>Code block executed when the user switches tabs</td></tr>
+<tr><td><code>lBottom</code></td><td>Logical</td><td>When <code>.T.</code>, tabs appear at the bottom instead of the top</td></tr>
+<tr><td><code>nTabHeight</code></td><td>Numeric</td><td>Height of the tab strip in pixels</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Clave</h2>
+<h2 id="methods">Key Methods</h2>
 
 <table>
-<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, aPrompts, ... )</code></td><td>Constructor. Crea el folder con las etiquetas de pestaña indicadas.</td></tr>
-<tr><td><code>AddPage( cPrompt, oDlg )</code></td><td>Agregar una nueva página en tiempo de ejecución.</td></tr>
-<tr><td><code>DelPage( nPage )</code></td><td>Eliminar una página en tiempo de ejecución.</td></tr>
-<tr><td><code>SetOption( n )</code></td><td>Cambiar a la página <code>n</code> programáticamente.</td></tr>
-<tr><td><code>GetPage( n )</code></td><td>Retorna el <code>TDialog</code> de la página <code>n</code>.</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, aPrompts, ... )</code></td><td>Constructor. Creates the folder with the given tab labels.</td></tr>
+<tr><td><code>AddPage( cPrompt, oDlg )</code></td><td>Add a new page at runtime.</td></tr>
+<tr><td><code>DelPage( nPage )</code></td><td>Remove a page at runtime.</td></tr>
+<tr><td><code>SetOption( n )</code></td><td>Switch to page <code>n</code> programmatically.</td></tr>
+<tr><td><code>GetPage( n )</code></td><td>Returns the <code>TDialog</code> for page <code>n</code>.</td></tr>
 </tbody>
 </table>
 
-<h2 id="command">Sintaxis de Comandos</h2>
+<h2 id="command">Command Syntax</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol FOLDER oFld ;
    OF oDlg ;
@@ -82,41 +82,41 @@ graph TD
    [ ON CHANGE bChange ] ;
    [ BOTTOM ]</code></pre>
 
-<p>Cada variable de diálogo (<code>oDlg1</code>, <code>oDlg2</code>, <code>oDlg3</code>) se crea automáticamente como un <code>TDialog</code> hijo. Luego se colocan controles en cada diálogo de página en el bloque <code>ACTIVATE DIALOG</code>.</p>
+<p>Each dialog variable (<code>oDlg1</code>, <code>oDlg2</code>, <code>oDlg3</code>) is automatically created as a child <code>TDialog</code>. You then place controls on each page dialog in the <code>ACTIVATE DIALOG</code> block.</p>
 
-<h2 id="tab-navigation">Flujo de Navegación por Pestañas</h2>
+<h2 id="tab-navigation">Tab Navigation Flow</h2>
 
 <div class="mermaid">
 stateDiagram-v2
-    [*] --> Page1 : Folder creado
-    Page1 --> Page2 : Clic pestaña 2
-    Page2 --> Page3 : Clic pestaña 3
-    Page3 --> Page1 : Clic pestaña 1
+    [*] --> Page1 : Folder created
+    Page1 --> Page2 : Click tab 2
+    Page2 --> Page3 : Click tab 3
+    Page3 --> Page1 : Click tab 1
     Page1 --> PageN : SetOption(N)
     PageN --> Page1 : SetOption(1)
 
     state Page1 {
         [*] --> DLG1_Visible
-        DLG1_Visible : aDialogs[1] visible
-        DLG1_Visible : Otras páginas ocultas
+        DLG1_Visible : aDialogs[1] shown
+        DLG1_Visible : Other pages hidden
     }
 
     state Page2 {
         [*] --> DLG2_Visible
-        DLG2_Visible : aDialogs[2] visible
-        DLG2_Visible : Otras páginas ocultas
+        DLG2_Visible : aDialogs[2] shown
+        DLG2_Visible : Other pages hidden
     }
 
     state Page3 {
         [*] --> DLG3_Visible
-        DLG3_Visible : aDialogs[3] visible
-        DLG3_Visible : Otras páginas ocultas
+        DLG3_Visible : aDialogs[3] shown
+        DLG3_Visible : Other pages hidden
     }
 </div>
 
-<h2 id="examples">Ejemplos de Código</h2>
+<h2 id="examples">Code Examples</h2>
 
-<h3>Ejemplo 1: Diálogo de Edición de Cliente con Pestañas</h3>
+<h3>Example 1: Customer Edit Dialog with Tabs</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -139,14 +139,14 @@ FUNCTION CustomerEdit()
    DEFINE DIALOG oDlg TITLE "Edit Customer" ;
       SIZE 520, 420 FONT oFont
 
-   // Crear el folder con 3 pestañas
+   // Create the folder with 3 tabs
    @ 0.5, 0.5 FOLDER oFld ;
       OF oDlg ;
       PROMPTS "General", "Address", "Notes" ;
       DIALOGS oDlg1, oDlg2, oDlg3 ;
       SIZE 490, 310
 
-   // --- Página 1: General ---
+   // --- Page 1: General ---
    @ 1.0, 1 SAY "Name:" OF oDlg1
    @ 1.0, 5 GET cName OF oDlg1 SIZE 200, 22 PICTURE "@!"
 
@@ -161,7 +161,7 @@ FUNCTION CustomerEdit()
 
    @ 7.0, 1 CHECKBOX lActive PROMPT "Active Customer" OF oDlg1
 
-   // --- Página 2: Dirección ---
+   // --- Page 2: Address ---
    @ 1.0, 1 SAY "Street:" OF oDlg2
    @ 1.0, 5 GET cAddr OF oDlg2 SIZE 280, 22
 
@@ -174,10 +174,10 @@ FUNCTION CustomerEdit()
    @ 4.0, 9 SAY "ZIP:" OF oDlg2
    @ 4.0, 11 GET cZip OF oDlg2 SIZE 80, 22 PICTURE "99999"
 
-   // --- Página 3: Notas ---
+   // --- Page 3: Notes ---
    @ 0.5, 1 GET cNotes MEMO OF oDlg3 SIZE 440, 200
 
-   // Botones debajo del folder
+   // Buttons below the folder
    @ 24, 12 BUTTON "&Save"   OF oDlg SIZE 80, 25 ACTION oDlg:End() DEFAULT
    @ 24, 22 BUTTON "&Cancel" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
 
@@ -186,7 +186,7 @@ FUNCTION CustomerEdit()
    RELEASE FONT oFont
 RETURN NIL</code></pre>
 
-<h3>Ejemplo 2: Folder con Browse y Cambio Dinámico de Página</h3>
+<h3>Example 2: Folder with Browse and Dynamic Page Switching</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "XBrowse.ch"
@@ -208,17 +208,17 @@ FUNCTION DataViewer()
       DIALOGS oDlg1, oDlg2 ;
       SIZE 570, 340
 
-   // Notificar cuando cambia la pestaña
+   // Notify when tab changes
    oFld:bChange := {|| MsgBeep() }
 
-   // --- Página 1: XBrowse de un DBF ---
+   // --- Page 1: XBrowse of a DBF ---
    USE Customer VIA "DBFCDX" NEW
    oBrw := TXBrowse():New( oDlg1 )
    oBrw:SetRDD()
    oBrw:CreateFromCode()
    oDlg1:oClient := oBrw
 
-   // --- Página 2: XBrowse de un array ---
+   // --- Page 2: XBrowse of an array ---
    LOCAL oBrw2 := TXBrowse():New( oDlg2 )
    oBrw2:SetArray( aLog )
    oBrw2:aCols := {}
@@ -228,10 +228,10 @@ FUNCTION DataViewer()
    oBrw2:CreateFromCode()
    oDlg2:oClient := oBrw2
 
-   // Botones
+   // Buttons
    @ 27, 18 BUTTON "&Close" OF oDlg SIZE 80, 25 ACTION oDlg:End() CANCEL
 
-   // Saltar a la pestaña Registro de Actividad programáticamente
+   // Jump to Activity Log tab programmatically
    @ 27, 2 BUTTON "Show &Log" OF oDlg SIZE 100, 25 ;
       ACTION oFld:SetOption( 2 )
 
@@ -240,25 +240,25 @@ FUNCTION DataViewer()
    CLOSE Customer
 RETURN NIL</code></pre>
 
-<h2 id="tips">Consejos</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-  <li>Coloque los controles en cada diálogo de página (<code>oDlg1</code>, <code>oDlg2</code>, ...) -- <strong>no</strong> en el diálogo padre <code>oDlg</code>.</li>
-  <li>Los botones que deben permanecer visibles en todas las pestañas (Guardar, Cancelar) van en el diálogo padre, posicionados debajo del folder.</li>
-  <li>Use <code>oFld:SetOption( n )</code> para cambiar de pestaña desde el código, por ejemplo en respuesta a un clic de botón.</li>
-  <li>Use <code>bChange</code> para actualizar datos cuando el usuario cambia de pestaña (ej. refrescar un browse en una pestaña).</li>
-  <li>Para agregar iconos a las pestañas, cree un <code>TImageList</code> y asígnelo a <code>oFld:oImageList</code> antes de la activación.</li>
-  <li>Cada diálogo de página hereda la fuente del diálogo padre, así que establezca la fuente en el padre para mantener consistencia.</li>
+  <li>Place controls on each page dialog (<code>oDlg1</code>, <code>oDlg2</code>, ...) -- <strong>not</strong> on the parent dialog <code>oDlg</code>.</li>
+  <li>Buttons that should remain visible on all tabs (Save, Cancel) go on the parent dialog, positioned below the folder.</li>
+  <li>Use <code>oFld:SetOption( n )</code> to switch tabs from code, for example in response to a button click.</li>
+  <li>Use <code>bChange</code> to refresh data when the user switches tabs (e.g. refresh a browse on a tab).</li>
+  <li>To add icons to tabs, create a <code>TImageList</code> and assign it to <code>oFld:oImageList</code> before activation.</li>
+  <li>Each page dialog inherits the font from the parent dialog, so set the font on the parent for consistency.</li>
 </ul>
 
 <h2 id="see-also">Ver También</h2>
 <ul>
-  <li><a href="../../es/core/tdialog.html">TDialog</a> -- cada página es un TDialog</li>
-  <li><a href="../../es/core/tcontrol.html">TControl</a> -- clase padre</li>
-  <li><a href="../../es/ui/tget.html">TGet</a> -- comúnmente usado dentro de páginas de folder</li>
-  <li><a href="../../es/ui/txbrowse.html">TXBrowse</a> -- las grillas de datos funcionan bien dentro de páginas de folder</li>
+  <li><a href="../../es/core/tdialog.html">TDialog</a> -- each page is a TDialog</li>
+  <li><a href="../../es/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../es/ui/tget.html">TGet</a> -- commonly used inside folder pages</li>
+  <li><a href="../../es/ui/txbrowse.html">TXBrowse</a> -- data grids work well inside folder pages</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

@@ -12,60 +12,60 @@
 <main id="content">
 
 <h1>TSymbol / TSymTable</h1>
-<p class="class-source">Fuentes: <code>source/classes/tsymbol.prg</code>, <code>source/classes/tsymtabl.prg</code></p>
-<p class="class-hierarchy">Clases independientes</p>
+<p class="class-source">Sources: <code>source/classes/tsymbol.prg</code>, <code>source/classes/tsymtabl.prg</code></p>
+<p class="class-hierarchy">Standalone classes</p>
 
 <p>
-TSymbol y TSymTable proporcionan introspección en tiempo de ejecución de la tabla de símbolos de Harbour. TSymbol envuelve un único manejador de símbolo (<code>hSymbol</code>) y expone su nombre y visibilidad. TSymTable permite iterar sobre toda la tabla de símbolos, devolviendo objetos TSymbol. Estas clases son útiles para depuradores, perfiladores y herramientas que necesitan enumerar todos los símbolos públicos/estáticos de la aplicación actual.
+TSymbol and TSymTable provide runtime introspection of the Harbour symbol table. TSymbol wraps a single symbol handle (<code>hSymbol</code>) and exposes its name and visibility. TSymTable provides iteration over the entire symbol table, returning TSymbol objects. These classes are useful for debuggers, profilers, and tools that need to enumerate all public/static symbols in the current application.
 </p>
 
 <h2 id="tsymbol">TSymbol</h2>
 
-<p>TSymbol representa una única entrada de símbolo en la tabla de símbolos de Harbour.</p>
+<p>TSymbol represents a single symbol entry in the Harbour symbol table.</p>
 
-<h3>Miembros DATA clave</h3>
+<h3>Key DATA</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hSymbol</code></td><td>Numérico</td><td>Manejador de la entrada de símbolo interna de Harbour</td></tr>
+<tr><td><code>hSymbol</code></td><td>Numeric</td><td>Handle to the internal Harbour symbol entry</td></tr>
 </tbody>
 </table>
 
-<h3>METHODs clave</h3>
+<h3>Key METHODs</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>Name()</code></td><td>Devuelve el nombre del símbolo como cadena de caracteres</td></tr>
-<tr><td><code>IsStatic()</code></td><td>Devuelve .T. si el símbolo es estático (ámbito de módulo)</td></tr>
+<tr><td><code>Name()</code></td><td>Return the symbol name as a character string</td></tr>
+<tr><td><code>IsStatic()</code></td><td>Return .T. if the symbol is static (module-scoped)</td></tr>
 </tbody>
 </table>
 
 <h2 id="tsymtable">TSymTable</h2>
 
-<p>TSymTable proporciona acceso indexado a todos los símbolos de la tabla de símbolos.</p>
+<p>TSymTable provides indexed access to all symbols in the symbol table.</p>
 
-<h3>METHODs clave</h3>
+<h3>Key METHODs</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>Get( n )</code></td><td>Devuelve el TSymbol en la posición n (índice basado en 1)</td></tr>
-<tr><td><code>Len()</code></td><td>Devuelve el número total de símbolos de la tabla</td></tr>
-<tr><td><code>Size()</code></td><td>Devuelve el tamaño total (igual que Len())</td></tr>
-<tr><td><code>GetFirst()</code></td><td>Devuelve el primer TSymbol de la tabla</td></tr>
-<tr><td><code>GetLast()</code></td><td>Devuelve el último TSymbol de la tabla</td></tr>
+<tr><td><code>Get( n )</code></td><td>Return the TSymbol at position n (1-based)</td></tr>
+<tr><td><code>Len()</code></td><td>Return the total number of symbols in the table</td></tr>
+<tr><td><code>Size()</code></td><td>Return the total size (same as Len())</td></tr>
+<tr><td><code>GetFirst()</code></td><td>Return the first TSymbol in the table</td></tr>
+<tr><td><code>GetLast()</code></td><td>Return the last TSymbol in the table</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Iterar todos los símbolos</h2>
+<h2 id="example">Example: Iterate All Symbols</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -77,7 +77,7 @@ function Main()
    ? "Total symbols:", oSymTable:Len()
    ? "---"
 
-   // Imprime los primeros 20 símbolos
+   // Print first 20 symbols
    for n := 1 to Min( 20, oSymTable:Len() )
       oSym := oSymTable:Get( n )
       if oSym != nil
@@ -86,7 +86,7 @@ function Main()
       endif
    next
 
-   // Obtiene el primer y el último símbolo
+   // Get first and last symbols
    oSym := oSymTable:GetFirst()
    if oSym != nil
       ? "First symbol:", oSym:Name()
@@ -99,17 +99,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>La tabla de símbolos contiene todos los símbolos de nivel Harbour de la aplicación, incluidos los símbolos FUNCTION, PROCEDURE, STATIC y PUBLIC.</li>
-<li><code>Get()</code> devuelve <code>nil</code> si el índice está fuera de rango. Compruebe siempre si es <code>nil</code> antes de acceder al objeto devuelto.</li>
-<li>Los símbolos se indexan en el orden en que se definen en la aplicación. Los símbolos del primer módulo aparecen primero, seguidos de los de los módulos posteriores.</li>
-<li>Estas clases dependen de la API interna de la tabla de símbolos de Harbour (funciones <code>hb_sym*</code>) y son específicas del runtime de Harbour.</li>
+<li>The symbol table contains all Harbour-level symbols in the application, including FUNCTION, PROCEDURE, STATIC, and PUBLIC symbols.</li>
+<li><code>Get()</code> returns <code>nil</code> if the index is out of range. Always check for <code>nil</code> before accessing the returned object.</li>
+<li>Symbols are indexed in the order they are defined in the application. The first module's symbols appear first, followed by subsequent modules.</li>
+<li>These classes rely on Harbour's internal symbol table API (<code>hb_sym*</code> Funciones) and are specific to the Harbour runtime.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tswitch.html">&larr; tswitch</a> | <a href="../../es/core/tsymtable.html">tsymtable &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

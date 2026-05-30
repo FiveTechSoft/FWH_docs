@@ -17,61 +17,61 @@ Fonte: <code>source/classes/tstruct.prg</code>, <code>source/classes/tfield.prg<
 </p>
 
 <p>
-Estas três classes utilitárias fornecem representações orientadas a objetos para estruturas de memória
-ao estilo C (TStruct), definições de campos DBF (TField) e definições de índices DBF (TIndex). São usadas
-ao trabalhar com estruturas de dados de baixo nível, definir esquemas DBF programaticamente ou criar
-ficheiros de índice a partir de código Harbour.
+These three utility classes provide object-oriented representations for C-style memory structures
+(TStruct), DBF field definitions (TField), and DBF index definitions (TIndex). They are used
+when working with low-level data structures, defining DBF schemas programmatically, or creating
+index files from Harbour code.
 </p>
 
-<h2 id="tstruct">TStruct - Construtor de Estruturas C</h2>
+<h2 id="tstruct">TStruct - C Structure Builder</h2>
 
 <p>
-TStruct modela uma estrutura da linguagem C na memória Harbour. Mantém um buffer binário e uma
-lista de definições de membros, permitindo que membros sejam adicionados e acedidos por nome ou posição.
+TStruct models a C-language structure in Harbour memory. It maintains a binary buffer and a
+list of member definitions, allowing members to be added and accessed by name or position.
 </p>
 
-<h3>Membros DATA</h3>
+<h3>DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cBuffer</code></td><td>Caractere</td><td>Buffer de memória binário bruto</td></tr>
-<tr><td><code>aMembers</code></td><td>Array</td><td>Array de <code>{ cName, nType, nLen, nOffset }</code></td></tr>
+<tr><td><code>cBuffer</code></td><td>Character</td><td>Binary raw memory buffer</td></tr>
+<tr><td><code>aMembers</code></td><td>Array</td><td>Array of <code>{ cName, nType, nLen, nOffset }</code></td></tr>
 </tbody>
 </table>
 
-<h3>Constantes de Tipo</h3>
+<h3>Type Constants</h3>
 
 <table>
 <thead>
-<tr><th>Constante</th><th>Descrição</th></tr>
+<tr><th>Constant</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>BYTE</code> / <code>CHAR</code></td><td>Inteiro sem sinal de 1 byte</td></tr>
-<tr><td><code>WORD</code> / <code>INT</code> / <code>BOOL</code></td><td>Inteiro com sinal de 2 bytes</td></tr>
-<tr><td><code>LONG</code> / <code>DWORD</code> / <code>PTR</code> / <code>LPSTR</code></td><td>Inteiro com sinal de 4 bytes ou ponteiro</td></tr>
-<tr><td><code>LONGLONG</code></td><td>Inteiro com sinal de 8 bytes</td></tr>
+<tr><td><code>BYTE</code> / <code>CHAR</code></td><td>1-byte unsigned integer</td></tr>
+<tr><td><code>WORD</code> / <code>INT</code> / <code>BOOL</code></td><td>2-byte signed integer</td></tr>
+<tr><td><code>LONG</code> / <code>DWORD</code> / <code>PTR</code> / <code>LPSTR</code></td><td>4-byte signed integer or pointer</td></tr>
+<tr><td><code>LONGLONG</code></td><td>8-byte signed integer</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Criar estrutura vazia</td></tr>
-<tr><td><code>AddMember( cName, nType, nLen )</code></td><td>Adicionar um membro com tipo e comprimento opcional</td></tr>
-<tr><td><code>SetMember( nMember, uData )</code></td><td>Definir valor do membro por índice</td></tr>
-<tr><td><code>GetMember( nMember )</code></td><td>Obter valor do membro por índice</td></tr>
-<tr><td><code>SizeOf()</code></td><td>Retornar comprimento total do buffer em bytes</td></tr>
+<tr><td><code>New()</code></td><td>Create empty structure</td></tr>
+<tr><td><code>AddMember( cName, nType, nLen )</code></td><td>Add a member with type and optional length</td></tr>
+<tr><td><code>SetMember( nMember, uData )</code></td><td>Set member value by index</td></tr>
+<tr><td><code>GetMember( nMember )</code></td><td>Get member value by index</td></tr>
+<tr><td><code>SizeOf()</code></td><td>Return total buffer length in bytes</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Definir e Usar uma Estrutura C</h3>
+<h3>Example: Define and Use a C Structure</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "Struct.ch"
@@ -97,43 +97,43 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="tfield">TField - Definição de Campo DBF</h2>
+<h2 id="tfield">TField - DBF Field Definition</h2>
 
 <p>
-TField é um contentor de dados simples que representa um único campo DBF. Armazena todas as propriedades
-necessárias para definir um campo na estrutura de um ficheiro DBF.
+TField is a simple data container representing a single DBF field. It stores all properties
+needed to define a field in a DBF file structure.
 </p>
 
-<h3>Membros DATA</h3>
+<h3>DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cDbfName</code></td><td>Caractere</td><td>Nome do ficheiro DBF</td></tr>
-<tr><td><code>nOrder</code></td><td>Numérico</td><td>Posição do campo (base 1)</td></tr>
-<tr><td><code>lIndexed</code></td><td>Lógico</td><td>Se o campo é indexado</td></tr>
-<tr><td><code>cName</code></td><td>Caractere</td><td>Nome do campo</td></tr>
-<tr><td><code>cType</code></td><td>Caractere</td><td>Tipo de campo (C, N, D, L, M)</td></tr>
-<tr><td><code>nWidth</code></td><td>Numérico</td><td>Largura do campo</td></tr>
-<tr><td><code>nDecimal</code></td><td>Numérico</td><td>Casas decimais para campos numéricos</td></tr>
-<tr><td><code>cComments</code></td><td>Caractere</td><td>Descrição opcional do campo</td></tr>
+<tr><td><code>cDbfName</code></td><td>Character</td><td>Name of the DBF file</td></tr>
+<tr><td><code>nOrder</code></td><td>Numeric</td><td>Field position (1-based)</td></tr>
+<tr><td><code>lIndexed</code></td><td>Logical</td><td>Whether the field is indexed</td></tr>
+<tr><td><code>cName</code></td><td>Character</td><td>Field name</td></tr>
+<tr><td><code>cType</code></td><td>Character</td><td>Field type (C, N, D, L, M)</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Field width</td></tr>
+<tr><td><code>nDecimal</code></td><td>Numeric</td><td>Decimal places for numeric fields</td></tr>
+<tr><td><code>cComments</code></td><td>Character</td><td>Optional field description</td></tr>
 </tbody>
 </table>
 
-<h3>Método</h3>
+<h3>Method</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cDbfName, nOrder, lIndexed, cName, cType, nWidth, nDecimal, cComments )</code></td><td>Criar uma definição de campo</td></tr>
+<tr><td><code>New( cDbfName, nOrder, lIndexed, cName, cType, nWidth, nDecimal, cComments )</code></td><td>Create a field definition</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Definir um Campo DBF</h3>
+<h3>Example: Define a DBF Field</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -149,44 +149,44 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="tindex">TIndex - Definição de Índice DBF</h2>
+<h2 id="tindex">TIndex - DBF Index Definition</h2>
 
 <p>
-TIndex representa uma definição de índice para um ficheiro DBF. Pode criar o ficheiro de índice real
-em disco (formato CDX ou NTX) a partir das propriedades da definição.
+TIndex represents an index definition for a DBF file. It can create the actual index file
+on disk (CDX or NTX format) from the definition properties.
 </p>
 
-<h3>Membros DATA</h3>
+<h3>DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cDbfName</code></td><td>Caractere</td><td>Nome do ficheiro DBF a indexar</td></tr>
-<tr><td><code>cName</code></td><td>Caractere</td><td>Nome do ficheiro de índice (sem extensão)</td></tr>
-<tr><td><code>cTag</code></td><td>Caractere</td><td>Nome da tag para índices CDX</td></tr>
-<tr><td><code>cExpression</code></td><td>Caractere</td><td>Expressão da chave de índice</td></tr>
-<tr><td><code>lUnique</code></td><td>Lógico</td><td>Flag de índice único</td></tr>
-<tr><td><code>lDescending</code></td><td>Lógico</td><td>Flag de ordem descendente</td></tr>
-<tr><td><code>cComments</code></td><td>Caractere</td><td>Comentários opcionais</td></tr>
-<tr><td><code>cType</code></td><td>Caractere</td><td>Tipo de índice (<code>"CDX"</code> padrão, ou <code>"NTX"</code>)</td></tr>
+<tr><td><code>cDbfName</code></td><td>Character</td><td>Name of the DBF file to index</td></tr>
+<tr><td><code>cName</code></td><td>Character</td><td>Index file name (without extension)</td></tr>
+<tr><td><code>cTag</code></td><td>Character</td><td>Tag name for CDX indexes</td></tr>
+<tr><td><code>cExpression</code></td><td>Character</td><td>Index key expression</td></tr>
+<tr><td><code>lUnique</code></td><td>Logical</td><td>Unique index flag</td></tr>
+<tr><td><code>lDescending</code></td><td>Logical</td><td>Descending order flag</td></tr>
+<tr><td><code>cComments</code></td><td>Character</td><td>Optional comments</td></tr>
+<tr><td><code>cType</code></td><td>Character</td><td>Index type (<code>"CDX"</code> default, or <code>"NTX"</code>)</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cDbfName, cName, cTag, cExpression, lUnique, lDescending, cComments )</code></td><td>Criar uma definição de índice</td></tr>
-<tr><td><code>Create( cPath )</code></td><td>Criar o ficheiro de índice em disco no caminho dado</td></tr>
+<tr><td><code>New( cDbfName, cName, cTag, cExpression, lUnique, lDescending, cComments )</code></td><td>Create an index definition</td></tr>
+<tr><td><code>Create( cPath )</code></td><td>Create the index file on disk at the given path</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Criar um Índice</h3>
+<h3>Example: Create an Index</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -202,16 +202,16 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TStruct usa <code>NumToBin()</code> / <code>BinToNum()</code> do Harbour internamente para serialização do buffer. Suporta acesso a membros por índice numérico e por nome (via manipulador de erros).</li>
-<li>TField é principalmente um contentor de dados e não modifica o ficheiro DBF em si. É útil para construção programática de esquemas e gestão de metadados.</li>
-<li>TIndex:Create() abre o DBF, executa o comando INDEX e fecha o ficheiro. Suporta formatos CDX (padrão) e NTX com base no membro <code>cType</code>.</li>
+<li>TStruct uses Harbour's <code>NumToBin()</code> / <code>BinToNum()</code> internally for buffer serialization. It supports member access by both numeric index and name (via error handler).</li>
+<li>TField is primarily a data container and does not modify the DBF file itself. It is useful for programmatic schema construction and metadata management.</li>
+<li>TIndex:Create() opens the DBF, executes the INDEX command, and closes the file. It supports both CDX (default) and NTX formats based on the <code>cType</code> member.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tstatusbar.html">&larr; tstatusbar</a> | <a href="../../pt/ui/tswitch.html">tswitch &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

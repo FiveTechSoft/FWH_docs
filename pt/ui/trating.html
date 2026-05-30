@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRating - Documenta&ccedil;&atilde;o FWH</title>
+<title>TRating - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,50 +13,53 @@
 
 <h1>TRating</h1>
 <p class="class-source">Fonte: <code>source/classes/trating.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TRating &eacute; um controle interativo de classifica&ccedil;&atilde;o por estrelas que permite aos usu&aacute;rios selecionar um valor de classifica&ccedil;&atilde;o clicando em imagens de estrelas. Suporta pr&eacute;-visualiza&ccedil;&atilde;o ao passar o mouse, clique para definir, exibi&ccedil;&atilde;o de meia estrela e valores m&aacute;ximos configur&aacute;veis. O controle usa tr&ecirc;s estados de imagem (vazia, meia, cheia) para renderizar a classifica&ccedil;&atilde;o visual.
+TRating is an interactive star-rating control that allows users to select a rating value
+by clicking on star images. It supports hover preview, click-to-set, half-star display,
+and configurable maximum values. The control uses three image states (empty, half, full)
+to render the visual rating.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padr&atilde;o</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nImages</code></td><td>Numeric</td><td><code>5</code></td><td>N&uacute;mero de imagens/estrelas de classifica&ccedil;&atilde;o a exibir</td></tr>
-<tr><td><code>nCurrentValue</code></td><td>Numeric</td><td><code>0</code></td><td>Valor atual de pr&eacute;-visualiza&ccedil;&atilde;o/ao passar o mouse</td></tr>
-<tr><td><code>nSelectedValue</code></td><td>Numeric</td><td><code>0</code></td><td>&Uacute;ltimo valor clicado (confirmado)</td></tr>
-<tr><td><code>nPercentual</code></td><td>Numeric</td><td><code>100</code></td><td>Valor m&aacute;ximo para c&aacute;lculo de porcentagem</td></tr>
-<tr><td><code>bChanged</code></td><td>Block</td><td></td><td>Bloco de c&oacute;digo executado quando a classifica&ccedil;&atilde;o muda (recebe novo valor)</td></tr>
-<tr><td><code>bSetGet</code></td><td>Block</td><td></td><td>Bloco SetGet para vincula&ccedil;&atilde;o de vari&aacute;vel (leitura/escrita)</td></tr>
-<tr><td><code>lBorder</code></td><td>Logical</td><td><code>.F.</code></td><td>Mostrar borda ao redor do controle</td></tr>
-<tr><td><code>nClrBorder</code></td><td>Numeric</td><td></td><td>Cor da borda</td></tr>
+<tr><td><code>nImages</code></td><td>Numeric</td><td><code>5</code></td><td>Number of rating images/stars to display</td></tr>
+<tr><td><code>nCurrentValue</code></td><td>Numeric</td><td><code>0</code></td><td>Current hover/preview value</td></tr>
+<tr><td><code>nSelectedValue</code></td><td>Numeric</td><td><code>0</code></td><td>Last clicked (committed) value</td></tr>
+<tr><td><code>nPercentual</code></td><td>Numeric</td><td><code>100</code></td><td>Maximum value for percentage calculation</td></tr>
+<tr><td><code>bChanged</code></td><td>Block</td><td></td><td>Codeblock executed when rating changes (receives new value)</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td></td><td>SetGet codeblock for variable binding (read/write)</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td><code>.F.</code></td><td>Show border around the control</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td></td><td>Border color</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, nWidth, nHeight, nRating, cEmptyImg, cHalfImg, cFullImg, lBorder, nClrBorder, nBackColor, lDesign, nInitialValue, nMaxValue, bChanged, bSetGet )</code></td><td>Criar um novo controle TRating</td></tr>
-<tr><td><code>SetValue( x )</code></td><td>Definir o valor da classifica&ccedil;&atilde;o programaticamente. Se x for omitido, redefine para 0.</td></tr>
-<tr><td><code>Reset()</code></td><td>Redefinir a classifica&ccedil;&atilde;o para 0 (chama SetValue() sem argumento)</td></tr>
-<tr><td><code>Display()</code></td><td>Iniciar pintura, renderizar, finalizar pintura</td></tr>
-<tr><td><code>Paint()</code></td><td>Renderizar as estrelas de classifica&ccedil;&atilde;o com base nos valores atual e selecionado</td></tr>
-<tr><td><code>MouseMove( nRow, nCol, nKeyFlags )</code></td><td>Gerenciar hover: atualizar <code>nCurrentValue</code> para pr&eacute;-visualiza&ccedil;&atilde;o visual</td></tr>
-<tr><td><code>MouseLeave( nRow, nCol, nKeyFlags )</code></td><td>Gerenciar sa&iacute;da do mouse: restaurar exibi&ccedil;&atilde;o para o valor confirmado</td></tr>
-<tr><td><code>LButtonUp( nRow, nCol, nKeyFlags, lTouch )</code></td><td>Gerenciar clique: confirmar o valor pairando e disparar <code>bChanged</code></td></tr>
-<tr><td><code>Destroy()</code></td><td>Destruir o controle e liberar os handles de imagem</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, nWidth, nHeight, nRating, cEmptyImg, cHalfImg, cFullImg, lBorder, nClrBorder, nBackColor, lDesign, nInitialValue, nMaxValue, bChanged, bSetGet )</code></td><td>Create a new TRating control</td></tr>
+<tr><td><code>SetValue( x )</code></td><td>Set the rating value programmatically. If x is omitted, resets to 0.</td></tr>
+<tr><td><code>Reset()</code></td><td>Reset the rating to 0 (calls SetValue() with no argument)</td></tr>
+<tr><td><code>Display()</code></td><td>Begin paint, render, end paint</td></tr>
+<tr><td><code>Paint()</code></td><td>Render the rating stars based on current and selected values</td></tr>
+<tr><td><code>MouseMove( nRow, nCol, nKeyFlags )</code></td><td>Handle hover: update <code>nCurrentValue</code> for visual preview</td></tr>
+<tr><td><code>MouseLeave( nRow, nCol, nKeyFlags )</code></td><td>Handle mouse leave: restore display to committed value</td></tr>
+<tr><td><code>LButtonUp( nRow, nCol, nKeyFlags, lTouch )</code></td><td>Handle click: commit the hovered value and fire <code>bChanged</code></td></tr>
+<tr><td><code>Destroy()</code></td><td>Destroy the control and free image handles</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Controle de Classifica&ccedil;&atilde;o de 5 Estrelas</h2>
+<h2 id="example">Example: 5-Star Rating Control</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -87,19 +90,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O comando RATING requer tr&ecirc;s imagens bitmap para os tr&ecirc;s estados visuais: <code>EMPTY</code> (n&atilde;o selecionado), <code>HALF</code> (meio preenchido) e <code>FULL</code> (completamente selecionado).</li>
-<li><code>nRating</code> especifica o n&uacute;mero de imagens de estrela exibidas (ex., 5 para classifica&ccedil;&atilde;o de 5 estrelas). <code>MAX</code> define o valor num&eacute;rico m&aacute;ximo (padr&atilde;o 100), e o controle mapeia a posi&ccedil;&atilde;o visual para um valor proporcional.</li>
-<li>O bloco de c&oacute;digo <code>CHANGE</code> n&atilde;o recebe par&acirc;metro; leia <code>oRating:nSelectedValue</code> dentro do bloco para obter a classifica&ccedil;&atilde;o atual.</li>
-<li>Use <code>bSetGet</code> para vincular a classifica&ccedil;&atilde;o a uma vari&aacute;vel ou campo de banco de dados. O bloco &eacute; avaliado na cria&ccedil;&atilde;o para ler o valor inicial e no clique para escrever o novo valor.</li>
-<li>O comportamento hover &eacute; gerenciado automaticamente: <code>MouseMove</code> atualiza <code>nCurrentValue</code> para feedback visual em tempo real, e <code>MouseLeave</code> restaura a exibi&ccedil;&atilde;o para <code>nSelectedValue</code>.</li>
-<li>O membro de dados <code>nPercentual</code> controla o fator de escala. Com o padr&atilde;o de 100, clicar na &uacute;ltima estrela define o valor como 100. Ajuste para diferentes escalas de classifica&ccedil;&atilde;o.</li>
+<li>The RATING command requires three bitmap images for the three visual states: <code>EMPTY</code> (unselected), <code>HALF</code> (half-filled), and <code>FULL</code> (fully selected).</li>
+<li><code>nRating</code> specifies the number of star images displayed (e.g., 5 for a 5-star rating). <code>MAX</code> sets the maximum numeric value (default 100), and the control maps the visual position to a proportional value.</li>
+<li>The <code>CHANGE</code> codeblock receives no parameter; read <code>oRating:nSelectedValue</code> inside the block to get the current rating.</li>
+<li>Use <code>bSetGet</code> to bind the rating to a variable or database field. The codeblock is evaluated on creation to read the initial value and on click to write the new value.</li>
+<li>Hover behavior is handled automatically: <code>MouseMove</code> updates <code>nCurrentValue</code> for real-time visual feedback, and <code>MouseLeave</code> restores the display to <code>nSelectedValue</code>.</li>
+<li>The <code>nPercentual</code> data member controls the scaling factor. With the default of 100, clicking the last star sets the value to 100. Adjust this for different rating scales.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/internet/tras.html">&larr; tras</a> | <a href="../../pt/reference/trbgroup.html">trbgroup &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

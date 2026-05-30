@@ -15,40 +15,40 @@
 <p class="class-source">Fonte: <code>source/classes/time.prg</code></p>
 
 <p>
-TTime representa um valor de tempo como segundos desde a meia-noite. Fornece aritmética de tempo (somar/subtrair horas, minutos, segundos), formatação para "HH:MM:SS" e a capacidade de ler o relógio do sistema ou gravar o tempo de volta no relógio do sistema. Internamente, o tempo é armazenado como um único valor numérico (<code>nTime</code>) módulo 86400.
+TTime represents a time value as seconds since midnight. It provides time arithmetic (add/subtract hours, minutes, seconds), formatting to "HH:MM:SS", and the ability to read the system clock or write the time back to the system clock. Internally the time is stored as a single numeric value (<code>nTime</code>) modulo 86400.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nTime</code></td><td>Numeric</td><td>Segundos desde a meia-noite (0-86399)</td></tr>
+<tr><td><code>nTime</code></td><td>Numeric</td><td>Seconds since midnight (0-86399)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nHours, nMinutes, nSeconds )</code></td><td>Cria um TTime a partir de valores de hora/minuto/segundo. Todos têm padrão 0</td></tr>
-<tr><td><code>System()</code></td><td>Inicializa a partir da hora atual do relógio do sistema</td></tr>
-<tr><td><code>AddHours( n )</code></td><td>Adiciona n horas ao tempo armazenado</td></tr>
-<tr><td><code>AddMinutes( n )</code></td><td>Adiciona n minutos ao tempo armazenado</td></tr>
-<tr><td><code>AddSeconds( n )</code></td><td>Adiciona n segundos ao tempo armazenado</td></tr>
-<tr><td><code>cAdd( nH, nM, nS )</code></td><td>Adiciona uma duração de tempo e retorna o resultado como uma string formatada "HH:MM:SS"</td></tr>
-<tr><td><code>cSub( nH, nM, nS )</code></td><td>Subtrai uma duração de tempo (ou outro objeto TTime) e retorna o resultado formatado</td></tr>
-<tr><td><code>cGetTime()</code></td><td>Retorna o tempo armazenado formatado como "HH:MM:SS"</td></tr>
-<tr><td><code>SysChange()</code></td><td>Define o relógio do sistema com o valor de tempo armazenado</td></tr>
+<tr><td><code>New( nHours, nMinutes, nSeconds )</code></td><td>Create a TTime from hour/minute/second values. All default to 0</td></tr>
+<tr><td><code>System()</code></td><td>Initialize from the current system clock time</td></tr>
+<tr><td><code>AddHours( n )</code></td><td>Add n hours to the stored time</td></tr>
+<tr><td><code>AddMinutes( n )</code></td><td>Add n minutes to the stored time</td></tr>
+<tr><td><code>AddSeconds( n )</code></td><td>Add n seconds to the stored time</td></tr>
+<tr><td><code>cAdd( nH, nM, nS )</code></td><td>Add a time duration and return the result as a formatted "HH:MM:SS" string</td></tr>
+<tr><td><code>cSub( nH, nM, nS )</code></td><td>Subtract a time duration (or another TTime object) and return the formatted result</td></tr>
+<tr><td><code>cGetTime()</code></td><td>Return the stored time formatted as "HH:MM:SS"</td></tr>
+<tr><td><code>SysChange()</code></td><td>Set the system clock to the stored time value</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Aritmética de Tempo</h2>
+<h2 id="example">Example: Time Arithmetic</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -56,34 +56,34 @@ function Main()
 
    local oTime, cResult
 
-   // Cria um tempo: 09:30:00
+   // Create a time: 09:30:00
    oTime := TTime():New( 9, 30, 0 )
 
-   // Adiciona 2 horas e 15 minutos
+   // Add 2 hours and 15 minutes
    cResult := oTime:cAdd( 2, 15, 0 )
    MsgInfo( cResult )   // --> "11:45:00"
 
-   // Subtrai 45 minutos
+   // Subtract 45 minutes
    cResult := oTime:cSub( 0, 45, 0 )
    MsgInfo( cResult )   // --> "11:00:00"
 
-   // Obtém a hora atual do sistema
+   // Get current system time
    oTime:System()
    MsgInfo( "Current time: " + oTime:cGetTime() )
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Todas as operações aritméticas aplicam módulo 86400 (segundos em um dia). Valores que excedem 24 horas dão a volta.</li>
-<li><code>cAdd()</code> e <code>cSub()</code> modificam o <code>nTime</code> interno e retornam a nova string formatada.</li>
-<li><code>cSub()</code> pode aceitar valores numéricos de hora/minuto/segundo ou outro objeto TTime como seu primeiro parâmetro.</li>
-<li><code>SysChange()</code> chama <code>SysTime( ::nTime )</code> para gravar o tempo no relógio do sistema; isso pode exigir privilégios apropriados.</li>
+<li>All arithmetic operations wrap modulo 86400 (seconds in a day). Values exceeding 24 hours roll over.</li>
+<li><code>cAdd()</code> and <code>cSub()</code> modify the internal <code>nTime</code> and return the new formatted string.</li>
+<li><code>cSub()</code> can accept either numeric hour/minute/second values or another TTime object as its first parameter.</li>
+<li><code>SysChange()</code> calls <code>SysTime( ::nTime )</code> to write the time to the system clock; this may require appropriate privileges.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/utilities/ttextfile.html">&larr; ttextfile</a> | <a href="../../pt/reference/ttimepick.html">ttimepick &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

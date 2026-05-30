@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TNeuralNetwork - Documentaci&oacute;n FWH</title>
+<title>TNeuralNetwork - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -15,14 +15,14 @@
 <p class="class-source">Fuente: <code>source/classes/tneuralnet.prg</code></p>
 
 <p>
-TNeuralNetwork es la red neuronal feedforward de FiveWin implementada en Harbour puro.
-Proporciona un perceptr&oacute;n multicapa (MLP) con entrenamiento por retropropagaci&oacute;n. La red
-consta de tres tipos de capas: una capa de entrada, una o m&aacute;s capas ocultas y una capa de salida.
-Cada neurona usa la funci&oacute;n de activaci&oacute;n sigmoide. La clase es ideal para tareas simples
-de reconocimiento de patrones como el problema XOR.
+TNeuralNetwork is FiveWin's feedforward neural network implemented in pure Harbour.
+It provides a multi-layer perceptron (MLP) with backpropagation training. The network
+consists of three layer types: an input layer, one or more hidden layers, and an output
+layer. Each neuron uses the sigmoid activation function. The class is ideal for simple
+pattern recognition tasks such as the XOR problem.
 </p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
@@ -49,19 +49,19 @@ flowchart LR
     D --> H
 </div>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <h3>TNeuralNetwork</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oInputLayer</code></td><td>Object</td><td></td><td>TNeuralLayer para la capa de entrada</td></tr>
-<tr><td><code>aHiddenLayers</code></td><td>Array</td><td><code>{}</code></td><td>Array de objetos TNeuralLayer (una o m&aacute;s capas ocultas)</td></tr>
-<tr><td><code>oOutputLayer</code></td><td>Object</td><td></td><td>TNeuralLayer para la capa de salida</td></tr>
-<tr><td><code>nLearningRate</code></td><td>Num&eacute;rico</td><td><code>0.1</code></td><td>Tasa de aprendizaje para actualizaciones de pesos por retropropagaci&oacute;n</td></tr>
+<tr><td><code>oInputLayer</code></td><td>Object</td><td></td><td>TNeuralLayer for the input layer</td></tr>
+<tr><td><code>aHiddenLayers</code></td><td>Array</td><td><code>{}</code></td><td>Array of TNeuralLayer objects (one or more hidden layers)</td></tr>
+<tr><td><code>oOutputLayer</code></td><td>Object</td><td></td><td>TNeuralLayer for the output layer</td></tr>
+<tr><td><code>nLearningRate</code></td><td>Numeric</td><td><code>0.1</code></td><td>Learning rate for backpropagation weight updates</td></tr>
 </tbody>
 </table>
 
@@ -69,10 +69,10 @@ flowchart LR
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aNeurons</code></td><td>Array</td><td><code>{}</code></td><td>Array de objetos TNeuron en esta capa</td></tr>
+<tr><td><code>aNeurons</code></td><td>Array</td><td><code>{}</code></td><td>Array of TNeuron objects in this layer</td></tr>
 </tbody>
 </table>
 
@@ -80,31 +80,31 @@ flowchart LR
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nBias</code></td><td>Num&eacute;rico</td><td><code>hb_Random()</code></td><td>T&eacute;rmino de sesgo para esta neurona</td></tr>
-<tr><td><code>aWeights</code></td><td>Array</td><td></td><td>Array de pesos de conexi&oacute;n desde la capa anterior, inicializados aleatoriamente</td></tr>
-<tr><td><code>nValue</code></td><td>Num&eacute;rico</td><td></td><td>Valor de activaci&oacute;n actual despu&eacute;s de la propagaci&oacute;n hacia adelante</td></tr>
-<tr><td><code>nDeltaError</code></td><td>Num&eacute;rico</td><td></td><td>Gradiente de error calculado durante la retropropagaci&oacute;n</td></tr>
+<tr><td><code>nBias</code></td><td>Numeric</td><td><code>hb_Random()</code></td><td>Bias term for this neuron</td></tr>
+<tr><td><code>aWeights</code></td><td>Array</td><td></td><td>Array of connection weights from the previous layer, initialized randomly</td></tr>
+<tr><td><code>nValue</code></td><td>Numeric</td><td></td><td>Current activation value after forward propagation</td></tr>
+<tr><td><code>nDeltaError</code></td><td>Numeric</td><td></td><td>Error gradient computed during backpropagation</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nInputs, aHiddenLayers, nOutputs )</code></td><td>Crear una red neuronal con <code>nInputs</code> neuronas de entrada, un array de tama&ntilde;os de capas ocultas (ej., <code>{ 4, 3 }</code> para dos capas ocultas) y <code>nOutputs</code> neuronas de salida.</td></tr>
-<tr><td><code>Learn( aInputs, aOutputs, lDebug )</code></td><td>Entrenar la red en una muestra: ejecuta propagaci&oacute;n hacia adelante, luego retropropagaci&oacute;n para ajustar pesos y sesgos.</td></tr>
-<tr><td><code>Propagation( aInputs )</code></td><td>Ejecutar propagaci&oacute;n hacia adelante: calcular valores de activaci&oacute;n desde la entrada a trav&eacute;s de las capas ocultas hasta la salida. Usa la funci&oacute;n de activaci&oacute;n sigmoide.</td></tr>
-<tr><td><code>BackPropagation( aInputs, aOutputs )</code></td><td>Ejecutar propagaci&oacute;n hacia atr&aacute;s: calcular gradientes de error y actualizar todos los pesos y sesgos seg&uacute;n la tasa de aprendizaje.</td></tr>
+<tr><td><code>New( nInputs, aHiddenLayers, nOutputs )</code></td><td>Create a neural network with <code>nInputs</code> input neurons, an array of hidden layer sizes (e.g. <code>{ 4, 3 }</code> for two hidden layers), and <code>nOutputs</code> output neurons.</td></tr>
+<tr><td><code>Learn( aInputs, aOutputs, lDebug )</code></td><td>Train the network on one sample: runs forward propagation, then backpropagation to adjust weights and biases.</td></tr>
+<tr><td><code>Propagation( aInputs )</code></td><td>Run forward propagation: compute activation values from input through hidden layers to output. Uses the sigmoid activation function.</td></tr>
+<tr><td><code>BackPropagation( aInputs, aOutputs )</code></td><td>Run backward propagation: compute error gradients and update all weights and biases based on the learning rate.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Entrenamiento XOR</h2>
+<h2 id="example">Example: XOR Training</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -132,7 +132,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-debug">Ejemplo: Entrenamiento con Salida de Depuraci&oacute;n</h2>
+<h2 id="example-debug">Example: Training with Debug Output</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -145,19 +145,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Los pesos y sesgos se inicializan con valores aleatorios usando <code>hb_Random()</code>.</li>
-<li>La funci&oacute;n de activaci&oacute;n sigmoide mapea valores al rango (0, 1). La derivada se usa durante la retropropagaci&oacute;n para el c&aacute;lculo del gradiente.</li>
-<li><code>nLearningRate</code> controla cu&aacute;nto cambian los pesos durante cada actualizaci&oacute;n. Valores m&aacute;s bajos (ej., 0.01 - 0.1) proporcionan entrenamiento m&aacute;s estable, mientras que valores m&aacute;s altos pueden converger m&aacute;s r&aacute;pido pero riskan oscilaci&oacute;n.</li>
-<li>Se pueden crear m&uacute;ltiples capas ocultas pasando un array con varios valores: <code>{ 4, 3 }</code> crea dos capas ocultas con 4 y 3 neuronas respectivamente.</li>
-<li>Esta es una implementaci&oacute;n en Harbour puro sin dependencias externas. La funci&oacute;n <code>Math_E()</code> se implementa a trav&eacute;s de la API de extensi&oacute;n C de Harbour.</li>
-<li>Para capacidades de red neuronal m&aacute;s avanzadas, consulte la clase <code>Transformer</code> en <code>source/classes/transformer.prg</code>.</li>
+<li>Weights and biases are initialized to random values using <code>hb_Random()</code>.</li>
+<li>The sigmoid activation function maps values to the range (0, 1). The derivative is used during backpropagation for gradient computation.</li>
+<li>The <code>nLearningRate</code> controls how much weights change during each update. Lower values (e.g. 0.01 - 0.1) provide more stable training, while higher values may converge faster but risk oscillation.</li>
+<li>Multiple hidden layers can be created by passing an array with multiple values: <code>{ 4, 3 }</code> creates two hidden layers with 4 and 3 neurons respectively.</li>
+<li>This is a pure Harbour implementation with no external dependencies. The <code>Math_E()</code> function is implemented via Harbour's C extension API.</li>
+<li>For more advanced neural network capabilities, see the <code>Transformer</code> class in <code>source/classes/transformer.prg</code>.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tnavigator.html">&larr; tnavigator</a> | <a href="../../es/internet/tneuralnetwork.html">tneuralnetwork &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

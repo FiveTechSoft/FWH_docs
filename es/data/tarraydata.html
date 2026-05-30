@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TArrayData - Documentaci&oacute;n FWH</title>
+<title>TArrayData - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -15,84 +15,84 @@
 <p class="class-source">Fuente: <code>source/classes/tarrdata.prg</code></p>
 
 <p>
-TArrayData proporciona una interfaz uniforme de fuente de datos sobre arrays de Harbour, tablas DBF y
-consultas MariaDB/MySQL. Act&uacute;a como puente entre los datos y XBrowse, permitiendo que cualquier fuente de datos
-sea navegada, ordenada, filtrada y editada usando la misma API. Internamente, los datos se almacenan como
-un array de filas con una definici&oacute;n de estructura de campos equivalente.
+TArrayData provides a uniform data source interface over Harbour arrays, DBF tables, and
+MariaDB/MySQL queries. It acts as a bridge between data and XBrowse, allowing any data source
+to be browsed, sorted, filtered, and edited using the same API. Internally, data is stored as
+an array of row arrays with a matching field structure definition.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aData</code></td><td>Array</td><td>Array de arrays de filas que contiene todos los datos</td></tr>
-<tr><td><code>aStruct</code></td><td>Array</td><td>Array de estructura de campos (compatible con DbStruct())</td></tr>
-<tr><td><code>nAt</code></td><td>Num&eacute;rico</td><td>Posici&oacute;n actual de fila (base 1)</td></tr>
-<tr><td><code>nSrcType</code></td><td>Num&eacute;rico</td><td>Tipo de origen: <code>SRC_ARR</code> (0), <code>SRC_DBF</code> (1), <code>SRC_MYQ</code> (2)</td></tr>
-<tr><td><code>nOrder</code></td><td>Num&eacute;rico</td><td>Posici&oacute;n actual de la columna de ordenaci&oacute;n</td></tr>
-<tr><td><code>lDesc</code></td><td>L&oacute;gico</td><td>Indicador de orden descendente</td></tr>
-<tr><td><code>lReadOnly</code></td><td>L&oacute;gico</td><td>Modo de solo lectura</td></tr>
-<tr><td><code>cFilter</code></td><td>Car&aacute;cter</td><td>Expresi&oacute;n de filtro activa</td></tr>
-<tr><td><code>bFilter</code></td><td>Block</td><td>Bloque de c&oacute;digo de filtro</td></tr>
-<tr><td><code>lFound</code></td><td>L&oacute;gico</td><td>Resultado de la &uacute;ltima operaci&oacute;n Seek</td></tr>
-<tr><td><code>bEdit</code></td><td>Block</td><td>Bloque de c&oacute;digo para edici&oacute;n de registros</td></tr>
-<tr><td><code>bKeyCount</code></td><td>Block</td><td>Bloque de c&oacute;digo que devuelve el conteo de registros</td></tr>
-<tr><td><code>cAlias</code></td><td>Car&aacute;cter</td><td>Nombre de alias (predeterminado <code>"ARRAY"</code>)</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>Array of row arrays containing all data</td></tr>
+<tr><td><code>aStruct</code></td><td>Array</td><td>Field structure array (compatible with DbStruct())</td></tr>
+<tr><td><code>nAt</code></td><td>Numeric</td><td>Current row position (1-based)</td></tr>
+<tr><td><code>nSrcType</code></td><td>Numeric</td><td>Source type: <code>SRC_ARR</code> (0), <code>SRC_DBF</code> (1), <code>SRC_MYQ</code> (2)</td></tr>
+<tr><td><code>nOrder</code></td><td>Numeric</td><td>Current sort column position</td></tr>
+<tr><td><code>lDesc</code></td><td>Logical</td><td>Descending sort order flag</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Read-only mode</td></tr>
+<tr><td><code>cFilter</code></td><td>Character</td><td>Active filter expression</td></tr>
+<tr><td><code>bFilter</code></td><td>Block</td><td>Filter code block</td></tr>
+<tr><td><code>lFound</code></td><td>Logical</td><td>Result of last Seek operation</td></tr>
+<tr><td><code>bEdit</code></td><td>Block</td><td>Code block for record editing</td></tr>
+<tr><td><code>bKeyCount</code></td><td>Block</td><td>Code block returning record count</td></tr>
+<tr><td><code>cAlias</code></td><td>Character</td><td>Alias name (default <code>"ARRAY"</code>)</td></tr>
 </tbody>
 </table>
 
-<h2 id="constructors">Constructores</h2>
+<h2 id="constructors">Constructors</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( aData, aStruct )</code></td><td>Crear desde array y definici&oacute;n de estructura</td></tr>
-<tr><td><code>fromDBF( cAlias, bFor, bWhile, nNext, nRec, lRest )</code></td><td>Cargar datos desde DBF con filtro opcional</td></tr>
-<tr><td><code>fromMYSQL( oCn, cTable, cWhere )</code></td><td>Cargar datos desde tabla MariaDB/MySQL</td></tr>
-<tr><td><code>fromQuery( oCn, cSql, aParams )</code></td><td>Cargar desde resultado de consulta SQL</td></tr>
-<tr><td><code>fromFIELD( cAlias, aStruct, cField )</code></td><td>Cargar desde un campo memo que contiene datos de array</td></tr>
+<tr><td><code>New( aData, aStruct )</code></td><td>Create from array and structure definition</td></tr>
+<tr><td><code>fromDBF( cAlias, bFor, bWhile, nNext, nRec, lRest )</code></td><td>Load data from DBF with optional filter</td></tr>
+<tr><td><code>fromMYSQL( oCn, cTable, cWhere )</code></td><td>Load data from MariaDB/MySQL table</td></tr>
+<tr><td><code>fromQuery( oCn, cSql, aParams )</code></td><td>Load from SQL query result</td></tr>
+<tr><td><code>fromFIELD( cAlias, aStruct, cField )</code></td><td>Load from a memo field containing array data</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>FieldGet( n )</code></td><td>Obtener valor de campo por posici&oacute;n desde la fila actual</td></tr>
-<tr><td><code>FieldPut( nFld, uValue )</code></td><td>Establecer valor de campo en la fila actual</td></tr>
-<tr><td><code>FieldPos( cFld )</code></td><td>Obtener posici&oacute;n de campo por nombre</td></tr>
-<tr><td><code>FieldName( n )</code></td><td>Obtener nombre de campo por posici&oacute;n</td></tr>
-<tr><td><code>FieldType( n )</code></td><td>Obtener tipo de campo por posici&oacute;n</td></tr>
-<tr><td><code>FieldLen( n )</code></td><td>Obtener longitud de campo por posici&oacute;n</td></tr>
-<tr><td><code>FieldDec( n )</code></td><td>Obtener decimales de campo por posici&oacute;n</td></tr>
-<tr><td><code>FieldPic( n, c )</code></td><td>Obtener/establecer formato de picture de campo</td></tr>
-<tr><td><code>FCount()</code></td><td>N&uacute;mero de campos</td></tr>
-<tr><td><code>GoTop() / GoBottom() / Skip( n )</code></td><td>Navegar dentro de los datos</td></tr>
-<tr><td><code>RecNo() / GoTo( nRecNo )</code></td><td>Posicionar por n&uacute;mero de registro</td></tr>
-<tr><td><code>KeyNo() / KeyGoTo( nKeyNo )</code></td><td>Posici&oacute;n absoluta (base 1)</td></tr>
-<tr><td><code>RecCount() / LastRec()</code></td><td>N&uacute;mero total de registros</td></tr>
-<tr><td><code>Bof() / Eof()</code></td><td>Verificaciones de l&iacute;mite</td></tr>
-<tr><td><code>Seek( uVal, lSoft, lWild )</code></td><td>Buscar valor en la columna de ordenaci&oacute;n actual</td></tr>
-<tr><td><code>SetOrder( cCol, u, lDescend )</code></td><td>Establecer columna y direcci&oacute;n de ordenaci&oacute;n</td></tr>
-<tr><td><code>SetFilter( cFilter )</code></td><td>Establecer expresi&oacute;n de filtro</td></tr>
-<tr><td><code>Append( aRow, nAt )</code></td><td>Agregar una nueva fila</td></tr>
-<tr><td><code>Delete()</code></td><td>Eliminar registro actual</td></tr>
-<tr><td><code>SetXBrowse( oBrw, aCols, lAutoSort, lAutoCols )</code></td><td>Vincular a XBrowse con definici&oacute;n autom&aacute;tica de columnas</td></tr>
-<tr><td><code>Record( cFieldList, lNew )</code></td><td>Obtener un TDataRow para edici&oacute;n</td></tr>
-<tr><td><code>Edit()</code></td><td>Editar registro actual mediante TDataRow</td></tr>
-<tr><td><code>SaveData()</code></td><td>Guardar datos de vuelta al origen (DBF o MySQL)</td></tr>
+<tr><td><code>FieldGet( n )</code></td><td>Get field value by position from current row</td></tr>
+<tr><td><code>FieldPut( nFld, uValue )</code></td><td>Set field value in current row</td></tr>
+<tr><td><code>FieldPos( cFld )</code></td><td>Get field position by name</td></tr>
+<tr><td><code>FieldName( n )</code></td><td>Get field name by position</td></tr>
+<tr><td><code>FieldType( n )</code></td><td>Get field type by position</td></tr>
+<tr><td><code>FieldLen( n )</code></td><td>Get field length by position</td></tr>
+<tr><td><code>FieldDec( n )</code></td><td>Get field decimals by position</td></tr>
+<tr><td><code>FieldPic( n, c )</code></td><td>Get/set field picture format</td></tr>
+<tr><td><code>FCount()</code></td><td>Number of fields</td></tr>
+<tr><td><code>GoTop() / GoBottom() / Skip( n )</code></td><td>Navigate within data</td></tr>
+<tr><td><code>RecNo() / GoTo( nRecNo )</code></td><td>Position by record number</td></tr>
+<tr><td><code>KeyNo() / KeyGoTo( nKeyNo )</code></td><td>Absolute position (1-based)</td></tr>
+<tr><td><code>RecCount() / LastRec()</code></td><td>Total number of records</td></tr>
+<tr><td><code>Bof() / Eof()</code></td><td>Boundary checks</td></tr>
+<tr><td><code>Seek( uVal, lSoft, lWild )</code></td><td>Search for value in current sort column</td></tr>
+<tr><td><code>SetOrder( cCol, u, lDescend )</code></td><td>Set sort column and direction</td></tr>
+<tr><td><code>SetFilter( cFilter )</code></td><td>Set filter expression</td></tr>
+<tr><td><code>Append( aRow, nAt )</code></td><td>Append a new row</td></tr>
+<tr><td><code>Delete()</code></td><td>Delete current record</td></tr>
+<tr><td><code>SetXBrowse( oBrw, aCols, lAutoSort, lAutoCols )</code></td><td>Bind to XBrowse with automatic column definition</td></tr>
+<tr><td><code>Record( cFieldList, lNew )</code></td><td>Get a TDataRow for editing</td></tr>
+<tr><td><code>Edit()</code></td><td>Edit current record via TDataRow</td></tr>
+<tr><td><code>SaveData()</code></td><td>Save data back to source (DBF or MySQL)</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Array a XBrowse con Ordenaci&oacute;n</h2>
+<h2 id="example">Example: Array to XBrowse with Sort</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -120,17 +120,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TArrayData es la fuente de datos predeterminada utilizada por XBrowse cuando se llama a <code>oBrw:SetArrayData()</code>. Es creado internamente por XBrowse desde cualquier array de datos.</li>
-<li>Cuando se carga desde DBF, los datos son una instant&aacute;nea. Los cambios no se escriben de vuelta a menos que se llame a <code>SaveData()</code>, que actualiza los registros DBF originales.</li>
-<li>Los constructores <code>fromMYSQL()</code> y <code>fromQuery()</code> requieren un objeto <code>FWMariaConnection</code> y mantienen un enlace activo para escribir los cambios de vuelta.</li>
-<li>La ordenaci&oacute;n crea un &iacute;ndice ordenado internamente; el orden original de <code>aData</code> se conserva en <code>aNatural</code>.</li>
+<li>TArrayData is the default data source used by XBrowse when <code>oBrw:SetArrayData()</code> is called. It is created internally by XBrowse from any data array.</li>
+<li>When loaded from DBF, the data is a snapshot. Changes are not written back unless <code>SaveData()</code> is called, which updates the original DBF records.</li>
+<li>The <code>fromMYSQL()</code> and <code>fromQuery()</code> constructors require a <code>FWMariaConnection</code> object and maintain a live link for writing back changes.</li>
+<li>Sorting creates a sorted index internally; the original <code>aData</code> order is preserved in <code>aNatural</code>.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tanimate.html">&larr; tanimate</a> | <a href="../../es/ui/tautoget.html">tautoget &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

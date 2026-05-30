@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMetro - FWH Docs</title>
+<title>TMetro - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,51 +13,51 @@
 
 <h1>TMetro</h1>
 <p class="class-source">Fuente: <code>source/classes/tmetro.prg</code></p>
-<p class="class-hierarchy">Clase independiente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TMetro crea una pantalla de inicio de UI moderna (estilo Metro) a pantalla completa con botones en mosaico,
-inspirada en el lenguaje de diseño Metro de Windows 8. Muestra una imagen de fondo, un título,
-la fecha y hora actuales, y una cuadrícula de botones en mosaico que pueden ser normales o grandes
-(de doble ancho). Cada mosaico tiene colores de texto y de fondo configurables y una imagen de icono opcional.
+TMetro creates a full-screen Modern UI (Metro-style) start screen with tiled buttons,
+inspired by the Windows 8 Metro design language. It displays a background image, a title,
+current date and time, and a grid of tiled buttons that can be either normal or large
+(double-width). Each tile has configurable text and background colors and an optional icon image.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oWnd</code></td><td>Objeto</td><td>La ventana emergente subyacente (estilo WS_POPUP)</td></tr>
-<tr><td><code>cTitle</code></td><td>Carácter</td><td>Título mostrado en la parte superior de la pantalla de inicio</td></tr>
-<tr><td><code>aButtons</code></td><td>Array</td><td>Array de objetos TButtonBmp creados por <code>AddButton()</code></td></tr>
-<tr><td><code>nBtnWidth</code></td><td>Numérico</td><td>Ancho del mosaico en píxeles (132 por defecto)</td></tr>
-<tr><td><code>nBtnHeight</code></td><td>Numérico</td><td>Alto del mosaico en píxeles (132 por defecto)</td></tr>
-<tr><td><code>nOriginX</code></td><td>Numérico</td><td>Posición X inicial de la cuadrícula de mosaicos (200 por defecto)</td></tr>
-<tr><td><code>nOriginY</code></td><td>Numérico</td><td>Posición Y inicial de la cuadrícula de mosaicos (200 por defecto)</td></tr>
-<tr><td><code>hBitmap</code></td><td>Numérico</td><td>Handle del bitmap de fondo</td></tr>
-<tr><td><code>oFont</code></td><td>Objeto</td><td>Fuente Segoe UI Light para los elementos de visualización</td></tr>
-<tr><td><code>oFontB</code></td><td>Objeto</td><td>Fuente Segoe UI Light en negrita para mostrar la hora</td></tr>
-<tr><td><code>oTimer</code></td><td>Objeto</td><td>Temporizador para actualizar la visualización del reloj</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>The underlying popup window (WS_POPUP style)</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Title displayed at the top of the start screen</td></tr>
+<tr><td><code>aButtons</code></td><td>Array</td><td>Array of TButtonBmp objects created by <code>AddButton()</code></td></tr>
+<tr><td><code>nBtnWidth</code></td><td>Numeric</td><td>Tile width in pixels (default 132)</td></tr>
+<tr><td><code>nBtnHeight</code></td><td>Numeric</td><td>Tile height in pixels (default 132)</td></tr>
+<tr><td><code>nOriginX</code></td><td>Numeric</td><td>Starting X position for tile grid (default 200)</td></tr>
+<tr><td><code>nOriginY</code></td><td>Numeric</td><td>Starting Y position for tile grid (default 200)</td></tr>
+<tr><td><code>hBitmap</code></td><td>Numeric</td><td>Handle to the background bitmap</td></tr>
+<tr><td><code>oFont</code></td><td>Object</td><td>Segoe UI Light font for display elements</td></tr>
+<tr><td><code>oFontB</code></td><td>Object</td><td>Segoe UI Light bold font for time display</td></tr>
+<tr><td><code>oTimer</code></td><td>Object</td><td>Timer for updating the clock display</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cTitle, nBtnW, nBtnH, cBgFile )</code></td><td>Crea una nueva pantalla de inicio TMetro. <code>cBgFile</code> es un archivo o recurso de bitmap de fondo.</td></tr>
-<tr><td><code>Activate()</code></td><td>Muestra la pantalla de inicio maximizada con fondo, título, fecha y hora</td></tr>
-<tr><td><code>AddButton( cCaption, nClrText, nClrPane, lLarge, cImg, bAction )</code></td><td>Añade un botón de mosaico con texto, colores, imagen opcional y acción</td></tr>
-<tr><td><code>End()</code></td><td>Cierra la pantalla de inicio y libera los recursos</td></tr>
+<tr><td><code>New( cTitle, nBtnW, nBtnH, cBgFile )</code></td><td>Create a new TMetro start screen. <code>cBgFile</code> is a background bitmap file or resource.</td></tr>
+<tr><td><code>Activate()</code></td><td>Show the start screen maximized with background, title, date, and time</td></tr>
+<tr><td><code>AddButton( cCaption, nClrText, nClrPane, lLarge, cImg, bAction )</code></td><td>Add a tile button with caption, colors, optional image, and action</td></tr>
+<tr><td><code>End()</code></td><td>Close the start screen and release resources</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Pantalla Metro con Mosaicos</h2>
+<h2 id="example">Example: Metro Screen with Tiles</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -80,19 +80,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TMetro crea una ventana emergente sin bordes que ocupa toda la pantalla. El estilo de ventana usa <code>WS_POPUP</code> sin título ni borde.</li>
-<li>La imagen de fondo puede cargarse desde un archivo o desde un recurso. Si no se encuentra el archivo, recurre a la carga desde recurso.</li>
-<li>Los mosaicos grandes (<code>lLarge := .T.</code>) ocupan dos posiciones de mosaico en ancho, proporcionando énfasis visual para las acciones principales.</li>
-<li>Las posiciones de los mosaicos se calculan automáticamente en una disposición de cuadrícula. Cuando una fila excede el ancho de la pantalla, los mosaicos saltan a la siguiente fila.</li>
-<li>El reloj se actualiza mediante un temporizador interno y se muestra en el área superior derecha usando la fuente Segoe UI Light.</li>
-<li>TMetro usa la fuente <code>Segoe UI Light</code>, que está disponible en Windows 8 y posteriores. En sistemas más antiguos, recurre a una fuente por defecto.</li>
+<li>TMetro creates a borderless popup window that fills the entire screen. The window style uses <code>WS_POPUP</code> with no caption or border.</li>
+<li>The background image can be loaded from a file or from a resource. If the file is not found, it falls back to resource loading.</li>
+<li>Large tiles (<code>lLarge := .T.</code>) span two tile positions in width, providing visual emphasis for primary actions.</li>
+<li>Tile positions are calculated automatically in a grid layout. When a row exceeds the screen width, tiles wrap to the next row.</li>
+<li>The clock is updated via an internal timer and displayed in the top-right area using the Segoe UI Light font.</li>
+<li>TMetro uses <code>Segoe UI Light</code> font which is available on Windows 8 and later. On older systems, it falls back to a default font.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tmeterex.html">&larr; tmeterex</a> | <a href="../../es/ui/tmetropanel.html">tmetropanel &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

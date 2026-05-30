@@ -13,17 +13,17 @@
 
 <h1>TTagCloud</h1>
 <p class="class-source">Fuente: <code>source/classes/tagcloud.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TTagCloud muestra una nube de etiquetas ponderada donde cada etiqueta se renderiza en uno de siete tamaños de fuente según su peso (frecuencia). Las etiquetas se auto-organizan en un diseño fluido, se resaltan al pasar el ratón con un color de texto y fondo personalizable, y responden a eventos de clic. El control es ideal para navegación por palabras clave, exploración de categorías o cualquier escenario que requiera una lista visualmente ponderada.
+TTagCloud displays a weighted tag cloud where each tag is rendered in one of seven font sizes based on its weight (frequency). Tags auto-arrange in a flowing layout, highlight on mouse hover with a customizable text and background color, and respond to click events. The control is ideal for keyword navigation, category browsing, or any scenario requiring a visually weighted list.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>aItems</code></td><td>Array</td><td>Array of items, each <code>{ cText, nPeso, nFontIndex, nOriginalPos }</code></td></tr>
@@ -39,11 +39,11 @@ TTagCloud muestra una nube de etiquetas ponderada donde cada etiqueta se renderi
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New( nTop, nLeft, nW, nH, oWnd, oFont )</code></td><td>Create a new TTagCloud control</td></tr>
@@ -53,7 +53,7 @@ TTagCloud muestra una nube de etiquetas ponderada donde cada etiqueta se renderi
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Tag Cloud with Three Tags</h2>
+<h2 id="example">Example: Tag Cloud with Three Tags</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -74,17 +74,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Las etiquetas se ordenan internamente por peso. El peso m
-<li>Llame a <code>AsignFonts()</code> despu
-<li>El seguimiento de desplazamiento se maneja mediante <code>MouseMove</code>, que establece <code>nOver</code> y dispara <code>Refresh()</code> para redibujar la etiqueta resaltada.</li>
-<li>Al hacer clic en una etiqueta (<code>LButtonUp</code> predeterminado) se muestra el texto de la etiqueta. Sobrescriba <code>bLClicked</code> o subclase <code>LButtonUp</code> para acciones de clic personalizadas.</li>
+<li>Tags are sorted internally by weight. The highest weight gets the largest font (level 1) and lower weights descend through levels 2-7.</li>
+<li>Call <code>AsignFonts()</code> after adding all items to assign matching font sizes. Fonts are created once by <code>GetFonts()</code> during <code>New()</code>.</li>
+<li>Hover tracking is handled by <code>MouseMove</code>, which sets <code>nOver</code> and triggers <code>Refresh()</code> to repaint the highlighted tag.</li>
+<li>Clicking a tag (default <code>LButtonUp</code>) outputs the tag text. Override <code>bLClicked</code> or subclass <code>LButtonUp</code> for custom click actions.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/ttabs.html">&larr; ttabs</a> | <a href="../../es/reference/ttagent.html">ttagent &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TLocks - FWH Docs</title>
+<title>TLocks - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,45 +13,45 @@
 
 <h1>TLocks</h1>
 <p class="class-source">Fuente: <code>source/classes/tlocks.prg</code></p>
-<p class="class-hierarchy">Clase independiente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TLocks proporciona un mecanismo de bloqueo de registros para tablas ODBC. Gestiona una tabla de bloqueos
-dentro de la base de datos que rastrea qué registros están bloqueados y por qué conexión.
-Esto habilita un control de concurrencia pesimista básico para orígenes de datos ODBC que no
-proporcionan bloqueo nativo a nivel de registro.
+TLocks provides a record-locking mechanism for ODBC tables. It manages a lock table
+within the database that tracks which records are locked and by which connection.
+This enables basic pessimistic concurrency control for ODBC data sources that do not
+provide native record-level locking.
 </p>
 
-<h2 id="data">Miembros DATA Clave</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oOdbc</code></td><td>Objeto</td><td>Objeto de conexión TODBC para acceso a la base de datos</td></tr>
-<tr><td><code>cTable</code></td><td>Carácter</td><td>Nombre de la tabla que se está bloqueando</td></tr>
-<tr><td><code>nId</code></td><td>Numérico</td><td>Identificador de conexión o sesión</td></tr>
+<tr><td><code>oOdbc</code></td><td>Object</td><td>TODBC connection object for database access</td></tr>
+<tr><td><code>cTable</code></td><td>Character</td><td>Name of the table being locked</td></tr>
+<tr><td><code>nId</code></td><td>Numeric</td><td>Connection or session identifier</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oOdbc, cTable )</code></td><td>Crea un nuevo gestor de bloqueos para la conexión ODBC y tabla especificadas</td></tr>
-<tr><td><code>CreateEnviroment()</code></td><td>Crea el entorno de seguimiento de bloqueos (tabla de bloqueos) si no existe</td></tr>
-<tr><td><code>Lock( nRecNo )</code></td><td>Bloquea un pseudo-registro por número de registro</td></tr>
-<tr><td><code>UnLock( nRecNo )</code></td><td>Libera el bloqueo de un pseudo-registro</td></tr>
-<tr><td><code>RefreshLock( nRecNo )</code></td><td>Refresca la marca de tiempo del bloqueo para evitar la expiración por tiempo de espera</td></tr>
-<tr><td><code>SeekRegLock( nRecNo )</code></td><td>Comprueba si un pseudo-registro está actualmente bloqueado</td></tr>
+<tr><td><code>New( oOdbc, cTable )</code></td><td>Create a new lock manager for the specified ODBC connection and table</td></tr>
+<tr><td><code>CreateEnviroment()</code></td><td>Create the lock tracking environment (lock table) if it does not exist</td></tr>
+<tr><td><code>Lock( nRecNo )</code></td><td>Lock a pseudo-record by record number</td></tr>
+<tr><td><code>UnLock( nRecNo )</code></td><td>Release a lock on a pseudo-record</td></tr>
+<tr><td><code>RefreshLock( nRecNo )</code></td><td>Refresh the lock timestamp to prevent timeout expiration</td></tr>
+<tr><td><code>SeekRegLock( nRecNo )</code></td><td>Check if a pseudo-record is currently locked</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Bloquear/Desbloquear un Pseudo-Registro</h2>
+<h2 id="example">Example: Lock/Unlock a Pseudo-Record</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -64,16 +64,16 @@ function Main()
    if oOdbc:lSuccess
       oLocks := TLocks():New( oOdbc, "CUSTOMERS" )
 
-      // Asegura que el entorno de bloqueo existe
+      // Ensure the lock environment exists
       oLocks:CreateEnviroment()
 
-      // Bloquea el registro número 101
+      // Lock record number 101
       if oLocks:Lock( 101 )
          MsgInfo( "Record 101 locked" )
 
-         // Trabaja con el registro...
+         // Do work with the record...
 
-         // Libera el bloqueo
+         // Release the lock
          oLocks:UnLock( 101 )
          MsgInfo( "Record 101 unlocked" )
       else
@@ -83,18 +83,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TLocks utiliza una tabla de bloqueos separada en la base de datos ODBC para rastrear los bloqueos a nivel de registro. Esta tabla se crea automáticamente mediante <code>CreateEnviroment()</code> y almacena información clave como el número de registro, el ID de sesión y la marca de tiempo del bloqueo.</li>
-<li>El bloqueo pesimista significa que un bloqueo se adquiere antes de editar y se mantiene hasta que se libera explícitamente. Otras sesiones que intenten bloquear el mismo registro fallarán hasta que se libere el bloqueo.</li>
-<li>Use <code>RefreshLock()</code> periódicamente durante sesiones de edición largas para evitar que el bloqueo expire por tiempo de espera.</li>
-<li><code>SeekRegLock()</code> permite comprobar si un registro específico está actualmente bloqueado sin intentar adquirir el bloqueo.</li>
-<li>Libere siempre los bloqueos con <code>UnLock()</code> tan pronto como se complete la edición para evitar bloquear a otros usuarios.</li>
+<li>TLocks uses a separate lock table in the ODBC database to track record-level locks. This table is created automatically by <code>CreateEnviroment()</code> and stores key information including record number, session ID, and lock timestamp.</li>
+<li>Pessimistic locking means a lock is acquired before editing and held until explicitly released. Other sessions attempting to lock the same record will fail until the lock is released.</li>
+<li>Use <code>RefreshLock()</code> periodically during long editing sessions to prevent the lock from timing out.</li>
+<li><code>SeekRegLock()</code> allows checking whether a specific record is currently locked without attempting to acquire the lock.</li>
+<li>Always release locks with <code>UnLock()</code> as soon as the edit is complete to avoid blocking other users.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tlistview_items.html">&larr; tlistview_items</a> | <a href="../../es/internet/tmail.html">tmail &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

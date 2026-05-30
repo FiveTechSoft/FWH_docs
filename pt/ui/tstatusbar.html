@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TStatusBar - FWH Docs</title>
+<title>TStatusBar - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,45 +13,45 @@
 
 <h1>TStatusBar</h1>
 <p class="class-source">Fonte: <code>source/classes/statusba.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TStatusBar encapsula o controle comum de barra de status do Windows para exibir
-uma barra de status com múltiplos painéis na parte inferior de uma janela. Suporta
-um número arbitrário de painéis com larguras e textos individuais, um relógio
-integrado e exibição automática de mensagens com tempo de expiração configurável.
+TStatusBar wraps the Windows status bar common control to display a multi-pane
+status bar at the bottom of a window. It supports an arbitrary number of panes
+with individual widths and text, an integrated clock, and automatic message
+display with a configurable timeout.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cMsgDef</code></td><td>Caractere</td><td>Texto padrão da mensagem da barra de status</td></tr>
-<tr><td><code>oTimer</code></td><td>Objeto</td><td>Temporizador interno para expiração de mensagens e atualizações do relógio</td></tr>
-<tr><td><code>nPartTime</code></td><td>Numérico</td><td>Índice do painel reservado para a exibição do relógio</td></tr>
+<tr><td><code>cMsgDef</code></td><td>Character</td><td>Default status bar message text</td></tr>
+<tr><td><code>oTimer</code></td><td>Object</td><td>Internal timer for message timeout and clock updates</td></tr>
+<tr><td><code>nPartTime</code></td><td>Numeric</td><td>Pane index reserved for the clock display</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cText, aWidths, aPrompts, lClock )</code></td><td>Cria um novo controle TStatusBar</td></tr>
-<tr><td><code>SetMsg( cText )</code></td><td>Define o texto da barra de status (normalmente a partir de <code>oWnd:SetMsg()</code>)</td></tr>
-<tr><td><code>SetParts( aWidths )</code></td><td>Define as larguras dos painéis como um array de valores numéricos</td></tr>
-<tr><td><code>SetPartText( nPart, cText )</code></td><td>Define o texto de um painel específico por índice</td></tr>
-<tr><td><code>GetParts()</code></td><td>Retorna as definições atuais de largura dos painéis</td></tr>
-<tr><td><code>ClockOn()</code></td><td>Ativa a exibição do relógio no último painel</td></tr>
+<tr><td><code>New( oWnd, cText, aWidths, aPrompts, lClock )</code></td><td>Create a new TStatusBar control</td></tr>
+<tr><td><code>SetMsg( cText )</code></td><td>Set the status bar text (typically from <code>oWnd:SetMsg()</code>)</td></tr>
+<tr><td><code>SetParts( aWidths )</code></td><td>Define pane widths as an array of numeric values</td></tr>
+<tr><td><code>SetPartText( nPart, cText )</code></td><td>Set the text of a specific pane by index</td></tr>
+<tr><td><code>GetParts()</code></td><td>Return the current pane width definitions</td></tr>
+<tr><td><code>ClockOn()</code></td><td>Enable the clock display in the last pane</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Barra de Status de 3 Painéis com Relógio</h2>
+<h2 id="example">Example: 3-Pane Status Bar with Clock</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -65,7 +65,7 @@ function Main()
       CLOCK ;
       PARTS 150, 300
 
-   // Define o texto em painéis individuais
+   // Set text in individual panes
    oWnd:oStatusBar:SetPartText( 2, "User: Admin" )
    oWnd:oStatusBar:SetPartText( 3, "Records: 42" )
 
@@ -73,18 +73,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>A barra de status é criada automaticamente na parte inferior da janela. O comando <code>DEFINE STATUSBAR</code> fornece a sintaxe mais conveniente; <code>TStatusBar():New()</code> pode ser usado para criação programática.</li>
-<li>As larguras dos painéis em <code>SetParts()</code> são especificadas como valores em pixels. O último painel sempre se estende para preencher o espaço restante, independentemente da largura especificada.</li>
-<li>A cláusula <code>CLOCK</code> (ou <code>ClockOn()</code>) ativa um relógio em tempo real no painel mais à direita, atualizado a cada segundo por meio de um temporizador interno.</li>
-<li>As mensagens definidas via <code>SetMsg()</code> são exibidas no primeiro painel (mais à esquerda). A mensagem reverte automaticamente para <code>cMsgDef</code> após o período de expiração definido por <code>nPartTime</code>.</li>
-<li>TStatusBar usa o controle comum de barra de status do Windows (msctls_statusbar32), que fornece dimensionamento e posicionamento automáticos na parte inferior da janela pai.</li>
+<li>The status bar is automatically created at the bottom of the window. The <code>DEFINE STATUSBAR</code> command provides the most convenient syntax; <code>TStatusBar():New()</code> can be used for programmatic creation.</li>
+<li>Pane widths in <code>SetParts()</code> are specified as pixel values. The last pane always stretches to fill the remaining space regardless of its specified width.</li>
+<li>The <code>CLOCK</code> clause (or <code>ClockOn()</code>) enables a real-time clock in the rightmost pane, updated every second via an internal timer.</li>
+<li>Messages set via <code>SetMsg()</code> are displayed in the first (leftmost) pane. The message automatically reverts to <code>cMsgDef</code> after the timeout period defined by <code>nPartTime</code>.</li>
+<li>TStatusBar uses the Windows status bar common control (msctls_statusbar32), which provides automatic sizing and positioning at the bottom of the parent window.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/data/tsqlerror.html">&larr; tsqlerror</a> | <a href="../../pt/data/tstruct.html">tstruct &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

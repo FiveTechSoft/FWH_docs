@@ -1,70 +1,68 @@
-﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HFTokenizer - Tokenizador BPE de HuggingFace - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HFTokenizer - HuggingFace BPE Tokenizer - Documentación FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
 <body>
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>HFTokenizer - Tokenizador BPE de HuggingFace</h1>
+<h1>HFTokenizer - HuggingFace BPE Tokenizer</h1>
 <p class="class-source">Fuente: <code>source/classes/hftokenizer.prg</code></p>
 
 <p>
-<code>HFTokenizer</code> es una implementación en Harbour puro del tokenizador
-<strong>BPE a nivel de bytes (byte-level Byte-Pair-Encoding)</strong> de HuggingFace,
-el que usan GPT-2 y muchos modelos derivados. Carga un archivo
-<code>tokenizer.json</code> estándar (descargado del Hub de HuggingFace) y reproduce
-la tokenización de GPT-2 <strong>bit a bit</strong>: el mismo texto produce
-exactamente los mismos ids de tokens.
+<code>HFTokenizer</code> is a pure Harbour implementation of the HuggingFace
+<strong>byte-level Byte-Pair-Encoding (BPE)</strong> tokenizer used by GPT-2 and
+many derived models. It loads a standard <code>tokenizer.json</code> file
+(downloaded from the HuggingFace Hub) and reproduces GPT-2 tokenization
+<strong>bit-for-bit</strong>: the same text yields the exact same token ids.
 </p>
 
 <p>
-Esto conecta la clase <a href="../../es/ai/ttransformer.html">Transformer</a> de FiveWin con
-vocabularios reales, de modo que un modelo se pueda entrenar o ejecutar sobre texto
-real en vez de ids de tokens de juguete.
+This bridges the FiveWin <a href="../../es/ai/ttransformer.html">Transformer</a> class with
+real-world vocabularies, so a model can be trained or run on real text instead of
+toy token ids.
 </p>
 
-<h2 id="pipeline">Tubería de Tokenización</h2>
+<h2 id="pipeline">Tokenization Pipeline</h2>
 
 <div class="mermaid">
 flowchart LR
-    subgraph Codificar
-      T[Texto crudo] --> PT[Pre-tokenizar<br/>regex GPT-2]
+    subgraph Encode
+      T[Raw text] --> PT[Pre-tokenize<br/>GPT-2 regex]
       PT --> BU[Bytes &rarr; Unicode<br/>byte_to_unicode]
-      BU --> BPE[Fusiones BPE<br/>por rango]
-      BPE --> ID[Ids de tokens]
+      BU --> BPE[BPE merges<br/>by rank]
+      BPE --> ID[Token ids]
     end
-    subgraph Decodificar
-      ID2[Ids de tokens] --> TK[ids &rarr; tokens]
+    subgraph Decode
+      ID2[Token ids] --> TK[ids &rarr; tokens]
       TK --> UB[Unicode &rarr; bytes]
-      UB --> TXT[Texto original]
+      UB --> TXT[Original text]
     end
 </div>
 
-<h2 id="getting">Obtener un tokenizer.json</h2>
+<h2 id="getting">Getting a tokenizer.json</h2>
 
-<p>Descarga un tokenizador del Hub de HuggingFace. Para GPT-2:</p>
+<p>Download a tokenizer from the HuggingFace Hub. For GPT-2:</p>
 
 <pre><code class="language-text">https://huggingface.co/gpt2/resolve/main/tokenizer.json</code></pre>
 
 <p>
-El archivo contiene un objeto <code>model</code> con un mapa <code>vocab</code>
-(token&nbsp;&rarr;&nbsp;id) y una lista <code>merges</code> (reglas de fusión BPE
-ordenadas). El archivo de GPT-2 pesa unos 1,35&nbsp;MB con 50&nbsp;257 tokens y
-50&nbsp;000 fusiones.
+The file contains a <code>model</code> object with a <code>vocab</code> map
+(token&nbsp;&rarr;&nbsp;id) and a <code>merges</code> list (ordered BPE merge rules).
+GPT-2's file is about 1.35&nbsp;MB with 50,257 tokens and 50,000 merges.
 </p>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
-<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cFile )</code></td><td>Construye los mapas byte&nbsp;&rarr;&nbsp;unicode y, si se indica <code>cFile</code>, carga ese <code>tokenizer.json</code>.</td></tr>
-<tr><td><code>Load( cFile )</code></td><td>Analiza un <code>tokenizer.json</code>: lee <code>model.vocab</code> y <code>model.merges</code> (acepta formato de cadena o de par). Devuelve <code>NIL</code> si el archivo es inválido.</td></tr>
-<tr><td><code>Encode( cText )</code></td><td>Tokeniza el texto en un array de ids de tokens (base 0, ids crudos de HuggingFace).</td></tr>
-<tr><td><code>Decode( aIds )</code></td><td>Reconstruye el texto original a partir de un array de ids de tokens.</td></tr>
-<tr><td><code>Size()</code></td><td>Número de tokens del vocabulario cargado.</td></tr>
+<tr><td><code>New( cFile )</code></td><td>Build the byte&nbsp;&rarr;&nbsp;unicode maps and, if <code>cFile</code> is given, load that <code>tokenizer.json</code>.</td></tr>
+<tr><td><code>Load( cFile )</code></td><td>Parse a <code>tokenizer.json</code>: read <code>model.vocab</code> and <code>model.merges</code> (string or pair form both accepted). Returns <code>NIL</code> on a malformed file.</td></tr>
+<tr><td><code>Encode( cText )</code></td><td>Tokenize text into an array of (0-based, raw HuggingFace) token ids.</td></tr>
+<tr><td><code>Decode( aIds )</code></td><td>Reconstruct the original text from an array of token ids.</td></tr>
+<tr><td><code>Size()</code></td><td>Number of tokens in the loaded vocabulary.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo</h2>
+<h2 id="example">Example</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -83,100 +81,98 @@ FUNCTION Main()
 
 RETURN NIL</code></pre>
 
-<h2 id="howitworks">Cómo Funciona</h2>
+<h2 id="howitworks">How It Works</h2>
 
-<h3>1. Mapa byte &rarr; unicode</h3>
+<h3>1. Byte &rarr; Unicode map</h3>
 <p>
-El <code>byte_to_unicode</code> de GPT-2 asigna cada uno de los 256 valores de byte
-a un carácter Unicode imprimible, de modo que ningún byte sea no imprimible ni
-espacio dentro del paso BPE. El byte de espacio (0x20) se convierte célebremente
-en <code>U+0120</code> (mostrado como <code>&#x0120;</code>). La clase construye
-este mapa una sola vez en <code>New()</code>, junto con su inverso exacto para
-<code>Decode()</code>.
+GPT-2's <code>byte_to_unicode</code> maps every one of the 256 byte values to a
+printable Unicode character, so no byte is ever unprintable or whitespace inside
+the BPE step. The space byte (0x20) famously becomes <code>U+0120</code>
+(displayed as <code>&#x0120;</code>). The class builds this map once in
+<code>New()</code> and the exact inverse for <code>Decode()</code>.
 </p>
 
-<h3>2. Pre-tokenizador</h3>
+<h3>2. Pre-tokenizer</h3>
 <p>
-Antes del BPE, el texto se divide en piezas siguiendo la expresión regular de
-GPT-2, que mantiene unidas las contracciones (<code>'s 't 're 've 'm 'll 'd</code>)
-y adjunta un único espacio inicial al grupo de palabra, número o símbolo que le
-sigue (el conocido comportamiento <code>" ?\p{L}+"</code>). La implementación cubre
-letras ASCII, dígitos, símbolos y secuencias de espacios; cualquier byte no ASCII
-se maneja de forma transparente mediante el mapeo a nivel de bytes.
+Before BPE, text is split into pieces following the GPT-2 regular expression,
+which keeps contractions (<code>'s 't 're 've 'm 'll 'd</code>) together and
+attaches a single leading space to the following word, number or symbol group
+(the well-known <code>" ?\p{L}+"</code> behaviour). The implementation covers
+ASCII letters, digits, symbols and whitespace runs; any non-ASCII byte is handled
+transparently by the byte-level mapping.
 </p>
 
-<h3>3. Fusiones BPE</h3>
+<h3>3. BPE merges</h3>
 <p>
-Cada pre-token se convierte a sus caracteres Unicode mapeados y luego se fusiona de
-forma voraz: en cada paso se une el par de símbolos adyacente con el
-<em>menor rango de fusión</em> (su posición en <code>model.merges</code>), hasta que
-no queda ningún par conocido. Los tokens resultantes se buscan en
-<code>model.vocab</code> para producir los ids.
+Each pre-token is converted to its mapped Unicode characters and then merged
+greedily: at every step the adjacent symbol pair with the <em>lowest merge rank</em>
+(its position in <code>model.merges</code>) is joined, until no known pair
+remains. The resulting tokens are looked up in <code>model.vocab</code> to produce
+ids.
 </p>
 
-<h2 id="validation">Validación</h2>
+<h2 id="validation">Validation</h2>
 <p>
-El tokenizador se verifica contra el <code>tokenizer.json</code> real de GPT-2.
-Los ids de referencia conocidos coinciden exactamente:
+The tokenizer is verified against the real GPT-2 <code>tokenizer.json</code>.
+Known reference ids match exactly:
 </p>
 <table>
-<thead><tr><th>Texto</th><th>Ids de tokens</th></tr></thead>
+<thead><tr><th>Text</th><th>Token ids</th></tr></thead>
 <tbody>
 <tr><td><code>"hello world"</code></td><td><code>{ 31373, 995 }</code></td></tr>
 <tr><td><code>"Hello world"</code></td><td><code>{ 15496, 995 }</code></td></tr>
 </tbody>
 </table>
 <p>
-Un ciclo completo <code>Decode( Encode( texto ) ) == texto</code> se cumple para
-frases con puntuación, contracciones, dígitos, múltiples espacios y saltos de
-línea. El banco de pruebas sin interfaz es <code>samples/ai/hftoktest.prg</code>.
+A full <code>Decode( Encode( text ) ) == text</code> round-trip holds for sentences
+with punctuation, contractions, digits, multiple spaces and newlines. The headless
+test harness is <code>samples/ai/hftoktest.prg</code>.
 </p>
 
-<h2 id="bridge">Puente hacia el Transformer</h2>
+<h2 id="bridge">Bridging to the Transformer</h2>
 <p>
-HFTokenizer es el primer paso de un esfuerzo continuo para integrar el
-<a href="../../es/ai/ttransformer.html">Transformer</a> de FWH con el ecosistema
-de HuggingFace, de modo que las aplicaciones FiveWin puedan reutilizar recursos
-de IA del mundo real &mdash; tokenizadores hoy, datasets y (cuando la
-arquitectura lo permita) pesos preentrenados después.
+HFTokenizer is the first step of an ongoing effort to integrate the FWH
+<a href="../../es/ai/ttransformer.html">Transformer</a> with the HuggingFace
+ecosystem, so FiveWin apps can reuse real-world AI resources &mdash; tokenizers
+today, datasets and (where the architecture allows) pretrained weights next.
 </p>
 <p>
-El vocabulario de GPT-2 tiene 50&nbsp;257 tokens &mdash; mucho más de lo que
-necesita un modelo pequeño entrenado desde cero. Por eso el puente construye un
-vocabulario <em>compacto</em> que contiene sólo los tokens que aparecen en tu
-corpus, mapeando los ids de HuggingFace a ids locales densos de base 1:
+The GPT-2 vocabulary has 50,257 tokens &mdash; far more than a small
+from-scratch model needs. The bridge therefore builds a <em>compact</em>
+vocabulary containing only the tokens that appear in your corpus, mapping
+HuggingFace ids to dense 1-based local ids:
 </p>
 <ol>
-<li>Tokeniza el corpus con <code>HFTokenizer:Encode</code>.</li>
-<li>Recoge los ids de tokens únicos en un vocabulario compacto de base 1 más sus cadenas de tokens.</li>
-<li>Crea el <code>Transformer</code> con ese vocabulario y entrénalo (<code>ForwardSeq</code> / <code>BackwardSeq</code>).</li>
-<li>Genera ids locales, mapéalos de vuelta a ids de HuggingFace y haz <code>Decode</code> a texto.</li>
+<li>Tokenize the corpus with <code>HFTokenizer:Encode</code>.</li>
+<li>Collect the unique token ids into a compact 1-based vocabulary plus token strings.</li>
+<li>Create the <code>Transformer</code> with that vocabulary and train it (<code>ForwardSeq</code> / <code>BackwardSeq</code>).</li>
+<li>Generate local ids, map them back to HuggingFace ids, and <code>Decode</code> to text.</li>
 </ol>
-<p>Ejemplo de extremo a extremo: <code>samples/ai/hflmtest.prg</code>.</p>
+<p>End-to-end sample: <code>samples/ai/hflmtest.prg</code>.</p>
 
-<h2 id="roadmap">Hoja de Ruta de Integración</h2>
+<h2 id="roadmap">Integration Roadmap</h2>
 <table>
-<thead><tr><th>Paso</th><th>Estado</th></tr></thead>
+<thead><tr><th>Step</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td>Tokenizador BPE a nivel de bytes de HuggingFace (GPT-2)</td><td>Hecho</td></tr>
-<tr><td>Puente Tokenizador &rarr; Transformer (vocabulario compacto)</td><td>Hecho</td></tr>
-<tr><td>Clase envoltorio de modelo de lenguaje en una línea</td><td>En progreso</td></tr>
-<tr><td>Entrenamiento con corpus reales (Shakespeare, TinyStories)</td><td>Planeado</td></tr>
-<tr><td>Mejor decodificación (muestreo top-p / nucleus, penalización por repetición)</td><td>Planeado</td></tr>
-<tr><td>Carga de pesos preentrenados cuando la arquitectura lo permita</td><td>Explorando</td></tr>
+<tr><td>HuggingFace byte-level BPE tokenizer (GPT-2)</td><td>Done</td></tr>
+<tr><td>Tokenizer &rarr; Transformer bridge (compact vocabulary)</td><td>Done</td></tr>
+<tr><td>One-line language-model wrapper class</td><td>In progress</td></tr>
+<tr><td>Training on real corpora (Shakespeare, TinyStories)</td><td>Planned</td></tr>
+<tr><td>Better decoding (top-p / nucleus sampling, repetition penalty)</td><td>Planned</td></tr>
+<tr><td>Loading pretrained weights where the architecture allows</td><td>Exploring</td></tr>
 </tbody>
 </table>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 <ul>
-<li>Encode devuelve ids crudos de HuggingFace (base 0). Al alimentar un vocabulario base 1 de la clase <code>Transformer</code> de FiveWin, suma 1 (o mapea a través de tu propio vocabulario).</li>
-<li>Se aceptan ambos formatos de fusión: cadenas heredadas <code>"tokA tokB"</code> y los pares más nuevos <code>[ "tokA", "tokB" ]</code>.</li>
-<li>El <code>tokenizer.json</code> es un recurso descargable y no se distribuye con FiveWin; descárgalo una vez del Hub.</li>
-<li>Los tokens especiales/añadidos (p.ej. <code>&lt;|endoftext|&gt;</code>) están en el vocabulario y se resuelven como cualquier otro token cuando aparecen literalmente en la entrada.</li>
+<li>Encode returns raw (0-based) HuggingFace ids. When feeding a 1-based FiveWin <code>Transformer</code> vocabulary, add 1 (or map through your own vocab).</li>
+<li>Both merge formats are accepted: legacy <code>"tokA tokB"</code> strings and the newer <code>[ "tokA", "tokB" ]</code> pairs.</li>
+<li>The <code>tokenizer.json</code> is a downloadable resource and is not shipped with FiveWin; download it once from the Hub.</li>
+<li>Special/added tokens (e.g. <code>&lt;|endoftext|&gt;</code>) are present in the vocab and resolve like any other token when they appear verbatim in the input.</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -13,51 +13,51 @@
 
 <h1>TDbg - FiveWin Debugger</h1>
 <p class="class-source">Fonte: <code>source/classes/fwdbg.prg</code></p>
-<p class="class-hierarchy">Classe independente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-O TDbg é um depurador completo de nível de código-fonte para aplicações FiveWin. Ele fornece uma janela gráfica de depuração (<code>oDlg</code>) contendo até nove painéis XBrowse para inspecionar o código-fonte, a pilha de chamadas, variáveis locais/privadas, arrays, objetos, breakpoints, áreas de trabalho, comandos SET e dados do profiler. O depurador é ativado compilando com <code>#pragma /b+</code> ou passando a flag de linha de comando <code>/b</code>.
+TDbg is a full-featured source-level debugger for FiveWin applications. It provides a graphical debug window (<code>oDlg</code>) containing up to nine XBrowse panels for inspecting source code, call stack, local/private variables, arrays, objects, breakpoints, work areas, SET commands, and profiler data. The debugger is activated by compiling with <code>#pragma /b+</code> or passing the <code>/b</code> command-line flag.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oDlg</code></td><td>TDialog</td><td>A janela de diálogo do depurador</td></tr>
-<tr><td><code>oBrw</code></td><td>TXBrowse</td><td>Array ou objeto para 9 painéis de browse (código-fonte, pilha, variáveis, arrays, objetos, breakpoints, áreas, SETs, profiler)</td></tr>
-<tr><td><code>aStack</code></td><td>Array</td><td>Entradas atuais da pilha de chamadas</td></tr>
-<tr><td><code>aModules</code></td><td>Array</td><td>Módulos de código-fonte carregados</td></tr>
-<tr><td><code>aBreak</code></td><td>Array</td><td>Definições de breakpoints</td></tr>
-<tr><td><code>aTrace</code></td><td>Array</td><td>Entradas do log de trace</td></tr>
+<tr><td><code>oDlg</code></td><td>TDialog</td><td>The debugger dialog window</td></tr>
+<tr><td><code>oBrw</code></td><td>TXBrowse</td><td>Array or object for 9 browse panels (source, stack, vars, arrays, objects, breakpoints, areas, SETs, profiler)</td></tr>
+<tr><td><code>aStack</code></td><td>Array</td><td>Current call stack entries</td></tr>
+<tr><td><code>aModules</code></td><td>Array</td><td>Loaded source modules</td></tr>
+<tr><td><code>aBreak</code></td><td>Array</td><td>Breakpoint definitions</td></tr>
+<tr><td><code>aTrace</code></td><td>Array</td><td>Trace log entries</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Cria a instância do depurador</td></tr>
-<tr><td><code>Activate()</code></td><td>Abre e exibe a janela de diálogo do depurador</td></tr>
-<tr><td><code>Exec()</code></td><td>Executa o loop principal do depurador</td></tr>
-<tr><td><code>DbgNext()</code></td><td>Avança para a próxima linha de código-fonte</td></tr>
-<tr><td><code>DbgGo()</code></td><td>Continua a execução até o próximo breakpoint</td></tr>
-<tr><td><code>DbgNextRoutine()</code></td><td>Passa por cima (executa chamadas de sub-rotina sem entrar nelas)</td></tr>
-<tr><td><code>DbgSetBreak( cMod, nLine )</code></td><td>Define um breakpoint em um módulo e linha específicos</td></tr>
-<tr><td><code>DbgSetTrace( lOn )</code></td><td>Ativa ou desativa o registro de trace</td></tr>
-<tr><td><code>DbgEditVar( cVarName )</code></td><td>Abre um editor para modificar o valor de uma variável</td></tr>
-<tr><td><code>DbgEditObj( oObj )</code></td><td>Abre um inspetor de objeto para um determinado objeto</td></tr>
+<tr><td><code>New()</code></td><td>Create the debugger instance</td></tr>
+<tr><td><code>Activate()</code></td><td>Open and display the debugger dialog window</td></tr>
+<tr><td><code>Exec()</code></td><td>Execute the debugger main loop</td></tr>
+<tr><td><code>DbgNext()</code></td><td>Step to the next source line</td></tr>
+<tr><td><code>DbgGo()</code></td><td>Continue execution until the next breakpoint</td></tr>
+<tr><td><code>DbgNextRoutine()</code></td><td>Step over (execute subroutine calls without stepping into them)</td></tr>
+<tr><td><code>DbgSetBreak( cMod, nLine )</code></td><td>Set a breakpoint at a specific module and line</td></tr>
+<tr><td><code>DbgSetTrace( lOn )</code></td><td>Enable or disable trace logging</td></tr>
+<tr><td><code>DbgEditVar( cVarName )</code></td><td>Open an editor to modify a variable's value</td></tr>
+<tr><td><code>DbgEditObj( oObj )</code></td><td>Open an object inspector for a given object</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Sessão de Depuração</h2>
+<h2 id="example">Example: Debug Session</h2>
 
-<pre><code class="language-harbour">// Adicione este pragma aos módulos que deseja depurar:
+<pre><code class="language-harbour">// Add this pragma to modules you want to debug:
 #pragma /b+
 
 #include "FiveWin.ch"
@@ -67,10 +67,10 @@ function Main()
    local cName := "FiveWin"
    local nCount := 0
 
-   // O depurador abre automaticamente quando o programa
-   // é compilado com /b+ e a FWDbg.lib é vinculada.
+   // The debugger opens automatically when the program
+   // is compiled with /b+ and FWDbg.lib is linked.
 
-   // Use F5 para continuar, F8 para avançar passo a passo, F9 para breakpoints
+   // Use F5 to continue, F8 to step, F9 for breakpoints
    for nCount := 1 to 5
       ? "Iteration:", nCount
       ProcessItem( cName )
@@ -84,17 +84,17 @@ function ProcessItem( cItem )
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Para habilitar a depuração, adicione <code>#pragma /b+</code> no topo de cada módulo de código-fonte que deseja depurar e vincule a <code>FWDbg.lib</code> (ou garanta que ela faça parte do seu conjunto de bibliotecas FWH).</li>
-<li>O depurador também pode ser acionado em tempo de execução passando a flag <code>/b</code> na linha de comando ao iniciar sua aplicação.</li>
-<li>Os nove painéis de browse exibem: código-fonte (com destaque da linha atual), pilha de chamadas, variáveis locais/privadas, arrays, objetos, breakpoints, áreas de trabalho de banco de dados, estados dos comandos SET e estatísticas do profiler.</li>
-<li>Escrito por Carles Aubia.</li>
+<li>To enable debugging, add <code>#pragma /b+</code> at the top of each source module you want to debug, and link <code>FWDbg.lib</code> (or ensure it is part of your FWH library set).</li>
+<li>The debugger can also be triggered at runtime by passing the <code>/b</code> flag on the command line when launching your application.</li>
+<li>The nine browser panels display: source code (with current-line highlight), call stack, local/private variables, arrays, objects, breakpoints, database work areas, SET command states, and profiler statistics.</li>
+<li>Written by Carles Aubia.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/data/tdbfcomp.html">&larr; tdbfcomp</a> | <a href="../../pt/data/tdbodbc.html">tdbodbc &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

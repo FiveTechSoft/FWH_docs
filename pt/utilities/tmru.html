@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMRU - Lista de Arquivos Usados Recentemente - Documentação FWH</title>
+<title>TMRU - Most Recently Used File List - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,49 +11,49 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>TMRU - Lista de Arquivos Usados Recentemente</h1>
+<h1>TMRU - Most Recently Used File List</h1>
 <p class="class-source">
 Fonte: <code>source/classes/mru.prg</code>
 </p>
 
 <p>
-TMRU gerencia uma lista de arquivos usados recentemente (MRU - Most Recently Used), normalmente exibida no menu Arquivo das
-aplicações. Ela persiste a lista em um arquivo INI (via <code>TIni</code>) e atualiza automaticamente
-um menu popup. Quando um usuário abre um arquivo, a lista MRU é atualizada com a nova entrada
-no topo, e as entradas mais antigas descem ou são removidas se a lista exceder o tamanho máximo.
-Selecionar um item de menu MRU dispara o codeblock <code>bAction</code> associado.
+TMRU manages a Most Recently Used (MRU) file list, typically displayed in the File menu of
+applications. It persists the list to an INI file (via <code>TIni</code>) and automatically
+updates a popup menu. When a user opens a file, the MRU list is updated with the new entry
+at the top, and older entries shift down or are removed if the list exceeds the maximum size.
+Selecting an MRU menu item fires the associated <code>bAction</code> codeblock.
 </p>
 
 <h3>DATA Members</h3>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array de strings de caminhos de arquivo em ordem MRU (mais recente primeiro)</td></tr>
-<tr><td><code>nMaxItems</code></td><td>Numeric</td><td>Número máximo de itens na lista MRU (padrão 4)</td></tr>
-<tr><td><code>cIniFile</code></td><td>Character</td><td>Caminho do arquivo INI para persistir a lista MRU</td></tr>
-<tr><td><code>cSection</code></td><td>Character</td><td>Nome da seção INI onde as entradas MRU são armazenadas</td></tr>
-<tr><td><code>oMenu</code></td><td>Object</td><td>Objeto de menu popup que exibe as entradas MRU</td></tr>
-<tr><td><code>bAction</code></td><td>Codeblock</td><td>Codeblock executado quando um item MRU é selecionado, recebe o caminho do arquivo</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array of file path strings in MRU order (most recent first)</td></tr>
+<tr><td><code>nMaxItems</code></td><td>Numeric</td><td>Maximum number of items in the MRU list (default 4)</td></tr>
+<tr><td><code>cIniFile</code></td><td>Character</td><td>Path to the INI file for persisting the MRU list</td></tr>
+<tr><td><code>cSection</code></td><td>Character</td><td>INI section name where MRU entries are stored</td></tr>
+<tr><td><code>oMenu</code></td><td>Object</td><td>Popup menu object that displays the MRU entries</td></tr>
+<tr><td><code>bAction</code></td><td>Codeblock</td><td>Codeblock executed when an MRU item is selected, receives the file path</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos Principais</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cIni, cSec, nMax, cMsg, bAction, oMenu, nPos )</code></td><td>Cria a lista MRU. Carrega do INI, cria os itens de menu popup e os anexa a oMenu na posição nPos</td></tr>
-<tr><td><code>Save( uNew )</code></td><td>Adiciona um novo arquivo ao topo da lista MRU. Se já existir, move-o para o topo. Persiste no INI. uNew pode ser um único arquivo ou um array de arquivos</td></tr>
-<tr><td><code>Clear()</code></td><td>Limpa a lista MRU, remove todos os itens de menu e exclui a seção INI</td></tr>
+<tr><td><code>New( cIni, cSec, nMax, cMsg, bAction, oMenu, nPos )</code></td><td>Create MRU list. Loads from INI, creates popup menu items, and attaches them to oMenu at position nPos</td></tr>
+<tr><td><code>Save( uNew )</code></td><td>Add a new file to the top of the MRU list. If it already exists, move it to the top. Persists to INI. uNew can be a single file or an array of files</td></tr>
+<tr><td><code>Clear()</code></td><td>Clear the MRU list, remove all menu items, and delete the INI section</td></tr>
 </tbody>
 </table>
 
-<h3>Exemplo: Menu MRU no Menu Arquivo</h3>
+<h3>Example: MRU Menu in File Menu</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -69,13 +69,13 @@ function Main()
          MENUITEM "~Open..."   ACTION OpenFile( oWnd, oMru )
          MENUITEM "~Save"      ACTION MsgInfo( "Save" )
          SEPARATOR
-         // A lista MRU será inserida aqui na posição 4
+         // MRU list will be inserted here at position 4
       ENDPOPUP
    ENDMENU
 
    oWnd:oMenu := oMenu
 
-   // Cria o MRU com no máximo 5 itens, anexado ao menu Arquivo na posição 4
+   // Create MRU with max 5 items, attached to File menu at position 4
    oMru := TMRU():New( "C:\MyApp\settings.ini", "MRU", 5, ;
                        "Open recent file", {|cFile| OpenRecent( cFile ) }, ;
                        oMenu, 4 )
@@ -89,8 +89,8 @@ function OpenFile( oWnd, oMru )
    local cFile := cGetFile( "All files (*.*)|*.*" )
 
    if ! Empty( cFile )
-      oMru:Save( cFile )   // Adiciona ao MRU e atualiza o menu
-      // ... abre o arquivo
+      oMru:Save( cFile )   // Add to MRU and update menu
+      // ... open the file
    endif
 
 return nil
@@ -98,12 +98,12 @@ return nil
 function OpenRecent( cFile )
 
    MsgInfo( "Opening recent: " + cFile )
-   // ... abre o arquivo
+   // ... open the file
 
 return nil</code></pre>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tmonthview.html">&larr; tmonthview</a> | <a href="../../pt/ui/tmsgbar.html">tmsgbar &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

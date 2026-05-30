@@ -13,36 +13,36 @@
 
 <h1>TAgent / TOLlama</h1>
 <p class="class-source">Fonte: <code>source/classes/tollama.prg</code></p>
-<p class="class-hierarchy">TOLlama: Autônoma | TAgent: Usa TOLlama internamente</p>
+<p class="class-hierarchy">TOLlama: Standalone | TAgent: Uses TOLlama internally</p>
 
 <p>
-TOLlama fornece integração com modelos LLM do Ollama executados localmente através da API REST do Ollama. Suporta prompts de texto, respostas em streaming e análise de imagens (para modelos multimodais). TAgent baseia-se em TOLlama para criar um agente de IA capaz de invocar funções Harbour como ferramentas, permitindo automação dirigida por LLM.
+TOLlama provides integration with locally running Ollama LLM models via the Ollama REST API. It supports text prompts, streaming responses, and image analysis (for multimodal models). TAgent builds on TOLlama to create an AI agent that can invoke Harbour Funções as tools, enabling LLM-driven automation.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
-<table><thead><tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr></thead>
+<h2 id="data">Key DATA Members</h2>
+<table><thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>cModel</code></td><td>Character</td><td>Nome do modelo Ollama (padrão "deepseek-r1:14b")</td></tr>
-<tr><td><code>cUrl</code></td><td>Character</td><td>URL da API (padrão "http://localhost:11434/api/chat")</td></tr>
-<tr><td><code>cSystemPrompt</code></td><td>Character</td><td>Prompt de sistema que define o comportamento do agente</td></tr>
-<tr><td><code>aTools</code></td><td>Array</td><td>Array de definições de ferramentas para o agente</td></tr>
+<tr><td><code>cModel</code></td><td>Character</td><td>Ollama model name (default "deepseek-r1:14b")</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td>API URL (default "http://localhost:11434/api/chat")</td></tr>
+<tr><td><code>cSystemPrompt</code></td><td>Character</td><td>System prompt defining agent behavior</td></tr>
+<tr><td><code>aTools</code></td><td>Array</td><td>Array of tool definitions for the agent</td></tr>
 </tbody></table>
 
-<h2 id="methods">Métodos Principais</h2>
-<table><thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<h2 id="methods">Methods</h2>
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( cModel )</code></td><td>Cria um cliente Ollama com o modelo especificado</td></tr>
-<tr><td><code>Send( cPrompt )</code></td><td>Envia um prompt; retorna a resposta completa</td></tr>
-<tr><td><code>SendStream( cPrompt, bWriteFunction )</code></td><td>Envia com callback de streaming para saída de tokens em tempo real</td></tr>
-<tr><td><code>SendImage( cImageFile, cPrompt )</code></td><td>Envia imagem + prompt para modelos multimodais</td></tr>
-<tr><td><code>GetValue()</code></td><td>Analisa a resposta JSON e extrai o texto do conteúdo</td></tr>
-<tr><td><code>End()</code></td><td>Libera o handle do libcurl</td></tr>
-<tr><td><code>SetSystemPrompt( c )</code></td><td>Define o prompt de sistema do agente</td></tr>
-<tr><td><code>AddTool( cName, cDesc, bAction )</code></td><td>Registra uma função Harbour como ferramenta invocável</td></tr>
-<tr><td><code>Run( cPrompt )</code></td><td>Executa um prompt através do agente; retorna o resultado</td></tr>
+<tr><td><code>New( cModel )</code></td><td>Create an Ollama client with the specified model</td></tr>
+<tr><td><code>Send( cPrompt )</code></td><td>Send a prompt; returns the complete response</td></tr>
+<tr><td><code>SendStream( cPrompt, bWriteFunction )</code></td><td>Send with streaming callback for real-time token output</td></tr>
+<tr><td><code>SendImage( cImageFile, cPrompt )</code></td><td>Send image + prompt for multimodal models</td></tr>
+<tr><td><code>GetValue()</code></td><td>Parse JSON response and extract content text</td></tr>
+<tr><td><code>End()</code></td><td>Clean up the libcurl handle</td></tr>
+<tr><td><code>SetSystemPrompt( c )</code></td><td>Set the system prompt for the agent</td></tr>
+<tr><td><code>AddTool( cName, cDesc, bAction )</code></td><td>Register a Harbour function as a callable tool</td></tr>
+<tr><td><code>Run( cPrompt )</code></td><td>Execute a prompt through the agent; returns result</td></tr>
 </tbody></table>
 
-<h2 id="example">Exemplo: Agente com Ferramenta de Calculadora</h2>
+<h2 id="example">Example: Agent with Calculator Tool</h2>
 <pre><code class="language-harbour">#include "FiveWin.ch"
 function Main()
    local oAgent
@@ -52,17 +52,17 @@ function Main()
    ? oAgent:Run( "What is 123 + 456?" )
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 <ul>
-<li>TOLlama requer um servidor Ollama local em execução na porta 11434.</li>
-<li>Usa libcurl (<code>hbcurl.ch</code>) para comunicação HTTP com a API do Ollama.</li>
-<li><code>SendStream</code> permite a exibição incremental dos tokens gerados à medida que chegam.</li>
-<li><code>SendImage</code> funciona com modelos multimodais como LLaVA ou bakllava.</li>
-<li>TAgent organiza as ferramentas por categoria, fornecendo um framework extensível de uso de ferramentas por LLM.</li>
+<li>TOLlama requires a local Ollama server running on port 11434.</li>
+<li>Uses libcurl (<code>hbcurl.ch</code>) for HTTP communication with the Ollama API.</li>
+<li><code>SendStream</code> enables incremental display of generated tokens as they arrive.</li>
+<li><code>SendImage</code> works with multimodal models like LLaVA or bakllava.</li>
+<li>TAgent organizes tools by category, providing an extensible LLM tool-use framework.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/ttagcloud.html">&larr; ttagcloud</a> | <a href="../../pt/utilities/ttextfile.html">ttextfile &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

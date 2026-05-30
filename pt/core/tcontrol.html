@@ -4,14 +4,14 @@
 
 <h1>TControl</h1>
 <p>
-  <span class="badge badge-blue">Classe Base</span>
-  <span class="badge badge-purple">Herda de TWindow</span>
+  <span class="badge badge-blue">Core Class</span>
+  <span class="badge badge-purple">Inherits TWindow</span>
   <span class="source-badge">source/classes/control.prg</span>
 </p>
-<p>TControl é a classe base abstrata para todos os controles UI no FiveWin. Ela herda de <a href="twindow.html">TWindow</a> e adiciona comportamentos específicos de controles: vinculação de dados via <code>bSetGet</code>, notificações de alteração, suporte a arrastar e soltar, ancoragem/encaixe dentro de janelas pai, redimensionamento em modo design e o padrão <code>REDEFINE</code> para diálogos baseados em recurso. Você nunca instancia TControl diretamente; em vez disso, usa suas subclasses concretas como TButton, TGet, TXBrowse, etc.</p>
+<p>TControl is the abstract base class for all UI controls in FiveWin. It inherits from <a href="twindow.html">TWindow</a> and adds control-specific behavior: data binding via <code>bSetGet</code>, change notifications, drag-and-drop support, docking/anchoring within parent windows, design-mode resizing, and the <code>REDEFINE</code> pattern for resource-based dialogs. You never instantiate TControl directly; instead, you use its concrete subclasses like TButton, TGet, TXBrowse, etc.</p>
 
-<h2 id="hierarchy">Hierarquia de Controles</h2>
-<p>TControl é o ancestral comum de todo controle visual. Aqui está a árvore de herança mostrando as principais subclasses:</p>
+<h2 id="hierarchy">Control Hierarchy</h2>
+<p>TControl is the common ancestor of every visual control. Here is the inheritance tree showing the major subclasses:</p>
 <div class="mermaid">
 classDiagram
     class TControl {
@@ -46,60 +46,71 @@ classDiagram
     TControl <|-- TSplitter
 </div>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 <table>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
-<tr><td><code>oWnd</code></td><td>TWindow/TDialog</td><td>nil</td><td>Janela ou diálogo pai que contém este controle.</td></tr>
-<tr><td><code>nId</code></td><td>Numeric</td><td>auto</td><td>ID do controle Win32. Auto-atribuído a partir de <code>CLASSDATA nInitID</code> (começa em 100) ou definido explicitamente para diálogos de recurso.</td></tr>
-<tr><td><code>bSetGet</code></td><td>Block</td><td>nil</td><td>Bloco de vinculação de dados. Quando chamado sem argumentos, retorna o valor atual; com um argumento, define o valor. Criado automaticamente pelas cláusulas de comando <code>GET</code> / <code>VAR</code>.</td></tr>
-<tr><td><code>bChange</code></td><td>Block</td><td>nil</td><td>Avaliado sempre que o valor do controle muda (texto digitado, mudança de seleção, etc.).</td></tr>
-<tr><td><code>lUpdate</code></td><td>Logical</td><td>.F.</td><td>Se <code>.T.</code>, o controle participa do ciclo de atualização do pai (<code>oWnd:Update()</code>). Usado para controles vinculados a dados que precisam ser atualizados quando o ponteiro de registro se move.</td></tr>
-<tr><td><code>lDrag</code></td><td>Logical</td><td>.F.</td><td>Habilitar arrastar e soltar por mouse para este controle. Usado no modo design e para arraste iniciado pelo usuário.</td></tr>
-<tr><td><code>lTransparent</code></td><td>Logical</td><td>.F.</td><td>Pintar o controle com fundo transparente, deixando o pincel/gradiente do pai aparecer.</td></tr>
-<tr><td><code>lCaptured</code></td><td>Logical</td><td>.F.</td><td>Se o controle atualmente possui a captura do mouse.</td></tr>
-<tr><td><code>lMouseDown</code></td><td>Logical</td><td>.F.</td><td>Rastreia se o botão esquerdo do mouse está pressionado.</td></tr>
-<tr><td><code>nDlgCode</code></td><td>Numeric</td><td>nil</td><td>Valor retornado por <code>GetDlgCode()</code>. Controla o comportamento de navegação por Tab/setas.</td></tr>
-<tr><td><code>oJump</code></td><td>TControl</td><td>nil</td><td>Após <code>VALID</code> ter sucesso, o foco pula para este controle em vez do próximo na ordem de tabulação.</td></tr>
-<tr><td><code>nClientBevel</code></td><td>Numeric</td><td>nil</td><td>Offset de bevel/borda para encaixe <code>AdjClient()</code>.</td></tr>
-<tr><td><code>aSizeRect</code></td><td>Array</td><td>nil</td><td>Armazena o retângulo de tamanho original para redimensionamento proporcional.</td></tr>
-<tr><td><code>uOriginalValue</code></td><td>Any</td><td>nil</td><td>Valor original na criação do controle. Usado pelo método de acesso <code>lChanged</code>.</td></tr>
-<tr><td><code>LastValidValue</code></td><td>Any</td><td>nil</td><td>Armazena o último valor que passou na validação.</td></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>oWnd</code></td><td>TWindow/TDialog</td><td>nil</td><td>Parent window or dialog that contains this control.</td></tr>
+<tr><td><code>nId</code></td><td>Numeric</td><td>auto</td><td>Win32 control ID. Auto-assigned from <code>CLASSDATA nInitID</code> (starts at 100) or explicitly set for resource dialogs.</td></tr>
+<tr><td><code>bSetGet</code></td><td>Block</td><td>nil</td><td>Data-binding block. When called with no args, returns the current value; with one arg, sets it. Created automatically by the <code>GET</code> / <code>VAR</code> command clauses.</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td>nil</td><td>Evaluated whenever the control's value changes (typed text, selection change, etc.).</td></tr>
+<tr><td><code>lUpdate</code></td><td>Logical</td><td>.F.</td><td>If <code>.T.</code>, the control participates in the parent's update cycle (<code>oWnd:Update()</code>). Used for data-bound controls that must refresh when the record pointer moves.</td></tr>
+<tr><td><code>lDrag</code></td><td>Logical</td><td>.F.</td><td>Enable mouse drag-and-drop for this control. Used in design mode and for user-initiated dragging.</td></tr>
+<tr><td><code>lTransparent</code></td><td>Logical</td><td>.F.</td><td>Paint the control with a transparent background, letting the parent's brush/gradient show through.</td></tr>
+<tr><td><code>lCaptured</code></td><td>Logical</td><td>.F.</td><td>Whether the control currently has mouse capture.</td></tr>
+<tr><td><code>lMouseDown</code></td><td>Logical</td><td>.F.</td><td>Tracks whether the left mouse button is pressed.</td></tr>
+<tr><td><code>nDlgCode</code></td><td>Numeric</td><td>nil</td><td>Value returned by <code>GetDlgCode()</code>. Controls tab/arrow key navigation behavior.</td></tr>
+<tr><td><code>oJump</code></td><td>TControl</td><td>nil</td><td>After <code>VALID</code> succeeds, focus jumps to this control instead of the next tab-order control.</td></tr>
+<tr><td><code>nClientBevel</code></td><td>Numeric</td><td>nil</td><td>Bevel/border offset for <code>AdjClient()</code> docking.</td></tr>
+<tr><td><code>aSizeRect</code></td><td>Array</td><td>nil</td><td>Stores original size rectangle for proportional resizing.</td></tr>
+<tr><td><code>ResizeType</code></td><td>Numeric</td><td>nil</td><td>Resize behavior flag set by <code>SetResizeType()</code>. Controls how the control scales when its parent is resized.</td></tr>
+<tr><td><code>uOriginalValue</code></td><td>Any</td><td>nil</td><td>Original value at control creation. Used by <code>lChanged</code> access method.</td></tr>
+<tr><td><code>LastValidValue</code></td><td>Any</td><td>nil</td><td>Stores the last value that passed validation.</td></tr>
 </table>
 
-<h3 id="access-methods">Métodos de Acesso / Atribuição</h3>
+<h3 id="access-methods">Access / Assign Methods</h3>
 <table>
-<tr><th>Acesso</th><th>Descrição</th></tr>
-<tr><td><code>lChanged</code></td><td>Somente leitura. Retorna <code>.T.</code> se o valor atual (de <code>VarGet()</code>) difere de <code>uOriginalValue</code>.</td></tr>
-<tr><td><code>nTop( nNewTop )</code></td><td>SETGET &mdash; obtém ou define a coordenada superior, movendo a janela Win32 se existir.</td></tr>
-<tr><td><code>nLeft( nNewLeft )</code></td><td>SETGET &mdash; obtém ou define a coordenada esquerda.</td></tr>
+<tr><th>Access</th><th>Description</th></tr>
+<tr><td><code>lChanged</code></td><td>Read-only. Returns <code>.T.</code> if the current value (from <code>VarGet()</code>) differs from <code>uOriginalValue</code>.</td></tr>
+<tr><td><code>nTop( nNewTop )</code></td><td>SETGET &mdash; gets or sets the top coordinate, moving the Win32 window if it exists.</td></tr>
+<tr><td><code>nLeft( nNewLeft )</code></td><td>SETGET &mdash; gets or sets the left coordinate.</td></tr>
 </table>
 
-<h2 id="methods">Principais Métodos</h2>
+<h2 id="methods">Key Methods</h2>
 
 <h3 id="refresh">Refresh()</h3>
-<p>Herdado de TWindow. Força o controle a repintar. Para controles vinculados a dados (aqueles com <code>bSetGet</code>), também relê o valor da variável vinculada.</p>
+<p>Inherited from TWindow. Forces the control to repaint. For data-bound controls (those with <code>bSetGet</code>), it also re-reads the value from the bound variable.</p>
 
 <h3 id="setfocus">SetFocus()</h3>
-<p>Dá o foco do teclado a este controle. Internamente envia <code>FM_CHANGEFOCUS</code> e chama a API Win32 <code>SetFocus()</code>.</p>
+<p>Gives keyboard focus to this control. Internally sends <code>FM_CHANGEFOCUS</code> and calls the Win32 <code>SetFocus()</code> API.</p>
 
 <h3 id="varget-varput">VarGet() / VarPut()</h3>
 <pre><code>METHOD VarGet() INLINE If( ValType( ::bSetGet ) == "B", Eval( ::bSetGet ), )
 METHOD VarPut( uVal ) INLINE If( ValType( ::bSetGet ) == "B", Eval( ::bSetGet, uVal ), )</code></pre>
-<p>Lê ou escreve a variável vinculada do controle através do bloco <code>bSetGet</code>. Esta é a forma padrão de obter/definir programaticamente o valor de um controle.</p>
+<p>Read or write the control's bound variable through the <code>bSetGet</code> block. This is the standard way to programmatically get/set a control's value.</p>
 
 <h3 id="ctochar">cToChar()</h3>
 <pre><code>METHOD cToChar( cCtrlClass )</code></pre>
-<p>Gera código-fonte que recria este controle. Usado pelo designer visual para serializar diálogos.</p>
+<p>Generates source code that recreates this control. Used by the visual designer to serialize dialogs.</p>
 
 <h3 id="move">Move()</h3>
 <pre><code>METHOD Move( nTop, nLeft, nWidth, nHeight, lRepaint )</code></pre>
-<p>Reposiciona e/ou redimensiona o controle dentro do seu pai.</p>
+<p>Repositions and/or resizes the control within its parent.</p>
 
 <h3 id="end">End()</h3>
-<p>Destrói a janela Win32 do controle e o remove do array <code>aControls</code> do pai.</p>
+<p>Destroys the control's Win32 window and removes it from the parent's <code>aControls</code> array.</p>
 
-<h2 id="docking">Encaixe e Ancoragem</h2>
-<p>TControl fornece métodos de encaixe que posicionam automaticamente um controle para preencher regiões específicas da janela pai. Estes são essenciais para construir layouts redimensionáveis:</p>
+<h3 id="initiate-method">Initiate()</h3>
+<pre><code>METHOD Initiate( hWnd )</code></pre>
+<p>Called automatically by the parent after the control's Win32 window is created. It subclasses the window procedure to intercept control messages and completes the control's initialization. Not typically called directly.</p>
+
+<h3 id="checkdots">CheckDots() / ShowDots() / HideDots()</h3>
+<pre><code>METHOD CheckDots( hWnd, nId )
+METHOD ShowDots()
+METHOD HideDots()</code></pre>
+<p>Design-mode helper methods that manage the eight resize handles (dots) around the control border. <code>ShowDots()</code> displays the handles; <code>HideDots()</code> removes them; <code>CheckDots()</code> is called during <code>MResize()</code> to adjust handle positions. These are used by the visual dialog designer.</p>
+
+<h2 id="docking">Docking and Anchoring</h2>
+<p>TControl provides docking methods that automatically position a control to fill specific regions of the parent window. These are essential for building resizable layouts:</p>
 
 <div class="mermaid">
 flowchart TD
@@ -118,16 +129,16 @@ flowchart TD
 
 <h3 id="adjclient">AdjClient()</h3>
 <pre><code>METHOD AdjClient()</code></pre>
-<p>Redimensiona o controle para preencher toda a área cliente do pai, menos qualquer espaço ocupado por controles encaixados (<code>oTop</code>, <code>oBottom</code>, <code>oLeft</code>, <code>oRight</code>) e a barra de mensagem. Este é o método de encaixe mais comumente usado.</p>
-<p>Internamente, <code>AdjClient()</code> inspeciona as propriedades <code>oTop</code>, <code>oBar</code>, <code>oBottom</code>, <code>oMsgBar</code>, <code>oLeft</code> e <code>oRight</code> do pai para calcular o retângulo restante, e então chama <code>WndAdjClient()</code> para posicionar o controle.</p>
+<p>Resizes the control to fill the entire client area of the parent, minus any space taken by docked controls (<code>oTop</code>, <code>oBottom</code>, <code>oLeft</code>, <code>oRight</code>) and the message bar. This is the most commonly used docking method.</p>
+<p>Internally, <code>AdjClient()</code> inspects the parent's <code>oTop</code>, <code>oBar</code>, <code>oBottom</code>, <code>oMsgBar</code>, <code>oLeft</code>, and <code>oRight</code> properties to calculate the remaining rectangle, then calls <code>WndAdjClient()</code> to position the control.</p>
 
 <h3 id="adjtop-adjbottom">AdjTop() / AdjBottom()</h3>
-<p>Encaixa o controle na borda superior ou inferior do pai. O controle se estica pela largura total, e sua altura permanece como definida.</p>
+<p>Dock the control to the top or bottom edge of the parent. The control stretches the full width, and its height remains as defined.</p>
 
 <h3 id="adjleft-adjright">AdjLeft() / AdjRight()</h3>
-<p>Encaixa o controle na borda esquerda ou direita. O controle se estica pela altura total (entre quaisquer controles encaixados no topo/base), e sua largura permanece como definida.</p>
+<p>Dock the control to the left or right edge. The control stretches the full height (between any top/bottom docked controls), and its width remains as defined.</p>
 
-<h3 id="docking-example">Encaixe na Prática</h3>
+<h3 id="docking-example">Docking in Practice</h3>
 <pre><code>#include "FiveWin.ch"
 
 function Main()
@@ -159,10 +170,10 @@ function Main()
       ON RESIZE ( oTree:AdjLeft(), oBrw:AdjClient() )
 
 return nil</code></pre>
-<p>O padrão principal: atribua o controle ao slot de encaixe do pai (<code>oWnd:oLeft</code>, <code>oWnd:oClient</code>), depois chame o método <code>Adj*()</code> correspondente. No handler <code>ON RESIZE</code>, chame-os novamente para que o layout se adapte.</p>
+<p>The key pattern: assign the control to the parent's docking slot (<code>oWnd:oLeft</code>, <code>oWnd:oClient</code>), then call the corresponding <code>Adj*()</code> method. In the <code>ON RESIZE</code> handler, call them again so the layout adapts.</p>
 
-<h2 id="data-binding">Vinculação de Dados com bSetGet</h2>
-<p>O bloco de código <code>bSetGet</code> é o coração da vinculação de dados do FiveWin. Ele segue a convenção getter/setter do xBase:</p>
+<h2 id="data-binding">Data Binding with bSetGet</h2>
+<p>The <code>bSetGet</code> code block is the heart of FiveWin's data binding. It follows the xBase getter/setter convention:</p>
 <pre><code>// When creating a GET, FiveWin generates this block automatically:
 local cName := Space( 30 )
 
@@ -176,12 +187,12 @@ local cName := Space( 30 )
 oGet:VarPut( "John" ) // sets cName := "John"
 oGet:Refresh()        // updates the visual display</code></pre>
 
-<p>Para controles vinculados a banco de dados, <code>bSetGet</code> referencia um campo:</p>
+<p>For database-bound controls, <code>bSetGet</code> references a field:</p>
 <pre><code>@ 10, 10 GET oGet VAR Customers->Name OF oDlg
 // bSetGet := { |u| If( u == nil, Customers->Name, Customers->Name := u ) }</code></pre>
 
-<h2 id="example-custom">Exemplo: Criando um Controle Personalizado</h2>
-<p>Você pode criar subclasses de TControl para criar controles personalizados com pintura e comportamento especializados:</p>
+<h2 id="example-custom">Example: Creating a Custom Control</h2>
+<p>You can subclass TControl to create custom controls with specialized painting and behavior:</p>
 <pre><code>#include "FiveWin.ch"
 
 // A simple LED indicator control
@@ -239,7 +250,7 @@ METHOD Paint() CLASS TLed
    ::EndPaint()
 
 return 0</code></pre>
-<p>Uso:</p>
+<p>Usage:</p>
 <pre><code>function TestLed()
 
    local oDlg, oLed1, oLed2
@@ -259,18 +270,18 @@ return 0</code></pre>
 
 return nil</code></pre>
 
-<h2 id="design-mode">Modo Design</h2>
-<p>TControl inclui suporte integrado para o modo de design visual (usado pelo editor de diálogos do FiveWin). Quando <code>lDrag</code> é definido como <code>.T.</code>:</p>
+<h2 id="design-mode">Design Mode</h2>
+<p>TControl includes built-in support for visual design mode (used by FiveWin's dialog editor). When <code>lDrag</code> is set to <code>.T.</code>:</p>
 <ul>
-<li>O controle pode ser movido arrastando com o mouse.</li>
-<li>Alças de redimensionamento (pontos) aparecem ao redor do controle quando focado (<code>ShowDots()</code> / <code>HideDots()</code>).</li>
-<li>O método <code>MResize()</code> trata as 8 direções de redimensionamento (NO, N, NE, L, SE, S, SO, O).</li>
-<li>Os blocos <code>bDragBegin</code>, <code>bDrag</code>, <code>bPreDrag</code> e <code>bPostDrag</code> disparam em diferentes estágios do arraste.</li>
-<li>Os blocos <code>bPreDelControl</code> e <code>bPostDelControl</code> disparam antes/depois que um controle é excluído no designer.</li>
+<li>The control can be moved by dragging with the mouse.</li>
+<li>Resize handles (dots) appear around the control when focused (<code>ShowDots()</code> / <code>HideDots()</code>).</li>
+<li>The <code>MResize()</code> method handles the 8 resize directions (NW, N, NE, E, SE, S, SW, W).</li>
+<li><code>bDragBegin</code>, <code>bDrag</code>, <code>bPreDrag</code>, and <code>bPostDrag</code> blocks fire at different drag stages.</li>
+<li><code>bPreDelControl</code> and <code>bPostDelControl</code> fire before/after a control is deleted in the designer.</li>
 </ul>
 
-<h2 id="redefine">O Padrão REDEFINE</h2>
-<p>Para diálogos baseados em recurso, os controles são criados pelo template de recurso do diálogo. Os comandos <code>REDEFINE</code> do FiveWin vinculam objetos FiveWin a esses controles Win32 existentes pelos seus IDs numéricos:</p>
+<h2 id="redefine">The REDEFINE Pattern</h2>
+<p>For resource-based dialogs, controls are created by the dialog resource template. FiveWin's <code>REDEFINE</code> commands bind FiveWin objects to those existing Win32 controls by their numeric ID:</p>
 <pre><code>METHOD Redefine( nId, oWnd ) CONSTRUCTOR</code></pre>
 <pre><code>DEFINE DIALOG oDlg RESOURCE "MYDIALOG"
 
@@ -281,7 +292,7 @@ return nil</code></pre>
 
 ACTIVATE DIALOG oDlg CENTER</code></pre>
 
-<h2 id="lifecycle">Ciclo de Vida do Controle</h2>
+<h2 id="lifecycle">Control Lifecycle</h2>
 <div class="mermaid">
 flowchart LR
     A["New() or Redefine()<br/>Object created"] --> B["Parent Activate()<br/>Win32 controls created"]
@@ -292,26 +303,26 @@ flowchart LR
     F --> G["Destroy()<br/>Win32 window destroyed"]
 </div>
 
-<h2 id="tips">Dicas de Uso</h2>
+<h2 id="tips">Usage Tips</h2>
 <ul>
-<li><strong>Use <code>lUpdate := .T.</code></strong> para controles que devem ser atualizados ao navegar registros do banco de dados. Chame <code>oWnd:Update()</code> ou <code>oDlg:Update()</code> após um <code>SKIP</code> para atualizar todos os controles marcados com <code>lUpdate</code>.</li>
-<li><strong>Acesso <code>lChanged</code></strong> &mdash; Verifique <code>oGet:lChanged</code> para saber se o usuário modificou um campo antes de salvar.</li>
-<li><strong>Ordem de tabulação</strong> é determinada pela ordem em que os controles são adicionados ao <code>aControls</code> (ou seja, a ordem dos seus comandos <code>@</code>).</li>
-<li><strong>Controles transparentes</strong> &mdash; Defina <code>lTransparent := .T.</code> (ou cláusula <code>TRANSPARENT</code>) ao colocar controles sobre fundos gradientes ou bitmap.</li>
-<li><strong><code>oJump</code></strong> &mdash; Defina <code>oGet1:oJump := oGet3</code> para pular um campo na sequência de tabulação condicionalmente.</li>
-<li><strong>Redimensionamento proporcional</strong> &mdash; Os métodos <code>CalcSize()</code> e <code>SetResizeType()</code> (adicionados em 2024) habilitam layout com coordenadas relativas onde os controles escalam proporcionalmente com o pai.</li>
-<li><strong>Cores</strong> &mdash; O método <code>Colors( hDC )</code> trata mensagens <code>WM_CTLCOLOR</code>. Sobrescreva-o em subclasses para comportamento de cores personalizado.</li>
+<li><strong>Use <code>lUpdate := .T.</code></strong> for controls that should refresh when navigating database records. Call <code>oWnd:Update()</code> or <code>oDlg:Update()</code> after a <code>SKIP</code> to refresh all <code>lUpdate</code>-flagged controls.</li>
+<li><strong><code>lChanged</code> access</strong> &mdash; Check <code>oGet:lChanged</code> to see if the user modified a field before saving.</li>
+<li><strong>Tab order</strong> is determined by the order controls are added to <code>aControls</code> (i.e., the order of your <code>@</code> commands).</li>
+<li><strong>Transparent controls</strong> &mdash; Set <code>lTransparent := .T.</code> (or <code>TRANSPARENT</code> clause) when placing controls over gradient or bitmap backgrounds.</li>
+<li><strong><code>oJump</code></strong> &mdash; Set <code>oGet1:oJump := oGet3</code> to skip a field in the tab sequence conditionally.</li>
+<li><strong>Proportional resizing</strong> &mdash; The <code>CalcSize()</code> and <code>SetResizeType()</code> methods (added 2024) enable relative coordinate layout where controls scale proportionally with the parent.</li>
+<li><strong>Colors</strong> &mdash; The <code>Colors( hDC )</code> method handles <code>WM_CTLCOLOR</code> messages. Override it in subclasses for custom color behavior.</li>
 </ul>
 
 <h2 id="see-also">Veja Também</h2>
 <ul>
-<li><a href="twindow.html">TWindow</a> &mdash; Classe pai que fornece a API base de janela</li>
-<li><a href="tdialog.html">TDialog</a> &mdash; Caixas de diálogo que hospedam controles</li>
-<li><a href="../../pt/ui/txbrowse.html">TXBrowse</a> &mdash; O controle grid/navegador de dados mais rico em funcionalidades</li>
-<li><a href="../../pt/ui/tget.html">TGet / TMGet</a> &mdash; Controles de entrada de linha única e múltiplas linhas</li>
-<li><a href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a> &mdash; Botões simples e botões com bitmap</li>
+<li><a href="twindow.html">TWindow</a> &mdash; Parent class providing the base window API</li>
+<li><a href="tdialog.html">TDialog</a> &mdash; Dialog boxes that host controls</li>
+<li><a href="../../pt/ui/txbrowse.html">TXBrowse</a> &mdash; The most feature-rich grid/browse control</li>
+<li><a href="../../pt/ui/tget.html">TGet / TMGet</a> &mdash; Single-line and multi-line input controls</li>
+<li><a href="../../pt/ui/tbutton.html">TButton / TBtnBmp</a> &mdash; Push buttons and bitmap buttons</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

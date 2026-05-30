@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTagCloud - FWH Docs</title>
+<title>TTagCloud - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,47 +13,47 @@
 
 <h1>TTagCloud</h1>
 <p class="class-source">Fonte: <code>source/classes/tagcloud.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-O TTagCloud exibe uma nuvem de tags ponderada onde cada tag é renderizada em um de sete tamanhos de fonte com base em seu peso (frequência). As tags se organizam automaticamente em um layout fluido, destacam-se ao passar o mouse com cor de texto e fundo personalizáveis e respondem a eventos de clique. O controle é ideal para navegação por palavras-chave, navegação por categorias ou qualquer cenário que exija uma lista visualmente ponderada.
+TTagCloud displays a weighted tag cloud where each tag is rendered in one of seven font sizes based on its weight (frequency). Tags auto-arrange in a flowing layout, highlight on mouse hover with a customizable text and background color, and respond to click events. The control is ideal for keyword navigation, category browsing, or any scenario requiring a visually weighted list.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aItems</code></td><td>Array</td><td>Matriz de itens, cada <code>{ cText, nPeso, nFontIndex, nOriginalPos }</code></td></tr>
-<tr><td><code>aFonts</code></td><td>Array</td><td>Sete handles de fonte, um por nível de tamanho (maior para menor)</td></tr>
-<tr><td><code>nHLine</code></td><td>Numeric</td><td>Altura da linha para quebra de linha de tags (padrão 30)</td></tr>
-<tr><td><code>nClrText</code></td><td>Numeric</td><td>Cor padrão do texto da tag</td></tr>
-<tr><td><code>nClrTextOver</code></td><td>Numeric</td><td>Cor de destaque do texto ao passar o mouse (padrão laranja)</td></tr>
-<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Cor de fundo padrão</td></tr>
-<tr><td><code>nClrPaneOver</code></td><td>Numeric</td><td>Cor de fundo de destaque ao passar o mouse</td></tr>
-<tr><td><code>aCoors</code></td><td>Array</td><td>Retângulos delimitadores por item, usados para teste de clique</td></tr>
-<tr><td><code>nMaxDescend</code></td><td>Numeric</td><td>Descida máxima da fonte em todas as sete fontes</td></tr>
-<tr><td><code>nOver</code></td><td>Numeric</td><td>Índice do item atualmente com mouse, ou -1 se nenhum</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array of items, each <code>{ cText, nPeso, nFontIndex, nOriginalPos }</code></td></tr>
+<tr><td><code>aFonts</code></td><td>Array</td><td>Seven font handles, one per size level (largest to smallest)</td></tr>
+<tr><td><code>nHLine</code></td><td>Numeric</td><td>Line height for tag row wrapping (default 30)</td></tr>
+<tr><td><code>nClrText</code></td><td>Numeric</td><td>Default tag text color</td></tr>
+<tr><td><code>nClrTextOver</code></td><td>Numeric</td><td>Hover highlight text color (default orange)</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Default background color</td></tr>
+<tr><td><code>nClrPaneOver</code></td><td>Numeric</td><td>Hover highlight background color</td></tr>
+<tr><td><code>aCoors</code></td><td>Array</td><td>Bounding rectangles per item, used for hit testing</td></tr>
+<tr><td><code>nMaxDescend</code></td><td>Numeric</td><td>Maximum font descent across all seven fonts</td></tr>
+<tr><td><code>nOver</code></td><td>Numeric</td><td>Index of the currently hovered item, or -1 if none</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nW, nH, oWnd, oFont )</code></td><td>Criar um novo controle TTagCloud</td></tr>
-<tr><td><code>AddItem( cText, nPeso )</code></td><td>Adicionar uma tag com texto e valor de peso</td></tr>
-<tr><td><code>AsignFonts()</code></td><td>Atribuir índices de tamanho de fonte aos itens com base nos pesos ordenados</td></tr>
-<tr><td><code>GetFonts()</code></td><td>Construir os sete tamanhos de fonte a partir da fonte base atual</td></tr>
+<tr><td><code>New( nTop, nLeft, nW, nH, oWnd, oFont )</code></td><td>Create a new TTagCloud control</td></tr>
+<tr><td><code>AddItem( cText, nPeso )</code></td><td>Add a tag with text and weight value</td></tr>
+<tr><td><code>AsignFonts()</code></td><td>Assign font size indices to items based on sorted weights</td></tr>
+<tr><td><code>GetFonts()</code></td><td>Build the seven font sizes from the current base font</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Nuvem de Tags com Três Tags</h2>
+<h2 id="example">Example: Tag Cloud with Three Tags</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -74,17 +74,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Observações</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>As tags são ordenadas internamente por peso. O peso mais alto recebe a maior fonte (nível 1) e os pesos mais baixos descem pelos níveis 2-7.</li>
-<li>Chame <code>AsignFonts()</code> após adicionar todos os itens para atribuir tamanhos de fonte correspondentes. As fontes são criadas uma vez por <code>GetFonts()</code> durante <code>New()</code>.</li>
-<li>O rastreamento de passagem do mouse é tratado por <code>MouseMove</code>, que define <code>nOver</code> e aciona <code>Refresh()</code> para repintar a tag destacada.</li>
-<li>Clicar em uma tag (<code>LButtonUp</code> padrão) produz o texto da tag. Sobrescreva <code>bLClicked</code> ou subclassifique <code>LButtonUp</code> para ações de clique personalizadas.</li>
+<li>Tags are sorted internally by weight. The highest weight gets the largest font (level 1) and lower weights descend through levels 2-7.</li>
+<li>Call <code>AsignFonts()</code> after adding all items to assign matching font sizes. Fonts are created once by <code>GetFonts()</code> during <code>New()</code>.</li>
+<li>Hover tracking is handled by <code>MouseMove</code>, which sets <code>nOver</code> and triggers <code>Refresh()</code> to repaint the highlighted tag.</li>
+<li>Clicking a tag (default <code>LButtonUp</code>) outputs the tag text. Override <code>bLClicked</code> or subclass <code>LButtonUp</code> for custom click actions.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/ttabs.html">&larr; ttabs</a> | <a href="../../pt/reference/ttagent.html">ttagent &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

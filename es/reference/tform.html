@@ -13,45 +13,45 @@
 
 <h1>TForm</h1>
 <p class="class-source">Fuente: <code>source/classes/tform.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TWindow</code></p>
+<p class="class-hierarchy">Inherits from: <code>TWindow</code></p>
 
 <p>
-TForm es un contenedor visual de formularios que carga la disposición de sus controles desde un recurso .ffm (Forms File Memory). Lo utiliza el IDE Visual FiveWin para diseñar y ejecutar formularios en tiempo de ejecución. El formulario serializa los controles hijos, sus propiedades y los enlaces a la base de datos.
+TForm is a visual form container that loads its control layout from a .ffm resource (Forms File Memory). It is used by the Visual FiveWin IDE to design and run forms at runtime. The form serializes child controls, their properties, and database bindings.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nBorderStyle</code></td><td>Numeric</td><td>Estilo del borde de la ventana (por defecto 3 = redimensionable)</td></tr>
-<tr><td><code>nPosition</code></td><td>Numeric</td><td>Posición de inicio: 0=normal, 1=maximizada, 2=minimizada</td></tr>
-<tr><td><code>cDescription</code></td><td>Character</td><td>Descripción visible en el gestor de Proyectos Visuales</td></tr>
-<tr><td><code>cClassName</code></td><td>Character</td><td>Nombre de clase usado como nombre de recurso por defecto para cargar el .ffm</td></tr>
-<tr><td><code>oInspector</code></td><td>Object</td><td>Objeto inspector de propiedades para el modo de diseño</td></tr>
-<tr><td><code>aProperties</code></td><td>Array</td><td>Array DATA de clase que lista todas las propiedades serializables</td></tr>
-<tr><td><code>lDesign</code></td><td>Logical</td><td>Activa el modo de diseño con arrastrar y soltar para los controles hijos</td></tr>
+<tr><td><code>nBorderStyle</code></td><td>Numeric</td><td>Window border style (default 3 = sizable)</td></tr>
+<tr><td><code>nPosition</code></td><td>Numeric</td><td>Startup position: 0=normal, 1=maximized, 2=minimized</td></tr>
+<tr><td><code>cDescription</code></td><td>Character</td><td>Description visible in the Visual Project manager</td></tr>
+<tr><td><code>cClassName</code></td><td>Character</td><td>Class name used as default resource name for loading .ffm</td></tr>
+<tr><td><code>oInspector</code></td><td>Object</td><td>Property inspector object for design mode</td></tr>
+<tr><td><code>aProperties</code></td><td>Array</td><td>Class DATA array listing all serializable properties</td></tr>
+<tr><td><code>lDesign</code></td><td>Logical</td><td>Enables design mode with drag-and-drop for child controls</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Crea un nuevo formulario con la configuración por defecto y carga el recurso .ffm</td></tr>
-<tr><td><code>LoadRes( cResName, cResType )</code></td><td>Carga la definición del formulario desde un recurso (tipo "FORMS" por defecto)</td></tr>
-<tr><td><code>ShowModal()</code></td><td>Muestra el formulario como un diálogo modal, respetando nPosition</td></tr>
-<tr><td><code>Initiate()</code></td><td>Inicializa los controles: crea las ventanas hijas, resuelve los alias, configura los enlaces a la base de datos</td></tr>
-<tr><td><code>Default()</code></td><td>Establece los valores por defecto del estilo de borde, posición y barras de desplazamiento</td></tr>
+<tr><td><code>New()</code></td><td>Create a new form with default settings and load .ffm resource</td></tr>
+<tr><td><code>LoadRes( cResName, cResType )</code></td><td>Load form definition from a resource (default "FORMS" type)</td></tr>
+<tr><td><code>ShowModal()</code></td><td>Show the form as a modal dialog, respecting nPosition</td></tr>
+<tr><td><code>Initiate()</code></td><td>Initialize controls: creates child windows, resolves aliases, sets up database bindings</td></tr>
+<tr><td><code>Default()</code></td><td>Set default values for border style, position, scrollbars</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Cargar y Mostrar un Formulario</h2>
+<h2 id="example">Example: Load and Show Form</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -59,7 +59,7 @@ function Main()
 
    local oForm := TForm():New()
 
-   oForm:cTitle     := "Mi Formulario"
+   oForm:cTitle     := "My Form"
    oForm:nWidth     := 600
    oForm:nHeight    := 400
    oForm:nPosition  := 0   // normal
@@ -68,17 +68,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TForm carga la disposición de sus controles desde un recurso binario .ffm almacenado bajo el tipo de recurso "FORMS", indexado por el nombre de la clase.</li>
-<li><code>Initiate()</code> procesa los componentes de base de datos (TDataBaseComp) antes que los demás controles, de modo que los alias estén disponibles para TXBrowse y controles similares.</li>
-<li>El modo de diseño se activa mediante <code>lDesign</code>, que permite reposicionar todos los controles hijos arrastrando y soltando.</li>
-<li>Los controles sin un hWnd existente se crean a partir de sus propiedades almacenadas; las coordenadas se normalizan si son negativas.</li>
+<li>TForm loads its control layout from a binary .ffm resource stored under the "FORMS" resource type, keyed by the class name.</li>
+<li><code>Initiate()</code> processes database components (TDataBaseComp) before other controls so that aliases are available for TXBrowse and similar controls.</li>
+<li>Design mode is toggled via <code>lDesign</code>, which enables drag-and-drop repositioning of all child controls.</li>
+<li>Controls without existing hWnd are created from their stored properties; coordinates are normalized if negative.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/reference/tfont.html">&larr; tfont</a> | <a href="../../es/internet/tftp.html">tftp &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

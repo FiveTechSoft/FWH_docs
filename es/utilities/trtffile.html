@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRtfFile - Generador de Documentos de Ayuda RTF/HPJ - Documentación FWH</title>
+<title>TRtfFile - RTF/HPJ Help Document Generator - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,37 +11,36 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>TRtfFile - Generador de Documentos de Ayuda RTF/HPJ</h1>
+<h1>TRtfFile - RTF/HPJ Help Document Generator</h1>
 <p class="class-source">
 Fuente: <code>source/classes/rtffile.prg</code>
 </p>
 
 <p>
-TRtfFile genera archivos en formato Rich Text Format (.RTF) adecuados para compilarse en archivos
-de Ayuda de Windows (.HLP) con el Microsoft Help Workshop (HCW.EXE). Produce entradas de temas
-cortos y largos, enlaces de salto (jump) y emergentes (popup), referencias a mapas de bits,
-identificadores de temas, listas de temas relacionados (see-also) y saltos de página, todo ello
-en sintaxis RTF válida que el Compilador de Ayuda comprende.
+TRtfFile generates Rich Text Format (.RTF) files suitable for compiling into Windows Help
+(.HLP) files with the Microsoft Help Workshop (HCW.EXE). It produces short and long topic
+entries, jump and popup links, bitmap references, topic IDs, see-also lists, and page breaks,
+all in valid RTF syntax that the Help Compiler understands.
 </p>
 
-<h3>Métodos Principales</h3>
+<h3>Methods</h3>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cFile )</code></td><td>Crea un nuevo archivo RTF con la cabecera de ayuda estándar (formato de notas al pie)</td></tr>
-<tr><td><code>WriteShort( cText, cJump, lPopup, cBmp )</code></td><td>Escribe un tema corto. cText es lo que se muestra; cJump es la cadena de contexto; lPopup indica emergente (popup) frente a salto (jump); cBmp opcionalmente incrusta un mapa de bits</td></tr>
-<tr><td><code>WriteLong( cText )</code></td><td>Escribe un párrafo de tema largo con texto del cuerpo</td></tr>
-<tr><td><code>WriteId( cId )</code></td><td>Escribe una nota al pie # con la cadena del identificador del tema (usada como nombre de contexto para los saltos)</td></tr>
-<tr><td><code>WriteSeeAlso( cList )</code></td><td>Escribe una nota al pie $ con una lista de "Ver también" de títulos de temas relacionados</td></tr>
-<tr><td><code>NewPage()</code></td><td>Inserta un salto de página (form-feed) para separar temas en el RTF</td></tr>
-<tr><td><code>End()</code></td><td>Finaliza el archivo RTF con las llaves de cierre y lo cierra</td></tr>
+<tr><td><code>New( cFile )</code></td><td>Create a new RTF file with the standard help header (footnote formatting)</td></tr>
+<tr><td><code>WriteShort( cText, cJump, lPopup, cBmp )</code></td><td>Write a short topic. cText is displayed; cJump is the context string; lPopup specifies popup vs. jump; cBmp optionally embeds a bitmap</td></tr>
+<tr><td><code>WriteLong( cText )</code></td><td>Write a long topic paragraph of body text</td></tr>
+<tr><td><code>WriteId( cId )</code></td><td>Write a # footnote with the topic ID string (used as the context name for jumps)</td></tr>
+<tr><td><code>WriteSeeAlso( cList )</code></td><td>Write a $ footnote with a "Ver También" list of related topic titles</td></tr>
+<tr><td><code>NewPage()</code></td><td>Insert a page break (form-feed) to separate topics in the RTF</td></tr>
+<tr><td><code>End()</code></td><td>Finalize the RTF file with closing braces and close it</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo: Generar un Archivo de Temas de Ayuda</h3>
+<h3>Example: Generate a Help Topic File</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -49,17 +48,17 @@ function Main()
 
    local oRtf := TRtfFile():New( "help.rtf" )
 
-   // Primer tema: Introducción
+   // First topic: Introduction
    oRtf:WriteId( "INTRO" )
    oRtf:WriteShort( "Welcome to MyApp", "INTRO", .F., "" )
    oRtf:WriteLong( "This is the introduction to MyApp." )
    oRtf:WriteLong( "Click below for more information." )
-   oRtf:WriteSeeAlso( "Instalación|Configuration" )
+   oRtf:WriteSeeAlso( "Installation|Configuration" )
    oRtf:NewPage()
 
-   // Segundo tema: Instalación
+   // Second topic: Installation
    oRtf:WriteId( "INSTALL" )
-   oRtf:WriteShort( "Instalación Guide", "INSTALL", .F., "" )
+   oRtf:WriteShort( "Installation Guide", "INSTALL", .F., "" )
    oRtf:WriteLong( "Follow these steps to install MyApp." )
    oRtf:WriteSeeAlso( "Introduction" )
    oRtf:NewPage()
@@ -70,7 +69,7 @@ function Main()
 return nil</code></pre>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

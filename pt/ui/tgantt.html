@@ -13,72 +13,72 @@
 
 <h1>TGantt</h1>
 <p class="class-source">Fonte: <code>source/classes/gantt.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TGantt é o controle de gráfico de Gantt do FiveWin para agendamento de projetos e visualização de linhas do tempo.
-Ele exibe barras horizontais em uma grade baseada em tempo, onde cada barra representa uma tarefa
-com suas datas de início e fim. O controle suporta operações interativas com mouse, visualizações
-de grade mês-dia e recálculo dinâmico.
+TGantt is FiveWin's Gantt chart control for project scheduling and timeline visualization.
+It displays horizontal bars across a time-based grid, where each bar represents a task
+with its start and end dates. The control supports interactive mouse operations, month-day
+grid views, and dynamic recalculation.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aItems</code></td><td>Array</td><td><code>{}</code></td><td>Array de objetos TGanttItem</td></tr>
-<tr><td><code>nCellWidth</code></td><td>Numérico</td><td><code>28</code></td><td>Largura de cada célula da grade em pixels</td></tr>
-<tr><td><code>nCellHeight</code></td><td>Numérico</td><td><code>25</code></td><td>Altura de cada célula da grade em pixels</td></tr>
-<tr><td><code>nCols</code></td><td>Numérico</td><td><code>31</code></td><td>Número de colunas da grade (normalmente dias do mês)</td></tr>
-<tr><td><code>nRows</code></td><td>Numérico</td><td><code>6</code></td><td>Número de linhas da grade (tarefas)</td></tr>
-<tr><td><code>lGridMonth</code></td><td>Lógico</td><td><code>.F.</code></td><td>Mostrar cabeçalho de grade mês-dia</td></tr>
-<tr><td><code>bChange</code></td><td>Bloco</td><td></td><td>Bloco de código executado quando um item é alterado</td></tr>
-<tr><td><code>bPressed</code></td><td>Bloco</td><td></td><td>Bloco de código executado ao pressionar um item</td></tr>
-<tr><td><code>nTopOffset</code></td><td>Numérico</td><td><code>5</code></td><td>Deslocamento superior para renderização da grade</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td><code>{}</code></td><td>Array of TGanttItem objects</td></tr>
+<tr><td><code>nCellWidth</code></td><td>Numeric</td><td><code>28</code></td><td>Width of each grid cell in pixels</td></tr>
+<tr><td><code>nCellHeight</code></td><td>Numeric</td><td><code>25</code></td><td>Height of each grid cell in pixels</td></tr>
+<tr><td><code>nCols</code></td><td>Numeric</td><td><code>31</code></td><td>Number of grid columns (typically days in month)</td></tr>
+<tr><td><code>nRows</code></td><td>Numeric</td><td><code>6</code></td><td>Number of grid rows (tasks)</td></tr>
+<tr><td><code>lGridMonth</code></td><td>Logical</td><td><code>.F.</code></td><td>Show month-day header grid</td></tr>
+<tr><td><code>bChange</code></td><td>Block</td><td></td><td>Code block executed when an item is changed</td></tr>
+<tr><td><code>bPressed</code></td><td>Block</td><td></td><td>Code block executed on item press</td></tr>
+<tr><td><code>nTopOffset</code></td><td>Numeric</td><td><code>5</code></td><td>Top offset for grid rendering</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, lBorder, lVScroll, lHScroll, nClrFore, nClrBack, bChange, bPressed, oLbx )</code></td><td>Criar um novo controle TGantt</td></tr>
-<tr><td><code>Redefine( nId, oWnd, nClrFore, nClrBack, bChange, bPressed, oLbx )</code></td><td>Redefinir a partir de recurso de diálogo</td></tr>
-<tr><td><code>AddItem( nRow, nStart, nEnd, nClrBack )</code></td><td>Adicionar um item de barra Gantt à linha especificada com colunas de início/fim e cor de fundo</td></tr>
-<tr><td><code>AtItem( nRow, nCol )</code></td><td>Obter o TGanttItem na posição da grade especificada</td></tr>
-<tr><td><code>SetGridMonth( nRows )</code></td><td>Alternar para o modo de grade com cabeçalho mês-dia. nRows = número de semanas a exibir.</td></tr>
-<tr><td><code>ReCalculate()</code></td><td>Recalcular dimensões da grade e posições dos itens após redimensionamento</td></tr>
-<tr><td><code>GridMonth()</code></td><td>Desenhar os rótulos de cabeçalho mês-dia</td></tr>
-<tr><td><code>Paint()</code></td><td>Renderizar a grade Gantt e todos os itens</td></tr>
-<tr><td><code>Display()</code></td><td>Iniciar pintura, chamar Paint, finalizar pintura</td></tr>
+<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, lBorder, lVScroll, lHScroll, nClrFore, nClrBack, bChange, bPressed, oLbx )</code></td><td>Create a new TGantt control</td></tr>
+<tr><td><code>Redefine( nId, oWnd, nClrFore, nClrBack, bChange, bPressed, oLbx )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>AddItem( nRow, nStart, nEnd, nClrBack )</code></td><td>Add a Gantt bar item to the specified row with start/end columns and background color</td></tr>
+<tr><td><code>AtItem( nRow, nCol )</code></td><td>Get the TGanttItem at the specified grid position</td></tr>
+<tr><td><code>SetGridMonth( nRows )</code></td><td>Switch to month-day header grid mode. nRows = number of weeks to display.</td></tr>
+<tr><td><code>ReCalculate()</code></td><td>Recalculate grid dimensions and item positions after resizing</td></tr>
+<tr><td><code>GridMonth()</code></td><td>Draw the month-day header labels</td></tr>
+<tr><td><code>Paint()</code></td><td>Render the Gantt grid and all items</td></tr>
+<tr><td><code>Display()</code></td><td>Begin paint, call Paint, end paint</td></tr>
 </tbody>
 </table>
 
 <h2 id="item">TGanttItem</h2>
 
 <p>
-Cada barra no gráfico de Gantt é representada por um objeto TGanttItem com as seguintes propriedades:
+Each bar in the Gantt chart is represented by a TGanttItem object with the following properties:
 </p>
 
 <table>
 <thead>
-<tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>Property</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nRow</code></td><td>Numérico</td><td>Posição da linha do item</td></tr>
-<tr><td><code>nStart</code></td><td>Numérico</td><td>Coluna de início (normalmente o número do dia)</td></tr>
-<tr><td><code>nEnd</code></td><td>Numérico</td><td>Coluna de fim (normalmente o número do dia)</td></tr>
-<tr><td><code>nClrBack</code></td><td>Numérico</td><td>Cor de fundo da barra</td></tr>
+<tr><td><code>nRow</code></td><td>Numeric</td><td>Row position of the item</td></tr>
+<tr><td><code>nStart</code></td><td>Numeric</td><td>Start column (typically day number)</td></tr>
+<tr><td><code>nEnd</code></td><td>Numeric</td><td>End column (typically day number)</td></tr>
+<tr><td><code>nClrBack</code></td><td>Numeric</td><td>Background color of the bar</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Gráfico de Gantt de Planejamento de Projeto</h2>
+<h2 id="example">Example: Project Plan Gantt Chart</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -106,18 +106,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Use <code>SetGridMonth( nRows )</code> para exibir cabeçalhos de dia da semana/mês. nRows determina quantas semanas são visíveis. Sem isso, a grade mostra um cabeçalho simples de número de coluna.</li>
-<li>Os itens são armazenados em <code>aItems</code> como objetos TGanttItem. Use <code>AtItem( nRow, nCol )</code> para localizar um item em uma coordenada específica da grade.</li>
-<li>O bloco de código <code>bChange</code> é acionado quando um item é arrastado ou modificado via interação do mouse. O bloco de código recebe o TGanttItem afetado como parâmetro.</li>
-<li>O controle recalcula as posições das células ao redimensionar via <code>ReCalculate()</code>, que é chamado automaticamente pelo método Resize.</li>
-<li>As dimensões das células (<code>nCellWidth</code>, <code>nCellHeight</code>) podem ser ajustadas para se adequar a diferentes densidades de exibição ou durações de projeto.</li>
+<li>Use <code>SetGridMonth( nRows )</code> to display weekday/month headers. nRows determines how many weeks are visible. Without this, the grid shows a plain column-number header.</li>
+<li>Items are stored in <code>aItems</code> as TGanttItem objects. Use <code>AtItem( nRow, nCol )</code> to locate an item at a specific grid coordinate.</li>
+<li>The <code>bChange</code> codeblock is triggered when an item is dragged or modified via mouse interaction. The codeblock receives the affected TGanttItem as a parameter.</li>
+<li>The control recalculates cell positions on resize via <code>ReCalculate()</code>, which is automatically called from the Resize method.</li>
+<li>Cell dimensions (<code>nCellWidth</code>, <code>nCellHeight</code>) can be adjusted to fit different display densities or project durations.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/utilities/tfwstack.html">&larr; tfwstack</a> | <a href="../../pt/reference/tgdip.html">tgdip &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

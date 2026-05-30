@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TEmbeddings - Documentaci&oacute;n FWH</title>
+<title>TEmbeddings - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -15,14 +15,14 @@
 <p class="class-source">Fuente: <code>source/classes/tembeddings.prg</code></p>
 
 <p>
-TEmbeddings es la clase de FiveWin para generar y comparar embeddings de texto (representaciones vectoriales
-del texto). Soporta tanto la <strong>API de HuggingFace</strong> (a trav&eacute;s del pipeline de extracci&oacute;n de caracter&iacute;sticas
-de la Inference API) como la <strong>API de embeddings de OpenAI</strong>. Los embeddings convierten texto
-en vectores de alta dimensi&oacute;n que capturan el significado sem&aacute;ntico, permitiendo operaciones como
-b&uacute;squeda de similitud sem&aacute;ntica, agrupamiento y clasificaci&oacute;n.
+TEmbeddings is FiveWin's class for generating and comparing text embeddings (vector
+representations of text). It supports both <strong>HuggingFace</strong> (via the Inference API
+feature-extraction pipeline) and <strong>OpenAI</strong> embeddings API. Embeddings convert text
+into high-dimensional vectors that capture semantic meaning, enabling operations like
+semantic similarity search, clustering, and classification.
 </p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
@@ -39,39 +39,39 @@ flowchart LR
     A --> B
 </div>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cModel</code></td><td>Car&aacute;cter</td><td><code>"sentence-transformers/all-MiniLM-L6-v2"</code></td><td>Nombre del modelo de embeddings. ID de modelo HuggingFace o modelo de embedding OpenAI.</td></tr>
-<tr><td><code>cKey</code></td><td>Car&aacute;cter</td><td></td><td>Clave API. Lee primero <code>HF_API_KEY</code>, luego <code>OPENAI_API_KEY</code>.</td></tr>
-<tr><td><code>aEmbeddings</code></td><td>Array</td><td></td><td>El vector de embedding devuelto por la API (array de valores num&eacute;ricos)</td></tr>
-<tr><td><code>cResponse</code></td><td>Car&aacute;cter</td><td></td><td>Respuesta JSON en bruto de la API</td></tr>
-<tr><td><code>cUrl</code></td><td>Car&aacute;cter</td><td></td><td>URL del endpoint de la API (se establece autom&aacute;ticamente seg&uacute;n el prefijo del modelo)</td></tr>
-<tr><td><code>nError</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>C&oacute;digo de error curl</td></tr>
-<tr><td><code>nHttpCode</code></td><td>Num&eacute;rico</td><td><code>0</code></td><td>C&oacute;digo de estado HTTP de la respuesta</td></tr>
+<tr><td><code>cModel</code></td><td>Character</td><td><code>"sentence-transformers/all-MiniLM-L6-v2"</code></td><td>Embeddings model name. HuggingFace model ID or OpenAI embedding model.</td></tr>
+<tr><td><code>cKey</code></td><td>Character</td><td></td><td>API key. Reads <code>HF_API_KEY</code> first, then <code>OPENAI_API_KEY</code>.</td></tr>
+<tr><td><code>aEmbeddings</code></td><td>Array</td><td></td><td>The embedding vector returned by the API (array of numeric values)</td></tr>
+<tr><td><code>cResponse</code></td><td>Character</td><td></td><td>Raw JSON response from the API</td></tr>
+<tr><td><code>cUrl</code></td><td>Character</td><td></td><td>API endpoint URL (auto-set based on model prefix)</td></tr>
+<tr><td><code>nError</code></td><td>Numeric</td><td><code>0</code></td><td>curl error code</td></tr>
+<tr><td><code>nHttpCode</code></td><td>Numeric</td><td><code>0</code></td><td>HTTP response status code</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cModel, cKey )</code></td><td>Crear una instancia de TEmbeddings. Por defecto usa el modelo HuggingFace MiniLM. Lee la clave API de las variables de entorno <code>HF_API_KEY</code> y luego <code>OPENAI_API_KEY</code> si no se proporciona.</td></tr>
-<tr><td><code>GetEmbeddings( cText )</code></td><td>Generar embeddings para el texto dado. Almacena el vector en <code>aEmbeddings</code>. Devuelve el array de vector en bruto.</td></tr>
-<tr><td><code>Distance( aVector, lCosine )</code></td><td>Calcular la distancia entre <code>aEmbeddings</code> y otro vector. Por defecto usa distancia coseno. Establezca <code>lCosine := .F.</code> para distancia euclidiana.</td></tr>
-<tr><td><code>DistanceFrom( oEmbeddings )</code></td><td>Calcular la distancia a otro objeto TEmbeddings comparando sus vectores <code>aEmbeddings</code>.</td></tr>
-<tr><td><code>End()</code></td><td>Limpiar el manejador libcurl.</td></tr>
+<tr><td><code>New( cModel, cKey )</code></td><td>Create a TEmbeddings instance. Defaults to HuggingFace MiniLM model. Reads API key from <code>HF_API_KEY</code> then <code>OPENAI_API_KEY</code> env vars if not provided.</td></tr>
+<tr><td><code>GetEmbeddings( cText )</code></td><td>Generate embeddings for the given text. Stores the vector in <code>aEmbeddings</code>. Returns the raw vector array.</td></tr>
+<tr><td><code>Distance( aVector, lCosine )</code></td><td>Compute distance between <code>aEmbeddings</code> and another vector. Default uses cosine distance. Set <code>lCosine := .F.</code> for Euclidean distance.</td></tr>
+<tr><td><code>DistanceFrom( oEmbeddings )</code></td><td>Compute distance to another TEmbeddings object by comparing their <code>aEmbeddings</code> vectors.</td></tr>
+<tr><td><code>End()</code></td><td>Clean up the libcurl handle.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Similitud Sem&aacute;ntica</h2>
+<h2 id="example">Example: Semantic Similarity</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -104,7 +104,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-euclidean">Ejemplo: Distancia Euclidiana</h2>
+<h2 id="example-euclidean">Example: Euclidean Distance</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -124,18 +124,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>El modelo predeterminado es <code>sentence-transformers/all-MiniLM-L6-v2</code> de HuggingFace. Cambiar el nombre del modelo cambia autom&aacute;ticamente entre proveedores: si el nombre del modelo contiene <code>"openai"</code> o <code>"text-embedding-"</code>, usa el endpoint de OpenAI; de lo contrario, usa HuggingFace.</li>
-<li>Cuando use HuggingFace, establezca la variable de entorno <code>HF_API_KEY</code>. Cuando use OpenAI, establezca <code>OPENAI_API_KEY</code>.</li>
-<li>El m&eacute;todo <code>Distance()</code> soporta dos m&eacute;tricas: distancia coseno (predeterminada) va de 0 (id&eacute;ntico) a 1 (completamente diferente); la distancia euclidiana mide la distancia en l&iacute;nea recta entre vectores.</li>
-<li>El <code>OPERATOR "-"</code> permite una sintaxis intuitiva: <code>oE1 - oE2</code> calcula la distancia entre dos objetos TEmbeddings. Esto es equivalente a llamar a <code>oE1:DistanceFrom( oE2 )</code>.</li>
-<li>Ambos vectores deben tener la misma longitud. El m&eacute;todo <code>Distance()</code> devuelve <code>-1</code> en caso de error.</li>
+<li>The default model is <code>sentence-transformers/all-MiniLM-L6-v2</code> from HuggingFace. Changing the model name switches between providers automatically: if the model name contains <code>"openai"</code> or <code>"text-embedding-"</code>, it uses the OpenAI endpoint; otherwise it uses HuggingFace.</li>
+<li>When using HuggingFace, set the <code>HF_API_KEY</code> environment variable. When using OpenAI, set <code>OPENAI_API_KEY</code>.</li>
+<li>The <code>Distance()</code> method supports two metrics: cosine distance (default) ranges from 0 (identical) to 1 (completely different); Euclidean distance measures the straight-line distance between vectors.</li>
+<li>The <code>OPERATOR "-"</code> allows intuitive syntax: <code>oE1 - oE2</code> computes the distance between two TEmbeddings objects. This is equivalent to calling <code>oE1:DistanceFrom( oE2 )</code>.</li>
+<li>Both vectors must have the same length. The <code>Distance()</code> method returns <code>-1</code> on error.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tedit.html">&larr; tedit</a> | <a href="../../es/reference/tenhmeta.html">tenhmeta &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

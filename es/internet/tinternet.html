@@ -13,40 +13,40 @@
 
 <h1>TInternet</h1>
 <p class="class-source">Fuente: <code>source/classes/internet.prg</code></p>
-<p class="class-hierarchy">Hereda de: ninguna (clase base)</p>
+<p class="class-hierarchy">Inherits from: none (base class)</p>
 
 <p>
-TInternet es la clase base para el acceso a Internet basado en WinInet en FWH. Gestiona un manejador de sesión WinInet global y proporciona un método fábrica para crear conexiones TFTP. La clase usa un patrón singleton con conteo de referencias para el manejador de sesión WinINet.
+TInternet is the base class for WinInet-based internet access in FWH. It manages a global WinInet session handle and provides a factory method for creating TFTP connections. The class uses a reference-counted singleton pattern for the WinINet session handle.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hWinINet</code></td><td>Manejador</td><td>(Dato de clase) Manejador de WinINet.dll abierto</td></tr>
-<tr><td><code>hSession</code></td><td>Manejador</td><td>(Dato de clase) Manejador de la sesión WinINet actual (InternetOpen)</td></tr>
-<tr><td><code>nCount</code></td><td>Numérico</td><td>(Dato de clase) Conteo de referencia de objetos TInternet activos</td></tr>
-<tr><td><code>aFTPs</code></td><td>Array</td><td>(Dato de clase) Array de todos los objetos TFTP actualmente en uso</td></tr>
+<tr><td><code>hWinINet</code></td><td>Handle</td><td>(Class data) Handle to the opened WinINet.dll</td></tr>
+<tr><td><code>hSession</code></td><td>Handle</td><td>(Class data) Handle of the current WinINet session (InternetOpen)</td></tr>
+<tr><td><code>nCount</code></td><td>Numeric</td><td>(Class data) Reference count of active TInternet objects</td></tr>
+<tr><td><code>aFTPs</code></td><td>Array</td><td>(Class data) Array of all TFTP objects currently in use</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New()</code></td><td>Crea un nuevo objeto TInternet; incrementa el conteo de referencia de la sesión y abre la sesión WinINet en el primer uso</td></tr>
-<tr><td><code>End()</code></td><td>Libera el objeto internet; decrementa el conteo de referencia y cierra la sesión WinINet cuando el conteo llega a cero</td></tr>
-<tr><td><code>FTP( cFTPSite, cUserName, cPassword )</code></td><td>Crea y devuelve un nuevo objeto TFTP conectado al sitio FTP especificado</td></tr>
+<tr><td><code>New()</code></td><td>Create a new TInternet object; increments the session reference count and opens the WinINet session on first use</td></tr>
+<tr><td><code>End()</code></td><td>Release the internet object; decrements the reference count and closes the WinINet session when the count reaches zero</td></tr>
+<tr><td><code>FTP( cFTPSite, cUserName, cPassword )</code></td><td>Create and return a new TFTP object connected to the specified FTP site</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Subida de Archivo FTP vía WinInet</h2>
+<h2 id="example">Example: FTP File Upload via WinInet</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -68,17 +68,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TInternet usa un patrón singleton con datos de clase: el manejador <code>hSession</code> se comparte entre todas las instancias de TInternet. La sesión se abre en el primer <code>New()</code> y se cierra en el último <code>End()</code>.</li>
-<li>El método <code>FTP()</code> crea un objeto <code>TFTP</code> (definido en <code>tftp.prg</code>) que usa <code>InternetConnect</code> con <code>INTERNET_SERVICE_FTP</code> en el puerto 21.</li>
-<li>Todas las conexiones TFTP activas se rastrean en <code>aFTPs</code> y se cierran adecuadamente cuando el conteo de referencia de TInternet llega a cero.</li>
-<li>Las llamadas directas a la API WinINet (<code>InternetOpen</code>, <code>InternetConnect</code>, <code>InternetCloseHandle</code>, <code>FtpPutFile</code>, etc.) están disponibles para uso avanzado más allá de los métodos envolventes.</li>
+<li>TInternet uses a class-data singleton pattern: the <code>hSession</code> handle is shared across all TInternet instances. The session is opened on the first <code>New()</code> and closed on the last <code>End()</code>.</li>
+<li>The <code>FTP()</code> method creates a <code>TFTP</code> object (defined in <code>tftp.prg</code>) which uses <code>InternetConnect</code> with <code>INTERNET_SERVICE_FTP</code> on port 21.</li>
+<li>All active TFTP connections are tracked in <code>aFTPs</code> and properly closed when the TInternet reference count reaches zero.</li>
+<li>Direct WinINet API calls (<code>InternetOpen</code>, <code>InternetConnect</code>, <code>InternetCloseHandle</code>, <code>FtpPutFile</code>, etc.) are available for advanced usage beyond the wrapper methods.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/core/tinier.html">&larr; tinier</a> | <a href="../../es/ui/tipaddr.html">tipaddr &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TDatabase - FWH Docs</title>
+<title>TDatabase - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -15,13 +15,13 @@
 <p class="class-source">Fuente: <code>source/classes/database.prg</code></p>
 
 <p>
-TDatabase es el envoltorio orientado a objetos de FiveWin sobre el sistema DBF/RDD (Replaceable Database Driver) de Harbour.
-Encapsula todas las operaciones comunes de base de datos -- apertura, navegación, edición, filtrado, indexación y más --
-en una interfaz de clase limpia. TDatabase puede trabajar con cualquier RDD soportado por Harbour, incluyendo DBFCDX, DBFNTX,
-DBFNSX y ADS (Advantage Database Server).
+TDatabase is FiveWin's object-oriented wrapper around Harbour's DBF/RDD (Replaceable Database Driver) system.
+It encapsulates all common database operations -- opening, navigating, editing, filtering, indexing, and more --
+into a clean class interface. TDatabase can work with any RDD supported by Harbour, including DBFCDX, DBFNTX,
+DBFNSX, and ADS (Advantage Database Server).
 </p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart TB
@@ -46,80 +46,85 @@ flowchart TB
     A -.-> G
 </div>
 
-<h2 id="data">Miembros DATA Clave</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Por Defecto</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cAlias</code></td><td>Carácter</td><td><code>""</code></td><td>Nombre del alias del área de trabajo (SOLO LECTURA)</td></tr>
-<tr><td><code>cFile</code></td><td>Carácter</td><td><code>""</code></td><td>Ruta del archivo DBF (SOLO LECTURA)</td></tr>
-<tr><td><code>cDriver</code></td><td>Carácter</td><td><code>RddSetDefault()</code></td><td>Nombre del driver RDD (p. ej. "DBFCDX", "DBFNTX")</td></tr>
-<tr><td><code>lReadOnly</code></td><td>Lógico</td><td><code>.F.</code></td><td>Abrir en modo de solo lectura</td></tr>
-<tr><td><code>lShared</code></td><td>Lógico</td><td><code>!Set(_SET_EXCLUSIVE)</code></td><td>Abrir en modo compartido</td></tr>
-<tr><td><code>lBuffer</code></td><td>Lógico</td><td><code>.F.</code></td><td>Habilitar el buffer de registros para bloqueo optimista</td></tr>
-<tr><td><code>nArea</code></td><td>Numérico</td><td><code>0</code></td><td>Número del área de trabajo (SOLO LECTURA)</td></tr>
-<tr><td><code>aStruct</code></td><td>Array</td><td></td><td>Array extendido de estructura de campos (más allá del estándar de 4 elementos)</td></tr>
-<tr><td><code>hRec</code></td><td>Hash</td><td></td><td>Registro actual como un hash (nombre de campo => valor)</td></tr>
-<tr><td><code>aBuffer</code></td><td>Array</td><td></td><td>Buffer de registro para bloqueo optimista</td></tr>
-<tr><td><code>bBoF</code></td><td>Bloque</td><td></td><td>Bloque de código evaluado al inicio del archivo</td></tr>
-<tr><td><code>bEoF</code></td><td>Bloque</td><td></td><td>Bloque de código evaluado al final del archivo</td></tr>
-<tr><td><code>bNetError</code></td><td>Bloque</td><td></td><td>Bloque de código evaluado ante un error de red</td></tr>
-<tr><td><code>bTrigger</code></td><td>Bloque</td><td></td><td>Bloque trigger evaluado ante cambios en el registro</td></tr>
-<tr><td><code>lADS</code></td><td>Lógico</td><td><code>.F.</code></td><td>Verdadero al usar el RDD de Advantage Database Server</td></tr>
-<tr><td><code>lHasMemos</code></td><td>Lógico</td><td><code>.F.</code></td><td>Indica si el DBF tiene campos memo (SOLO LECTURA)</td></tr>
-<tr><td><code>oCn</code></td><td>Objeto</td><td></td><td>Objeto de conexión para consultas SQL (desde FWH 13.03)</td></tr>
-<tr><td><code>oReplServer</code></td><td>Objeto</td><td></td><td>Servidor de replicación (MySQL/MS SQL, desde FWH 18.11)</td></tr>
+<tr><td><code>cAlias</code></td><td>Character</td><td><code>""</code></td><td>Work area alias name (READONLY)</td></tr>
+<tr><td><code>cFile</code></td><td>Character</td><td><code>""</code></td><td>DBF file path (READONLY)</td></tr>
+<tr><td><code>cDriver</code></td><td>Character</td><td><code>RddSetDefault()</code></td><td>RDD driver name (e.g. "DBFCDX", "DBFNTX")</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td><code>.F.</code></td><td>Open in read-only mode</td></tr>
+<tr><td><code>lShared</code></td><td>Logical</td><td><code>!Set(_SET_EXCLUSIVE)</code></td><td>Open in shared mode</td></tr>
+<tr><td><code>lBuffer</code></td><td>Logical</td><td><code>.F.</code></td><td>Enable record buffering for optimistic locking</td></tr>
+<tr><td><code>nArea</code></td><td>Numeric</td><td><code>0</code></td><td>Work area number (READONLY)</td></tr>
+<tr><td><code>aStruct</code></td><td>Array</td><td></td><td>Extended field structure array (beyond standard 4-element)</td></tr>
+<tr><td><code>hRec</code></td><td>Hash</td><td></td><td>Current record as a hash (field name => value)</td></tr>
+<tr><td><code>aBuffer</code></td><td>Array</td><td></td><td>Record buffer for optimistic locking</td></tr>
+<tr><td><code>nBufRecNo</code></td><td>Numeric</td><td><code>0</code></td><td>Record number of the current buffer content</td></tr>
+<tr><td><code>bBoF</code></td><td>Block</td><td></td><td>Code block evaluated at beginning of file</td></tr>
+<tr><td><code>bEoF</code></td><td>Block</td><td></td><td>Code block evaluated at end of file</td></tr>
+<tr><td><code>bNetError</code></td><td>Block</td><td></td><td>Code block evaluated on network error</td></tr>
+<tr><td><code>bTrigger</code></td><td>Block</td><td></td><td>Trigger block evaluated on record changes</td></tr>
+<tr><td><code>lADS</code></td><td>Logical</td><td><code>.F.</code></td><td>True when using Advantage Database Server RDD</td></tr>
+<tr><td><code>lHasMemos</code></td><td>Logical</td><td><code>.F.</code></td><td>Whether the DBF has memo fields (READONLY)</td></tr>
+<tr><td><code>oCn</code></td><td>Object</td><td></td><td>Connection object for SQL queries (since FWH 13.03)</td></tr>
+<tr><td><code>oReplServer</code></td><td>Object</td><td></td><td>Replication server (MySQL/MS SQL, since FWH 18.11)</td></tr>
 </tbody>
 </table>
 
-<h2 id="constructors">Constructores</h2>
+<h2 id="constructors">Constructors</h2>
 
 <h3>New()</h3>
 <pre><code>METHOD New( ncArea, cFile, cDriver, lShared, lReadOnly, cPassword )</code></pre>
 <p>
-Crea un objeto TDatabase. Si <code>ncArea</code> es un número o alias de un área de trabajo ya abierta,
-TDatabase envuelve el área existente. Si <code>ncArea</code> es una cadena con la ruta de un archivo, se prepara para abrir ese archivo.
-Si solo se pasa un parámetro, detecta automáticamente si se trata de un número de área, un alias o un nombre de archivo.
+Creates a TDatabase object. If <code>ncArea</code> is a number or alias of an already-open work area,
+TDatabase wraps the existing area. If <code>ncArea</code> is a file path string, it prepares to open that file.
+If only one parameter is passed, it auto-detects whether it is an area number, alias, or filename.
 </p>
 
 <h3>Open()</h3>
 <pre><code>METHOD Open( cAlias, cFile, cDriver, lShared, lReadOnly, cPassword )</code></pre>
 <p>
-Abre un archivo DBF con un alias explícito. Este es el constructor preferido para abrir archivos nuevos.
+Opens a DBF file with explicit alias. This is the preferred constructor for opening new files.
 </p>
 
 <h3>Create()</h3>
 <pre><code>METHOD Create( cFile, aStruct, cDriver, cIndexFields, cPassword )</code></pre>
 <p>
-Crea un nuevo archivo DBF con la estructura especificada y, opcionalmente, crea un índice.
+Creates a new DBF file with the specified structure and optionally creates an index.
+The <code>aStruct</code> parameter is an array of field definitions, where each element contains
+<code>{ cFieldName, cType, nLen, nDec }</code>. The optional <code>cIndexFields</code> parameter
+specifies a comma-separated list of field names for an automatic index. After creation,
+the table is opened and the work area is ready for use.
 </p>
 
-<h2 id="navigation">Métodos de Navegación</h2>
+<h2 id="navigation">Navigation Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>GoTop()</code></td><td>Mover al primer registro, recargar el buffer</td></tr>
-<tr><td><code>GoBottom()</code></td><td>Mover al último registro, recargar el buffer</td></tr>
-<tr><td><code>GoTo( nRecNo )</code></td><td>Ir a un número de registro específico</td></tr>
-<tr><td><code>Skip( nRecords )</code></td><td>Avanzar/retroceder n registros</td></tr>
-<tr><td><code>Skipper( nRecords )</code></td><td>Skipper para XBrowse (uso interno)</td></tr>
-<tr><td><code>Bof()</code></td><td>Devuelve .T. si está al inicio del archivo</td></tr>
-<tr><td><code>Eof()</code></td><td>Devuelve .T. si está al final del archivo</td></tr>
-<tr><td><code>RecNo()</code></td><td>Número de registro actual</td></tr>
-<tr><td><code>RecCount()</code></td><td>Número total de registros</td></tr>
-<tr><td><code>LastRec()</code></td><td>Número del último registro (igual que RecCount)</td></tr>
-<tr><td><code>KeyNo()</code></td><td>Posición de clave actual en el índice activo</td></tr>
-<tr><td><code>KeyCount()</code></td><td>Total de claves en el índice activo</td></tr>
-<tr><td><code>KeyGoTo( nKeyNo )</code></td><td>Ir a una posición de clave específica en el índice</td></tr>
+<tr><td><code>GoTop()</code></td><td>Move to first record, reload buffer</td></tr>
+<tr><td><code>GoBottom()</code></td><td>Move to last record, reload buffer</td></tr>
+<tr><td><code>GoTo( nRecNo )</code></td><td>Go to specific record number</td></tr>
+<tr><td><code>Skip( nRecords )</code></td><td>Skip forward/backward by n records</td></tr>
+<tr><td><code>Skipper( nRecords )</code></td><td>Skipper for XBrowse (internal use)</td></tr>
+<tr><td><code>Bof()</code></td><td>Returns .T. if at beginning of file</td></tr>
+<tr><td><code>Eof()</code></td><td>Returns .T. if at end of file</td></tr>
+<tr><td><code>RecNo()</code></td><td>Current record number</td></tr>
+<tr><td><code>RecCount()</code></td><td>Total number of records</td></tr>
+<tr><td><code>LastRec()</code></td><td>Last record number (same as RecCount)</td></tr>
+<tr><td><code>KeyNo()</code></td><td>Current key position in active index</td></tr>
+<tr><td><code>KeyCount()</code></td><td>Total keys in active index</td></tr>
+<tr><td><code>KeyGoTo( nKeyNo )</code></td><td>Go to specific key position in index</td></tr>
 </tbody>
 </table>
 
-<h2 id="seeking">Búsqueda y Filtrado</h2>
+<h2 id="seeking">Seeking &amp; Filtering</h2>
 
 <pre><code>METHOD Seek( uExpr, lSoft, lWildSeek, lCurRec )
 METHOD SetFilter( cFilter, aParams )
@@ -129,78 +134,125 @@ METHOD SetOrder( cnTag, cFile )
 METHOD OrdDescend( cnTag, cFile, lDesc )</code></pre>
 
 <p>
-<code>Seek()</code> busca en el índice activo la expresión de clave especificada. <code>lSoft</code> habilita
-la búsqueda blanda (coincidencia más cercana). <code>SetFilter()</code> acepta una cadena de expresión de filtro con
-sustitución opcional de parámetros mediante <code>aParams</code>. <code>SetScope()</code> establece los valores de ámbito
-superior e inferior para restringir la navegación dentro de un rango del índice.
+<code>Seek()</code> searches the active index for the specified key expression. <code>lSoft</code> enables
+soft-seek (nearest match). <code>SetFilter()</code> accepts a filter expression string with optional parameter
+substitution via <code>aParams</code>. <code>SetScope()</code> sets top and bottom scope values to restrict
+navigation within an index range.
 </p>
 
-<h2 id="editing">Métodos de Edición</h2>
+<h2 id="editing">Editing Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>FieldGet( cnCol )</code></td><td>Obtener el valor de un campo por nombre o posición</td></tr>
-<tr><td><code>FieldPut( nField, uVal )</code></td><td>Establecer el valor de un campo por posición</td></tr>
-<tr><td><code>Append( aFlds, aVals )</code></td><td>Añadir un registro en blanco, opcionalmente rellenar campos</td></tr>
-<tr><td><code>Blank()</code></td><td>Crear un buffer en blanco (sin añadido físico aún)</td></tr>
-<tr><td><code>Save()</code></td><td>Guardar en disco los cambios del buffer</td></tr>
-<tr><td><code>SaveBuff()</code></td><td>Guardar el buffer sin volver a leer</td></tr>
-<tr><td><code>Delete()</code></td><td>Marcar el registro actual como borrado</td></tr>
-<tr><td><code>Recall()</code></td><td>Recuperar el registro actual borrado</td></tr>
-<tr><td><code>Update( aFlds, aVals )</code></td><td>Actualizar varios campos a la vez</td></tr>
-<tr><td><code>Record( cFieldList, lBlank )</code></td><td>Obtener un objeto TDataRow para el registro actual</td></tr>
-<tr><td><code>Load( lReload )</code></td><td>Recargar el hash hRec desde disco</td></tr>
-<tr><td><code>RollBack()</code></td><td>Descartar los cambios del buffer</td></tr>
+<tr><td><code>FieldGet( cnCol )</code></td><td>Get field value by name or position</td></tr>
+<tr><td><code>FieldPut( nField, uVal )</code></td><td>Set field value by position</td></tr>
+<tr><td><code>FieldPos( cField )</code></td><td>Get the ordinal position of a field by name</td></tr>
+<tr><td><code>Append( aFlds, aVals )</code></td><td>Append blank record, optionally fill fields</td></tr>
+<tr><td><code>Blank()</code></td><td>Create a blank buffer (no physical append yet)</td></tr>
+<tr><td><code>Save()</code></td><td>Save buffered changes to disk</td></tr>
+<tr><td><code>SaveBuff()</code></td><td>Save buffer without re-reading</td></tr>
+<tr><td><code>Delete()</code></td><td>Mark current record as deleted</td></tr>
+<tr><td><code>Recall()</code></td><td>Undelete current record</td></tr>
+<tr><td><code>Update( aFlds, aVals )</code></td><td>Update multiple fields at once</td></tr>
+<tr><td><code>Record( cFieldList, lBlank )</code></td><td>Get a TDataRow object for the current record</td></tr>
+<tr><td><code>Load( lReload )</code></td><td>Reload the hRec hash from disk</td></tr>
+<tr><td><code>RollBack()</code></td><td>Discard buffered changes</td></tr>
 </tbody>
 </table>
 
-<h2 id="locking">Métodos de Bloqueo</h2>
+<h2 id="locking">Locking Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>Lock()</code></td><td>Bloqueo a nivel de archivo (FLock)</td></tr>
-<tr><td><code>RecLock( nRecNo, @lLocked )</code></td><td>Bloqueo a nivel de registro</td></tr>
-<tr><td><code>UnLock()</code></td><td>Liberar todos los bloqueos</td></tr>
-<tr><td><code>IsRecLocked( nRecNo )</code></td><td>Comprobar si un registro específico está bloqueado</td></tr>
-<tr><td><code>IsFileLocked()</code></td><td>Comprobar si el archivo completo está bloqueado</td></tr>
+<tr><td><code>Lock()</code></td><td>File-level lock (FLock)</td></tr>
+<tr><td><code>RecLock( nRecNo, @lLocked )</code></td><td>Record-level lock</td></tr>
+<tr><td><code>UnLock()</code></td><td>Release all locks</td></tr>
+<tr><td><code>IsRecLocked( nRecNo )</code></td><td>Check if specific record is locked</td></tr>
+<tr><td><code>IsFileLocked()</code></td><td>Check if entire file is locked</td></tr>
 </tbody>
 </table>
 
-<h2 id="indexing">Métodos de Indexación</h2>
+<h2 id="indexing">Indexing Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>AddIndex( cFile, cTag )</code></td><td>Añadir un archivo de índice existente a la lista de órdenes</td></tr>
-<tr><td><code>CreateIndex( cFile, cTag, cKey, lUnique, lDescend, lMemory )</code></td><td>Crear un nuevo índice</td></tr>
-<tr><td><code>DeleteIndex( cTag, cFile )</code></td><td>Eliminar un tag de índice</td></tr>
-<tr><td><code>CloseIndex()</code></td><td>Limpiar todos los índices de la lista de órdenes</td></tr>
-<tr><td><code>ReIndex()</code></td><td>Reconstruir todos los índices</td></tr>
-<tr><td><code>IndexKey( ncTag, cFile )</code></td><td>Obtener la expresión de clave del índice</td></tr>
-<tr><td><code>IndexName( nTag, cFile )</code></td><td>Obtener el nombre del tag del índice</td></tr>
+<tr><td><code>AddIndex( cFile, cTag )</code></td><td>Add an existing index file to the order list</td></tr>
+<tr><td><code>CreateIndex( cFile, cTag, cKey, lUnique, lDescend, lMemory )</code></td><td>Create a new index</td></tr>
+<tr><td><code>DeleteIndex( cTag, cFile )</code></td><td>Delete an index tag</td></tr>
+<tr><td><code>CloseIndex()</code></td><td>Clear all indexes from the order list</td></tr>
+<tr><td><code>ReIndex()</code></td><td>Rebuild all indexes</td></tr>
+<tr><td><code>IndexKey( ncTag, cFile )</code></td><td>Get index key expression</td></tr>
+<tr><td><code>IndexName( nTag, cFile )</code></td><td>Get index tag name</td></tr>
 </tbody>
 </table>
 
-<h2 id="browsing">Navegación y XBrowse</h2>
+<h2 id="buffering">Buffering</h2>
+
+<p>
+TDatabase supports optional record buffering for optimistic concurrency control. When buffering
+is enabled, changes are held in memory and written to disk only when <code>Save()</code> is called.
+</p>
+
+<table>
+<thead>
+<tr><th>DATA / Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>lBuffer</code></td><td>Set to .T. to enable buffering. When on, field modifications are held in the buffer array rather than written directly to disk.</td></tr>
+<tr><td><code>aBuffer</code></td><td>Array containing the buffered field values. The array is sized to match the field count.</td></tr>
+<tr><td><code>nBufRecNo</code></td><td>Record number corresponding to the content currently in <code>aBuffer</code>. Used to detect if the buffer is stale.</td></tr>
+<tr><td><code>Blank()</code></td><td>Create a blank buffer for appending a new record without writing to disk. Call <code>Save()</code> to commit.</td></tr>
+<tr><td><code>Load( lReload )</code></td><td>Fill the buffer from the current record on disk. When <code>lReload</code> is .T., re-reads even if the buffer already contains data.</td></tr>
+<tr><td><code>Save()</code></td><td>Commit buffered changes to disk. For new records (created with <code>Blank()</code>), performs an append. For existing records, writes field values.</td></tr>
+<tr><td><code>SaveBuff()</code></td><td>Save the buffer to disk without re-reading the current record first. Used for performance when the record is known to be current.</td></tr>
+<tr><td><code>RollBack()</code></td><td>Discard buffered changes and restore the buffer to the original disk state.</td></tr>
+</tbody>
+</table>
+
+<h2 id="edit-shortcut">Editing with TDataRow</h2>
+
+<p>
+The <code>Record()</code> method provides a shortcut to create a TDataRow object for the current
+record, enabling rich editing dialogs:
+</p>
+
+<pre><code class="language-harbour">METHOD Record( cFieldList, lBlank ) -&gt; oDataRow</code></pre>
+
+<p>
+Pass a comma-separated field list to limit the visible fields, or <code>lBlank=.T.</code> to
+start with a blank record. The returned TDataRow can be used with <code>Edit()</code> to display
+an interactive editing dialog:
+</p>
+
+<pre><code class="language-harbour">oDb:GoTop()
+oRow := oDb:Record()
+if oRow:Edit( , , "Edit Customer" )
+   MsgInfo( "Changes saved" )
+endif</code></pre>
+
+<p>See <a href="../../es/data/tdatarow.html">TDataRow</a> for full documentation.</p>
+
+<h2 id="browsing">Browsing &amp; XBrowse</h2>
 
 <pre><code>METHOD Browse( cTitle, acFields )
 METHOD SetXBrowse( oBrw, aCols, lAutoSort, lAutocols )
 METHOD xBrowse( oWnd, aCols, lAutoSort, bSetUp )</code></pre>
 
 <p>
-<code>xBrowse()</code> es la forma más rápida de mostrar el contenido de una base de datos en una rejilla XBrowse. Configura automáticamente
-el browse con encabezados de columna, tipos de datos y ordenación.
+<code>xBrowse()</code> is the quickest way to display database contents in an XBrowse grid. It automatically
+configures the browse with column headers, data types, and sorting.
 </p>
 
-<h2 id="data-flow">Flujo de Datos</h2>
+<h2 id="data-flow">Data Flow</h2>
 
 <div class="mermaid">
 sequenceDiagram
@@ -233,7 +285,7 @@ sequenceDiagram
     DB->>RDD: DbCloseArea()
 </div>
 
-<h2 id="example-basic">Ejemplo: Operaciones Básicas con DBF</h2>
+<h2 id="example-basic">Example: Basic DBF Operations</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -241,38 +293,38 @@ function Main()
 
    local oDb, oWnd
 
-   // Abrir un archivo DBF con el driver DBFCDX
+   // Open a DBF file with DBFCDX driver
    DATABASE oDb FILE "customers.dbf" DRIVER "DBFCDX" SHARED
 
-   // Equivalente a:
+   // Equivalent to:
    // oDb := TDatabase():Open( "CUST", "customers.dbf", "DBFCDX", .T. )
 
-   // Navegar
+   // Navigate
    oDb:GoTop()
    ? oDb:FieldGet( "FIRST" )    // "John"
    ? oDb:FieldGet( "LAST" )     // "Smith"
-   ? oDb:hRec[ "FIRST" ]        // "John" (acceso por hash)
+   ? oDb:hRec[ "FIRST" ]        // "John" (hash access)
 
-   // Establecer un orden de índice y buscar
+   // Set an index order and seek
    oDb:SetOrder( "LAST" )
    if oDb:Seek( "Jones" )
       ? "Found:", oDb:FieldGet( "FIRST" ), oDb:FieldGet( "LAST" )
    endif
 
-   // Editar un registro
+   // Edit a record
    if oDb:RecLock()
       oDb:FieldPut( "PHONE", "555-1234" )
       oDb:UnLock()
    endif
 
-   // Añadir un nuevo registro
+   // Append a new record
    oDb:Append()
    oDb:FieldPut( "FIRST", "Jane" )
    oDb:FieldPut( "LAST",  "Doe" )
    oDb:FieldPut( "PHONE", "555-5678" )
    oDb:Save()
 
-   // Aplicar un filtro
+   // Apply a filter
    oDb:SetFilter( "STATE = 'CA'" )
    oDb:GoTop()
    do while ! oDb:Eof()
@@ -285,7 +337,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-xbrowse">Ejemplo: Navegación con XBrowse</h2>
+<h2 id="example-xbrowse">Example: Browse with XBrowse</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -308,7 +360,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-buffer">Ejemplo: Edición con Buffer</h2>
+<h2 id="example-buffer">Example: Buffered Editing</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -318,25 +370,25 @@ function Main()
 
    DATABASE oDb FILE "customers.dbf" DRIVER "DBFCDX" SHARED
 
-   // Habilitar el buffer para el bloqueo optimista
+   // Enable buffering for optimistic locking
    oDb:SetBuffer( .T. )
 
    oDb:GoTop()
 
-   // Los cambios van al buffer, no al disco
+   // Changes go to buffer, not disk
    oDb:FieldPut( "PHONE", "555-0000" )
 
    if MsgYesNo( "Save changes?" )
-      oDb:Save()        // escribe el buffer en disco
+      oDb:Save()        // writes buffer to disk
    else
-      oDb:RollBack()    // descarta los cambios
+      oDb:RollBack()    // discard changes
    endif
 
    oDb:Close()
 
 return nil</code></pre>
 
-<h2 id="example-index">Ejemplo: Creación de Índices</h2>
+<h2 id="example-index">Example: Creating Indexes</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -346,16 +398,16 @@ function Main()
 
    DATABASE oDb FILE "customers.dbf" DRIVER "DBFCDX" SHARED
 
-   // Crear un índice compuesto con varios tags
+   // Create a compound index with multiple tags
    oDb:CreateIndex( "customers.cdx", "NAME",  "UPPER(LAST)+UPPER(FIRST)" )
    oDb:CreateIndex( "customers.cdx", "STATE", "STATE" )
-   oDb:CreateIndex( "customers.cdx", "PHONE", "PHONE", .T. )  // único
+   oDb:CreateIndex( "customers.cdx", "PHONE", "PHONE", .T. )  // unique
 
-   // Usar el orden NAME
+   // Use the NAME order
    oDb:SetOrder( "NAME" )
    oDb:GoTop()
 
-   // Navegación con ámbito: solo registros donde STATE = "CA"
+   // Scoped navigation: only records where STATE = "CA"
    oDb:SetScope( "CA", "CA" )
    oDb:GoTop()
    do while ! oDb:Eof()
@@ -367,15 +419,15 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="recset-compat">Sintaxis Compatible con RecordSet</h2>
+<h2 id="recset-compat">RecordSet-Compatible Syntax</h2>
 
 <p>
-TDatabase proporciona nombres de método compatibles con el RecordSet de ADO para facilitar la migración entre DBF local y datos remotos:
+TDatabase provides ADO RecordSet-compatible method names for easier migration between local DBF and remote data:
 </p>
 
 <table>
 <thead>
-<tr><th>Método RecordSet</th><th>Equivalente en TDatabase</th></tr>
+<tr><th>RecordSet Method</th><th>TDatabase Equivalent</th></tr>
 </thead>
 <tbody>
 <tr><td><code>MoveFirst()</code></td><td><code>GoTop()</code></td></tr>
@@ -386,8 +438,8 @@ TDatabase proporciona nombres de método compatibles con el RecordSet de ADO par
 </tbody>
 </table>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/reference/tcursor.html">&larr; tcursor</a> | <a href="../../es/data/tdatabase2.html">tdatabase2 &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

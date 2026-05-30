@@ -13,38 +13,38 @@
 
 <h1>TComObject</h1>
 <p class="class-source">Fonte: <code>source/classes/tcomobj.prg</code></p>
-<p class="class-hierarchy">Classe independente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TComObject fornece um wrapper genérico em torno de objetos COM (Component Object Model) do Windows através da interface <code>IDispatch</code>. Ela armazena o ponteiro <code>nIDispatch</code> e expõe métodos para invocar métodos COM, obter/definir propriedades e encapsular automaticamente ponteiros IDispatch retornados. A classe suporta chamadas COM encadeadas através de seu manipulador de erros: nomes de propriedades prefixados com <code>_</code> definem valores, nomes de propriedades simples obtêm valores, e valores de retorno IDispatch são automaticamente encapsulados em novas instâncias de TComObject.
+TComObject provides a generic wrapper around Windows COM (Component Object Model) objects via the <code>IDispatch</code> interface. It stores the <code>nIDispatch</code> pointer and exposes methods to invoke COM methods, get/set properties, and auto-wrap returned IDispatch pointers. The class supports chained COM calls through its error handler: property names prefixed with <code>_</code> set values, bare property names get values, and IDispatch return values are automatically wrapped in new TComObject instances.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nIDispatch</code></td><td>Numeric</td><td>Ponteiro para a interface COM IDispatch</td></tr>
+<tr><td><code>nIDispatch</code></td><td>Numeric</td><td>Pointer to the COM IDispatch interface</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cProgID )</code></td><td>Cria um objeto COM a partir de uma string ProgID (ex.: "Word.Application")</td></tr>
-<tr><td><code>Invoke( cMethod, u1, u2, u3 )</code></td><td>Invoca um método COM com até três parâmetros opcionais</td></tr>
-<tr><td><code>End()</code></td><td>Libera o objeto COM e libera o ponteiro IDispatch</td></tr>
-<tr><td><code>ClassName()</code></td><td>Retorna o nome da classe Harbour ("TComObject")</td></tr>
+<tr><td><code>New( cProgID )</code></td><td>Create a COM object from a ProgID string (e.g. "Word.Application")</td></tr>
+<tr><td><code>Invoke( cMethod, u1, u2, u3 )</code></td><td>Invoke a COM method with up to three optional parameters</td></tr>
+<tr><td><code>End()</code></td><td>Release the COM object and free the IDispatch pointer</td></tr>
+<tr><td><code>ClassName()</code></td><td>Return the Harbour class name ("TComObject")</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Automação do Word</h2>
+<h2 id="example">Example: Word Automation</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -52,44 +52,44 @@ function Main()
 
    local oWord, oDoc
 
-   // Cria o objeto COM Word Application
+   // Create Word Application COM object
    oWord := TComObject():New( "Word.Application" )
 
-   // Define propriedade (prefixo com _)
+   // Set property (prefix with _)
    oWord:_Visible := .T.
 
-   // Acessa a coleção de documentos (retorna TComObject encapsulado automaticamente)
+   // Access documents collection (returns auto-wrapped TComObject)
    oDoc := oWord:Documents
 
-   // Adiciona um novo documento
+   // Add a new document
    oDoc:Add()
 
-   // Invoca métodos
+   // Invoke methods
    oWord:Invoke( "Activate" )
 
-   // Define o conteúdo
+   // Set content
    oWord:Selection:TypeText( "Hello from FiveWin!" )
 
    MsgInfo( "Word is running. Press OK to close." )
 
-   // Limpeza
+   // Clean up
    oWord:Quit()
    oWord:End()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O manipulador de erros (<code>Error()</code>) é o núcleo da conveniência do TComObject. Quando você acessa uma propriedade sem o prefixo de underscore, ele chama <code>IDispatch::GetIDsOfNames</code> e <code>Invoke</code> com DISPATCH_PROPERTYGET. Se o valor de retorno for outro ponteiro IDispatch, ele é encapsulado automaticamente em um novo TComObject, permitindo navegação encadeada como <code>oWord:Selection:Text</code>.</li>
-<li>Definir uma propriedade requer o prefixo de underscore (ex.: <code>oWord:_Visible := .T.</code>), que aciona DISPATCH_PROPERTYPUT.</li>
-<li>Use <code>Invoke()</code> para métodos que precisam de controle explícito sobre os parâmetros, ou quando o comportamento de encapsulamento automático não se aplica.</li>
-<li>Sempre chame <code>End()</code> para liberar o ponteiro da interface COM e evitar vazamentos de recursos.</li>
-<li>Requer o subsistema COM do Windows (OLE32.dll). Funciona em todas as plataformas Windows de 32 e 64 bits.</li>
+<li>The error handler (<code>Error()</code>) is the core of TComObject's convenience. When you access a property without the underscore prefix, it calls <code>IDispatch::GetIDsOfNames</code> and <code>Invoke</code> with DISPATCH_PROPERTYGET. If the return value is another IDispatch pointer, it is auto-wrapped in a new TComObject, enabling chained navigation like <code>oWord:Selection:Text</code>.</li>
+<li>Setting a property requires the underscore prefix (e.g. <code>oWord:_Visible := .T.</code>), which triggers DISPATCH_PROPERTYPUT.</li>
+<li>Use <code>Invoke()</code> for methods that need explicit control over parameters, or when the auto-wrap behavior does not apply.</li>
+<li>Always call <code>End()</code> to release the COM interface pointer and avoid resource leaks.</li>
+<li>Requires the Windows COM subsystem (OLE32.dll). Works on all 32-bit and 64-bit Windows platforms.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/utilities/tcomm.html">&larr; tcomm</a> | <a href="../../pt/reference/tcomponent.html">tcomponent &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

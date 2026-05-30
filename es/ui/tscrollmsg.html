@@ -13,17 +13,17 @@
 
 <h1>TScrollMsg</h1>
 <p class="class-source">Fuente: <code>source/classes/scrolmsg.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TPanel</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
 
 <p>
-TScrollMsg es un control de texto tipo marquesina con desplazamiento automático. Desplaza texto continuamente ya sea horizontalmente (estilo cinta de cotizaciones) o verticalmente (estilo créditos). Un temporizador impulsa el desplazamiento incremental de píxeles, y el texto se envuelve sin problemas cuando llega al final. Admite velocidad configurable, colores, bordes y actualizaciones de texto en tiempo de ejecución.
+TScrollMsg is an auto-scrolling marquee text control. It continuously scrolls text either horizontally (ticker-tape style) or vertically (scrolling credits style). A timer drives incremental pixel scrolling, and the text wraps around seamlessly when it reaches the end. It supports configurable speed, colors, borders, and runtime text updates.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>cText</code></td><td>Character</td><td>The text to scroll (read-only, use <code>SetText()</code> to update)</td></tr>
@@ -35,11 +35,11 @@ TScrollMsg es un control de texto tipo marquesina con desplazamiento automático
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New( nRow, nCol, nW, nH, cText, oWnd, oFont, nSpeed, nClrText, nClrBack, lHoriz, lPixels, lDesign, cVarName, lNoBorder )</code></td><td>Create a new TScrollMsg marquee control</td></tr>
@@ -47,7 +47,7 @@ TScrollMsg es un control de texto tipo marquesina con desplazamiento automático
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Horizontal Marquee</h2>
+<h2 id="example">Example: Horizontal Marquee</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -65,18 +65,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>El intervalo del temporizador de la marquesina est
-<li>Al desplazarse verticalmente, el texto se envuelve usando <code>DT_WORDBREAK</code>. El desplazamiento horizontal usa una sola l
-<li>Pase <code>lHoriz := .T.</code> para habilitar el desplazamiento horizontal; el valor predeterminado es vertical.</li>
-<li>El control crea y activa autom
-<li>Establezca <code>lNoBorder := .T.</code> para suprimir el contorno del cuadro circundante.</li>
+<li>The marquee timer interval is fixed at 18 ms (approximately 55 fps). Adjust <code>nSpeed</code> (pixels per tick) to control the effective scroll velocity.</li>
+<li>When scrolling vertically, text wraps using <code>DT_WORDBREAK</code>. Horizontal scrolling uses a single line with <code>DT_SINGLELINE</code>.</li>
+<li>Pass <code>lHoriz := .T.</code> to enable horizontal scrolling; the default is vertical.</li>
+<li>The control automatically creates and activates its timer on first paint and destroys it on <code>Destroy()</code>.</li>
+<li>Set <code>lNoBorder := .T.</code> to suppress the surrounding box outline.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tscrollmetro.html">&larr; tscrollmetro</a> | <a href="../../es/ui/tscrollpanel.html">tscrollpanel &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTrayIcon - FWH Docs</title>
+<title>TTrayIcon - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,49 +13,49 @@
 
 <h1>TTrayIcon</h1>
 <p class="class-source">Fuente: <code>source/classes/ttray.prg</code></p>
-<p class="class-hierarchy">Clase independiente (no derivada de TControl)</p>
+<p class="class-hierarchy">Standalone class (not derived from TControl)</p>
 
 <p>
-TTrayIcon crea y gestiona un icono en el área de notificación de la bandeja del sistema de Windows.
-Permite que las aplicaciones se ejecuten minimizadas o en segundo plano, a la vez que ofrece
-interacción con el usuario mediante eventos de clic del ratón, un tooltip y un menú contextual.
-Se utiliza habitualmente para servicios en segundo plano, aplicaciones tipo mensajería instantánea
-y aplicaciones que se minimizan a la bandeja del sistema.
+TTrayIcon creates and manages an icon in the Windows system tray notification area.
+It allows applications to run minimized or in the background while providing
+user interaction via mouse click events, a tooltip, and a context menu. It is
+commonly used for background services, instant-messenger-style apps, and
+applications that minimize to the system tray.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oWnd</code></td><td>Objeto</td><td>La ventana principal asociada (oculta o visible)</td></tr>
-<tr><td><code>oWndParent</code></td><td>Objeto</td><td>La ventana padre para el reenvío de notificaciones</td></tr>
-<tr><td><code>oIcon</code></td><td>Objeto</td><td>El icono mostrado en la bandeja del sistema</td></tr>
-<tr><td><code>cCaption</code></td><td>Carácter</td><td>Texto del tooltip mostrado al pasar el ratón por encima</td></tr>
-<tr><td><code>bLClicked</code></td><td>Bloque</td><td>Bloque de código ejecutado al hacer clic con el botón izquierdo</td></tr>
-<tr><td><code>bRClicked</code></td><td>Bloque</td><td>Bloque de código ejecutado al hacer clic con el botón derecho</td></tr>
-<tr><td><code>bLDblClick</code></td><td>Bloque</td><td>Bloque de código ejecutado al hacer doble clic con el botón izquierdo</td></tr>
+<tr><td><code>oWnd</code></td><td>Object</td><td>The associated main window (hidden or visible)</td></tr>
+<tr><td><code>oWndParent</code></td><td>Object</td><td>The parent window for notification forwarding</td></tr>
+<tr><td><code>oIcon</code></td><td>Object</td><td>The icon displayed in the system tray</td></tr>
+<tr><td><code>cCaption</code></td><td>Character</td><td>Tooltip text shown on hover</td></tr>
+<tr><td><code>bLClicked</code></td><td>Block</td><td>Code block executed on left-click</td></tr>
+<tr><td><code>bRClicked</code></td><td>Block</td><td>Code block executed on right-click</td></tr>
+<tr><td><code>bLDblClick</code></td><td>Block</td><td>Code block executed on double-left-click</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, oIcon, cTip, bLClick, bRClick )</code></td><td>Crea un nuevo icono de bandeja</td></tr>
-<tr><td><code>End()</code></td><td>Elimina el icono de la bandeja del sistema y libera los recursos</td></tr>
-<tr><td><code>Refresh( oIcon, cTip )</code></td><td>Refresca la visualización del icono de bandeja</td></tr>
-<tr><td><code>SetIcon( oIcon, cTip )</code></td><td>Cambia el icono y/o el texto del tooltip</td></tr>
-<tr><td><code>SetText( cTitle )</code></td><td>Establece el texto del título</td></tr>
+<tr><td><code>New( oWnd, oIcon, cTip, bLClick, bRClick )</code></td><td>Create a new tray icon</td></tr>
+<tr><td><code>End()</code></td><td>Remove the icon from the system tray and release resources</td></tr>
+<tr><td><code>Refresh( oIcon, cTip )</code></td><td>Refresh the tray icon display</td></tr>
+<tr><td><code>SetIcon( oIcon, cTip )</code></td><td>Change the icon and/or tooltip text</td></tr>
+<tr><td><code>SetText( cTitle )</code></td><td>Set the caption text</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Icono de Bandeja con Menú y Restauración al Hacer Doble Clic</h2>
+<h2 id="example">Example: Tray Icon with Menu and Restore on Double-Click</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -80,18 +80,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TTrayIcon no hereda de TControl; es una clase independiente que interactúa directamente con el área de notificación del shell de Windows mediante llamadas a la API <code>Shell_NotifyIcon</code>.</li>
-<li>El parámetro <code>oIcon</code> puede ser la ruta de un archivo de icono (<code>.ico</code>), el nombre de un recurso o un número que identifica un icono de recurso.</li>
-<li>Llame siempre a <code>End()</code> antes de que la aplicación finalice para eliminar el icono de la bandeja. No hacerlo puede dejar un icono fantasma hasta que el usuario pase el ratón por encima.</li>
-<li>Los bloques de código <code>bLClicked</code>, <code>bRClicked</code> y <code>bLDblClick</code> proporcionan interacción completa con el ratón. El clic derecho se utiliza normalmente para mostrar un menú contextual emergente.</li>
-<li>En Windows 11, la visibilidad del icono de bandeja puede depender de la configuración del sistema del "Área de notificación". Utilice <code>SetIcon()</code> para actualizar el icono dinámicamente en tiempo de ejecución.</li>
+<li>TTrayIcon does not inherit from TControl; it is a standalone class that interacts directly with the Windows shell notification area via <code>Shell_NotifyIcon</code> API calls.</li>
+<li>The <code>oIcon</code> parameter can be an icon file path (<code>.ico</code>), a resource name, or a number identifying a resource icon.</li>
+<li>Always call <code>End()</code> before the application exits to remove the icon from the tray. Failure to do so may leave a ghost icon until the user hovers over it.</li>
+<li>The <code>bLClicked</code>, <code>bRClicked</code>, and <code>bLDblClick</code> code blocks provide full mouse interaction. Right-click is typically used to show a popup context menu.</li>
+<li>On Windows 11, tray icon visibility may depend on the "Notification Area" system settings. Use <code>SetIcon()</code> to update the icon dynamically at runtime.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ai/ttransformer.html">&larr; ttransformer</a> | <a href="../../es/reference/ttreeitem.html">ttreeitem &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

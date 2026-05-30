@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TDBCombo - FWH Docs</title>
+<title>TDBCombo - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,49 +13,49 @@
 
 <h1>TDBCombo</h1>
 <p class="class-source">Fonte: <code>source/classes/dbcombo.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TComboBox</code></p>
+<p class="class-hierarchy">Inherits from: <code>TComboBox</code></p>
 
 <p>
-TDBCombo é um ComboBox com reconhecimento de banco de dados que exibe valores de um campo DBF e pode retornar um valor diferente para a variável vinculada. Ele suporta busca incremental conforme o usuário digita e pode preencher automaticamente seus itens a partir do banco de dados quando nenhum array explícito é fornecido.
+TDBCombo is a database-aware ComboBox that displays values from a DBF field and can return a different value to the bound variable. It supports an incremental search as the user types, and can auto-populate its items from the database when no explicit array is provided.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cAlias</code></td><td>Character</td><td>Alias da área de trabalho para a tabela do banco de dados (padrão: alias atual)</td></tr>
-<tr><td><code>cFldList</code></td><td>Character</td><td>Nome do campo cujos valores são exibidos no combo</td></tr>
-<tr><td><code>cFldItem</code></td><td>Character</td><td>Nome do campo cujo valor é retornado para a variável vinculada</td></tr>
-<tr><td><code>aList</code></td><td>Array</td><td>Array de strings de exibição mostradas na lista suspensa</td></tr>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array de valores de retorno correspondentes às entradas de aList</td></tr>
-<tr><td><code>cSearchKey</code></td><td>Character</td><td>Buffer de busca incremental para navegação pelo teclado</td></tr>
+<tr><td><code>cAlias</code></td><td>Character</td><td>Workarea alias for the database table (default: current alias)</td></tr>
+<tr><td><code>cFldList</code></td><td>Character</td><td>Field name whose values are displayed in the combo</td></tr>
+<tr><td><code>cFldItem</code></td><td>Character</td><td>Field name whose value is returned to the bound variable</td></tr>
+<tr><td><code>aList</code></td><td>Array</td><td>Array of display strings shown in the dropdown</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array of return values corresponding to aList entries</td></tr>
+<tr><td><code>cSearchKey</code></td><td>Character</td><td>Incremental search buffer for keyboard navigation</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, bSetGet, aItems, nW, nH, oWnd, nHelpId, bChange, bValid, nClrFore, nClrBack, lPixel, oFont, cMsg, lUpdate, bWhen, lDesign, acBitmaps, bDrawItem, cAlias, cFldItem, cFldList, aList, nHGet )</code></td><td>Cria um novo ComboBox com reconhecimento de DBF</td></tr>
-<tr><td><code>ReDefine( nId, bSetGet, aItems, oWnd, ... )</code></td><td>Redefine a partir de um recurso de diálogo</td></tr>
-<tr><td><code>Fill()</code></td><td>Preenche aItems e aList a partir do banco de dados (chamado automaticamente em New/ReDefine se nenhum array explícito for fornecido)</td></tr>
-<tr><td><code>Refill()</code></td><td>Relê o banco de dados e repreenche os itens do combo</td></tr>
-<tr><td><code>SetItems( aItems, aList, lChanged )</code></td><td>Define manualmente os arrays de exibição e de valores de retorno</td></tr>
-<tr><td><code>Add( cItem, nAt, cList )</code></td><td>Adiciona um item ao combo na posição nAt</td></tr>
-<tr><td><code>Del( nAt )</code></td><td>Exclui o item na posição nAt</td></tr>
-<tr><td><code>ListGet()</code></td><td>Retorna o elemento selecionado de ::aList</td></tr>
-<tr><td><code>KeyChar( nKey, nFlags )</code></td><td>Manipulador de teclado para busca incremental</td></tr>
-<tr><td><code>Update()</code></td><td>Atualiza a exibição a partir da variável vinculada atual</td></tr>
+<tr><td><code>New( nRow, nCol, bSetGet, aItems, nW, nH, oWnd, nHelpId, bChange, bValid, nClrFore, nClrBack, lPixel, oFont, cMsg, lUpdate, bWhen, lDesign, acBitmaps, bDrawItem, cAlias, cFldItem, cFldList, aList, nHGet )</code></td><td>Create a new DBF-aware ComboBox</td></tr>
+<tr><td><code>ReDefine( nId, bSetGet, aItems, oWnd, ... )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>Fill()</code></td><td>Populate aItems and aList from the database (called automatically on New/ReDefine if no explicit arrays given)</td></tr>
+<tr><td><code>Refill()</code></td><td>Re-read the database and repopulate the combo items</td></tr>
+<tr><td><code>SetItems( aItems, aList, lChanged )</code></td><td>Set display and return value arrays manually</td></tr>
+<tr><td><code>Add( cItem, nAt, cList )</code></td><td>Add an item to the combo at position nAt</td></tr>
+<tr><td><code>Del( nAt )</code></td><td>Delete item at position nAt</td></tr>
+<tr><td><code>ListGet()</code></td><td>Return the selected element of ::aList</td></tr>
+<tr><td><code>KeyChar( nKey, nFlags )</code></td><td>Incremental search keyboard handler</td></tr>
+<tr><td><code>Update()</code></td><td>Refresh the display from the current bound variable</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Combo Vinculado ao Campo Cidade do Cliente</h2>
+<h2 id="example">Example: Combo Linked to Customer City Field</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -66,7 +66,7 @@ function Main()
    use Customer shared new
    index on field->city to tmpCity
 
-   DEFINE WINDOW oWnd TITLE "Demo TDBCombo" SIZE 400, 150
+   DEFINE WINDOW oWnd TITLE "TDBCombo Demo" SIZE 400, 150
 
    @ 30, 30 DBCOMBO oCombo VAR cCity ;
       ITEMS FIELD->city ;
@@ -79,17 +79,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TDBCombo pode exibir o valor de um campo enquanto retorna um valor diferente. Por exemplo, mostrar nomes de departamentos (<code>cFldList</code>) mas retornar os IDs dos departamentos (<code>cFldItem</code>).</li>
-<li>A busca incremental é suportada: digitar caracteres filtra a lista. Pressionar Espaço reinicia o buffer de busca.</li>
-<li>Quando nem <code>aItems</code> nem <code>aList</code> são fornecidos, o construtor chama <code>Fill()</code> para preencher automaticamente a partir dos campos do banco de dados.</li>
-<li>Os dados do combo podem ser atualizados manualmente com <code>Refill()</code> quando os registros do banco de dados subjacente mudam.</li>
+<li>TDBCombo can display one field value while returning a different one. For example, show department names (<code>cFldList</code>) but return department IDs (<code>cFldItem</code>).</li>
+<li>Incremental search is supported: typing characters filters the list. Pressing Space resets the search buffer.</li>
+<li>When neither <code>aItems</code> nor <code>aList</code> is provided, the constructor calls <code>Fill()</code> to auto-populate from the database fields.</li>
+<li>The combo data can be manually refreshed with <code>Refill()</code> when the underlying database records change.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/data/tdbase.html">&larr; tdbase</a> | <a href="../../pt/data/tdbfcomp.html">tdbfcomp &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

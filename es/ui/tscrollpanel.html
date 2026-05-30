@@ -13,20 +13,20 @@
 
 <h1>TScrollPanel</h1>
 <p class="class-source">Fuente: <code>source/classes/scrlpanl.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TPanel</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
 
 <p>
-TScrollPanel es un panel contenedor desplazable con barras de desplazamiento vertical y horizontal automáticas
-que siguen la extensión de los controles hijo. Admite desplazamiento con rueda del ratón, clic y arrastre,
-desplazamiento táctil mediante gestos, navegación basada en páginas y métodos auxiliares para llevar cualquier control
-hijo a la vista. Creado por G.N. Rao.
+TScrollPanel is a scrollable container panel with automatic vertical and horizontal scrollbars
+that track the extent of child controls. It supports mouse-wheel scrolling, click-and-drag scroll,
+touch panning via gesture handling, page-based navigation, and helper methods to bring any child
+control into view. Created by G.N. Rao.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>vStep</code></td><td>Numeric</td><td>Vertical scroll step in pixels (default 20)</td></tr>
@@ -43,11 +43,11 @@ hijo a la vista. Creado por G.N. Rao.
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lNoBorder )</code></td><td>Create a new TScrollPanel</td></tr>
@@ -66,7 +66,7 @@ hijo a la vista. Creado por G.N. Rao.
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Scroll Panel with Controls</h2>
+<h2 id="example">Example: Scroll Panel with Controls</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -91,19 +91,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Llame a <code>SetRange()</code> despu
-<li>El panel crea ambas barras de desplazamiento vertical y horizontal autom
-<li>El desplazamiento por arrastre se activa manteniendo presionado el bot
-<li>Use <code>ControlIntoView()</code> en bloques <code>bGotFocus</code> de controles hijo para desplazar autom
-<li><code>AddText()</code> crea etiquetas de texto desplazables que se mueven con el contenido del panel, a diferencia de los controles SAY est
-<li>Los miembros DATA <code>nRightMargin</code> y <code>nBottomMargin</code> permiten que el panel se redimensione autom
+<li>Call <code>SetRange()</code> after adding all child controls to calculate the scroll range and enable the scrollbars.</li>
+<li>The panel creates both vertical and horizontal scrollbars automatically via <code>WS_VSCROLL</code> and <code>WS_HSCROLL</code> styles.</li>
+<li>Drag-to-scroll is enabled by holding the left mouse button and dragging. Touch panning is supported via <code>HandleGesture()</code> for WM_GESTURE messages.</li>
+<li>Use <code>ControlIntoView()</code> in <code>bGotFocus</code> blocks of child controls to automatically scroll the panel when tabbing through controls.</li>
+<li><code>AddText()</code> creates scrolling text labels that move with the panel content, unlike standard SAY controls which stay fixed unless scrolled manually.</li>
+<li>The <code>nRightMargin</code> and <code>nBottomMargin</code> DATA members allow the panel to auto-resize when its parent window is resized.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tscrollmsg.html">&larr; tscrollmsg</a> | <a href="../../es/ui/tscrollpanel_ex.html">tscrollpanel_ex &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

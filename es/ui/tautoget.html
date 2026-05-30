@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TAutoGet / TGetList - DocumentaciÃ³n FWH</title>
+<title>TAutoGet / TGetList - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,29 +13,29 @@
 
 <h1>TAutoGet / TGetList</h1>
 <p class="class-source">Fuente: <code>source/classes/autoget.prg</code></p>
-<p class="class-hierarchy">TAutoGet hereda de: <code>TGet</code> | TGetList hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">TAutoGet inherits from: <code>TGet</code> | TGetList inherits from: <code>TControl</code></p>
 
 <p>
-TAutoGet extiende TGet con una lista desplegable de autocompletado que aparece mientras el usuario escribe, mostrando elementos coincidentes de una fuente de datos (array o hash). El desplegable es implementado por TGetList, una clase complementaria que renderiza una lista desplazable de elementos con estilo degradado, resaltado al pasar el ratÃ³n y navegaciÃ³n por teclado.
+TAutoGet extends TGet with an autocomplete dropdown list that appears as the user types, showing matching items from a data source (array or hash). The dropdown is implemented by TGetList, a companion class that renders a scrollable, gradient-styled item list with hover highlighting and keyboard navigation.
 </p>
 
 <h2 id="data-tautoget">TAutoGet DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescripciÃ³n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>uDataSource</code></td><td>Array/Hash</td><td>Datos fuente para sugerencias de autocompletado</td></tr>
-<tr><td><code>cField</code></td><td>Character/Numeric</td><td>Ãndice de campo o columna dentro de la fuente de datos</td></tr>
-<tr><td><code>oList</code></td><td>Object</td><td>Referencia a la ventana desplegable TGetList</td></tr>
-<tr><td><code>nLHeight</code></td><td>Numeric</td><td>Altura mÃ¡xima de la lista desplegable (por defecto 170)</td></tr>
-<tr><td><code>bCreateList</code></td><td>Block</td><td>Bloque de cÃ³digo para refiltrar la lista mientras el usuario escribe</td></tr>
-<tr><td><code>aGradList</code></td><td>Array</td><td>DefiniciÃ³n de degradado para el fondo de la lista</td></tr>
-<tr><td><code>aGradItem</code></td><td>Array</td><td>DefiniciÃ³n de degradado para elementos individuales</td></tr>
-<tr><td><code>nClrLine</code></td><td>Numeric</td><td>Color de lÃ­nea de borde/separador</td></tr>
-<tr><td><code>nClrSel</code></td><td>Numeric</td><td>Color de resaltado para el elemento seleccionado</td></tr>
-<tr><td><code>nClrText</code></td><td>Numeric</td><td>Color de texto en la lista</td></tr>
+<tr><td><code>uDataSource</code></td><td>Array/Hash</td><td>Source data for autocomplete suggestions</td></tr>
+<tr><td><code>cField</code></td><td>Character/Numeric</td><td>Field or column index within the data source</td></tr>
+<tr><td><code>oList</code></td><td>Object</td><td>Reference to the TGetList dropdown window</td></tr>
+<tr><td><code>nLHeight</code></td><td>Numeric</td><td>Maximum height of the dropdown list (default 170)</td></tr>
+<tr><td><code>bCreateList</code></td><td>Block</td><td>Code block to re-filter the list as the user types</td></tr>
+<tr><td><code>aGradList</code></td><td>Array</td><td>Gradient definition for the list background</td></tr>
+<tr><td><code>aGradItem</code></td><td>Array</td><td>Gradient definition for individual items</td></tr>
+<tr><td><code>nClrLine</code></td><td>Numeric</td><td>Border/separator line color</td></tr>
+<tr><td><code>nClrSel</code></td><td>Numeric</td><td>Highlight color for selected item</td></tr>
+<tr><td><code>nClrText</code></td><td>Numeric</td><td>Text color in the list</td></tr>
 </tbody>
 </table>
 
@@ -43,14 +43,14 @@ TAutoGet extiende TGet con una lista desplegable de autocompletado que aparece m
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescripciÃ³n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oGet</code></td><td>Object</td><td>Referencia al control TAutoGet padre</td></tr>
-<tr><td><code>nRowHeight</code></td><td>Numeric</td><td>Altura de cada fila de elemento en pÃ­xeles</td></tr>
-<tr><td><code>nMaxHeight</code></td><td>Numeric</td><td>Altura mÃ¡xima permitida para la ventana de lista</td></tr>
-<tr><td><code>nFirstRow</code></td><td>Numeric</td><td>Ãndice de la primera fila visible (para desplazamiento)</td></tr>
-<tr><td><code>nRowAt</code></td><td>Numeric</td><td>Fila actualmente resaltada</td></tr>
+<tr><td><code>oGet</code></td><td>Object</td><td>Reference to the parent TAutoGet control</td></tr>
+<tr><td><code>nRowHeight</code></td><td>Numeric</td><td>Height of each list item row in pixels</td></tr>
+<tr><td><code>nMaxHeight</code></td><td>Numeric</td><td>Maximum allowed height for the list window</td></tr>
+<tr><td><code>nFirstRow</code></td><td>Numeric</td><td>First visible row index (for scrolling)</td></tr>
+<tr><td><code>nRowAt</code></td><td>Numeric</td><td>Currently highlighted row</td></tr>
 </tbody>
 </table>
 
@@ -58,24 +58,24 @@ TAutoGet extiende TGet con una lista desplegable de autocompletado que aparece m
 
 <table>
 <thead>
-<tr><th>Clase</th><th>MÃ©todo</th><th>DescripciÃ³n</th></tr>
+<tr><th>Class</th><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td>TAutoGet</td><td><code>New( nRow, nCol, bSetGet, oWnd, nW, nH, cPict, ... )</code></td><td>Crear un nuevo control GET autocompletable</td></tr>
-<tr><td>TAutoGet</td><td><code>ReDefine( nId, bSetGet, oWnd, ... )</code></td><td>Redefinir desde un recurso de diÃ¡logo</td></tr>
-<tr><td>TAutoGet</td><td><code>SetList( uDataSource, cField )</code></td><td>Establecer la fuente de datos y el campo de visualizaciÃ³n</td></tr>
-<tr><td>TAutoGet</td><td><code>OpenList( nKey, nFlags )</code></td><td>Abrir la lista desplegable de sugerencias</td></tr>
-<tr><td>TAutoGet</td><td><code>CloseList()</code></td><td>Cerrar la lista desplegable</td></tr>
-<tr><td>TAutoGet</td><td><code>CreateList()</code></td><td>Crear o actualizar la lista desplegable</td></tr>
-<tr><td>TGetList</td><td><code>New( nTop, nLeft, oWnd, nW, nH, oGet, aGradItem, aGradList, nClrLine, nClrText, nClrSel )</code></td><td>Crear la ventana de lista desplegable</td></tr>
-<tr><td>TGetList</td><td><code>SetList( uDataSource, cField )</code></td><td>Poblar la lista desde un array o hash</td></tr>
-<tr><td>TGetList</td><td><code>Adjust()</code></td><td>Recalcular altura de fila y tamaÃ±o de ventana</td></tr>
-<tr><td>TGetList</td><td><code>GoDown() / GoUp()</code></td><td>Navegar la lista con el teclado</td></tr>
-<tr><td>TGetList</td><td><code>Paint() / PaintData( hDC, nAt )</code></td><td>Dibujar la lista con fondos degradados</td></tr>
+<tr><td>TAutoGet</td><td><code>New( nRow, nCol, bSetGet, oWnd, nW, nH, cPict, ... )</code></td><td>Create a new autocomplete GET control</td></tr>
+<tr><td>TAutoGet</td><td><code>ReDefine( nId, bSetGet, oWnd, ... )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td>TAutoGet</td><td><code>SetList( uDataSource, cField )</code></td><td>Set the data source and display field</td></tr>
+<tr><td>TAutoGet</td><td><code>OpenList( nKey, nFlags )</code></td><td>Open the dropdown suggestion list</td></tr>
+<tr><td>TAutoGet</td><td><code>CloseList()</code></td><td>Close the dropdown list</td></tr>
+<tr><td>TAutoGet</td><td><code>CreateList()</code></td><td>Create or refresh the dropdown list</td></tr>
+<tr><td>TGetList</td><td><code>New( nTop, nLeft, oWnd, nW, nH, oGet, aGradItem, aGradList, nClrLine, nClrText, nClrSel )</code></td><td>Create the dropdown list window</td></tr>
+<tr><td>TGetList</td><td><code>SetList( uDataSource, cField )</code></td><td>Populate the list from array or hash source</td></tr>
+<tr><td>TGetList</td><td><code>Adjust()</code></td><td>Recalculate row height and window size</td></tr>
+<tr><td>TGetList</td><td><code>GoDown() / GoUp()</code></td><td>Navigate the list with keyboard</td></tr>
+<tr><td>TGetList</td><td><code>Paint() / PaintData( hDC, nAt )</code></td><td>Draw the list with gradient backgrounds</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: GET Autocompletable</h2>
+<h2 id="example">Example: Autocomplete GET</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -98,14 +98,14 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>Llame a <code>SetList( aData, cField )</code> para proporcionar la fuente de datos de autocompletado. La fuente puede ser un array de arrays o un hash, con <code>cField</code> seleccionando la columna de visualizaciÃ³n.</li>
-<li>El bloque <code>bCreateList</code> se evalÃºa en cada pulsaciÃ³n de tecla para filtrar la lista. El bloque predeterminado restaura la fuente de datos original cuando la lista se cierra.</li>
-<li>TGetList dibuja una ventana superpuesta con estilo degradado y resaltado de selecciÃ³n redondeado.</li>
-<li>La navegaciÃ³n por teclado (flechas Arriba/Abajo) desplaza la lista; Enter o clic selecciona un elemento y cierra la lista.</li>
+<li>Call <code>SetList( aData, cField )</code> to supply the autocomplete data source. The source can be an array of arrays or a hash, with <code>cField</code> selecting the display column.</li>
+<li>The <code>bCreateList</code> block is evaluated each keystroke to filter the list. The default block restores the original data source when the list closes.</li>
+<li>TGetList draws a gradient-styled overlay window with rounded item selection highlighting.</li>
+<li>Keyboard navigation (Up/Down arrows) scrolls through the list; Enter or click selects an item and closes the list.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/data/tarraydata.html">&larr; tarraydata</a> | <a href="../../es/utilities/tbackup.html">tbackup &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

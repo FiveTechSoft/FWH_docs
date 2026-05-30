@@ -13,63 +13,63 @@
 
 <h1>TC5Tooltip</h1>
 <p class="class-source">Fonte: <code>source/classes/c5tooltp.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TWindow</code></p>
+<p class="class-hierarchy">Inherits from: <code>TWindow</code></p>
 
 <p>
-TC5Tooltip é uma janela de tooltip (dica) popup rica, com suporte a texto de corpo em várias linhas, cabeçalho, rodapé, uma imagem opcional do lado esquerdo e cores personalizadas de borda/fundo. É renderizada como uma janela arredondada com sombra projetada, dimensiona-se automaticamente ao conteúdo e inclui um temporizador de auto-fechamento. O tooltip foi projetado para dicas com tema no estilo C5 (CA-Visual Objects).
+TC5Tooltip is a rich popup tooltip window with support for multi-line body text, header, footer, an optional left-side image, and custom border/background colors. It renders as a rounded window with drop shadow, auto-sizes to content, and includes a self-dismissing timer. The tooltip is designed for C5-style (CA-Visual Objects) themed tooltips.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cHeader</code></td><td>Character</td><td>Texto do cabeçalho (negrito, seção superior)</td></tr>
-<tr><td><code>cBody</code></td><td>Character</td><td>Texto do corpo em várias linhas</td></tr>
-<tr><td><code>cFoot</code></td><td>Character</td><td>Texto do rodapé (seção inferior, negrito)</td></tr>
-<tr><td><code>cBmpLeft</code></td><td>Character</td><td>Nome de arquivo da imagem opcional do lado esquerdo</td></tr>
-<tr><td><code>cBmpHeader</code></td><td>Character</td><td>Imagem opcional do cabeçalho</td></tr>
-<tr><td><code>cBmpFoot</code></td><td>Character</td><td>Imagem opcional do rodapé</td></tr>
-<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Cor de fundo (topo do gradiente)</td></tr>
-<tr><td><code>nClrPane2</code></td><td>Numeric</td><td>Cor de fundo (base do gradiente)</td></tr>
-<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Cor da borda</td></tr>
-<tr><td><code>nClrText</code></td><td>Numeric</td><td>Cor de texto padrão</td></tr>
-<tr><td><code>nClrTextHeader</code></td><td>Numeric</td><td>Cor do texto do cabeçalho (sobrepõe o padrão)</td></tr>
-<tr><td><code>nClrTextBody</code></td><td>Numeric</td><td>Cor do texto do corpo (sobrepõe o padrão)</td></tr>
-<tr><td><code>nClrTextFoot</code></td><td>Numeric</td><td>Cor do texto do rodapé (sobrepõe o padrão)</td></tr>
-<tr><td><code>oFontHdr</code></td><td>Object</td><td>Fonte do cabeçalho (Verdana, 11pt, negrito)</td></tr>
-<tr><td><code>oFontBody</code></td><td>Object</td><td>Fonte do corpo (Segoe UI, 11pt)</td></tr>
-<tr><td><code>oFontPie</code></td><td>Object</td><td>Fonte do rodapé (Verdana, 11pt, negrito)</td></tr>
-<tr><td><code>nTimer</code></td><td>Numeric</td><td>Tempo limite de auto-fechamento em ms (padrão 5000)</td></tr>
-<tr><td><code>nWRadio / nHRadio</code></td><td>Numeric</td><td>Raio dos cantos da janela arredondada</td></tr>
-<tr><td><code>lBorder</code></td><td>Logical</td><td>Mostrar/ocultar a borda externa</td></tr>
-<tr><td><code>lLineHeader / lLineFoot</code></td><td>Logical</td><td>Mostrar linhas separadoras nos limites do cabeçalho/rodapé</td></tr>
+<tr><td><code>cHeader</code></td><td>Character</td><td>Header text (bold, top section)</td></tr>
+<tr><td><code>cBody</code></td><td>Character</td><td>Multi-line body text</td></tr>
+<tr><td><code>cFoot</code></td><td>Character</td><td>Footer text (bottom section, bold)</td></tr>
+<tr><td><code>cBmpLeft</code></td><td>Character</td><td>Optional left-side image filename</td></tr>
+<tr><td><code>cBmpHeader</code></td><td>Character</td><td>Optional header image</td></tr>
+<tr><td><code>cBmpFoot</code></td><td>Character</td><td>Optional footer image</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td>Background color (top of gradient)</td></tr>
+<tr><td><code>nClrPane2</code></td><td>Numeric</td><td>Background color (bottom of gradient)</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Border color</td></tr>
+<tr><td><code>nClrText</code></td><td>Numeric</td><td>Default text color</td></tr>
+<tr><td><code>nClrTextHeader</code></td><td>Numeric</td><td>Header text color (overrides default)</td></tr>
+<tr><td><code>nClrTextBody</code></td><td>Numeric</td><td>Body text color (overrides default)</td></tr>
+<tr><td><code>nClrTextFoot</code></td><td>Numeric</td><td>Footer text color (overrides default)</td></tr>
+<tr><td><code>oFontHdr</code></td><td>Object</td><td>Header font (Verdana, 11pt, bold)</td></tr>
+<tr><td><code>oFontBody</code></td><td>Object</td><td>Body font (Segoe UI, 11pt)</td></tr>
+<tr><td><code>oFontPie</code></td><td>Object</td><td>Footer font (Verdana, 11pt, bold)</td></tr>
+<tr><td><code>nTimer</code></td><td>Numeric</td><td>Auto-dismiss timeout in ms (default 5000)</td></tr>
+<tr><td><code>nWRadio / nHRadio</code></td><td>Numeric</td><td>Corner radius for the rounded window</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Show/hide the outer border</td></tr>
+<tr><td><code>lLineHeader / lLineFoot</code></td><td>Logical</td><td>Show separator lines at header/footer boundaries</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, lDisenio, nClrPane, nClrPane2, nClrText, nWRadio, nHRadio )</code></td><td>Cria uma janela de tooltip com dimensões e cores personalizadas</td></tr>
-<tr><td><code>GetSize()</code></td><td>Calcula o tamanho automático com base no conteúdo; retorna { nWidth, nHeight }</td></tr>
-<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Define um tamanho explícito</td></tr>
-<tr><td><code>Show() / Hide()</code></td><td>Mostra ou oculta a janela de tooltip</td></tr>
-<tr><td><code>Default( lShowDlg )</code></td><td>Aplica a região arredondada e define os padrões</td></tr>
-<tr><td><code>Paint()</code></td><td>Renderiza o tooltip completo com fundo em gradiente, cabeçalho, corpo, rodapé e borda</td></tr>
-<tr><td><code>PaintHdr( hDC, rc )</code></td><td>Renderiza a seção de cabeçalho com imagem e separador opcionais</td></tr>
-<tr><td><code>PaintHdr2( hDC, rc )</code></td><td>Renderiza a seção de cabeçalho secundária (modo de cabeçalho dividido)</td></tr>
-<tr><td><code>PaintBody( hDC, rc )</code></td><td>Renderiza o texto do corpo com imagem opcional do lado esquerdo</td></tr>
-<tr><td><code>PaintFoot( hDC, rc )</code></td><td>Renderiza o rodapé com imagem e separador opcionais</td></tr>
+<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, lDisenio, nClrPane, nClrPane2, nClrText, nWRadio, nHRadio )</code></td><td>Create a tooltip window with custom dimensions and colors</td></tr>
+<tr><td><code>GetSize()</code></td><td>Compute auto-size based on content; returns { nWidth, nHeight }</td></tr>
+<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Set explicit size</td></tr>
+<tr><td><code>Show() / Hide()</code></td><td>Show or hide the tooltip window</td></tr>
+<tr><td><code>Default( lShowDlg )</code></td><td>Apply rounded region and set defaults</td></tr>
+<tr><td><code>Paint()</code></td><td>Render the full tooltip with gradient background, header, body, footer, and border</td></tr>
+<tr><td><code>PaintHdr( hDC, rc )</code></td><td>Render the header section with optional image and separator</td></tr>
+<tr><td><code>PaintHdr2( hDC, rc )</code></td><td>Render secondary header section (split header mode)</td></tr>
+<tr><td><code>PaintBody( hDC, rc )</code></td><td>Render the body text with optional left-side image</td></tr>
+<tr><td><code>PaintFoot( hDC, rc )</code></td><td>Render the footer with optional image and separator</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Tooltip Rico com Ícone</h2>
+<h2 id="example">Example: Rich Tooltip with Icon</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -86,17 +86,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O tooltip fecha-se automaticamente após <code>nTimer</code> milissegundos (padrão 5000). Defina <code>lShowAgain</code> como .F. para impedir que seja exibido novamente.</li>
-<li>Usa <code>CreateRoundRectRgn</code> para os cantos arredondados e registra-se com o estilo de classe <code>CS_DROPSHADOW</code> para o efeito de sombra projetada.</li>
-<li>O texto do corpo usa <code>DT_WORDBREAK</code> para a quebra automática de linha dentro da largura disponível.</li>
-<li>Todas as três seções (cabeçalho, corpo, rodapé) são opcionais -- omita-as deixando o DATA c* correspondente vazio.</li>
+<li>The tooltip auto-dismisses after <code>nTimer</code> milliseconds (default 5000). Set <code>lShowAgain</code> to .F. to prevent re-show.</li>
+<li>Uses <code>CreateRoundRectRgn</code> for rounded corners and registers with <code>CS_DROPSHADOW</code> class style for the drop-shadow effect.</li>
+<li>Body text uses <code>DT_WORDBREAK</code> for automatic word wrapping within the available width.</li>
+<li>All three sections (header, body, footer) are optional -- omit them by leaving the corresponding c* DATA empty.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tbuttonbmp.html">&larr; tbuttonbmp</a> | <a href="../../pt/ui/tcalendar.html">tcalendar &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

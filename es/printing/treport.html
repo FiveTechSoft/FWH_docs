@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TReport - FWH Docs</title>
+<title>TReport - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -15,98 +15,98 @@
 <p class="class-source">Fuente: <code>source/classes/report.prg</code></p>
 
 <p>
-TReport es el motor de informes de alto nivel de FiveWin. Automatiza la creación de informes tabulares
-a partir de archivos DBF o cualquier fuente de datos, con soporte para encabezados de columna, agrupación, subtotales, totales generales,
-numeración de páginas, sombras, líneas de cuadrícula y exportación a Excel. TReport utiliza TPrinter internamente para la salida.
+TReport is FiveWin's high-level report engine. It automates the creation of tabular reports
+from DBF files or any data source, with support for column headers, grouping, subtotals, grand totals,
+page numbering, shadows, grid lines, and export to Excel. TReport uses TPrinter internally for output.
 </p>
 
-<h2 id="flow">Flujo de Procesamiento del Informe</h2>
+<h2 id="flow">Report Processing Flow</h2>
 
 <div class="mermaid">
 flowchart TD
-    A[Inicio] --> B[Bloque bInit]
-    B --> C[IniciarPágina]
-    C --> D{Verificar Grupos}
-    D -->|Nuevo Grupo| E[IniciarGrupo<br/>Imprimir Encabezado de Grupo]
-    D -->|Mismo Grupo| F[Imprimir Datos de Columna]
+    A[Init] --> B[bInit Block]
+    B --> C[StartPage]
+    C --> D{Check Groups}
+    D -->|New Group| E[StartGroup<br/>Print Group Header]
+    D -->|Same Group| F[Print Column Data]
     E --> F
-    F --> G[FinLínea / Saltar]
-    G --> H{¿Fin de Datos?}
-    H -->|No| I{¿Página Llena?}
-    I -->|Sí| J[FinPágina / IniciarPágina]
+    F --> G[EndLine / Skip]
+    G --> H{End of Data?}
+    H -->|No| I{Page Full?}
+    I -->|Yes| J[EndPage / StartPage]
     I -->|No| D
     J --> D
-    H -->|Sí| K[FinGrupo<br/>Imprimir Totales]
-    K --> L[Línea de Total General]
-    L --> M[FinPágina]
-    M --> N[Bloque bEnd]
-    N --> O[Vista Previa / Imprimir]
+    H -->|Yes| K[EndGroup<br/>Print Totals]
+    K --> L[Grand Total Line]
+    L --> M[EndPage]
+    M --> N[bEnd Block]
+    N --> O[Preview / Print]
 </div>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oDevice</code></td><td>TPrinter</td><td>Dispositivo de impresora de salida</td></tr>
-<tr><td><code>aGroups</code></td><td>Array</td><td>Array de objetos TRGroup (niveles de agrupación)</td></tr>
-<tr><td><code>aColumns</code></td><td>Array</td><td>Array de objetos TRColumn (columnas del informe)</td></tr>
-<tr><td><code>aFont</code></td><td>Array</td><td>Array de objetos TFont usados en el informe</td></tr>
-<tr><td><code>aPen</code></td><td>Array</td><td>Array de objetos TPen para líneas/cuadrícula</td></tr>
-<tr><td><code>bFor</code></td><td>Block</td><td>Condición FOR (filtrar registros)</td></tr>
-<tr><td><code>bWhile</code></td><td>Block</td><td>Condición WHILE (condición de parada)</td></tr>
-<tr><td><code>bInit</code></td><td>Block</td><td>Ejecutado antes de que comience el informe</td></tr>
-<tr><td><code>bEnd</code></td><td>Block</td><td>Ejecutado después de que termine el informe</td></tr>
-<tr><td><code>bSkip</code></td><td>Block</td><td>Bloque de salto personalizado (por defecto: DBSKIP())</td></tr>
-<tr><td><code>bStartPage</code></td><td>Block</td><td>Ejecutado al inicio de cada página</td></tr>
-<tr><td><code>bEndPage</code></td><td>Block</td><td>Ejecutado al final de cada página</td></tr>
-<tr><td><code>bStartLine</code></td><td>Block</td><td>Ejecutado antes de cada línea de datos</td></tr>
-<tr><td><code>bEndLine</code></td><td>Block</td><td>Ejecutado después de cada línea de datos</td></tr>
-<tr><td><code>bStartGroup</code></td><td>Block</td><td>Ejecutado cuando comienza un nuevo grupo</td></tr>
-<tr><td><code>bEndGroup</code></td><td>Block</td><td>Ejecutado cuando termina un grupo</td></tr>
-<tr><td><code>nRow</code></td><td>Numeric</td><td>Posición de fila actual en la página</td></tr>
-<tr><td><code>nPage</code></td><td>Numeric</td><td>Número de página actual</td></tr>
-<tr><td><code>nMargin</code></td><td>Numeric</td><td>Margen izquierdo</td></tr>
-<tr><td><code>nBottomRow</code></td><td>Numeric</td><td>Fila del margen inferior (dispara nueva página)</td></tr>
-<tr><td><code>nStdLineHeight</code></td><td>Numeric</td><td>Altura estándar de línea en píxeles</td></tr>
-<tr><td><code>lSummary</code></td><td>Logical</td><td>Modo solo resumen (sin líneas de detalle)</td></tr>
-<tr><td><code>lTotal</code></td><td>Logical</td><td>Mostrar totales generales</td></tr>
-<tr><td><code>lShadow</code></td><td>Logical</td><td>Imprimir sombras debajo de los totales</td></tr>
-<tr><td><code>lGrid</code></td><td>Logical</td><td>Imprimir líneas de cuadrícula</td></tr>
-<tr><td><code>nRptAlign</code></td><td>Numeric</td><td>Alineación del informe (RPT_LEFT, RPT_CENTER, RPT_RIGHT)</td></tr>
+<tr><td><code>oDevice</code></td><td>TPrinter</td><td>Output printer device</td></tr>
+<tr><td><code>aGroups</code></td><td>Array</td><td>Array of TRGroup objects (grouping levels)</td></tr>
+<tr><td><code>aColumns</code></td><td>Array</td><td>Array of TRColumn objects (report columns)</td></tr>
+<tr><td><code>aFont</code></td><td>Array</td><td>Array of TFont objects used in the report</td></tr>
+<tr><td><code>aPen</code></td><td>Array</td><td>Array of TPen objects for lines/grid</td></tr>
+<tr><td><code>bFor</code></td><td>Block</td><td>FOR condition (filter records)</td></tr>
+<tr><td><code>bWhile</code></td><td>Block</td><td>WHILE condition (stop condition)</td></tr>
+<tr><td><code>bInit</code></td><td>Block</td><td>Executed before report starts</td></tr>
+<tr><td><code>bEnd</code></td><td>Block</td><td>Executed after report ends</td></tr>
+<tr><td><code>bSkip</code></td><td>Block</td><td>Custom skip block (default: DBSKIP())</td></tr>
+<tr><td><code>bStartPage</code></td><td>Block</td><td>Executed at the start of each page</td></tr>
+<tr><td><code>bEndPage</code></td><td>Block</td><td>Executed at the end of each page</td></tr>
+<tr><td><code>bStartLine</code></td><td>Block</td><td>Executed before each data line</td></tr>
+<tr><td><code>bEndLine</code></td><td>Block</td><td>Executed after each data line</td></tr>
+<tr><td><code>bStartGroup</code></td><td>Block</td><td>Executed when a new group starts</td></tr>
+<tr><td><code>bEndGroup</code></td><td>Block</td><td>Executed when a group ends</td></tr>
+<tr><td><code>nRow</code></td><td>Numeric</td><td>Current row position on page</td></tr>
+<tr><td><code>nPage</code></td><td>Numeric</td><td>Current page number</td></tr>
+<tr><td><code>nMargin</code></td><td>Numeric</td><td>Left margin</td></tr>
+<tr><td><code>nBottomRow</code></td><td>Numeric</td><td>Bottom margin row (triggers new page)</td></tr>
+<tr><td><code>nStdLineHeight</code></td><td>Numeric</td><td>Standard line height in pixels</td></tr>
+<tr><td><code>lSummary</code></td><td>Logical</td><td>Summary-only mode (no detail lines)</td></tr>
+<tr><td><code>lTotal</code></td><td>Logical</td><td>Show grand totals</td></tr>
+<tr><td><code>lShadow</code></td><td>Logical</td><td>Print shadows under totals</td></tr>
+<tr><td><code>lGrid</code></td><td>Logical</td><td>Print grid lines</td></tr>
+<tr><td><code>nRptAlign</code></td><td>Numeric</td><td>Report alignment (RPT_LEFT, RPT_CENTER, RPT_RIGHT)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principales</h2>
+<h2 id="methods">Key Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( aTitle, aHead, aFoot, aFont, aPen, lSummary, ... )</code></td><td>Crear el informe</td></tr>
-<tr><td><code>Activate( bFor, bWhile, bInit, bEnd, ... )</code></td><td>Ejecutar el informe</td></tr>
-<tr><td><code>AddColumn( oColumn )</code></td><td>Agregar una columna al informe</td></tr>
-<tr><td><code>DelColumn( nColumn )</code></td><td>Eliminar una columna</td></tr>
-<tr><td><code>InsColumn( oColumn, nPos )</code></td><td>Insertar una columna en una posición específica</td></tr>
-<tr><td><code>AddGroup( oGroup )</code></td><td>Agregar un nivel de agrupación</td></tr>
-<tr><td><code>Say( nCol, xText, nFont, nPad, nRow )</code></td><td>Imprimir texto en una columna</td></tr>
-<tr><td><code>SayBitmap( nRow, nCol, cBitmap, nWidth, nHeight, ... )</code></td><td>Imprimir una imagen</td></tr>
-<tr><td><code>Box( nRow, nCol, nBottom, nRight, nPen, nScale )</code></td><td>Dibujar un cuadro</td></tr>
-<tr><td><code>Line( nRow, nCol, nBottom, nRight, nPen, nScale )</code></td><td>Dibujar una línea</td></tr>
-<tr><td><code>TotalLine( nType, nGrid )</code></td><td>Imprimir línea de total/subtotal</td></tr>
-<tr><td><code>NewLine( nHeight )</code></td><td>Avanzar a la siguiente línea</td></tr>
-<tr><td><code>BackLine( nLine )</code></td><td>Retroceder n líneas</td></tr>
-<tr><td><code>NeedNewPage()</code></td><td>Verificar si la fila actual excede el margen inferior</td></tr>
-<tr><td><code>Margin( nValue, nType, nScale )</code></td><td>Establecer márgenes (izquierdo, derecho, superior, inferior)</td></tr>
-<tr><td><code>CellView()</code></td><td>Habilitar modo vista de celda (cuadrícula alrededor de cada celda)</td></tr>
-<tr><td><code>ToExcel( bProgress )</code></td><td>Exportar informe a Excel</td></tr>
+<tr><td><code>New( aTitle, aHead, aFoot, aFont, aPen, lSummary, ... )</code></td><td>Create the report</td></tr>
+<tr><td><code>Activate( bFor, bWhile, bInit, bEnd, ... )</code></td><td>Run the report</td></tr>
+<tr><td><code>AddColumn( oColumn )</code></td><td>Add a column to the report</td></tr>
+<tr><td><code>DelColumn( nColumn )</code></td><td>Remove a column</td></tr>
+<tr><td><code>InsColumn( oColumn, nPos )</code></td><td>Insert a column at a specific position</td></tr>
+<tr><td><code>AddGroup( oGroup )</code></td><td>Add a grouping level</td></tr>
+<tr><td><code>Say( nCol, xText, nFont, nPad, nRow )</code></td><td>Print text in a column</td></tr>
+<tr><td><code>SayBitmap( nRow, nCol, cBitmap, nWidth, nHeight, ... )</code></td><td>Print an image</td></tr>
+<tr><td><code>Box( nRow, nCol, nBottom, nRight, nPen, nScale )</code></td><td>Draw a box</td></tr>
+<tr><td><code>Line( nRow, nCol, nBottom, nRight, nPen, nScale )</code></td><td>Draw a line</td></tr>
+<tr><td><code>TotalLine( nType, nGrid )</code></td><td>Print total/subtotal line</td></tr>
+<tr><td><code>NewLine( nHeight )</code></td><td>Advance to next line</td></tr>
+<tr><td><code>BackLine( nLine )</code></td><td>Move back by n lines</td></tr>
+<tr><td><code>NeedNewPage()</code></td><td>Check if current row exceeds bottom margin</td></tr>
+<tr><td><code>Margin( nValue, nType, nScale )</code></td><td>Set margins (left, right, top, bottom)</td></tr>
+<tr><td><code>CellView()</code></td><td>Enable cell-view mode (grid around every cell)</td></tr>
+<tr><td><code>ToExcel( bProgress )</code></td><td>Export report to Excel</td></tr>
 </tbody>
 </table>
 
-<h2 id="commands">Comandos de Informe</h2>
+<h2 id="commands">Report Commands</h2>
 
 <pre><code class="language-harbour">REPORT oRpt ;
    [ TITLE cTitle1, cTitle2, ... ] ;
@@ -138,7 +138,7 @@ GROUP [ ON bGroupExpr ] ;
 
 END REPORT</code></pre>
 
-<h2 id="example-simple">Ejemplo: Informe de Lista Simple</h2>
+<h2 id="example-simple">Example: Simple List Report</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -170,7 +170,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-grouped">Ejemplo: Informe Agrupado con Subtotales</h2>
+<h2 id="example-grouped">Example: Grouped Report with Subtotals</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -193,7 +193,7 @@ function Main()
       FONT oFont1, oFont2, oFont3 ;
       PREVIEW
 
-   // Agrupar por cliente
+   // Group by customer
    GROUP ON invoices->custid ;
       HEADER "Customer: " + invoices->custname ;
       FOOTER "Subtotal" ;
@@ -216,7 +216,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-custom">Ejemplo: Informe Personalizado con Eventos</h2>
+<h2 id="example-custom">Example: Custom Report with Events</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -242,9 +242,9 @@ function Main()
 
    END REPORT
 
-   // Activación personalizada con bloques de eventos
+   // Custom activation with event blocks
    oRpt:Activate( ;
-      { || products->active },                ; // bFor: solo productos activos
+      { || products->active },                ; // bFor: only active products
       ,                                        ; // bWhile
       { || oRpt:Margin( 1, 1, 1 ) },         ; // bInit
       { || MsgInfo( "Report completed" ) },   ; // bEnd
@@ -261,7 +261,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-excel">Ejemplo: Exportar a Excel</h2>
+<h2 id="example-excel">Example: Export to Excel</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -280,26 +280,26 @@ function Main()
 
    END REPORT
 
-   // Exportar a Excel después de la vista previa
+   // Export to Excel after preview
    oRpt:ToExcel( { |n| SysRefresh() } )
 
    USE
 
 return nil</code></pre>
 
-<h2 id="tips">Consejos</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-<li>Los índices de fuentes en los comandos COLUMN y GROUP son base 1 y se refieren al array FONT del comando REPORT.</li>
-<li>Use <code>EJECT</code> en GROUP para forzar un salto de página cuando cambia el grupo.</li>
-<li>El modo <code>lSummary</code> imprime solo encabezados/pies de grupo y totales -- sin líneas de detalle.</li>
-<li>El método <code>CellView()</code> habilita una apariencia tipo hoja de cálculo con bordes de cuadrícula alrededor de cada celda.</li>
-<li>Use <code>nRptAlign</code> para controlar cómo se posiciona el informe en la página (RPT_LEFT, RPT_CENTER, RPT_RIGHT).</li>
-<li><code>NeedNewPage()</code> devuelve .T. cuando la posición de fila actual ha alcanzado el margen inferior, útil en bStartLine para insertar saltos de página manuales.</li>
+<li>Font indices in COLUMN and GROUP commands are 1-based and refer to the FONT array in the REPORT command.</li>
+<li>Use <code>EJECT</code> in GROUP to force a page break when the group changes.</li>
+<li><code>lSummary</code> mode prints only group headers/footers and totals -- no detail lines.</li>
+<li>The <code>CellView()</code> method enables a spreadsheet-like appearance with grid borders around each cell.</li>
+<li>Use <code>nRptAlign</code> to control how the report is positioned on the page (RPT_LEFT, RPT_CENTER, RPT_RIGHT).</li>
+<li><code>NeedNewPage()</code> returns .T. when the current row position has reached the bottom margin, useful in bStartLine to insert manual page breaks.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/utilities/treg32.html">&larr; treg32</a> | <a href="../../es/utilities/trestore.html">trestore &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

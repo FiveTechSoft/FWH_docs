@@ -1,33 +1,33 @@
-﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TListView - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TListView - Documentación FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TListView</h1>
-<p class="subtitle">Control común ListView de Windows con iconos, detalles, grupos y vistas de mosaico</p>
+<p class="subtitle">Windows ListView common control with icons, details, groups, and tile views</p>
 
-<p><strong>Fuente:</strong> <code>source/classes/tlistvie.prg</code> &nbsp;|&nbsp; <strong>Padre:</strong> <code>TControl</code></p>
+<p><strong>Fuente:</strong> <code>source/classes/tlistvie.prg</code> &nbsp;|&nbsp; <strong>Parent:</strong> <code>TControl</code></p>
 
-<h2 id="overview">Visión General</h2>
+<h2 id="overview">Overview</h2>
 
-<p><code>TListView</code> envuelve el control común <code>SysListView32</code> de Windows. A diferencia de <code>TXBrowse</code> (diseñado para navegar registros de bases de datos), <code>TListView</code> está diseñado para mostrar listas de elementos con iconos -- similar al listado de archivos del Explorador de Windows. Soporta cinco modos de vista, agrupación de elementos, listas de imágenes y selección de elementos.</p>
+<p><code>TListView</code> wraps the Windows <code>SysListView32</code> common control. Unlike <code>TXBrowse</code> (which is designed for database record browsing), <code>TListView</code> is designed for displaying lists of items with icons -- similar to Windows Explorer's file listing. It supports five view modes, item grouping, image lists, and item selection.</p>
 
-<h2 id="architecture">Arquitectura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 graph TD
     TControl --> TListView
 
-    TListView --> IL_NORMAL["oImageList<br/>(Iconos Normales)"]
-    TListView --> IL_SMALL["oImageList<br/>(Iconos Pequeños)"]
-    TListView --> GROUPS["aGroups[]<br/>Grupos de Elementos"]
-    TListView --> ITEMS["aItems[]<br/>Elementos de Lista"]
+    TListView --> IL_NORMAL["oImageList<br/>(Normal Icons)"]
+    TListView --> IL_SMALL["oImageList<br/>(Small Icons)"]
+    TListView --> GROUPS["aGroups[]<br/>Item Groups"]
+    TListView --> ITEMS["aItems[]<br/>List Items"]
 
-    subgraph "Modos de Vista"
-        ICON["LV_VIEW_ICON<br/>Iconos grandes"]
-        DETAILS["LV_VIEW_DETAILS<br/>Detalles en columnas"]
-        SMALL["LV_VIEW_SMALLICON<br/>Iconos pequeños"]
-        LIST["LV_VIEW_LIST<br/>Lista simple"]
-        TILE["LV_VIEW_TILE<br/>Disposición en mosaico"]
+    subgraph "View Modes"
+        ICON["LV_VIEW_ICON<br/>Large icons"]
+        DETAILS["LV_VIEW_DETAILS<br/>Column details"]
+        SMALL["LV_VIEW_SMALLICON<br/>Small icons"]
+        LIST["LV_VIEW_LIST<br/>Simple list"]
+        TILE["LV_VIEW_TILE<br/>Tile layout"]
     end
 
     TListView --> ICON
@@ -40,56 +40,56 @@ graph TD
     style DETAILS fill:#1c2129,stroke:#3fb950,stroke-width:1px,color:#e6edf3
 </div>
 
-<h2 id="view-modes">Modos de Vista</h2>
+<h2 id="view-modes">View Modes</h2>
 
 <table>
-<thead><tr><th>Constante</th><th>Valor</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Constant</th><th>Value</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>LV_VIEW_ICON</code></td><td>0</td><td>Vista de iconos grandes -- elementos mostrados como iconos grandes con etiqueta debajo</td></tr>
-<tr><td><code>LV_VIEW_DETAILS</code></td><td>1</td><td>Vista de detalles/informe -- elementos en filas con múltiples columnas</td></tr>
-<tr><td><code>LV_VIEW_SMALLICON</code></td><td>2</td><td>Vista de iconos pequeños -- elementos como iconos pequeños dispuestos libremente</td></tr>
-<tr><td><code>LV_VIEW_LIST</code></td><td>3</td><td>Vista de lista -- elementos como iconos pequeños en una lista vertical</td></tr>
-<tr><td><code>LV_VIEW_TILE</code></td><td>4</td><td>Vista de mosaico -- elementos mostrados como mosaicos con icono y texto multilínea</td></tr>
+<tr><td><code>LV_VIEW_ICON</code></td><td>0</td><td>Large icon view -- items displayed as large icons with label below</td></tr>
+<tr><td><code>LV_VIEW_DETAILS</code></td><td>1</td><td>Details/report view -- items in rows with multiple columns</td></tr>
+<tr><td><code>LV_VIEW_SMALLICON</code></td><td>2</td><td>Small icon view -- items as small icons arranged freely</td></tr>
+<tr><td><code>LV_VIEW_LIST</code></td><td>3</td><td>List view -- items as small icons in a vertical list</td></tr>
+<tr><td><code>LV_VIEW_TILE</code></td><td>4</td><td>Tile view -- items displayed as tiles with icon and multi-line text</td></tr>
 </tbody>
 </table>
 
-<h2 id="properties">Propiedades Clave</h2>
+<h2 id="properties">Key Properties</h2>
 
 <table>
-<thead><tr><th>Propiedad</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>aPrompts</code></td><td>Array</td><td>Array de etiquetas de texto para los elementos iniciales</td></tr>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array en tiempo de ejecución de todos los elementos insertados (mantenido internamente)</td></tr>
-<tr><td><code>aGroups</code></td><td>Array</td><td>Array de definiciones de grupo para vista de grupo</td></tr>
-<tr><td><code>nOption</code></td><td>Numeric</td><td>Índice del elemento seleccionado actualmente (basado en 1)</td></tr>
-<tr><td><code>nGroups</code></td><td>Numeric</td><td>Número de grupos insertados (auto-incrementado)</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Bloque de código ejecutado al activar un elemento (doble clic/Enter)</td></tr>
-<tr><td><code>bClick</code></td><td>Block</td><td>Bloque de código ejecutado con un solo clic</td></tr>
+<tr><td><code>aPrompts</code></td><td>Array</td><td>Array of text labels for the initial items</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Runtime array of all inserted items (maintained internally)</td></tr>
+<tr><td><code>aGroups</code></td><td>Array</td><td>Array of group definitions for group view</td></tr>
+<tr><td><code>nOption</code></td><td>Numeric</td><td>Currently selected item index (1-based)</td></tr>
+<tr><td><code>nGroups</code></td><td>Numeric</td><td>Number of groups inserted (auto-incremented)</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block executed on item activation (double-click/Enter)</td></tr>
+<tr><td><code>bClick</code></td><td>Block</td><td>Code block executed on single click</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Clave</h2>
+<h2 id="methods">Key Methods</h2>
 
 <table>
-<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, aPrompts, bAction, oWnd, nClrFore, nClrBack, lPixel, lDesign, nWidth, nHeight, cMsg )</code></td><td>Constructor. Crea el ListView en la posición indicada.</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, bAction )</code></td><td>Redefinir desde un recurso de diálogo.</td></tr>
-<tr><td><code>InsertItem( nImageIndex, cText, nGroup )</code></td><td>Insertar un nuevo elemento con un índice de imagen, etiqueta y asignación de grupo opcional.</td></tr>
-<tr><td><code>InsertGroup( cText )</code></td><td>Insertar un nuevo encabezado de grupo con la etiqueta indicada.</td></tr>
-<tr><td><code>DelItem( nItem )</code></td><td>Eliminar el elemento en el índice basado en 1 <code>nItem</code>.</td></tr>
-<tr><td><code>GetItem( nItem )</code></td><td>Obtener los datos del elemento en el índice indicado.</td></tr>
-<tr><td><code>FindItem( cText )</code></td><td>Buscar un elemento por su etiqueta de texto.</td></tr>
-<tr><td><code>SetItemSelect( nItem )</code></td><td>Seleccionar un elemento programáticamente.</td></tr>
-<tr><td><code>SetStyle( nStyle )</code></td><td>Cambiar el modo de vista (pasar una de las constantes <code>LV_VIEW_*</code>).</td></tr>
-<tr><td><code>SetImageList( oImageList, nType )</code></td><td>Asignar una lista de imágenes. <code>nType</code>: <code>LVSIL_NORMAL</code> (0), <code>LVSIL_SMALL</code> (1), <code>LVSIL_STATE</code> (2).</td></tr>
-<tr><td><code>SetIconSpacing( x, y )</code></td><td>Establecer el espaciado entre iconos en vista de iconos.</td></tr>
-<tr><td><code>SetHotItem( nItem )</code></td><td>Establecer el elemento con seguimiento del ratón.</td></tr>
-<tr><td><code>EnableGroupView()</code></td><td>Habilitar el modo de vista de grupo para que los encabezados de grupo sean visibles.</td></tr>
+<tr><td><code>New( nTop, nLeft, aPrompts, bAction, oWnd, nClrFore, nClrBack, lPixel, lDesign, nWidth, nHeight, cMsg )</code></td><td>Constructor. Creates the ListView at the given position.</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, bAction )</code></td><td>Redefine from a dialog resource.</td></tr>
+<tr><td><code>InsertItem( nImageIndex, cText, nGroup )</code></td><td>Insert a new item with an image index, label, and optional group assignment.</td></tr>
+<tr><td><code>InsertGroup( cText )</code></td><td>Insert a new group header with the given label.</td></tr>
+<tr><td><code>DelItem( nItem )</code></td><td>Delete the item at 1-based index <code>nItem</code>.</td></tr>
+<tr><td><code>GetItem( nItem )</code></td><td>Retrieve item data at the given index.</td></tr>
+<tr><td><code>FindItem( cText )</code></td><td>Search for an item by its text label.</td></tr>
+<tr><td><code>SetItemSelect( nItem )</code></td><td>Programmatically select an item.</td></tr>
+<tr><td><code>SetStyle( nStyle )</code></td><td>Change the view mode (pass one of the <code>LV_VIEW_*</code> constants).</td></tr>
+<tr><td><code>SetImageList( oImageList, nType )</code></td><td>Assign an image list. <code>nType</code>: <code>LVSIL_NORMAL</code> (0), <code>LVSIL_SMALL</code> (1), <code>LVSIL_STATE</code> (2).</td></tr>
+<tr><td><code>SetIconSpacing( x, y )</code></td><td>Set the spacing between icons in icon view.</td></tr>
+<tr><td><code>SetHotItem( nItem )</code></td><td>Set the hot-tracked item.</td></tr>
+<tr><td><code>EnableGroupView()</code></td><td>Enable group view mode so group headers are visible.</td></tr>
 </tbody>
 </table>
 
-<h2 id="command">Sintaxis de Comandos</h2>
+<h2 id="command">Command Syntax</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol LISTVIEW oLvw ;
    [ OF oWnd ] ;
@@ -105,7 +105,7 @@ REDEFINE LISTVIEW oLvw ;
    [ OF oWnd ] ;
    [ ON CHANGE bAction ]</code></pre>
 
-<h2 id="lifecycle">Ciclo de Vida del ListView</h2>
+<h2 id="lifecycle">ListView Lifecycle</h2>
 
 <div class="mermaid">
 sequenceDiagram
@@ -116,17 +116,17 @@ sequenceDiagram
     App->>LV: @ row,col LISTVIEW oLvw PROMPTS ...
     LV->>Win: Create("SysListView32")
     LV->>Win: InsertGroup("default")
-    loop Para cada prompt
+    loop For each prompt
         LV->>Win: InsertItem(n, cText)
     end
 
     App->>LV: SetImageList(oImgList, LVSIL_NORMAL)
     LV->>Win: SendMessage(LVM_SETIMAGELIST)
 
-    App->>LV: InsertGroup("Categoría A")
+    App->>LV: InsertGroup("Category A")
     LV->>Win: LVInsertGroup()
 
-    App->>LV: InsertItem(0, "Nuevo Elemento", nGroup)
+    App->>LV: InsertItem(0, "New Item", nGroup)
     LV->>Win: LVInsertItem()
 
     App->>LV: SetStyle(LV_VIEW_DETAILS)
@@ -136,9 +136,9 @@ sequenceDiagram
     LV-->>App: Eval(bAction)
 </div>
 
-<h2 id="examples">Ejemplos de Código</h2>
+<h2 id="examples">Code Examples</h2>
 
-<h3>Ejemplo 1: ListView Básico con Iconos</h3>
+<h3>Example 1: Basic ListView with Icons</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -147,7 +147,7 @@ FUNCTION TestListView()
 
    DEFINE WINDOW oWnd TITLE "ListView Demo"
 
-   // Crear una lista de imágenes de 32x32
+   // Create a 32x32 image list
    oImgList := TImageList():New( 32, 32 )
    oImgList:AddMasked( TBitmap():Define( "FOLDER",, oWnd ), CLR_MAGENTA )
    oImgList:AddMasked( TBitmap():Define( "FILE",,   oWnd ), CLR_MAGENTA )
@@ -162,7 +162,7 @@ FUNCTION TestListView()
    ACTIVATE WINDOW oWnd
 RETURN NIL</code></pre>
 
-<h3>Ejemplo 2: Vista de Detalles con Grupos</h3>
+<h3>Example 2: Details View with Groups</h3>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -174,51 +174,51 @@ FUNCTION TestListViewGroups()
    @ 0, 0 LISTVIEW oLvw OF oWnd SIZE 500, 400 PIXEL ;
       ON CHANGE { || ProcessItem( oLvw:nOption ) }
 
-   // Cambiar a vista de detalles
+   // Switch to details view
    oLvw:SetStyle( 1 )   // LV_VIEW_DETAILS
 
-   // Insertar grupos
+   // Insert groups
    oLvw:InsertGroup( "Contacts" )
    oLvw:InsertGroup( "Suppliers" )
 
-   // Habilitar encabezados de grupo
+   // Enable group headers
    oLvw:EnableGroupView()
 
-   // Insertar elementos en grupos
-   oLvw:InsertItem( 0, "John Smith",     0 )  // Grupo 0 = predeterminado
-   oLvw:InsertItem( 0, "Jane Doe",       1 )  // Grupo 1 = Contactos
-   oLvw:InsertItem( 0, "Acme Corp",      2 )  // Grupo 2 = Proveedores
+   // Insert items into groups
+   oLvw:InsertItem( 0, "John Smith",     0 )  // Group 0 = default
+   oLvw:InsertItem( 0, "Jane Doe",       1 )  // Group 1 = Contacts
+   oLvw:InsertItem( 0, "Acme Corp",      2 )  // Group 2 = Suppliers
    oLvw:InsertItem( 0, "Widget Inc",     2 )
 
    ACTIVATE WINDOW oWnd
 RETURN NIL</code></pre>
 
-<h3>Ejemplo 3: Cambio de Modos de Vista</h3>
+<h3>Example 3: Switching View Modes</h3>
 
-<pre><code class="language-harbour">// Agregar un combobox para cambiar modos de vista
+<pre><code class="language-harbour">// Add a combobox to switch view modes
 @ 0, 0 COMBOBOX oCbx ITEMS { "Large Icons", "Details", ;
    "Small Icons", "List", "Tiles" } ;
    OF oWnd SIZE 150, 200 PIXEL ;
    ON CHANGE { || oLvw:SetStyle( oCbx:nAt - 1 ) }</code></pre>
 
-<h2 id="tips">Consejos</h2>
+<h2 id="tips">Tips</h2>
 
 <ul>
-  <li>Para navegar bases de datos con ordenamiento, filtrado y edición, use <a href="../../es/ui/txbrowse.html">TXBrowse</a> en su lugar.</li>
-  <li><code>TListView</code> es más adecuado para selección basada en iconos (exploradores de archivos, galerías de imágenes, listas de opciones).</li>
-  <li>Llame a <code>EnableGroupView()</code> después de insertar grupos para hacer visibles los encabezados de grupo.</li>
-  <li>El parámetro <code>nImageIndex</code> en <code>InsertItem()</code> está basado en 0 (coincidiendo con el índice de la lista de imágenes).</li>
-  <li>Use <code>SetIconSpacing()</code> para controlar el espacio entre elementos en el modo de vista de iconos.</li>
+  <li>For database browsing with sorting, filtering, and editing, use <a href="../../es/ui/txbrowse.html">TXBrowse</a> instead.</li>
+  <li><code>TListView</code> is best suited for icon-based selection (file browsers, image galleries, option lists).</li>
+  <li>Call <code>EnableGroupView()</code> after inserting groups to make group headers visible.</li>
+  <li>The <code>nImageIndex</code> parameter in <code>InsertItem()</code> is 0-based (matching the image list index).</li>
+  <li>Use <code>SetIconSpacing()</code> to control the gap between items in icon view mode.</li>
 </ul>
 
 <h2 id="see-also">Ver También</h2>
 <ul>
-  <li><a href="../../es/core/tcontrol.html">TControl</a> -- clase padre</li>
-  <li><a href="../../es/ui/txbrowse.html">TXBrowse</a> -- navegador de datos con grilla</li>
-  <li><a href="../../es/ui/ttreeview.html">TTreeView</a> -- control de árbol jerárquico</li>
-  <li><a href="../../es/reference/resources.html">Recursos (GDI)</a> -- TImageList para iconos</li>
+  <li><a href="../../es/core/tcontrol.html">TControl</a> -- parent class</li>
+  <li><a href="../../es/ui/txbrowse.html">TXBrowse</a> -- data-aware grid browser</li>
+  <li><a href="../../es/ui/ttreeview.html">TTreeView</a> -- hierarchical tree control</li>
+  <li><a href="../../es/reference/resources.html">Resources (GDI)</a> -- TImageList for icons</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script></body></html>

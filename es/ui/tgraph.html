@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TGraph - Documentaci&oacute;n FWH</title>
+<title>TGraph - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,89 +13,89 @@
 
 <h1>TGraph</h1>
 <p class="class-source">Fuente: <code>source/classes/tgraph.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TGraph es el control de gr&aacute;ficos de FiveWin que soporta gr&aacute;ficos de barras, l&iacute;neas, puntos, circulares y de dispersi&oacute;n XY.
-Proporciona un conjunto completo de capacidades de graficaci&oacute;n directamente dentro de ventanas y di&aacute;logos de FiveWin,
-con soporte para m&uacute;ltiples series, renderizado 3D, leyendas, l&iacute;neas de cuadr&iacute;cula y exportaci&oacute;n a imagen o impresora.
+TGraph is FiveWin's charting control that supports bar, line, point, pie, and XY scatter charts.
+It provides a comprehensive set of graphing capabilities directly within FiveWin windows and dialogs,
+with support for multiple series, 3D rendering, legends, grid lines, and export to image or printer.
 </p>
 
-<h2 id="graph-types">Tipos de Gr&aacute;fico</h2>
+<h2 id="graph-types">Graph Types</h2>
 
-<p>TGraph soporta los siguientes tipos de gr&aacute;fico, definidos como constantes num&eacute;ricas:</p>
-
-<table>
-<thead>
-<tr><th>Constante</th><th>Valor</th><th>Descripci&oacute;n</th></tr>
-</thead>
-<tbody>
-<tr><td><code>GRAPH_TYPE_BAR</code></td><td>1</td><td>Gr&aacute;fico de barras vertical (predeterminado)</td></tr>
-<tr><td><code>GRAPH_TYPE_LINE</code></td><td>2</td><td>Gr&aacute;fico de l&iacute;neas conectando puntos de datos</td></tr>
-<tr><td><code>GRAPH_TYPE_POINT</code></td><td>3</td><td>Gr&aacute;fico de puntos/dispersi&oacute;n</td></tr>
-<tr><td><code>GRAPH_TYPE_PIE</code></td><td>4</td><td>Gr&aacute;fico circular</td></tr>
-<tr><td><code>GRAPH_TYPE_XY_LINES</code></td><td>6</td><td>Gr&aacute;fico de dispersi&oacute;n XY con l&iacute;neas conectoras</td></tr>
-<tr><td><code>GRAPH_TYPE_XY_POINTS</code></td><td>7</td><td>Gr&aacute;fico de dispersi&oacute;n XY solo con puntos</td></tr>
-</tbody>
-</table>
-
-<h2 id="data">Miembros DATA Principales</h2>
+<p>TGraph supports the following chart types, defined as numeric constants:</p>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nType</code></td><td>Num&eacute;rico</td><td>Tipo de gr&aacute;fico (GRAPH_TYPE_BAR, GRAPH_TYPE_LINE, etc.)</td></tr>
-<tr><td><code>aSeries</code></td><td>Array</td><td>Array de objetos de definici&oacute;n de series</td></tr>
-<tr><td><code>aData</code></td><td>Array</td><td>Valores de datos del gr&aacute;fico</td></tr>
-<tr><td><code>l3D</code></td><td>L&oacute;gico</td><td>Habilitar renderizado 3D</td></tr>
-<tr><td><code>lxGrid</code></td><td>L&oacute;gico</td><td>Mostrar l&iacute;neas de cuadr&iacute;cula del eje X</td></tr>
-<tr><td><code>lyGrid</code></td><td>L&oacute;gico</td><td>Mostrar l&iacute;neas de cuadr&iacute;cula del eje Y</td></tr>
-<tr><td><code>lxVal</code></td><td>L&oacute;gico</td><td>Mostrar etiquetas de valores del eje X</td></tr>
-<tr><td><code>lyVal</code></td><td>L&oacute;gico</td><td>Mostrar etiquetas de valores del eje Y</td></tr>
-<tr><td><code>cTitle</code></td><td>Car&aacute;cter</td><td>T&iacute;tulo principal del gr&aacute;fico</td></tr>
-<tr><td><code>cSubTit</code></td><td>Car&aacute;cter</td><td>Subt&iacute;tulo del gr&aacute;fico</td></tr>
-<tr><td><code>cTitX</code></td><td>Car&aacute;cter</td><td>T&iacute;tulo del eje X</td></tr>
-<tr><td><code>cTitY</code></td><td>Car&aacute;cter</td><td>T&iacute;tulo del eje Y</td></tr>
-<tr><td><code>cPicture</code></td><td>Car&aacute;cter</td><td>M&aacute;scara de picture para formato de valores</td></tr>
-<tr><td><code>lViewVal</code></td><td>L&oacute;gico</td><td>Mostrar valores de datos en el gr&aacute;fico</td></tr>
-<tr><td><code>lLegends</code></td><td>L&oacute;gico</td><td>Mostrar leyendas de series</td></tr>
-<tr><td><code>nBarSep</code></td><td>Num&eacute;rico</td><td>Espacio de separaci&oacute;n entre barras</td></tr>
-<tr><td><code>nPoint</code></td><td>Num&eacute;rico</td><td>Tipo de marcador de punto (POINT_TYPE_1..3)</td></tr>
-<tr><td><code>nMaxVal</code></td><td>Num&eacute;rico</td><td>Valor m&aacute;ximo del eje Y</td></tr>
-<tr><td><code>nMinVal</code></td><td>Num&eacute;rico</td><td>Valor m&iacute;nimo del eje Y</td></tr>
-<tr><td><code>nClrBack</code></td><td>Num&eacute;rico</td><td>Color de fondo</td></tr>
-<tr><td><code>cBitmap</code></td><td>Car&aacute;cter</td><td>Archivo de mapa de bits de fondo</td></tr>
+<tr><td><code>GRAPH_TYPE_BAR</code></td><td>1</td><td>Vertical bar chart (default)</td></tr>
+<tr><td><code>GRAPH_TYPE_LINE</code></td><td>2</td><td>Line chart connecting data points</td></tr>
+<tr><td><code>GRAPH_TYPE_POINT</code></td><td>3</td><td>Scatter/point chart</td></tr>
+<tr><td><code>GRAPH_TYPE_PIE</code></td><td>4</td><td>Pie chart</td></tr>
+<tr><td><code>GRAPH_TYPE_XY_LINES</code></td><td>6</td><td>XY scatter chart with connecting lines</td></tr>
+<tr><td><code>GRAPH_TYPE_XY_POINTS</code></td><td>7</td><td>XY scatter chart with points only</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, oWnd, nWidth, nHeight, cTitle, lDesign, lPixel, l3D, lxGrid, lyGrid, lxVal, lyVal, lPopUp, lLegends, nType )</code></td><td>Crear un nuevo control TGraph</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, cTitle, l3D, lxGrid, lyGrid, lxVal, lyVal, lPopUp, lLegends, nType )</code></td><td>Redefinir desde recurso de di&aacute;logo</td></tr>
-<tr><td><code>AddSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine, cSRLegend )</code></td><td>A&ntilde;adir una serie de datos al gr&aacute;fico. Devuelve el &iacute;ndice de la serie.</td></tr>
-<tr><td><code>AddXYSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine, cSRLegend )</code></td><td>A&ntilde;adir una serie de dispersi&oacute;n XY (array de pares {x,y})</td></tr>
-<tr><td><code>SetYVals( aLabels )</code></td><td>Establecer etiquetas de categor&iacute;a del eje Y (ej., Q1, Q2, Q3, Q4)</td></tr>
-<tr><td><code>SelSerie( nSerie )</code></td><td>Seleccionar una serie espec&iacute;fica para mostrar</td></tr>
-<tr><td><code>SelPeriod( nPeriod )</code></td><td>Seleccionar un per&iacute;odo espec&iacute;fico para mostrar</td></tr>
-<tr><td><code>SaveAsImage( cFile )</code></td><td>Guardar el gr&aacute;fico como archivo de imagen BMP</td></tr>
-<tr><td><code>Save2XLS( nTypeGraph )</code></td><td>Exportar datos del gr&aacute;fico a Excel</td></tr>
-<tr><td><code>Print( oPrn, nTop, nLeft, nWidth, nHeight )</code></td><td>Imprimir el gr&aacute;fico en un dispositivo de impresi&oacute;n</td></tr>
-<tr><td><code>PrintGraph( lPrev, oPrn, nY, nX, cFile, nPorY, nPorX, lUser, lHoriz, nTypePage )</code></td><td>Impresi&oacute;n avanzada con vista previa y opciones de zoom</td></tr>
-<tr><td><code>Copy2ClipBoard( lMsg )</code></td><td>Copiar imagen del gr&aacute;fico al portapapeles</td></tr>
-<tr><td><code>ResizeSerie( nNewSize )</code></td><td>Redimensionar din&aacute;micamente el n&uacute;mero de series</td></tr>
-<tr><td><code>Default()</code></td><td>Aplicar configuraci&oacute;n y fuentes predeterminadas del gr&aacute;fico</td></tr>
-<tr><td><code>Destroy()</code></td><td>Destruir el gr&aacute;fico y liberar recursos</td></tr>
+<tr><td><code>nType</code></td><td>Numeric</td><td>Graph type (GRAPH_TYPE_BAR, GRAPH_TYPE_LINE, etc.)</td></tr>
+<tr><td><code>aSeries</code></td><td>Array</td><td>Array of series definition objects</td></tr>
+<tr><td><code>aData</code></td><td>Array</td><td>Chart data values</td></tr>
+<tr><td><code>l3D</code></td><td>Logical</td><td>Enable 3D rendering</td></tr>
+<tr><td><code>lxGrid</code></td><td>Logical</td><td>Show X-axis grid lines</td></tr>
+<tr><td><code>lyGrid</code></td><td>Logical</td><td>Show Y-axis grid lines</td></tr>
+<tr><td><code>lxVal</code></td><td>Logical</td><td>Show X-axis value labels</td></tr>
+<tr><td><code>lyVal</code></td><td>Logical</td><td>Show Y-axis value labels</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Main chart title</td></tr>
+<tr><td><code>cSubTit</code></td><td>Character</td><td>Chart subtitle</td></tr>
+<tr><td><code>cTitX</code></td><td>Character</td><td>X-axis title</td></tr>
+<tr><td><code>cTitY</code></td><td>Character</td><td>Y-axis title</td></tr>
+<tr><td><code>cPicture</code></td><td>Character</td><td>Picture mask for value formatting</td></tr>
+<tr><td><code>lViewVal</code></td><td>Logical</td><td>Show data values on chart</td></tr>
+<tr><td><code>lLegends</code></td><td>Logical</td><td>Show series legends</td></tr>
+<tr><td><code>nBarSep</code></td><td>Numeric</td><td>Bar separation gap</td></tr>
+<tr><td><code>nPoint</code></td><td>Numeric</td><td>Point marker type (POINT_TYPE_1..3)</td></tr>
+<tr><td><code>nMaxVal</code></td><td>Numeric</td><td>Maximum Y-axis value</td></tr>
+<tr><td><code>nMinVal</code></td><td>Numeric</td><td>Minimum Y-axis value</td></tr>
+<tr><td><code>nClrBack</code></td><td>Numeric</td><td>Background color</td></tr>
+<tr><td><code>cBitmap</code></td><td>Character</td><td>Background bitmap file</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Gr&aacute;fico de Barras con Dos Series</h2>
+<h2 id="methods">Methods</h2>
+
+<table>
+<thead>
+<tr><th>Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>New( nTop, nLeft, oWnd, nWidth, nHeight, cTitle, lDesign, lPixel, l3D, lxGrid, lyGrid, lxVal, lyVal, lPopUp, lLegends, nType )</code></td><td>Create a new TGraph control</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, cTitle, l3D, lxGrid, lyGrid, lxVal, lyVal, lPopUp, lLegends, nType )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>AddSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine, cSRLegend )</code></td><td>Add a data series to the chart. Returns the series index.</td></tr>
+<tr><td><code>AddXYSerie( aDat, cLegend, nColor, nType, l3D, lViewVal, lDrawPoint, lDrawLine, cSRLegend )</code></td><td>Add an XY scatter series (array of {x,y} pairs)</td></tr>
+<tr><td><code>SetYVals( aLabels )</code></td><td>Set Y-axis category labels (e.g., Q1, Q2, Q3, Q4)</td></tr>
+<tr><td><code>SelSerie( nSerie )</code></td><td>Select a specific series for display</td></tr>
+<tr><td><code>SelPeriod( nPeriod )</code></td><td>Select a specific period for display</td></tr>
+<tr><td><code>SaveAsImage( cFile )</code></td><td>Save chart as a bitmap image file</td></tr>
+<tr><td><code>Save2XLS( nTypeGraph )</code></td><td>Export chart data to Excel</td></tr>
+<tr><td><code>Print( oPrn, nTop, nLeft, nWidth, nHeight )</code></td><td>Print the chart on a printer device</td></tr>
+<tr><td><code>PrintGraph( lPrev, oPrn, nY, nX, cFile, nPorY, nPorX, lUser, lHoriz, nTypePage )</code></td><td>Advanced printing with preview and zoom options</td></tr>
+<tr><td><code>Copy2ClipBoard( lMsg )</code></td><td>Copy chart image to clipboard</td></tr>
+<tr><td><code>ResizeSerie( nNewSize )</code></td><td>Resize the number of series dynamically</td></tr>
+<tr><td><code>Default()</code></td><td>Apply default chart settings and fonts</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destroy the chart and free resources</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example: Bar Chart with Two Series</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -127,19 +127,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TGraph es un motor de gr&aacute;ficos completamente aut&oacute;nomo que no depende de componentes ActiveX o OCX externos. Todo el renderizado se realiza mediante GDI.</li>
-<li>Use la sintaxis del comando <code>GRAPH</code> con <code>TYPE nType</code> para establecer el tipo de gr&aacute;fico en el momento de la creaci&oacute;n.</li>
-<li>Los colores para las series se asignan autom&aacute;ticamente desde una paleta interna si no se especifican. La paleta predeterminada recorre METRO_AMBER, METRO_OLIVE, CLR_HMAGENTA, CLR_HBLUE, CLR_HRED, CLR_HGREEN y colores est&aacute;ndar.</li>
-<li>Los gr&aacute;ficos XY (tipos 6 y 7) esperan datos como arrays de pares de coordenadas <code>{ x, y }</code>. Use <code>AddXYSerie()</code> para a&ntilde;adir series XY.</li>
-<li>La exportaci&oacute;n a imagen usa <code>Save2Bmp()</code> internamente. El gr&aacute;fico tambi&eacute;n se puede copiar al portapapeles para pegarlo en otras aplicaciones.</li>
-<li>El men&uacute; emergente (habilitado mediante <code>lPopUp</code>) proporciona acceso con clic derecho para cambiar el tipo de gr&aacute;fico, alternar cuadr&iacute;culas y opciones de exportaci&oacute;n en tiempo de ejecuci&oacute;n.</li>
+<li>TGraph is a fully self-contained charting engine that does not rely on external ActiveX or OCX components. All rendering is done via GDI.</li>
+<li>Use <code>GRAPH</code> command syntax with <code>TYPE nType</code> to set the chart type at creation time.</li>
+<li>Colors for series are auto-assigned from an internal palette if not specified. The default palette cycles through METRO_AMBER, METRO_OLIVE, CLR_HMAGENTA, CLR_HBLUE, CLR_HRED, CLR_HGREEN, and standard colors.</li>
+<li>XY charts (types 6 and 7) expect data as arrays of <code>{ x, y }</code> coordinate pairs. Use <code>AddXYSerie()</code> to add XY series.</li>
+<li>Export to image uses <code>Save2Bmp()</code> internally. The chart can also be copied to clipboard for pasting into other applications.</li>
+<li>The popup menu (enabled via <code>lPopUp</code>) provides right-click access to chart type switching, grid toggles, and export options at runtime.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/reference/tgmail.html">&larr; tgmail</a> | <a href="../../es/internet/tgrok.html">tgrok &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

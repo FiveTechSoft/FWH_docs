@@ -1,239 +1,239 @@
-﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PyTorch-lite en FWH - Hoja de Ruta - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PyTorch-lite in FWH - Roadmap - Documentación FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
 <body>
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>"PyTorch-lite en FWH" &mdash; Hoja de Ruta</h1>
-<p class="class-source">Notas fuente: <code>docs/pytorch-lite-roadmap.md</code></p>
+<h1>"PyTorch-lite in FWH" &mdash; Roadmap</h1>
+<p class="class-source">Source notes: <code>docs/pytorch-lite-roadmap.md</code></p>
 
 <p>
-El esfuerzo por llevar la potencia real de los transformers a las apps
-FiveWin/Harbour reutilizando recursos de HuggingFace. Esta página explica el
-<strong>porqué</strong> de cada paso y el orden en que aterrizan. Es un plan vivo
-&mdash; ver las páginas <a href="../../es/ai/ttransformer.html">Transformer</a> y
-<a href="../../es/ai/hftokenizer.html">HFTokenizer</a> para lo que ya está disponible.
+The effort to bring real transformer power into FiveWin/Harbour apps by reusing
+HuggingFace resources. This page explains <strong>why</strong> each step is
+needed and the order in which they land. It is a living plan &mdash; see the
+<a href="../../es/ai/ttransformer.html">Transformer</a> and
+<a href="../../es/ai/hftokenizer.html">HFTokenizer</a> pages for what already ships.
 </p>
 
-<h2 id="premise">Premisa</h2>
+<h2 id="premise">Premise</h2>
 <p>
-Harbour-el-lenguaje <strong>no</strong> es inferior a Python para esto. PyTorch es
-una capa fina de Python sobre un núcleo C++/CUDA. FWH ya incluye extensiones C
-(<code>source/function/matrixes.c</code>). La brecha a cerrar es ese <em>núcleo C</em>,
-no el lenguaje.
+Harbour-the-language is <strong>not</strong> inferior to Python for this. PyTorch
+is a thin Python layer over a C++/CUDA core. FWH already ships C extensions
+(<code>source/function/matrixes.c</code>). The gap to close is that <em>C core</em>,
+not the language.
 </p>
 
-<h2 id="tracks">Tres pistas</h2>
-<p>Mantenerlas distintas para fijar expectativas honestas:</p>
+<h2 id="tracks">Three tracks</h2>
+<p>Keep these distinct to set honest expectations:</p>
 <ul>
-<li><strong>Pista A &mdash; Transformer local desde cero.</strong> Escala
-juguete/educativa, CPU, <code>d_model</code> pequeño. Nicho: modelos diminutos
-embebidos/offline, clasificación con pocos datos, enseñanza. No igualará a PyTorch.</li>
-<li><strong>Pista B &mdash; HuggingFace como potencia remota (Inference API).</strong>
-Ya parcial: <code>tembeddings.prg</code>, <code>tollama.prg</code>,
-<code>chatgpt.prg</code>, <code>gemini*.prg</code>. Mucho más capaz hoy, sin
-entrenamiento local.</li>
-<li><strong>Pista C &mdash; bindear llama.cpp (<code>libllama</code>) por FFI.</strong>
-El mayor valor real para ejecutar un LLM real <em>localmente</em> en una app FWH
-<em>hoy</em>. llama.cpp ya hace lo difícil (pesos cuantizados, SIMD, GPU, KV cache,
-mmap, GGUF); una clase <code>TLlamaCpp</code> sólo llamaría su API C
-(<code>llama_load_model_from_file</code>, <code>llama_decode</code>, sampling)
-&mdash; el mismo patrón que el binding de hbcurl &mdash; dando inferencia real de
-Llama/Mistral/Qwen/Phi en CPU/GPU con cuantización de 4 bits, sin entrenar.</li>
+<li><strong>Track A &mdash; local from-scratch Transformer.</strong> Toy/educational
+scale, CPU, small <code>d_model</code>. Niche: tiny embeddable/offline models,
+classification on small data, teaching. Will not match PyTorch.</li>
+<li><strong>Track B &mdash; HuggingFace as remote power (Inference API).</strong>
+Already partial: <code>tembeddings.prg</code>, <code>tollama.prg</code>,
+<code>chatgpt.prg</code>, <code>gemini*.prg</code>. Vastly more capable today, no
+local training.</li>
+<li><strong>Track C &mdash; bind llama.cpp (<code>libllama</code>) via FFI.</strong>
+Highest real value for running a real LLM <em>locally</em> in an FWH app
+<em>today</em>. llama.cpp already does the hard part (quantized weights, SIMD, GPU,
+KV cache, mmap, GGUF); a <code>TLlamaCpp</code> class would just call its C API
+(<code>llama_load_model_from_file</code>, <code>llama_decode</code>, sampling) &mdash;
+the same pattern as the hbcurl binding &mdash; giving real Llama/Mistral/Qwen/Phi
+inference on CPU/GPU with 4-bit quantization, no training.</li>
 </ul>
-<p>Las fases de abajo elevan el techo de la <strong>Pista A</strong>. La Pista C es
-un esfuerzo separado y complementario (un binding FFI, no un núcleo desde cero) y
-es el camino pragmático si el objetivo es potencia LLM de producción en apps FWH ya.</p>
+<p>The phases below raise <strong>Track A</strong>'s ceiling. Track C is a separate,
+complementary effort (an FFI binding, not a from-scratch core) and is the pragmatic
+path if the goal is production LLM power in FWH apps now.</p>
 
-<h3>Por qué NO hacer nuestro Transformer compatible con los pesos de llama.cpp</h3>
+<h3>Why not make our Transformer weight-compatible with llama.cpp models</h3>
 <p>
-Poco valor, alto coste. LLaMA/Mistral usan <strong>RoPE</strong> (no posiciones
-aprendidas), <strong>RMSNorm</strong> (no LayerNorm), <strong>SwiGLU</strong> (no
-GELU/ReLU) y <strong>GQA</strong> (grouped-query attention) &mdash; distinto de
-GPT-2 y de nuestra clase. Correr sus pesos exigiría reescribir por arquitectura más
-dequantización de bloques GGUF. Bindear <code>libllama</code> (Pista C) da la misma
-capacidad por una fracción del esfuerzo.
+Low value, high cost. LLaMA/Mistral use <strong>RoPE</strong> (not learned
+positions), <strong>RMSNorm</strong> (not LayerNorm), <strong>SwiGLU</strong> (not
+GELU/ReLU) and <strong>GQA</strong> (grouped-query attention) &mdash; different from
+GPT-2 and from our class. Running their weights would mean a per-architecture
+rewrite plus GGUF block dequantization. Binding <code>libllama</code> (Track C)
+gets the same capability for a fraction of the effort.
 </p>
 
-<h2 id="lessons">Lecciones de llama.cpp</h2>
-<p>Incorporarlas a la Pista A para que <code>FW_Tensor</code> escale:</p>
+<h2 id="lessons">Lessons from llama.cpp</h2>
+<p>Fold these into Track A so <code>FW_Tensor</code> scales:</p>
 <table>
-<thead><tr><th>Lección</th><th>Qué es</th><th>Dónde aplica</th></tr></thead>
+<thead><tr><th>Lesson</th><th>What it is</th><th>Where it applies</th></tr></thead>
 <tbody>
-<tr><td><strong>Cuantización</strong> (Q4_K/Q8_0)</td><td>pesos en bloques de 4&ndash;8 bits + escala por bloque</td><td>4-bit = 1/8 de memoria vs float32; así caben 7B en 4&nbsp;GB. <code>FW_Tensor</code> debería soportar bloques cuantizados + dequant en matmul</td></tr>
-<tr><td><strong>mmap de pesos</strong></td><td>mapear el archivo; el SO pagina bajo demanda</td><td><code>FWT_LoadSafe</code> hoy hace <code>fread</code>; mmap = "cargar" 500&nbsp;MB instantáneo, paginado lazy</td></tr>
-<tr><td><strong>KV cache</strong></td><td>cachear K,V por capa entre pasos de generación</td><td>nuestro <code>Generate</code> recomputa toda la ventana cada token (O(n&sup2;)); KV cache &rarr; O(1) capas/token</td></tr>
-<tr><td><strong>grafo ggml + backends</strong></td><td>grafo de ops + backend CPU/CUDA/Metal + arena</td><td>objetivo arquitectónico de <code>FW_Tensor</code> (alinea con Fase 2/4)</td></tr>
-<tr><td><strong>matmul SIMD + threads + blocking</strong></td><td>kernels multinúcleo cache-aware</td><td>nuestra matmul es triple bucle &rarr; Fase 2 (BLAS)</td></tr>
-<tr><td><strong>Formato único GGUF</strong></td><td>metadata + tensores + quant en un archivo mmap</td><td>un lector GGUF (como el de safetensors) abre el ecosistema de modelos cuantizados</td></tr>
+<tr><td><strong>Quantization</strong> (Q4_K/Q8_0)</td><td>weights in 4&ndash;8-bit blocks + per-block scale</td><td>4-bit = 1/8 the memory of float32; how 7B fits in 4&nbsp;GB. <code>FW_Tensor</code> should support quantized blocks + dequant-in-matmul</td></tr>
+<tr><td><strong>mmap weights</strong></td><td>memory-map the file; OS pages on demand</td><td><code>FWT_LoadSafe</code> currently <code>fread</code>s; mmap = "load" 500&nbsp;MB instantly, lazy paging</td></tr>
+<tr><td><strong>KV cache</strong></td><td>cache K,V per layer across generation steps</td><td>our <code>Generate</code> recomputes the whole window each token (O(n&sup2;)); KV cache &rarr; O(1) layers/token</td></tr>
+<tr><td><strong>ggml graph + backends</strong></td><td>op graph + pluggable CPU/CUDA/Metal backend + arena allocator</td><td>architecture target for <code>FW_Tensor</code> (aligns with Phase 2/4)</td></tr>
+<tr><td><strong>SIMD + threaded + blocked matmul</strong></td><td>cache-aware multicore kernels</td><td>our matmul is a triple loop &rarr; Phase 2 (BLAS)</td></tr>
+<tr><td><strong>GGUF single-file format</strong></td><td>metadata + tensors + quant in one mmap'd file</td><td>a GGUF reader (like our safetensors reader) opens the quantized-model ecosystem</td></tr>
 </tbody>
 </table>
 
-<h2 id="spike">Spike de carga de pesos GPT-2 (hallazgos)</h2>
+<h2 id="spike">GPT-2 weight-loading spike (findings)</h2>
 <p>
-El ejemplo <code>samples/ai/gpt2spike.prg</code> demostró que Harbour puro
-<em>puede</em> leer un <code>model.safetensors</code> real de GPT-2: parseó la
-cabecera (160 tensores, 137.022.720 params), validó shapes
-(<code>wte[50257,768]</code>, <code>wpe[1024,768]</code>) y decodificó un peso
-float32 real &mdash; bajando sólo la cabecera de 16&nbsp;KB vía HTTP range, no el
-archivo de 500&nbsp;MB.
+Sample <code>samples/ai/gpt2spike.prg</code> proved pure Harbour <em>can</em> read a
+real GPT-2 <code>model.safetensors</code>: it parsed the header (160 tensors,
+137,022,720 params), validated shapes (<code>wte[50257,768]</code>,
+<code>wpe[1024,768]</code>), and decoded a real float32 weight &mdash; fetching only
+the 16&nbsp;KB header via an HTTP range request, not the 500&nbsp;MB file.
 </p>
 <p>
-<strong>Bloqueo encontrado:</strong> 137M params como arrays anidados de Harbour
-(<code>array de array de double</code>, ~16&ndash;24 bytes/elemento) son ~2&ndash;3&nbsp;GB
-de RAM y lento. El backend de matrices actual no escala &mdash; de ahí la Fase 1.
-GPT-2 real además necesita una arquitectura exacta (pre-norm, GELU, posicional
-aprendida, QKV combinado con bias, <code>lm_head</code> con weight-tying).
+<strong>Blocker found:</strong> 137M params as Harbour nested arrays
+(<code>array of array of double</code>, ~16&ndash;24 bytes/element) is ~2&ndash;3&nbsp;GB
+RAM and slow. The current matrix backend does not scale &mdash; hence Phase 1.
+Real GPT-2 also needs an exact architecture (pre-norm, GELU, learned positional,
+combined QKV with bias, weight-tied <code>lm_head</code>).
 </p>
 
-<h2 id="needs">Qué necesita FWH, por prioridad &mdash; y por qué</h2>
+<h2 id="needs">What FWH needs, by priority &mdash; and why</h2>
 <table>
-<thead><tr><th>#</th><th>Necesidad</th><th>Por qué es necesaria</th></tr></thead>
+<thead><tr><th>#</th><th>Need</th><th>Why it is necessary</th></tr></thead>
 <tbody>
-<tr><td>1</td><td><strong>Tensor plano en C</strong> (<code>FW_Tensor</code>)</td>
-<td>Hoy una matriz es array-de-arrays-de-double; 137M params así ≈ 2&ndash;3&nbsp;GB y hostil a caché. Los mismos datos como buffer float32 plano son ~523&nbsp;MB, contiguos y leíbles con <code>fread</code> directo de safetensors. Desbloquea todo.</td></tr>
-<tr><td>2</td><td><strong>matmul BLAS/SIMD</strong></td>
-<td><code>hb_MatrixMultiply</code> es un triple bucle ingenuo. Un transformer es sobre todo matmuls grandes; BLAS afinado usa SIMD, blocking y todos los núcleos para 10&ndash;100&times; &mdash; la frontera entre "segundos por token" y "minutos por token".</td></tr>
-<tr><td>3</td><td><strong>Autograd</strong> (tape)</td>
-<td>La killer feature de PyTorch. Hoy cada backward se deriva a mano por capa &mdash; propenso a errores y un muro contra nuevas arquitecturas. Un tape da los gradientes desde el forward gratis. Necesario para entrenar, no para inferir.</td></tr>
+<tr><td>1</td><td><strong>Flat C-backed tensor</strong> (<code>FW_Tensor</code>)</td>
+<td>A matrix is currently an array-of-arrays-of-double; 137M params that way ≈ 2&ndash;3&nbsp;GB and cache-hostile. The same data as a flat float32 buffer is ~523&nbsp;MB, contiguous, and <code>fread</code>-able straight from safetensors. Unblocks everything.</td></tr>
+<tr><td>2</td><td><strong>BLAS/SIMD matmul</strong></td>
+<td><code>hb_MatrixMultiply</code> is a naive triple loop. A transformer is mostly large matmuls; tuned BLAS uses SIMD, blocking and all cores for 10&ndash;100&times; &mdash; the line between "seconds per token" and "minutes per token".</td></tr>
+<tr><td>3</td><td><strong>Autograd</strong> (tape-based)</td>
+<td>PyTorch's killer feature. Today every backward is hand-derived per layer &mdash; error-prone and a wall against new architectures. A tape gives gradients from the forward pass for free. Needed for training, not inference.</td></tr>
 <tr><td>4</td><td><strong>float32 / bf16 / fp16</strong></td>
-<td>Calculamos en double de 64 bits. Tipos más pequeños reducen a la mitad/cuarto memoria y ancho de banda &mdash; y el ancho de banda, no los flops, es el cuello de botella usual en CPU.</td></tr>
-<tr><td>5</td><td><strong>Backend GPU</strong> (cuBLAS/OpenCL)</td>
-<td>Las CPU topan en cientos de GFLOP/s; las GPU alcanzan 10&ndash;100 TFLOP/s. Donde vive la potencia de modelos grandes y el entrenamiento a escala. Opcional para inferencia pequeña/media.</td></tr>
-<tr><td>6</td><td><strong>Zoo de kernels</strong></td>
-<td>La atención ingenua materializa la matriz completa seq&times;seq (memoria O(n&sup2;)); los kernels fusionados/flash lo evitan. Un conjunto amplio y correcto permite construir muchos modelos, no uno.</td></tr>
-<tr><td>7</td><td><strong>IO de modelos</strong> (safetensors, GGUF, ONNX)</td>
-<td>Cómo reutilizar los pesos preentrenados del mundo en vez de entrenar desde cero. La lectura de safetensors está probada; GGUF abre el ecosistema cuantizado/llama.cpp; ONNX abre modelos multi-framework.</td></tr>
-<tr><td>8</td><td><strong>Ecosistema</strong> (tokenizers, datasets, Hub)</td>
-<td>Un modelo es inútil sin su tokenizer exacto (ids bit a bit), datos y forma de bajar pesos. <code>HFTokenizer</code> cierra la mitad del tokenizer.</td></tr>
+<td>We compute in 64-bit double. Smaller dtypes halve/quarter memory and bandwidth &mdash; and bandwidth, not flops, is the usual CPU bottleneck.</td></tr>
+<tr><td>5</td><td><strong>GPU backend</strong> (cuBLAS/OpenCL)</td>
+<td>CPUs top out at a few hundred GFLOP/s; GPUs reach 10&ndash;100 TFLOP/s. Where big-model power and training-at-scale live. Optional for small/medium inference.</td></tr>
+<tr><td>6</td><td><strong>Kernel zoo</strong></td>
+<td>Naive attention materializes the full seq&times;seq matrix (O(n&sup2;) memory); fused/flash kernels avoid that. A broad correct kernel set lets you build many models, not one.</td></tr>
+<tr><td>7</td><td><strong>Model IO</strong> (safetensors, GGUF, ONNX)</td>
+<td>How you reuse the world's pretrained weights instead of training from scratch. safetensors reading is proven; GGUF opens the quantized/llama.cpp ecosystem; ONNX opens cross-framework models.</td></tr>
+<tr><td>8</td><td><strong>Ecosystem</strong> (tokenizers, datasets, Hub)</td>
+<td>A model is useless without its exact tokenizer (bit-exact ids), data, and a way to fetch weights. <code>HFTokenizer</code> closes the tokenizer half.</td></tr>
 </tbody>
 </table>
 
-<h2 id="phases">Fases pragmáticas</h2>
+<h2 id="phases">Pragmatic phases</h2>
 <table>
-<thead><tr><th>Fase</th><th>Entregable</th><th>Notas</th></tr></thead>
+<thead><tr><th>Phase</th><th>Deliverable</th><th>Notes</th></tr></thead>
 <tbody>
-<tr><td>1</td><td>Tipo plano <code>FW_Tensor</code> + ops sobre él</td><td>Quita el bloqueo de memoria (<strong>foundation entregada</strong>: tensor, MatMul, loader safetensors)</td></tr>
-<tr><td>2</td><td>Backend BLAS para matmul</td><td>Aceleración 10&ndash;100&times;</td></tr>
-<tr><td>3</td><td><code>GPT2Model</code> <strong>solo inferencia</strong> cargando safetensors</td><td>LA demo estrella: GPT-2 real preentrenado generando texto en FWH/CPU. ~1&ndash;5 tok/s con BLAS. Sólo necesita Fase 1+3.</td></tr>
-<tr><td>4 (opc)</td><td>Autograd tape para entrenar; backend GPU</td><td>Hacia entrenar modelos reales</td></tr>
+<tr><td>1</td><td><code>FW_Tensor</code> flat C type + ops on it</td><td>Removes the memory blocker (<strong>foundation shipped</strong>: tensor, MatMul, safetensors loader)</td></tr>
+<tr><td>2</td><td>BLAS backend for matmul</td><td>10&ndash;100&times; speedup</td></tr>
+<tr><td>3</td><td><code>GPT2Model</code> <strong>inference-only</strong> loading safetensors</td><td>THE headline demo: real pretrained GPT-2 generating text in FWH/CPU. ~1&ndash;5 tok/s with BLAS. Needs only Phase 1+3.</td></tr>
+<tr><td>4 (opt)</td><td>Tape autograd for training; GPU backend</td><td>Toward training real models</td></tr>
 </tbody>
 </table>
 
-<p><strong>Idea clave:</strong> la <em>inferencia</em> de GPT-2 no necesita autograd
-&mdash; sólo Fase&nbsp;1&nbsp;+&nbsp;Fase&nbsp;3. Es el camino más directo a una funcionalidad estrella.</p>
+<p><strong>Key insight:</strong> GPT-2 <em>inference</em> needs no autograd &mdash; only
+Phase&nbsp;1&nbsp;+&nbsp;Phase&nbsp;3. That is the most direct path to a headline feature.</p>
 
-<h3>Por qué este orden</h3>
+<h3>Why this order</h3>
 <ul>
-<li><strong>Fase 1 primero</strong> porque es dependencia dura de todo lo demás &mdash; no puedes guardar, cargar ni computar eficientemente sobre pesos reales mientras los datos viven en arrays anidados. Además paga de inmediato (cargar safetensors).</li>
-<li><strong>Fase 2 antes que 3</strong> porque un forward correcto-pero-lento (matmul ingenuo) puede ser demasiado lento para demo; BLAS lo hace usable. La Fase 3 puede empezar con matmul ingenuo y acelerar cuando llegue la Fase 2.</li>
-<li><strong>Fase 3 antes que 4</strong> porque la inferencia entrega el resultado estrella con la menor maquinaria (sin autograd, sin GPU). Entrenar es estrictamente más trabajo y puede seguir.</li>
-<li>Cada fase es entregable de forma independiente y deja la librería en estado funcional.</li>
+<li><strong>Phase 1 first</strong> because it is a hard dependency of everything else &mdash; you cannot hold, load, or efficiently compute on real weights while data lives in nested arrays. It also pays off immediately (loading safetensors).</li>
+<li><strong>Phase 2 before 3</strong> because a correct-but-slow forward (naive matmul) may be too slow to demo; BLAS makes it usable. Phase 3 can start on naive matmul and speed up once Phase 2 lands.</li>
+<li><strong>Phase 3 before 4</strong> because inference delivers the headline result with the least machinery (no autograd, no GPU). Training is strictly more work and can follow.</li>
+<li>Each phase is independently shippable and leaves the library in a working state.</li>
 </ul>
 
-<h2 id="fwai">Utilidades HuggingFace concretas para apps FWH (objetivo "FWAI")</h2>
+<h2 id="fwai">Concrete HuggingFace utilities for FWH apps (the "FWAI" objective)</h2>
 <p>
-<strong>Objetivo:</strong> hacer de FWH una plataforma AI de primera &mdash;
-cualquier capacidad alojada en HuggingFace usable desde Harbour en pocas líneas,
-vía tres backends <em>intercambiables</em>: remoto (Inference API, amplitud hoy),
-local (FW_Tensor / llama.cpp, privacidad + offline) y from-scratch (educativo).
-Las apps FiveWin son de negocio sobre DBF/SQL + xBrowse, así que las utilidades de
-mayor valor son las que enchufan IA a esos datos.
+<strong>Objective:</strong> make FWH a first-class AI app platform &mdash; any
+HuggingFace-hosted capability usable from Harbour in a few lines, via three
+<em>interchangeable</em> backends: remote (Inference API, breadth today), local
+(FW_Tensor / llama.cpp, privacy + offline) and from-scratch (educational).
+FiveWin apps are DBF/SQL + xBrowse business apps, so the high-value utilities are
+the ones that plug AI into that data.
 </p>
 <table>
-<thead><tr><th>Utilidad</th><th>Qué hace en una app FWH</th><th>Backend</th><th>Valor</th></tr></thead>
+<thead><tr><th>Utility</th><th>What it does in an FWH app</th><th>Backend</th><th>Value</th></tr></thead>
 <tbody>
-<tr><td><strong>Búsqueda semántica</strong> sobre DBF/SQL</td><td>buscar clientes/facturas/productos por <em>significado</em>, no LIKE</td><td>embeddings (API <code>tembeddings</code> / local) + coseno</td><td>★★★</td></tr>
-<tr><td><strong>RAG / Q&amp;A de docs</strong></td><td>responder preguntas en lenguaje natural sobre PDFs/manuales</td><td>embeddings + retrieval + LLM</td><td>★★★</td></tr>
-<tr><td><strong>Clasificación de texto</strong></td><td>auto-categorizar tickets, emails, gastos; routing de intención</td><td>API / transformer pequeño local</td><td>★★★</td></tr>
-<tr><td><strong>NER (extracción)</strong></td><td>sacar nombres/fechas/importes/NIF de texto libre &rarr; campos DB</td><td>API / local</td><td>★★★</td></tr>
-<tr><td><strong>Voz a texto (Whisper)</strong></td><td>dictado a GETs, transcribir llamadas/notas de voz</td><td>API / binding whisper.cpp</td><td>★★★</td></tr>
-<tr><td><strong>Resumen</strong></td><td>notas/informes/emails largos &rarr; campo resumen</td><td>API / llama.cpp</td><td>★★</td></tr>
-<tr><td><strong>Traducción</strong></td><td>facturas / UI / contenido multiidioma</td><td>API</td><td>★★</td></tr>
-<tr><td><strong>Sentimiento</strong></td><td>puntuar reseñas / feedback de clientes</td><td>API / local</td><td>★★</td></tr>
-<tr><td><strong>OCR / imagen&rarr;texto</strong></td><td>escanear recibos/DNI &rarr; texto &rarr; DB</td><td>API / VLM local</td><td>★★</td></tr>
-<tr><td><strong>Asistente chat in-app</strong></td><td>consultar los datos del app en lenguaje natural; ayuda</td><td>llama.cpp local / API</td><td>★★★</td></tr>
-<tr><td><strong>Autocompletar GETs</strong></td><td>predicción de siguiente palabra/campo</td><td>GPT-2 local (factible ya)</td><td>★★</td></tr>
-<tr><td><strong>Normalización de datos</strong></td><td>corregir direcciones, deduplicar, estandarizar</td><td>LLM API/local</td><td>★★</td></tr>
+<tr><td><strong>Semantic search</strong> over DBF/SQL</td><td>find customers/invoices/products by <em>meaning</em>, not LIKE</td><td>embeddings (API <code>tembeddings</code> / local) + cosine</td><td>★★★</td></tr>
+<tr><td><strong>RAG / doc Q&amp;A</strong></td><td>answer natural-language questions over company PDFs/manuals</td><td>embeddings + retrieval + LLM</td><td>★★★</td></tr>
+<tr><td><strong>Text classification</strong></td><td>auto-categorize tickets, emails, expenses; intent routing</td><td>API / small local transformer</td><td>★★★</td></tr>
+<tr><td><strong>NER (extraction)</strong></td><td>pull names/dates/amounts/tax-ids from free text &rarr; DB fields</td><td>API / local</td><td>★★★</td></tr>
+<tr><td><strong>Speech-to-text (Whisper)</strong></td><td>dictation into GETs, transcribe calls/voice notes</td><td>API / whisper.cpp binding</td><td>★★★</td></tr>
+<tr><td><strong>Summarization</strong></td><td>long notes/reports/emails &rarr; summary field</td><td>API / llama.cpp</td><td>★★</td></tr>
+<tr><td><strong>Translation</strong></td><td>multilingual invoices / UI / content</td><td>API</td><td>★★</td></tr>
+<tr><td><strong>Sentiment</strong></td><td>score reviews / customer feedback</td><td>API / local</td><td>★★</td></tr>
+<tr><td><strong>OCR / image&rarr;text</strong></td><td>scan receipts/IDs &rarr; text &rarr; DB</td><td>API / local VLM</td><td>★★</td></tr>
+<tr><td><strong>In-app chat assistant</strong></td><td>query the app's data in natural language; help</td><td>llama.cpp local / API</td><td>★★★</td></tr>
+<tr><td><strong>GET autocomplete</strong></td><td>next-word / field prediction</td><td>local GPT-2 (feasible now)</td><td>★★</td></tr>
+<tr><td><strong>Data normalization</strong></td><td>fix addresses, dedupe, standardize</td><td>LLM API/local</td><td>★★</td></tr>
 </tbody>
 </table>
-<h3>Las cinco a construir primero (máximo valor / menor esfuerzo)</h3>
+<h3>First five to build (max value / least effort)</h3>
 <ol>
-<li><strong>TSemanticIndex</strong> &mdash; indexa una columna DBF/SQL en embeddings; <code>:Search(cText)</code> devuelve registros por similitud coseno. La killer para apps de datos; reusa <code>tembeddings</code>.</li>
-<li><strong>TChatAgent</strong> &mdash; chat sobre los datos del app (function-calling simple: el LLM pide consultas, el app devuelve filas). Backend llama.cpp (local) o API.</li>
-<li><strong>THFTask</strong> &mdash; base fina + <code>:Classify / :NER / :Summarize / :Translate / :Sentiment</code> vía Inference API (cada uno ~20 líneas de curl, como <code>tembeddings</code>). Cinco utilidades de golpe.</li>
-<li><strong>TWhisperCpp</strong> &mdash; binding a whisper.cpp para dictado offline &rarr; texto en GET.</li>
-<li><strong>Autocompletar GET con GPT-2 local</strong> &mdash; ya existe todo lo necesario.</li>
+<li><strong>TSemanticIndex</strong> &mdash; index a DBF/SQL column into embeddings; <code>:Search(cText)</code> returns records by cosine similarity. The killer feature for data apps; reuses <code>tembeddings</code>.</li>
+<li><strong>TChatAgent</strong> &mdash; chat over the app's data (simple function-calling: the LLM asks for queries, the app returns rows). Backend llama.cpp (local) or API.</li>
+<li><strong>THFTask</strong> &mdash; thin base + <code>:Classify / :NER / :Summarize / :Translate / :Sentiment</code> over the Inference API (each ~20 lines of curl, like <code>tembeddings</code>). Five utilities at once.</li>
+<li><strong>TWhisperCpp</strong> &mdash; binding to whisper.cpp for offline dictation &rarr; GET text.</li>
+<li><strong>GET autocomplete with local GPT-2</strong> &mdash; everything needed already exists.</li>
 </ol>
 
-<h2 id="local-vs-cloud">Local vs API cloud (ej. TDeepSeek) &mdash; cuándo usar cada uno</h2>
+<h2 id="local-vs-cloud">Local vs cloud API (e.g. TDeepSeek) &mdash; when to use each</h2>
 <p>
-No es uno-u-otro. Una API cloud (TDeepSeek, OpenAI, Gemini…) gana en capacidad
-bruta; lo local gana en el contexto de despliegue. Elige el backend por tarea.
+Not either/or. A cloud API (TDeepSeek, OpenAI, Gemini…) wins on raw capability;
+local wins on the deployment context. Pick the backend per task.
 </p>
-<p><strong>Donde gana lo local (FW_Tensor / GPT-2 / llama.cpp):</strong></p>
+<p><strong>Where local (FW_Tensor / GPT-2 / llama.cpp) wins:</strong></p>
 <ul>
-<li><strong>Privacidad / soberanía del dato</strong> &mdash; el dato no sale de la máquina (GDPR, médico, legal, financiero, defensa). Una API cloud envía tu dato a un tercero.</li>
-<li><strong>Offline</strong> &mdash; fábricas, barcos, redes aisladas/air-gapped.</li>
-<li><strong>Coste cero por llamada</strong> &mdash; embeddings de 1M registros DBF, autocompletar en cada tecla: gratis local; medido + rate-limited por API.</li>
-<li><strong>Latencia</strong> &mdash; clasificar/embedding local es instantáneo; por-tecla (&lt;50 ms) es imposible con round-trip de red.</li>
-<li><strong>Sin dependencia / longevidad</strong> &mdash; las APIs cambian, deprecian, suben precio, caen, geobloquean. El modelo local es tuyo para siempre y va dentro del .exe.</li>
-<li><strong>Determinismo / auditable</strong> &mdash; pesos fijos = salida reproducible; las industrias reguladas lo necesitan.</li>
-<li><strong>Embebible / sin cuenta</strong> &mdash; IA en un desktop sin setup, sin API key por cliente, sin alta.</li>
-<li><strong>Personalización</strong> &mdash; entrenar modelos diminutos de dominio con los datos del propio cliente (Pista A).</li>
+<li><strong>Privacy / data sovereignty</strong> &mdash; data never leaves the machine (GDPR, medical, legal, financial, defense). A cloud API ships your data to a third party.</li>
+<li><strong>Offline</strong> &mdash; factories, ships, isolated/air-gapped networks.</li>
+<li><strong>Zero per-call cost</strong> &mdash; embeddings over 1M DBF rows, autocomplete on every keystroke: free locally; metered + rate-limited via API.</li>
+<li><strong>Latency</strong> &mdash; local classify/embed is instant; per-keystroke (&lt;50 ms) is impossible across a network round-trip.</li>
+<li><strong>No dependency / longevity</strong> &mdash; APIs change, deprecate, raise prices, go down, geo-block. A local model is yours forever and ships inside the .exe.</li>
+<li><strong>Determinism / auditability</strong> &mdash; fixed weights = reproducible output; regulated industries need this.</li>
+<li><strong>Embeddable / no account</strong> &mdash; AI in a desktop app with zero setup, no per-customer API key, no signup.</li>
+<li><strong>Customization</strong> &mdash; train tiny domain models on the customer's own data (Track A).</li>
 </ul>
-<p><strong>Donde gana la API cloud (honesto):</strong></p>
+<p><strong>Where the cloud API wins (be honest):</strong></p>
 <ul>
-<li><strong>Capacidad bruta</strong> &mdash; DeepSeek-V3/R1 ≫ GPT-2 o lo que corras local en CPU. Razonamiento difícil / chat de calidad → cloud arrasa.</li>
-<li><strong>Cero infraestructura</strong> &mdash; sin modelo de 500 MB, sin huella de RAM/GPU.</li>
-<li><strong>Siempre el último modelo, sin mantenimiento.</strong></li>
+<li><strong>Raw capability</strong> &mdash; DeepSeek-V3/R1 ≫ GPT-2 or anything you run locally on CPU. Hard reasoning / high-quality chat → cloud wins decisively.</li>
+<li><strong>Zero infrastructure</strong> &mdash; no 500 MB model, no RAM/GPU footprint.</li>
+<li><strong>Always the latest model, maintenance-free.</strong></li>
 </ul>
 <p>
-<strong>Regla práctica:</strong> cloud para razonamiento/chat de calidad sobre dato
-no sensible y online; local para dato sensible, offline, alto volumen/barato
-(búsqueda semántica sobre toda la BD), latencia por-tecla, embebido sin setup,
-regulado/auditable.
+<strong>Rule of thumb:</strong> cloud for heavy reasoning / quality chat on
+non-sensitive, online data; local for sensitive data, offline, high-volume/cheap
+(semantic search over a whole DB), per-keystroke latency, embedded zero-setup,
+regulated/auditable.
 </p>
 <p>
-<strong>El insight clave &mdash; híbrido.</strong> Lo local <em>potencia</em> al
-cloud, no lo reemplaza. Ejemplo RAG: retrieval con <strong>embeddings locales</strong>
-(barato, privado, sobre cientos de miles de registros), luego generar la respuesta
-con <strong>la API cloud</strong> (calidad). El diseño de backends intercambiables
-deja que el desarrollador elija por tarea, y la app nunca queda atada a un proveedor.
+<strong>The key insight &mdash; hybrid.</strong> Local <em>complements</em> the
+cloud, it does not replace it. Example RAG: retrieval with <strong>local
+embeddings</strong> (cheap, private, over hundreds of thousands of records), then
+generate the answer with <strong>the cloud API</strong> (quality). The
+interchangeable-backend design lets the developer choose per task, and the app is
+never locked to one provider.
 </p>
 
-<h2 id="status">Estado</h2>
+<h2 id="status">Status</h2>
 <ul>
-<li>&#10003; <a href="../../es/ai/hftokenizer.html">HFTokenizer</a> (BPE de GPT-2), bit a bit &mdash; en lib</li>
-<li>&#10003; Puente Tokenizer &rarr; Transformer (vocab compacto) + envoltorio <code>TFWLanguageModel</code></li>
-<li>&#10003; Spike de lectura safetensors + decode float32 de GPT-2</li>
-<li>&#10003; Pista A: entrenar con texto real de Shakespeare (overfit de un verso; loss baja en un slice)</li>
-<li>&#9632; <strong>Foundation Fase 1</strong>: <code>FW_Tensor</code> (float32 plano, MatMul, loader safetensors). Pendiente: op set completo (add, softmax, layernorm, GELU), strides/views.</li>
-<li>&#9633; Fase 2: BLAS</li>
-<li>&#9633; Fase 3: inferencia <code>GPT2Model</code></li>
-<li>&#9633; Fase 4: autograd / GPU</li>
-<li>&#9633; Pista A: muestreo top-p / nucleus + penalización por repetición</li>
+<li>&#10003; <a href="../../es/ai/hftokenizer.html">HFTokenizer</a> (GPT-2 BPE), bit-exact &mdash; in lib</li>
+<li>&#10003; Tokenizer &rarr; Transformer bridge (compact vocab) + <code>TFWLanguageModel</code> wrapper</li>
+<li>&#10003; GPT-2 safetensors read + float32 decode spike</li>
+<li>&#10003; Track A: train on real Shakespeare text (overfit a line; loss drops on a slice)</li>
+<li>&#9632; <strong>Phase 1 foundation</strong>: <code>FW_Tensor</code> (flat float32, MatMul, safetensors loader). Remaining: full tensor op set (add, softmax, layernorm, GELU), strides/views.</li>
+<li>&#9633; Phase 2: BLAS</li>
+<li>&#9633; Phase 3: <code>GPT2Model</code> inference</li>
+<li>&#9633; Phase 4: autograd / GPU</li>
+<li>&#9633; Track A: top-p / nucleus + repetition-penalty sampling</li>
 </ul>
 
-<h2 id="next">Trabajo siguiente / pendiente</h2>
-<p>Ordenado por valor; todo construye sobre lo que ya está en la lib (hb32).</p>
+<h2 id="next">Next / pending work</h2>
+<p>Ordered by value; all builds on what already ships (in lib, hb32).</p>
 <ol>
-<li><strong>TLlamaCpp (Pista C)</strong> &mdash; binding FFI a llama.cpp para LLMs locales reales (Llama/Mistral/Qwen/Phi), CPU/GPU, cuantizado 4-bit, un solo .exe autónomo (sin instalar Ollama). Usa el patrón de módulo opcional ya probado con TWhisperCpp; se enchufa a TChatAgent como <code>bChat</code>.</li>
-<li><strong>Autocompletar GET con GPT-2 local</strong> &mdash; última de las primeras-cinco utilidades FWAI; ya existe todo lo necesario.</li>
-<li><strong>Fase 2 &mdash; backend BLAS</strong> para <code>FWT_MatMul</code> (10&ndash;100&times;), más KV cache en <code>GPT2Model:Generate</code> (hoy O(n&sup2;)).</li>
-<li><strong>Más utilidades FWAI</strong> &mdash; OCR / imagen&rarr;texto, pipeline RAG (retrieval con TSemanticIndex + respuesta LLM), normalización de datos.</li>
-<li><strong>Cuantización + lector GGUF</strong> para FW_Tensor (lecciones de llama.cpp); mmap de pesos en <code>FWT_LoadSafe</code>.</li>
-<li><strong>Compilar todas las variantes de lib</strong> &mdash; este esfuerzo sólo reconstruyó hb32; antes de un release, recompilar cada target para que todos tengan las nuevas clases IA.</li>
+<li><strong>TLlamaCpp (Track C)</strong> &mdash; FFI binding to llama.cpp for real local LLMs (Llama/Mistral/Qwen/Phi), CPU/GPU, 4-bit quantized, single self-contained exe (no Ollama install). Uses the proven optional-module pattern from TWhisperCpp; plugs into TChatAgent as <code>bChat</code>.</li>
+<li><strong>GET autocomplete with local GPT-2</strong> &mdash; last of the first-five FWAI utilities; everything needed exists.</li>
+<li><strong>Phase 2 &mdash; BLAS backend</strong> for <code>FWT_MatMul</code> (10&ndash;100&times;), plus a KV cache in <code>GPT2Model:Generate</code> (currently O(n&sup2;)).</li>
+<li><strong>More FWAI utilities</strong> &mdash; OCR / image&rarr;text, a RAG pipeline (TSemanticIndex retrieval + LLM answer), data normalization.</li>
+<li><strong>Quantization + GGUF reader</strong> for FW_Tensor (llama.cpp lessons); mmap weights in <code>FWT_LoadSafe</code>.</li>
+<li><strong>Build all library variants</strong> &mdash; this effort rebuilt only hb32; before a release, rebuild every compiler target so all have the new AI classes.</li>
 </ol>
 <p>
-<strong>Patrón reutilizable de binding opcional</strong> (para cualquier dependencia
-nativa pesada &mdash; llama.cpp, whisper.cpp, libs GPU): wrapper C guardado fuera de
-<code>fwhc.hbp</code>; clase PRG en la lib FWH que llama a las nativas por nombre (sin
-dependencia de link); chequeo <code>IsAvailable()</code>; la dependencia la añade sólo
-la app que la quiere. La IA potente queda opcional y de coste cero para el resto.
+<strong>Reusable optional-binding pattern</strong> (for any heavy native dep &mdash;
+llama.cpp, whisper.cpp, GPU libs): guarded C wrapper kept out of <code>fwhc.hbp</code>;
+PRG class in the FWH lib calling the natives by name (no link dependency); an
+<code>IsAvailable()</code> check; the dependency is added only by the app that wants
+it. Powerful AI stays optional and zero-cost for every other FWH user.
 </p>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

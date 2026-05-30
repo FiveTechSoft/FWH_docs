@@ -15,60 +15,60 @@
 <p class="class-source">Fonte: <code>source/classes/tsmtp.prg</code></p>
 
 <p>
-TSmtp é a classe de envio de e-mail do FiveWin. Ela implementa o protocolo SMTP para enviar
-mensagens através de um servidor de correio, com suporte para autenticação (AUTH LOGIN),
-conteúdo HTML, anexos de arquivos, destinatários CC/BCC e confirmações de recebimento.
-É construída sobre <a href="../../pt/internet/tsocket.html">TSocket</a> e usa o
-modelo de eventos assíncronos para comunicação.
+TSmtp is FiveWin's email-sending class. It implements the SMTP protocol to send
+messages through a mail server, with support for authentication (AUTH LOGIN),
+HTML content, file attachments, CC/BCC recipients, and return receipts.
+It is built on top of <a href="../../pt/internet/tsocket.html">TSocket</a> and uses the
+asynchronous event model for communication.
 </p>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cIPServer</code></td><td>Character</td><td></td><td>Nome do servidor SMTP ou endereço IP</td></tr>
-<tr><td><code>nPort</code></td><td>Numeric</td><td><code>25</code></td><td>Porta do servidor SMTP</td></tr>
-<tr><td><code>cFrom</code></td><td>Character</td><td></td><td>Endereço de e-mail do remetente</td></tr>
-<tr><td><code>aTo</code></td><td>Array</td><td><code>{}</code></td><td>Array de endereços de e-mail dos destinatários</td></tr>
-<tr><td><code>aCC</code></td><td>Array</td><td><code>{}</code></td><td>Array de endereços de destinatários CC</td></tr>
-<tr><td><code>aBCC</code></td><td>Array</td><td><code>{}</code></td><td>Array de endereços de destinatários BCC</td></tr>
-<tr><td><code>cSubject</code></td><td>Character</td><td><code>"[no subject]"</code></td><td>Linha de assunto do e-mail</td></tr>
-<tr><td><code>cMsg</code></td><td>Character</td><td><code>""</code></td><td>Corpo da mensagem em texto simples</td></tr>
-<tr><td><code>cHTML</code></td><td>Character</td><td><code>""</code></td><td>Corpo da mensagem em HTML (alternativa ao texto simples)</td></tr>
-<tr><td><code>aFiles</code></td><td>Array</td><td><code>{}</code></td><td>Array de caminhos de arquivos para anexar</td></tr>
-<tr><td><code>cPriority</code></td><td>Character</td><td><code>"Normal"</code></td><td>Prioridade da mensagem: Normal, High ou Low</td></tr>
-<tr><td><code>cUser</code></td><td>Character</td><td><code>""</code></td><td>Nome de usuário para autenticação SMTP</td></tr>
-<tr><td><code>cPassword</code></td><td>Character</td><td><code>""</code></td><td>Senha para autenticação SMTP</td></tr>
-<tr><td><code>lDoAuth</code></td><td>Logical</td><td><code>.F.</code></td><td>Ativar autenticação SMTP (AUTH LOGIN)</td></tr>
-<tr><td><code>cReplyTo</code></td><td>Character</td><td></td><td>Endereço de e-mail Reply-To</td></tr>
-<tr><td><code>lReceipt</code></td><td>Logical</td><td><code>.F.</code></td><td>Solicitar confirmação de recebimento (Disposition-Notification-To)</td></tr>
-<tr><td><code>cMailer</code></td><td>Character</td><td><code>"FiveWin Mailer"</code></td><td>Valor do cabeçalho X-Mailer</td></tr>
-<tr><td><code>cError</code></td><td>Character</td><td><code>""</code></td><td>Descrição do erro se o envio falhar</td></tr>
-<tr><td><code>bConnecting</code></td><td>Block</td><td></td><td>Callback durante a conexão</td></tr>
-<tr><td><code>bConnected</code></td><td>Block</td><td></td><td>Callback quando conectado ao servidor</td></tr>
-<tr><td><code>bDone</code></td><td>Block</td><td></td><td>Callback quando a mensagem é enviada com sucesso</td></tr>
-<tr><td><code>bFailure</code></td><td>Block</td><td></td><td>Callback quando ocorre um erro</td></tr>
+<tr><td><code>cIPServer</code></td><td>Character</td><td></td><td>SMTP server hostname or IP address</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td><code>25</code></td><td>SMTP server port</td></tr>
+<tr><td><code>cFrom</code></td><td>Character</td><td></td><td>Sender email address</td></tr>
+<tr><td><code>aTo</code></td><td>Array</td><td><code>{}</code></td><td>Array of recipient email addresses</td></tr>
+<tr><td><code>aCC</code></td><td>Array</td><td><code>{}</code></td><td>Array of CC recipient addresses</td></tr>
+<tr><td><code>aBCC</code></td><td>Array</td><td><code>{}</code></td><td>Array of BCC recipient addresses</td></tr>
+<tr><td><code>cSubject</code></td><td>Character</td><td><code>"[no subject]"</code></td><td>Email subject line</td></tr>
+<tr><td><code>cMsg</code></td><td>Character</td><td><code>""</code></td><td>Plain text message body</td></tr>
+<tr><td><code>cHTML</code></td><td>Character</td><td><code>""</code></td><td>HTML message body (alternative to plain text)</td></tr>
+<tr><td><code>aFiles</code></td><td>Array</td><td><code>{}</code></td><td>Array of file paths to attach</td></tr>
+<tr><td><code>cPriority</code></td><td>Character</td><td><code>"Normal"</code></td><td>Message priority: Normal, High, or Low</td></tr>
+<tr><td><code>cUser</code></td><td>Character</td><td><code>""</code></td><td>Username for SMTP authentication</td></tr>
+<tr><td><code>cPassword</code></td><td>Character</td><td><code>""</code></td><td>Password for SMTP authentication</td></tr>
+<tr><td><code>lDoAuth</code></td><td>Logical</td><td><code>.F.</code></td><td>Enable SMTP authentication (AUTH LOGIN)</td></tr>
+<tr><td><code>cReplyTo</code></td><td>Character</td><td></td><td>Reply-To email address</td></tr>
+<tr><td><code>lReceipt</code></td><td>Logical</td><td><code>.F.</code></td><td>Request a return receipt (Disposition-Notification-To)</td></tr>
+<tr><td><code>cMailer</code></td><td>Character</td><td><code>"FiveWin Mailer"</code></td><td>X-Mailer header value</td></tr>
+<tr><td><code>cError</code></td><td>Character</td><td><code>""</code></td><td>Error description if sending fails</td></tr>
+<tr><td><code>bConnecting</code></td><td>Block</td><td></td><td>Callback during connection</td></tr>
+<tr><td><code>bConnected</code></td><td>Block</td><td></td><td>Callback when connected to server</td></tr>
+<tr><td><code>bDone</code></td><td>Block</td><td></td><td>Callback when message is successfully sent</td></tr>
+<tr><td><code>bFailure</code></td><td>Block</td><td></td><td>Callback when an error occurs</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cIPServer, nPort, lAuth, cUser, cPassword )</code></td><td>Criar uma nova sessão SMTP. nPort padrão é 25. Resolve hostname para IP se necessário.</td></tr>
-<tr><td><code>SendMail( cFrom, aTo, cMsg, cSubject, aFiles, aCC, aBCC, lReceipt, cHTML )</code></td><td>Compor e enviar um e-mail. Todos os parâmetros após aTo são opcionais.</td></tr>
-<tr><td><code>End()</code></td><td>Fechar o socket subjacente e limpar</td></tr>
-<tr><td><code>Priority()</code></td><td>Retornar prioridade numérica: 1=High, 3=Normal, 5=Low</td></tr>
+<tr><td><code>New( cIPServer, nPort, lAuth, cUser, cPassword )</code></td><td>Create a new SMTP session. nPort defaults to 25. Resolves hostname to IP if needed.</td></tr>
+<tr><td><code>SendMail( cFrom, aTo, cMsg, cSubject, aFiles, aCC, aBCC, lReceipt, cHTML )</code></td><td>Compose and send an email. All parameters after aTo are optional.</td></tr>
+<tr><td><code>End()</code></td><td>Close the underlying socket and clean up</td></tr>
+<tr><td><code>Priority()</code></td><td>Return numeric priority: 1=High, 3=Normal, 5=Low</td></tr>
 </tbody>
 </table>
 
-<h2 id="example-basic">Exemplo: Enviar um E-mail Simples</h2>
+<h2 id="example-basic">Example: Send a Simple Email</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -85,7 +85,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-auth">Exemplo: SMTP Autenticado com Anexo</h2>
+<h2 id="example-auth">Example: Authenticated SMTP with Attachment</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -109,7 +109,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-html">Exemplo: E-mail HTML com CC</h2>
+<h2 id="example-html">Example: HTML Email with CC</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -139,18 +139,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="tips">Notas</h2>
+<h2 id="tips">Notes</h2>
 
 <ul>
-<li>TSmtp suporta o método de autenticação AUTH LOGIN. Para servidores que exigem PLAIN ou MD5, é necessária implementação adicional.</li>
-<li>O hostname do servidor (<code>cIPServer</code>) pode ser um nome amigável (ex.: "smtp.gmail.com") ou um endereço IP. TSmtp resolve automaticamente.</li>
-<li>Anexos são codificados como base64 para arquivos binários ou quoted-printable para arquivos de texto. Os nomes dos arquivos preservam suas maiúsculas/minúsculas originais.</li>
-<li>E-mails HTML incluem uma estrutura multipart/alternative: um fallback de texto simples é enviado junto com o conteúdo HTML.</li>
-<li>Se o servidor expirar após enviar anexos grandes, incremente o membro DATA <code>nDelay</code> em um para adicionar atraso entre os envios.</li>
+<li>TSmtp supports the AUTH LOGIN authentication method. For servers requiring PLAIN or MD5, additional implementation is needed.</li>
+<li>The server hostname (<code>cIPServer</code>) can be a friendly name (e.g. "smtp.gmail.com") or an IP address. TSmtp resolves it automatically.</li>
+<li>Attachments are encoded as base64 for binary files or quoted-printable for text files. File names preserve their original case.</li>
+<li>HTML emails include a multipart/alternative structure: a plain text fallback is sent alongside the HTML content.</li>
+<li>If the server times out after sending large attachments, increment the <code>nDelay</code> DATA member by one to add delay between sends.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tslidermetro.html">&larr; tslidermetro</a> | <a href="../../pt/internet/tsocket.html">tsocket &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

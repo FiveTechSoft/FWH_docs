@@ -13,7 +13,7 @@
 
 <h1>TCoverFlow</h1>
 <p class="class-source">Fonte: <code>source/classes/tcvrflow.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
 TCoverFlow is a cover-flow image browser control inspired by the iTunes / Apple Cover Flow
@@ -22,19 +22,19 @@ the side items angled outward. Users can navigate left and right via mouse click
 arrows, or programmatic calls.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aCovers</code></td><td>Array</td><td>Array de definições de capa (bitmap, texto, cor)</td></tr>
-<tr><td><code>nAt</code></td><td>Numeric</td><td>Índice da capa atualmente selecionada</td></tr>
-<tr><td><code>nAngle</code></td><td>Numeric</td><td>Ângulo (em graus) aplicado às capas laterais</td></tr>
-<tr><td><code>nSeparation</code></td><td>Numeric</td><td>Separação em pixels entre capas</td></tr>
-<tr><td><code>nCoverWidth</code></td><td>Numeric</td><td>Largura de cada imagem de capa</td></tr>
-<tr><td><code>bAction</code></td><td>Block</td><td>Bloco de código avaliado quando uma capa é selecionada</td></tr>
+<tr><td><code>aCovers</code></td><td>Array</td><td>Array of cover definitions (bitmap, text, color)</td></tr>
+<tr><td><code>nAt</code></td><td>Numeric</td><td>Index of the currently selected cover</td></tr>
+<tr><td><code>nAngle</code></td><td>Numeric</td><td>Angle (in degrees) applied to side covers</td></tr>
+<tr><td><code>nSeparation</code></td><td>Numeric</td><td>Pixel separation between covers</td></tr>
+<tr><td><code>nCoverWidth</code></td><td>Numeric</td><td>Width of each cover image</td></tr>
+<tr><td><code>bAction</code></td><td>Block</td><td>Code block evaluated when a cover is selected</td></tr>
 </tbody>
 </table>
 
@@ -42,19 +42,19 @@ arrows, or programmatic calls.
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd )</code></td><td>Criar um novo controle TCoverFlow</td></tr>
-<tr><td><code>AddCover( cBmp, cText, nClrText )</code></td><td>Adicionar uma capa com bitmap, título e cor do texto</td></tr>
-<tr><td><code>GoLeft()</code></td><td>Navegar uma capa à esquerda</td></tr>
-<tr><td><code>GoRight()</code></td><td>Navegar uma capa à direita</td></tr>
-<tr><td><code>GoTo( n )</code></td><td>Ir diretamente para a capa no índice <code>n</code></td></tr>
-<tr><td><code>AtCover( nRow, nCol )</code></td><td>Retorna o índice da capa nas coordenadas de pixel fornecidas</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd )</code></td><td>Create a new TCoverFlow control</td></tr>
+<tr><td><code>AddCover( cBmp, cText, nClrText )</code></td><td>Add a cover with bitmap, caption, and text color</td></tr>
+<tr><td><code>GoLeft()</code></td><td>Navigate one cover to the left</td></tr>
+<tr><td><code>GoRight()</code></td><td>Navigate one cover to the right</td></tr>
+<tr><td><code>GoTo( n )</code></td><td>Jump directly to the cover at index <code>n</code></td></tr>
+<tr><td><code>AtCover( nRow, nCol )</code></td><td>Return the cover index at the given pixel coordinates</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Navegador de Álbuns</h2>
+<h2 id="example">Example: Album Browser</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -84,15 +84,15 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>O método <code>AddCover()</code> espera um caminho de arquivo bitmap ou um nome de recurso para <code>cBmp</code>. As imagens são internamente redimensionadas para <code>nCoverWidth</code> preservando a proporção. Images are internally scaled to <code>nCoverWidth</code> while preserving aspect ratio.</li>
-<li>A navegação pode ser feita com cliques do mouse nas capas esquerda/direita ou usando as teclas de seta esquerda/direita quando o controle tem o foco.</li>
-<li>O bloco de código <code>bAction</code> (ou a cláusula <code>ACTION</code> no comando <code>COVERFLOW</code>) é disparado quando o usuário clica duas vezes ou pressiona Enter na capa central.</li>
-<li>O método <code>AtCover()</code> é útil para teste de impacto durante o manuseio personalizado do mouse.</li>
-<li>Ajuste <code>nAngle</code> e <code>nSeparation</code> para controlar a perspectiva e o espaçamento das capas laterais.</li>
+<li>The <code>AddCover()</code> method expects a bitmap file path or a resource name for <code>cBmp</code>. Images are internally scaled to <code>nCoverWidth</code> while preserving aspect ratio.</li>
+<li>Navigation can be performed with mouse clicks on the left/right covers or by using left/right arrow keys when the control has focus.</li>
+<li>The <code>bAction</code> code block (or the <code>ACTION</code> clause in the <code>COVERFLOW</code> command) fires when the user double-clicks or presses Enter on the center cover.</li>
+<li>The <code>AtCover()</code> method is useful for hit-testing during custom mouse handling.</li>
+<li>Adjust <code>nAngle</code> and <code>nSeparation</code> to control the perspective and spacing of side covers.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/core/tcontrol.html">&larr; tcontrol</a> | <a href="../../pt/internet/tctrlsocket.html">tctrlsocket &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

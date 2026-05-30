@@ -13,7 +13,7 @@
 
 <h1>TImageList</h1>
 <p class="class-source">Fuente: <code>source/classes/timaglst.prg</code></p>
-<p class="class-hierarchy">Clase independiente (not derived from TControl)</p>
+<p class="class-hierarchy">Standalone class (not derived from TControl)</p>
 
 <p>
 TImageList is a standalone wrapper around the Win32 HIMAGELIST API for managing collections
@@ -21,15 +21,15 @@ of icons and bitmaps of equal size. Image lists are used extensively by tree vie
 tab controls, toolbars, and other common controls to efficiently manage icon sets.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hImageList</code></td><td>Handle</td><td>Manejador HIMAGELIST de Win32</td></tr>
-<tr><td><code>aBitmaps</code></td><td>Array</td><td>Array de objetos TBitmap agregados a la lista</td></tr>
+<tr><td><code>hImageList</code></td><td>Handle</td><td>Win32 HIMAGELIST handle</td></tr>
+<tr><td><code>aBitmaps</code></td><td>Array</td><td>Array of TBitmap objects added to the list</td></tr>
 </tbody>
 </table>
 
@@ -37,21 +37,21 @@ tab controls, toolbars, and other common controls to efficiently manage icon set
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nWidth, nHeight )</code></td><td>Crear una nueva lista de imágenes. El tamaño predeterminado es 16x16 píxeles.</td></tr>
-<tr><td><code>Add( oBmpImage, oBmpMask )</code></td><td>Agregar una imagen con mapa de bits de máscara opcional a la lista. Devuelve el índice de la imagen.</td></tr>
-<tr><td><code>AddMasked( oBmpImage, nClrMask )</code></td><td>Agregar una imagen usando un color transparente como máscara. Devuelve el índice de la imagen.</td></tr>
-<tr><td><code>AddIcon( oIcon )</code></td><td>Agregar un icono (objeto TIcon o nombre de archivo/recurso de icono) a la lista. Devuelve el índice de la imagen.</td></tr>
-<tr><td><code>AddImage( cFile )</code></td><td>Cargar y agregar una imagen desde una ruta de archivo. Devuelve el índice de la imagen.</td></tr>
+<tr><td><code>New( nWidth, nHeight )</code></td><td>Create a new image list. Default size is 16x16 pixels.</td></tr>
+<tr><td><code>Add( oBmpImage, oBmpMask )</code></td><td>Add an image with optional mask bitmap to the list. Returns the image index.</td></tr>
+<tr><td><code>AddMasked( oBmpImage, nClrMask )</code></td><td>Add an image using a transparent color as mask. Returns the image index.</td></tr>
+<tr><td><code>AddIcon( oIcon )</code></td><td>Add an icon (TIcon object or icon file/resource name) to the list. Returns the image index.</td></tr>
+<tr><td><code>AddImage( cFile )</code></td><td>Load and add an image from a file path. Returns the image index.</td></tr>
 <tr><td><code>ReadBitmap( cFile, nWidth, nImages, nClrTransparent )</code></td><td>Load a bitmap strip from a file, split into <code>nImages</code> frames, using <code>nClrTransparent</code> as the transparent mask color.</td></tr>
-<tr><td><code>SetBkColor( nColor )</code></td><td>Establecer el color de fondo usado al renderizar imágenes con máscara. Use CLR_NONE para fondo transparente. Use CLR_NONE for transparent background.</td></tr>
-<tr><td><code>End()</code></td><td>Destruir la lista de imágenes y liberar todos los recursos asociados.</td></tr>
+<tr><td><code>SetBkColor( nColor )</code></td><td>Set the background color used when rendering masked images. Use CLR_NONE for transparent background.</td></tr>
+<tr><td><code>End()</code></td><td>Destroy the image list and release all associated resources.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Crear una Lista de Imágenes para una Barra de Herramientas</h2>
+<h2 id="example">Example: Creating an Image List for a Toolbar</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -79,15 +79,15 @@ return nil</code></pre>
 <h2 id="notes">Notes</h2>
 
 <ul>
-<li>TImageList es una clase no visual y no hereda de TControl. Gestiona el ciclo de vida de un manejador HIMAGELIST de Win32 que puede compartirse entre múltiples controles comunes. It manages the lifecycle of a Manejador HIMAGELIST de Win32 that can be shared across multiple common controls.</li>
-<li>Todas las imágenes en una sola lista de imágenes deben tener el mismo tamaño (ancho y alto), que se especifica en el momento de la creación en <code>New()</code>.</li>
-<li>El método <code>AddMasked()</code> es la forma más común de agregar mapas de bits, usando un color transparente (típicamente CLR_MAGENTA o CLR_WHITE) para crear la máscara automáticamente.</li>
-<li><code>ReadBitmap()</code> es útil para cargar tiras de mapas de bits (múltiples imágenes dispuestas horizontalmente en un solo archivo). Especifique el número de imágenes y el color transparente para dividirlas automáticamente. Specify the number of images and the transparent color to split them automatically.</li>
-<li>Siempre llame a <code>End()</code> cuando la lista de imágenes ya no sea necesaria para evitar fugas de manejadores GDI. La lista de imágenes a menudo se destruye automáticamente cuando se destruye la ventana padre. The image list is often destroyed automatically when the parent window is destroyed.</li>
+<li>TImageList is a non-visual class and does not inherit from TControl. It manages the lifecycle of a Win32 HIMAGELIST handle that can be shared across multiple common controls.</li>
+<li>All images in a single image list must be the same size (width and height), which is specified at creation time in <code>New()</code>.</li>
+<li>The <code>AddMasked()</code> method is the most common way to add bitmaps, using a transparent color (typically CLR_MAGENTA or CLR_WHITE) to create the mask automatically.</li>
+<li><code>ReadBitmap()</code> is useful for loading bitmap strips (multiple images arranged horizontally in a single bitmap file). Specify the number of images and the transparent color to split them automatically.</li>
+<li>Always call <code>End()</code> when the image list is no longer needed to avoid GDI handle leaks. The image list is often destroyed automatically when the parent window is destroyed.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/reference/timagebase64.html">&larr; timagebase64</a> | <a href="../../es/data/tindex.html">tindex &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

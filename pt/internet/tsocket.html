@@ -15,13 +15,13 @@
 <p class="class-source">Fonte: <code>source/classes/tsocket.prg</code></p>
 
 <p>
-TSocket é a classe de sockets TCP/IP de baixo nível do FiveWin, encapsulando a API Winsock do Windows.
-Ela fornece funcionalidade de socket tanto para cliente quanto para servidor através de um modelo
-assíncrono orientado a eventos que se integra naturalmente ao loop de mensagens do FiveWin.
-TSocket é a base para TWebServer, TSmtp, TPop3, TFtpClient e TWebClient.
+TSocket is FiveWin's low-level TCP/IP socket class, wrapping the Windows Winsock API.
+It provides both client and server socket functionality through an asynchronous,
+event-driven model that integrates naturally with FiveWin's message loop.
+TSocket is the foundation for TWebServer, TSmtp, TPop3, TFtpClient, and TWebClient.
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart LR
@@ -48,77 +48,77 @@ flowchart LR
     G --> H
 </div>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nPort</code></td><td>Numeric</td><td><code>0</code></td><td>Número da porta do socket</td></tr>
-<tr><td><code>cIPAddr</code></td><td>Character</td><td><code>""</code></td><td>Endereço IP local (detectado automaticamente na criação)</td></tr>
-<tr><td><code>nSocket</code></td><td>Numeric</td><td><code>-1</code></td><td>Handle do socket Winsock</td></tr>
-<tr><td><code>nTimeOut</code></td><td>Numeric</td><td><code>30</code></td><td>Tempo limite em segundos para operações</td></tr>
-<tr><td><code>nBackLog</code></td><td>Numeric</td><td><code>5</code></td><td>Máximo de conexões pendentes para escuta</td></tr>
-<tr><td><code>bAccept</code></td><td>Block</td><td></td><td>Callback quando uma nova conexão é aceita (modo servidor)</td></tr>
-<tr><td><code>bRead</code></td><td>Block</td><td></td><td>Callback quando há dados disponíveis para leitura</td></tr>
-<tr><td><code>bWrite</code></td><td>Block</td><td></td><td>Callback quando o socket está pronto para escrever</td></tr>
-<tr><td><code>bClose</code></td><td>Block</td><td></td><td>Callback quando a extremidade remota fecha a conexão</td></tr>
-<tr><td><code>bConnect</code></td><td>Block</td><td></td><td>Callback com o resultado da conexão (modo cliente)</td></tr>
-<tr><td><code>bOOB</code></td><td>Block</td><td></td><td>Callback para dados fora-de-banda (out-of-band)</td></tr>
-<tr><td><code>lDebug</code></td><td>Logical</td><td></td><td>Ativar registro de depuração (debug logging)</td></tr>
-<tr><td><code>cLogFile</code></td><td>Character</td><td></td><td>Caminho para o arquivo de log de depuração</td></tr>
-<tr><td><code>aBuffer</code></td><td>Array</td><td><code>{}</code></td><td>Buffer interno para dados de saída enfileirados</td></tr>
-<tr><td><code>lSending</code></td><td>Logical</td><td></td><td>Indica se uma operação de envio está em andamento</td></tr>
-<tr><td><code>aSockets</code></td><td>Array (Class)</td><td><code>{}</code></td><td>Array de classe que rastreia todos os sockets ativos</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td><code>0</code></td><td>Socket port number</td></tr>
+<tr><td><code>cIPAddr</code></td><td>Character</td><td><code>""</code></td><td>Local IP address (auto-detected on creation)</td></tr>
+<tr><td><code>nSocket</code></td><td>Numeric</td><td><code>-1</code></td><td>Winsock socket handle</td></tr>
+<tr><td><code>nTimeOut</code></td><td>Numeric</td><td><code>30</code></td><td>Timeout in seconds for operations</td></tr>
+<tr><td><code>nBackLog</code></td><td>Numeric</td><td><code>5</code></td><td>Maximum pending connections for listening</td></tr>
+<tr><td><code>bAccept</code></td><td>Block</td><td></td><td>Callback when a new connection is accepted (server mode)</td></tr>
+<tr><td><code>bRead</code></td><td>Block</td><td></td><td>Callback when data is available to read</td></tr>
+<tr><td><code>bWrite</code></td><td>Block</td><td></td><td>Callback when the socket is ready to write</td></tr>
+<tr><td><code>bClose</code></td><td>Block</td><td></td><td>Callback when the remote end closes the connection</td></tr>
+<tr><td><code>bConnect</code></td><td>Block</td><td></td><td>Callback with connection result (client mode)</td></tr>
+<tr><td><code>bOOB</code></td><td>Block</td><td></td><td>Callback for out-of-band data</td></tr>
+<tr><td><code>lDebug</code></td><td>Logical</td><td></td><td>Enable debug logging</td></tr>
+<tr><td><code>cLogFile</code></td><td>Character</td><td></td><td>Path for debug log file</td></tr>
+<tr><td><code>aBuffer</code></td><td>Array</td><td><code>{}</code></td><td>Internal buffer for queued outgoing data</td></tr>
+<tr><td><code>lSending</code></td><td>Logical</td><td></td><td>Whether a send operation is in progress</td></tr>
+<tr><td><code>aSockets</code></td><td>Array (Class)</td><td><code>{}</code></td><td>Class-level array tracking all active sockets</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nPort, oWnd, cIp )</code></td><td>Criar um socket e vincular a uma porta. Chama WSAStartup no primeiro socket. Registra com oWnd para eventos assíncronos.</td></tr>
-<tr><td><code>Listen()</code></td><td>Iniciar escuta por conexões recebidas na porta vinculada</td></tr>
-<tr><td><code>Accept( nSocket, oWnd )</code></td><td>Aceitar uma conexão recebida. Retorna um novo TSocket para a sessão do cliente.</td></tr>
-<tr><td><code>Connect( cIPAddr, nPort )</code></td><td>Conectar a um servidor remoto como cliente</td></tr>
-<tr><td><code>GetData()</code></td><td>Ler dados disponíveis do socket. Retorna uma string de caracteres.</td></tr>
-<tr><td><code>SendData( cData )</code></td><td>Enviar dados de caractere. Armazena em buffer se um envio anterior estiver em andamento.</td></tr>
-<tr><td><code>SendFile( cFileName, nBlockSize )</code></td><td>Enviar um arquivo em blocos. O tamanho padrão do bloco é 30.000 bytes.</td></tr>
-<tr><td><code>SendChunk( nBlockSize )</code></td><td>Enviar o próximo bloco de um handle de arquivo aberto (usado internamente por SendFile)</td></tr>
-<tr><td><code>ClientIP()</code></td><td>Obter o endereço IP do par remoto conectado</td></tr>
-<tr><td><code>Refresh()</code></td><td>Forçar o socket a se registrar novamente para eventos assíncronos</td></tr>
-<tr><td><code>Close()</code></td><td>Fechar o handle do socket. Aguarda a conclusão de envios pendentes.</td></tr>
-<tr><td><code>End()</code></td><td>Fechar o socket e remover da lista de sockets da classe. Chama WSACleanup quando for o último socket.</td></tr>
+<tr><td><code>New( nPort, oWnd, cIp )</code></td><td>Create a socket and bind to port. Calls WSAStartup on first socket. Registers with oWnd for async events.</td></tr>
+<tr><td><code>Listen()</code></td><td>Start listening for incoming connections on the bound port</td></tr>
+<tr><td><code>Accept( nSocket, oWnd )</code></td><td>Accept an incoming connection. Returns a new TSocket for the client session.</td></tr>
+<tr><td><code>Connect( cIPAddr, nPort )</code></td><td>Connect to a remote server as a client</td></tr>
+<tr><td><code>GetData()</code></td><td>Read available data from the socket. Returns a character string.</td></tr>
+<tr><td><code>SendData( cData )</code></td><td>Send character data. Buffers data if a previous send is in progress.</td></tr>
+<tr><td><code>SendFile( cFileName, nBlockSize )</code></td><td>Send a file in blocks. Default block size is 30,000 bytes.</td></tr>
+<tr><td><code>SendChunk( nBlockSize )</code></td><td>Send the next block from an open file handle (used internally by SendFile)</td></tr>
+<tr><td><code>ClientIP()</code></td><td>Get the IP address of the connected remote peer</td></tr>
+<tr><td><code>Refresh()</code></td><td>Force the socket to re-register for async events</td></tr>
+<tr><td><code>Close()</code></td><td>Close the socket handle. Waits for pending sends to complete.</td></tr>
+<tr><td><code>End()</code></td><td>Close the socket and remove from the class-level socket list. Calls WSACleanup when last socket.</td></tr>
 </tbody>
 </table>
 
-<h2 id="callbacks">Callbacks de Evento</h2>
+<h2 id="callbacks">Event Callbacks</h2>
 
 <p>
-TSocket usa <code>WSAAsyncSelect</code> para registrar eventos de socket do Windows. Quando um evento ocorre,
-o loop de mensagens do FiveWin o roteia para <code>HandleEvent()</code>, que despacha para o método
-de callback apropriado. Defina o codeblock correspondente para manipular o evento:
+TSocket uses <code>WSAAsyncSelect</code> to register for Windows socket events. When an event occurs,
+the FiveWin message loop routes it to <code>HandleEvent()</code>, which dispatches to the appropriate
+callback method. Set the corresponding codeblock to handle the event:
 </p>
 
 <table>
 <thead>
-<tr><th>Codeblock</th><th>Evento</th><th>Método Callback</th></tr>
+<tr><th>Codeblock</th><th>Event</th><th>Callback Method</th></tr>
 </thead>
 <tbody>
-<tr><td><code>bAccept</code></td><td>Conexão recebida</td><td><code>OnAccept()</code></td></tr>
-<tr><td><code>bRead</code></td><td>Dados disponíveis</td><td><code>OnRead()</code></td></tr>
-<tr><td><code>bWrite</code></td><td>Pronto para enviar</td><td><code>OnWrite()</code></td></tr>
-<tr><td><code>bClose</code></td><td>Remoto fechou</td><td><code>OnClose()</code></td></tr>
-<tr><td><code>bConnect</code></td><td>Resultado da conexão</td><td><code>OnConnect( nErrorCode )</code></td></tr>
-<tr><td><code>bOOB</code></td><td>Dados OOB</td><td><code>OnOOB()</code></td></tr>
+<tr><td><code>bAccept</code></td><td>Incoming connection</td><td><code>OnAccept()</code></td></tr>
+<tr><td><code>bRead</code></td><td>Data available</td><td><code>OnRead()</code></td></tr>
+<tr><td><code>bWrite</code></td><td>Ready to send</td><td><code>OnWrite()</code></td></tr>
+<tr><td><code>bClose</code></td><td>Remote closed</td><td><code>OnClose()</code></td></tr>
+<tr><td><code>bConnect</code></td><td>Connection result</td><td><code>OnConnect( nErrorCode )</code></td></tr>
+<tr><td><code>bOOB</code></td><td>OOB data</td><td><code>OnOOB()</code></td></tr>
 </tbody>
 </table>
 
-<h2 id="example-client">Exemplo: Cliente TCP</h2>
+<h2 id="example-client">Example: TCP Client</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -154,7 +154,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-server">Exemplo: Servidor de Chat</h2>
+<h2 id="example-server">Example: Chat Server</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -192,18 +192,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="tips">Notas</h2>
+<h2 id="tips">Notes</h2>
 
 <ul>
-<li>TSocket requer uma janela FiveWin (ou diálogo) para seu modelo de eventos assíncronos. O loop de mensagens da janela despacha eventos Winsock via <code>WSAAsyncSelect</code>.</li>
-<li>O array de classe <code>aSockets</code> rastreia todos os sockets ativos. <code>HandleEvent()</code> pesquisa neste array pelo handle do socket para despachar eventos ao objeto correto.</li>
-<li><code>WSAStartup()</code> é chamado quando o primeiro TSocket é criado. <code>WSACleanup()</code> é chamado quando o último socket é destruído.</li>
-<li>O método <code>SendData()</code> lida com envios parciais e armazena dados em buffer automaticamente. Envios grandes são transparentemente divididos em vários segmentos TCP.</li>
-<li>Use <code>ShowIP()</code> (uma função utilitária em tsocket.prg) para obter rapidamente o endereço IP da máquina local.</li>
+<li>TSocket requires a FiveWin window (or dialog) for its async event model. The window's message loop dispatches Winsock events via <code>WSAAsyncSelect</code>.</li>
+<li>The class-level <code>aSockets</code> array tracks all live sockets. <code>HandleEvent()</code> searches this array by socket handle to dispatch events to the correct object.</li>
+<li><code>WSAStartup()</code> is called when the first TSocket is created. <code>WSACleanup()</code> is called when the last socket is destroyed.</li>
+<li>The <code>SendData()</code> method handles partial sends and buffers data automatically. Large sends are transparently split across multiple TCP segments.</li>
+<li>Use <code>ShowIP()</code> (a utility function in tsocket.prg) to quickly get the local machine's IP address.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/internet/tsmtp.html">&larr; tsmtp</a> | <a href="../../pt/ui/tsplitter.html">tsplitter &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

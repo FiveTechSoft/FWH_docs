@@ -13,74 +13,74 @@
 
 <h1>TPdf</h1>
 <p class="class-source">Fonte: <code>source/classes/tpdf.prg</code></p>
-<p class="class-hierarchy">Classe independente (usa libharu / hbhpdf.lib)</p>
+<p class="class-hierarchy">Standalone class (uses libharu / hbhpdf.lib)</p>
 
 <p>
-TPdf fornece geração de documentos PDF usando a Biblioteca Haru Free PDF (libharu). Suporta
-a criação de documentos PDF com múltiplas páginas contendo texto, linhas, retângulos, imagens e fontes.
-Os documentos podem ser protegidos por senha com permissões configuráveis.
+TPdf provides PDF document generation using the Haru Free PDF Library (libharu). It supports
+creating multi-page PDF documents with text, lines, rectangles, images, and fonts. Documents
+can be password-protected with configurable permissions.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hPdf</code></td><td>Handle</td><td>Manipulador do documento PDF libharu</td></tr>
-<tr><td><code>hPage</code></td><td>Handle</td><td>Manipulador da página atual</td></tr>
-<tr><td><code>aPages</code></td><td>Array</td><td>Array de todos os manipuladores de páginas no documento</td></tr>
-<tr><td><code>nPage</code></td><td>Numérico</td><td>Número da página atual</td></tr>
-<tr><td><code>nPageSize</code></td><td>Numérico</td><td>Constante de tamanho de página (padrão: <code>HPDF_PAGE_SIZE_A4</code>)</td></tr>
-<tr><td><code>nOrientation</code></td><td>Numérico</td><td><code>HPDF_PAGE_PORTRAIT</code> ou <code>HPDF_PAGE_LANDSCAPE</code></td></tr>
-<tr><td><code>nHeight</code></td><td>Numérico</td><td>Altura da página atual em pontos</td></tr>
-<tr><td><code>nWidth</code></td><td>Numérico</td><td>Largura da página atual em pontos</td></tr>
-<tr><td><code>cFileName</code></td><td>Caractere</td><td>Nome do arquivo PDF de saída</td></tr>
-<tr><td><code>cPassword</code></td><td>Caractere</td><td>Senha de usuário para criptografia PDF</td></tr>
-<tr><td><code>cOwnerPassword</code></td><td>Caractere</td><td>Senha de proprietário para permissões PDF</td></tr>
-<tr><td><code>nPermission</code></td><td>Numérico</td><td>Flags de permissão PDF</td></tr>
-<tr><td><code>lPreview</code></td><td>Lógico</td><td>Se <code>.T.</code>, abrir PDF após salvar</td></tr>
-<tr><td><code>hImageList</code></td><td>Hash</td><td>Cache de imagens carregadas</td></tr>
-<tr><td><code>LoadedFonts</code></td><td>Array</td><td>Array de manipuladores de fontes carregadas</td></tr>
+<tr><td><code>hPdf</code></td><td>Handle</td><td>libharu PDF document handle</td></tr>
+<tr><td><code>hPage</code></td><td>Handle</td><td>Current page handle</td></tr>
+<tr><td><code>aPages</code></td><td>Array</td><td>Array of all page handles in the document</td></tr>
+<tr><td><code>nPage</code></td><td>Numeric</td><td>Current page number</td></tr>
+<tr><td><code>nPageSize</code></td><td>Numeric</td><td>Page size constant (default: <code>HPDF_PAGE_SIZE_A4</code>)</td></tr>
+<tr><td><code>nOrientation</code></td><td>Numeric</td><td><code>HPDF_PAGE_PORTRAIT</code> or <code>HPDF_PAGE_LANDSCAPE</code></td></tr>
+<tr><td><code>nHeight</code></td><td>Numeric</td><td>Current page height in points</td></tr>
+<tr><td><code>nWidth</code></td><td>Numeric</td><td>Current page width in points</td></tr>
+<tr><td><code>cFileName</code></td><td>Character</td><td>Output PDF file name</td></tr>
+<tr><td><code>cPassword</code></td><td>Character</td><td>User password for PDF encryption</td></tr>
+<tr><td><code>cOwnerPassword</code></td><td>Character</td><td>Owner password for PDF permissions</td></tr>
+<tr><td><code>nPermission</code></td><td>Numeric</td><td>PDF permission flags</td></tr>
+<tr><td><code>lPreview</code></td><td>Logical</td><td>If <code>.T.</code>, open PDF after save</td></tr>
+<tr><td><code>hImageList</code></td><td>Hash</td><td>Loaded image cache</td></tr>
+<tr><td><code>LoadedFonts</code></td><td>Array</td><td>Array of loaded font handles</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cFileName, cPassword, cOwnerPassword, nPermission, lPreview )</code></td><td>Criar um novo documento PDF</td></tr>
-<tr><td><code>SetPage( nPageSize )</code></td><td>Definir tamanho da página (ex.: <code>HPDF_PAGE_SIZE_A4</code>, <code>HPDF_PAGE_SIZE_LETTER</code>)</td></tr>
-<tr><td><code>SetLandscape()</code></td><td>Alternar orientação da página para paisagem</td></tr>
-<tr><td><code>SetPortrait()</code></td><td>Alternar orientação da página para retrato</td></tr>
-<tr><td><code>SetCompression( cMode )</code></td><td>Definir modo de compressão PDF</td></tr>
-<tr><td><code>StartPage()</code></td><td>Iniciar uma nova página (adiciona ao documento)</td></tr>
-<tr><td><code>EndPage()</code></td><td>Finalizar a página atual</td></tr>
-<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad )</code></td><td>Desenhar texto na posição em pontos</td></tr>
-<tr><td><code>CmSay( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad, lO2A )</code></td><td>Desenhar texto na posição em centímetros</td></tr>
-<tr><td><code>SayRotate( nTop, nLeft, cTxt, oFont, nClrText )</code></td><td>Desenhar texto rotacionado</td></tr>
-<tr><td><code>DefineFont( cFontName, nSize, lEmbed )</code></td><td>Definir e carregar uma fonte TrueType</td></tr>
-<tr><td><code>AddFont( cFontName, cTtfFile )</code></td><td>Registrar uma fonte TrueType para incorporação</td></tr>
-<tr><td><code>Line( nTop, nLeft, nBottom, nRight, oPen )</code></td><td>Desenhar uma linha em pontos</td></tr>
-<tr><td><code>CmLine( nTop, nLeft, nBottom, nRight, oPen )</code></td><td>Desenhar uma linha em centímetros</td></tr>
-<tr><td><code>Rect( nTop, nLeft, nBottom, nRight, oPen, nColor )</code></td><td>Desenhar um retângulo em pontos</td></tr>
-<tr><td><code>CmRect( nTop, nLeft, nBottom, nRight, oPen, nColor )</code></td><td>Desenhar um retângulo em centímetros</td></tr>
-<tr><td><code>RoundBox( nTop, nLeft, nBottom, nRight, nWidth, nHeight, oPen, nColor, nBackColor, lFondo )</code></td><td>Desenhar um retângulo arredondado</td></tr>
-<tr><td><code>DashLine( nTop, nLeft, nBottom, nRight, oPen )</code></td><td>Desenhar uma linha tracejada</td></tr>
-<tr><td><code>SayBitmap( nRow, nCol, xBitmap, nWidth, nHeight )</code></td><td>Colocar uma imagem bitmap na página</td></tr>
-<tr><td><code>CmSayBitmap( nRow, nCol, xBitmap, nWidth, nHeight, nRaster, lStrech )</code></td><td>Colocar um bitmap usando coordenadas em centímetros</td></tr>
-<tr><td><code>GetImageFromFile( cImageFile )</code></td><td>Carregar uma imagem de arquivo para uso numa página</td></tr>
-<tr><td><code>GetTextWidth( cText, oFont )</code></td><td>Medir largura do texto em pontos</td></tr>
-<tr><td><code>Save( cFileName )</code></td><td>Salvar o documento PDF em arquivo</td></tr>
-<tr><td><code>End()</code></td><td>Fechar e liberar recursos PDF</td></tr>
+<tr><td><code>New( cFileName, cPassword, cOwnerPassword, nPermission, lPreview )</code></td><td>Create a new PDF document</td></tr>
+<tr><td><code>SetPage( nPageSize )</code></td><td>Set page size (e.g., <code>HPDF_PAGE_SIZE_A4</code>, <code>HPDF_PAGE_SIZE_LETTER</code>)</td></tr>
+<tr><td><code>SetLandscape()</code></td><td>Switch page orientation to landscape</td></tr>
+<tr><td><code>SetPortrait()</code></td><td>Switch page orientation to portrait</td></tr>
+<tr><td><code>SetCompression( cMode )</code></td><td>Set PDF compression mode</td></tr>
+<tr><td><code>StartPage()</code></td><td>Start a new page (adds to document)</td></tr>
+<tr><td><code>EndPage()</code></td><td>Finalize the current page</td></tr>
+<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad )</code></td><td>Draw text at position in points</td></tr>
+<tr><td><code>CmSay( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad, lO2A )</code></td><td>Draw text at position in centimeters</td></tr>
+<tr><td><code>SayRotate( nTop, nLeft, cTxt, oFont, nClrText )</code></td><td>Draw rotated text</td></tr>
+<tr><td><code>DefineFont( cFontName, nSize, lEmbed )</code></td><td>Define and load a TrueType font</td></tr>
+<tr><td><code>AddFont( cFontName, cTtfFile )</code></td><td>Register a TrueType font for embedding</td></tr>
+<tr><td><code>Line( nTop, nLeft, nBottom, nRight, oPen )</code></td><td>Draw a line in points</td></tr>
+<tr><td><code>CmLine( nTop, nLeft, nBottom, nRight, oPen )</code></td><td>Draw a line in centimeters</td></tr>
+<tr><td><code>Rect( nTop, nLeft, nBottom, nRight, oPen, nColor )</code></td><td>Draw a rectangle in points</td></tr>
+<tr><td><code>CmRect( nTop, nLeft, nBottom, nRight, oPen, nColor )</code></td><td>Draw a rectangle in centimeters</td></tr>
+<tr><td><code>RoundBox( nTop, nLeft, nBottom, nRight, nWidth, nHeight, oPen, nColor, nBackColor, lFondo )</code></td><td>Draw a rounded rectangle</td></tr>
+<tr><td><code>DashLine( nTop, nLeft, nBottom, nRight, oPen )</code></td><td>Draw a dashed line</td></tr>
+<tr><td><code>SayBitmap( nRow, nCol, xBitmap, nWidth, nHeight )</code></td><td>Place a bitmap image on the page</td></tr>
+<tr><td><code>CmSayBitmap( nRow, nCol, xBitmap, nWidth, nHeight, nRaster, lStrech )</code></td><td>Place a bitmap using centimeter coordinates</td></tr>
+<tr><td><code>GetImageFromFile( cImageFile )</code></td><td>Load an image from file for use on a page</td></tr>
+<tr><td><code>GetTextWidth( cText, oFont )</code></td><td>Measure text width in points</td></tr>
+<tr><td><code>Save( cFileName )</code></td><td>Save the PDF document to file</td></tr>
+<tr><td><code>End()</code></td><td>Close and release PDF resources</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Criar um PDF com Texto e Formas</h2>
+<h2 id="example">Example: Create a PDF with Text and Shapes</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 #include "harupdf.ch"
@@ -121,18 +121,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TPdf requer a vinculação de <code>hbhpdf.lib</code> e <code>libhpdf.lib</code> da pasta lib do FWH.</li>
-<li>As coordenadas são em pontos (1/72 polegada) por padrão. Use <code>CmSay</code>, <code>CmLine</code>, <code>CmRect</code> para coordenadas baseadas em centímetros.</li>
-<li>A incorporação de fontes é suportada via <code>AddFont()</code> e <code>DefineFont( cFontName, nSize, lEmbed )</code>.</li>
-<li>A proteção por senha com permissões é definida através do construtor. As permissões incluem <code>HPDF_ENABLE_READ</code>, <code>HPDF_ENABLE_PRINT</code>, <code>HPDF_ENABLE_COPY</code> e <code>HPDF_ENABLE_EDIT</code>.</li>
-<li>Fontes TrueType do diretório <code>Fonts</code> do sistema são auto-detetadas e disponíveis pelo nome da face.</li>
+<li>TPdf requires linking <code>hbhpdf.lib</code> and <code>libhpdf.lib</code> from the FWH lib folder.</li>
+<li>Coordinates are in points (1/72 inch) by default. Use <code>CmSay</code>, <code>CmLine</code>, <code>CmRect</code> for centimeter-based coordinates.</li>
+<li>Font embedding is supported via <code>AddFont()</code> and <code>DefineFont( cFontName, nSize, lEmbed )</code>.</li>
+<li>Password protection with permissions is set via the constructor. Permissions include <code>HPDF_ENABLE_READ</code>, <code>HPDF_ENABLE_PRINT</code>, <code>HPDF_ENABLE_COPY</code>, and <code>HPDF_ENABLE_EDIT</code>.</li>
+<li>TrueType fonts from the system <code>Fonts</code> directory are auto-detected and available by face name.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/utilities/tparser.html">&larr; tparser</a> | <a href="../../pt/reference/tpen.html">tpen &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

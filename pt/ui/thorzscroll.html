@@ -13,47 +13,47 @@
 
 <h1>THorzScroll</h1>
 <p class="class-source">Fonte: <code>source/classes/hrzscrol.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TPanel</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
 
 <p>
-THorzScroll estende TPanel com uma barra de rolagem horizontal incorporada que percorre uma coleção de painéis filhos. É projetado para layouts horizontalmente roláveis como fileiras de cartões de painel, painéis de ferramentas ou galerias de imagens onde o conteúdo excede a largura visível.
+THorzScroll extends TPanel with a built-in horizontal scrollbar that scrolls a collection of child panels. It is designed for horizontally scrollable layouts such as dashboard card rows, toolbar panels, or image galleries where content exceeds the visible width.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oHScroll</code></td><td>Object</td><td>Objeto TScrollBar que gerencia a barra de rolagem horizontal</td></tr>
-<tr><td><code>nHPos</code></td><td>Numeric</td><td>Posição atual de rolagem horizontal</td></tr>
-<tr><td><code>nMaxWidth</code></td><td>Numeric</td><td>Largura total do conteúdo; determina o intervalo de rolagem</td></tr>
-<tr><td><code>aPanels</code></td><td>Array</td><td>Array de objetos TPanel filhos gerenciados pelo contêiner</td></tr>
-<tr><td><code>nBetween</code></td><td>Numeric</td><td>Espaçamento em pixels entre painéis consecutivos (padrão 10)</td></tr>
-<tr><td><code>lBorder</code></td><td>Logical</td><td>Exibe uma borda ao redor do contêiner</td></tr>
-<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Cor da borda (valor RGB)</td></tr>
+<tr><td><code>oHScroll</code></td><td>Object</td><td>TScrollBar object managing the horizontal scrollbar</td></tr>
+<tr><td><code>nHPos</code></td><td>Numeric</td><td>Current horizontal scroll position</td></tr>
+<tr><td><code>nMaxWidth</code></td><td>Numeric</td><td>Total content width; determines the scroll range</td></tr>
+<tr><td><code>aPanels</code></td><td>Array</td><td>Array of child TPanel objects managed by the container</td></tr>
+<tr><td><code>nBetween</code></td><td>Numeric</td><td>Spacing in pixels between consecutive panels (default 10)</td></tr>
+<tr><td><code>lBorder</code></td><td>Logical</td><td>Show a border around the container</td></tr>
+<tr><td><code>nClrBorder</code></td><td>Numeric</td><td>Border color (RGB value)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, nClrPane, lHScroll, lBorder, nClrBorder )</code></td><td>Cria um novo painel de rolagem horizontal</td></tr>
-<tr><td><code>Redefine( nId, oWnd, nClrPane, lHScroll, lBorder, nClrBorder )</code></td><td>Redefine a partir de um recurso de diálogo</td></tr>
-<tr><td><code>AddPanel( nWidth, nClrBack )</code></td><td>Adiciona um painel filho à área rolável; retorna o objeto do painel</td></tr>
-<tr><td><code>RemovePanel( xParam )</code></td><td>Remove um painel filho por índice ou referência de objeto</td></tr>
-<tr><td><code>HScroll( nCode )</code></td><td>Trata eventos de rolagem (linha à esquerda/direita)</td></tr>
-<tr><td><code>UpdateScrollRange()</code></td><td>Recalcula o intervalo da barra de rolagem após adicionar/remover painéis</td></tr>
-<tr><td><code>StartSmoothScroll( nNewPos )</code></td><td>Inicia rolagem suave animada até uma posição alvo</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, nClrPane, lHScroll, lBorder, nClrBorder )</code></td><td>Create a new horizontal scroll panel</td></tr>
+<tr><td><code>Redefine( nId, oWnd, nClrPane, lHScroll, lBorder, nClrBorder )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>AddPanel( nWidth, nClrBack )</code></td><td>Add a child panel to the scrollable area; returns the panel object</td></tr>
+<tr><td><code>RemovePanel( xParam )</code></td><td>Remove a child panel by index or object reference</td></tr>
+<tr><td><code>HScroll( nCode )</code></td><td>Handle scroll events (line left/right)</td></tr>
+<tr><td><code>UpdateScrollRange()</code></td><td>Recalculate the scrollbar range after adding/removing panels</td></tr>
+<tr><td><code>StartSmoothScroll( nNewPos )</code></td><td>Begin smooth animated scrolling to a target position</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Painel de Rolagem Horizontal</h2>
+<h2 id="example">Example: Horizontal Scroll Panel</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -73,17 +73,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>THorzScroll cria internamente um <code>TScrollBar</code> via <code>::oHScroll</code> com blocos de código associados para rolagem de linha, página e arrasto do cursor.</li>
-<li>Use <code>AddPanel()</code> para anexar painéis filhos. Cada painel é dimensionado de acordo com <code>nWidth</code> e posicionado automaticamente com o espaçamento <code>nBetween</code>.</li>
-<li><code>UpdateScrollRange()</code> recalcula <code>nMaxWidth</code> a partir da largura total de todos os painéis filhos para definir o máximo da barra de rolagem.</li>
-<li>O método <code>MouseWheel</code> suporta rolagem horizontal através da roda do mouse quando o painel está em foco.</li>
+<li>THorzScroll internally creates a <code>TScrollBar</code> via <code>::oHScroll</code> with bound code blocks for line, page, and thumb-track scrolling.</li>
+<li>Use <code>AddPanel()</code> to append child panels. Each panel is sized according to <code>nWidth</code> and automatically positioned with <code>nBetween</code> spacing.</li>
+<li><code>UpdateScrollRange()</code> recalculates <code>nMaxWidth</code> from the total width of all child panels to set the scrollbar maximum.</li>
+<li>The <code>MouseWheel</code> method supports horizontal scrolling via the mouse wheel when the panel has focus.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ai/thftask.html">&larr; thftask</a> | <a href="../../pt/ui/thotkey.html">thotkey &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

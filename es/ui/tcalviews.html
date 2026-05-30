@@ -1,148 +1,148 @@
-﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCalViews (Día/Semana/Mes) - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
+﻿<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TCalViews (Day/Week/Month) - Documentación FWH</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head><body>
 <nav id="sidebar"></nav>
 <main id="content">
 
 <h1>TCalViews: TDayView, TWeekView, TMonthView</h1>
 <p class="class-source">Fuente: <code>source/classes/tdayv.prg</code>, <code>source/classes/tweekv.prg</code>, <code>source/classes/tmonthv.prg</code></p>
-<p class="class-hierarchy">Cada una hereda de: <code>TCalEx</code></p>
+<p class="class-hierarchy">Each inherits from: <code>TCalEx</code></p>
 
 <p>
-TDayView, TWeekView y TMonthView son las tres clases de sub-vista utilizadas por TCalEx
-para representar diferentes perspectivas del calendario. Cada vista hereda de TCalEx y proporciona
-representación, navegación y gestión de eventos especializadas para su granularidad temporal específica.
-La vista activa se establece mediante los métodos de TCalEx <code>SetDayView()</code>, <code>SetWeekView()</code>
-y <code>SetMonthView()</code>.
+TDayView, TWeekView, and TMonthView are the three sub-view classes used by TCalEx
+to render different calendar perspectives. Each view inherits from TCalEx and provides
+specialized rendering, navigation, and event handling for its specific time granularity.
+The active view is set via TCalEx methods <code>SetDayView()</code>, <code>SetWeekView()</code>,
+and <code>SetMonthView()</code>.
 </p>
 
 <!-- ================================================================ -->
-<h2 id="tdayview">TDayView - Vista de Día</h2>
+<h2 id="tdayview">TDayView - Day View</h2>
 
 <p>
-TDayView muestra un único día con una cuadrícula de franjas horarias. La cuadrícula se divide en filas
-que representan intervalos de tiempo (controlados por <code>nInterval</code> en TCalEx) entre
-<code>nStartHour</code> y <code>nEndHour</code>. Cada cita o evento aparece como
-un bloque coloreado que abarca su duración. Los usuarios pueden hacer clic en franjas vacías para crear nuevos
-eventos y arrastrar eventos existentes para reprogramarlos.
+TDayView displays a single day with a time-slot grid. The grid is divided into rows
+representing time intervals (controlled by <code>nInterval</code> in TCalEx) between
+<code>nStartHour</code> and <code>nEndHour</code>. Each appointment or event appears as
+a colored block spanning its duration. Users can click on empty slots to create new
+events and drag existing events to reschedule.
 </p>
 
-<h3>DATA Principales</h3>
+<h3>Key DATA</h3>
 
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>nRowCount</code></td><td>Numérico</td><td>Número total de filas de franjas horarias en la cuadrícula</td></tr>
-<tr><td><code>nRowHeight</code></td><td>Numérico</td><td>Altura de cada fila de franja horaria en píxeles</td></tr>
+<tr><td><code>nRowCount</code></td><td>Numeric</td><td>Total number of time-slot rows in the grid</td></tr>
+<tr><td><code>nRowHeight</code></td><td>Numeric</td><td>Height of each time-slot row in pixels</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
-<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( oCalex )</code></td><td>Crea una TDayView vinculada a un TCalEx padre</td></tr>
-<tr><td><code>GoNextDay()</code></td><td>Navega al día siguiente</td></tr>
-<tr><td><code>GoPrevDay()</code></td><td>Navega al día anterior</td></tr>
-<tr><td><code>SetDate( dDate )</code></td><td>Establece la vista en una fecha específica</td></tr>
+<tr><td><code>New( oCalex )</code></td><td>Create a TDayView bound to a TCalEx parent</td></tr>
+<tr><td><code>GoNextDay()</code></td><td>Navigate to the next day</td></tr>
+<tr><td><code>GoPrevDay()</code></td><td>Navigate to the previous day</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the view to a specific date</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo: Cambiar a Vista de Día</h3>
+<h3>Example: Switch to Day View</h3>
 
-<pre><code class="language-harbour">// Se asume que oCal es una instancia de TCalEx
-oCal:SetDayView( dDate(), 30 )  // Intervalos de 30 minutos</code></pre>
+<pre><code class="language-harbour">// Assume oCal is a TCalEx instance
+oCal:SetDayView( dDate(), 30 )  // 30-minute intervals</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="tweekview">TWeekView - Vista de Semana</h2>
+<h2 id="tweekview">TWeekView - Week View</h2>
 
 <p>
-TWeekView muestra una semana completa (7 días) con filas de franjas horarias para cada día. Cada columna
-representa un día de la semana, y cada fila representa un intervalo de tiempo. Los eventos se
-representan como bloques coloreados que abarcan su rango horario dentro de cada columna de día. La vista
-admite desplazamiento horizontal y vertical para semanas con muchos eventos.
+TWeekView displays a full week (7 days) with time-slot rows for each day. Each column
+represents one day of the week, and each row represents a time interval. Events are
+rendered as colored blocks spanning their time range within each day column. The view
+supports horizontal and vertical scrolling for weeks with many events.
 </p>
 
-<h3>DATA Principales</h3>
+<h3>Key DATA</h3>
 
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>nDays</code></td><td>Numérico</td><td>Número de días mostrados (siempre 7)</td></tr>
-<tr><td><code>nRowHeight</code></td><td>Numérico</td><td>Altura de cada fila de franja horaria</td></tr>
-<tr><td><code>nRowCount</code></td><td>Numérico</td><td>Número total de filas de franjas horarias</td></tr>
+<tr><td><code>nDays</code></td><td>Numeric</td><td>Number of days displayed (always 7)</td></tr>
+<tr><td><code>nRowHeight</code></td><td>Numeric</td><td>Height of each time-slot row</td></tr>
+<tr><td><code>nRowCount</code></td><td>Numeric</td><td>Total number of time-slot rows</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
-<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( oCalex )</code></td><td>Crea una TWeekView vinculada a un TCalEx padre</td></tr>
-<tr><td><code>GoNextWeek()</code></td><td>Navega a la semana siguiente</td></tr>
-<tr><td><code>GoPrevWeek()</code></td><td>Navega a la semana anterior</td></tr>
-<tr><td><code>SetDate( dDate )</code></td><td>Establece la vista en la semana específica que contiene dDate</td></tr>
+<tr><td><code>New( oCalex )</code></td><td>Create a TWeekView bound to a TCalEx parent</td></tr>
+<tr><td><code>GoNextWeek()</code></td><td>Navigate to the next week</td></tr>
+<tr><td><code>GoPrevWeek()</code></td><td>Navigate to the previous week</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the view to a specific week containing dDate</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo: Cambiar a Vista de Semana</h3>
+<h3>Example: Switch to Week View</h3>
 
-<pre><code class="language-harbour">// Se asume que oCal es una instancia de TCalEx
-oCal:SetWeekView( dDate(), 30 )  // Semana actual, intervalos de 30 min</code></pre>
+<pre><code class="language-harbour">// Assume oCal is a TCalEx instance
+oCal:SetWeekView( dDate(), 30 )  // Current week, 30-min intervals</code></pre>
 
 <!-- ================================================================ -->
-<h2 id="tmonthview">TMonthView - Vista de Mes</h2>
+<h2 id="tmonthview">TMonthView - Month View</h2>
 
 <p>
-TMonthView muestra un mes completo en una disposición de cuadrícula de calendario tradicional. La cuadrícula tiene
-7 columnas (días de la semana) y 5 o 6 filas (semanas del mes). Cada celda muestra
-el número del día y puede mostrar indicadores de eventos. Hacer doble clic en una celda normalmente
-cambia a TDayView para la fecha seleccionada mediante <code>oCalex:SetDayView()</code>.
+TMonthView displays a full month in a traditional calendar grid layout. The grid has
+7 columns (days of the week) and 5 or 6 rows (weeks in the month). Each cell shows
+the day number and can display event indicators. Double-clicking a cell typically
+switches to TDayView for the selected date via <code>oCalex:SetDayView()</code>.
 </p>
 
-<h3>DATA Principales</h3>
+<h3>Key DATA</h3>
 
 <table>
-<thead><tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>nWks</code></td><td>Numérico</td><td>Número de semanas mostradas (5 o 6, según el mes)</td></tr>
-<tr><td><code>nRowHeight</code></td><td>Numérico</td><td>Altura de cada fila de semana</td></tr>
-<tr><td><code>nColWidth</code></td><td>Numérico</td><td>Ancho de cada columna de día</td></tr>
-<tr><td><code>nInfoHeight</code></td><td>Numérico</td><td>Altura reservada para la información de eventos en cada celda</td></tr>
+<tr><td><code>nWks</code></td><td>Numeric</td><td>Number of weeks displayed (5 or 6, depending on the month)</td></tr>
+<tr><td><code>nRowHeight</code></td><td>Numeric</td><td>Height of each week row</td></tr>
+<tr><td><code>nColWidth</code></td><td>Numeric</td><td>Width of each day column</td></tr>
+<tr><td><code>nInfoHeight</code></td><td>Numeric</td><td>Height reserved for event info in each cell</td></tr>
 </tbody>
 </table>
 
-<h3>Métodos</h3>
+<h3>Methods</h3>
 
 <table>
-<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>New( oCalex )</code></td><td>Crea una TMonthView vinculada a un TCalEx padre</td></tr>
-<tr><td><code>SetDate( dDate )</code></td><td>Establece la vista en el mes que contiene dDate</td></tr>
-<tr><td><code>GoNextMonth()</code></td><td>Navega al mes siguiente</td></tr>
-<tr><td><code>GoPrevMonth()</code></td><td>Navega al mes anterior</td></tr>
-<tr><td><code>GetDateFromPos( nAtRow, nAtCol )</code></td><td>Devuelve la fecha en la posición de cuadrícula (fila, columna)</td></tr>
-<tr><td><code>GetPosFromDate( dDate )</code></td><td>Devuelve la fila y columna de la cuadrícula para una fecha dada</td></tr>
+<tr><td><code>New( oCalex )</code></td><td>Create a TMonthView bound to a TCalEx parent</td></tr>
+<tr><td><code>SetDate( dDate )</code></td><td>Set the view to the month containing dDate</td></tr>
+<tr><td><code>GoNextMonth()</code></td><td>Navigate to the next month</td></tr>
+<tr><td><code>GoPrevMonth()</code></td><td>Navigate to the previous month</td></tr>
+<tr><td><code>GetDateFromPos( nAtRow, nAtCol )</code></td><td>Return the date at grid position (row, col)</td></tr>
+<tr><td><code>GetPosFromDate( dDate )</code></td><td>Return grid row and column for a given date</td></tr>
 </tbody>
 </table>
 
-<h3>Ejemplo: Cambiar a Vista de Mes</h3>
+<h3>Example: Switch to Month View</h3>
 
-<pre><code class="language-harbour">// Se asume que oCal es una instancia de TCalEx
-oCal:SetMonthView()  // Muestra el mes actual</code></pre>
+<pre><code class="language-harbour">// Assume oCal is a TCalEx instance
+oCal:SetMonthView()  // Show current month</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Las tres vistas son creadas internamente por TCalEx y se acceden a través de sus miembros DATA <code>oDayView</code>, <code>oWeekView</code> y <code>oMonthView</code>.</li>
-<li>Los métodos de navegación de vista (GoNext/GoPrev) se aplican automáticamente a la vista activa. Por ejemplo, <code>oCal:GoNext()</code> avanza un día, una semana o un mes según la vista activa.</li>
-<li>Hacer doble clic en una celda de TMonthView activa <code>oCalex:SetDayView()</code>, profundizando de la granularidad de mes a la de día.</li>
-<li>El ajuste <code>nInterval</code> de TCalEx controla la granularidad de las filas en las vistas de día y semana. Los valores comunes son 30 (filas de media hora) o 60 (filas de una hora).</li>
-<li>La lógica de representación de eventos e interacción con el ratón se comparte entre las vistas mediante métodos heredados de TCalEx.</li>
+<li>All three views are created internally by TCalEx and accessed through its <code>oDayView</code>, <code>oWeekView</code>, and <code>oMonthView</code> DATA members.</li>
+<li>View navigation methods (GoNext/GoPrev) are automatically scoped to the active view. For example, <code>oCal:GoNext()</code> advances one day, week, or month depending on the active view.</li>
+<li>Double-clicking a cell in TMonthView triggers <code>oCalex:SetDayView()</code>, drilling down from month to day granularity.</li>
+<li>The <code>nInterval</code> setting from TCalEx controls the row granularity in day and week views. Common values are 30 (half-hour rows) or 60 (hour rows).</li>
+<li>Event rendering and mouse interaction logic is shared between the views through inherited methods from TCalEx.</li>
 </ul>
 
 </main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

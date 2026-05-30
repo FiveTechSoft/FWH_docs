@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TScrollImg - FWH Docs</title>
+<title>TScrollImg - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,56 +13,56 @@
 
 <h1>TScrollImg</h1>
 <p class="class-source">Fuente: <code>source/classes/scrolimg.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TPanel</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
 
 <p>
-TScrollImg es un control de banner / carrusel de imágenes que muestra una colección desplazable de imágenes. Soporta múltiples modos de visualización, animación automática, transiciones de desvanecimiento, zoom al pasar el ratón, acciones por clic en cada imagen y persistencia de estado. Diseñado originalmente para exhibidores de productos y banners publicitarios.
+TScrollImg is an image banner / carousel control that displays a scrolling collection of images. It supports multiple display modes, automatic animation, fading transitions, zoom on hover, click actions per image, and state persistence. Originally designed for product showcases and advertisement banners.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aElements</code></td><td>Array</td><td>Array de definiciones de elementos (archivo, URL, acción, prompt)</td></tr>
-<tr><td><code>nImages</code></td><td>Numérico</td><td>Número de imágenes cargadas desde la lista de banners</td></tr>
-<tr><td><code>nMode</code></td><td>Numérico</td><td>Modo de visualización 1-4 (dirección de desplazamiento / variante de diseño)</td></tr>
-<tr><td><code>nSpeed</code></td><td>Numérico</td><td>Velocidad de desplazamiento en píxeles por tick del temporizador</td></tr>
-<tr><td><code>lRunning</code></td><td>Lógico</td><td>La animación está actualmente en ejecución</td></tr>
-<tr><td><code>lPaused</code></td><td>Lógico</td><td>La animación está pausada</td></tr>
-<tr><td><code>aOpacity</code></td><td>Array</td><td>Valores de opacidad por imagen (0-255)</td></tr>
-<tr><td><code>nZoomedImage</code></td><td>Numérico</td><td>Índice de la imagen actualmente ampliada (0 = ninguna)</td></tr>
-<tr><td><code>lFading</code></td><td>Lógico</td><td>Transición de desvanecimiento en progreso</td></tr>
-<tr><td><code>lMouseWheel</code></td><td>Lógico</td><td>Habilitar desplazamiento con rueda del ratón</td></tr>
-<tr><td><code>lChangeSpeed</code></td><td>Lógico</td><td>Permitir cambio de velocidad mediante teclas +/-</td></tr>
+<tr><td><code>aElements</code></td><td>Array</td><td>Array of element definitions (file, URL, action, prompt)</td></tr>
+<tr><td><code>nImages</code></td><td>Numeric</td><td>Number of images loaded from the banner list</td></tr>
+<tr><td><code>nMode</code></td><td>Numeric</td><td>Display mode 1-4 (scroll direction / layout variant)</td></tr>
+<tr><td><code>nSpeed</code></td><td>Numeric</td><td>Scroll speed in pixels per timer tick</td></tr>
+<tr><td><code>lRunning</code></td><td>Logical</td><td>Animation is currently running</td></tr>
+<tr><td><code>lPaused</code></td><td>Logical</td><td>Animation is paused</td></tr>
+<tr><td><code>aOpacity</code></td><td>Array</td><td>Per-image opacity values (0-255)</td></tr>
+<tr><td><code>nZoomedImage</code></td><td>Numeric</td><td>Index of the currently zoomed image (0 = none)</td></tr>
+<tr><td><code>lFading</code></td><td>Logical</td><td>Fading transition is in progress</td></tr>
+<tr><td><code>lMouseWheel</code></td><td>Logical</td><td>Enable mouse wheel scrolling</td></tr>
+<tr><td><code>lChangeSpeed</code></td><td>Logical</td><td>Allow speed change via +/- keys</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, oWnd, aBanners, nMode, nSpeed, ... )</code></td><td>Crear un nuevo carrusel de imágenes con lista de banners y modo de visualización</td></tr>
-<tr><td><code>Redefine( nId, oWnd, aBanners, nMode, nSpeed, ... )</code></td><td>Redefinir desde un recurso de diálogo</td></tr>
-<tr><td><code>Reset()</code></td><td>Restablecer el carrusel a su estado inicial, reposicionar todas las imágenes</td></tr>
-<tr><td><code>Animate()</code></td><td>Iniciar o reiniciar el temporizador de animación de desplazamiento</td></tr>
-<tr><td><code>Paint()</code></td><td>Renderizar el fondo y todas las imágenes visibles</td></tr>
-<tr><td><code>TimerAction()</code></td><td>Callback del temporizador que avanza la posición de desplazamiento en cada tick</td></tr>
-<tr><td><code>SaveState( cFile )</code></td><td>Guardar el estado actual del carrusel (posiciones, imágenes) en un archivo</td></tr>
-<tr><td><code>LoadState( cFile )</code></td><td>Restaurar un estado de carrusel previamente guardado desde un archivo</td></tr>
-<tr><td><code>MouseMove( nRow, nCol )</code></td><td>Manejar el movimiento del ratón para detección de hover y zoom</td></tr>
-<tr><td><code>LButtonUp( nRow, nCol )</code></td><td>Ejecutar la acción asociada a la imagen cliqueada</td></tr>
-<tr><td><code>KeyDown( nKey, nFlags )</code></td><td>Manejar teclas +/- para control de velocidad</td></tr>
-<tr><td><code>MouseWheel( nKeys, nDelta, nX, nY )</code></td><td>Manejar la rueda del ratón para desplazamiento manual</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, oWnd, aBanners, nMode, nSpeed, ... )</code></td><td>Create a new image carousel with banner file list and display mode</td></tr>
+<tr><td><code>Redefine( nId, oWnd, aBanners, nMode, nSpeed, ... )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>Reset()</code></td><td>Reset the carousel to its initial state, reposition all images</td></tr>
+<tr><td><code>Animate()</code></td><td>Start or restart the scrolling animation timer</td></tr>
+<tr><td><code>Paint()</code></td><td>Render the background and all visible images</td></tr>
+<tr><td><code>TimerAction()</code></td><td>Timer callback that advances the scroll position each tick</td></tr>
+<tr><td><code>SaveState( cFile )</code></td><td>Save the current carousel state (positions, images) to a file</td></tr>
+<tr><td><code>LoadState( cFile )</code></td><td>Restore a previously saved carousel state from a file</td></tr>
+<tr><td><code>MouseMove( nRow, nCol )</code></td><td>Handle mouse movement for hover detection and zoom</td></tr>
+<tr><td><code>LButtonUp( nRow, nCol )</code></td><td>Execute action associated with the clicked image</td></tr>
+<tr><td><code>KeyDown( nKey, nFlags )</code></td><td>Handle +/- keys for speed control</td></tr>
+<tr><td><code>MouseWheel( nKeys, nDelta, nX, nY )</code></td><td>Handle mouse wheel for manual scrolling</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Carrusel de Imágenes</h2>
+<h2 id="example">Example: Image Carousel</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -82,18 +82,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>El array <code>aBanners</code> puede contener nombres de archivo, o sub-arrays con <code>{ file, url, action, prompt }</code> para interactividad extendida.</li>
-<li>El modo determina la dirección de desplazamiento: 1 = horizontal izquierda, 2 = horizontal derecha, 3 = vertical arriba, 4 = vertical abajo.</li>
-<li>Cuando el ratón se posa sobre una imagen, <code>nZoomedImage</code> activa un efecto de zoom usando <code>nZoomFactor</code>.</li>
-<li>Las transiciones de opacidad (desvanecimiento) se aplican mediante <code>aOpacity</code> y <code>lFading</code> / <code>nFadeDuration</code>.</li>
-<li>La persistencia de estado con <code>SaveState</code> / <code>LoadState</code> permite que el carrusel se reanude desde donde quedó.</li>
+<li>The <code>aBanners</code> array can contain filenames, or sub-arrays with <code>{ file, url, action, prompt }</code> for extended interactivity.</li>
+<li>Mode determines the scroll direction: 1 = horizontal left, 2 = horizontal right, 3 = vertical up, 4 = vertical down.</li>
+<li>When the mouse hovers over an image, <code>nZoomedImage</code> enables a zoom effect using <code>nZoomFactor</code>.</li>
+<li>Opacity transitions (fading) are applied via <code>aOpacity</code> and <code>lFading</code> / <code>nFadeDuration</code>.</li>
+<li>State persistence with <code>SaveState</code> / <code>LoadState</code> allows the carousel to resume from where it left off.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tscrollbar.html">&larr; tscrollbar</a> | <a href="../../es/ui/tscrollmetro.html">tscrollmetro &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

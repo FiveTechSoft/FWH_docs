@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMetroPanel - Documentaci&oacute;n FWH</title>
+<title>TMetroPanel - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,73 +13,77 @@
 
 <h1>TMetroPanel</h1>
 <p class="class-source">Fuente: <code>source/classes/metropnl.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TPanel</code></p>
+<p class="class-hierarchy">Inherits from: <code>TPanel</code></p>
 
 <p>
-TMetroPanel implementa un panel de inicio estilo Metro de Windows 8 con grupos de mosaicos que se desplazan horizontalmente. Organiza los mosaicos TMetroBtn en grupos y filas, proporcionando una interfaz t&aacute;ctil con desplazamiento por arrastre, soporte para rueda del rat&oacute;n y una barra de desplazamiento personalizada. Cada mosaico puede ser un bot&oacute;n grande o peque&ntilde;o con una imagen, t&iacute;tulo y acci&oacute;n.
+TMetroPanel implements a Windows 8-style Metro start panel with tile groups that scroll
+horizontally. It arranges TMetroBtn tiles into groups and rows, providing a touch-friendly
+interface with drag-to-scroll, mouse-wheel support, and a custom scrollbar. Each tile can be
+a large or small button with an image, caption, and action.
 
-TMetroBtn (clase hija de TBtnBmp) representa un mosaico Metro individual con alineaci&oacute;n configurable, superposici&oacute;n de texto y pertenencia a grupo.
+TMetroBtn (child class from TBtnBmp) represents an individual Metro tile with configurable
+alignment, text overlay, and group membership.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aButtons</code></td><td>Array</td><td>Array de objetos mosaico TMetroBtn</td></tr>
-<tr><td><code>nOffset</code></td><td>Numeric</td><td>Desplazamiento horizontal actual en p&iacute;xeles</td></tr>
-<tr><td><code>nBtnSize</code></td><td>Numeric</td><td>Tama&ntilde;o base del mosaico en p&iacute;xeles (predeterminado 132)</td></tr>
-<tr><td><code>nMetroRows</code></td><td>Numeric</td><td>N&uacute;mero de filas de mosaicos seg&uacute;n la altura de la pantalla</td></tr>
-<tr><td><code>nGroups</code></td><td>Numeric</td><td>N&uacute;mero de grupos de mosaicos (calculado autom&aacute;ticamente desde los botones)</td></tr>
-<tr><td><code>nScrollRange</code></td><td>Numeric</td><td>Extensi&oacute;n m&aacute;xima del desplazamiento horizontal</td></tr>
-<tr><td><code>nScrollRatio</code></td><td>Numeric</td><td>Proporci&oacute;n para el mapeo de desplazamiento pulgar-a-contenido</td></tr>
-<tr><td><code>cTitle</code></td><td>Character</td><td>T&iacute;tulo del panel mostrado en la parte superior</td></tr>
-<tr><td><code>lDesignMode</code></td><td>Logical</td><td>Habilitar interacci&oacute;n en tiempo de dise&ntilde;o</td></tr>
-<tr><td><code>lArranged</code></td><td>Logical</td><td>Indica si los mosaicos han sido posicionados</td></tr>
-<tr><td><code>nClrScroll</code></td><td>Numeric</td><td>Color de la pista de la barra de desplazamiento</td></tr>
-<tr><td><code>nClrThumb</code></td><td>Numeric</td><td>Color del pulgar de la barra de desplazamiento</td></tr>
+<tr><td><code>aButtons</code></td><td>Array</td><td>Array of TMetroBtn tile objects</td></tr>
+<tr><td><code>nOffset</code></td><td>Numeric</td><td>Current horizontal scroll offset in pixels</td></tr>
+<tr><td><code>nBtnSize</code></td><td>Numeric</td><td>Base tile size in pixels (default 132)</td></tr>
+<tr><td><code>nMetroRows</code></td><td>Numeric</td><td>Number of tile rows based on screen height</td></tr>
+<tr><td><code>nGroups</code></td><td>Numeric</td><td>Number of tile groups (auto-calculated from buttons)</td></tr>
+<tr><td><code>nScrollRange</code></td><td>Numeric</td><td>Maximum horizontal scroll extent</td></tr>
+<tr><td><code>nScrollRatio</code></td><td>Numeric</td><td>Ratio for thumb-to-content scroll mapping</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Panel title displayed at the top</td></tr>
+<tr><td><code>lDesignMode</code></td><td>Logical</td><td>Enable design-time interaction</td></tr>
+<tr><td><code>lArranged</code></td><td>Logical</td><td>Whether tiles have been positioned</td></tr>
+<tr><td><code>nClrScroll</code></td><td>Numeric</td><td>Scrollbar track color</td></tr>
+<tr><td><code>nClrThumb</code></td><td>Numeric</td><td>Scrollbar thumb color</td></tr>
 </tbody>
 </table>
 
-<h2 id="metrobtn">Clase TMetroBtn (Hija de TMetroPanel)</h2>
+<h2 id="metrobtn">TMetroBtn Class (Child of TMetroPanel)</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nGroup</code></td><td>Numeric</td><td>&Iacute;ndice del grupo al que pertenece este mosaico (predeterminado 1)</td></tr>
-<tr><td><code>lLarge</code></td><td>Logical</td><td>Si es .T., el mosaico abarca 2 columnas de ancho (doble ancho)</td></tr>
-<tr><td><code>cCaption</code></td><td>Character</td><td>T&iacute;tulo principal mostrado en el mosaico</td></tr>
-<tr><td><code>cText</code></td><td>Character</td><td>Texto secundario mostrado debajo del t&iacute;tulo</td></tr>
-<tr><td><code>nCapAlign</code></td><td>Numeric</td><td>Alineaci&oacute;n del texto del t&iacute;tulo (predeterminado DT_TOP + DT_RIGHT)</td></tr>
-<tr><td><code>nBmpAlign</code></td><td>Numeric</td><td>Alineaci&oacute;n del mapa de bits (predeterminado DT_BOTTOM + DT_LEFT)</td></tr>
-<tr><td><code>nClrCaption</code></td><td>Numeric</td><td>Color del texto del t&iacute;tulo</td></tr>
-<tr><td><code>bOnMove</code></td><td>Block</td><td>Bloque de c&oacute;digo ejecutado cuando se mueve el mosaico</td></tr>
+<tr><td><code>nGroup</code></td><td>Numeric</td><td>Group index to which this tile belongs (default 1)</td></tr>
+<tr><td><code>lLarge</code></td><td>Logical</td><td>If .T., tile spans 2 column widths (double-wide)</td></tr>
+<tr><td><code>cCaption</code></td><td>Character</td><td>Main caption displayed on the tile</td></tr>
+<tr><td><code>cText</code></td><td>Character</td><td>Secondary text displayed below the caption</td></tr>
+<tr><td><code>nCapAlign</code></td><td>Numeric</td><td>Caption text alignment (default DT_TOP + DT_RIGHT)</td></tr>
+<tr><td><code>nBmpAlign</code></td><td>Numeric</td><td>Bitmap alignment (default DT_BOTTOM + DT_LEFT)</td></tr>
+<tr><td><code>nClrCaption</code></td><td>Numeric</td><td>Caption text color</td></tr>
+<tr><td><code>bOnMove</code></td><td>Block</td><td>Code block executed when tile is moved</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, cTitle, nClrText, nClrPane, bLClicked, nBtnSize, nClrThumb, nClrScroll )</code></td><td>Crear un nuevo panel Metro</td></tr>
-<tr><td><code>AddButton( lLarge, nGroup, cCaption, bAction, nClrText, nClrPane, cImgName, oFont, nAlign, nBmpAlign, nBmpW, nBmpH, cText, nTextAlign, oTextFont, oSubMetro, cBackImage, cAction, cSub )</code></td><td>Agregar un mosaico TMetroBtn al panel. Devuelve el objeto bot&oacute;n.</td></tr>
-<tr><td><code>Arrange( lReArrange )</code></td><td>Posicionar todos los mosaicos en filas y grupos. Establezca lReArrange=.T. para forzar reorganizaci&oacute;n.</td></tr>
-<tr><td><code>Slide( nPixels )</code></td><td>Desplazar el panel horizontalmente nPixels. Valores negativos desplazan a la derecha.</td></tr>
-<tr><td><code>SwitchTo( oNext )</code></td><td>Animaci&oacute;n de cambio a un panel Metro diferente</td></tr>
-<tr><td><code>MoveBtn( oBtnDrag, oBtnOver )</code></td><td>Mover un mosaico de una posici&oacute;n a otra dentro del panel</td></tr>
-<tr><td><code>ProgramCode( lShow )</code></td><td>Generar c&oacute;digo fuente para el dise&ntilde;o actual del panel</td></tr>
-<tr><td><code>MouseWheel( nKey, nDelta, nXPos, nYPos )</code></td><td>Manejar el desplazamiento con la rueda del rat&oacute;n</td></tr>
+<tr><td><code>New( oWnd, cTitle, nClrText, nClrPane, bLClicked, nBtnSize, nClrThumb, nClrScroll )</code></td><td>Create a new Metro panel</td></tr>
+<tr><td><code>AddButton( lLarge, nGroup, cCaption, bAction, nClrText, nClrPane, cImgName, oFont, nAlign, nBmpAlign, nBmpW, nBmpH, cText, nTextAlign, oTextFont, oSubMetro, cBackImage, cAction, cSub )</code></td><td>Add a TMetroBtn tile to the panel. Returns the button object.</td></tr>
+<tr><td><code>Arrange( lReArrange )</code></td><td>Position all tiles into rows and groups. Set lReArrange=.T. to force re-layout.</td></tr>
+<tr><td><code>Slide( nPixels )</code></td><td>Slide the panel horizontally by nPixels. Negative values scroll right.</td></tr>
+<tr><td><code>SwitchTo( oNext )</code></td><td>Animate switch to a different Metro panel</td></tr>
+<tr><td><code>MoveBtn( oBtnDrag, oBtnOver )</code></td><td>Move a tile from one position to another within the panel</td></tr>
+<tr><td><code>ProgramCode( lShow )</code></td><td>Generate source code for the current panel design</td></tr>
+<tr><td><code>MouseWheel( nKey, nDelta, nXPos, nYPos )</code></td><td>Handle mouse wheel scrolling</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Panel Metro con Dos Grupos</h2>
+<h2 id="example">Example: Metro Panel with Two Groups</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -93,14 +97,14 @@ function Main()
       COLOR CLR_WHITE, RGB( 30, 30, 120 ) ;
       ON CLICK oWnd:End()
 
-   // Grupo 1: Mosaicos de comunicaci&oacute;n
+   // Group 1: Communication tiles
    oMetro:AddButton( .T., 1, "Email", { || MsgInfo( "Email" ) }, ;
                      CLR_WHITE, RGB( 0, 120, 200 ),, , , , 64, 64 )
 
    oMetro:AddButton( .F., 1, "Calendar", { || MsgInfo( "Calendar" ) }, ;
                      CLR_WHITE, RGB( 200, 50, 50 ) )
 
-   // Grupo 2: Mosaicos de productividad
+   // Group 2: Productivity tiles
    oMetro:AddButton( .T., 2, "Documents", { || MsgInfo( "Docs" ) }, ;
                      CLR_WHITE, RGB( 50, 150, 50 ),, , , , 64, 64 )
 
@@ -111,19 +115,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TMetroPanel requiere el comando <code>DEFINE METROPANEL</code> y usa fuentes "Segoe UI Light" para la est&eacute;tica Metro.</li>
-<li>Los mosaicos se organizan en grupos separados por un espacio de 32 p&iacute;xeles. Cada grupo distribuye los mosaicos en filas seg&uacute;n <code>nMetroRows</code> (calculado desde la altura de la pantalla).</li>
-<li>Los mosaicos grandes (<code>lLarge := .T.</code>) abarcan dos posiciones de columna, permitiendo una mezcla de mosaicos grandes y peque&ntilde;os en el mismo grupo.</li>
-<li>El desplazamiento horizontal se maneja mediante una barra de desplazamiento personalizada en la parte inferior. Se admiten arrastrar para desplazar y la rueda del rat&oacute;n.</li>
-<li>Use <code>lDesignMode := .T.</code> para habilitar funciones de tiempo de dise&ntilde;o como reposicionamiento de mosaicos mediante <code>MoveBtn()</code>.</li>
-<li>TMetroBtn hereda de TBtnBmp y admite carga de im&aacute;genes desde archivo o recurso, con alineaci&oacute;n y tama&ntilde;o de mapa de bits configurables.</li>
+<li>TMetroPanel requires the <code>DEFINE METROPANEL</code> command and uses "Segoe UI Light" fonts for the Metro aesthetic.</li>
+<li>Tiles are arranged into groups separated by a 32-pixel gap. Each group flows tiles into rows based on <code>nMetroRows</code> (calculated from screen height).</li>
+<li>Large tiles (<code>lLarge := .T.</code>) span two column positions, allowing a mix of large and small tiles in the same group.</li>
+<li>Horizontal scrolling is handled by a custom-drawn scrollbar at the bottom. Drag-to-scroll and mouse-wheel are supported.</li>
+<li>Use <code>lDesignMode := .T.</code> to enable design-time features such as tile repositioning via <code>MoveBtn()</code>.</li>
+<li>TMetroBtn inherits from TBtnBmp and supports image loading from file or resource, with configurable bitmap alignment and sizing.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tmetro.html">&larr; tmetro</a> | <a href="../../es/ui/tmnucmp.html">tmnucmp &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

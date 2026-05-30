@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TDBase (SQL Metadata) - FWH Docs</title>
+<title>TDBase (SQL Metadata) - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,40 +13,39 @@
 
 <h1>TDBase</h1>
 <p class="class-source">Fuente: <code>source/classes/tdbase.prg</code></p>
-<p class="class-hierarchy">Clase independiente</p>
+<p class="class-hierarchy">Standalone class</p>
 
 <p>
-TDBase representa los metadatos de una base de datos SQL, almacenando el nombre de la
-base de datos y hasta ocho definiciones de relaciones con sus correspondientes cláusulas
-INTO. Es utilizada por el motor de consultas e informes SQL para resolver las relaciones
-entre tablas en sentencias SELECT.
+TDBase represents SQL database metadata, storing the database name and up to eight
+relation definitions with their corresponding INTO clauses. It is used by the SQL
+query and reporting engine to resolve table relationships in SELECT statements.
 </p>
 
-<h2 id="data">Miembros DATA Clave</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cDatabase</code></td><td>Carácter</td><td>Nombre de la base de datos SQL</td></tr>
-<tr><td><code>aRelations</code></td><td>Array</td><td>Array de definiciones de relaciones (hasta 8)</td></tr>
-<tr><td><code>aIntos</code></td><td>Array</td><td>Array de definiciones de cláusulas INTO (hasta 8)</td></tr>
+<tr><td><code>cDatabase</code></td><td>Character</td><td>Name of the SQL database</td></tr>
+<tr><td><code>aRelations</code></td><td>Array</td><td>Array of relation definitions (up to 8)</td></tr>
+<tr><td><code>aIntos</code></td><td>Array</td><td>Array of INTO clause definitions (up to 8)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cDb, cRel01, cRel02, cRel03, cRel04, cRel05, cRel06, cRel07, cRel08, cInto01, cInto02, cInto03, cInto04, cInto05, cInto06, cInto07, cInto08 )</code></td><td>Crea un nuevo objeto de metadatos de base de datos con hasta 8 pares relación/INTO</td></tr>
+<tr><td><code>New( cDb, cRel01, cRel02, cRel03, cRel04, cRel05, cRel06, cRel07, cRel08, cInto01, cInto02, cInto03, cInto04, cInto05, cInto06, cInto07, cInto08 )</code></td><td>Create a new database metadata object with up to 8 relation/INTO pairs</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Definir Relaciones de Base de Datos</h2>
+<h2 id="example">Example: Define Database Relations</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -54,7 +53,7 @@ function Main()
 
    local oDb
 
-   // Define una base de datos "sales" con dos relaciones
+   // Define a "sales" database with two relations
    oDb := TDBase():New( "sales", ;
       "CUSTOMER.ID = ORDERS.CUSTID", "ORDERS.ID = ITEMS.ORDERID", , , , , , , ;
       "CUSTOMERS", "ORDER_ITEMS" )
@@ -67,17 +66,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TDBase es un contenedor ligero de metadatos utilizado principalmente para configurar el generador de consultas SQL con las relaciones entre tablas.</li>
-<li>Se pueden definir hasta ocho pares relación/INTO. Las posiciones no utilizadas deben dejarse vacías (omitidas).</li>
-<li>El array <code>aRelations</code> almacena cadenas de condiciones JOIN (p. ej., "TABLE1.COL = TABLE2.COL"), mientras que <code>aIntos</code> almacena los alias o nombres de las tablas de destino.</li>
-<li>Esta clase suele utilizarse internamente por el motor de informes en lugar de directamente en el código de la aplicación.</li>
+<li>TDBase is a lightweight metadata container primarily used to configure the SQL query generator with table relationships.</li>
+<li>Up to eight relation/INTO pairs can be defined. Unused positions should be left empty (skipped).</li>
+<li>The <code>aRelations</code> array stores JOIN condition strings (e.g., "TABLE1.COL = TABLE2.COL"), while <code>aIntos</code> stores the alias or target table names.</li>
+<li>This class is typically used internally by the reporting engine rather than directly in application code.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/data/tdatabase.html">&larr; tdatabase</a> | <a href="../../es/data/tdatabasecomp.html">tdatabasecomp &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

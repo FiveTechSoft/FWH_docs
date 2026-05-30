@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TToast - Documentaci&oacute;n FWH</title>
+<title>TToast - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,59 +13,59 @@
 
 <h1>TToast</h1>
 <p class="class-source">Fuente: <code>source/classes/ttoast.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TWindow</code></p>
+<p class="class-hierarchy">Inherits from: <code>TWindow</code></p>
 
 <p>
-TToast proporciona notificaciones de tipo toast al estilo de Windows 8/10.
-Las notificaciones aparecen como ventanas superpuestas que se auto-posicionan en la esquina de la pantalla,
-se descartan autom&aacute;ticamente despu&eacute;s de un tiempo configurable, y soportan texto de cabecera, cuerpo y pie
-junto con im&aacute;genes de mapa de bits opcionales. El control usa mezcla alfa para efectos suaves
-de transparencia y sombras.
+TToast provides desktop toast notifications in the Windows 8/10 style.
+Notifications appear as layered windows that auto-position at the screen corner,
+auto-dismiss after a configurable timeout, and support header, body, footer text
+along with optional bitmap images. The control uses alpha blending for smooth
+transparency effects and drop shadows.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cHeader</code></td><td>Car&aacute;cter</td><td></td><td>Texto de cabecera (negrita, secci&oacute;n superior)</td></tr>
-<tr><td><code>cBody</code></td><td>Car&aacute;cter</td><td></td><td>Texto del cuerpo/mensaje principal</td></tr>
-<tr><td><code>cFoot</code></td><td>Car&aacute;cter</td><td></td><td>Texto de pie</td></tr>
-<tr><td><code>cBmpLeft</code></td><td>Car&aacute;cter</td><td><code>""</code></td><td>Ruta a la imagen de mapa de bits del lado izquierdo</td></tr>
-<tr><td><code>nClrPane</code></td><td>Num&eacute;rico</td><td><code>RGB(20,20,20)</code></td><td>Color de fondo (oscuro en Win8+)</td></tr>
-<tr><td><code>nClrPane2</code></td><td>Num&eacute;rico</td><td></td><td>Color de fondo secundario (gradiente)</td></tr>
-<tr><td><code>nLevel</code></td><td>Num&eacute;rico</td><td><code>255</code></td><td>Nivel de opacidad (0-255, 255=opaco)</td></tr>
-<tr><td><code>nTimer</code></td><td>Num&eacute;rico</td><td><code>5000</code></td><td>Tiempo de auto-descarte en milisegundos</td></tr>
-<tr><td><code>lAlert</code></td><td>L&oacute;gico</td><td><code>.T.</code></td><td>Habilitar comportamiento de alerta (auto-mostrar y descartar)</td></tr>
-<tr><td><code>lUpPos</code></td><td>L&oacute;gico</td><td><code>.F.</code></td><td>Mostrar en la parte superior de la pantalla en lugar de la inferior</td></tr>
-<tr><td><code>lLeftPos</code></td><td>L&oacute;gico</td><td><code>.F.</code></td><td>Mostrar en el lado izquierdo en lugar del derecho</td></tr>
-<tr><td><code>bReturn</code></td><td>Block</td><td><code>{ &#124;&#124; .T. }</code></td><td>Bloque de c&oacute;digo ejecutado cuando se cierra la notificaci&oacute;n</td></tr>
-<tr><td><code>lBtnClose</code></td><td>L&oacute;gico</td><td><code>.T.</code></td><td>Mostrar bot&oacute;n de cerrar</td></tr>
-<tr><td><code>lShadow</code></td><td>L&oacute;gico</td><td><code>.T.</code></td><td>Mostrar sombra</td></tr>
+<tr><td><code>cHeader</code></td><td>Character</td><td></td><td>Header text (bold, top section)</td></tr>
+<tr><td><code>cBody</code></td><td>Character</td><td></td><td>Body/main message text</td></tr>
+<tr><td><code>cFoot</code></td><td>Character</td><td></td><td>Footer text</td></tr>
+<tr><td><code>cBmpLeft</code></td><td>Character</td><td><code>""</code></td><td>Path to left-side bitmap image</td></tr>
+<tr><td><code>nClrPane</code></td><td>Numeric</td><td><code>RGB(20,20,20)</code></td><td>Background color (dark on Win8+)</td></tr>
+<tr><td><code>nClrPane2</code></td><td>Numeric</td><td></td><td>Secondary background color (gradient)</td></tr>
+<tr><td><code>nLevel</code></td><td>Numeric</td><td><code>255</code></td><td>Opacity level (0-255, 255=opaque)</td></tr>
+<tr><td><code>nTimer</code></td><td>Numeric</td><td><code>5000</code></td><td>Auto-dismiss timeout in milliseconds</td></tr>
+<tr><td><code>lAlert</code></td><td>Logical</td><td><code>.T.</code></td><td>Enable alert behavior (auto-show and dismiss)</td></tr>
+<tr><td><code>lUpPos</code></td><td>Logical</td><td><code>.F.</code></td><td>Show at top of screen instead of bottom</td></tr>
+<tr><td><code>lLeftPos</code></td><td>Logical</td><td><code>.F.</code></td><td>Show at left side instead of right</td></tr>
+<tr><td><code>bReturn</code></td><td>Block</td><td><code>{ &#124;&#124; .T. }</code></td><td>Codeblock executed when notification is closed</td></tr>
+<tr><td><code>lBtnClose</code></td><td>Logical</td><td><code>.T.</code></td><td>Show close button</td></tr>
+<tr><td><code>lShadow</code></td><td>Logical</td><td><code>.T.</code></td><td>Show drop shadow</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>NewToast( nType, cText, cBmp, nWidth, nHeight, oWnd, nClrPane, nClrPane2, nClrText, nLev, nTime, lUp, bRet, lLeftP, lAlert, lShadow, nOffY, nOffX, nFont )</code></td><td>Crear y mostrar una notificaci&oacute;n toast. Este es el punto de entrada principal.</td></tr>
-<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, lDisenio, nClrPane, nClrPane2, nClrText, nWRadio, nHRadio, nLev, lShadow, lAlert, nTime, lUp, cFace, nFont, bRet, lLeftP, l2007 )</code></td><td>Constructor est&aacute;ndar de TWindow para creaci&oacute;n personalizada de toasts</td></tr>
-<tr><td><code>ActivaAlert()</code></td><td>Mostrar la notificaci&oacute;n toast en pantalla. Llamado autom&aacute;ticamente por NewToast.</td></tr>
-<tr><td><code>Default( lShowDlg )</code></td><td>Aplicar dise&ntilde;o y posicionamiento predeterminados. Calcula &aacute;reas de control y posiciona la ventana.</td></tr>
-<tr><td><code>BuildTimer( lEnd )</code></td><td>Iniciar o detener el temporizador de auto-descarte</td></tr>
-<tr><td><code>Destroy()</code></td><td>Destruir la ventana toast y liberar recursos</td></tr>
-<tr><td><code>Paint()</code></td><td>Renderizar el fondo, secciones de texto e im&aacute;genes del toast</td></tr>
-<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Redimensionar la ventana toast</td></tr>
+<tr><td><code>NewToast( nType, cText, cBmp, nWidth, nHeight, oWnd, nClrPane, nClrPane2, nClrText, nLev, nTime, lUp, bRet, lLeftP, lAlert, lShadow, nOffY, nOffX, nFont )</code></td><td>Create and display a toast notification. This is the primary entry point.</td></tr>
+<tr><td><code>New( nTop, nLeft, nWidth, nHeight, oWnd, lDisenio, nClrPane, nClrPane2, nClrText, nWRadio, nHRadio, nLev, lShadow, lAlert, nTime, lUp, cFace, nFont, bRet, lLeftP, l2007 )</code></td><td>Standard TWindow constructor for custom toast creation</td></tr>
+<tr><td><code>ActivaAlert()</code></td><td>Show the toast notification on screen. Called automatically by NewToast.</td></tr>
+<tr><td><code>Default( lShowDlg )</code></td><td>Apply default layout and positioning. Calculates control areas and positions the window.</td></tr>
+<tr><td><code>BuildTimer( lEnd )</code></td><td>Start or stop the auto-dismiss timer</td></tr>
+<tr><td><code>Destroy()</code></td><td>Destroy the toast window and release resources</td></tr>
+<tr><td><code>Paint()</code></td><td>Render the toast background, text sections, and images</td></tr>
+<tr><td><code>SetSize( nWidth, nHeight )</code></td><td>Resize the toast window</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Notificaci&oacute;n Toast</h2>
+<h2 id="example">Example: Toast Notification</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -97,19 +97,19 @@ function ShowToast()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TToast usa el m&eacute;todo est&aacute;tico <code>NewToast()</code> como su API principal. Crea, posiciona y muestra la ventana de notificaci&oacute;n en una sola llamada.</li>
-<li>El formato de texto usa <code>##</code> como separador: la primera parte se convierte en la cabecera, la segunda parte en el cuerpo y la tercera parte (opcional) en el texto de pie.</li>
-<li>En Windows 8 y posteriores, el estilo predeterminado es oscuro con la fuente Segoe MDL2 Assets. En sistemas antiguos, usa un tema claro con Tahoma.</li>
-<li>La opacidad se controla mediante <code>nLevel</code> (0-255). La ventana usa <code>WS_EX_LAYERED</code> y <code>LWA_ALPHA</code> para la mezcla alfa.</li>
-<li>Los toasts se apilan autom&aacute;ticamente: cada nuevo toast se posiciona encima del anterior. El array <code>aTToast</code> a nivel de clase rastrea todas las notificaciones activas.</li>
-<li>Al hacer clic en el toast se invoca <code>bReturn</code>. El bot&oacute;n de cerrar (si est&aacute; habilitado) descarta la notificaci&oacute;n inmediatamente.</li>
+<li>TToast uses the <code>NewToast()</code> static-like method as its primary API. It creates, positions, and shows the notification window in one call.</li>
+<li>The text format uses <code>##</code> as a separator: the first part becomes the header, the second part the body, and the third (optional) part the footer text.</li>
+<li>On Windows 8 and later, the default style is dark with Segoe MDL2 Assets font. On older systems, it falls back to a light theme with Tahoma.</li>
+<li>Opacity is controlled via <code>nLevel</code> (0-255). The window uses <code>WS_EX_LAYERED</code> and <code>LWA_ALPHA</code> for alpha blending.</li>
+<li>Toasts stack automatically: each new toast positions itself above the previous one. The class-level <code>aTToast</code> array tracks all active notifications.</li>
+<li>Clicking the toast invokes <code>bReturn</code>. The close button (if enabled) dismisses the notification immediately.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/ttmpicker.html">&larr; ttmpicker</a> | <a href="../../es/ui/ttoolbar.html">ttoolbar &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

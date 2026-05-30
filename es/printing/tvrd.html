@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VRD - Documentaci&oacute;n FWH</title>
+<title>VRD - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,77 +11,77 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>VRD - Motor de Dise&ntilde;o Visual de Informes</h1>
+<h1>VRD - Visual Report Designer Engine</h1>
 <p class="class-source">Fuente: <code>source/classes/vrd.prg</code></p>
-<p class="class-hierarchy">Clase independiente (motor de informes)</p>
+<p class="class-hierarchy">Standalone class (report engine)</p>
 
 <p>
-VRD es el motor en tiempo de ejecuci&oacute;n para el Dise&ntilde;ador Visual de Informes. Carga y procesa definiciones
-de informes almacenadas en archivos <code>.rpt</code> (formato INI), gestiona &aacute;reas de datos, procesa consultas
-de bases de datos y dirige la impresi&oacute;n o previsualizaci&oacute;n de informes complejos. No es un dise&ntilde;ador
-visual en s&iacute; mismo, sino el motor de ejecuci&oacute;n que lee la salida del dise&ntilde;ador.
+VRD is the runtime engine for the Visual Report Designer. It loads and processes report
+definitions stored in <code>.rpt</code> (INI-format) files, manages data areas, processes database
+queries, and drives the printing or previewing of complex reports. It is not a visual
+designer itself but the execution engine that reads the output of the designer.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cTitle</code></td><td>Car&aacute;cter</td><td>T&iacute;tulo del informe</td></tr>
-<tr><td><code>cReportName</code></td><td>Car&aacute;cter</td><td>Nombre del archivo de definici&oacute;n del informe (.rpt)</td></tr>
-<tr><td><code>cDefIni</code></td><td>Car&aacute;cter</td><td>Ruta del archivo INI principal para la definici&oacute;n del informe</td></tr>
-<tr><td><code>aAreaInis</code></td><td>Array</td><td>Array de definiciones de archivos INI de &aacute;rea</td></tr>
-<tr><td><code>aFonts</code></td><td>Array</td><td>Todas las fuentes con propiedades</td></tr>
-<tr><td><code>aColors</code></td><td>Array</td><td>Todas las definiciones de color</td></tr>
-<tr><td><code>aDBAlias</code></td><td>Array</td><td>Array de alias de bases de datos utilizados por las &aacute;reas</td></tr>
-<tr><td><code>aDBContent</code></td><td>Array</td><td>Array de registros de contenido de bases de datos</td></tr>
-<tr><td><code>aAreaSource</code></td><td>Array</td><td>Definiciones de origen de &aacute;rea (superior, ancho, alto, etc.)</td></tr>
-<tr><td><code>nTopMargin</code></td><td>Num&eacute;rico</td><td>Margen superior del papel en mm</td></tr>
-<tr><td><code>nLeftMargin</code></td><td>Num&eacute;rico</td><td>Margen izquierdo del papel en mm</td></tr>
-<tr><td><code>nPageBreak</code></td><td>Num&eacute;rico</td><td>Posici&oacute;n de salto de p&aacute;gina</td></tr>
-<tr><td><code>nOrientation</code></td><td>Num&eacute;rico</td><td>1 = Vertical, 2 = Apaisado</td></tr>
-<tr><td><code>oPrn</code></td><td>TPrinter</td><td>Objeto dispositivo de impresi&oacute;n</td></tr>
-<tr><td><code>lPreview</code></td><td>L&oacute;gico</td><td>Indicador de modo de previsualizaci&oacute;n</td></tr>
-<tr><td><code>lShowInfo</code></td><td>L&oacute;gico</td><td>Mostrar mensaje informativo durante el procesamiento</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Report title</td></tr>
+<tr><td><code>cReportName</code></td><td>Character</td><td>Report definition file name (.rpt)</td></tr>
+<tr><td><code>cDefIni</code></td><td>Character</td><td>Main INI file path for report definition</td></tr>
+<tr><td><code>aAreaInis</code></td><td>Array</td><td>Array of area INI file definitions</td></tr>
+<tr><td><code>aFonts</code></td><td>Array</td><td>All fonts with properties</td></tr>
+<tr><td><code>aColors</code></td><td>Array</td><td>All color definitions</td></tr>
+<tr><td><code>aDBAlias</code></td><td>Array</td><td>Array of database aliases used by areas</td></tr>
+<tr><td><code>aDBContent</code></td><td>Array</td><td>Array of database content records</td></tr>
+<tr><td><code>aAreaSource</code></td><td>Array</td><td>Area source definitions (top, width, height, etc.)</td></tr>
+<tr><td><code>nTopMargin</code></td><td>Numeric</td><td>Top paper margin in mm</td></tr>
+<tr><td><code>nLeftMargin</code></td><td>Numeric</td><td>Left paper margin in mm</td></tr>
+<tr><td><code>nPageBreak</code></td><td>Numeric</td><td>Page break position</td></tr>
+<tr><td><code>nOrientation</code></td><td>Numeric</td><td>1 = Portrait, 2 = Landscape</td></tr>
+<tr><td><code>oPrn</code></td><td>TPrinter</td><td>Printer device object</td></tr>
+<tr><td><code>lPreview</code></td><td>Logical</td><td>Preview mode flag</td></tr>
+<tr><td><code>lShowInfo</code></td><td>Logical</td><td>Show info message during processing</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cReportName, lPreview, cPrinter, oWnd, lModal, lPrintIDs, lNoPrint, lNoExpr, cAreaPath, lPrintDialog, nCopies, lCheck, oPrint, aSize, cTitle, cPreviewDir, lAutoBreak, lShowInfo )</code></td><td>Crear motor VRD y cargar definici&oacute;n del informe</td></tr>
-<tr><td><code>End( lPrintArea )</code></td><td>Cerrar informe, liberar recursos, imprimir opcionalmente</td></tr>
-<tr><td><code>AreaStart( nArea, lPrintArea, aIDs, aStrings, lPageBreak )</code></td><td>Iniciar procesamiento de un &aacute;rea del informe</td></tr>
-<tr><td><code>AreaStart2( nArea, lPrintArea, aIDs, aStrings, lPageBreak )</code></td><td>Inicio alternativo de &aacute;rea con par&aacute;metros extendidos</td></tr>
-<tr><td><code>PrintArea( nArea, nAddtoTop, lPageBreak )</code></td><td>Imprimir todos los elementos en un &aacute;rea del informe</td></tr>
-<tr><td><code>PrintRest( nArea, nAddtoTop, lPageBreak )</code></td><td>Imprimir espacio restante en un &aacute;rea despu&eacute;s de elementos</td></tr>
-<tr><td><code>PrintItem( nArea, nItemID, cValue, nAddToTop, lMemo, nEntry )</code></td><td>Imprimir un elemento espec&iacute;fico en un &aacute;rea</td></tr>
-<tr><td><code>PrintItemList( nArea, aIDs, aStrings, nAddToTop )</code></td><td>Imprimir una lista de elementos por ID</td></tr>
-<tr><td><code>GetItem( nArea, nItemID )</code></td><td>Obtener datos de definici&oacute;n de elemento desde el INI del &aacute;rea</td></tr>
-<tr><td><code>DrawBox( nTop, nLeft, nBottom, nRight )</code></td><td>Dibujar un rect&aacute;ngulo en el informe</td></tr>
-<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad )</code></td><td>Imprimir texto en la posici&oacute;n especificada</td></tr>
-<tr><td><code>SayMemo( nTop, nLeft, nWidth, nHeight, cText, oFont, nColor, nPad, lVariHeight )</code></td><td>Imprimir texto memo con ajuste de l&iacute;nea</td></tr>
-<tr><td><code>OpenDatabases()</code></td><td>Abrir todas las bases de datos referenciadas por las &aacute;reas del informe</td></tr>
-<tr><td><code>CloseDatabases()</code></td><td>Cerrar todas las bases de datos abiertas</td></tr>
-<tr><td><code>GetDBContent( cDatabase, cDBAlias, cDBType, cSeparator, nIndex )</code></td><td>Recuperar contenido de base de datos para un &aacute;rea</td></tr>
-<tr><td><code>DBSum( cDatabase, cField, nLen, nDec, cFor, lPrevious, lCount )</code></td><td>Calcular suma de un campo de base de datos</td></tr>
-<tr><td><code>DBCount( cDatabase, cFor )</code></td><td>Contar registros que coinciden con una condici&oacute;n</td></tr>
-<tr><td><code>SetExpression( cName, cExpression, cInfo )</code></td><td>Definir una expresi&oacute;n nombrada para usar en elementos</td></tr>
-<tr><td><code>GetExpression( cName )</code></td><td>Recuperar el valor de una expresi&oacute;n nombrada</td></tr>
-<tr><td><code>EvalExpression( cText )</code></td><td>Evaluar una expresi&oacute;n Harbour en el contexto del informe</td></tr>
-<tr><td><code>PageBreak( lPrintArea )</code></td><td>Insertar un salto de p&aacute;gina</td></tr>
-<tr><td><code>PrintDialog()</code></td><td>Mostrar di&aacute;logo de configuraci&oacute;n de impresi&oacute;n con impresora, copias, rango</td></tr>
-<tr><td><code>SetPaperSize( aSize )</code></td><td>Establecer dimensiones de papel personalizadas</td></tr>
+<tr><td><code>New( cReportName, lPreview, cPrinter, oWnd, lModal, lPrintIDs, lNoPrint, lNoExpr, cAreaPath, lPrintDialog, nCopies, lCheck, oPrint, aSize, cTitle, cPreviewDir, lAutoBreak, lShowInfo )</code></td><td>Create VRD engine and load report definition</td></tr>
+<tr><td><code>End( lPrintArea )</code></td><td>Close report, release resources, optionally print</td></tr>
+<tr><td><code>AreaStart( nArea, lPrintArea, aIDs, aStrings, lPageBreak )</code></td><td>Start processing a report area</td></tr>
+<tr><td><code>AreaStart2( nArea, lPrintArea, aIDs, aStrings, lPageBreak )</code></td><td>Alternate area start with extended parameters</td></tr>
+<tr><td><code>PrintArea( nArea, nAddtoTop, lPageBreak )</code></td><td>Print all items in a report area</td></tr>
+<tr><td><code>PrintRest( nArea, nAddtoTop, lPageBreak )</code></td><td>Print remaining space in an area after items</td></tr>
+<tr><td><code>PrintItem( nArea, nItemID, cValue, nAddToTop, lMemo, nEntry )</code></td><td>Print a specific item in an area</td></tr>
+<tr><td><code>PrintItemList( nArea, aIDs, aStrings, nAddToTop )</code></td><td>Print a list of items by ID</td></tr>
+<tr><td><code>GetItem( nArea, nItemID )</code></td><td>Get item definition data from area INI</td></tr>
+<tr><td><code>DrawBox( nTop, nLeft, nBottom, nRight )</code></td><td>Draw a rectangle box on the report</td></tr>
+<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad )</code></td><td>Print text at specified position</td></tr>
+<tr><td><code>SayMemo( nTop, nLeft, nWidth, nHeight, cText, oFont, nColor, nPad, lVariHeight )</code></td><td>Print memo text with word wrap</td></tr>
+<tr><td><code>OpenDatabases()</code></td><td>Open all databases referenced by report areas</td></tr>
+<tr><td><code>CloseDatabases()</code></td><td>Close all opened databases</td></tr>
+<tr><td><code>GetDBContent( cDatabase, cDBAlias, cDBType, cSeparator, nIndex )</code></td><td>Retrieve database content for an area</td></tr>
+<tr><td><code>DBSum( cDatabase, cField, nLen, nDec, cFor, lPrevious, lCount )</code></td><td>Compute sum of a database field</td></tr>
+<tr><td><code>DBCount( cDatabase, cFor )</code></td><td>Count records matching a condition</td></tr>
+<tr><td><code>SetExpression( cName, cExpression, cInfo )</code></td><td>Define a named expression for use in items</td></tr>
+<tr><td><code>GetExpression( cName )</code></td><td>Retrieve a named expression value</td></tr>
+<tr><td><code>EvalExpression( cText )</code></td><td>Evaluate a Harbour expression in report context</td></tr>
+<tr><td><code>PageBreak( lPrintArea )</code></td><td>Insert a page break</td></tr>
+<tr><td><code>PrintDialog()</code></td><td>Show print setup dialog with printer, copies, range</td></tr>
+<tr><td><code>SetPaperSize( aSize )</code></td><td>Set custom paper dimensions</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Cargar y Previsualizar un Informe</h2>
+<h2 id="example">Example: Load and Preview a Report</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -98,17 +98,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>VRD lee definiciones de informes desde archivos <code>.rpt</code> en formato INI creados por la aplicaci&oacute;n Dise&ntilde;ador Visual de Informes. Estos archivos definen &aacute;reas, elementos, fuentes, colores, conexiones de bases de datos y expresiones.</li>
-<li>Las &aacute;reas del informe son secciones l&oacute;gicas (ej., encabezado de p&aacute;gina, detalle, pie de p&aacute;gina). Cada &aacute;rea tiene su propio conjunto de elementos (texto, campos, l&iacute;neas, cuadros) posicionados en coordenadas de dise&ntilde;o.</li>
-<li>El motor admite expresiones calculadas, res&uacute;menes de bases de datos, impresi&oacute;n condicional y gesti&oacute;n de saltos de p&aacute;gina.</li>
-<li>Se pueden abrir m&uacute;ltiples bases de datos simult&aacute;neamente mediante <code>aDBAlias</code>, admitiendo estructuras de informe maestro-detalle.</li>
+<li>VRD reads report definitions from INI-format <code>.rpt</code> files created by the Visual Report Designer application. These files define areas, items, fonts, colors, database connections, and expressions.</li>
+<li>Report areas are logical sections (e.g., page header, detail, page footer). Each area has its own set of items (text, fields, lines, boxes) positioned at design-time coordinates.</li>
+<li>The engine supports calculated expressions, database summaries, conditional printing, and page break management.</li>
+<li>Multiple databases can be opened simultaneously via <code>aDBAlias</code>, supporting master-detail report structures.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/reference/tvistamenu.html">&larr; tvistamenu</a> | <a href="../../es/ui/twbrowse.html">twbrowse &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

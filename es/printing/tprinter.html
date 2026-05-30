@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TPrinter - FWH Docs</title>
+<title>TPrinter - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -15,17 +15,17 @@
 <p class="class-source">Fuente: <code>source/classes/printer.prg</code></p>
 
 <p>
-TPrinter es la clase de contexto de dispositivo de impresora de FiveWin. Envuelve la API de impresión GDI de Windows,
-proporcionando métodos para salida de texto, líneas, cajas, bitmaps, códigos de barras, gráficos y más. TPrinter
-soporta múltiples sistemas de coordenadas (píxeles, centímetros, milímetros, pulgadas), vista previa de impresión
-con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, HaruPDF, FWPDF).
+TPrinter is FiveWin's printer device context class. It wraps the Windows GDI printing API,
+providing methods for text output, lines, boxes, bitmaps, barcodes, charts, and more. TPrinter
+supports multiple coordinate systems (pixels, centimeters, millimeters, inches), print preview
+with metafile recording, and PDF output via multiple engines (I2PDF, HaruPDF, FWPDF).
 </p>
 
-<h2 id="data">Miembros DATA Clave</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Descripción</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>hDC</code></td><td>Numeric</td><td>Printer device context handle</td></tr>
@@ -47,11 +47,11 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h3>DATA de Clase (motores PDF)</h3>
+<h3>Class DATA (PDF engines)</h3>
 
 <table>
 <thead>
-<tr><th>CLASSDATA</th><th>Por Defecto</th><th>Descripción</th></tr>
+<tr><th>CLASSDATA</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>lUseI2PDF</code></td><td><code>.F.</code></td><td>Use I2PDF engine for PDF output</td></tr>
@@ -61,7 +61,7 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h2 id="paper-sizes">Tamaños de Papel (DMPAPER_*)</h2>
+<h2 id="paper-sizes">Paper Sizes (DMPAPER_*)</h2>
 
 <table>
 <thead>
@@ -84,11 +84,11 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h2 id="bins">Bandejas de Papel (DMBIN_*)</h2>
+<h2 id="bins">Paper Bins (DMBIN_*)</h2>
 
 <table>
 <thead>
-<tr><th>Constant</th><th>Value</th><th>Descripción</th></tr>
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>DMBIN_UPPER</code></td><td>1</td><td>Upper / Only One tray</td></tr>
@@ -101,7 +101,7 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h2 id="orientations">Orientaciones</h2>
+<h2 id="orientations">Orientations</h2>
 
 <table>
 <thead>
@@ -113,13 +113,13 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Clave</h2>
+<h2 id="methods">Key Methods</h2>
 
-<h3>Constructor y Ciclo de Vida</h3>
+<h3>Constructor &amp; Lifecycle</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>New( cDocument, lUser, lPreview, cModel, lModal, lSelection, cFile )</code></td><td>Create printer. lUser=show dialog, lPreview=preview mode</td></tr>
@@ -130,11 +130,11 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h3>Salida de Texto</h3>
+<h3>Text Output</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad, cUnits )</code></td><td>Print text at position (pixels)</td></tr>
@@ -146,11 +146,11 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h3>Gráficos</h3>
+<h3>Graphics</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>Line( nTop, nLeft, nBottom, nRight, oPen, cUnits )</code></td><td>Draw a line</td></tr>
@@ -164,11 +164,11 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h3>Imágenes</h3>
+<h3>Images</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>SayBitmap( nRow, nCol, xBitmap, nWidth, nHeight, nRaster, cUnits )</code></td><td>Print a bitmap</td></tr>
@@ -178,11 +178,11 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h3>Configuración de Página y Coordenadas</h3>
+<h3>Page &amp; Coordinate Setup</h3>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>SetPage( nPage )</code></td><td>Set paper size (DMPAPER_* constant)</td></tr>
@@ -198,7 +198,7 @@ con grabación de metarchivos y salida PDF mediante múltiples motores (I2PDF, H
 </tbody>
 </table>
 
-<h2 id="commands">Comandos de Impresión</h2>
+<h2 id="commands">Printing Commands</h2>
 
 <pre><code class="language-harbour">PRINT oPrn [ NAME cDocName ] [ PREVIEW ] [ FILE cFile ] [ TO cPrinter ]
 
@@ -210,7 +210,7 @@ ENDPAGE
 
 ENDPRINT</code></pre>
 
-<h2 id="example-simple">Ejemplo: Informe Simple</h2>
+<h2 id="example-simple">Example: Simple Report</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -263,7 +263,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-cm">Ejemplo: Coordenadas en Centímetros</h2>
+<h2 id="example-cm">Example: Centimeter Coordinates</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -296,7 +296,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-graphics">Ejemplo: Gráficos e Imágenes</h2>
+<h2 id="example-graphics">Example: Graphics and Images</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -338,7 +338,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-pdf">Ejemplo: Salida Directa a PDF</h2>
+<h2 id="example-pdf">Example: Direct PDF Output</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -364,11 +364,11 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="coordinate-systems">Métodos de Sistema de Coordenadas</h2>
+<h2 id="coordinate-systems">Coordinate System Methods</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descripción</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>Cmtr2Pix( @nRow, @nCol )</code></td><td>Convert centimeters to pixels (by reference)</td></tr>
@@ -380,8 +380,36 @@ return nil</code></pre>
 </tbody>
 </table>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<h2 id="pdf-delegation">PDF Delegation Architecture</h2>
+
+<p>
+TPrinter supports transparent PDF output through a call-log recording and replay
+mechanism. When one of the PDF-related class data flags (listed above) is enabled,
+every drawing command is captured as a call-log entry and replayed through the
+selected PDF backend at page completion. The application code does not change at
+all &mdash; the same <code>TPrinter:Say()</code>, <code>TPrinter:Line()</code>,
+and other drawing calls produce PDF output without any code modifications.
+</p>
+
+<p>
+The delegation architecture works as follows:
+</p>
+
+<ol>
+<li>The <code>aCallLog</code> array stores every drawing operation performed on the printer device context.</li>
+<li><code>AddLog()</code> records each individual call &mdash; <code>Say</code>, <code>Line</code>, <code>Box</code>, <code>Ellipse</code>, <code>PrintImage</code>, etc. &mdash; along with its parameters.</li>
+<li>When a PDF flag is active, <code>AddLog()</code> captures each call during the page and <code>EndPage()</code> replays the accumulated entries through the selected PDF backend.</li>
+<li>The same mechanism works for print preview: the metafile recording (<code>lMeta</code>) captures GDI calls for on-screen rendering, while the PDF flags capture the same logical operations for file output.</li>
+</ol>
+
+<p>
+This design ensures that any application using standard TPrinter drawing commands
+can produce PDF output simply by setting one class data flag at the start of the
+print job, with no changes to the drawing logic itself.
+</p>
+
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/printing/tpreview.html">&larr; tpreview</a> | <a href="../../es/reference/tprogress.html">tprogress &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

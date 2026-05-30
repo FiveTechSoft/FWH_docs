@@ -13,41 +13,41 @@
 
 <h1>TBrushEx</h1>
 <p class="class-source">Fonte: <code>source/classes/brushex.prg</code></p>
-<p class="class-hierarchy">Classe independente (sem herança)</p>
+<p class="class-hierarchy">Standalone class (no inheritance)</p>
 
 <p>
-TBrushEx cria objetos de pincel GDI estendidos com padrões de gradiente. Ao contrário de um
-pincel padrão de cor sólida, TBrushEx gera um bitmap preenchido com um gradiente suave entre duas
-(ou quatro) cores e, em seguida, cria um pincel de padrão a partir desse bitmap. Isso permite que
-janelas e controles sejam pintados com fundos em gradiente sem código manual de desenho de gradiente.
+TBrushEx creates extended GDI brush objects with gradient patterns. Unlike a standard solid-color
+brush, TBrushEx generates a bitmap filled with a smooth gradient between two (or four) colors,
+then creates a pattern brush from that bitmap. This allows windows and controls to be painted
+with gradient backgrounds without manual gradient drawing code.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hBrush</code></td><td>Numérico (Handle)</td><td>Handle do pincel GDI do Windows criado a partir do bitmap de gradiente</td></tr>
-<tr><td><code>hBitmap</code></td><td>Numérico (Handle)</td><td>Handle do bitmap de gradiente que sustenta o pincel</td></tr>
+<tr><td><code>hBrush</code></td><td>Numeric (Handle)</td><td>Windows GDI brush handle created from the gradient bitmap</td></tr>
+<tr><td><code>hBitmap</code></td><td>Numeric (Handle)</td><td>Handle to the gradient bitmap that backs the brush</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nWidth, nHeight, nColor, nColor2, lVGrad )</code></td><td>Cria um pincel de gradiente de duas cores. <code>lVGrad</code> é .T. para gradiente vertical, .F. (padrão) para horizontal.</td></tr>
-<tr><td><code>NewEx( nWidth, nHeight, nC1, nC2, nC3, nC4, lVGrad )</code></td><td>Cria um pincel de gradiente de quatro cores com duas cores de canto adicionais para padrões mais complexos.</td></tr>
-<tr><td><code>End()</code></td><td>Exclui tanto o pincel quanto o bitmap, liberando todos os recursos GDI.</td></tr>
+<tr><td><code>New( nWidth, nHeight, nColor, nColor2, lVGrad )</code></td><td>Create a two-color gradient brush. <code>lVGrad</code> is .T. for vertical gradient, .F. (default) for horizontal.</td></tr>
+<tr><td><code>NewEx( nWidth, nHeight, nC1, nC2, nC3, nC4, lVGrad )</code></td><td>Create a four-color gradient brush with two additional corner colors for more complex patterns.</td></tr>
+<tr><td><code>End()</code></td><td>Delete both the brush and the bitmap, releasing all GDI resources.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo</h2>
+<h2 id="example">Example</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -57,7 +57,7 @@ function Main()
 
    DEFINE WINDOW oWnd TITLE "TBrushEx Demo" SIZE 400, 300
 
-   // Cria um pincel de gradiente horizontal de vermelho para azul
+   // Create a horizontal red-to-blue gradient brush
    oBrush := TBrushEx():New( 400, 300, CLR_RED, CLR_BLUE, .F. )
 
    oWnd:SetBrush( oBrush )
@@ -69,17 +69,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>As dimensões do bitmap (<code>nWidth</code>, <code>nHeight</code>) devem corresponder ou exceder a área a ser preenchida para evitar artefatos de mosaico (tiling).</li>
-<li>Definir <code>lVGrad</code> como .T. cria um gradiente vertical (de cima para baixo); .F. cria horizontal (da esquerda para a direita).</li>
-<li><code>End()</code> deve ser chamado quando o pincel não for mais necessário para evitar vazamentos de recursos GDI. Tanto o handle do pincel quanto o handle do bitmap são excluídos internamente.</li>
-<li>TBrushEx não deriva de nenhuma classe base do FiveWin; é um wrapper leve em torno das funções GDI <code>CreaBitmapEx()</code> e <code>CreatePatternBrush()</code>.</li>
+<li>The bitmap dimensions (<code>nWidth</code>, <code>nHeight</code>) should match or exceed the area to be filled to avoid tiling artifacts.</li>
+<li>Setting <code>lVGrad</code> to .T. creates a vertical gradient (top-to-bottom); .F. creates horizontal (left-to-right).</li>
+<li><code>End()</code> must be called when the brush is no longer needed to avoid GDI resource leaks. Both the brush handle and the bitmap handle are deleted internally.</li>
+<li>TBrushEx is not derived from any FiveWin base class; it is a lightweight wrapper around <code>CreaBitmapEx()</code> and <code>CreatePatternBrush()</code> GDI Funções.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tbrush.html">&larr; tbrush</a> | <a href="../../pt/ui/tbtnbmp.html">tbtnbmp &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

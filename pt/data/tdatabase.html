@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TDatabase - FWH Docs</title>
+<title>TDatabase - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -12,16 +12,16 @@
 <main id="content">
 
 <h1>TDatabase</h1>
-<p class="class-source">Source: <code>source/classes/database.prg</code></p>
+<p class="class-source">Fonte: <code>source/classes/database.prg</code></p>
 
 <p>
-TDatabase e o wrapper orientado a objetos do FiveWin em torno do sistema DBF/RDD (Replaceable Database Driver) do Harbour.
-Encapsula todas as operacoes comuns de banco de dados -- abertura, navegacao, edicao, filtragem, indexacao e mais --
-em uma interface de classe limpa. TDatabase pode trabalhar com qualquer RDD suportado pelo Harbour, incluindo DBFCDX, DBFNTX,
-DBFNSX e ADS (Advantage Database Server).
+TDatabase is FiveWin's object-oriented wrapper around Harbour's DBF/RDD (Replaceable Database Driver) system.
+It encapsulates all common database operations -- opening, navigating, editing, filtering, indexing, and more --
+into a clean class interface. TDatabase can work with any RDD supported by Harbour, including DBFCDX, DBFNTX,
+DBFNSX, and ADS (Advantage Database Server).
 </p>
 
-<h2 id="architecture">Arquitetura</h2>
+<h2 id="architecture">Architecture</h2>
 
 <div class="mermaid">
 flowchart TB
@@ -46,11 +46,11 @@ flowchart TB
     A -.-> G
 </div>
 
-<h2 id="data">Membros DATA Principais</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Type</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>cAlias</code></td><td>Character</td><td><code>""</code></td><td>Work area alias name (READONLY)</td></tr>
@@ -63,6 +63,7 @@ flowchart TB
 <tr><td><code>aStruct</code></td><td>Array</td><td></td><td>Extended field structure array (beyond standard 4-element)</td></tr>
 <tr><td><code>hRec</code></td><td>Hash</td><td></td><td>Current record as a hash (field name => value)</td></tr>
 <tr><td><code>aBuffer</code></td><td>Array</td><td></td><td>Record buffer for optimistic locking</td></tr>
+<tr><td><code>nBufRecNo</code></td><td>Numeric</td><td><code>0</code></td><td>Record number of the current buffer content</td></tr>
 <tr><td><code>bBoF</code></td><td>Block</td><td></td><td>Code block evaluated at beginning of file</td></tr>
 <tr><td><code>bEoF</code></td><td>Block</td><td></td><td>Code block evaluated at end of file</td></tr>
 <tr><td><code>bNetError</code></td><td>Block</td><td></td><td>Code block evaluated on network error</td></tr>
@@ -74,33 +75,37 @@ flowchart TB
 </tbody>
 </table>
 
-<h2 id="constructors">Construtores</h2>
+<h2 id="constructors">Constructors</h2>
 
 <h3>New()</h3>
 <pre><code>METHOD New( ncArea, cFile, cDriver, lShared, lReadOnly, cPassword )</code></pre>
 <p>
-Cria um objeto TDatabase. Se <code>ncArea</code> for um numero ou alias de uma area de trabalho ja aberta,
-o TDatabase encapsula a area existente. Se <code>ncArea</code> for uma string de caminho de arquivo, prepara para abrir esse arquivo.
-Se apenas um parametro for passado, detecta automaticamente se e um numero de area, alias ou nome de arquivo.
+Creates a TDatabase object. If <code>ncArea</code> is a number or alias of an already-open work area,
+TDatabase wraps the existing area. If <code>ncArea</code> is a file path string, it prepares to open that file.
+If only one parameter is passed, it auto-detects whether it is an area number, alias, or filename.
 </p>
 
 <h3>Open()</h3>
 <pre><code>METHOD Open( cAlias, cFile, cDriver, lShared, lReadOnly, cPassword )</code></pre>
 <p>
-Abre um arquivo DBF com alias explicito. Este e o construtor preferido para abrir novos arquivos.
+Opens a DBF file with explicit alias. This is the preferred constructor for opening new files.
 </p>
 
 <h3>Create()</h3>
 <pre><code>METHOD Create( cFile, aStruct, cDriver, cIndexFields, cPassword )</code></pre>
 <p>
-Cria um novo arquivo DBF com a estrutura especificada e opcionalmente cria um indice.
+Creates a new DBF file with the specified structure and optionally creates an index.
+The <code>aStruct</code> parameter is an array of field definitions, where each element contains
+<code>{ cFieldName, cType, nLen, nDec }</code>. The optional <code>cIndexFields</code> parameter
+specifies a comma-separated list of field names for an automatic index. After creation,
+the table is opened and the work area is ready for use.
 </p>
 
-<h2 id="navigation">Metodos de Navegacao</h2>
+<h2 id="navigation">Navigation Methods</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>GoTop()</code></td><td>Move to first record, reload buffer</td></tr>
@@ -119,7 +124,7 @@ Cria um novo arquivo DBF com a estrutura especificada e opcionalmente cria um in
 </tbody>
 </table>
 
-<h2 id="seeking">Busca e Filtragem</h2>
+<h2 id="seeking">Seeking &amp; Filtering</h2>
 
 <pre><code>METHOD Seek( uExpr, lSoft, lWildSeek, lCurRec )
 METHOD SetFilter( cFilter, aParams )
@@ -129,21 +134,22 @@ METHOD SetOrder( cnTag, cFile )
 METHOD OrdDescend( cnTag, cFile, lDesc )</code></pre>
 
 <p>
-<code>Seek()</code> busca no indice ativo pela expressao de chave especificada. <code>lSoft</code> habilita
-busca suave (correspondencia mais proxima). <code>SetFilter()</code> aceita uma string de expressao de filtro com substituicao
-opcional de parametros via <code>aParams</code>. <code>SetScope()</code> define valores de escopo superior e inferior para restringir
-a navegacao dentro de um intervalo de indice.
+<code>Seek()</code> searches the active index for the specified key expression. <code>lSoft</code> enables
+soft-seek (nearest match). <code>SetFilter()</code> accepts a filter expression string with optional parameter
+substitution via <code>aParams</code>. <code>SetScope()</code> sets top and bottom scope values to restrict
+navigation within an index range.
 </p>
 
-<h2 id="editing">Metodos de Edicao</h2>
+<h2 id="editing">Editing Methods</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>FieldGet( cnCol )</code></td><td>Get field value by name or position</td></tr>
 <tr><td><code>FieldPut( nField, uVal )</code></td><td>Set field value by position</td></tr>
+<tr><td><code>FieldPos( cField )</code></td><td>Get the ordinal position of a field by name</td></tr>
 <tr><td><code>Append( aFlds, aVals )</code></td><td>Append blank record, optionally fill fields</td></tr>
 <tr><td><code>Blank()</code></td><td>Create a blank buffer (no physical append yet)</td></tr>
 <tr><td><code>Save()</code></td><td>Save buffered changes to disk</td></tr>
@@ -157,11 +163,11 @@ a navegacao dentro de um intervalo de indice.
 </tbody>
 </table>
 
-<h2 id="locking">Metodos de Bloqueio</h2>
+<h2 id="locking">Locking Methods</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>Lock()</code></td><td>File-level lock (FLock)</td></tr>
@@ -172,11 +178,11 @@ a navegacao dentro de um intervalo de indice.
 </tbody>
 </table>
 
-<h2 id="indexing">Metodos de Indexacao</h2>
+<h2 id="indexing">Indexing Methods</h2>
 
 <table>
 <thead>
-<tr><th>Method</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
 <tr><td><code>AddIndex( cFile, cTag )</code></td><td>Add an existing index file to the order list</td></tr>
@@ -189,18 +195,64 @@ a navegacao dentro de um intervalo de indice.
 </tbody>
 </table>
 
-<h2 id="browsing">Navegacao e XBrowse</h2>
+<h2 id="buffering">Buffering</h2>
+
+<p>
+TDatabase supports optional record buffering for optimistic concurrency control. When buffering
+is enabled, changes are held in memory and written to disk only when <code>Save()</code> is called.
+</p>
+
+<table>
+<thead>
+<tr><th>DATA / Method</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>lBuffer</code></td><td>Set to .T. to enable buffering. When on, field modifications are held in the buffer array rather than written directly to disk.</td></tr>
+<tr><td><code>aBuffer</code></td><td>Array containing the buffered field values. The array is sized to match the field count.</td></tr>
+<tr><td><code>nBufRecNo</code></td><td>Record number corresponding to the content currently in <code>aBuffer</code>. Used to detect if the buffer is stale.</td></tr>
+<tr><td><code>Blank()</code></td><td>Create a blank buffer for appending a new record without writing to disk. Call <code>Save()</code> to commit.</td></tr>
+<tr><td><code>Load( lReload )</code></td><td>Fill the buffer from the current record on disk. When <code>lReload</code> is .T., re-reads even if the buffer already contains data.</td></tr>
+<tr><td><code>Save()</code></td><td>Commit buffered changes to disk. For new records (created with <code>Blank()</code>), performs an append. For existing records, writes field values.</td></tr>
+<tr><td><code>SaveBuff()</code></td><td>Save the buffer to disk without re-reading the current record first. Used for performance when the record is known to be current.</td></tr>
+<tr><td><code>RollBack()</code></td><td>Discard buffered changes and restore the buffer to the original disk state.</td></tr>
+</tbody>
+</table>
+
+<h2 id="edit-shortcut">Editing with TDataRow</h2>
+
+<p>
+The <code>Record()</code> method provides a shortcut to create a TDataRow object for the current
+record, enabling rich editing dialogs:
+</p>
+
+<pre><code class="language-harbour">METHOD Record( cFieldList, lBlank ) -&gt; oDataRow</code></pre>
+
+<p>
+Pass a comma-separated field list to limit the visible fields, or <code>lBlank=.T.</code> to
+start with a blank record. The returned TDataRow can be used with <code>Edit()</code> to display
+an interactive editing dialog:
+</p>
+
+<pre><code class="language-harbour">oDb:GoTop()
+oRow := oDb:Record()
+if oRow:Edit( , , "Edit Customer" )
+   MsgInfo( "Changes saved" )
+endif</code></pre>
+
+<p>See <a href="../../pt/data/tdatarow.html">TDataRow</a> for full documentation.</p>
+
+<h2 id="browsing">Browsing &amp; XBrowse</h2>
 
 <pre><code>METHOD Browse( cTitle, acFields )
 METHOD SetXBrowse( oBrw, aCols, lAutoSort, lAutocols )
 METHOD xBrowse( oWnd, aCols, lAutoSort, bSetUp )</code></pre>
 
 <p>
-<code>xBrowse()</code> e a maneira mais rapida de exibir o conteudo do banco de dados em um grid XBrowse. Configura automaticamente
-o browse com cabecalhos de coluna, tipos de dados e ordenacao.
+<code>xBrowse()</code> is the quickest way to display database contents in an XBrowse grid. It automatically
+configures the browse with column headers, data types, and sorting.
 </p>
 
-<h2 id="data-flow">Fluxo de Dados</h2>
+<h2 id="data-flow">Data Flow</h2>
 
 <div class="mermaid">
 sequenceDiagram
@@ -233,7 +285,7 @@ sequenceDiagram
     DB->>RDD: DbCloseArea()
 </div>
 
-<h2 id="example-basic">Exemplo: Operacoes Basicas com DBF</h2>
+<h2 id="example-basic">Example: Basic DBF Operations</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -285,7 +337,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-xbrowse">Exemplo: Browse com XBrowse</h2>
+<h2 id="example-xbrowse">Example: Browse with XBrowse</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -308,7 +360,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-buffer">Exemplo: Edicao com Buffer</h2>
+<h2 id="example-buffer">Example: Buffered Editing</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -336,7 +388,7 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="example-index">Exemplo: Criando Indices</h2>
+<h2 id="example-index">Example: Creating Indexes</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -367,10 +419,10 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="recset-compat">Sintaxe Compativel com RecordSet</h2>
+<h2 id="recset-compat">RecordSet-Compatible Syntax</h2>
 
 <p>
-TDatabase fornece nomes de metodos compativeis com ADO RecordSet para facilitar a migracao entre DBF local e dados remotos:
+TDatabase provides ADO RecordSet-compatible method names for easier migration between local DBF and remote data:
 </p>
 
 <table>
@@ -386,8 +438,8 @@ TDatabase fornece nomes de metodos compativeis com ADO RecordSet para facilitar 
 </tbody>
 </table>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tcursor.html">&larr; tcursor</a> | <a href="../../pt/data/tdatabase2.html">tdatabase2 &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

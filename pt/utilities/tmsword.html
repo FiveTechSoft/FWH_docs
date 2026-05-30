@@ -15,49 +15,49 @@
 <p class="class-source">Fonte: <code>source/classes/fwmsword.prg</code></p>
 
 <p>
-FWMSWordDoc gera documentos do Microsoft Word de forma programática via OLE Automation. Ele encapsula o modelo de objetos do Word para criar, formatar e salvar documentos com texto, tabelas, imagens, formas e controle de layout de página. A classe fornece uma superfície de API compatível com TPrinter, permitindo que código orientado a impressão produza saída no Word com alterações mínimas.
+FWMSWordDoc generates Microsoft Word documents programmatically via OLE Automation. It wraps the Word object model to create, format, and save documents with text, tables, images, shapes, and page layout control. The class provides a TPrinter-compatible API surface, allowing print-oriented code to produce Word output with minimal changes.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oWord</code></td><td>Object</td><td>Objeto OLE Word Application</td></tr>
-<tr><td><code>oDoc</code></td><td>Object</td><td>Objeto OLE Word Document</td></tr>
-<tr><td><code>cFileName</code></td><td>Character</td><td>Nome de arquivo de saída padrão</td></tr>
-<tr><td><code>lPreview</code></td><td>Logical</td><td>Mostrar a janela do Word com o documento ao concluir</td></tr>
-<tr><td><code>nPage</code></td><td>Numeric</td><td>Contador da página atual</td></tr>
+<tr><td><code>oWord</code></td><td>Object</td><td>Word Application OLE object</td></tr>
+<tr><td><code>oDoc</code></td><td>Object</td><td>Word Document OLE object</td></tr>
+<tr><td><code>cFileName</code></td><td>Character</td><td>Default output file name</td></tr>
+<tr><td><code>lPreview</code></td><td>Logical</td><td>Show Word window with document on completion</td></tr>
+<tr><td><code>nPage</code></td><td>Numeric</td><td>Current page counter</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( cFileName )</code></td><td>Cria um novo documento do Word via OLE; retorna nil se o Word não estiver disponível</td></tr>
-<tr><td><code>End()</code></td><td>Salva se um nome de arquivo foi fornecido, opcionalmente mostra a janela do Word e então fecha</td></tr>
-<tr><td><code>Save( cFileName, lPdf )</code></td><td>Salva o documento em arquivo; suporta os formatos docx, doc e PDF</td></tr>
-<tr><td><code>SetPage( nPage )</code></td><td>Define o tamanho do papel usando as constantes DMPAPER_</td></tr>
-<tr><td><code>StartPage()</code></td><td>Insere uma quebra de página e avança o contador de páginas</td></tr>
-<tr><td><code>EndPage()</code></td><td>Espaço reservado para compatibilidade com impressora (no-op)</td></tr>
-<tr><td><code>Line( nTop, nLeft, nBottom, nRight, oPen, cUnits )</code></td><td>Desenha uma forma de linha no documento</td></tr>
-<tr><td><code>Box( nTop, nLeft, nBottom, nRight, oPen, oBrush, aText, cUnits, nShape )</code></td><td>Desenha uma forma de retângulo, retângulo arredondado ou oval</td></tr>
-<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad, cUnits )</code></td><td>Insere texto formatado em uma posição</td></tr>
-<tr><td><code>SayText( nRow, nCol, cText, nWidth, nHeight, oFont, cAlign, nClrText, nClrBack, cUnits )</code></td><td>Insere texto em uma caixa de texto com controle total de alinhamento</td></tr>
-<tr><td><code>PrintImage( nRow, nCol, uImage, nWidth, nHeight, lStretch, nAlpha, lTransp, lGray, cUnits, cAlign )</code></td><td>Insere uma imagem a partir de arquivo ou memória</td></tr>
-<tr><td><code>nOrient</code></td><td>ACCESS/ASSIGN</td><td>Obtém/define a orientação da página (1 = retrato, 2 = paisagem)</td></tr>
-<tr><td><code>SetPortrait()</code></td><td>Muda a página para orientação retrato</td></tr>
-<tr><td><code>SetLandscape()</code></td><td>Muda a página para orientação paisagem</td></tr>
+<tr><td><code>New( cFileName )</code></td><td>Create a new Word document via OLE; return nil if Word is unavailable</td></tr>
+<tr><td><code>End()</code></td><td>Save if a filename was provided, optionally show Word window, then close</td></tr>
+<tr><td><code>Save( cFileName, lPdf )</code></td><td>Save document to file; supports docx, doc, and PDF formats</td></tr>
+<tr><td><code>SetPage( nPage )</code></td><td>Set the paper size using DMPAPER_ constants</td></tr>
+<tr><td><code>StartPage()</code></td><td>Insert a page break and advance the page counter</td></tr>
+<tr><td><code>EndPage()</code></td><td>Placeholder for printer compatibility (no-op)</td></tr>
+<tr><td><code>Line( nTop, nLeft, nBottom, nRight, oPen, cUnits )</code></td><td>Draw a line shape in the document</td></tr>
+<tr><td><code>Box( nTop, nLeft, nBottom, nRight, oPen, oBrush, aText, cUnits, nShape )</code></td><td>Draw a rectangle, rounded rectangle, or oval shape</td></tr>
+<tr><td><code>Say( nRow, nCol, cText, oFont, nWidth, nClrText, nBkMode, nPad, cUnits )</code></td><td>Insert formatted text at a position</td></tr>
+<tr><td><code>SayText( nRow, nCol, cText, nWidth, nHeight, oFont, cAlign, nClrText, nClrBack, cUnits )</code></td><td>Insert text in a text box with full alignment control</td></tr>
+<tr><td><code>PrintImage( nRow, nCol, uImage, nWidth, nHeight, lStretch, nAlpha, lTransp, lGray, cUnits, cAlign )</code></td><td>Insert an image from file or memory</td></tr>
+<tr><td><code>nOrient</code></td><td>ACCESS/ASSIGN</td><td>Get/set page orientation (1 = portrait, 2 = landscape)</td></tr>
+<tr><td><code>SetPortrait()</code></td><td>Switch page to portrait orientation</td></tr>
+<tr><td><code>SetLandscape()</code></td><td>Switch page to landscape orientation</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Gerar Documento do Word com Tabela</h2>
+<h2 id="example">Example: Generate Word Document with Table</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -84,18 +84,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>FWMSWordDoc requer que o Microsoft Word esteja instalado na máquina de destino. O construtor <code>New()</code> retorna <code>nil</code> se o objeto OLE não puder ser criado.</li>
-<li>A classe é projetada com uma API compatível com TPrinter: <code>Say()</code>, <code>Line()</code>, <code>Box()</code>, <code>PrintImage()</code> e os métodos de conversão de unidades espelham a interface do TPrinter para facilitar a migração.</li>
-<li>As unidades de coordenadas são gerenciadas via <code>Units2Pix()</code> / <code>Pix2Units()</code>, que aceitam "PIXEL", "INCH", "CM" ou "MM".</li>
-<li>O método <code>Save()</code> pode exportar para o formato PDF quando o Word 2007 ou posterior (versão 12.0+) é utilizado.</li>
-<li>Quando <code>lPreview</code> é <code>.T.</code> (o padrão), a janela do Word torna-se visível após <code>End()</code>, permitindo que o usuário revise o documento.</li>
+<li>FWMSWordDoc requires Microsoft Word to be installed on the target machine. The <code>New()</code> constructor returns <code>nil</code> if the OLE object cannot be created.</li>
+<li>The class is designed with a TPrinter-compatible API: <code>Say()</code>, <code>Line()</code>, <code>Box()</code>, <code>PrintImage()</code>, and unit conversion methods mirror the TPrinter interface for easy migration.</li>
+<li>Coordinate units are managed via <code>Units2Pix()</code> / <code>Pix2Units()</code> which accept "PIXEL", "INCH", "CM", or "MM".</li>
+<li>The <code>Save()</code> method can export to PDF format when Word 2007 or later (version 12.0+) is used.</li>
+<li>When <code>lPreview</code> is <code>.T.</code> (the default), the Word window becomes visible after <code>End()</code>, allowing the user to review the document.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/tmsgitem.html">&larr; tmsgitem</a> | <a href="../../pt/reference/tmultiget.html">tmultiget &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

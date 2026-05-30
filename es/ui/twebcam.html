@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TWebcam - Documentaci&oacute;n FWH</title>
+<title>TWebcam - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,56 +13,56 @@
 
 <h1>TWebcam</h1>
 <p class="class-source">Fuente: <code>source/classes/twebcam.prg</code></p>
-<p class="class-hierarchy">Jerarqu&iacute;a: <strong>TWebcam</strong> &rarr; <strong>TControl</strong></p>
+<p class="class-hierarchy">Hierarchy: <strong>TWebcam</strong> &rarr; <strong>TControl</strong></p>
 
 <p>
-TWebcam proporciona funcionalidad de vista previa y captura de c&aacute;mara web en vivo usando la API de Video for Windows (VFW).
-Es un control visual que muestra la transmisi&oacute;n de la c&aacute;mara dentro de una ventana de FiveWin y soporta
-captura de instant&aacute;neas, di&aacute;logos de formato de video y configuraci&oacute;n de fuente de video.
+TWebcam provides live webcam preview and capture functionality using the Video for Windows (VFW)
+API. It is a visual control that displays the camera feed within a FiveWin window and supports
+snapshot capture, video format dialogs, and video source configuration.
 </p>
 
-<h2 id="command">Comando WEBCAM</h2>
+<h2 id="command">WEBCAM Command</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol WEBCAM oCam OF oWnd SIZE nW, nH INIT lInit</code></pre>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Predet.</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hWebcam</code></td><td>Num&eacute;rico</td><td></td><td>Manejador de la ventana de captura VFW</td></tr>
-<tr><td><code>cName</code></td><td>Car&aacute;cter</td><td></td><td>Descripci&oacute;n del controlador de la c&aacute;mara web</td></tr>
-<tr><td><code>cVersion</code></td><td>Car&aacute;cter</td><td></td><td>Cadena de versi&oacute;n del controlador de la c&aacute;mara web</td></tr>
-<tr><td><code>nRateRefresh</code></td><td>Num&eacute;rico</td><td><code>66</code></td><td>Tasa de actualizaci&oacute;n de vista previa en milisegundos</td></tr>
-<tr><td><code>isScale</code></td><td>L&oacute;gico</td><td><code>.T.</code></td><td>Escalar vista previa al tama&ntilde;o del control (640x480 cuando est&aacute; deshabilitado)</td></tr>
-<tr><td><code>isConnected</code></td><td>L&oacute;gico</td><td><code>.F.</code></td><td>Si la vista previa est&aacute; actualmente activa</td></tr>
+<tr><td><code>hWebcam</code></td><td>Numeric</td><td></td><td>Handle to the VFW capture window</td></tr>
+<tr><td><code>cName</code></td><td>Character</td><td></td><td>Webcam driver description</td></tr>
+<tr><td><code>cVersion</code></td><td>Character</td><td></td><td>Webcam driver version string</td></tr>
+<tr><td><code>nRateRefresh</code></td><td>Numeric</td><td><code>66</code></td><td>Preview refresh rate in milliseconds</td></tr>
+<tr><td><code>isScale</code></td><td>Logical</td><td><code>.T.</code></td><td>Scale preview to control size (640x480 when disabled)</td></tr>
+<tr><td><code>isConnected</code></td><td>Logical</td><td><code>.F.</code></td><td>Whether preview is currently active</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos Principales</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nTop, nLeft, nWidth, nHeight, lInit, lAdjust, nRate, bError )</code></td><td>Constructor. Crea la ventana de captura VFW y opcionalmente inicia la vista previa.</td></tr>
-<tr><td><code>Initialize()</code></td><td>Conectar el controlador de la c&aacute;mara web e iniciar la vista previa en vivo.</td></tr>
-<tr><td><code>Finalize()</code></td><td>Desconectar el controlador de la c&aacute;mara web y detener la vista previa.</td></tr>
-<tr><td><code>SaveFile( cFileName )</code></td><td>Capturar el fotograma actual a un archivo BMP. Por defecto usa un nombre basado en marca de tiempo.</td></tr>
-<tr><td><code>VideoControl()</code></td><td>Abrir el di&aacute;logo de propiedades de la fuente de video (brillo, contraste, etc.).</td></tr>
-<tr><td><code>VideoFormat()</code></td><td>Abrir el di&aacute;logo de formato de video (resoluci&oacute;n, profundidad de color).</td></tr>
-<tr><td><code>StartCapture( cFile )</code></td><td>Iniciar la transmisi&oacute;n de captura a un archivo de video.</td></tr>
-<tr><td><code>StopCapture()</code></td><td>Detener cualquier captura de video en curso.</td></tr>
-<tr><td><code>GetWidth()</code></td><td>Devolver el ancho actual de la imagen de vista previa en p&iacute;xeles.</td></tr>
-<tr><td><code>GetHeight()</code></td><td>Devolver la altura actual de la imagen de vista previa en p&iacute;xeles.</td></tr>
-<tr><td><code>SetRate( nRate )</code></td><td>Establecer la tasa de actualizaci&oacute;n de vista previa en milisegundos.</td></tr>
+<tr><td><code>New( oWnd, nTop, nLeft, nWidth, nHeight, lInit, lAdjust, nRate, bError )</code></td><td>Constructor. Creates the VFW capture window and optionally starts preview.</td></tr>
+<tr><td><code>Initialize()</code></td><td>Connect the webcam driver and start the live preview.</td></tr>
+<tr><td><code>Finalize()</code></td><td>Disconnect the webcam driver and stop the preview.</td></tr>
+<tr><td><code>SaveFile( cFileName )</code></td><td>Capture the current frame to a BMP file. Defaults to a timestamp-based filename.</td></tr>
+<tr><td><code>VideoControl()</code></td><td>Open the video source property dialog (brightness, contrast, etc.).</td></tr>
+<tr><td><code>VideoFormat()</code></td><td>Open the video format dialog (resolution, color depth).</td></tr>
+<tr><td><code>StartCapture( cFile )</code></td><td>Begin streaming capture to a video file.</td></tr>
+<tr><td><code>StopCapture()</code></td><td>Stop any ongoing video capture.</td></tr>
+<tr><td><code>GetWidth()</code></td><td>Return the current preview image width in pixels.</td></tr>
+<tr><td><code>GetHeight()</code></td><td>Return the current preview image height in pixels.</td></tr>
+<tr><td><code>SetRate( nRate )</code></td><td>Set the preview refresh rate in milliseconds.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Vista Previa en Vivo con Captura</h2>
+<h2 id="example">Example: Live Preview with Capture</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -93,18 +93,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TWebcam depende de la API heredada VFW (Video for Windows). Funciona en todas las versiones de Windows de 32 y 64 bits a trav&eacute;s de las bibliotecas de sistema <code>avicap32.dll</code> y <code>msvfw32.dll</code>.</li>
-<li>El control debe crearse antes de que se active la ventana padre; use la cl&aacute;usula <code>INIT</code> o llame a <code>Initialize()</code> manualmente desde <code>ON INIT</code>.</li>
-<li>Las instant&aacute;neas se guardan como archivos BMP de 24 bits por defecto.</li>
-<li>Use <code>GetVideoCapDriver()</code> (una funci&oacute;n de utilidad en twebcam.prg) para enumerar los dispositivos de c&aacute;mara web disponibles.</li>
-<li>Los eventos de error se enrutan a trav&eacute;s del bloque de c&oacute;digo <code>bError</code>. El manejador predeterminado muestra un di&aacute;logo <code>MsgAlert</code>.</li>
+<li>TWebcam relies on the legacy VFW (Video for Windows) API. It works on all 32-bit and 64-bit Windows versions through the <code>avicap32.dll</code> and <code>msvfw32.dll</code> system libraries.</li>
+<li>The control must be created before the parent window is activated; use the <code>INIT</code> clause or call <code>Initialize()</code> manually from <code>ON INIT</code>.</li>
+<li>Snapshots are saved as 24-bit BMP files by default.</li>
+<li>Use <code>GetVideoCapDriver()</code> (a utility function in twebcam.prg) to enumerate available webcam devices.</li>
+<li>Error events are routed through the <code>bError</code> codeblock. The default handler shows a <code>MsgAlert</code> dialog.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/twbrowse.html">&larr; twbrowse</a> | <a href="../../es/internet/twebclient.html">twebclient &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

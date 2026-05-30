@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TProgressWheel - Documenta&ccedil;&atilde;o FWH</title>
+<title>TProgressWheel - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,52 +13,52 @@
 
 <h1>TProgressWheel</h1>
 <p class="class-source">Fonte: <code>source/classes/metrcirc.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TProgressWheel &eacute; um indicador de progresso circular/anel baseado em GDI+ que exibe texto de porcentagem conclu&iacute;da no centro. Suporta cores de preenchimento gradiente tanto para os segmentos de arco conclu&iacute;dos quanto restantes, um di&acirc;metro interno ajust&aacute;vel e um modo de giro indeterminado adequado para opera&ccedil;&otilde;es de dura&ccedil;&atilde;o desconhecida. As propriedades de cor aceitam valores RGB num&eacute;ricos, arrays gradientes, caminhos de arquivo de imagem ou objetos TBrush.
+TProgressWheel is a GDI+-based circular/ring progress indicator that displays percentage-complete text in the center. It supports gradient fill colors for both the done and remaining arc segments, an adjustable inner diameter, and an indeterminate spinning mode suitable for unknown-duration operations. Color properties accept numeric RGB values, gradient arrays, image file paths, or TBrush objects.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>nMin, nMax</code></td><td>Numeric</td><td>Valores m&iacute;nimo e m&aacute;ximo do intervalo</td></tr>
-<tr><td><code>nPos</code></td><td>Numeric</td><td>Posi&ccedil;&atilde;o atual dentro do intervalo</td></tr>
-<tr><td><code>nStep</code></td><td>Numeric</td><td>Valor de incremento de passo</td></tr>
-<tr><td><code>cPrompt</code></td><td>Character</td><td>Texto personalizado opcional ou bloco de c&oacute;digo exibido no centro</td></tr>
-<tr><td><code>lPercentage</code></td><td>Logical</td><td>Mostrar texto de porcentagem no centro da roda</td></tr>
-<tr><td><code>nStartAngle</code></td><td>Numeric</td><td>&Acirc;ngulo inicial em graus (padr&atilde;o -90, 12 horas)</td></tr>
-<tr><td><code>nInnerDia</code></td><td>Numeric</td><td>Propor&ccedil;&atilde;o do di&acirc;metro interno (0.0-1.0, padr&atilde;o 0.75)</td></tr>
-<tr><td><code>lIndefinite</code></td><td>Logical</td><td>Habilitar anima&ccedil;&atilde;o de giro indeterminado</td></tr>
-<tr><td><code>nColorText</code></td><td>Numeric</td><td>Cor do texto para porcentagem ou prompt</td></tr>
-<tr><td><code>nColorInner</code></td><td>Numeric/Array</td><td>Cor do c&iacute;rculo interno (num&eacute;rico ou gradiente)</td></tr>
-<tr><td><code>nColorRemain</code></td><td>Variados</td><td>Pincel do arco restante: num&eacute;rico, gradiente, caminho de imagem ou TBrush</td></tr>
-<tr><td><code>nColorDoneMin</code></td><td>Variados</td><td>Pincel do arco conclu&iacute;do: num&eacute;rico, gradiente, caminho de imagem ou TBrush</td></tr>
+<tr><td><code>nMin, nMax</code></td><td>Numeric</td><td>Range minimum and maximum values</td></tr>
+<tr><td><code>nPos</code></td><td>Numeric</td><td>Current position within the range</td></tr>
+<tr><td><code>nStep</code></td><td>Numeric</td><td>Step increment value</td></tr>
+<tr><td><code>cPrompt</code></td><td>Character</td><td>Optional custom text or code block displayed in center</td></tr>
+<tr><td><code>lPercentage</code></td><td>Logical</td><td>Show percentage text in center of wheel</td></tr>
+<tr><td><code>nStartAngle</code></td><td>Numeric</td><td>Starting angle in degrees (default -90, 12 o'clock)</td></tr>
+<tr><td><code>nInnerDia</code></td><td>Numeric</td><td>Inner diameter ratio (0.0-1.0, default 0.75)</td></tr>
+<tr><td><code>lIndefinite</code></td><td>Logical</td><td>Enable indeterminate spinning animation</td></tr>
+<tr><td><code>nColorText</code></td><td>Numeric</td><td>Text color for percentage or prompt display</td></tr>
+<tr><td><code>nColorInner</code></td><td>Numeric/Array</td><td>Inner circle color (numeric or gradient)</td></tr>
+<tr><td><code>nColorRemain</code></td><td>Varies</td><td>Remaining arc brush: numeric, gradient, image path, or TBrush</td></tr>
+<tr><td><code>nColorDoneMin</code></td><td>Varies</td><td>Completed arc brush: numeric, gradient, image path, or TBrush</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descri&ccedil;&atilde;o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, nPos, nW, nH, lPixel, lDesign, oFont, cPrompt, lNoPct, nClrInner, nClrRemain, nClrDoneMin, nClrText, nMin, nMax, nInnerDia )</code></td><td>Criar um novo controle TProgressWheel</td></tr>
-<tr><td><code>SetPos( nVal )</code></td><td>Definir a posi&ccedil;&atilde;o atual e atualizar a exibi&ccedil;&atilde;o</td></tr>
-<tr><td><code>GetPos()</code></td><td>Retornar o valor da posi&ccedil;&atilde;o atual</td></tr>
-<tr><td><code>SetRange( nMin, nMax )</code></td><td>Alterar o m&iacute;nimo e m&aacute;ximo do intervalo</td></tr>
-<tr><td><code>SetInner( nSize )</code></td><td>Ajustar a propor&ccedil;&atilde;o do di&acirc;metro interno</td></tr>
-<tr><td><code>Indefinite( lOn )</code></td><td>Habilitar ou desabilitar o modo de giro indeterminado</td></tr>
-<tr><td><code>Default()</code></td><td>Aplicar configura&ccedil;&otilde;es padr&atilde;o de tamanho e posi&ccedil;&atilde;o</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, nPos, nW, nH, lPixel, lDesign, oFont, cPrompt, lNoPct, nClrInner, nClrRemain, nClrDoneMin, nClrText, nMin, nMax, nInnerDia )</code></td><td>Create a new TProgressWheel control</td></tr>
+<tr><td><code>SetPos( nVal )</code></td><td>Set the current position and refresh the display</td></tr>
+<tr><td><code>GetPos()</code></td><td>Return the current position value</td></tr>
+<tr><td><code>SetRange( nMin, nMax )</code></td><td>Change the range minimum and maximum</td></tr>
+<tr><td><code>SetInner( nSize )</code></td><td>Adjust the inner diameter ratio</td></tr>
+<tr><td><code>Indefinite( lOn )</code></td><td>Enable or disable indeterminate spinning mode</td></tr>
+<tr><td><code>Default()</code></td><td>Apply default size and position settings</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Progresso de Anel a 35%</h2>
+<h2 id="example">Example: Ring Progress at 35%</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -79,17 +79,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TProgressWheel usa GDI+ para toda a renderiza&ccedil;&atilde;o. A biblioteca FWH vincula suporte GDI+ por padr&atilde;o em vers&otilde;es recentes.</li>
-<li>As propriedades de cor <code>nColorRemain</code> e <code>nColorDoneMin</code> aceitam RGB num&eacute;rico, arrays gradientes de dois elementos <code>{ nClr1, nClr2 }</code>, caminhos de arquivo de imagem para pinc&eacute;is de textura ou objetos TBrush.</li>
-<li>No modo indeterminado (<code>Indefinite( .T. )</code>), um temporizador interno impulsiona a rota&ccedil;&atilde;o cont&iacute;nua de dois arcos coloridos, adequado para opera&ccedil;&otilde;es de dura&ccedil;&atilde;o desconhecida.</li>
-<li>O di&acirc;metro interno controla a espessura do anel. Valores pr&oacute;ximos de 0 produzem um disco s&oacute;lido; valores pr&oacute;ximos de 1 produzem um contorno de anel fino.</li>
+<li>TProgressWheel uses GDI+ for all rendering. The FWH library links GDI+ support by default in recent builds.</li>
+<li>Color properties <code>nColorRemain</code> and <code>nColorDoneMin</code> accept numeric RGB, two-element gradient arrays <code>{ nClr1, nClr2 }</code>, image file paths for texture brushes, or TBrush objects.</li>
+<li>In indeterminate mode (<code>Indefinite( .T. )</code>), an internal timer drives continuous rotation of two colored arcs, suitable for operations of unknown duration.</li>
+<li>The inner diameter controls ring thickness. Values near 0 produce a solid disk; values near 1 produce a thin ring outline.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tprogress.html">&larr; tprogress</a> | <a href="../../pt/internet/tproxy.html">tproxy &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

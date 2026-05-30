@@ -13,48 +13,48 @@
 
 <h1>TVistaMenu</h1>
 <p class="class-source">Fonte: <code>source/classes/vistamnu.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TVistaMenu fornece um painel de menu vertical moderno com renderização visual no estilo Vista.
-Cada item exibe texto e um ícone opcional, com cores de destaque configuráveis para
-a seleção sob o cursor. O controle é adequado para painéis de navegação e menus laterais.
+TVistaMenu provides a modern vertical menu panel with Vista-style visual rendering.
+Each item displays text and an optional icon, with configurable highlight colors for
+the hovered selection. The control is suitable for navigation panels and sidebar menus.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>aItems</code></td><td>Array</td><td>Array com as definições dos itens de menu</td></tr>
-<tr><td><code>oOver</code></td><td>Numérico</td><td>Índice do item atualmente sob o mouse</td></tr>
-<tr><td><code>nOptionFocus</code></td><td>Numérico</td><td>Índice do item atualmente em foco (navegação por teclado)</td></tr>
-<tr><td><code>nClrPaneOver</code></td><td>Numérico</td><td>Cor de fundo do item sob o cursor</td></tr>
-<tr><td><code>nClrTextOver</code></td><td>Numérico</td><td>Cor do texto do item sob o cursor</td></tr>
-<tr><td><code>nClrBorderOver</code></td><td>Numérico</td><td>Cor da borda do item sob o cursor</td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array of menu item definitions</td></tr>
+<tr><td><code>oOver</code></td><td>Numeric</td><td>Index of the item currently under the mouse</td></tr>
+<tr><td><code>nOptionFocus</code></td><td>Numeric</td><td>Index of the currently focused item (keyboard navigation)</td></tr>
+<tr><td><code>nClrPaneOver</code></td><td>Numeric</td><td>Background color of the hovered item</td></tr>
+<tr><td><code>nClrTextOver</code></td><td>Numeric</td><td>Text color of the hovered item</td></tr>
+<tr><td><code>nClrBorderOver</code></td><td>Numeric</td><td>Border color of the hovered item</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, nW, nH, oWnd, oFont, oFont2 )</code></td><td>Cria um novo controle de menu vista</td></tr>
-<tr><td><code>Redefine( nId, oWnd, oFont, oFont2 )</code></td><td>Redefine a partir de um recurso de diálogo</td></tr>
-<tr><td><code>AddItem( cText, cImage, bAction )</code></td><td>Adiciona um item de menu com texto, caminho da imagem e ação</td></tr>
-<tr><td><code>InsertItem( n, cText, cImage, bAction )</code></td><td>Insere um item de menu na posição especificada</td></tr>
-<tr><td><code>DelItem( n )</code></td><td>Exclui um item de menu na posição indicada</td></tr>
-<tr><td><code>GoUp()</code></td><td>Move o foco do teclado para o item anterior</td></tr>
-<tr><td><code>GoDown()</code></td><td>Move o foco do teclado para o próximo item</td></tr>
+<tr><td><code>New( nRow, nCol, nW, nH, oWnd, oFont, oFont2 )</code></td><td>Create a new vista menu control</td></tr>
+<tr><td><code>Redefine( nId, oWnd, oFont, oFont2 )</code></td><td>Redefine from a dialog resource</td></tr>
+<tr><td><code>AddItem( cText, cImage, bAction )</code></td><td>Add a menu item with text, image path and action</td></tr>
+<tr><td><code>InsertItem( n, cText, cImage, bAction )</code></td><td>Insert a menu item at the specified position</td></tr>
+<tr><td><code>DelItem( n )</code></td><td>Delete a menu item at the given position</td></tr>
+<tr><td><code>GoUp()</code></td><td>Move keyboard focus to the previous item</td></tr>
+<tr><td><code>GoDown()</code></td><td>Move keyboard focus to the next item</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Menu Vertical com Ícones</h2>
+<h2 id="example">Example: Vertical Menu with Icons</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -78,18 +78,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>O parâmetro <code>cImage</code> em <code>AddItem()</code> aceita um caminho de arquivo para um bitmap ou recurso de ícone. Se a imagem não puder ser carregada, o item exibe apenas o texto.</li>
-<li>Use <code>nClrPaneOver</code>, <code>nClrTextOver</code> e <code>nClrBorderOver</code> para personalizar a aparência do destaque sob o cursor.</li>
-<li>A navegação por teclado é tratada via <code>GoUp()</code> e <code>GoDown()</code>, normalmente mapeadas para as teclas de seta PARA CIMA e PARA BAIXO na janela pai.</li>
-<li>O caractere <code>&amp;</code> no texto do item define aceleradores de teclado (por exemplo, "&amp;Dashboard" é ativado com Alt+D).</li>
-<li>TVistaMenu herda de TControl, portanto suporta todo o posicionamento, dimensionamento e tratamento de eventos padrão de controles.</li>
+<li>The <code>cImage</code> parameter in <code>AddItem()</code> accepts a file path to a bitmap or icon resource. If the image cannot be loaded, the item displays text only.</li>
+<li>Use <code>nClrPaneOver</code>, <code>nClrTextOver</code>, and <code>nClrBorderOver</code> to customize the hover highlight appearance.</li>
+<li>Keyboard navigation is handled via <code>GoUp()</code> and <code>GoDown()</code>, typically mapped to the UP and DOWN arrow keys in the parent window.</li>
+<li>The <code>&amp;</code> character in item text defines keyboard accelerators (e.g., "&amp;Dashboard" activates on Alt+D).</li>
+<li>TVistaMenu inherits from TControl, so it supports all standard control positioning, sizing, and event handling.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tview.html">&larr; tview</a> | <a href="../../pt/printing/tvrd.html">tvrd &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

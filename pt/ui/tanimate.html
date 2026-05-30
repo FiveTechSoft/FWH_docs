@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TAnimate - DocumentaÃ§Ã£o FWH</title>
+<title>TAnimate - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,7 +13,7 @@
 
 <h1>TAnimate</h1>
 <p class="class-source">Fonte: <code>source/classes/tanimate.prg</code></p>
-<p class="class-hierarchy">Herda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
 TAnimate wraps the Windows animation common control to display AVI (Audio Video Interleaved)
@@ -22,14 +22,14 @@ file copying, searching, or printing. The control plays silent AVI clips in a fi
 window and supports preset system animations.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>cAvi</code></td><td>Character</td><td>Caminho do arquivo AVI ou nome do recurso de animaÃ§Ã£o do sistema</td></tr>
+<tr><td><code>cAvi</code></td><td>Character</td><td>AVI file path or system animation resource name</td></tr>
 </tbody>
 </table>
 
@@ -37,35 +37,35 @@ window and supports preset system animations.
 
 <table>
 <thead>
-<tr><th>MÃ©todo</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nRow, nCol, oWnd, lPixel, lDesign, nW, nH )</code></td><td>Criar um novo controle TAnimate</td></tr>
-<tr><td><code>Open( cAvi )</code></td><td>Abrir um arquivo AVI ou animaÃ§Ã£o do sistema para reproduÃ§Ã£o</td></tr>
+<tr><td><code>New( nRow, nCol, oWnd, lPixel, lDesign, nW, nH )</code></td><td>Create a new TAnimate control</td></tr>
+<tr><td><code>Open( cAvi )</code></td><td>Open an AVI file or system animation for playback</td></tr>
 <tr><td><code>Play( nFrom, nTo, nRepeat )</code></td><td>Play the animation from frame <code>nFrom</code> to <code>nTo</code>, repeating <code>nRepeat</code> times</td></tr>
-<tr><td><code>Stop()</code></td><td>Parar a reproduÃ§Ã£o atual</td></tr>
-<tr><td><code>Close()</code></td><td>Fechar o AVI e liberar recursos</td></tr>
-<tr><td><code>Seek( nFrame )</code></td><td>Ir para um quadro especÃ­fico na animaÃ§Ã£o</td></tr>
+<tr><td><code>Stop()</code></td><td>Stop the current playback</td></tr>
+<tr><td><code>Close()</code></td><td>Close the AVI and release resources</td></tr>
+<tr><td><code>Seek( nFrame )</code></td><td>Seek to a specific frame in the animation</td></tr>
 </tbody>
 </table>
 
-<h3>AnimaÃ§Ãµes do Sistema Predefinidas</h3>
+<h3>Preset System Animations</h3>
 
-<p>Os seguintes nomes de recursos AVI do sistema podem ser passados para <code>Open()</code> para animaÃ§Ãµes padrÃ£o do shell:</p>
+<p>The following system AVI resource names can be passed to <code>Open()</code> for standard shell animations:</p>
 
 <table>
 <thead>
-<tr><th>Name</th><th>DescriÃ§Ã£o</th></tr>
+<tr><th>Name</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>AVI_FINDFILE</code></td><td>AnimaÃ§Ã£o de lupa procurando</td></tr>
-<tr><td><code>AVI_COPYFILE</code></td><td>AnimaÃ§Ã£o de documento sendo copiado</td></tr>
-<tr><td><code>AVI_SEARCH</code></td><td>AnimaÃ§Ã£o de pesquisa em disco</td></tr>
-<tr><td><code>AVI_DELETE</code></td><td>AnimaÃ§Ã£o de documento sendo excluÃ­do (reciclagem)</td></tr>
+<tr><td><code>AVI_FINDFILE</code></td><td>Magnifying glass searching animation</td></tr>
+<tr><td><code>AVI_COPYFILE</code></td><td>Document being copied animation</td></tr>
+<tr><td><code>AVI_SEARCH</code></td><td>Search disk animation</td></tr>
+<tr><td><code>AVI_DELETE</code></td><td>Document being deleted (recycle) animation</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: AnimaÃ§Ã£o de CÃ³pia de Arquivos</h2>
+<h2 id="example">Example: File Copy Animation</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -80,8 +80,8 @@ function Main()
    oAnimate:Open( AVI_COPYFILE )
    oAnimate:Play( 1, 100, 0 )   // 0 = repeat indefinitely
 
-   // Simular uma operaÃ§Ã£o longa
-   // ... cÃ³digo de cÃ³pia de arquivos aqui ...
+   // Simulate a long operation
+   // ... file copy code here ...
 
    oAnimate:Stop()
    oAnimate:Close()
@@ -94,14 +94,14 @@ return nil</code></pre>
 
 <ul>
 <li>The AVI animation control plays silent video only; audio tracks are not supported by the underlying Windows common control.</li>
-<li>Passe <code>0</code> como contagem de repetiÃ§Ã£o para loop infinito da animaÃ§Ã£o. Use <code>Stop()</code> para finalizar a reproduÃ§Ã£o.</li>
-<li>As animaÃ§Ãµes do sistema (<code>AVI_FINDFILE</code>, <code>AVI_COPYFILE</code>, <code>AVI_SEARCH</code>, <code>AVI_DELETE</code>) nÃ£o requerem um arquivo AVI externo; sÃ£o carregadas da shell32.dll.</li>
-<li>O controle fica oculto quando nenhum AVI estÃ¡ aberto. Chame <code>Open()</code> antes de <code>Play()</code> para carregar o clip.</li>
-<li>TAnimate Ã© ideal para feedback de progresso em diÃ¡logos modais onde uma barra de progresso pareceria muito tÃ©cnica.</li>
+<li>Pass <code>0</code> as the repeat count to loop the animation indefinitely. Use <code>Stop()</code> to end playback.</li>
+<li>System animations (<code>AVI_FINDFILE</code>, <code>AVI_COPYFILE</code>, <code>AVI_SEARCH</code>, <code>AVI_DELETE</code>) do not require an external AVI file; they are loaded from shell32.dll.</li>
+<li>The control is hidden when no AVI is open. Call <code>Open()</code> before <code>Play()</code> to load the clip.</li>
+<li>TAnimate is ideal for modal dialog progress feedback where a progress bar would feel too technical.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta pÃ¡gina</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ai/tai_glossary.html">&larr; tai_glossary</a> | <a href="../../pt/data/tarraydata.html">tarraydata &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

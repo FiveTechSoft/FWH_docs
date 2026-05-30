@@ -13,56 +13,56 @@
 
 <h1>TWebcam</h1>
 <p class="class-source">Fonte: <code>source/classes/twebcam.prg</code></p>
-<p class="class-hierarchy">Hierarquia: <strong>TWebcam</strong> &rarr; <strong>TControl</strong></p>
+<p class="class-hierarchy">Hierarchy: <strong>TWebcam</strong> &rarr; <strong>TControl</strong></p>
 
 <p>
-TWebcam fornece visualização ao vivo de webcam e funcionalidade de captura usando a API Video for Windows (VFW).
-É um controle visual que exibe o feed da câmera dentro de uma janela FiveWin e suporta
-captura de instantâneos, diálogos de formato de vídeo e configuração de fonte de vídeo.
+TWebcam provides live webcam preview and capture functionality using the Video for Windows (VFW)
+API. It is a visual control that displays the camera feed within a FiveWin window and supports
+snapshot capture, video format dialogs, and video source configuration.
 </p>
 
-<h2 id="command">Comando WEBCAM</h2>
+<h2 id="command">WEBCAM Command</h2>
 
 <pre><code class="language-harbour">@ nRow, nCol WEBCAM oCam OF oWnd SIZE nW, nH INIT lInit</code></pre>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>hWebcam</code></td><td>Numérico</td><td></td><td>Identificador da janela de captura VFW</td></tr>
-<tr><td><code>cName</code></td><td>Caractere</td><td></td><td>Descrição do driver da webcam</td></tr>
-<tr><td><code>cVersion</code></td><td>Caractere</td><td></td><td>String de versão do driver da webcam</td></tr>
-<tr><td><code>nRateRefresh</code></td><td>Numérico</td><td><code>66</code></td><td>Taxa de atualização da visualização em milissegundos</td></tr>
-<tr><td><code>isScale</code></td><td>Lógico</td><td><code>.T.</code></td><td>Redimensionar visualização para o tamanho do controle (640x480 quando desativado)</td></tr>
-<tr><td><code>isConnected</code></td><td>Lógico</td><td><code>.F.</code></td><td>Se a visualização está ativa no momento</td></tr>
+<tr><td><code>hWebcam</code></td><td>Numeric</td><td></td><td>Handle to the VFW capture window</td></tr>
+<tr><td><code>cName</code></td><td>Character</td><td></td><td>Webcam driver description</td></tr>
+<tr><td><code>cVersion</code></td><td>Character</td><td></td><td>Webcam driver version string</td></tr>
+<tr><td><code>nRateRefresh</code></td><td>Numeric</td><td><code>66</code></td><td>Preview refresh rate in milliseconds</td></tr>
+<tr><td><code>isScale</code></td><td>Logical</td><td><code>.T.</code></td><td>Scale preview to control size (640x480 when disabled)</td></tr>
+<tr><td><code>isConnected</code></td><td>Logical</td><td><code>.F.</code></td><td>Whether preview is currently active</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos Principais</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWnd, nTop, nLeft, nWidth, nHeight, lInit, lAdjust, nRate, bError )</code></td><td>Construtor. Cria a janela de captura VFW e opcionalmente inicia a visualização.</td></tr>
-<tr><td><code>Initialize()</code></td><td>Conectar o driver da webcam e iniciar a visualização ao vivo.</td></tr>
-<tr><td><code>Finalize()</code></td><td>Desconectar o driver da webcam e parar a visualização.</td></tr>
-<tr><td><code>SaveFile( cFileName )</code></td><td>Capturar o quadro atual para um arquivo BMP. Padrão é um nome de arquivo baseado em timestamp.</td></tr>
-<tr><td><code>VideoControl()</code></td><td>Abrir o diálogo de propriedades da fonte de vídeo (brilho, contraste, etc.).</td></tr>
-<tr><td><code>VideoFormat()</code></td><td>Abrir o diálogo de formato de vídeo (resolução, profundidade de cor).</td></tr>
-<tr><td><code>StartCapture( cFile )</code></td><td>Iniciar captura de streaming para um arquivo de vídeo.</td></tr>
-<tr><td><code>StopCapture()</code></td><td>Parar qualquer captura de vídeo em andamento.</td></tr>
-<tr><td><code>GetWidth()</code></td><td>Retornar a largura atual da imagem de visualização em pixels.</td></tr>
-<tr><td><code>GetHeight()</code></td><td>Retornar a altura atual da imagem de visualização em pixels.</td></tr>
-<tr><td><code>SetRate( nRate )</code></td><td>Definir a taxa de atualização da visualização em milissegundos.</td></tr>
+<tr><td><code>New( oWnd, nTop, nLeft, nWidth, nHeight, lInit, lAdjust, nRate, bError )</code></td><td>Constructor. Creates the VFW capture window and optionally starts preview.</td></tr>
+<tr><td><code>Initialize()</code></td><td>Connect the webcam driver and start the live preview.</td></tr>
+<tr><td><code>Finalize()</code></td><td>Disconnect the webcam driver and stop the preview.</td></tr>
+<tr><td><code>SaveFile( cFileName )</code></td><td>Capture the current frame to a BMP file. Defaults to a timestamp-based filename.</td></tr>
+<tr><td><code>VideoControl()</code></td><td>Open the video source property dialog (brightness, contrast, etc.).</td></tr>
+<tr><td><code>VideoFormat()</code></td><td>Open the video format dialog (resolution, color depth).</td></tr>
+<tr><td><code>StartCapture( cFile )</code></td><td>Begin streaming capture to a video file.</td></tr>
+<tr><td><code>StopCapture()</code></td><td>Stop any ongoing video capture.</td></tr>
+<tr><td><code>GetWidth()</code></td><td>Return the current preview image width in pixels.</td></tr>
+<tr><td><code>GetHeight()</code></td><td>Return the current preview image height in pixels.</td></tr>
+<tr><td><code>SetRate( nRate )</code></td><td>Set the preview refresh rate in milliseconds.</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Visualização Ao Vivo com Captura</h2>
+<h2 id="example">Example: Live Preview with Capture</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -93,18 +93,18 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TWebcam depende da API VFW (Video for Windows) legada. Funciona em todas as versões de 32 e 64 bits do Windows através das bibliotecas de sistema <code>avicap32.dll</code> e <code>msvfw32.dll</code>.</li>
-<li>O controle deve ser criado antes que a janela pai seja ativada; use a cláusula <code>INIT</code> ou chame <code>Initialize()</code> manualmente a partir de <code>ON INIT</code>.</li>
-<li>Os instantâneos são salvos como arquivos BMP de 24 bits por padrão.</li>
-<li>Use <code>GetVideoCapDriver()</code> (uma função utilitária em twebcam.prg) para enumerar os dispositivos de webcam disponíveis.</li>
-<li>Eventos de erro são roteados através do bloco de código <code>bError</code>. O manipulador padrão mostra um diálogo <code>MsgAlert</code>.</li>
+<li>TWebcam relies on the legacy VFW (Video for Windows) API. It works on all 32-bit and 64-bit Windows versions through the <code>avicap32.dll</code> and <code>msvfw32.dll</code> system libraries.</li>
+<li>The control must be created before the parent window is activated; use the <code>INIT</code> clause or call <code>Initialize()</code> manually from <code>ON INIT</code>.</li>
+<li>Snapshots are saved as 24-bit BMP files by default.</li>
+<li>Use <code>GetVideoCapDriver()</code> (a utility function in twebcam.prg) to enumerate available webcam devices.</li>
+<li>Error events are routed through the <code>bError</code> codeblock. The default handler shows a <code>MsgAlert</code> dialog.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/twbrowse.html">&larr; twbrowse</a> | <a href="../../pt/internet/twebclient.html">twebclient &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

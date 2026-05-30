@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TEReport (Designer EasyReport) - FWH Docs</title>
+<title>TEReport (EasyReport Designer) - Documentação FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -11,56 +11,56 @@
 <nav id="sidebar"></nav>
 <main id="content">
 
-<h1>TEReport (Designer EasyReport)</h1>
+<h1>TEReport (EasyReport Designer)</h1>
 <p class="class-source">Fonte: <code>source/classes/tereport.prg</code></p>
 
 <p>
-TEReport é o designer visual interativo para arquivos de relatório EasyReport (.vrd / .erd). Ele encapsula o <code>TEasyReport</code> e fornece um editor MDI completo com barra de menus, barra de botões, superfície de design da área do relatório, inserção de itens (texto, imagem, gráfico, código de barras), desfazer/refazer, gerenciamento de banco de dados, configuração de fonte/cor e recursos de pré-visualização/impressão. É a principal ferramenta para projetar layouts de relatório visualmente.
+TEReport is the interactive visual designer for EasyReport (.vrd / .erd) report files. It wraps <code>TEasyReport</code> and provides a full-featured MDI editor with a menu bar, button bar, report area design surface, item insertion (text, image, graphic, barcode), undo/redo, database management, font/color configuration, and preview/print capabilities. It is the primary tool for designing report layouts visually.
 </p>
 
-<h2 id="data">Principais Membros DATA</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>oER</code></td><td>TEasyReport</td><td>Instância subjacente do motor EasyReport</td></tr>
-<tr><td><code>cFileReport</code></td><td>Character</td><td>Caminho do arquivo de relatório atual</td></tr>
-<tr><td><code>oGenVar</code></td><td>TExStruct</td><td>Contêiner de variáveis gerais (cores, pincéis, fontes, configurações)</td></tr>
-<tr><td><code>aFonts</code></td><td>Array</td><td>Array de objetos TFont (até 20) definidos para o relatório</td></tr>
-<tr><td><code>aAreas</code></td><td>Array</td><td>Áreas (faixas) do relatório acessadas via <code>:oER:aAreaIni</code></td></tr>
-<tr><td><code>aItems</code></td><td>Array</td><td>Itens do relatório por área, acessados via <code>:oER:aItems[nArea, nItem]</code></td></tr>
-<tr><td><code>oBar</code></td><td>TButtonBar</td><td>Barra de botões principal do designer</td></tr>
-<tr><td><code>lVRDSave</code></td><td>Logical</td><td>Indica se existem alterações não salvas</td></tr>
+<tr><td><code>oER</code></td><td>TEasyReport</td><td>Underlying EasyReport engine instance</td></tr>
+<tr><td><code>cFileReport</code></td><td>Character</td><td>Current report file path</td></tr>
+<tr><td><code>oGenVar</code></td><td>TExStruct</td><td>General variables container (colors, brushes, fonts, settings)</td></tr>
+<tr><td><code>aFonts</code></td><td>Array</td><td>Array of TFont objects (up to 20) defined for the report</td></tr>
+<tr><td><code>aAreas</code></td><td>Array</td><td>Report areas (bands) accessed via <code>:oER:aAreaIni</code></td></tr>
+<tr><td><code>aItems</code></td><td>Array</td><td>Report items per area, accessed via <code>:oER:aItems[nArea, nItem]</code></td></tr>
+<tr><td><code>oBar</code></td><td>TButtonBar</td><td>Main designer button bar</td></tr>
+<tr><td><code>lVRDSave</code></td><td>Logical</td><td>Whether unsaved changes exist</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">Métodos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>Método</th><th>Descrição</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oP )</code></td><td>Cria e executa o designer como filho MDI de uma janela existente, ou como janela MDI independente</td></tr>
-<tr><td><code>Activate( ... )</code></td><td>Ativa o designer como uma aplicação MDI independente com suporte a arquivo por linha de comando</td></tr>
-<tr><td><code>OpenFile( cFile, lChange, lAddDelNew )</code></td><td>Abre um arquivo de relatório .vrd ou .erd no designer</td></tr>
-<tr><td><code>SaveFile()</code></td><td>Salva o estado atual do relatório (todas as áreas, configurações gerais)</td></tr>
-<tr><td><code>SaveAs( cFile )</code></td><td>Salva o relatório em um novo caminho de arquivo</td></tr>
-<tr><td><code>SaveAsNewFormat()</code></td><td>Converte e salva no novo formato .erd</td></tr>
-<tr><td><code>Undo()</code></td><td>Desfaz a última ação do designer</td></tr>
-<tr><td><code>Redo()</code></td><td>Refaz uma ação previamente desfeita</td></tr>
-<tr><td><code>BuildMenu()</code></td><td>Constrói toda a estrutura de menus do designer</td></tr>
-<tr><td><code>BarMenu()</code></td><td>Constrói a barra de botões do designer com todas as ferramentas</td></tr>
-<tr><td><code>SetGeneralSettings()</code></td><td>Carrega e aplica as configurações gerais do relatório (medida, grade, bancos de dados)</td></tr>
-<tr><td><code>ClientWindows()</code></td><td>Cria todas as janelas filhas MDI para cada área do relatório, carregando os dados da área</td></tr>
-<tr><td><code>DefineFonts()</code></td><td>Carrega as definições de fonte do arquivo de relatório em objetos TFont</td></tr>
-<tr><td><code>OpenDatabases()</code></td><td>Abre e carrega as definições de banco de dados a partir da configuração do relatório</td></tr>
+<tr><td><code>New( oP )</code></td><td>Create and run the designer as an MDI child of an existing window, or as a standalone MDI window</td></tr>
+<tr><td><code>Activate( ... )</code></td><td>Activate the designer as a standalone MDI application with command-line file support</td></tr>
+<tr><td><code>OpenFile( cFile, lChange, lAddDelNew )</code></td><td>Open a .vrd or .erd report file into the designer</td></tr>
+<tr><td><code>SaveFile()</code></td><td>Save current report state (all areas, general settings)</td></tr>
+<tr><td><code>SaveAs( cFile )</code></td><td>Save report to a new file path</td></tr>
+<tr><td><code>SaveAsNewFormat()</code></td><td>Convert and save as new .erd format</td></tr>
+<tr><td><code>Undo()</code></td><td>Undo the last designer action</td></tr>
+<tr><td><code>Redo()</code></td><td>Redo a previously undone action</td></tr>
+<tr><td><code>BuildMenu()</code></td><td>Build the full designer menu structure</td></tr>
+<tr><td><code>BarMenu()</code></td><td>Build the designer button bar with all tools</td></tr>
+<tr><td><code>SetGeneralSettings()</code></td><td>Load and apply report-level general settings (measure, grid, databases)</td></tr>
+<tr><td><code>ClientWindows()</code></td><td>Create all MDI child windows for each report area, loading area data</td></tr>
+<tr><td><code>DefineFonts()</code></td><td>Load font definitions from the report file into TFont objects</td></tr>
+<tr><td><code>OpenDatabases()</code></td><td>Open and load database definitions from the report configuration</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Exemplo: Executar o Designer EasyReport a partir do Código</h2>
+<h2 id="example">Example: Run EasyReport Designer from Code</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -68,11 +68,11 @@ function Main()
 
    local oER
 
-   oER := TEReport():New()  // Designer independente
+   oER := TEReport():New()  // Standalone designer
 
 return nil</code></pre>
 
-<h2 id="example-load">Exemplo: Abrir um Arquivo de Relatório no Designer</h2>
+<h2 id="example-load">Example: Open a Report File in the Designer</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -85,19 +85,19 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>TEReport é uma aplicação completa de design visual, não um encapsulamento de execução de relatórios. Ele hospeda o motor <code>TEasyReport</code> e apresenta uma interface gráfica baseada em MDI para projetar layouts de relatório.</li>
-<li>Os arquivos de relatório vêm em dois formatos: o legado <code>.vrd</code> (formato VRD) e o novo <code>.erd</code> (formato EasyReport). O designer lida com ambos de forma transparente.</li>
-<li>Cada área (faixa) do relatório é exibida como uma janela filha MDI dentro da janela principal do designer, com suporte ao posicionamento de itens por arrastar e soltar.</li>
-<li>Os tipos de itens incluem TEXT, IMAGE, GRAPHIC e BARCODE. Cada item pode ser posicionado, dimensionado e estilizado através do diálogo de propriedades.</li>
-<li>O desfazer/refazer é implementado usando arquivos DBF temporários que armazenam as alterações em nível de entrada e em nível de área.</li>
-<li>O designer inclui um sistema multi-idioma com suporte a inglês, alemão, italiano, espanhol, português e francês.</li>
+<li>TEReport is a full visual designer application, not a report execution wrapper. It hosts the <code>TEasyReport</code> engine and presents an MDI-based graphical interface for designing report layouts.</li>
+<li>Report files come in two formats: legacy <code>.vrd</code> (VRD format) and new <code>.erd</code> (EasyReport format). The designer handles both transparently.</li>
+<li>Each report area (band) is displayed as an MDI child window within the designer's main window, supporting drag-and-drop item placement.</li>
+<li>Items types include TEXT, IMAGE, GRAPHIC, and BARCODE. Each item can be positioned, sized, and styled through the properties dialog.</li>
+<li>Undo/redo is implemented using temporary DBF files that store entry-level and area-level changes.</li>
+<li>The designer includes a multi-language system supporting English, German, Italian, Spanish, Portuguese, and French.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">Nesta Página</div><div id="toc-links"></div></aside>
+<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tenhmetafile.html">&larr; tenhmetafile</a> | <a href="../../pt/utilities/texcel.html">texcel &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>

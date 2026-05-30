@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TNavigator - Documentaci&oacute;n FWH</title>
+<title>TNavigator - Documentación FWH</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -13,54 +13,54 @@
 
 <h1>TNavigator</h1>
 <p class="class-source">Fuente: <code>source/classes/navpanels.prg</code></p>
-<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+<p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
-TNavigator es un panel de navegaci&oacute;n colapsable con una barra de t&iacute;tulo degradada, bot&oacute;n de alternancia y reposicionamiento autom&aacute;tico de paneles hermanos. Cuando est&aacute; colapsado, el panel se reduce a una barra vertical estrecha con un t&iacute;tulo rotado; cuando est&aacute; expandido, revela los controles hijos. Varias instancias de TNavigator se pueden vincular mediante <code>aRelatedNavigators</code> para que al alternar un panel se reposicionen sus hermanos, ideal para barras de navegaci&oacute;n acopladas lateralmente.
+TNavigator is a collapsible navigation panel with a gradient title bar, toggle button, and automatic sibling panel repositioning. When collapsed, the panel shrinks to a narrow vertical bar with a rotated title; when expanded, it reveals child controls. Multiple TNavigator instances can be linked via <code>aRelatedNavigators</code> so that toggling one panel repositions its siblings -- ideal for side-docking navigation bars.
 </p>
 
-<h2 id="data">Miembros DATA Principales</h2>
+<h2 id="data">Key DATA Members</h2>
 
 <table>
 <thead>
-<tr><th>DATA</th><th>Tipo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>DATA</th><th>Type</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>lExpanded</code></td><td>Logical</td><td>Estado expandido/colapsado actual (predeterminado <code>.T.</code>)</td></tr>
-<tr><td><code>nOriginalWidth</code></td><td>Numeric</td><td>Ancho cuando est&aacute; completamente expandido, usado al restaurar</td></tr>
-<tr><td><code>nWidthClosed</code></td><td>Numeric</td><td>Ancho cuando est&aacute; colapsado (predeterminado 50)</td></tr>
-<tr><td><code>cTitle</code></td><td>Character</td><td>Texto del t&iacute;tulo mostrado en la barra de encabezado</td></tr>
-<tr><td><code>nTitleHeight</code></td><td>Numeric</td><td>Altura de la barra de t&iacute;tulo degradada (predeterminado 40)</td></tr>
-<tr><td><code>aRelatedNavigators</code></td><td>Array</td><td>Paneles hermanos vinculados para auto-reposicionamiento</td></tr>
-<tr><td><code>bToggled</code></td><td>Block</td><td>Bloque de c&oacute;digo ejecutado despu&eacute;s de completar la alternancia</td></tr>
-<tr><td><code>nRound</code></td><td>Numeric</td><td>Radio de esquinas redondeadas (predeterminado 6)</td></tr>
-<tr><td><code>nTopColor</code></td><td>Numeric</td><td>Color superior/inicio del degradado</td></tr>
-<tr><td><code>nBottomColor</code></td><td>Numeric</td><td>Color inferior/fin del degradado</td></tr>
-<tr><td><code>nClrHover</code></td><td>Numeric</td><td>Color del texto del t&iacute;tulo al pasar el rat&oacute;n</td></tr>
-<tr><td><code>nBetWeenSpace</code></td><td>Numeric</td><td>Espacio entre paneles de navegaci&oacute;n hermanos (predeterminado 2)</td></tr>
-<tr><td><code>cImage</code></td><td>Character</td><td>Ruta de archivo de imagen de fondo opcional</td></tr>
-<tr><td><code>cBtnImage1</code></td><td>Character</td><td>Imagen del bot&oacute;n de alternancia cuando est&aacute; colapsado (flecha derecha)</td></tr>
-<tr><td><code>cBtnImage2</code></td><td>Character</td><td>Imagen del bot&oacute;n de alternancia cuando est&aacute; expandido (flecha izquierda)</td></tr>
+<tr><td><code>lExpanded</code></td><td>Logical</td><td>Current expanded/collapsed state (default <code>.T.</code>)</td></tr>
+<tr><td><code>nOriginalWidth</code></td><td>Numeric</td><td>Width when fully expanded, used on restore</td></tr>
+<tr><td><code>nWidthClosed</code></td><td>Numeric</td><td>Width when collapsed (default 50)</td></tr>
+<tr><td><code>cTitle</code></td><td>Character</td><td>Title text displayed in the header bar</td></tr>
+<tr><td><code>nTitleHeight</code></td><td>Numeric</td><td>Height of the gradient title bar (default 40)</td></tr>
+<tr><td><code>aRelatedNavigators</code></td><td>Array</td><td>Linked sibling panels for auto-repositioning</td></tr>
+<tr><td><code>bToggled</code></td><td>Block</td><td>Code block fired after toggle completes</td></tr>
+<tr><td><code>nRound</code></td><td>Numeric</td><td>Corner rounding radius (default 6)</td></tr>
+<tr><td><code>nTopColor</code></td><td>Numeric</td><td>Gradient top/start color</td></tr>
+<tr><td><code>nBottomColor</code></td><td>Numeric</td><td>Gradient bottom/end color</td></tr>
+<tr><td><code>nClrHover</code></td><td>Numeric</td><td>Title text color on mouse hover</td></tr>
+<tr><td><code>nBetWeenSpace</code></td><td>Numeric</td><td>Gap between sibling navigator panels (default 2)</td></tr>
+<tr><td><code>cImage</code></td><td>Character</td><td>Optional background image file path</td></tr>
+<tr><td><code>cBtnImage1</code></td><td>Character</td><td>Toggle button image when collapsed (arrow right)</td></tr>
+<tr><td><code>cBtnImage2</code></td><td>Character</td><td>Toggle button image when expanded (arrow left)</td></tr>
 </tbody>
 </table>
 
-<h2 id="methods">M&eacute;todos</h2>
+<h2 id="methods">Methods</h2>
 
 <table>
 <thead>
-<tr><th>M&eacute;todo</th><th>Descripci&oacute;n</th></tr>
+<tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lBorder, nClrBorder, nBackColor, nWidthClosed, cTitle, cImage, cBtnImg1, cBtnImg2, nClrText, nClrHover, nTitleH, nSpace, lDesign, lPixel )</code></td><td>Crear un nuevo panel TNavigator</td></tr>
-<tr><td><code>ReDefine( nId, oWnd, lBorder, nClrBorder, nBackColor, nWidthClosed, cTitle, cImage, cBtnImg1, cBtnImg2, nClrText, nClrHover, nTitleH, nSpace, lDesign )</code></td><td>Redefinir desde recurso de di&aacute;logo</td></tr>
-<tr><td><code>ToggleSize()</code></td><td>Alternar entre estados expandido y colapsado, reposicionar hermanos</td></tr>
-<tr><td><code>CloseAll()</code></td><td>Colapsar todos los paneles de navegaci&oacute;n vinculados</td></tr>
-<tr><td><code>OpenAll()</code></td><td>Expandir todos los paneles de navegaci&oacute;n vinculados</td></tr>
-<tr><td><code>ChangeWidth( nWidth, nHeight )</code></td><td>Redimensionar el panel de navegaci&oacute;n</td></tr>
+<tr><td><code>New( nTop, nLeft, nBottom, nRight, oWnd, lBorder, nClrBorder, nBackColor, nWidthClosed, cTitle, cImage, cBtnImg1, cBtnImg2, nClrText, nClrHover, nTitleH, nSpace, lDesign, lPixel )</code></td><td>Create a new TNavigator panel</td></tr>
+<tr><td><code>ReDefine( nId, oWnd, lBorder, nClrBorder, nBackColor, nWidthClosed, cTitle, cImage, cBtnImg1, cBtnImg2, nClrText, nClrHover, nTitleH, nSpace, lDesign )</code></td><td>Redefine from dialog resource</td></tr>
+<tr><td><code>ToggleSize()</code></td><td>Toggle between expanded and collapsed states, reposition siblings</td></tr>
+<tr><td><code>CloseAll()</code></td><td>Collapse all linked navigator panels</td></tr>
+<tr><td><code>OpenAll()</code></td><td>Expand all linked navigator panels</td></tr>
+<tr><td><code>ChangeWidth( nWidth, nHeight )</code></td><td>Resize the navigator panel</td></tr>
 </tbody>
 </table>
 
-<h2 id="example">Ejemplo: Paneles de Navegaci&oacute;n Vinculados</h2>
+<h2 id="example">Example: Linked Navigator Panels</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
 
@@ -83,17 +83,17 @@ function Main()
 
 return nil</code></pre>
 
-<h2 id="notes">Notas</h2>
+<h2 id="notes">Notes</h2>
 
 <ul>
-<li>Los paneles hermanos se reposicionan autom&aacute;ticamente mediante <code>aRelatedNavigators</code>. El array se ordena por <code>nOriginalLeft</code> para mantener el orden de izquierda a derecha durante la alternancia.</li>
-<li>Cuando est&aacute; colapsado, el texto del t&iacute;tulo se dibuja verticalmente usando la fuente <code>oBoldVertical</code>. Cuando est&aacute; expandido, se dibuja horizontalmente en el encabezado degradado.</li>
-<li>La imagen del bot&oacute;n de alternancia predeterminada son flechas integradas (<code>CreaArrowLeft</code> / <code>CreaArrowRight</code>). Se pueden suministrar im&aacute;genes de bot&oacute;n personalizadas mediante <code>cBtnImage1</code> y <code>cBtnImage2</code>.</li>
-<li>Los controles hijos se muestran u ocultan autom&aacute;ticamente cuando el panel se expande o colapsa.</li>
+<li>Sibling panels are repositioned automatically via <code>aRelatedNavigators</code>. The array is sorted by <code>nOriginalLeft</code> to maintain left-to-right ordering during toggle.</li>
+<li>When collapsed, the title text is drawn vertically using the <code>oBoldVertical</code> font. When expanded, it is drawn horizontally in the gradient header.</li>
+<li>The toggle button image defaults to built-in arrow bitmaps (<code>CreaArrowLeft</code> / <code>CreaArrowRight</code>). Custom button images can be supplied via <code>cBtnImage1</code> and <code>cBtnImage2</code>.</li>
+<li>Child controls are automatically shown/hidden as the panel expands and collapses.</li>
 </ul>
 
-</main>
-<aside id="toc"><div id="toc-title">En esta p&aacute;gina</div><div id="toc-links"></div></aside>
+<h2>Ver También</h2><ul><li><a href="../../es/reference/classes.html">Clases Alfabético</a></li><li><a href="../../es/reference/Funciones.html">Funciones</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../es/ui/tmytitle.html">&larr; tmytitle</a> | <a href="../../es/internet/tneuralnet.html">tneuralnet &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
 </html>
