@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
@@ -6,117 +6,45 @@
 <title>Claude Code - Documenta&ccedil;&atilde;o FWH</title>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
-<body>
-<nav id="sidebar"></nav>
-<main id="content">
+<body><nav id="sidebar"></nav><main id="content">
 
 <h1>Claude Code</h1>
+<p><strong>Claude Code</strong> &eacute; a ferramenta CLI oficial da Anthropic e um agente de codifica&ccedil;&atilde;o com IA que opera diretamente no terminal. L&ecirc; todo o c&oacute;digo do projeto, executa comandos, edita arquivos e orquestra tarefas complexas.</p>
+<p>FiveWin para Harbour integra-se com Claude Code atrav&eacute;s de <code>CLAUDE.md</code>, mem&oacute;ria persistente, skills especializados e fluxos multi-agente.</p>
 
-<p>
-<strong>Claude Code</strong> is Anthropic's official CLI tool and AI coding agent that operates
-directly in your terminal. It reads your entire codebase, executes commands, edits files,
-and orchestrates complex multi-step development tasks — all from the command line.
-</p>
-
-<p>
-FiveWin for Harbour integrates deeply with Claude Code via project-specific configuration
-(<code>CLAUDE.md</code>), persistent memory, specialized skills, and multi-agent workflows.
-This section documents all Claude Code capabilities and how they enhance FWH development.
-</p>
-
-<h2 id="what-is-claude-code">What Is Claude Code?</h2>
+<h2>O que &eacute; Claude Code?</h2>
 <ul>
-  <li><strong>Terminal-native</strong> — runs in PowerShell, cmd, bash, or any terminal</li>
-  <li><strong>Full codebase awareness</strong> — reads and understands your entire project</li>
-  <li><strong>Tool-using agent</strong> — edits files, runs builds, executes git, launches apps</li>
-  <li><strong>Multi-agent orchestration</strong> — spawns parallel sub-agents for complex tasks</li>
-  <li><strong>Persistent memory</strong> — remembers project facts, user preferences, conventions</li>
-  <li><strong>Hooks system</strong> — automated behaviors triggered by events</li>
-  <li><strong>MCP servers</strong> — extensible via Model Context Protocol</li>
+<li><strong>Nativo do terminal</strong> — PowerShell, cmd, bash</li>
+<li><strong>Conhecimento total do c&oacute;digo</strong> — l&ecirc; todo o projeto</li>
+<li><strong>Agente com ferramentas</strong> — edita, compila, executa, usa git</li>
+<li><strong>Multi-agente</strong> — sub-agentes em paralelo</li>
+<li><strong>Mem&oacute;ria persistente</strong> — lembra prefer&ecirc;ncias e conven&ccedil;&otilde;es</li>
+<li><strong>Hooks</strong> — automa&ccedil;&atilde;o por eventos</li>
+<li><strong>MCP</strong> — extens&iacute;vel por Model Context Protocol</li>
 </ul>
 
-<h2 id="fwh-integration">FWH Integration</h2>
-<p>
-Claude Code enhances FWH development across all phases:
-</p>
+<h2>Integra&ccedil;&atilde;o com FWH</h2>
 <table>
-<tr><th>Phase</th><th>Claude Code Capability</th></tr>
-<tr><td>Code exploration</td><td>Glob/Grep/Read tools — instant full-text search across 700+ source files</td></tr>
-<tr><td>Build &amp; test</td><td>Executes build_new.bat, reads compiler errors, fixes and rebuilds</td></tr>
-<tr><td>Dialog design</td><td>Generates .rc resource files + FiveWin PRG with REDEFINE</td></tr>
-<tr><td>Documentation</td><td>Edits whatsnew.txt, updates HTML docs, commits and pushes</td></tr>
-<tr><td>Git workflow</td><td>Branches, commits with Conventional Commits format, creates PRs</td></tr>
-<tr><td>Debugging</td><td>Systematic debugging skill — reads error logs, isolates root cause</td></tr>
-<tr><td>Code review</td><td>Adversarial verification, finds bugs and simplifications</td></tr>
+<tr><th>Fase</th><th>Claude Code</th></tr>
+<tr><td>Explora&ccedil;&atilde;o</td><td>Busca em 700+ arquivos</td></tr>
+<tr><td>Compilar</td><td>build_new.bat, l&ecirc; erros, recompila</td></tr>
+<tr><td>Di&aacute;logos</td><td>Gera .rc + PRG REDEFINE</td></tr>
+<tr><td>Documenta&ccedil;&atilde;o</td><td>whatsnew.txt, docs HTML, git</td></tr>
+<tr><td>Git</td><td>Ramos, commits, PRs</td></tr>
+<tr><td>Depurar</td><td>An&aacute;lise causa raiz</td></tr>
+<tr><td>Revisar</td><td>Verifica&ccedil;&atilde;o adversarial</td></tr>
 </table>
 
-<h2 id="key-features">Key Features</h2>
-
-<h3>CLAUDE.md</h3>
-<p>
-The project instruction file checked into the repo root. Contains build rules, compiler
-paths, library naming conventions, encoding requirements, and critical rules that Claude
-Code follows for every task. Also supports user-level <code>~/.claude/CLAUDE.md</code>.
-</p>
-
-<h3>Memory System</h3>
-<p>
-Persistent file-based memory at <code>.claude/projects/&lt;project&gt;/memory/</code>. Stores
-user preferences, project conventions, feedback, and reference facts across sessions.
-Recalled automatically via <code>MEMORY.md</code> index.
-</p>
-
-<h3>Skills</h3>
-<p>
-Specialized instruction sets loaded on-demand. The FWH project includes:
-</p>
+<h2>Pr&oacute;ximos Passos</h2>
 <ul>
-  <li><strong>dialog</strong> — Design Windows dialog boxes (.rc + PRG with REDEFINE)</li>
-  <li><strong>systematic-debugging</strong> — Root-cause analysis workflow</li>
-  <li><strong>test-driven-development</strong> — TDD workflow for Harbour/FiveWin</li>
-  <li><strong>code-review</strong> — Correctness and simplification review</li>
-  <li><strong>caveman</strong> — Token-efficient communication mode (75% reduction)</li>
-  <li><strong>writing-plans / executing-plans</strong> — Plan-then-execute workflow</li>
-  <li><strong>deep-research</strong> — Multi-source web research with citations</li>
-</ul>
-
-<h3>Multi-Agent Workflows</h3>
-<p>
-Orchestrate dozens of parallel sub-agents via JavaScript workflow scripts. Patterns include:
-adversarial verification, judge panels, fan-out search, pipeline stages, and loop-until-dry
-accumulation. The FWH project uses workflows for comprehensive code review and documentation
-generation.
-</p>
-
-<h3>Caveman Mode</h3>
-<p>
-Ultra-compressed communication: fragments, no articles, no pleasantries. Cuts token usage
-~75% while keeping full technical accuracy. Three intensity levels (lite/full/ultra) plus
-Wenyan (classical Chinese) variants. Trigger: "caveman mode", "/caveman".
-</p>
-
-<h3>Hooks System</h3>
-<p>
-Event-driven automation via <code>settings.json</code>. Examples in FWH:
-<code>UserPromptSubmit</code> activates caveman mode, <code>SessionStart</code> persists
-caveman state, <code>PostToolUse</code> triggers build/test flows.
-</p>
-
-<h2 id="next-steps">Next Steps</h2>
-<ul>
-  <li><a href="installation.html">Installation &amp; Setup</a></li>
-  <li><a href="claudemd.html">CLAUDE.md Configuration</a></li>
-  <li><a href="skills.html">Skills Reference</a></li>
-  <li><a href="workflows.html">Multi-Agent Workflows</a></li>
-  <li><a href="samples.html">FWH + Claude Code Examples</a></li>
+<li><a href="installation.html">Instala&ccedil;&atilde;o</a></li>
+<li><a href="claudemd.html">CLAUDE.md</a></li>
+<li><a href="skills.html">Skills</a></li>
+<li><a href="workflows.html">Fluxos Multi-Agente</a></li>
+<li><a href="samples.html">Exemplos FWH</a></li>
 </ul>
 
 </main>
-<aside id="toc">
-<div id="toc-title">On this page</div>
-<div id="toc-links"></div>
-</aside>
-<script src="../../js/app.js"></script>
-<script src="../../js/nav.js"></script>
-</body>
-</html>
+<aside id="toc"><div id="toc-title">Nesta p&aacute;gina</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script><script src="../../js/nav.js"></script>
+</body></html>
