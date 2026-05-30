@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflows - Claude Code - Documentaci&oacute;n FWH</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body><nav id="sidebar"></nav><main id="content">
+<h1>Multi-Agent Workflows</h1>
+<p>JavaScript workflow scripts that orchestrate dozens of parallel sub-agents deterministically. Each workflow fans out, verifies, and synthesizes results.</p>
+
+<h2>Core Primitives</h2>
+<table>
+<tr><th>Function</th><th>Behavior</th></tr>
+<tr><td><code>agent(prompt, opts)</code></td><td>Spawn sub-agent. Returns text or validated schema object.</td></tr>
+<tr><td><code>pipeline(items, ...stages)</code></td><td>Run items through stages independently. No barrier between stages — default for multi-stage work.</td></tr>
+<tr><td><code>parallel(thunks)</code></td><td>BARRIER: awaits all thunks. Use only when all results needed together.</td></tr>
+<tr><td><code>phase(title)</code></td><td>Group subsequent agents under progress label.</td></tr>
+<tr><td><code>log(message)</code></td><td>Emit progress message.</td></tr>
+</table>
+
+<h2>Patterns</h2>
+<h3>Adversarial Verification</h3>
+<p>Spawn N skeptics per finding, each prompted to REFUTE. Kill if majority refute.</p>
+<h3>Judge Panel</h3>
+<p>N independent attempts from different angles, scored by parallel judges, synthesize best.</p>
+<h3>Loop-Until-Dry</h3>
+<p>Keep spawning finders until K consecutive rounds return nothing new.</p>
+<h3>Multi-Modal Sweep</h3>
+<p>Parallel agents searching different ways (by-container, by-content, by-entity, by-time).</p>
+
+<h2>FWH Workflow Example</h2>
+<pre><code>export const meta = {
+  name: 'review-changes',
+  description: 'Review files across dimensions, verify each finding',
+  phases: [{ title: 'Review' }, { title: 'Verify' }],
+}
+const DIMS = [{key:'bugs', prompt:'Find bugs'}, {key:'perf', prompt:'Find perf issues'}]
+const results = await pipeline(
+  DIMS,
+  d => agent(d.prompt, {label: `review:${d.key}`, schema: FINDINGS_SCHEMA}),
+  review => parallel(review.findings.map(f => () =>
+    agent(`Adversarially verify: ${f.title}`, {schema: VERDICT_SCHEMA})))
+)
+return results.flat().filter(Boolean)
+</code></pre>
+
+<h2>Scale Considerations</h2>
+<ul><li>Concurrent agent cap: min(16, CPU cores - 2)</li><li>Lifetime cap: 1000 agents per workflow</li><li>Token budget: user "+500k" directive controls scale</li><li>Worktree isolation: --isolation worktree for parallel file mutations</li></ul>
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script><script src="../../js/nav-claudecode.js"></script>
+</body></html>
