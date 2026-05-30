@@ -22,7 +22,7 @@
       internet: "Internet &amp; AI",
       aiClasses: "AI Classes",
       ref: "Reference",
-      classIdx: "Class Index", funcIdx: "Functions", commands: "Commands",
+      classIdx: "Classes Alphabetical", funcIdx: "Functions", commands: "Commands",
       errors: "Error System", resources: "Resources (GDI)", moreClasses: "More Classes"
     },
     es: {
@@ -39,7 +39,7 @@
       internet: "Internet e IA",
       aiClasses: "Clases IA",
       ref: "Referencia",
-      classIdx: "Índice de Clases", funcIdx: "Funciones", commands: "Comandos",
+      classIdx: "Clases Alfabético", funcIdx: "Funciones", commands: "Comandos",
       errors: "Sistema de Errores", resources: "Recursos (GDI)", moreClasses: "Más Clases"
     },
     pt: {
@@ -56,7 +56,7 @@
       internet: "Internet e IA",
       aiClasses: "Classes IA",
       ref: "Referência",
-      classIdx: "Índice de Classes", funcIdx: "Funções", commands: "Comandos",
+      classIdx: "Classes Alfabético", funcIdx: "Funções", commands: "Comandos",
       errors: "Sistema de Erros", resources: "Recursos (GDI)", moreClasses: "Mais Classes"
     }
   };
