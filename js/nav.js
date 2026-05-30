@@ -142,15 +142,6 @@
       'reference/errorsys.html', L.errors,
       'reference/resources.html', L.resources,
       'reference/more-classes.html', L.moreClasses
-    ]) +
-    section('Claude Code', [
-      'claudecode/overview.html', 'Overview',
-      'claudecode/installation.html', 'Installation',
-      'claudecode/claudemd.html', 'CLAUDE.md',
-      'claudecode/skills.html', 'Skills',
-      'claudecode/workflows.html', 'Workflows',
-      'claudecode/slash-commands.html', 'Commands',
-      'claudecode/samples.html', 'FWH Samples'
     ]);
 
   document.getElementById('sidebar').innerHTML = html;
