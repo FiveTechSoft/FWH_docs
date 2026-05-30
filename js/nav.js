@@ -78,7 +78,15 @@
     return h + '</div>';
   }
 
-  var html = '<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>'+L.title+'</h2></a><span class="version">'+L.version+'</span></div>' +
+  // Language switcher: replace /en/ → /es/ or /pt/
+  var curPage = path.replace(/^.*\/(en|es|pt)\//, '/$1/');
+  var langLinks = '<div style="padding:4px 16px 8px;font-size:11px">' +
+    '<a href="' + curPage.replace(/\/(en|es|pt)\//, '/en/') + '" style="color:' + (lang==='en'?'var(--text-link)':'var(--text-dim)') + ';margin-right:6px">EN</a>' +
+    '<a href="' + curPage.replace(/\/(en|es|pt)\//, '/es/') + '" style="color:' + (lang==='es'?'var(--text-link)':'var(--text-dim)') + ';margin-right:6px">ES</a>' +
+    '<a href="' + curPage.replace(/\/(en|es|pt)\//, '/pt/') + '" style="color:' + (lang==='pt'?'var(--text-link)':'var(--text-dim)') + '">PT</a>' +
+    '</div>';
+
+  var html = '<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>'+L.title+'</h2></a><span class="version">'+L.version+'</span></div>' + langLinks +
     section(L.gettingStarted, [
       'getting-started/overview.html', L.overview,
       'getting-started/installation.html', L.install,
