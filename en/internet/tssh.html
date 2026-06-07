@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSSH - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>TSSH</h1>
+<p class="class-source">Source: <code>source/classes/tssh.prg</code> | C backend: <code>source/winapi/ssh.c</code></p>
+<p class="class-hierarchy">Hierarchy: <strong>TSSH</strong> (standalone class, no inheritance)</p>
+
+<p>
+TSSH wraps the Windows 10+ OpenSSH client (<code>ssh.exe</code> and <code>scp.exe</code>) via
+<code>CreateProcess</code> with anonymous pipe capture. It supports remote command execution,
+SCP file transfer, key-based authentication, and host key scanning.
+</p>
+
+<p>
+<strong>Requirements:</strong> OpenSSH Client installed (Windows Settings &rarr; Apps &rarr;
+Optional Features &rarr; OpenSSH Client). For password-based authentication, set up
+SSH keys or use an external tool like Plink.
+</p>
+
+<h2 id="backend">C Backend Functions</h2>
+
+<table>
+<thead>
+<tr><th>Function</th><th>Signature</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>SSH_EXEC()</code></td><td><code>SSH_EXEC( cHost, cUser, cCmd, cKeyFile, nPort, @cOut, @cErr ) &rarr; nExitCode</code></td><td>Execute a remote command via SSH</td></tr>
+<tr><td><code>SCP_SEND()</code></td><td><code>SCP_SEND( cHost, cUser, cLocal, cRemote, cKeyFile, nPort, @cErr ) &rarr; nExitCode</code></td><td>Upload a file via SCP</td></tr>
+<tr><td><code>SCP_RECV()</code></td><td><code>SCP_RECV( cHost, cUser, cRemote, cLocal, cKeyFile, nPort, @cErr ) &rarr; nExitCode</code></td><td>Download a file via SCP</td></tr>
+<tr><td><code>SSH_HASSSH()</code></td><td><code>SSH_HASSSH() &rarr; lResult</code></td><td>Check if ssh.exe is available in PATH</td></tr>
+</tbody>
+</table>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cHost</code></td><td>Character</td><td><code>""</code></td><td>Remote hostname or IP address</td></tr>
+<tr><td><code>cUser</code></td><td>Character</td><td><code>""</code></td><td>SSH username</td></tr>
+<tr><td><code>nPort</code></td><td>Numeric</td><td><code>22</code></td><td>SSH port</td></tr>
+<tr><td><code>cKeyFile</code></td><td>Character</td><td><code>""</code></td><td>Private key file path (PEM format)</td></tr>
+<tr><td><code>cPassphrase</code></td><td>Character</td><td><code>""</code></td><td>Key passphrase (for KeyGen)</td></tr>
+<tr><td><code>cOutput</code></td><td>Character</td><td><code>""</code></td><td>Last command stdout</td></tr>
+<tr><td><code>cError</code></td><td>Character</td><td><code>""</code></td><td>Last command stderr</td></tr>
+<tr><td><code>nExitCode</code></td><td>Numeric</td><td><code>0</code></td><td>Last command exit code</td></tr>
+<tr><td><code>cKnownHosts</code></td><td>Character</td><td><code>""</code></td><td>Custom known_hosts file path</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<h3>Connection</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( cHost, cUser, nPort, cKeyFile )</code></td><td>Constructor. Configure target host and credentials.</td></tr>
+<tr><td><code>Connect()</code></td><td>Test SSH connectivity by running <code>ssh user@host exit</code>.</td></tr>
+<tr><td><code>IsAvailable()</code></td><td>Returns .T. if ssh.exe is in PATH.</td></tr>
+</tbody>
+</table>
+
+<h3>Remote Execution</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Exec( cCmd )</code></td><td>Execute a command on the remote host. Returns stdout string.</td></tr>
+<tr><td><code>ExecQuiet( cCmd )</code></td><td>Execute a command. Returns .T. if exit code is 0.</td></tr>
+<tr><td><code>Shell( cCmd )</code></td><td>Alias for Exec().</td></tr>
+</tbody>
+</table>
+
+<h3>File Transfer</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>SendFile( cLocal, cRemote )</code></td><td>Upload a local file to the remote host via SCP.</td></tr>
+<tr><td><code>GetFile( cRemote, cLocal )</code></td><td>Download a remote file via SCP.</td></tr>
+<tr><td><code>SendFiles( aFiles, cRemoteDir )</code></td><td>Upload multiple files.</td></tr>
+<tr><td><code>GetFiles( aFiles, cLocalDir )</code></td><td>Download multiple files.</td></tr>
+</tbody>
+</table>
+
+<h3>Key Management</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>KeyGen( cFile, cType, cComment, nBits )</code></td><td>Generate an SSH key pair via ssh-keygen.</td></tr>
+<tr><td><code>KeyScan( cHost )</code></td><td>Retrieve host public keys via ssh-keyscan.</td></tr>
+<tr><td><code>SetKnownHosts( cFile )</code></td><td>Set a custom known_hosts file path.</td></tr>
+</tbody>
+</table>
+
+<h2 id="usage">Usage Examples</h2>
+
+<h3>Connect and Execute Commands</h3>
+<pre><code>oSSH := TSSH():New( "192.168.1.100", "root", 22, "~/.ssh/id_rsa" )
+
+if oSSH:Connect()
+   // Run a command
+   cResult := oSSH:Exec( "uname -a" )
+   MsgInfo( cResult )
+
+   // List files
+   cResult := oSSH:Exec( "ls -la /var/log" )
+   MsgInfo( cResult )
+endif</code></pre>
+
+<h3>File Transfer</h3>
+<pre><code>oSSH := TSSH():New( "myserver.com", "deploy", 22, "deploy_key.pem" )
+
+// Upload
+if oSSH:SendFile( "app.exe", "/opt/app/app.exe" )
+   MsgInfo( "Upload successful" )
+endif
+
+// Download
+if oSSH:GetFile( "/etc/hostname", "hostname.txt" )
+   MsgInfo( "Downloaded: " + MemoRead( "hostname.txt" ) )
+endif</code></pre>
+
+<h3>Generate Key and Scan Host</h3>
+<pre><code>oSSH := TSSH():New()
+
+// Generate RSA key pair
+oSSH:KeyGen( "mykey_rsa", "rsa", "deploy@myserver", 4096 )
+// Creates: mykey_rsa (private) and mykey_rsa.pub (public)
+
+// Scan host key (for known_hosts)
+cHostKey := oSSH:KeyScan( "github.com" )
+? cHostKey</code></pre>
+
+<h3>Deploy Workflow</h3>
+<pre><code>oSSH := TSSH():New( "prod-server", "admin", 22, "~/.ssh/prod_key" )
+
+// Pull latest code
+oSSH:Exec( "cd /opt/app && git pull origin master" )
+
+// Rebuild
+oSSH:Exec( "cd /opt/app && make clean && make" )
+
+// Restart service
+oSSH:Exec( "systemctl restart myapp" )
+
+// Verify
+cStatus := oSSH:Exec( "systemctl status myapp" )
+MsgInfo( cStatus )</code></pre>
+
+</main>
+<script src="../../js/docs.js"></script>
+</body>
+</html>

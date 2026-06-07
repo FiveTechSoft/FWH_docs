@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TGit - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>TGit</h1>
+<p class="class-source">Source: <code>source/classes/tgit.prg</code> | C backend: <code>source/winapi/git.c</code></p>
+<p class="class-hierarchy">Hierarchy: <strong>TGit</strong> (standalone class, no inheritance)</p>
+
+<p>
+TGit wraps the <code>git.exe</code> command line via <code>CreateProcess</code> with anonymous pipe
+capture for stdout and stderr. No external libraries required — only <code>git</code> must be
+installed and in the system PATH.
+</p>
+
+<h2 id="backend">C Backend Functions</h2>
+
+<table>
+<thead>
+<tr><th>Function</th><th>Signature</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GIT_EXEC()</code></td><td><code>GIT_EXEC( cCmd ) &rarr; cStdout</code></td><td>Execute any git command, return stdout</td></tr>
+<tr><td><code>GIT_RUN()</code></td><td><code>GIT_RUN( cCmd, @cOut, @cErr ) &rarr; nExitCode</code></td><td>Execute command, fill byref params, return exit code</td></tr>
+<tr><td><code>GIT_EXITCODE()</code></td><td><code>GIT_EXITCODE() &rarr; nExitCode</code></td><td>Last command exit code</td></tr>
+<tr><td><code>GIT_STDERR()</code></td><td><code>GIT_STDERR() &rarr; cStderr</code></td><td>Last command stderr (one-shot; cleared after read)</td></tr>
+<tr><td><code>GIT_HASGIT()</code></td><td><code>GIT_HASGIT() &rarr; lResult</code></td><td>Check if git.exe is available in PATH</td></tr>
+</tbody>
+</table>
+
+<h2 id="data">Key DATA Members</h2>
+
+<table>
+<thead>
+<tr><th>DATA</th><th>Type</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>cPath</code></td><td>Character</td><td><code>""</code></td><td>Repository path (defaults to GetCurDir())</td></tr>
+<tr><td><code>cOutput</code></td><td>Character</td><td><code>""</code></td><td>Last command stdout</td></tr>
+<tr><td><code>cError</code></td><td>Character</td><td><code>""</code></td><td>Last command stderr</td></tr>
+<tr><td><code>nExitCode</code></td><td>Numeric</td><td><code>0</code></td><td>Last command exit code</td></tr>
+<tr><td><code>lNoPager</code></td><td>Logical</td><td><code>.T.</code></td><td>Automatically add --no-pager to commands</td></tr>
+<tr><td><code>cGitExe</code></td><td>Character</td><td><code>"git"</code></td><td>Git executable path</td></tr>
+<tr><td><code>bOnCommand</code></td><td>CodeBlock</td><td></td><td>Callback: <code>{ |cCmd, Self| }</code> before each git command</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+
+<h3>Repository</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( cPath, cGitExe )</code></td><td>Constructor. Optionally set repo path and git binary location.</td></tr>
+<tr><td><code>Init( cPath )</code></td><td>Initialize a new git repository (git init).</td></tr>
+<tr><td><code>Clone( cURL, cPath, cBranch )</code></td><td>Clone a remote repository. Optionally specify branch.</td></tr>
+<tr><td><code>IsRepo()</code></td><td>Returns .T. if the path is inside a git work tree.</td></tr>
+<tr><td><code>RootDir()</code></td><td>Returns the repository root path (git rev-parse --show-toplevel).</td></tr>
+<tr><td><code>HasGit()</code></td><td>Returns .T. if git.exe is available in PATH.</td></tr>
+</tbody>
+</table>
+
+<h3>Status &amp; Staging</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Status()</code></td><td>Returns array of <code>{ cStatus, cFile }</code> from <code>git status --porcelain</code>.</td></tr>
+<tr><td><code>IsClean()</code></td><td>Returns .T. if the working tree has no uncommitted changes.</td></tr>
+<tr><td><code>Add( cFile )</code></td><td>Stage a file (default: "." for all).</td></tr>
+<tr><td><code>AddAll()</code></td><td>Stage all changes (git add .).</td></tr>
+<tr><td><code>Reset( cFile, cMode )</code></td><td>Unstage/reset. cMode: "--soft", "--mixed" (default), "--hard", etc.</td></tr>
+<tr><td><code>Rm( cFile, lCached )</code></td><td>Remove file from working tree and/or index.</td></tr>
+</tbody>
+</table>
+
+<h3>Commit</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Commit( cMsg, aFiles, lAmend )</code></td><td>Commit staged changes with a message.</td></tr>
+</tbody>
+</table>
+
+<h3>Remote</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>RemoteList()</code></td><td>Returns array of <code>{ cName, cURL, cDir }</code>.</td></tr>
+<tr><td><code>RemoteAdd( cName, cURL )</code></td><td>Add a remote repository.</td></tr>
+<tr><td><code>RemoteRemove( cName )</code></td><td>Remove a remote.</td></tr>
+<tr><td><code>RemoteGetURL( cName )</code></td><td>Get the URL of a remote.</td></tr>
+<tr><td><code>RemoteSetURL( cName, cURL )</code></td><td>Change a remote's URL.</td></tr>
+</tbody>
+</table>
+
+<h3>Push / Pull / Fetch</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Push( cRemote, cBranch, lForce, lSetUpstream )</code></td><td>Push commits to remote.</td></tr>
+<tr><td><code>Pull( cRemote, cBranch, lRebase )</code></td><td>Pull updates from remote.</td></tr>
+<tr><td><code>Fetch( cRemote, cBranch, lPrune, lTags )</code></td><td>Fetch from remote without merging.</td></tr>
+</tbody>
+</table>
+
+<h3>Branch</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>BranchList( lAll )</code></td><td>Returns array of <code>{ cName, lCurrent }</code>.</td></tr>
+<tr><td><code>BranchCreate( cName, cBase )</code></td><td>Create a new branch.</td></tr>
+<tr><td><code>BranchDelete( cName, lForce )</code></td><td>Delete a branch. Use lForce=.T. for -D.</td></tr>
+<tr><td><code>BranchRename( cOld, cNew )</code></td><td>Rename a branch.</td></tr>
+<tr><td><code>BranchSwitch( cName )</code></td><td>Switch to another branch (git switch).</td></tr>
+<tr><td><code>CurrentBranch()</code></td><td>Returns current branch name.</td></tr>
+<tr><td><code>Merge( cBranch, cMsg, lNoFF, lSquash )</code></td><td>Merge a branch into the current one.</td></tr>
+<tr><td><code>Rebase( cBranch )</code></td><td>Rebase current branch onto another.</td></tr>
+</tbody>
+</table>
+
+<h3>History</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Log( nMax, cFile )</code></td><td>Returns array of <code>{ cHash, cAuthor, cDate, cMsg, cRefs }</code>.</td></tr>
+<tr><td><code>LogRaw( nMax, cFile )</code></td><td>Returns raw git log output as a string.</td></tr>
+</tbody>
+</table>
+
+<h3>Diff &amp; Show</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Diff( cFile, cBranch1, cBranch2, lStaged )</code></td><td>Show differences. Flexible branch/file/staged filtering.</td></tr>
+<tr><td><code>Show( cRef, cFile )</code></td><td>Show content of a commit or a file at a commit.</td></tr>
+</tbody>
+</table>
+
+<h3>Blame</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Blame( cFile, nFrom, nTo )</code></td><td>Returns array of <code>{ nLine, cHash, cAuthor, cDate, cText }</code>.</td></tr>
+</tbody>
+</table>
+
+<h3>Stash</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>StashList()</code></td><td>Returns array of <code>{ cRef, cMsg }</code>.</td></tr>
+<tr><td><code>StashSave( cMsg, lIncludeUntracked )</code></td><td>Stash working directory changes.</td></tr>
+<tr><td><code>StashPop( cRef )</code></td><td>Pop (apply + drop) a stash.</td></tr>
+<tr><td><code>StashApply( cRef )</code></td><td>Apply a stash without dropping it.</td></tr>
+<tr><td><code>StashDrop( cRef )</code></td><td>Drop a stash without applying.</td></tr>
+</tbody>
+</table>
+
+<h3>Tag</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>TagList( cPattern )</code></td><td>Returns array of tag names.</td></tr>
+<tr><td><code>TagCreate( cName, cMsg, cRef )</code></td><td>Create a tag. With cMsg creates an annotated tag.</td></tr>
+<tr><td><code>TagDelete( cName )</code></td><td>Delete a tag.</td></tr>
+</tbody>
+</table>
+
+<h3>Config</h3>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Config( cKey, cValue, lLocal )</code></td><td>Get or set a git config value. With cValue = sets it.</td></tr>
+<tr><td><code>ConfigList( cSection )</code></td><td>Returns array of <code>{ cKey, cValue }</code> for a config section.</td></tr>
+</tbody>
+</table>
+
+<h2 id="usage">Usage Examples</h2>
+
+<h3>Repository Status</h3>
+<pre><code>oGit := TGit():New( "C:\MyProject" )
+
+if oGit:IsRepo()
+   aStatus := oGit:Status()
+   for each aFile in aStatus
+      ? aFile[ 1 ], aFile[ 2 ]  // XY status, filename
+   next
+endif</code></pre>
+
+<h3>Commit and Push</h3>
+<pre><code>oGit := TGit():New()
+oGit:AddAll()
+oGit:Commit( "Fix: resolve login timeout issue" )
+oGit:Push( "origin", "master" )</code></pre>
+
+<h3>Branch Operations</h3>
+<pre><code>oGit := TGit():New()
+
+// List branches
+aBranches := oGit:BranchList()
+for each aBranch in aBranches
+   ? If( aBranch[ 2 ], "* ", "  " ) + aBranch[ 1 ]
+next
+
+// Create and switch
+oGit:BranchCreate( "feature/new-feature" )
+oGit:BranchSwitch( "feature/new-feature" )</code></pre>
+
+<h3>View History</h3>
+<pre><code>oGit := TGit():New()
+aLog := oGit:Log( 20 )  // Last 20 commits
+for each aCommit in aLog
+   ? aCommit[ 1 ]  // Hash
+   ? aCommit[ 2 ]  // Author
+   ? aCommit[ 3 ]  // Date
+   ? aCommit[ 4 ]  // Message
+next</code></pre>
+
+<h3>Clone Repository</h3>
+<pre><code>oGit := TGit():New()
+oGit:Clone( "https://github.com/user/repo.git", "C:\Projects\repo" )</code></pre>
+
+</main>
+<script src="../../js/docs.js"></script>
+</body>
+</html>
