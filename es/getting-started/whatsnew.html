@@ -18,6 +18,43 @@ Esta p&aacute;gina resume los cambios y adiciones en FiveWin para Harbour/xHarbo
 versi&oacute;n 26.05 (Mayo 2026), en relaci&oacute;n con la versi&oacute;n anterior 26.03 (Marzo 2026).
 </p>
 
+<h2 id="remoteview">Remote View &mdash; Vista y Control en Vivo desde el Navegador</h2>
+<p>
+Un nuevo subsistema (<code>source/internal/remoteview/</code>) permite que cualquier navegador en la
+LAN vea y controle una ventana FWH en tiempo real. La ventana se captura por GDI+, se codifica
+diferencialmente en parches JPEG y se transmite por WebSocket a un canvas HTML5. Los clics,
+movimiento, rueda y teclado regresan del navegador a la ventana real mediante <code>PostMessage</code>.
+Dos modos:
+</p>
+<ul>
+  <li><strong>Cliente &uacute;nico</strong> &mdash; <code>RemoteViewStart(hWnd, nPort)</code>
+    utiliza un temporizador WM_TIMER en el hilo GUI. El temporizador sobrevive a bucles modales
+    (MsgInfo, di&aacute;logos, men&uacute;s). Sin necesidad de <code>-mt</code>.</li>
+  <li><strong>Multi-cliente</strong> &mdash; <code>RemoteViewServe(hWnd, nPort)</code>
+    se ejecuta dentro de un hilo Harbour (<code>hb_threadStart</code>), cada uno en su propio puerto
+    con estado aislado por TLS. Varios navegadores pueden ver y controlar la misma ventana
+    simult&aacute;neamente. Requiere Harbour MT VM (<code>-mt</code>).</li>
+</ul>
+<p>
+El motor de captura compone los popups owned (di&aacute;logos hijos, MessageBoxes) sobre la ventana
+principal, y soporta interacci&oacute;n completa con la barra de t&iacute;tulo: arrastrar para mover, bordes
+de redimensionamiento, botones de min/max/cerrar, y doble clic para alternar maximizar —
+todo compatible con DWM de Windows 10/11. Captura diferencial inteligente con hash FNV-1a
+para omitir frames id&eacute;nticos y ahorrar ancho de banda.
+</p>
+<p>
+API: <code>RemoteViewStart(hWnd, nPort)</code>, <code>RemoteViewStop()</code>,
+<code>RemoteViewSetOffset(nX, nY)</code>, <code>RemoteViewServe(hWnd, nPort, nOffX, nOffY)</code>,
+<code>RemoteViewStopAll()</code>. Consulta la documentaci&oacute;n completa en
+<a href="../../en/internet/remoteview.html">Remote View</a>.
+</p>
+<p>
+Ejemplos: <code>samples/RemoteView/testrv.prg</code>, <code>testrv2.prg</code> (di&aacute;logo),
+<code>testrvmt.prg</code> (multi-cliente). Ya integrado en
+<code>samples/database/fivedburv.prg</code> (FiveDBU)
+via <code>ON INIT RemoteViewStart()</code>.
+</p>
+
 <h2 id="documentation">Documentaci&oacute;n HTML Completa</h2>
 <p>
 El cambio m&aacute;s visible: un sitio completo de documentaci&oacute;n HTML que cubre m&aacute;s de 200 clases
@@ -182,43 +219,6 @@ para aplicaciones de 64 bits. Exporta las 45 funciones de la DLL original de 32 
   <li><strong>BWCCMessageBox:</strong> cuadro de mensaje con estilo Borland con icono BWCC
     y botones BorBtn</li>
 </ul>
-
-<h2 id="remoteview">Remote View &mdash; Vista y Control en Vivo desde el Navegador</h2>
-<p>
-Un nuevo subsistema (<code>source/internal/remoteview/</code>) permite que cualquier navegador en la
-LAN vea y controle una ventana FWH en tiempo real. La ventana se captura por GDI+, se codifica
-diferencialmente en parches JPEG y se transmite por WebSocket a un canvas HTML5. Los clics,
-movimiento, rueda y teclado regresan del navegador a la ventana real mediante <code>PostMessage</code>.
-Dos modos:
-</p>
-<ul>
-  <li><strong>Cliente &uacute;nico</strong> &mdash; <code>RemoteViewStart(hWnd, nPort)</code>
-    utiliza un temporizador WM_TIMER en el hilo GUI. El temporizador sobrevive a bucles modales
-    (MsgInfo, di&aacute;logos, men&uacute;s). Sin necesidad de <code>-mt</code>.</li>
-  <li><strong>Multi-cliente</strong> &mdash; <code>RemoteViewServe(hWnd, nPort)</code>
-    se ejecuta dentro de un hilo Harbour (<code>hb_threadStart</code>), cada uno en su propio puerto
-    con estado aislado por TLS. Varios navegadores pueden ver y controlar la misma ventana
-    simult&aacute;neamente. Requiere Harbour MT VM (<code>-mt</code>).</li>
-</ul>
-<p>
-El motor de captura compone los popups owned (di&aacute;logos hijos, MessageBoxes) sobre la ventana
-principal, y soporta interacci&oacute;n completa con la barra de t&iacute;tulo: arrastrar para mover, bordes
-de redimensionamiento, botones de min/max/cerrar, y doble clic para alternar maximizar —
-todo compatible con DWM de Windows 10/11. Captura diferencial inteligente con hash FNV-1a
-para omitir frames id&eacute;nticos y ahorrar ancho de banda.
-</p>
-<p>
-API: <code>RemoteViewStart(hWnd, nPort)</code>, <code>RemoteViewStop()</code>,
-<code>RemoteViewSetOffset(nX, nY)</code>, <code>RemoteViewServe(hWnd, nPort, nOffX, nOffY)</code>,
-<code>RemoteViewStopAll()</code>. Consulta la documentaci&oacute;n completa en
-<a href="../../en/internet/remoteview.html">Remote View</a>.
-</p>
-<p>
-Ejemplos: <code>samples/RemoteView/testrv.prg</code>, <code>testrv2.prg</code> (di&aacute;logo),
-<code>testrvmt.prg</code> (multi-cliente). Ya integrado en
-<code>samples/database/fivedburv.prg</code> (FiveDBU)
-via <code>ON INIT RemoteViewStart()</code>.
-</p>
 
 <h2 id="dark-mode">Modo Oscuro Nativo</h2>
 <p>

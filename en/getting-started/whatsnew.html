@@ -18,6 +18,43 @@ This page summarizes the changes and additions in FiveWin for Harbour/xHarbour
 version 26.05 (May 2026), relative to the previous release 26.03 (March 2026).
 </p>
 
+<h2 id="remoteview">Remote View &mdash; Browser Live View &amp; Control</h2>
+<p>
+A new subsystem (<code>source/internal/remoteview/</code>) lets any browser on the
+LAN see and control a live FWH window in real time. The window is captured by GDI+,
+differentially encoded as JPEG patches, and streamed over a WebSocket to an HTML5
+canvas. Mouse clicks, movement, wheel, and keyboard input flow back from the browser
+to the real window via <code>PostMessage</code>. Two modes:
+</p>
+<ul>
+  <li><strong>Single-client</strong> &mdash; <code>RemoteViewStart(hWnd, nPort)</code>
+    uses a WM_TIMER pump in the GUI thread. The timer survives modal loops (MsgInfo,
+    dialogs, menus), so the browser stays live. No <code>-mt</code> required.</li>
+  <li><strong>Multi-client</strong> &mdash; <code>RemoteViewServe(hWnd, nPort)</code>
+    runs inside a Harbour thread (<code>hb_threadStart</code>), each on its own port
+    with TLS-isolated state. Multiple browsers can view and control the same window
+    simultaneously. Requires Harbour MT VM (<code>-mt</code>).</li>
+</ul>
+<p>
+The capture engine composites owned popups (child dialogs, MessageBoxes) on top of
+the main window, and supports full title-bar interaction: drag to move, resize edges,
+min/max/close buttons, and double-click to toggle maximize — all DWM-aware for
+Windows 10/11. Smart differential capture with FNV-1a hashing skips identical frames
+to save bandwidth.
+</p>
+<p>
+API: <code>RemoteViewStart(hWnd, nPort)</code>, <code>RemoteViewStop()</code>,
+<code>RemoteViewSetOffset(nX, nY)</code>, <code>RemoteViewServe(hWnd, nPort, nOffX, nOffY)</code>,
+<code>RemoteViewStopAll()</code>. See the full
+<a href="../../en/internet/remoteview.html">Remote View</a> documentation.
+</p>
+<p>
+Samples: <code>samples/RemoteView/testrv.prg</code>, <code>testrv2.prg</code> (dialog),
+<code>testrvmt.prg</code> (multi-client). Already integrated in
+<code>samples/database/fivedburv.prg</code> (FiveDBU)
+via <code>ON INIT RemoteViewStart()</code>.
+</p>
+
 <h2 id="documentation">Comprehensive HTML Documentation</h2>
 <p>
 The most visible change: a complete HTML documentation site covering 200+ classes
@@ -177,43 +214,6 @@ for 64-bit applications. Exports all 45 functions of the original 32-bit DLL:
   <li><strong>BWCCMessageBox:</strong> Borland-styled message box with BWCC icon
     and BorBtn buttons</li>
 </ul>
-
-<h2 id="remoteview">Remote View &mdash; Browser Live View &amp; Control</h2>
-<p>
-A new subsystem (<code>source/internal/remoteview/</code>) lets any browser on the
-LAN see and control a live FWH window in real time. The window is captured by GDI+,
-differentially encoded as JPEG patches, and streamed over a WebSocket to an HTML5
-canvas. Mouse clicks, movement, wheel, and keyboard input flow back from the browser
-to the real window via <code>PostMessage</code>. Two modes:
-</p>
-<ul>
-  <li><strong>Single-client</strong> &mdash; <code>RemoteViewStart(hWnd, nPort)</code>
-    uses a WM_TIMER pump in the GUI thread. The timer survives modal loops (MsgInfo,
-    dialogs, menus), so the browser stays live. No <code>-mt</code> required.</li>
-  <li><strong>Multi-client</strong> &mdash; <code>RemoteViewServe(hWnd, nPort)</code>
-    runs inside a Harbour thread (<code>hb_threadStart</code>), each on its own port
-    with TLS-isolated state. Multiple browsers can view and control the same window
-    simultaneously. Requires Harbour MT VM (<code>-mt</code>).</li>
-</ul>
-<p>
-The capture engine composites owned popups (child dialogs, MessageBoxes) on top of
-the main window, and supports full title-bar interaction: drag to move, resize edges,
-min/max/close buttons, and double-click to toggle maximize — all DWM-aware for
-Windows 10/11. Smart differential capture with FNV-1a hashing skips identical frames
-to save bandwidth.
-</p>
-<p>
-API: <code>RemoteViewStart(hWnd, nPort)</code>, <code>RemoteViewStop()</code>,
-<code>RemoteViewSetOffset(nX, nY)</code>, <code>RemoteViewServe(hWnd, nPort, nOffX, nOffY)</code>,
-<code>RemoteViewStopAll()</code>. See the full
-<a href="../../en/internet/remoteview.html">Remote View</a> documentation.
-</p>
-<p>
-Samples: <code>samples/RemoteView/testrv.prg</code>, <code>testrv2.prg</code> (dialog),
-<code>testrvmt.prg</code> (multi-client). Already integrated in
-<code>samples/database/fivedburv.prg</code> (FiveDBU)
-via <code>ON INIT RemoteViewStart()</code>.
-</p>
 
 <h2 id="dark-mode">Native Dark Mode</h2>
 <p>
