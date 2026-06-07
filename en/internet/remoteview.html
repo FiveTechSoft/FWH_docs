@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remote View - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>Remote View</h1>
+<p class="class-source">Sources: <code>source/internal/remoteview/remoteviewfw.c</code>, <code>server.c</code>, <code>capture.c</code></p>
+
+<p>
+Remote View lets any browser on the LAN see and control a live FWH window.
+The window is captured in real time by GDI+, streamed as JPEG frames over
+a WebSocket, and drawn on an HTML5 canvas. Mouse clicks, movement, wheel,
+and keyboard input flow back from the browser to the real window via
+<code>PostMessage</code>.
+</p>
+
+<h2 id="quick-start">Quick Start</h2>
+
+<p>
+Start a server in <code>ON INIT</code> and stop it in <code>VALID</code>.
+Point any browser on the LAN to <code>http://&lt;ip&gt;:8080</code>:
+</p>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oWnd, oSay, oBtn
+   local nClicks := 0
+
+   DEFINE WINDOW oWnd TITLE "FWH Remote View" ;
+      FROM 4, 4 TO 22, 60
+
+   @ 1, 2 SAY oSay PROMPT "Open http://localhost:8080" ;
+      OF oWnd SIZE 300, 20
+
+   @ 3, 2 BUTTON oBtn PROMPT "Click (local or remote)" ;
+      OF oWnd SIZE 160, 30 ;
+      ACTION ( nClicks++, oSay:SetText( "Clicks: " + Str( nClicks, 4 ) ) )
+
+   ACTIVATE WINDOW oWnd ;
+      ON INIT ( RemoteViewStart( oWnd:hWnd, 8080 ), ;
+                oWnd:SetText( "FWH Remote View - http://localhost:8080" ) ) ;
+      VALID ( RemoteViewStop(), .T. )
+
+return nil</code></pre>
+
+<p>
+The browser shows the window as-is — buttons, SAYs, GETs, browses, menus, all
+work. Clicks on the canvas become real clicks on the real window.
+</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="mermaid">
+flowchart LR
+    subgraph FWH App
+        W[Window]
+        RV[remoteviewfw.c]
+        S[server.c WebSocket]
+        C[capture.c GDI+]
+    end
+    subgraph Browser
+        CV[HTML5 Canvas]
+        JS[JS input send]
+    end
+    W -->|GDI+ capture| C
+    C -->|JPEG frames| S
+    S -->|WebSocket binary| JS
+    JS -->|drawImage| CV
+    CV -->|pointer/key events| JS
+    JS -->|WebSocket 0x10-0x16| S
+    S -->|PostMessage| W
+    RV -->|start/stop| S
+    RV -->|start/stop| C
+</div>
+
+<table>
+  <thead>
+    <tr><th>Component</th><th>File</th><th>Role</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Harbour binding</td>
+      <td><code>remoteviewfw.c</code></td>
+      <td>Exposes <code>RemoteViewStart/Stop/Serve/StopAll/SetOffset</code> to PRG</td>
+    </tr>
+    <tr>
+      <td>WebSocket server</td>
+      <td><code>server.c</code></td>
+      <td>Single-threaded non-blocking Winsock server, client HTML/JS, binary protocol</td>
+    </tr>
+    <tr>
+      <td>Capture engine</td>
+      <td><code>capture.c</code></td>
+      <td>GDI+ screen capture, differential (changed-region) JPEG encoding, viewport mode</td>
+    </tr>
+    <tr>
+      <td>WebSocket handshake</td>
+      <td><code>sha1.c</code>, <code>base64.c</code></td>
+      <td>SHA-1 hashing and Base64 encoding for the WebSocket upgrade handshake</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="api">Harbour API Reference</h2>
+
+<h3>RemoteViewStart( [hWnd], [nPort] ) &rarr; lOk</h3>
+<p>
+Starts capturing <code>hWnd</code> (default: the active window) and serves it
+on <code>nPort</code> (default 8080). Returns <code>.T.</code> on success.
+</p>
+<p>
+<strong>Pump strategy:</strong> A hidden message-only window owns a
+<code>WM_TIMER</code> (16 ms) that calls <code>ServerTick()</code>. Because the
+timer is dispatched by the thread message loop, it keeps firing even while a
+modal loop (MsgInfo, dialogs, menus) has taken over the loop — exactly what FWH
+needs. No threads, no <code>-mt</code> required.
+</p>
+
+<h3>RemoteViewStop()</h3>
+<p>
+Stops the server, kills the pump timer, frees GDI+, and clears state.
+Call in <code>VALID</code> or before shutdown.
+</p>
+
+<h3>RemoteViewSetOffset( nX, nY )</h3>
+<p>
+Shifts the window image inside the browser viewport by <code>nX</code> pixels
+right and <code>nY</code> pixels down. Default 0,0. Useful during development
+so the real window does not cover the web image on the same monitor.
+Call before <code>RemoteViewStart()</code>.
+</p>
+
+<h3>RemoteViewServe( hWnd, nPort [, nOffX, nOffY] )</h3>
+<p>
+<strong>Blocking.</strong> Starts a server with state isolated by TLS
+(thread-local storage) and pumps <code>ServerTick()</code> in a loop until
+<code>RemoteViewStopAll()</code> is called. Designed to run inside a Harbour
+thread created with <code>hb_threadStart()</code>, so each PRG callback
+(ACTION, bChanged…) executes with the Harbour VM already initialized in that
+thread. <strong>Requires <code>-mt</code></strong> (Harbour MT VM).
+</p>
+
+<h3>RemoteViewStopAll()</h3>
+<p>
+Signals all running <code>RemoteViewServe()</code> loops to exit. Call in
+<code>VALID</code> when using the multi-client MT approach.
+</p>
+
+<h2 id="modes">Two Modes</h2>
+
+<h3>Single-Client Mode (WM_TIMER pump)</h3>
+<p>
+Use <code>RemoteViewStart()</code> in <code>ON INIT</code>. One server, one
+client. No <code>-mt</code> needed. The timer pump runs in the GUI thread and
+survives modal loops. Ideal for most applications.
+</p>
+
+<table>
+  <thead>
+    <tr><th>Sample</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>samples/RemoteView/testrv.prg</code></td>
+      <td>Basic window with SAY + BUTTON, single client on port 8080</td>
+    </tr>
+    <tr>
+      <td><code>samples/RemoteView/testrv2.prg</code></td>
+      <td>Main window + child dialog. The capture composites owned popups, so the dialog appears in the browser too</td>
+    </tr>
+    <tr>
+      <td><code>samples/database/fivedburv.prg</code></td>
+      <td>FiveDBU integrated with Remote View: <code>ON INIT RemoteViewStart()</code> + right-click popup menu</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Multi-Client Mode (Harbour threads + -mt)</h3>
+<p>
+Use <code>hb_threadStart()</code> to launch N instances of
+<code>RemoteViewServe()</code>, each on its own port. TLS state isolation
+prevents the instances from stepping on each other. Multiple browsers can
+view and control the same window simultaneously, each on a different port.
+Stop with <code>RemoteViewStopAll()</code>.
+</p>
+
+<pre><code class="language-harbour">#define N_CLIENTS  3
+#define BASE_PORT  8080
+
+STATIC FUNCTION StartServers( oWnd )
+
+   local i
+
+   for i := 0 TO N_CLIENTS - 1
+      hb_threadStart( {| h, p | RemoteViewServe( h, p, 200, 200 ) }, ;
+                      oWnd:hWnd, BASE_PORT + i )
+   next
+
+   oWnd:SetText( "FWH Remote View MT - " + LTrim( Str( N_CLIENTS ) ) + ;
+                 " servers (8080.." + LTrim( Str( BASE_PORT + N_CLIENTS - 1 ) ) + ")" )
+
+return nil</code></pre>
+
+<p>
+Sample: <code>samples/RemoteView/testrvmt.prg</code>.
+Compile with <code>build_new.bat testrvmt mt</code>
+(<code>mt</code> as 3rd argument selects the Harbour MT VM).
+</p>
+
+<h2 id="protocol">Browser-Client Protocol</h2>
+
+<p>
+The server serves an inline HTML/JS client on <code>GET /</code>. The built-in
+client opens a WebSocket to <code>/ws</code> and uses a compact binary protocol:
+</p>
+
+<table>
+  <thead>
+    <tr><th>Byte 0</th><th>Message</th><th>Payload</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>0x01</code></td><td>Full frame</td><td>w(2) h(2) originX(2) originY(2) JPEG...</td></tr>
+    <tr><td><code>0x02</code></td><td>Dirty patch</td><td>x(2) y(2) w(2) h(2) originX(2) originY(2) JPEG...</td></tr>
+    <tr><td><code>0x10</code></td><td>Mouse move</td><td>x(2) y(2)</td></tr>
+    <tr><td><code>0x11</code></td><td>Mouse down</td><td>x(2) y(2) button(1)</td></tr>
+    <tr><td><code>0x12</code></td><td>Mouse up</td><td>x(2) y(2) button(1)</td></tr>
+    <tr><td><code>0x13</code></td><td>Key down</td><td>vk(2) modifiers(1) char(2)</td></tr>
+    <tr><td><code>0x14</code></td><td>Key up</td><td>vk(2) modifiers(1)</td></tr>
+    <tr><td><code>0x15</code></td><td>Mouse wheel</td><td>x(2) y(2) delta(2)</td></tr>
+    <tr><td><code>0x16</code></td><td>Viewport size</td><td>w(2) h(2) (client &rarr; server)</td></tr>
+  </tbody>
+</table>
+
+<p>
+All multi-byte integers are little-endian. Coordinates are in the bitmap
+space (mapped to screen coordinates by the server before PostMessage).
+</p>
+
+<h2 id="smart-capture">Smart Capture</h2>
+
+<p>
+The capture engine uses several techniques to minimize bandwidth:
+</p>
+
+<ul>
+  <li><strong>Differential capture:</strong> Only the changed region of the
+    window is JPEG-encoded and sent as a <code>0x02</code> patch. The browser
+    draws it at the correct offset, preserving the rest of the canvas.</li>
+  <li><strong>FNV-1a hash:</strong> Every frame is hashed. Identical consecutive
+    frames are skipped entirely — no JPEG encode, no network send.</li>
+  <li><strong>Viewport mode:</strong> When the browser sends its viewport size
+    (<code>0x16</code>), the capture engine scales the virtual desktop to match
+    the browser canvas. The window is centered within this virtual space.
+    Maximizing the window fills the browser viewport, not the real monitor.</li>
+  <li><strong>Minimize:</strong> When the window is minimized, an iconic
+    representation is drawn and clickable in the browser.</li>
+  <li><strong>Owned popups:</strong> Dialogs and MessageBoxes owned by the
+    captured window are composited on top, so they appear in the browser.</li>
+</ul>
+
+<h2 id="titlebar">Title Bar Interaction</h2>
+
+<p>
+The browser client supports full title-bar interaction:
+</p>
+
+<ul>
+  <li><strong>Drag to move:</strong> Click and drag the title bar area to move the window</li>
+  <li><strong>Resize edges:</strong> 8-pixel borders on all sides and corners for resizing</li>
+  <li><strong>Double-click title bar:</strong> Toggles maximize/restore</li>
+  <li><strong>Min/Max/Close buttons:</strong> Clickable with visual hover feedback</li>
+  <li><strong>DWM-aware:</strong> Adjusts for modern Windows 10/11 DWM extended frame bounds so button hit-testing works correctly with rounded corners and shadows</li>
+</ul>
+
+<h2 id="keyboard">Keyboard Support</h2>
+
+<p>
+The browser client captures keyboard events and maps them to Windows virtual-key
+codes. Standard keys (Enter, Escape, Backspace, Tab, arrows, function keys,
+alphanumeric) are supported. Modifier keys (Shift, Ctrl, Alt, Meta, CapsLock)
+are tracked and sent with each key event.
+</p>
+
+<h2 id="security">Security Note</h2>
+
+<div class="warning">
+<p>
+<strong>Warning:</strong> The server binds <code>INADDR_ANY</code> (0.0.0.0)
+with no authentication. Any device on the LAN can see and control the window.
+<strong>Use only on trusted networks</strong> until a local-only or
+authentication option is added.
+</p>
+</div>
+
+<h2 id="build">Compilation</h2>
+
+<p>
+Remote View is linked into all FWH libraries — no extra libs needed.
+The WebSocket server uses Winsock (<code>ws2_32.lib</code>) and the
+capture engine uses GDI+ (<code>gdiplus.lib</code>). Both are linked
+automatically by <code>build_new.bat</code> for all compiler variants.
+</p>
+
+<p>
+The internal <code>RemoteView.exe</code> in
+<code>source/internal/remoteview/</code> is a pure-C reference implementation
+that does not require FiveWin — a minimal Win32 window served by the same
+server and capture engine.
+</p>
+
+<ul>
+  <li><strong>Single client:</strong> <code>build_new.bat testrv</code> (any variant)</li>
+  <li><strong>Multi-client:</strong> <code>build_new.bat testrvmt mt</code> (Harbour MT VM required)</li>
+</ul>
+
+<h2 id="integration">Integration Pattern</h2>
+
+<p>
+The recommended pattern for adding Remote View to any FWH application:
+</p>
+
+<pre><code class="language-harbour">ACTIVATE WINDOW oWnd ;
+   ON INIT ( RemoteViewSetOffset( 200, 200 ), ;          // optional dev offset
+             If( RemoteViewStart( oWnd:hWnd, 8080 ), ;
+                 oWnd:SetText( "App - http://localhost:8080" ), ;
+                 MsgStop( "Could not start Remote View" ) ) ) ;
+   VALID ( RemoteViewStop(), .T. )</code></pre>
+
+<p>
+For apps that need multiple simultaneous clients, use
+<code>hb_threadStart</code> + <code>RemoteViewServe</code> +
+<code>RemoteViewStopAll</code> (see <a href="#modes">Multi-Client Mode</a> above).
+</p>
+
+<h2 id="samples">Samples</h2>
+
+<table>
+  <thead>
+    <tr><th>File</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>samples/RemoteView/testrv.prg</code></td>
+      <td>Minimal single-client demo: window + SAY + BUTTON on port 8080</td>
+    </tr>
+    <tr>
+      <td><code>samples/RemoteView/testrv2.prg</code></td>
+      <td>Main window + child dialog (owned popup compositing)</td>
+    </tr>
+    <tr>
+      <td><code>samples/RemoteView/testrvmt.prg</code></td>
+      <td>Multi-client: 3 servers on ports 8080–8082 via Harbour threads (-mt)</td>
+    </tr>
+    <tr>
+      <td><code>samples/database/fivedburv.prg</code></td>
+      <td>FiveDBU with integrated Remote View on port 8080</td>
+    </tr>
+  </tbody>
+</table>
+
+</main>
+<aside id="toc">
+  <div id="toc-title">On this page</div>
+  <div id="toc-links"></div>
+</aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

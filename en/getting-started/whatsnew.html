@@ -178,6 +178,43 @@ for 64-bit applications. Exports all 45 functions of the original 32-bit DLL:
     and BorBtn buttons</li>
 </ul>
 
+<h2 id="remoteview">Remote View &mdash; Browser Live View &amp; Control</h2>
+<p>
+A new subsystem (<code>source/internal/remoteview/</code>) lets any browser on the
+LAN see and control a live FWH window in real time. The window is captured by GDI+,
+differentially encoded as JPEG patches, and streamed over a WebSocket to an HTML5
+canvas. Mouse clicks, movement, wheel, and keyboard input flow back from the browser
+to the real window via <code>PostMessage</code>. Two modes:
+</p>
+<ul>
+  <li><strong>Single-client</strong> &mdash; <code>RemoteViewStart(hWnd, nPort)</code>
+    uses a WM_TIMER pump in the GUI thread. The timer survives modal loops (MsgInfo,
+    dialogs, menus), so the browser stays live. No <code>-mt</code> required.</li>
+  <li><strong>Multi-client</strong> &mdash; <code>RemoteViewServe(hWnd, nPort)</code>
+    runs inside a Harbour thread (<code>hb_threadStart</code>), each on its own port
+    with TLS-isolated state. Multiple browsers can view and control the same window
+    simultaneously. Requires Harbour MT VM (<code>-mt</code>).</li>
+</ul>
+<p>
+The capture engine composites owned popups (child dialogs, MessageBoxes) on top of
+the main window, and supports full title-bar interaction: drag to move, resize edges,
+min/max/close buttons, and double-click to toggle maximize — all DWM-aware for
+Windows 10/11. Smart differential capture with FNV-1a hashing skips identical frames
+to save bandwidth.
+</p>
+<p>
+API: <code>RemoteViewStart(hWnd, nPort)</code>, <code>RemoteViewStop()</code>,
+<code>RemoteViewSetOffset(nX, nY)</code>, <code>RemoteViewServe(hWnd, nPort, nOffX, nOffY)</code>,
+<code>RemoteViewStopAll()</code>. See the full
+<a href="../../en/internet/remoteview.html">Remote View</a> documentation.
+</p>
+<p>
+Samples: <code>samples/RemoteView/testrv.prg</code>, <code>testrv2.prg</code> (dialog),
+<code>testrvmt.prg</code> (multi-client). Already integrated in
+<code>samples/database/fivedburv.prg</code> (FiveDBU)
+via <code>ON INIT RemoteViewStart()</code>.
+</p>
+
 <h2 id="dark-mode">Native Dark Mode</h2>
 <p>
 Print Preview (<code>TPreview</code>) now supports native dark mode via
@@ -265,7 +302,8 @@ and <a href="../../en/data/mariadb.html">MariaDB / MySQL</a> pages.
 <h2 id="conclusion">Summary</h2>
 <p>
 FWH 26.05 represents a major documentation effort with 200+ new HTML class
-reference pages, combined with the TGroupEx accordion control, full BWCC 64-bit
+reference pages, combined with the new Remote View subsystem for browser-based
+window control, the TGroupEx accordion control, full BWCC 64-bit
 support, native dark mode for Print Preview, and multiple bug fixes. The new
 documentation is published at
 <a href="https://fivetechsoft.github.io/FWH_docs/">fivetechsoft.github.io/FWH_docs</a>

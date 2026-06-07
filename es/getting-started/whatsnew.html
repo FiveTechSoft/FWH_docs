@@ -183,6 +183,43 @@ para aplicaciones de 64 bits. Exporta las 45 funciones de la DLL original de 32 
     y botones BorBtn</li>
 </ul>
 
+<h2 id="remoteview">Remote View &mdash; Vista y Control en Vivo desde el Navegador</h2>
+<p>
+Un nuevo subsistema (<code>source/internal/remoteview/</code>) permite que cualquier navegador en la
+LAN vea y controle una ventana FWH en tiempo real. La ventana se captura por GDI+, se codifica
+diferencialmente en parches JPEG y se transmite por WebSocket a un canvas HTML5. Los clics,
+movimiento, rueda y teclado regresan del navegador a la ventana real mediante <code>PostMessage</code>.
+Dos modos:
+</p>
+<ul>
+  <li><strong>Cliente &uacute;nico</strong> &mdash; <code>RemoteViewStart(hWnd, nPort)</code>
+    utiliza un temporizador WM_TIMER en el hilo GUI. El temporizador sobrevive a bucles modales
+    (MsgInfo, di&aacute;logos, men&uacute;s). Sin necesidad de <code>-mt</code>.</li>
+  <li><strong>Multi-cliente</strong> &mdash; <code>RemoteViewServe(hWnd, nPort)</code>
+    se ejecuta dentro de un hilo Harbour (<code>hb_threadStart</code>), cada uno en su propio puerto
+    con estado aislado por TLS. Varios navegadores pueden ver y controlar la misma ventana
+    simult&aacute;neamente. Requiere Harbour MT VM (<code>-mt</code>).</li>
+</ul>
+<p>
+El motor de captura compone los popups owned (di&aacute;logos hijos, MessageBoxes) sobre la ventana
+principal, y soporta interacci&oacute;n completa con la barra de t&iacute;tulo: arrastrar para mover, bordes
+de redimensionamiento, botones de min/max/cerrar, y doble clic para alternar maximizar —
+todo compatible con DWM de Windows 10/11. Captura diferencial inteligente con hash FNV-1a
+para omitir frames id&eacute;nticos y ahorrar ancho de banda.
+</p>
+<p>
+API: <code>RemoteViewStart(hWnd, nPort)</code>, <code>RemoteViewStop()</code>,
+<code>RemoteViewSetOffset(nX, nY)</code>, <code>RemoteViewServe(hWnd, nPort, nOffX, nOffY)</code>,
+<code>RemoteViewStopAll()</code>. Consulta la documentaci&oacute;n completa en
+<a href="../../en/internet/remoteview.html">Remote View</a>.
+</p>
+<p>
+Ejemplos: <code>samples/RemoteView/testrv.prg</code>, <code>testrv2.prg</code> (di&aacute;logo),
+<code>testrvmt.prg</code> (multi-cliente). Ya integrado en
+<code>samples/database/fivedburv.prg</code> (FiveDBU)
+via <code>ON INIT RemoteViewStart()</code>.
+</p>
+
 <h2 id="dark-mode">Modo Oscuro Nativo</h2>
 <p>
 La Vista Previa de Impresi&oacute;n (<code>TPreview</code>) ahora soporta el modo oscuro nativo mediante
@@ -270,7 +307,8 @@ y <a href="../../es/data/mariadb.html">MariaDB / MySQL</a>.
 <h2 id="conclusion">Resumen</h2>
 <p>
 FWH 26.05 representa un importante esfuerzo de documentaci&oacute;n con m&aacute;s de 200 nuevas p&aacute;ginas HTML de
-referencia de clases, combinado con el control de acorde&oacute;n TGroupEx, soporte completo de BWCC 64
+referencia de clases, combinado con el nuevo subsistema Remote View para control remoto de ventanas desde
+el navegador, el control de acorde&oacute;n TGroupEx, soporte completo de BWCC 64
 bits, modo oscuro nativo para Vista Previa de Impresi&oacute;n y m&uacute;ltiples correcciones de errores. La nueva
 documentaci&oacute;n se publica en
 <a href="https://fivetechsoft.github.io/FWH_docs/">fivetechsoft.github.io/FWH_docs</a>

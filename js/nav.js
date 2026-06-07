@@ -133,6 +133,7 @@
       'internet/tftp.html', 'TFtp',
       'internet/twhatsapp.html', 'TWhatsApp',
       'internet/topenai.html', 'TOpenAI',
+      'internet/remoteview.html', 'Remote View',
       'internet/tai.html', L.aiClasses
     ]) +
     section(L.ref, [
