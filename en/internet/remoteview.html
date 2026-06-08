@@ -383,11 +383,45 @@ For apps that need multiple simultaneous clients, use
       <td>Multi-client: 3 servers on ports 8080–8082 via Harbour threads (-mt)</td>
     </tr>
     <tr>
+      <td><code>samples/RemoteView/testrvauth.prg</code></td>
+      <td>Login before launch: remote user authenticates in a dialog, then the app UI opens</td>
+    </tr>
+    <tr>
       <td><code>samples/database/fivedburv.prg</code></td>
       <td>FiveDBU with integrated Remote View on port 8080</td>
     </tr>
   </tbody>
 </table>
+
+<h2 id="auth-pattern">Authentication Pattern (login before launch)</h2>
+<p>
+  <code>testrvauth.prg</code> shows how to make a remote user identify before the
+  application is shown. Because RemoteView streams an already-running window and
+  composites its <em>owned</em> popups, the login is just a normal FiveWin dialog
+  owned by the served window &mdash; the remote user sees it and fills it in. On
+  valid credentials the app UI opens (also owned by the served window, so it appears
+  instantly); on failure the session is closed.
+</p>
+<p>
+  <strong>Gotcha &mdash; do not show modal UI inside <code>ON INIT</code>.</strong>
+  If you launch the login dialog synchronously in <code>ON INIT</code>, the host
+  window has not presented its first frame yet, so <code>PrintWindow</code> (the
+  capture path) blits it <em>black</em> before and during login. Defer the login
+  until after the window paints &mdash; a one-shot <code>TTimer</code> works well:
+</p>
+<pre><code>ACTIVATE WINDOW oWnd ON INIT ( RemoteViewStart( oWnd:hWnd, 8080 ), DeferLogin( oWnd ) )
+
+STATIC FUNCTION DeferLogin( oWnd )
+   LOCAL oTmr
+   DEFINE TIMER oTmr INTERVAL 250 OF oWnd ;
+      ACTION ( oTmr:DeActivate(), Login( oWnd ) )   // 1-shot: deactivate, then show login
+   ACTIVATE TIMER oTmr
+RETURN NIL</code></pre>
+<p>
+  For real deployments authenticate over the TLS multi-client path
+  (<code>RemoteViewServe</code> + <code>-mt</code>) and store credentials hashed:
+  the single-client path is plain HTTP/WS, so credentials would travel in clear.
+</p>
 
 </main>
 <aside id="toc">

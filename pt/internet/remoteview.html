@@ -397,11 +397,45 @@ use <code>hb_threadStart</code> + <code>RemoteViewServe</code> +
       <td>Multi-cliente: 3 servidores nas portas 8080&ndash;8082 via threads Harbour (-mt)</td>
     </tr>
     <tr>
+      <td><code>samples/RemoteView/testrvauth.prg</code></td>
+      <td>Login antes de lançar: o utilizador remoto identifica-se num diálogo e depois a app abre</td>
+    </tr>
+    <tr>
       <td><code>samples/database/fivedburv.prg</code></td>
       <td>FiveDBU com Remote View integrado na porta 8080</td>
     </tr>
   </tbody>
 </table>
+
+<h2 id="auth-pattern">Padrão de autenticação (login antes de lançar)</h2>
+<p>
+  <code>testrvauth.prg</code> mostra como fazer um utilizador remoto identificar-se
+  antes de mostrar a aplicação. Como o RemoteView transmite uma janela já em execução
+  e compõe os seus popups <em>owned</em>, o login é um diálogo FiveWin normal owned
+  pela janela servida &mdash; o remoto vê-o e preenche-o. Com credenciais válidas a UI
+  da app abre (também owned pela janela servida, logo aparece de imediato); se falham,
+  a sessão é fechada.
+</p>
+<p>
+  <strong>Atenção &mdash; não mostre UI modal dentro de <code>ON INIT</code>.</strong>
+  Se lançar o diálogo de login de forma síncrona em <code>ON INIT</code>, a janela
+  anfitriã ainda não apresentou o seu primeiro frame, por isso o <code>PrintWindow</code>
+  (o caminho de captura) bli­ta-a a <em>preto</em> antes e durante o login. Adie o login
+  até a janela pintar &mdash; um <code>TTimer</code> de um disparo funciona bem:
+</p>
+<pre><code>ACTIVATE WINDOW oWnd ON INIT ( RemoteViewStart( oWnd:hWnd, 8080 ), DeferLogin( oWnd ) )
+
+STATIC FUNCTION DeferLogin( oWnd )
+   LOCAL oTmr
+   DEFINE TIMER oTmr INTERVAL 250 OF oWnd ;
+      ACTION ( oTmr:DeActivate(), Login( oWnd ) )   // 1 disparo: desativa e mostra o login
+   ACTIVATE TIMER oTmr
+RETURN NIL</code></pre>
+<p>
+  Em produção autentique sobre o caminho multi-cliente com TLS
+  (<code>RemoteViewServe</code> + <code>-mt</code>) e guarde as credenciais com hash:
+  o caminho single-client é HTTP/WS simples e viajariam em claro.
+</p>
 
 </main>
 <aside id="toc">

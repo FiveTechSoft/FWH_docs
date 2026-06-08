@@ -399,11 +399,45 @@ Para aplicaciones que necesitan varios clientes simult&aacute;neos, use
       <td>Multicliente: 3 servidores en los puertos 8080–8082 mediante hilos de Harbour (-mt)</td>
     </tr>
     <tr>
+      <td><code>samples/RemoteView/testrvauth.prg</code></td>
+      <td>Login antes de lanzar: el usuario remoto se identifica en un diálogo y luego se abre la app</td>
+    </tr>
+    <tr>
       <td><code>samples/database/fivedburv.prg</code></td>
       <td>FiveDBU con Remote View integrado en el puerto 8080</td>
     </tr>
   </tbody>
 </table>
+
+<h2 id="auth-pattern">Patrón de autenticación (login antes de lanzar)</h2>
+<p>
+  <code>testrvauth.prg</code> muestra cómo hacer que un usuario remoto se identifique
+  antes de mostrar la aplicación. Como RemoteView transmite una ventana ya en marcha
+  y composita sus popups <em>owned</em>, el login es un diálogo FiveWin normal owned
+  por la ventana servida &mdash; el remoto lo ve y lo rellena. Con credenciales
+  válidas se abre la UI de la app (también owned por la ventana servida, así aparece
+  al instante); si fallan, se cierra la sesión.
+</p>
+<p>
+  <strong>Cuidado &mdash; no muestres UI modal dentro de <code>ON INIT</code>.</strong>
+  Si lanzas el diálogo de login de forma síncrona en <code>ON INIT</code>, la ventana
+  anfitriona aún no ha presentado su primer frame, así que <code>PrintWindow</code>
+  (la ruta de captura) la bli­tea <em>negra</em> antes y durante el login. Difiere el
+  login hasta que la ventana pinte &mdash; un <code>TTimer</code> de un disparo va bien:
+</p>
+<pre><code>ACTIVATE WINDOW oWnd ON INIT ( RemoteViewStart( oWnd:hWnd, 8080 ), DeferLogin( oWnd ) )
+
+STATIC FUNCTION DeferLogin( oWnd )
+   LOCAL oTmr
+   DEFINE TIMER oTmr INTERVAL 250 OF oWnd ;
+      ACTION ( oTmr:DeActivate(), Login( oWnd ) )   // 1 disparo: desactiva y muestra el login
+   ACTIVATE TIMER oTmr
+RETURN NIL</code></pre>
+<p>
+  En producción autentica sobre la ruta multicliente con TLS
+  (<code>RemoteViewServe</code> + <code>-mt</code>) y guarda las credenciales
+  hasheadas: la ruta single-client es HTTP/WS plano y viajarían en claro.
+</p>
 
 </main>
 <aside id="toc">
