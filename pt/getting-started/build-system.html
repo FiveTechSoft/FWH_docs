@@ -260,6 +260,42 @@ test.rc</code></pre>
     </tbody>
   </table>
 
+  <h3 id="makes-projects">Projetos de teste por compilador (makes/)</h3>
+  <p>
+    A pasta <code>makes/</code> inclui um projeto FiveWin mínimo de teste para cada
+    combinação suportada de Harbour/xHarbour &times; compilador C. Cada subpasta contém
+    um <code>test.prg</code> e um <code>go.bat</code> que prepara as ferramentas, compila
+    e executa o programa. Basta entrar (<code>cd</code>) na pasta e rodar
+    <code>go.bat</code>. O título da janela informa a build exata com que foi gerado
+    (ex.: <code>FiveWin | Harbour | MSVC 64</code>), para confirmar num relance qual
+    variante está a executar. Use <code>FW_NORUN=1</code> para compilar sem executar.
+  </p>
+  <p>
+    Os alvos Harbour de 32/64 bits que o <code>hbmk2</code> consegue gerir usam um
+    ficheiro de projeto <code>test.hbp</code>. <code>BCC64</code> e todos os alvos
+    xHarbour são construídos com uma receita manual de <em>compilar&nbsp;+&nbsp;ligar</em>
+    dentro do <code>go.bat</code> (espelhando <code>samples/build_new.bat</code>), porque
+    o <code>hbmk2</code> não consegue gerir essas ferramentas aqui.
+  </p>
+  <table>
+    <thead>
+      <tr><th>Pasta</th><th>Variante</th><th>Driver</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>makes/hb_bcc32</code></td><td>Harbour + BCC 32</td><td>hbmk2 (.hbp)</td></tr>
+      <tr><td><code>makes/hb_gcc32</code></td><td>Harbour + GCC 32</td><td>hbmk2 (.hbp)</td></tr>
+      <tr><td><code>makes/hb_gcc64</code></td><td>Harbour + GCC 64</td><td>hbmk2 (.hbp)</td></tr>
+      <tr><td><code>makes/hb_msvc32</code></td><td>Harbour + MSVC 32</td><td>hbmk2 (.hbp)</td></tr>
+      <tr><td><code>makes/hb_msvc64</code></td><td>Harbour + MSVC 64</td><td>hbmk2 (.hbp)</td></tr>
+      <tr><td><code>makes/hb_bcc64</code></td><td>Harbour + BCC 64</td><td>manual</td></tr>
+      <tr><td><code>makes/xhb_bcc32</code></td><td>xHarbour + BCC 32</td><td>manual</td></tr>
+      <tr><td><code>makes/xhb_bcc64</code></td><td>xHarbour + BCC 64</td><td>manual</td></tr>
+      <tr><td><code>makes/xhb_msvc32</code></td><td>xHarbour + MSVC 32</td><td>manual</td></tr>
+      <tr><td><code>makes/xhb_msvc64</code></td><td>xHarbour + MSVC 64</td><td>manual</td></tr>
+      <tr><td><code>makes/xhb_commercial</code></td><td>xHarbour Commercial + VC98</td><td>manual</td></tr>
+    </tbody>
+  </table>
+
   <h2 id="library-naming">Convenção de Nomes das Bibliotecas</h2>
   <p>
     As bibliotecas do FiveWin seguem uma convenção de nomes que codifica a variante do Harbour e o compilador:
