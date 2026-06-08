@@ -323,6 +323,27 @@ server and capture engine.
   <li><strong>Multi-client:</strong> <code>build_new.bat testrvmt mt</code> (Harbour MT VM required)</li>
 </ul>
 
+<h2 id="compilers">Compiler Support</h2>
+
+<p>
+The single-client Remote View was verified to capture and stream correctly on
+<strong>every Harbour and xHarbour variant, 32 and 64-bit</strong>, across the BCC,
+MSVC and MinGW C compilers. The <code>testrv</code> / <code>testrvmt</code> window title
+reports the running build at runtime (for example <em>&ldquo;Harbour MSVC 64&rdquo;</em>),
+which makes it easy to confirm which toolchain produced a given executable.
+</p>
+<p>
+The multi-client mode (<code>-mt</code>) relies on the Harbour multi-thread VM and its
+threading C API, so it is available on the Harbour BCC32 / MSVC32 / MSVC64 builds;
+xHarbour does not provide that API.
+</p>
+<p>
+<strong>xHarbour Commercial (VC98) is the one exception:</strong> ordinary FiveWin
+applications build and run there, but the GDI+ window capture that Remote View depends on
+(the same path used by <code>SaveAsImage</code>) misbehaves at runtime, so Remote View is
+not supported on that build.
+</p>
+
 <h2 id="integration">Integration Pattern</h2>
 
 <p>
