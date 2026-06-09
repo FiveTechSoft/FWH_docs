@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Exemplo AgenticAI - UI de agente com WebView2 - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>AgenticAI &mdash; UI de agente com WebView2</h1>
+<p class="class-source">Fonte: <code>samples/AgenticAI/agenticai.prg</code> (+ <code>agenticai.hbp</code>, <code>build.bat</code>)</p>
+
+<p>
+AgenticAI é um front-end GUI do FiveWin para o motor agêntico <strong>ccharbour</strong>.
+Executa o mesmo laço de chat em streaming + chamadas de ferramentas que move o console
+<code>cc.exe</code> (<code>CC_Client</code> / <code>CC_AgentRun</code>), mas renderiza-o
+como um painel de chat web moderno hospedado num Edge
+<a href="../../pt/internet/twebview.html">WebView2</a> (<code>TWebView2</code>) embutido
+que preenche um diálogo redimensionável &mdash; sem RichEdit, sem .rc.
+</p>
+
+<div class="mermaid">
+flowchart LR
+    U[Utilizador escreve no webview] -->|SendToFWH| P[OnJsMessage enfileira]
+    P --> T[TTimer inicia o turno]
+    T --> A[CC_AgentRun]
+    A -->|transporte libcurl| L[Stream SSE do LLM]
+    L -->|eventos| E[OnEvent]
+    E -->|oWeb:Eval JS| W[Painel de chat ao vivo]
+    A -->|tool_call| G[Porta de permissoes]
+    G -->|cartao permitir/rejeitar| W
+</div>
+
+<h2 id="ui">O que o painel mostra</h2>
+<ul>
+<li><strong>Bolhas em streaming</strong> &mdash; a resposta chega ao vivo como texto
+simples; no fim do turno o markdown é re-renderizado (tabelas, blocos de código, listas)
+com <code>marked.js</code>.</li>
+<li><strong>Painel recolhível "N ações"</strong> &mdash; linhas por ferramenta com ícones
+(ficheiro / terminal / pesquisa / globo / memória), um indicador pendente que vira check
+verde, ou X vermelho em caso de erro.</li>
+<li><strong>Cartão permitir / rejeitar</strong> &mdash; com "Auto-aprovar" desligado, cada
+ferramenta mutante (<code>shell</code> / <code>write</code> / <code>edit</code>) mostra um
+cartão de confirmação e o turno bloqueia até decidir.</li>
+<li><strong>Cartão ask_user</strong> &mdash; uma pergunta de escolha múltipla ligada ao
+webview (substitui o seletor de console do ccharbour, inutilizável sem console).</li>
+<li><strong>Barra "Código gerado"</strong> com um botão <em>Ver Alterações (Diff)</em> que
+renderiza o diff do ccharbour com linhas vermelhas/verdes.</li>
+<li><strong>Comandos slash</strong> &mdash; <code>/key &lt;api-key&gt;</code> define a chave
+do LLM em tempo de execução, além de <code>/tools</code>, <code>/clear</code>,
+<code>/help</code>.</li>
+</ul>
+
+<h2 id="bridge">Ponte PRG &harr; página</h2>
+<p>
+O PRG conduz a página com <code>oWeb:Eval( jsFunc(...) )</code>; a página responde com
+<code>SendToFWH( action, text )</code>, entregue a <code>TWebView2:bOnBind</code>.
+Regista-se todo o conjunto local de ferramentas (read / write / edit / glob / grep /
+shell / web_search / web_fetch / memory) envolto numa porta de permissões.
+</p>
+
+<h2 id="gotchas">Três armadilhas a lembrar</h2>
+<table>
+<thead><tr><th>Problema</th><th>Causa e solução</th></tr></thead>
+<tbody>
+<tr><td>O clique permitir / ask / stop bloqueia a meio do turno</td>
+<td>O WebView2 não entrega uma segunda chamada de função vinculada enquanto o primeiro
+<code>bOnBind</code> ainda está na pilha. Por isso <code>send</code> apenas <em>enfileira</em>
+o prompt; um <code>TTimer</code> inicia o turno a partir de <code>WM_TIMER</code>, fora de
+qualquer <code>bOnBind</code>, onde os cliques aninhados permitir/ask/stop <em>são</em>
+entregues.</td></tr>
+<tr><td>Acentos / emoji com mojibake</td>
+<td><code>WebView2_Eval</code> converte o seu argumento a partir da codepage ANSI. Passe
+cada codepoint não-ASCII como literal JS escapado <code>\uXXXX</code> em ASCII puro (pares
+substitutos para emoji) para ser independente de codepage.</td></tr>
+<tr><td>O &lt;script&gt; inteiro falhou em silêncio</td>
+<td>Um bloco <code>TEXT INTO</code> do Harbour processa escapes C: <code>'\n'</code> dentro
+do JS tornou-se uma quebra de linha real e partiu a string. Mantenha o JS embutido sem
+backslash &mdash; use <code>String.fromCharCode(10)</code> e regex com classes de
+caracteres (<code>[0-9]</code>, <code>[ ]</code>) em vez de <code>\n</code>,
+<code>\d</code>, <code>\s</code>.</td></tr>
+</tbody>
+</table>
+
+<h2 id="build">Compilar e executar</h2>
+<p>
+É multi-módulo (prg GUI + núcleo ccharbour), portanto compila com o seu próprio
+<code>build.bat</code> (hbmk2 + <code>agenticai.hbp</code>), não com
+<code>samples/build_new.bat</code>. Requer o runtime do WebView2 instalado e uma chave do
+LLM (env <code>DEEPSEEK_API_KEY</code> &hellip; ou <code>/key</code> em tempo de execução).
+</p>
+<pre><code class="language-harbour">cd /d C:\fwteam\samples\AgenticAI
+build.bat</code></pre>
+
+<h2>Ver também</h2><ul><li><a href="../../pt/internet/twebview.html">TWebView2</a></li><li><a href="../../pt/internet/tai.html">Classes de IA</a></li><li><a href="../../pt/reference/classes.html">Classes (alfabético)</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/internet/tai.html">&larr; Classes de IA</a> | <a href="../../pt/ai/ttransformer.html">ttransformer &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script></body>
+</html>

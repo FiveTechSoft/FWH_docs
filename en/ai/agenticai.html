@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AgenticAI sample - WebView2 agent UI - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>AgenticAI &mdash; a WebView2 agent UI</h1>
+<p class="class-source">Source: <code>samples/AgenticAI/agenticai.prg</code> (+ <code>agenticai.hbp</code>, <code>build.bat</code>)</p>
+
+<p>
+AgenticAI is a FiveWin GUI front-end for the <strong>ccharbour</strong> agentic engine.
+It runs the same streaming chat + tool-calling loop that powers the console
+<code>cc.exe</code> (<code>CC_Client</code> / <code>CC_AgentRun</code>), but renders it as a
+modern web chat panel hosted in an embedded Edge <a href="../../en/internet/twebview.html">WebView2</a>
+(<code>TWebView2</code>) that fills a resizable dialog &mdash; no RichEdit, no .rc.
+</p>
+
+<div class="mermaid">
+flowchart LR
+    U[User types in webview] -->|SendToFWH| P[OnJsMessage queues prompt]
+    P --> T[TTimer launches turn]
+    T --> A[CC_AgentRun]
+    A -->|libcurl transport| L[LLM SSE stream]
+    L -->|events| E[OnEvent]
+    E -->|oWeb:Eval JS| W[Chat panel updates live]
+    A -->|tool_call| G[Permission gate]
+    G -->|permit/reject card| W
+</div>
+
+<h2 id="ui">What the panel shows</h2>
+<ul>
+<li><strong>Streaming bubbles</strong> &mdash; the assistant answer streams live as plain
+text; at the end of the turn the raw markdown is re-rendered (tables, code blocks,
+lists) with <code>marked.js</code>.</li>
+<li><strong>Collapsible "N actions" panel</strong> &mdash; per-tool rows with icons
+(file / terminal / search / globe / memory), a pending spinner that becomes a green
+check, or a red X on error.</li>
+<li><strong>Permit / reject card</strong> &mdash; when "Auto-approve" is off, every
+mutating tool (<code>shell</code> / <code>write</code> / <code>edit</code>) shows a
+confirmation card and the turn blocks until you decide.</li>
+<li><strong>ask_user card</strong> &mdash; a multiple-choice question wired to the
+webview (replaces ccharbour's console selector, which cannot prompt without a console).</li>
+<li><strong>"Code generated" bar</strong> with a <em>View Changes (Diff)</em> toggle that
+renders the ccharbour diff with red/green lines.</li>
+<li><strong>Slash commands</strong> &mdash; <code>/key &lt;api-key&gt;</code> sets the LLM
+key at runtime, plus <code>/tools</code>, <code>/clear</code>, <code>/help</code>.</li>
+</ul>
+
+<h2 id="bridge">PRG &harr; page bridge</h2>
+<p>
+PRG drives the page with <code>oWeb:Eval( jsFunc(...) )</code>; the page calls back with
+<code>SendToFWH( action, text )</code>, delivered to <code>TWebView2:bOnBind</code>.
+The full local tool set (read / write / edit / glob / grep / shell / web_search /
+web_fetch / memory) is registered and wrapped in a permission gate.
+</p>
+
+<h2 id="gotchas">Three gotchas worth remembering</h2>
+<table>
+<thead><tr><th>Problem</th><th>Cause &amp; fix</th></tr></thead>
+<tbody>
+<tr><td>Permit / ask / stop click deadlocks mid-turn</td>
+<td>WebView2 does not deliver a second bound-function call while the first
+<code>bOnBind</code> is still on the stack. So <code>send</code> only <em>queues</em> the
+prompt; a <code>TTimer</code> launches the turn from <code>WM_TIMER</code>, outside any
+<code>bOnBind</code>, where the nested permit/ask/stop clicks <em>are</em> delivered.</td></tr>
+<tr><td>Accents / emoji mojibake</td>
+<td><code>WebView2_Eval</code> converts its argument from the ANSI codepage. Pass every
+non-ASCII codepoint as a pure-ASCII <code>\uXXXX</code>-escaped JS string literal
+(surrogate pairs for emoji) so it is codepage-independent.</td></tr>
+<tr><td>The whole &lt;script&gt; silently failed</td>
+<td>A Harbour <code>TEXT INTO</code> block is C-escape-processed: <code>'\n'</code> inside
+JS became a real line feed and broke the string. Keep the embedded JS backslash-free
+&mdash; use <code>String.fromCharCode(10)</code> and character-class regexes
+(<code>[0-9]</code>, <code>[ ]</code>) instead of <code>\n</code>, <code>\d</code>,
+<code>\s</code>.</td></tr>
+</tbody>
+</table>
+
+<h2 id="build">Build &amp; run</h2>
+<p>
+Multi-module (GUI prg + ccharbour core), so it is built with its own
+<code>build.bat</code> (hbmk2 + <code>agenticai.hbp</code>), not
+<code>samples/build_new.bat</code>. It needs the WebView2 runtime installed and an LLM
+key (env <code>DEEPSEEK_API_KEY</code> &hellip; or <code>/key</code> at runtime).
+</p>
+<pre><code class="language-harbour">cd /d C:\fwteam\samples\AgenticAI
+build.bat</code></pre>
+
+<h2>See Also</h2><ul><li><a href="../../en/internet/twebview.html">TWebView2</a></li><li><a href="../../en/internet/tai.html">AI Classes</a></li><li><a href="../../en/reference/classes.html">Classes Alphabetical</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../en/internet/tai.html">&larr; AI Classes</a> | <a href="../../en/ai/ttransformer.html">ttransformer &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script></body>
+</html>
