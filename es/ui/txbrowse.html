@@ -356,6 +356,51 @@ FUNCTION Main()
    CLOSE Customer
 RETURN NIL</code></pre>
 
+<h3>Example 5: Flicker-Free Runtime Resize</h3>
+
+<p>To enlarge or reduce a browse at runtime without flickering, freeze the parent
+dialog with <code>WM_SETREDRAW</code> while moving the control, then repaint dialog
+and browse once. The parent must also have the <code>WS_CLIPCHILDREN</code> style --
+FiveWin dialogs do not set it by default -- otherwise the dialog background erase
+paints over the browse area before the rows are redrawn, which is visible as a
+flash when the browse grows. See <code>samples/testrsz.prg</code>.</p>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "XBrowse.ch"
+
+#define WM_SETREDRAW     11
+#define GWL_STYLE       -16
+#define WS_CLIPCHILDREN  0x2000000
+
+FUNCTION Main()
+   LOCAL oDlg, oBrw
+   LOCAL nHeightIni := 350
+
+   USE Customer NEW SHARED
+
+   DEFINE DIALOG oDlg SIZE 800,500 PIXEL TRUEPIXEL TITLE "Resize without flicker"
+
+   @ 10,10 XBROWSE oBrw OF oDlg SIZE 760,nHeightIni PIXEL AUTOCOLS ALIAS "CUSTOMER"
+   oBrw:CreateFromCode()
+
+   @ 420,10  BUTTON "Up"   SIZE 80,25 PIXEL OF oDlg ACTION SetBrwHeight( oDlg, oBrw, nHeightIni - 60 )
+   @ 420,100 BUTTON "Down" SIZE 80,25 PIXEL OF oDlg ACTION SetBrwHeight( oDlg, oBrw, nHeightIni )
+
+   ACTIVATE DIALOG oDlg CENTERED ;
+      ON INIT SetWindowLong( oDlg:hWnd, GWL_STYLE, ;
+              nOr( GetWindowLong( oDlg:hWnd, GWL_STYLE ), WS_CLIPCHILDREN ) )
+RETURN NIL
+
+STATIC FUNCTION SetBrwHeight( oDlg, oBrw, nHeight )
+
+   oDlg:SendMsg( WM_SETREDRAW, 0, 0 )   // freeze painting
+   oBrw:nHeight := nHeight              // resize: nothing reaches the screen
+   oDlg:SendMsg( WM_SETREDRAW, 1, 0 )   // re-enable
+   oDlg:Refresh()                       // single clean repaint...
+   oBrw:Refresh()                       // ...Refresh() does not cascade to children
+
+RETURN NIL</code></pre>
+
 <h2 id="tips">Tips and Best Practices</h2>
 
 <ul>
@@ -366,6 +411,7 @@ RETURN NIL</code></pre>
   <li><strong>Column <code>bClrEdit</code></strong> controls the colors of the cell while it is being edited (foreground/background block). This is separate from <code>bClrStd</code> which controls display-mode colors.</li>
   <li><strong>Double-buffer painting</strong>: TXBrowse paints to an off-screen bitmap, then blits to screen. This eliminates flicker but means you should call <code>Refresh()</code> -- not <code>Invalidate()</code> -- to force a redraw.</li>
   <li><strong>For very large arrays</strong>, consider using <code>SetRDD()</code> with a temporary DBF instead, as array navigation does not virtualize seeks.</li>
+  <li><strong>Resizing the browse at runtime</strong>: a plain <code>oBrw:nHeight :=</code> assignment repaints twice (immediate <code>MoveWindow()</code> repaint plus the later <code>Refresh()</code>) and flickers. Wrap the resize in <code>WM_SETREDRAW</code> 0/1 on the parent dialog and add <code>WS_CLIPCHILDREN</code> to the dialog style -- see Example 5.</li>
 </ul>
 
 <h2 id="see-also">Ver También</h2>
