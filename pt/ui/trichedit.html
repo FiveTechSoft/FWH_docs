@@ -65,7 +65,7 @@ graph TD
 <tr><td><code>SetStrikeOut( lOnOff )</code></td><td>Toggle strikethrough</td></tr>
 <tr><td><code>SetFontName( cName )</code></td><td>Set font face for selection</td></tr>
 <tr><td><code>SetFontSize( nSize )</code></td><td>Set font size for selection</td></tr>
-<tr><td><code>SetTextColor( nRGB )</code></td><td>Set text color for selection</td></tr>
+<tr><td><code>SetTextColor( nRGB )</code></td><td>Set text color on current selection only. CFM_COLOR mask preserves bold, italic, font, size. No selection → word under caret</td></tr>
 <tr><td><code>SetHighLight( nColor )</code></td><td>Set background highlight color for selection</td></tr>
 <tr><td><code>SetBkGndColor( nRGB )</code></td><td>Set the entire control's background color</td></tr>
 <tr><td><code>SetAlign( nAlign )</code></td><td>Paragraph alignment: <code>PFA_LEFT</code> (1), <code>PFA_RIGHT</code> (2), <code>PFA_CENTER</code> (3), <code>PFA_JUSTIFY</code> (4)</td></tr>
@@ -347,8 +347,8 @@ oSci:nColorSelectionB := RGB( 60, 100, 160 )</code></pre>
   <li>Use <code>TScintilla</code> for source code editors, script editors, and configuration file editors.</li>
   <li>TRichEdit supports <code>HIGHLIGHT</code> mode for basic syntax highlighting of Harbour code, but TScintilla is far more capable.</li>
   <li>TScintilla requires <code>SciLexer.dll</code> (or <code>Scintilla.dll</code>) to be available at runtime.</li>
-  <li>For TRichEdit, call <code>SetZoom(2, 1)</code> for 200% zoom -- useful for high-DPI displays.</li>
-  <li>Both controls support <code>ON CHANGE</code> to detect modifications in real time.</li>
+  <li>TRichEdit requires <code>LoadLibrary(&quot;riched20.dll&quot;)</code> before instantiation. For TRichEdit, call <code>SetZoom(2, 1)</code> for 200% zoom -- useful for high-DPI displays.</li>
+  <li>Sample: <code>samples\test\testreclr.prg</code> — selection coloring (Blue/Red/Black) with Bold/Italic, ON RESIZE. Both controls support <code>ON CHANGE</code> to detect modifications in real time.</li>
 </ul>
 
 <h2 id="see-also">Veja Também</h2>
