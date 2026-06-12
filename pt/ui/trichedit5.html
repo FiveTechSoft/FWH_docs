@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRichEdit5 - Documentação FWH</title>
+<title>TRichEdit5 - FWH Docs</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -12,7 +12,7 @@
 <main id="content">
 
 <h1>TRichEdit5</h1>
-<p class="class-source">Fonte: <code>source/classes/triched5.prg</code></p>
+<p class="class-source">Source: <code>source/classes/triched5.prg</code></p>
 <p class="class-hierarchy">Inherits from: <code>TControl</code></p>
 
 <p>
@@ -61,6 +61,9 @@ building full-featured text editors and code editors within FiveWin applications
 <tr><td><code>InsertPicture5( cFile, nSizeX, nSizeY )</code></td><td>Insert a picture from file</td></tr>
 <tr><td><code>InsertBitmap( hBitmap, nSizeX, nSizeY, lSpecial )</code></td><td>Insert a bitmap handle</td></tr>
 <tr><td><code>SetBold() / SetItalic() / SetUnderline() / SetStrikeOut()</code></td><td>Toggle character formatting on selection</td></tr>
+<tr><td><code>SetTextColor( nRGB )</code></td><td>Set text color on current selection only. CFM_COLOR mask preserves bold, italic, font, size. No selection → word under caret</td></tr>
+<tr><td><code>GetTextColor()</code></td><td>Get current text color from selection</td></tr>
+<tr><td><code>SetBkGndColor( nRGB )</code></td><td>Set background color on current selection</td></tr>
 <tr><td><code>SetAlign( nAlign )</code></td><td>Set paragraph alignment</td></tr>
 <tr><td><code>SetIndent( nIndent )</code></td><td>Set paragraph indentation</td></tr>
 <tr><td><code>Find( cFind, lDown, lCase, lWord )</code></td><td>Search for text in the document</td></tr>
@@ -81,31 +84,38 @@ building full-featured text editors and code editors within FiveWin applications
 </tbody>
 </table>
 
-<h2 id="example">Example: RTF Editor</h2>
+<h2 id="example">Example: Selection Color</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"
+#include "RichEdi5.ch"
 
 function Main()
+   local oWnd, oRich
+   local cText := "Select text and click Blue or Red."
 
-   local oWnd, oRE
+   DEFINE WINDOW oWnd TITLE "RichEdit5 Test" ;
+      FROM 0, 0 TO 520, 700 PIXEL
 
-   DEFINE WINDOW oWnd TITLE "RichEdit 5.0 Editor" SIZE 800, 600
+   @ 5, 5 RICHEDIT5 oRich VAR cText SIZE 680, 420 PIXEL OF oWnd
 
-   @ 10, 10 RICHEDIT5 oRE VAR "" ;
-      OF oWnd ;
-      SIZE 760, 540 ;
-      HIGHLIGHT ;
-      BAR ;
-      FILE "document.rtf"
+   @ 440, 10 BUTTON "Blue" SIZE 80, 30 PIXEL OF oWnd ;
+      ACTION oRich:SetTextColor( CLR_BLUE )
 
-   ACTIVATE WINDOW oWnd CENTERED
+   @ 440, 100 BUTTON "Red" SIZE 80, 30 PIXEL OF oWnd ;
+      ACTION oRich:SetTextColor( CLR_RED )
+
+   ACTIVATE WINDOW oWnd CENTERED ;
+      ON RESIZE ResizeCtrls( oWnd, oRich )
 
 return nil</code></pre>
+
+<p>Full sample: <code>samples\test\testchclr.prg</code> — includes Bold/Italic toggle buttons proving formatting survives color changes, plus ON RESIZE layout.</p>
 
 <h2 id="notes">Notes</h2>
 
 <ul>
 <li>TRichEdit5 uses the RichEdit 5.0 (MsftEdit 5.0) control, which is available on Windows Vista and later. It provides significantly more features than the standard RichEdit control.</li>
+<li><strong>SetTextColor</strong> applies color to the current selection only (SCF_WORD | SCF_SELECTION). It sets only CFM_COLOR, so bold, italic, underline, font face, and font size are all preserved. If no text is selected, the color is applied to the word under the caret.</li>
 <li>Syntax highlighting is controlled by <code>lHighlight</code> and configured via the <code>aKeywords1</code>, <code>aKeywords2</code> arrays and the <code>nClrNumber</code>, <code>nClrString</code>, <code>nClrComment</code>, <code>nClrKey1</code>, <code>nClrKey2</code> color values.</li>
 <li>The <code>lBar</code> flag enables a built-in formatting toolbar with bold, italic, underline, font, size, color, alignment, and table buttons.</li>
 <li>Use <code>cText</code> (SETGET access) to get or set the plain text content, or <code>LoadRTF()</code>/<code>SaveAsRTF()</code> for RTF content.</li>
@@ -114,7 +124,7 @@ return nil</code></pre>
 <li>The control supports drag-and-drop of files via the <code>EN_DROPFILES</code> notification.</li>
 </ul>
 
-<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/Funções.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/trichedit.html">&larr; trichedit</a> | <a href="../../pt/printing/trline.html">trline &rarr;</a></nav></main>
+<h2>See Also</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alphabetical</a></li><li><a href="../../pt/reference/functions.html">Functions</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/ui/trichedit.html">&larr; trichedit</a> | <a href="../../pt/printing/trline.html">trline &rarr;</a></nav></main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>
