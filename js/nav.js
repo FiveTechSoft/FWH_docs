@@ -9,7 +9,7 @@
 
   var labels = {
     en: {
-      title: "FWH Documentation", version: "Version 26.05",
+      title: "FWH Documentation", version: "Version 26.06",
       gettingStarted: "Getting Started",
       overview: "Framework Overview", install: "Installation", build: "Build System",
       samples: "Samples &amp; Learning Path", local: "Localization", whatsnew: "What's New",
@@ -26,7 +26,7 @@
       errors: "Error System", resources: "Resources (GDI)", moreClasses: "More Classes"
     },
     es: {
-      title: "Documentación FWH", version: "Versión 26.05",
+      title: "Documentación FWH", version: "Versión 26.06",
       gettingStarted: "Primeros Pasos",
       overview: "Visión General", install: "Instalación", build: "Sistema de Compilación",
       samples: "Ejemplos y Ruta de Aprendizaje", local: "Localización", whatsnew: "Novedades",
@@ -43,7 +43,7 @@
       errors: "Sistema de Errores", resources: "Recursos (GDI)", moreClasses: "Más Clases"
     },
     pt: {
-      title: "Documentação FWH", version: "Versão 26.05",
+      title: "Documentação FWH", version: "Versão 26.06",
       gettingStarted: "Primeiros Passos",
       overview: "Visão Geral", install: "Instalação", build: "Sistema de Compilação",
       samples: "Exemplos e Rota de Aprendizagem", local: "Localização", whatsnew: "Novidades",
