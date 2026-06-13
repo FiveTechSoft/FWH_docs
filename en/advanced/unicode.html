@@ -307,6 +307,16 @@ HB_CDPSELECT( "FRWIN" )
 REQUEST HB_LANG_ES
 HB_LANGSELECT( "ES" )</code></pre>
 
+<h3>Legacy single-byte (non-Unicode) applications</h3>
+<p>A legacy application that stores genuine single-byte data in a Windows codepage (CP1250 Central European, CP1251 Cyrillic, CP1252 Western, CP1253 Greek, CP1254 Turkish, CP1257 Baltic, etc.) and does <strong>not</strong> use UTF-8 should select its Harbour codepage and turn Unicode mode off. This is the supported configuration -- no extra <code>FW_SetCdp()</code> call is needed unless the PC's ANSI codepage differs from the application's data codepage:</p>
+<pre><code class="language-harbour">REQUEST HB_CODEPAGE_TRWIN   // e.g. Turkish (Windows-1254)
+HB_CDPSELECT( "TRWIN" )
+FW_SetUnicode( .F. )        // ANSI mode: single-byte data preserved
+
+// Only if the machine ANSI codepage is NOT the data codepage:
+// FW_SetCdp( 1254 )</code></pre>
+<p>With a comctl32 v6 manifest the EDIT controls are created Unicode, so keystrokes arrive as UTF-16. FiveWin's GET converts each keystroke back to the selected single-byte codepage, so characters whose Unicode codepoint is above 255 (Turkish <code>&#351; &#287; &#305; &#304;</code>, Polish/Czech/Baltic accents, Cyrillic and Greek letters) are stored as their correct single byte. (Builds before June 2026 had a regression that showed <code>?</code> for those characters in this configuration -- see the GET documentation.)</p>
+
 <!-- ================================================================ -->
 <h2 id="multilang-app">Complete Multi-Language Application</h2>
 <p>This example shows a complete application with a language selector that dynamically switches the UI language for all FiveWin controls and custom strings.</p>

@@ -294,6 +294,18 @@ RETURN .T.</code></pre>
   <li>When using GETs in a dialog, FiveWin handles Tab-order automatically based on creation order.</li>
 </ul>
 
+<h2 id="international-input">International Character Input</h2>
+<p>On Windows 11 with a comctl32 v6 manifest the underlying EDIT control is Unicode, so every keystroke reaches the GET as a UTF-16 code regardless of the application's Unicode mode. TGet handles both modes transparently:</p>
+<ul>
+  <li><strong>Unicode mode</strong> (<code>FW_SetUnicode(.T.)</code>): the GET stores and returns UTF-8; any character from any language is accepted.</li>
+  <li><strong>ANSI / single-byte mode</strong> (<code>FW_SetUnicode(.F.)</code>, the default): the GET converts each keystroke to the selected Harbour codepage. Characters whose Unicode codepoint is above 255 -- Turkish <code>&#351; &#287; &#305; &#304;</code>, Polish/Czech/Baltic accents, Cyrillic and Greek letters on CP1250-CP1258 -- are stored as their correct single byte. A legacy application keeps its usual setup:
+<pre><code class="language-harbour">REQUEST HB_CODEPAGE_TRWIN   // e.g. Turkish (Windows-1254)
+HB_CDPSELECT( "TRWIN" )
+FW_SetUnicode( .F. )</code></pre></li>
+</ul>
+<p>No <code>FW_SetCdp()</code> call is required unless the PC's ANSI codepage differs from the data codepage. See <a href="../../en/advanced/unicode.html">Unicode &amp; Encoding</a> for the full picture.</p>
+<p><strong>Note:</strong> builds before June 2026 had a regression that displayed <code>?</code> for these above-255 characters in ANSI mode; it is fixed in current builds.</p>
+
 <h2 id="see-also">See Also</h2>
 <ul>
   <li><a href="../../en/core/tcontrol.html">TControl</a> -- parent class</li>
