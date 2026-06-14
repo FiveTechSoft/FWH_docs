@@ -79,12 +79,7 @@
   }
 
 
-  // Build language-switch URL: replace /en/ /es/ /pt/ prefix with target lang
-  function langUrl(targetLang) {
-    return '../../' + targetLang + '/' + cur.replace(/^(en|es|pt)\//, '');
-  }
-
-  var html = '<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>'+L.title+'</h2></a><span class="version">'+L.version+'</span><div class="nav-lang" style="margin-top:8px;display:flex;gap:4px"><a href="'+langUrl('en')+'" style="flex:1;text-align:center;padding:3px 0;font-size:11px;font-weight:600;border-radius:4px;text-decoration:none;color:'+(lang==='en'?'#fff':'var(--text-link)')+';background:'+(lang==='en'?'var(--accent)':'transparent')+';border:1px solid '+(lang==='en'?'var(--accent)':'var(--border)')+'">EN</a><a href="'+langUrl('es')+'" style="flex:1;text-align:center;padding:3px 0;font-size:11px;font-weight:600;border-radius:4px;text-decoration:none;color:'+(lang==='es'?'#fff':'var(--text-link)')+';background:'+(lang==='es'?'var(--accent)':'transparent')+';border:1px solid '+(lang==='es'?'var(--accent)':'var(--border)')+'">ES</a><a href="'+langUrl('pt')+'" style="flex:1;text-align:center;padding:3px 0;font-size:11px;font-weight:600;border-radius:4px;text-decoration:none;color:'+(lang==='pt'?'#fff':'var(--text-link)')+';background:'+(lang==='pt'?'var(--accent)':'transparent')+';border:1px solid '+(lang==='pt'?'var(--accent)':'var(--border)')+'">PT</a></div></div>' +
+  var html = '<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>'+L.title+'</h2></a><span class="version">'+L.version+'</span></div>' +
     section(L.gettingStarted, [
       'getting-started/overview.html', L.overview,
       'getting-started/installation.html', L.install,
