@@ -16,40 +16,45 @@
 <p><code>source\classes\agent.prg</code></p>
 
 <p>
-An <strong>autonomous AI coding agent</strong> for Harbour/FiveWin. Implements the same
-motor agentic que impulsiona o <a href="https://fivetechsoft.github.io/Agents/">Agents Web</a>:
+An <strong>agente IA de codificação autônomo</strong> for Harbour/FiveWin. Implements the same
+motor agentic que impulsiona <a href="https://fivetechsoft.github.io/Agents/">Agents Web</a>:
 chat streaming, ferramentas reais, tools dinâmicas, skills e multi-agente via
 <code>hb_threadStart()</code>.
 </p>
 
+<h2>Arquitetura</h2>
+<div class="mermaid">
+flowchart TB
+    subgraph Core["Núcleo do Agente"]
+        Run["Run() loop"]
+        Step["Step() → LLM → tool_calls? → act"]
+        Run --> Step --> Run
+    end
+    subgraph Tools["Tools"]
+        BuiltIn["Integradas (15)"]
+        User["Tools do usuário (dinâmicas)"]
+        Skills["Skills (system prompt)"]
+    end
+    subgraph Advanced["Advanced"]
+        Dispatch["DispatchAgents() → threads"]
+        Plan["GeneratePlan() → ExecutePlan()"]
+        Persist["SaveState() / LoadState()"]
+    end
+    Core --> Tools --> Advanced
+</div>
 
-<pre><code> ┌───────────────────────────────────┐
- │           Run() loop              │
- │  Step() → LLM → tool_calls? → act │
- │    ↑                         ↓    │
- │    └── result ←──────────────┘    │
- ├───────────────────────────────────┤
- │  Built-in tools (15)              │
- │  User tools (dynamic)             │
- │  Skills (system prompt)           │
- ├───────────────────────────────────┤
- │  DispatchAgents() → threads       │
- │  GeneratePlan() → ExecutePlan()   │
- │  SaveState() / LoadState()        │
- └───────────────────────────────────┘</code></pre>
-
-
+<h2>Início Rápido</h2>
 <pre><code class="language-harbour">oAgent := Agent():New( cApiKey )
 oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
 ? oAgent:UsageReport()</code></pre>
 
-
+<h2>DATA Members</h2>
 <table>
 <tr><th>DATA</th><th>Tipo</th><th>Descrição</th></tr>
 <tr><td><code>aMessages</code></td><td>Array</td><td>Conversação completa <code>{role, content}</code></td></tr>
-<tr><td><code>aBuiltinTools</code></td><td>Hash</td><td><code>name → codeblock</code> para todas as tools</td></tr>
-<tr><td><code>aUserTools</code></td><td>Hash</td><td><code>name → {desc, script, type}</code> para tools do usuário</td></tr>
-<tr><td><code>aSkills</code></td><td>Hash</td><td><code>name → content</code> para todos os skills</td></tr>
+<tr><td><code>aBuiltinTools</code></td><td>Hash</td><td><code>name → codeblock</code> for all tools</td></tr>
+<tr><td><code>aUserTools</code></td><td>Hash</td><td><code>name → {desc, script, type}</code> for user-created tools</td></tr>
+<tr><td><code>aSkills</code></td><td>Hash</td><td><code>name → content</code> for all known skills</td></tr>
 <tr><td><code>aSkillsOn</code></td><td>Array</td><td>Nomes dos skills atualmente ativos</td></tr>
 <tr><td><code>cGoal</code></td><td>String</td><td>Objetivo atual</td></tr>
 <tr><td><code>aPlan</code></td><td>Array</td><td>Passos <code>{title, state}</code></td></tr>
@@ -76,7 +81,7 @@ retorna a resposta bruta. Atualiza métricas de tokens. É o RPC central do LLM.
 <p>Constrói o system prompt: instruções base + skills ativos + lista de user tools + objetivo/plano.</p>
 
 <h3>BuildToolsArray() → aTools</h3>
-<p>Retorna o array completo de tools no formato OpenAI (integrado + usuário) para a requisição LLM.</p>
+<p>Retorna o array completo de tools no formato OpenAI (integradas + usuário) para a requisição LLM.</p>
 
 <h2 id="tools">Ferramentas Integradas</h2>
 <table>
@@ -132,7 +137,7 @@ Resultados coletados via <code>hb_threadJoin()</code>. <strong>Requer Harbour MT
 <h2 id="planning">Planejamento</h2>
 <h3>GeneratePlan( cGoal ) → aPlan</h3>
 <p>Pede ao LLM para dividir o objetivo em 3-6 passos JSON. Retorna um array de
-<code>{title, state}</code> onde o primeiro passo está <code>"active"</code> e o resto <code>"pending"</code>.</p>
+<code>{title, state}</code> where the first step is <code>"active"</code> and the rest <code>"pending"</code>.</p>
 
 <h3>ExecutePlan()</h3>
 <p>Executa o plano sequencialmente: para cada passo <code>"active"</code>, chama <code>Run()</code> com a
@@ -184,7 +189,7 @@ RETURN</code></pre>
 
 <h2 id="notes">Notas</h2>
 <ul>
-  <li><strong>Requer Harbour MT VM</strong> para <code>DispatchAgents()</code>. Linkar contra <code>libhbvmmt</code>.</li>
+  <li><strong>Requer Harbour MT VM</strong> for <code>DispatchAgents()</code>. Linkar contra <code>libhbvmmt</code>.</li>
   <li><strong>API Key</strong>: configurar via variável de ambiente <code>DEEPSEEK_API_KEY</code> ou construtor.</li>
   <li><strong>Streaming</strong>: streaming token a token via SSE está planejado mas não implementado ainda.</li>
   <li><strong>Contrato</strong>: o parâmetro <code>cContract</code> em <code>DispatchAgents()</code> é crítico.
