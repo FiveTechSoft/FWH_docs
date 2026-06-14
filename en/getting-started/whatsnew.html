@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -16,6 +16,39 @@
 <p>
 This page summarizes the changes and additions in FiveWin for Harbour/xHarbour
 version 26.05 (May 2026), relative to the previous release 26.03 (March 2026).
+</p>
+
+<h2 id="agent">Agent Class — Autonomous AI Agent</h2>
+<p>
+A new class <code>source\classes\agent.prg</code> implements an autonomous AI coding agent
+for Harbour/FiveWin — the same agentic engine that powers
+<a href="https://fivetechsoft.github.io/Agents/">Agents Web</a>.
+</p>
+<ul>
+  <li><strong>Loop</strong> — <code>Run()</code>/<code>Step()</code>: observe → decide → act.
+    14 steps max, DeepSeek V4 via libcurl.</li>
+  <li><strong>15 built-in tools</strong> — list_files, read_file, write_file, delete_file,
+    shell, python, sql, web_search, web_fetch, register_tool, unregister_tool,
+    user_tools, create_skill, toggle_skill, classify_disk.</li>
+  <li><strong>Dynamic tools</strong> — <code>RegisterTool()</code> lets the agent create
+    its own tools from scripts. <code>UnregisterTool()</code> removes them without deleting
+    the script. Tools persist in <code>agent_state/user_tools.json</code>.</li>
+  <li><strong>Skills</strong> — reusable instructions injected into the system prompt.
+    5 built-in (reviewer, summarizer, refactor, documenter, tester) + disk skills.
+    <code>ToggleSkill()</code> activates/deactivates without deleting the file.</li>
+  <li><strong>Multi-agent</strong> — <code>DispatchAgents()</code> launches up to 4
+    sub-agents in parallel via <code>hb_threadStart()</code>. Each with its own instance,
+    no dispatch/ask_user. Shared contract for consistency.</li>
+  <li><strong>Planning</strong> — <code>GeneratePlan()</code> asks the LLM for 3-6 JSON
+    steps. <code>ExecutePlan()</code> runs them sequentially, marking each done.</li>
+  <li><strong>Persistence</strong> — <code>SaveState()</code>/<code>LoadState()</code>
+    save user tools and active skills to disk. Survives between sessions.</li>
+</ul>
+<p>
+Requires Harbour MT VM (<code>libhbvmmt</code>) for multi-agent dispatch.
+Full reference: <a href="https://fivetechsoft.github.io/FWH_docs/classes/Agent.md">
+  Agent class documentation</a>.
+See sample: <code>samples\agenticai\agenticai2.prg</code>.
 </p>
 
 <h2 id="remoteview">Remote View &mdash; Browser Live View &amp; Control</h2>
