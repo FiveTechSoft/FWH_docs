@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Agent - Documentación FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>Class Agent</h1>
+<p class="class-source">Fuente: <code>source/classes/agent.prg</code></p>
+<p><code>source\classes\agent.prg</code></p>
+
+<p>
+An <strong>autonomous AI coding agent</strong> for Harbour/FiveWin. Implements the same
+motor agentic que impulsa <a href="https://fivetechsoft.github.io/Agents/">Agents Web</a>:
+chat streaming, herramientas reales, tools dinámicas, skills y multi-agente vía
+<code>hb_threadStart()</code>.
+</p>
+
+<h2>Arquitectura</h2>
+<pre><code> ┌───────────────────────────────────┐
+ │           Run() loop              │
+ │  Step() → LLM → tool_calls? → act │
+ │    ↑                         ↓    │
+ │    └── result ←──────────────┘    │
+ ├───────────────────────────────────┤
+ │  Built-in tools (15)              │
+ │  User tools (dynamic)             │
+ │  Skills (system prompt)           │
+ ├───────────────────────────────────┤
+ │  DispatchAgents() → threads       │
+ │  GeneratePlan() → ExecutePlan()   │
+ │  SaveState() / LoadState()        │
+ └───────────────────────────────────┘</code></pre>
+
+<h2>Inicio Rápido</h2>
+<pre><code class="language-harbour">oAgent := Agent():New( cApiKey )
+oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
+? oAgent:UsageReport()</code></pre>
+
+<h2>DATA Members</h2>
+<table>
+<tr><th>DATA</th><th>Tipo</th><th>Descripción</th></tr>
+<tr><td><code>aMessages</code></td><td>Array</td><td>Conversación completa <code>{role, content}</code></td></tr>
+<tr><td><code>aBuiltinTools</code></td><td>Hash</td><td><code>name → codeblock</code> para todas las tools</td></tr>
+<tr><td><code>aUserTools</code></td><td>Hash</td><td><code>name → {desc, script, type}</code> para tools creadas por el usuario</td></tr>
+<tr><td><code>aSkills</code></td><td>Hash</td><td><code>name → content</code> para todos los skills</td></tr>
+<tr><td><code>aSkillsOn</code></td><td>Array</td><td>Nombres de skills actualmente activos</td></tr>
+<tr><td><code>cGoal</code></td><td>String</td><td>Objetivo actual</td></tr>
+<tr><td><code>aPlan</code></td><td>Array</td><td>Pasos <code>{title, state}</code></td></tr>
+<tr><td><code>cModel</code></td><td>String</td><td>ID del modelo (defecto: <code>deepseek-v4-pro</code>)</td></tr>
+<tr><td><code>nMaxSteps</code></td><td>Numeric</td><td>Máx iteraciones por Run() (defecto: 14)</td></tr>
+<tr><td><code>nTokensIn/Out/Cache</code></td><td>Numeric</td><td>Contadores de tokens</td></tr>
+</table>
+
+<h2 id="core">Métodos Principales</h2>
+
+<h3>New( cKey, [cModel] ) → Agent</h3>
+<p>Constructor. Inicializa tools, skills, carga estado guardado. Modelo por defecto: <code>deepseek-v4-pro</code>.</p>
+
+<h3>Run( cPrompt ) → lastAssistantMessage</h3>
+<p>Bucle principal: observar → decidir → actuar. Máx <code>nMaxSteps</code> iteraciones (defecto 14).
+Devuelve la última respuesta de texto. Las tool calls intermedias se ejecutan y sus
+resultados se incorporan a la conversación.</p>
+
+<h3>Step() → cResponse</h3>
+<p>Envía la conversación actual a DeepSeek (<code>POST api.deepseek.com/chat/completions</code>),
+devuelve la respuesta bruta. Actualiza métricas de tokens. Es el RPC central del LLM.</p>
+
+<h3>BuildSystemPrompt()</h3>
+<p>Construye el system prompt: instrucciones base + skills activos + lista de user tools + objetivo/plan.</p>
+
+<h3>BuildToolsArray() → aTools</h3>
+<p>Devuelve el array completo de tools en formato OpenAI (integrado + usuario) para la petición LLM.</p>
+
+<h2 id="tools">Herramientas Integradas</h2>
+<table>
+<tr><th>Tool</th><th>Method</th><th>Description</th></tr>
+<tr><td><code>list_files</code></td><td><code>Tool_ListFiles([cDir])</code></td><td>Lista archivos en disco</td></tr>
+<tr><td><code>read_file</code></td><td><code>Tool_ReadFile(cPath)</code></td><td>Lee contenido de archivo</td></tr>
+<tr><td><code>write_file</code></td><td><code>Tool_WriteFile(cPath,cContent)</code></td><td>Crea/sobrescribe (pide permiso)</td></tr>
+<tr><td><code>delete_file</code></td><td><code>Tool_DeleteFile(cPath)</code></td><td>Borra archivo (pide permiso)</td></tr>
+<tr><td><code>shell</code></td><td><code>Tool_Shell(cCmd)</code></td><td>Ejecuta comando shell</td></tr>
+<tr><td><code>python</code></td><td><code>Tool_Python(cCode)</code></td><td>Ejecuta Python (temp .py + ejecuta)</td></tr>
+<tr><td><code>sql</code></td><td><code>Tool_Sql(cDb,cQuery)</code></td><td>Ejecuta SQL en base de datos</td></tr>
+<tr><td><code>web_search</code></td><td><code>Tool_WebSearch(cQuery)</code></td><td>Busca en la web</td></tr>
+<tr><td><code>web_fetch</code></td><td><code>Tool_WebFetch(cUrl)</code></td><td>Descarga una URL</td></tr>
+</table>
+
+<h2 id="dynamic-tools">Herramientas Dinámicas</h2>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>RegisterTool(cName,cDesc,cScript,[cType])</code></td><td>Registra script como tool ejecutable. Auto-detecta tipo python/shell.</td></tr>
+<tr><td><code>UnregisterTool(cName)</code></td><td>Elimina tool del registro. El script permanece en disco.</td></tr>
+<tr><td><code>ListUserTools()</code></td><td>Devuelve nombres + descripciones de tools de usuario.</td></tr>
+<tr><td><code>ExecUserTool(cName,hArgs)</code></td><td>Ejecuta una tool registrada por el usuario.</td></tr>
+</table>
+<p>Las tools persisten en <code>agent_state/user_tools.json</code>. Las integradas son fijas; las de usuario
+son dinámicas y sobreviven entre sesiones.</p>
+
+<h2 id="skills">Skills</h2>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>CreateSkill(cName,cContent,[cDir])</code></td><td>Escribe archivo skill en <code>skills/name.md</code></td></tr>
+<tr><td><code>ToggleSkill(cName,lOn)</code></td><td>Activa/desactiva sin borrar el archivo</td></tr>
+<tr><td><code>ActiveSkillsPrompt()</code></td><td>Devuelve string de prompt con skills activos</td></tr>
+<tr><td><code>ListSkills([cDir])</code></td><td>Carga skills del directorio en disco</td></tr>
+</table>
+<p>5 skills integrados: <code>reviewer</code>, <code>summarizer</code>, <code>refactor</code>, <code>documenter</code>, <code>tester</code>.
+Los skills inyectan instrucciones reutilizables en el system prompt. Moldean CÓMO piensa el agente,
+no QUÉ puede hacer (eso lo manejan las tools).</p>
+
+<h2 id="multi-agent">Multi-Agente</h2>
+<h3>DispatchAgents( aTasks, cContract ) → aResults</h3>
+<p>Lanza hasta 4 sub-agentes en paralelo vía <code>hb_threadStart()</code>. Cada sub-agente:
+<ul>
+  <li>Tiene su propia instancia <code>Agent</code> (mismo modelo, misma API key)</li>
+  <li>Accede a todas las tools <strong>excepto</strong> <code>dispatch_agents</code> y <code>ask_user</code> (sin recursión)</li>
+  <li>Tiene límite de pasos reducido (5)</li>
+  <li>Recibe el <code>cContract</code> antepuesto a su prompt para consistencia</li>
+</ul>
+Resultados recolectados vía <code>hb_threadJoin()</code>. <strong>Requiere Harbour MT VM</strong> (<code>libhbvmmt</code>).</p>
+
+<h3>SubAgentRun( cTask, cContract ) → cResult</h3>
+<p>Ejecución individual de sub-agente. Llamado por <code>DispatchAgents()</code> en su propio hilo.</p>
+
+<h2 id="planning">Planificación</h2>
+<h3>GeneratePlan( cGoal ) → aPlan</h3>
+<p>Pide al LLM que divida el objetivo en 3-6 pasos JSON. Devuelve un array de
+<code>{title, state}</code> donde el primer paso está <code>"active"</code> y el resto <code>"pending"</code>.</p>
+
+<h3>ExecutePlan()</h3>
+<p>Ejecuta el plan secuencialmente: para cada paso <code>"active"</code>, llama a <code>Run()</code> con la
+descripción, lo marca <code>"done"</code>, activa el siguiente. Para cuando todos están completos.</p>
+
+<h2 id="persistence">Persistencia</h2>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>SaveState(cDir)</code></td><td>Guarda user tools y skills activos en <code>user_tools.json</code></td></tr>
+<tr><td><code>LoadState(cDir)</code></td><td>Restaura del disco al iniciar. También carga skills del directorio <code>skills/</code>.</td></tr>
+</table>
+
+<h2 id="utilities">Utilidades</h2>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>AddMessage(cRole,cContent)</code></td><td>Añade al array de conversación. Auto-compacta a los 200 mensajes.</td></tr>
+<tr><td><code>UsageReport()</code></td><td>Imprime conteo de tokens y coste estimado.</td></tr>
+<tr><td><code>Abort()</code></td><td>Detiene el bucle del agente inmediatamente.</td></tr>
+</table>
+
+<h2 id="example">Ejemplo Completo</h2>
+<pre><code class="language-harbour">PROCEDURE Main()
+   LOCAL oAgent, cResult
+
+   oAgent := Agent():New( "sk-xxxx" )
+
+   // Registrar una tool personalizada
+   oAgent:RegisterTool( "contar", ;
+      "Cuenta lineas, palabras y caracteres de un archivo", ;
+      "contar.py" )
+
+   // Crear y activar un skill
+   oAgent:CreateSkill( "prueba", ;
+      "Responde siempre en español." + CRLF + ;
+      "Verifica el disco antes de escribir código." + CRLF + ;
+      "Escribe tests automáticamente." )
+   oAgent:ToggleSkill( "prueba", .T. )
+
+   // Generate and execute a plan
+   oAgent:GeneratePlan( "Crea una app TODO en PHP+SQLite" )
+   oAgent:ExecutePlan()
+
+   // Or run directly
+   cResult := oAgent:Run( "Explica qué hay en el disco" )
+   ? cResult
+
+   oAgent:UsageReport()
+RETURN</code></pre>
+
+<h2 id="notes">Notas</h2>
+<ul>
+  <li><strong>Requiere Harbour MT VM</strong> para <code>DispatchAgents()</code>. Enlazar contra <code>libhbvmmt</code>.</li>
+  <li><strong>API Key</strong>: configurar vía variable de entorno <code>DEEPSEEK_API_KEY</code> o constructor.</li>
+  <li><strong>Streaming</strong>: streaming token a token vía SSE está planeado pero no implementado aún.</li>
+  <li><strong>Contrato</strong>: el parámetro <code>cContract</code> en <code>DispatchAgents()</code> es crítico.
+    Sin él, los sub-agentes paralelos divergen en convenciones de nombres. Proporciona siempre
+    nombres exactos de tablas, columnas, funciones y rutas de archivos.</li>
+  <li><strong>Ejemplo</strong>: <code>samples\agenticai\agenticai2.prg</code> — una app FiveWin GUI completa
+    usando la Class Agent con panel de chat TWebView2.</li>
+</ul>
+
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+<nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../en/ai/tai_glossary.html">&larr; AI Glossary</a> | <a href="../../en/ai/gpt2model.html">GPT-2 Model &rarr;</a></nav>
+</main>
+<aside id="toc">
+  <div id="toc-title">En esta página</div>
+  <div id="toc-links"></div>
+</aside>
+</body>
+</html>
