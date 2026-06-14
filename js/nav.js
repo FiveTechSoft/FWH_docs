@@ -84,7 +84,7 @@
     return '../../' + targetLang + '/' + cur.replace(/^(en|es|pt)\//, '');
   }
 
-  var html = '<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>'+L.title+'</h2></a><span class="version">'+L.version+'</span><div class="nav-lang" style="margin-top:6px;font-size:11px"><a href="'+langUrl('en')+'" style="color:var(--link);text-decoration:none">EN</a> &middot; <a href="'+langUrl('es')+'" style="color:var(--link);text-decoration:none">ES</a> &middot; <a href="'+langUrl('pt')+'" style="color:var(--link);text-decoration:none">PT</a></div></div>' +
+  var html = '<div id="sidebar-header"><a href="../../index.html" style="text-decoration:none;color:inherit"><h2>'+L.title+'</h2></a><span class="version">'+L.version+'</span><div class="nav-lang" style="margin-top:6px;font-size:11px"><a href="'+langUrl('en')+'" style="color:'+(lang==='en'?'var(--text)':'var(--link)')+';text-decoration:none;font-weight:'+(lang==='en'?'600':'400')+'">EN</a> &middot; <a href="'+langUrl('es')+'" style="color:'+(lang==='es'?'var(--text)':'var(--link)')+';text-decoration:none;font-weight:'+(lang==='es'?'600':'400')+'">ES</a> &middot; <a href="'+langUrl('pt')+'" style="color:'+(lang==='pt'?'var(--text)':'var(--link)')+';text-decoration:none;font-weight:'+(lang==='pt'?'600':'400')+'">PT</a></div></div>' +
     section(L.gettingStarted, [
       'getting-started/overview.html', L.overview,
       'getting-started/installation.html', L.install,
@@ -140,7 +140,8 @@
       'internet/twhatsapp.html', 'TWhatsApp',
       'internet/topenai.html', 'TOpenAI',
       'internet/remoteview.html', 'Remote View',
-      'internet/tai.html', L.aiClasses
+      'internet/tai.html', L.aiClasses,
+      'ai/agent.html', 'Class Agent'
     ]) +
     section(L.ref, [
       'reference/classes.html', L.classIdx,
