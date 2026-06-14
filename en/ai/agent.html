@@ -23,20 +23,25 @@ streaming chat, real tool-calling, dynamic tools, skills, and multi-agent dispat
 </p>
 
 <h2>Architecture</h2>
-<pre><code> ┌───────────────────────────────────┐
- │           Run() loop              │
- │  Step() → LLM → tool_calls? → act │
- │    ↑                         ↓    │
- │    └── result ←──────────────┘    │
- ├───────────────────────────────────┤
- │  Built-in tools (15)              │
- │  User tools (dynamic)             │
- │  Skills (system prompt)           │
- ├───────────────────────────────────┤
- │  DispatchAgents() → threads       │
- │  GeneratePlan() → ExecutePlan()   │
- │  SaveState() / LoadState()        │
- └───────────────────────────────────┘</code></pre>
+<div class="mermaid">
+flowchart TB
+    subgraph Core["Agent Core"]
+        Run["Run() loop"]
+        Step["Step() → LLM → tool_calls? → act"]
+        Run --> Step --> Run
+    end
+    subgraph Tools["Tools"]
+        BuiltIn["Built-in (15)"]
+        User["User tools (dynamic)"]
+        Skills["Skills (system prompt)"]
+    end
+    subgraph Advanced["Advanced"]
+        Dispatch["DispatchAgents() → threads"]
+        Plan["GeneratePlan() → ExecutePlan()"]
+        Persist["SaveState() / LoadState()"]
+    end
+    Core --> Tools --> Advanced
+</div>
 
 <h2>Quick Start</h2>
 <pre><code class="language-harbour">oAgent := Agent():New( cApiKey )
