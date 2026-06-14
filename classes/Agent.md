@@ -1,4 +1,4 @@
-# Agent — Autonomous AI Agent Class
+# Class Agent — Autonomous AI Agent
 
 An autonomous AI coding agent for [Harbour](https://harbour.github.io/) / [FiveWin](https://www.fivetechsoft.com/).
 Implements the same agentic engine that powers Agents Web (`fivetechsoft.github.io/Agents`):
