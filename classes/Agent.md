@@ -2,7 +2,7 @@
 
 An autonomous AI coding agent for [Harbour](https://harbour.github.io/) / [FiveWin](https://www.fivetechsoft.com/).
 Implements the same agentic engine that powers Agents Web (`fivetechsoft.github.io/Agents`):
-streaming chat (coming soon), real tool-calling, and multiple agents running in parallel.
+streaming SSE chat, real tool-calling, and multiple agents running in parallel.
 
 ## Overview
 
@@ -45,8 +45,8 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
 | Method | Description |
 |--------|-------------|
 | `New( cKey, [cModel] )` | Init agent with API key. Defaults to `deepseek-v4-pro`. Loads saved state. |
-| `Run( cPrompt )` | Main loop. Max 14 steps. Returns last assistant message. |
-| `Step()` | Sends messages to DeepSeek, returns response. Updates token metrics. |
+| `Run( cPrompt )` | Main loop. Max 14 steps. Supports `bInterrupt` and `bInject` callbacks. Returns last assistant message. |
+| `Step()` | Sends messages to DeepSeek with streaming SSE. Parses response chunks, updates token metrics. |
 | `SendToLLM( aMsgs )` | Raw HTTP POST to `api.deepseek.com/chat/completions`. |
 
 ### Built-in Tools
@@ -186,8 +186,11 @@ RETURN
 
 - **Harbour MT VM required**: `DispatchAgents()` uses `hb_threadStart()` / `hb_threadJoin()`.
   Link against `libhbvmmt` (multi-thread VM), not `libhbvm` (single-thread).
-- **API Key**: set at construction or via environment variable `DEEPSEEK_KEY`.
-- **Streaming**: `Step()` currently fetches the full response. Token-by-token streaming
-  via SSE is planned.
+- **API Key**: set at construction or via environment variable `DEEPSEEK_API_KEY`.
+- **Streaming**: `Step()` uses SSE streaming with `stream_options.include_usage` for
+  real-time token metrics. Response is parsed from SSE data chunks.
+- **Interrupt/Inject**: pass `interrupt` and `inject` codeblocks in `hOpts` to `New()`.
+  `interrupt` returns `.T.` to abort the loop; `inject` returns a string to inject
+  as a user message between steps.
 - **Contract**: the `cContract` parameter in `DispatchAgents()` is prepended to every
   sub-agent prompt. Without it, sub-agents diverge on naming. Always provide one.

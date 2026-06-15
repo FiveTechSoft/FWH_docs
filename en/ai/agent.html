@@ -18,7 +18,7 @@
 <p>
 An <strong>autonomous AI coding agent</strong> for Harbour/FiveWin. Implements the same
 agentic engine that powers <a href="https://fivetechsoft.github.io/Agents/">Agents Web</a>:
-streaming chat, real tool-calling, dynamic tools, skills, and multi-agent dispatch via
+streaming SSE chat, real tool-calling, dynamic tools, skills, and multi-agent dispatch via
 <code>hb_threadStart()</code>.
 </p>
 
@@ -191,7 +191,8 @@ RETURN</code></pre>
 <ul>
   <li><strong>Harbour MT VM required</strong> for <code>DispatchAgents()</code>. Link against <code>libhbvmmt</code>.</li>
   <li><strong>API Key</strong>: set via environment variable <code>DEEPSEEK_API_KEY</code> or constructor.</li>
-  <li><strong>Streaming</strong>: token-by-token streaming via SSE is planned but not yet implemented.</li>
+  <li><strong>Streaming</strong>: Step() uses SSE streaming with stream_options for real-time token metrics.</li>
+  <li><strong>Interrupt/Inject</strong>: pass <code>interrupt</code> and <code>inject</code> codeblocks to New() for external cancellation and user interjections.</li>
   <li><strong>Contract</strong>: the <code>cContract</code> parameter in <code>DispatchAgents()</code> is critical.
     Without it, parallel sub-agents diverge on naming conventions. Always provide exact
     table names, column names, function signatures, and file paths.</li>
