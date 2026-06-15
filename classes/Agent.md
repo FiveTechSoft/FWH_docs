@@ -30,10 +30,12 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
  │  User tools (dynamic)             │
  │  Skills (system prompt)           │
  ├───────────────────────────────────┤
- │  DispatchAgents() → threads       │
- │  GeneratePlan() → ExecutePlan()   │
- │  SaveState() / LoadState()        │
- └───────────────────────────────────┘
+│  DispatchAgents() → threads       │
+│  GeneratePlan() → ExecutePlan()   │
+│  Distill() → patterns → skills    │
+│  Dream() → memory consolidation   │
+│  SaveState() / LoadState()        │
+└───────────────────────────────────┘
 ```
 
 ## Methods
@@ -95,6 +97,28 @@ Built-in skills: `reviewer`, `summarizer`, `refactor`, `documenter`, `tester`.
 | `GeneratePlan( cGoal )` | Ask LLM to generate 3-6 step plan in JSON. |
 | `ExecutePlan()` | Run plan step by step, marking each done. |
 
+### Distill
+
+| Method | Description |
+|--------|-------------|
+| `Distill( [nMinRepeat] )` | Analyze tool call history for repeated n-gram patterns (2-5 steps). Patterns with 3+ repeats become skills; 5+ repeats with 3+ steps become registered commands (.bat). Returns JSON with discovered workflows. |
+| `RecordToolCall( cName, hArgs, cResult )` | Record a tool invocation into history (called automatically by `ExecTool`). |
+| `ExtractPatterns()` | Find all n-gram subsequences in tool call history, return sorted by score. |
+| `ScorePattern( hPat )` | Rank a pattern by frequency (log), length, and recency. |
+| `DistillToSkill( hPattern )` | Create a `.md` skill file listing the tool sequence steps. |
+| `DistillToCommand( hPattern )` | Generate a `.bat` script in `agent_state/distilled/` and register it as a user tool. |
+
+### Dream (Memory Consolidation)
+
+| Method | Description |
+|--------|-------------|
+| `Dream()` | Consolidate project memory in 5 phases: read memory files, compress trajectory, build digest, persist, report. Returns JSON with counts. |
+| `ReadMemoryDir( cDir )` | Scan directory for `.json` (merged as hashes) and `.md` (stored as notes) files. |
+| `ConsolidateTrajectory()` | Compress `aMessages` + `aToolHistory` into structured entries (max 100). |
+| `BuildMemoryDigest()` | Synthesize rules (from skills), decisions (from distilled workflows), and patterns (from tool history). |
+| `SaveMemoryDigest()` / `LoadMemoryDigest()` | Persist/restore `digest.json` to/from `agent_state/memory/`. |
+| `MemoryPrompt()` | Generate a prompt section from the consolidated digest for inclusion in the system prompt. |
+
 ### Persistence
 
 | Method | Description |
@@ -121,6 +145,10 @@ Built-in skills: `reviewer`, `summarizer`, `refactor`, `documenter`, `tester`.
 | `aSkillsOn` | Array | Names of currently active skills |
 | `cGoal` | String | Current objective |
 | `aPlan` | Array | Steps `{title, state}` |
+| `aToolHistory` | Array | Tool call history `[{name, args, result, ts}]` |
+| `aDistilled` | Array | Discovered workflows `[{name, type, pattern, content}]` |
+| `aMemoryDigest` | Hash | Consolidated memory `{rules, decisions, patterns, trajectory, notes, timestamp}` |
+| `cMemoryDir` | String | Base directory for memory files (`agent_state/memory/`) |
 | `cModel` | String | Model ID (default: `deepseek-v4-pro`) |
 | `nMaxSteps` | Numeric | Max iterations per Run() (default: 14) |
 | `nTokensIn/Out/Cache` | Numeric | Token counters for cost tracking |

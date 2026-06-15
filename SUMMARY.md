@@ -3,7 +3,8 @@
 ## Latest Addition
 
 - ✅ **Agent class** (`source\classes\agent.prg`) — Autonomous AI agent with tools, skills,
-  multi-agent dispatch, and DeepSeek integration. Docs: `docs/classes/Agent.md`.
+  multi-agent dispatch, and DeepSeek integration. Includes Distill (workflow discovery)
+  and Dream (memory consolidation). Docs: `docs/classes/Agent.md`.
   See `whatsnew.txt` for full details.
 
 ## Completed Tasks
