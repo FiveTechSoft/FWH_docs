@@ -36,7 +36,10 @@ flowchart TB
         Skills["Skills (system prompt)"]
     end
     subgraph Advanced["Advanced"]
-        Dispatch["DispatchAgents() → threads"]
+        Dispatch["DispatchAgents() → paralelo"]
+        Pipeline["DispatchAgentsPipeline() → sequencial"]
+        Roles["Roles: cRole + cRolePrompt"]
+        Shared["SharedContext blackboard"]
         Plan["GeneratePlan() → ExecutePlan()"]
         Hooks["Hooks: callbacks pre/post tool"]
         Persist["SaveState() / LoadState()"]
@@ -63,6 +66,11 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
 <tr><td><code>nMaxSteps</code></td><td>Numeric</td><td>Máx iterações por Run() (padrão: 14)</td></tr>
 <tr><td><code>nTokensIn/Out/Cache</code></td><td>Numeric</td><td>Contadores de tokens</td></tr>
 <tr><td><code>aHooks</code></td><td>Array</td><td>Hooks registrados <code>{name, event, block, priority, active}</code></td></tr>
+<tr><td><code>cRole</code></td><td>String</td><td>Role do agente: <code>"planner"</code>, <code>"analyst"</code>, <code>"developer"</code>, <code>"tester"</code></td></tr>
+<tr><td><code>cRolePrompt</code></td><td>String</td><td>Prompt extra do sistema injetado pelo role</td></tr>
+<tr><td><code>aSharedContext</code></td><td>Hash</td><td>Blackboard compartilhado entre agentes para comunicação</td></tr>
+<tr><td><code>nSubAgentTimeout</code></td><td>Numeric</td><td>Segundos por sub-agente (padrão: 120)</td></tr>
+<tr><td><code>bOnAgentProgress</code></td><td>Codeblock</td><td>Callback: <code>{|cName, cStatus, cMsg| ...}</code></td></tr>
 </table>
 
 <h2 id="core">Métodos Principais</h2>
@@ -137,16 +145,74 @@ Os post-hooks recebem o resultado e podem modificar <code>hContext["result"]</co
 Skills injetam instruções reutilizáveis no system prompt. Eles moldam COMO o agente
 pensa, não O QUE ele pode fazer (isso é tratado pelas tools).</p>
 
-<h2 id="multi-agent">Multi-Agente</h2>
+<h2 id="orchestration">Orquestração Multi-Agente</h2>
+<p>A classe Agent fornece um framework completo de orquestração com 8 métodos para
+coordinar múltiplos agentes: despacho paralelo, pipelines sequenciais, roles
+especializados, contexto compartilhado, retry, timeout, agregação e monitoramento.</p>
+
+<h3>Roles</h3>
+<p>Cada Agent tem uma propriedade <code>cRole</code> e <code>cRolePrompt</code>. Os roles definem
+a especialização do agente. O prompt do role é injetado no system prompt.</p>
+<pre><code class="language-harbour">oDev := Agent():New( cKey )
+oDev:cRole       := "developer"
+oDev:cRolePrompt := "Eres desarrollador senior. Escribe código limpio y documentado."</code></pre>
+
 <h3>DispatchAgents( aTasks, cContract ) → aResults</h3>
-<p>Lança até 4 sub-agentes em paralelo via <code>hb_threadStart()</code>. Cada sub-agente:
+<p>Fan-out paralelo: lança até 4 sub-agentes simultaneamente. Cada sub-agente herda
+o role, contexto compartilhado e modelo do pai. Os resultados são coletados sincronamente.</p>
+
+<h3>DispatchAgentsPipeline( aTasks, cContract ) → aResults</h3>
+<p>Pipeline sequencial: a saída de cada agente alimenta o próximo. Útil para cadeias
+de tarefas dependentes onde o passo N precisa do resultado do passo N-1.</p>
+<pre><code class="language-harbour">aResults := oAgent:DispatchAgentsPipeline( { ;
+   "Analisa os requisitos do app", ;
+   "Projeta o schema do banco de dados", ;
+   "Gera o código backend", ;
+   "Escreve os testes unitários" }, cContract )</code></pre>
+
+<h3>DispatchAgentsWithRoles( aAgentDefs, cContract ) → aResults</h3>
+<p>Fan-out com roles especializados. Cada definição é um hash com: task, role,
+rolePrompt, model, nMaxSteps. Os agentes rodam em paralelo com sua própria configuração.</p>
+<pre><code class="language-harbour">aDefs := { ;
+   { "task" => "Projetar schema", "role" => "analyst", ;
+     "rolePrompt" => "Eres analista de datos.", "nMaxSteps" => "8" }, ;
+   { "task" => "Implementar API", "role" => "developer", ;
+     "model" => "gpt-4o", "nMaxSteps" => "10" }, ;
+   { "task" => "Escrever testes", "role" => "tester", ;
+     "rolePrompt" => "Eres tester QA.", "nMaxSteps" => "6" } }
+aResults := oAgent:DispatchAgentsWithRoles( aDefs, cContract )</code></pre>
+
+<h3>Contexto Compartilhado (Padrão Blackboard)</h3>
+<p>Os agentes comunicam via um hash compartilhado. As mudanças são sincronizadas de volta
+ao pai após cada sub-agente completar. O contexto é injetado no system prompt.</p>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>GetSharedContext([cKey])</code></td><td>Obter todo o contexto ou uma chave específica.</td></tr>
+<tr><td><code>SetSharedContext(cKey, xValue)</code></td><td>Definir uma chave no contexto compartilhado.</td></tr>
+</table>
+<pre><code class="language-harbour">oAgent:SetSharedContext( "schema", "CREATE TABLE users..." )
+// os sub-agentes verão isso em seu system prompt</code></pre>
+
+<h3>AggregateResults( aResults, cMethod ) → cCombined</h3>
+<p>Combinar resultados de múltiplos agentes. Métodos:</p>
 <ul>
-  <li>Tem sua própria instância <code>Agent</code> (mesmo modelo, mesma API key)</li>
-  <li>Acessa todas as tools <strong>exceto</strong> <code>dispatch_agents</code> e <code>ask_user</code> (sem recursão)</li>
-  <li>Tem limite de passos reduzido (5)</li>
-  <li>Recebe o <code>cContract</code> anteposto ao prompt para consistência</li>
+  <li><code>"join"</code> — concatenar com cabeçalhos (padrão)</li>
+  <li><code>"json"</code> — codificar como array JSON</li>
+  <li><code>"summary"</code> — resumo em bullets via LLM</li>
 </ul>
-Resultados coletados via <code>hb_threadJoin()</code>. <strong>Requer Harbour MT VM</strong> (<code>libhbvmmt</code>).</p>
+
+<h3>RetrySubAgent( cTask, cContract, nMaxRetries ) → cResult</h3>
+<p>Repetir um sub-agente falhado até <code>nMaxRetries</code> vezes (padrão 3). Cada tentativa
+roda em uma instância nova com recuperação de erros.</p>
+
+<h3>SubAgentRunWithTimeout( cTask, cContract, nTimeout ) → cResult</h3>
+<p>Executar um sub-agente com limite de tempo em segundos (padrão 120). Usa o
+mecanismo de interrupção para abortar se exceder o timeout.</p>
+
+<h3>NotifyProgress( cAgentName, cStatus, cMsg )</h3>
+<p>Enviar notificações de progresso. Configurar <code>bOnAgentProgress</code> para receber callbacks.</p>
+<pre><code class="language-harbour">oAgent:bOnAgentProgress := {| cName, cStatus, cMsg | ;
+   ? cName + ": " + cStatus + " — " + cMsg }</code></pre>
 
 <h3>SubAgentRun( cTask, cContract ) → cResult</h3>
 <p>Execução individual de sub-agente. Chamado por <code>DispatchAgents()</code> em seu próprio thread.</p>
@@ -212,6 +278,26 @@ descrição, marca como <code>"done"</code>, ativa o próximo. Para quando todos
    cResult := oAgent:Run( "Explica qué hay en el disco" )
    ? cResult
 
+   // === Orquestração multi-agente ===
+   oAgent:nSubAgentTimeout := 60
+
+   // Despacho paralelo com roles
+   aDefs := { ;
+      { "task" => "Projetar schema", "role" => "analyst", ;
+        "rolePrompt" => "Eres analista de datos." }, ;
+      { "task" => "Implementar API", "role" => "developer", ;
+        "model" => "gpt-4o" }, ;
+      { "task" => "Escrever testes", "role" => "tester" } }
+   aResults := oAgent:DispatchAgentsWithRoles( aDefs, cContract )
+
+   // Agregar resultados
+   cSummary := oAgent:AggregateResults( aResults, "summary" )
+   ? cSummary
+
+   // Pipeline: tarefas dependentes sequenciais
+   aResults := oAgent:DispatchAgentsPipeline( { ;
+      "Analisa requisitos", "Projetar schema", "Implementar API" }, cContract )
+
    oAgent:UsageReport()
 RETURN</code></pre>
 
@@ -220,6 +306,11 @@ RETURN</code></pre>
   <li><strong>Requer Harbour MT VM</strong> for <code>DispatchAgents()</code>. Linkar contra <code>libhbvmmt</code>.</li>
   <li><strong>API Key</strong>: configurar via variável de ambiente <code>DEEPSEEK_API_KEY</code> ou construtor.</li>
   <li><strong>Streaming</strong>: Step() usa streaming SSE com stream_options para métricas de tokens em tempo real.</li>
+  <li><strong>Orquestração</strong>: <code>DispatchAgents()</code> paralelo, <code>DispatchAgentsPipeline()</code>
+    sequencial, <code>DispatchAgentsWithRoles()</code> com roles especializados. Contexto
+    compartilhado via <code>SetSharedContext()</code>. Retry, timeout e agregação incluídos.</li>
+  <li><strong>Roles</strong>: configurar <code>cRole</code> e <code>cRolePrompt</code> para especializar cada agente.
+    O prompt do role é injetado no system prompt automaticamente.</li>
   <li><strong>Hooks</strong>: callbacks pre/post na execução de tools. Usar <code>RegisterHook()</code> para
     codeblocks personalizados, ou <code>LLMRegisterHook()</code> com presets (log, audit, block_*).</li>
   <li><strong>Contrato</strong>: o parâmetro <code>cContract</code> em <code>DispatchAgents()</code> é crítico.
