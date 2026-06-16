@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's New in 26.06 - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>What's New in FWH 26.06</h1>
+
+<p>
+This page summarizes the changes and additions in FiveWin for Harbour/xHarbour
+version 26.06 (June 2026), relative to the previous release 26.05 (May 2026).
+</p>
+
+<h2 id="agent-improvements">Agent Class &mdash; Major Improvements</h2>
+<p>
+The Agent class (<code>source\classes\agent.prg</code>) received substantial upgrades
+since its introduction in 26.05:
+</p>
+<ul>
+  <li><strong>Streaming SSE</strong> — <code>Step()</code> now sends <code>"stream": true</code>
+    with <code>stream_options.include_usage</code> for real-time token metrics. Response
+    is parsed from SSE data chunks via <code>AG_SseParse()</code>.</li>
+  <li><strong>Tool_Shell()</strong> — fully implemented: executes via <code>cmd.exe</code>
+    (Windows) or <code>/bin/sh</code> (Unix), captures stdout+stderr, truncates at 30&nbsp;KB,
+    reports exit code. Previously a stub.</li>
+  <li><strong>Tool_Python()</strong> — fully implemented: finds python3/python/py interpreter,
+    writes temp .py file, executes, captures output. Previously delegated to the stub
+    Tool_Shell().</li>
+  <li><strong>Tool_WebSearch()</strong> — implemented: curl to DuckDuckGo HTML, extracts
+    result snippets via <code>AG_ExtractDdgResults()</code>. Previously a stub.</li>
+  <li><strong>Tool_WebFetch()</strong> — implemented: curl to URL, strips HTML tags via
+    <code>AG_StripHtml()</code>, truncates at 40&nbsp;KB. Previously a stub.</li>
+  <li><strong>ExecTool() error handling</strong> — <code>BEGIN SEQUENCE / RECOVER</code>
+    wraps every tool call so a failing tool doesn't crash the agent loop.</li>
+  <li><strong>Run() interrupt/inject</strong> — <code>bInterrupt</code> codeblock checked
+    before each step and each tool call; <code>bInject</code> codeblock injects user
+    messages mid-run. Enables external cancellation and user interjections.</li>
+  <li><strong>BuildToolsArray()</strong> — now includes description and parameters schema
+    for every built-in tool (previously only had name).</li>
+  <li><strong>ToggleSkill()</strong> — bug fixed: ASort filter didn't remove items; now
+    uses <code>hb_ADel()</code> with <code>.T.</code> for in-place deletion.</li>
+  <li><strong>ExecUserTool()</strong> — fixed: <code>sys.argv</code> construction now
+    properly tokenizes space-separated args into a Python list.</li>
+  <li><strong>SendToLLM()</strong> — synchronized with Step(): streaming + SSE parse.</li>
+</ul>
+<p>New helper functions: <code>AG_SseParse()</code>, <code>AG_UrlEncode()</code>,
+  <code>AG_ExtractDdgResults()</code>, <code>AG_StripHtml()</code>,
+  <code>AG_ToolDesc()</code>, <code>AG_ToolParams()</code>.</p>
+
+<h2 id="agenticai">AgenticAI &mdash; GUI Desktop Sample</h2>
+<p>
+A full-featured desktop GUI for the ccharbour agentic engine, ported from the
+<a href="https://github.com/FiveTechSoft/Agents">Agents Web</a> version to a native
+FiveWin app using an embedded Edge WebView2 (<code>TWebView2</code>):
+</p>
+<ul>
+  <li><strong>Live reasoning</strong> ("thinking mode") — <code>reasoning_delta</code>
+    events stream into a purple glass box while the model thinks
+    (e.g. <code>/model deepseek-reasoner</code>).</li>
+  <li><strong>Status chip</strong> — header shows elapsed time, session token flow
+    (up/down) and tok/s, updated 5 times per second.</li>
+  <li><strong>Live markdown</strong> — assistant bubbles render markdown WHILE streaming
+    (throttled re-parse via marked.js), not only at turn end.</li>
+  <li><strong>/goal /plan /run</strong> — action-plan system. <code>/plan</code> asks
+    the model for 3-6 JSON steps and shows them as an editable "Action Plan" card
+    (cycle each step's state, edit titles in place, delete/add steps);
+    <code>/run</code> executes the plan one step per agent turn.</li>
+  <li><strong>/btw</strong> — interject "what are you doing?" while the agent works;
+    delivered between agent actions without interrupting the run. Uses the new
+    <code>CC_AgentRun</code> <code>hOpts["inject"]</code> hook.</li>
+  <li><strong>/cost</strong> — session metrics card with cache-aware DeepSeek pricing
+    (<code>prompt_cache_hit_tokens</code> billed at 98% off).</li>
+  <li><strong>/compact</strong> + context-window monitor — past 85% of the 128k window
+    a "Critical Context Window" card offers Compress / Clear; <code>/compact</code>
+    folds the middle of the history into one summary message.</li>
+  <li><strong>/init + AGENTS.md</strong> — the agent writes the project rules file;
+    AGENTS.md (fallback CLAUDE.md) is injected into the system prompt on every turn.</li>
+  <li><strong>New cards</strong> — aborted-execution (Stop), step-limit reached with a
+    "Continue" button, /help as a grid of clickable command buttons.</li>
+  <li><strong>Permit/reject</strong> — per-action card for mutating tools (shell/write/edit)
+    when "Auto-approve" is off; the agent turn blocks until you decide.</li>
+  <li><strong>ask_user</strong> — multiple-choice card wired to the webview.</li>
+  <li><strong>Diff viewer</strong> — "Code generated" bar with a "View Changes (Diff)"
+    toggle showing red/green lines.</li>
+  <li><strong>UX</strong> — Up/Down prompt history, Esc stops, Ctrl+K clears, prompt
+    stays enabled while running so /btw can be typed. In-app <code>/key</code> to
+    set the LLM key at runtime.</li>
+</ul>
+<p>
+Transport is in-process libcurl (hbcurl), the same path as <code>TOpenAI:SendStream</code>,
+plugged into ccharbour via <code>hOpts["transport"]</code>.
+Sample: <code>samples\AgenticAI\</code> (multi-module build with agenticai.hbp + build.bat).
+</p>
+
+<h2 id="ccharbour">ccharbour Engine &amp; Console</h2>
+<ul>
+  <li><strong>CC_AgentRun</strong> — accepts an optional <code>hOpts["inject"]</code>
+    codeblock, polled at the start of every iteration; when it returns a non-empty string
+    it is appended as a user message before the next model request (mid-run interjection
+    that does not interrupt the loop).</li>
+  <li><strong>Console cards (cc.exe)</strong> — responses now render as GUI-style
+    "cards": background-tinted rows like the AgenticAI bubbles. Replies on slate,
+    live reasoning on a purple glass box, errors on dark red, /cost on an emerald
+    metrics card with cache-aware DeepSeek pricing. Plain output is unchanged when
+    color is off.</li>
+</ul>
+
+<h2 id="new-classes">New Classes</h2>
+
+<h3>TGit &mdash; Git Integration</h3>
+<p>
+<code>source\classes\tgit.prg</code> + <code>source\winapi\git.c</code> wrap
+<code>git.exe</code> via <code>CreateProcess</code> with anonymous pipe capture
+(no hb_processRun, no external libs). Requires only <code>git</code> in PATH.
+</p>
+<p><strong>C backend</strong> (<code>source/winapi/git.c</code>):</p>
+<table>
+<tr><th>Function</th><th>Signature</th></tr>
+<tr><td><code>GIT_EXEC()</code></td><td><code>(cCmd) &rarr; cStdout</code></td></tr>
+<tr><td><code>GIT_RUN()</code></td><td><code>(cCmd, @cOut, @cErr) &rarr; nExit</code></td></tr>
+<tr><td><code>GIT_EXITCODE()</code></td><td><code>() &rarr; nLastExitCode</code></td></tr>
+<tr><td><code>GIT_STDERR()</code></td><td><code>() &rarr; cLastStderr</code></td></tr>
+<tr><td><code>GIT_HASGIT()</code></td><td><code>() &rarr; lAvailable</code></td></tr>
+</table>
+<p><strong>TGit class methods:</strong></p>
+<table>
+<tr><th>Category</th><th>Methods</th></tr>
+<tr><td>Repository</td><td><code>New()</code>, <code>Init()</code>, <code>Clone()</code>, <code>IsRepo()</code>, <code>RootDir()</code>, <code>HasGit()</code></td></tr>
+<tr><td>Status</td><td><code>Status()</code>, <code>IsClean()</code></td></tr>
+<tr><td>Staging</td><td><code>Add()</code>, <code>AddAll()</code>, <code>Reset()</code>, <code>Rm()</code></td></tr>
+<tr><td>Commit</td><td><code>Commit()</code></td></tr>
+<tr><td>Remote</td><td><code>RemoteList()</code>, <code>RemoteAdd()</code>, <code>RemoteRemove()</code>, <code>RemoteGetURL()</code>, <code>RemoteSetURL()</code></td></tr>
+<tr><td>Push/Pull</td><td><code>Push()</code>, <code>Pull()</code>, <code>Fetch()</code></td></tr>
+<tr><td>Branch</td><td><code>BranchList()</code>, <code>BranchCreate()</code>, <code>BranchDelete()</code>, <code>BranchRename()</code>, <code>BranchSwitch()</code>, <code>CurrentBranch()</code>, <code>Merge()</code>, <code>Rebase()</code></td></tr>
+<tr><td>History</td><td><code>Log()</code>, <code>LogRaw()</code></td></tr>
+<tr><td>Diff</td><td><code>Diff()</code>, <code>Show()</code></td></tr>
+<tr><td>Blame</td><td><code>Blame()</code></td></tr>
+<tr><td>Stash</td><td><code>StashList()</code>, <code>StashSave()</code>, <code>StashPop()</code>, <code>StashApply()</code>, <code>StashDrop()</code></td></tr>
+<tr><td>Tag</td><td><code>TagList()</code>, <code>TagCreate()</code>, <code>TagDelete()</code></td></tr>
+<tr><td>Checkout</td><td><code>Checkout()</code></td></tr>
+<tr><td>Config</td><td><code>Config()</code>, <code>ConfigList()</code></td></tr>
+</table>
+<p>Sample: <code>samples\misc\tgit.prg</code>. Include: <code>include\tgit.ch</code>.</p>
+
+<h3>TSSH &mdash; SSH Client</h3>
+<p>
+<code>source\classes\tssh.prg</code> + <code>source\winapi\ssh.c</code> wrap
+<code>ssh.exe</code> / <code>scp.exe</code> (Windows 10+ OpenSSH) via
+<code>CreateProcess</code> with pipe capture. Supports key authentication,
+custom port, SCP file transfer, and host key scanning.
+</p>
+<p><strong>C backend</strong> (<code>source/winapi/ssh.c</code>):</p>
+<table>
+<tr><th>Function</th><th>Signature</th></tr>
+<tr><td><code>SSH_EXEC()</code></td><td><code>(cHost, cUser, cCmd, cKeyFile, nPort, @cOut, @cErr) &rarr; nExit</code></td></tr>
+<tr><td><code>SCP_SEND()</code></td><td><code>(cHost, cUser, cLocal, cRemote, cKeyFile, nPort, @cErr) &rarr; nExit</code></td></tr>
+<tr><td><code>SCP_RECV()</code></td><td><code>(cHost, cUser, cRemote, cLocal, cKeyFile, nPort, @cErr) &rarr; nExit</code></td></tr>
+<tr><td><code>SSH_HASSSH()</code></td><td><code>() &rarr; lAvailable</code></td></tr>
+</table>
+<p><strong>TSSH class methods:</strong></p>
+<table>
+<tr><th>Category</th><th>Methods</th></tr>
+<tr><td>Connection</td><td><code>New()</code>, <code>Connect()</code>, <code>IsAvailable()</code></td></tr>
+<tr><td>Remote exec</td><td><code>Exec()</code>, <code>ExecQuiet()</code>, <code>Shell()</code></td></tr>
+<tr><td>File transfer</td><td><code>SendFile()</code>, <code>GetFile()</code>, <code>SendFiles()</code>, <code>GetFiles()</code></td></tr>
+<tr><td>Key mgmt</td><td><code>KeyGen()</code>, <code>KeyScan()</code>, <code>SetKnownHosts()</code></td></tr>
+</table>
+<p>Sample: <code>samples\misc\tssh.prg</code>.</p>
+
+<h2 id="remoteview">Remote View &mdash; Multi-Client &amp; Login</h2>
+<ul>
+  <li><strong>Multi-client</strong> — each viewer gets its own server on its own port,
+    fully isolated, so several browsers can watch/drive the same window at once.
+    Per-thread state via TLS (sockets, frame diff, viewport, cursor) — no shared globals.
+    <ul>
+      <li>Single client, NO multithread (no <code>-mt</code>):
+        <code>RemoteViewStart()</code>/<code>Stop()</code> pumped by a hidden
+        WM_TIMER on the GUI thread.</li>
+      <li>Multi client, multithread (<code>-mt</code>): launch one Harbour thread per
+        port with <code>hb_threadStart</code>, each calling the blocking
+        <code>RemoteViewServe()</code>; stop them all with
+        <code>RemoteViewStopAll()</code>.</li>
+    </ul>
+  </li>
+  <li><strong>New API</strong>:
+    <code>RemoteViewServe([hWnd], [nPort], [nOffX], [nOffY])</code>,
+    <code>RemoteViewStopAll()</code>.</li>
+  <li><strong>Custom page title</strong> — <code>RemoteViewStart([hWnd], [nPort], [cTitle])</code>
+    now accepts an optional title parameter. Default "FWH Remote View".</li>
+  <li><strong>Login sample</strong> — <code>samples\RemoteView\testrvauth.prg</code>
+    shows how to authenticate a remote user before the app UI opens. Login is a normal
+    FiveWin dialog owned by the served window, composited by RemoteView on top.
+    Key gotcha: do NOT launch modal UI inside ON INIT (the window hasn't painted yet).
+    The sample defers login with a one-shot TTimer.</li>
+  <li><strong>Zero-init fix</strong> — VC98/xHarbour CRT does not zero
+    <code>__declspec(thread)</code> variables; per-thread capture state is now reset
+    explicitly in <code>CaptureInit</code> and the monitor rect falls back to the
+    primary screen on failure.</li>
+  <li><strong>Visual polish</strong> — trims invisible Win10/11 resize borders,
+    draws a soft synthetic drop shadow, and synthesizes title-bar button hover.</li>
+</ul>
+<p>
+build_new.bat: set <code>FW_MT=1</code> to link the Harbour MT VM (<code>hbvmmt</code>)
+for apps that use <code>hb_threadStart</code>; without it the single-thread VM
+(<code>hbvm</code>) is linked.
+</p>
+
+<h2 id="build">Build System</h2>
+
+<h3>Compiler Warning Sweep</h3>
+<p>
+Every compiler warning emitted by the GCC32, GCC64, MSVC32 and MSVC64 library builds
+(~170 sites) has been cleared while preserving behavior on all supported toolchains
+(BCC32/64, MSVC32/64, GCC32/64, Harbour and xHarbour). Covers:
+</p>
+<ul>
+  <li><code>-Wcast-function-type</code> — GetProcAddress/FARPROC casts now use the
+    portable <code>( void (*)( void ) )</code> intermediate.</li>
+  <li><code>-Wdangling-else</code>, <code>-Wimplicit-fallthrough</code>,
+    <code>-Wsign-compare</code>, <code>-Wunused-function</code> (32-bit-only COM
+    IDataObject vtable callbacks guarded with <code>#ifndef _WIN64</code>),
+    <code>-Wold-style-declaration</code>, <code>-Wmisleading-indentation</code>.</li>
+  <li>Redefined macros and MSVC C4996.</li>
+</ul>
+<p>
+Two real bugs found: a buffer overflow in <code>BlankQuotes()</code>
+(<code>vstrfun1.prg</code>) when its 2nd argument exceeds 3 chars, and a 3-byte
+over-read of the GIF graphic-control block in <code>fwgif.c</code>. All nine library
+variants now build warning-free.
+</p>
+
+<h3>xHarbour Commercial Restored</h3>
+<p>
+The xHB Commercial (xhbc) target — which had been abandoned since 2016 — now builds,
+links and runs again with the VC98 toolchain:
+</p>
+<ul>
+  <li>The C library (<code>Fivehcm.lib</code>) went from an empty stub to the full
+    FiveWin C engine; the PRG library (<code>Fivehmx.lib</code>) was rebuilt complete.</li>
+  <li><code>source/internal/xhbcompat.c</code> + <code>include/xhbcompat.h</code>:
+    Harbour-3.x array "vector" C API implemented over what xHarbour provides.</li>
+  <li>Per-file VC98/xHarbour compile fixes (themes, msgs, files, elevation, winsock,
+    calendar, scintilc, richedit, brushes, ribbon, odbc32x, ...), each behind an
+    <code>__XHARBOUR__</code> guard.</li>
+  <li>All shims guarded by <code>__XHARBOUR__</code> — Harbour builds compile
+    byte-for-byte as before.</li>
+</ul>
+<p>Build scripts: <code>makes/build_fivehcm.ps1</code> + <code>makes/build_fivehmx.ps1</code>.</p>
+
+<h3>makes/ Test Projects</h3>
+<p>
+Every <code>makes/&lt;compiler&gt;/</code> folder now builds, links and runs a minimal
+FiveWin app for its Harbour/xHarbour + C-compiler combo (11 variants confirmed).
+Two missing variants were added (xhb_bcc64, xhb_msvc32). Each <code>go.bat</code>
+honours <code>FW_NORUN=1</code> and uses the VS 18 toolchain.
+</p>
+
+<h2 id="fixes">Notable Fixes</h2>
+
+<h3>TGet ANSI Characters (Turkish, CP1250-1258)</h3>
+<p>
+Keyboard input of ANSI characters with Unicode codepoint above 255
+(Turkish &#x15F;-cedilla, &#x11F;-breve, dotted &#x130;; Polish, Czech, Baltic,
+Cyrillic and Greek letters) showed "?" in non-Unicode applications
+(<code>FW_SetUnicode(.F.)</code>) using single-byte codepages CP1250–CP1258.
+</p>
+<p>
+Regression introduced when <code>is2byteansi()</code> started treating all 2-byte
+sequences as ANSI pairs on those codepages: <code>WideKey2Asc()</code> built genuine
+UTF-8 from the <code>WM_CHAR</code> wide code but <code>fw_Utf8ToStr()</code>'s
+<code>isutf8()</code> heuristic refused to convert it, so the keystroke was rejected.
+</p>
+<p>
+<code>WideKey2Asc()</code> now converts with explicit codepages via
+<code>FW_CdpTranslate(cUtf8, 65001, -1)</code>, bypassing the heuristic.
+<code>is2byteansi()</code> display behavior is unchanged.
+</p>
+<p>
+New samples: <code>samples\test\trwincdp.prg</code> (conversion-chain check) and
+<code>samples\test\trwinget.prg</code> (sends &#x15F; &#x11F; &#x130; WM_CHAR codes
+to a GET and checks the buffer receives CP1254 bytes FE F0 DD).
+</p>
+
+<h3>TGraph ADD SERIE / SET Y LABELS</h3>
+<p>
+Both <code>#xcommand</code> rules expanded to a hard-coded <code>oGraph:</code> instead
+of the <code>&lt;oGraph&gt;</code> matchmarker, so <code>ADD SERIE TO oMyGraph</code>
+/ <code>SET Y LABELS OF oMyGraph</code> called a non-existent <code>oGraph</code>
+variable unless the object happened to be named <code>oGraph</code>. They now expand to
+<code>&lt;oGraph&gt;:AddSerie()</code> / <code>&lt;oGraph&gt;:SetYVals()</code>.
+</p>
+
+<h2 id="new-features">New Features</h2>
+
+<h3>TRichEdit5 &amp; TRichEdit — SetTextColor()</h3>
+<p>
+<code>SetTextColor(nColor)</code> applies text color to the current selection
+(<code>SCF_WORD | SCF_SELECTION</code>) using only the <code>CFM_COLOR</code> mask,
+preserving all other character formatting (bold, italic, underline, font face, size).
+If no text is selected, the color is applied to the word under the caret.
+Works on both <code>TRichEdit5</code> (RichEdit 5.0) and <code>TRichEdit</code>
+(RichEdit 2.0 via <code>riched20.dll</code>).
+</p>
+<p>Samples: <code>samples\test\testchclr.prg</code> (Blue/Red/Black + Bold/Italic),
+<code>samples\test\testreclr.prg</code> (same for RichEdit 2.0).</p>
+
+<h3>TRichEdit5 — Dark Mode</h3>
+<p>
+New <code>METHOD SetDarkMode(nClrText, nClrBack)</code>, cascaded automatically by
+<code>TDialog:SetDarkMode</code> / <code>FW_SetDarkMode</code> like other controls.
+Uses the same dark palette as <code>TMultiGet</code>/<code>TGet</code>.
+</p>
+
+<h3>TURLLink — Text Alignment</h3>
+<p>
+New <code>DATA nAlign</code> and <code>METHOD AlignText(nAlign)</code>.
+<code>Method Default()</code> now auto-detects alignment from window styles
+(<code>SS_RIGHT</code>, <code>SS_CENTER</code>) when <code>::nAlign</code> is nil.
+<code>Method EraseBkGnd()</code> now accepts the <code>hDC</code> parameter.
+Thanks to Carlos Sincuir.
+</p>
+
+<h3>fwhxhb.h — Harbour/xHarbour C Compatibility</h3>
+<p>
+<code>include/fwhxhb.h</code> maps Harbour-only C API
+(<code>hb_parvc/parvni/parvnl/parvnll/parvnd/parvl</code>,
+<code>hb_storvc/storvni/storvnl/storvnll/storvnd/storvl</code>,
+<code>hb_vmCDP</code>, <code>hb_retclen_buffer</code>, <code>hb_rettdt</code>,
+<code>hb_timeStampStrGetDT</code>) to primitives common to both VMs.
+A single set of C object files links against Harbour or xHarbour.
+</p>
+
+<h2 id="new-samples">New Samples</h2>
+
+<h3>githubdb &mdash; githubDB + XBrowse</h3>
+<p>
+<code>samples\githubdb\githubdb.prg</code> browses a githubDB fork
+(SQL+vector database on GitHub Actions) from FiveWin using two HTTP paths:
+</p>
+<ul>
+  <li><strong>Fast read (CDN)</strong> — fetches <code>data/&lt;db&gt;.json</code> from
+    <code>raw.githubusercontent.com</code>, sub-second, no token needed.</li>
+  <li><strong>Action query</strong> — sends SQL via <code>repository_dispatch</code>,
+    polls for result, 10-30&nbsp;s, needs a GitHub token with Contents R/W.</li>
+</ul>
+<p>
+HTTP transport via <code>WinHttp</code> COM object (no curl/DLL dependency).
+Built with <code>build_new.bat</code> (all compiler variants). Docs at
+<a href="https://fivetechsoft.github.io/githubdb/">githubdb</a>.
+</p>
+
+<h3>testrsz &mdash; Flicker-Free XBrowse Resize</h3>
+<p>
+<code>samples\testrsz.prg</code> demonstrates how to resize an XBrowse at runtime
+without flickering. The correct method: add <code>WS_CLIPCHILDREN</code> to the
+dialog style, freeze the dialog with <code>WM_SETREDRAW</code> around the resize,
+then repaint both dialog and browse. Includes "old method" buttons side by side
+for comparison. Also documented in the TXBrowse HTML docs.
+</p>
+
+<h3>seqedit &amp; xbrseqed &mdash; Sequential XBrowse Edit</h3>
+<p>
+<code>samples\seqedit.prg</code> and <code>samples\ui\xbrowse\xbrseqed.prg</code>
+demonstrate sequential keyboard-driven edit for Array data sources in XBrowse.
+Press ENTER on a row to start editing the first column in the sequence; each
+subsequent ENTER validates the current column and auto-advances; ESC cancels.
+Fully configurable via <code>aEditSeq</code> static array (default <code>{3,5,7}</code>).
+Uses <code>PostMessage</code>-based column advance (zero timers).
+</p>
+
+<h2 id="dev-tools">Development Tools</h2>
+<ul>
+  <li><strong>VS Code tasks</strong> — <code>vscode/tasks.json</code> with five tasks:
+    Clean, Format (<code>hbformat</code>), Resources (PellesC RC editor), Build64, and
+    Run. All with Harbour problem matcher and statusbar labels. Thanks to Jose Vte. Cheto.</li>
+  <li><strong>xm64 build variant</strong> — xHarbour 64-bit + MSVC 64-bit now available
+    via <code>build_new.bat &lt;prog&gt; xm64</code>. Requires xHarbour 64-bit at
+    <code>c:\xharbour64</code> and VS 64-bit C compiler. Libraries:
+    <code>Fivehxh64.lib</code> + <code>FiveHC64.lib</code>.</li>
+</ul>
+
+<h2 id="conclusion">Summary</h2>
+<p>
+FWH 26.06 delivers major Agent class maturity (streaming SSE, real tool implementations,
+error handling, interrupt/inject), two new system-integration classes (TGit, TSSH),
+the AgenticAI GUI desktop port, Remote View multi-client support, a full compiler
+warning sweep (~170 sites, two real bugs found and fixed), restoration of the
+xHarbour Commercial target, and significant documentation expanding to 36+ HTML pages.
+</p>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+  <li><a href="../../en/ai/agent.html">Agent Class documentation</a></li>
+  <li><a href="../../en/internet/remoteview.html">Remote View documentation</a></li>
+  <li><a href="../getting-started/whatsnew.html">What's New in 26.05</a></li>
+</ul>
+
+</main>
+<script src="../../js/nav.js"></script>
+<script src="../../js/app.js"></script>
+</body>
+</html>
