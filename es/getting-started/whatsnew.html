@@ -18,6 +18,39 @@ Esta p&aacute;gina resume los cambios y adiciones en FiveWin para Harbour/xHarbo
 versi&oacute;n 26.05 (Mayo 2026), en relaci&oacute;n con la versi&oacute;n anterior 26.03 (Marzo 2026).
 </p>
 
+<h2 id="agent">Clase Agent &mdash; Agente Aut&oacute;nomo de IA</h2>
+<p>
+Una nueva clase <code>source\classes\agent.prg</code> implementa un agente de IA aut&oacute;nomo
+para codificaci&oacute;n en Harbour/FiveWin — el mismo motor agente que impulsa
+<a href="https://fivetechsoft.github.io/Agents/">Agents Web</a>.
+</p>
+<ul>
+  <li><strong>Bucle</strong> — <code>Run()</code>/<code>Step()</code>: observar &rarr; decidir &rarr; actuar.
+    14 pasos m&aacute;x., DeepSeek V4 v&iacute;a libcurl.</li>
+  <li><strong>15 herramientas integradas</strong> — list_files, read_file, write_file, delete_file,
+    shell, python, sql, web_search, web_fetch, register_tool, unregister_tool,
+    user_tools, create_skill, toggle_skill, classify_disk.</li>
+  <li><strong>Herramientas din&aacute;micas</strong> — <code>RegisterTool()</code> permite al agente crear
+    sus propias herramientas desde scripts. <code>UnregisterTool()</code> las elimina sin borrar
+    el script. Las herramientas persisten en <code>agent_state/user_tools.json</code>.</li>
+  <li><strong>Habilidades</strong> — instrucciones reutilizables inyectadas en el prompt del sistema.
+    5 integradas (reviewer, summarizer, refactor, documenter, tester) + habilidades en disco.
+    <code>ToggleSkill()</code> activa/desactiva sin eliminar el archivo.</li>
+  <li><strong>Multi-agente</strong> — <code>DispatchAgents()</code> lanza hasta 4
+    sub-agentes en paralelo mediante <code>hb_threadStart()</code>. Cada uno con su propia instancia,
+    sin dispatch/ask_user. Contrato compartido para consistencia.</li>
+  <li><strong>Planificaci&oacute;n</strong> — <code>GeneratePlan()</code> pide al LLM de 3 a 6 pasos
+    JSON. <code>ExecutePlan()</code> los ejecuta secuencialmente, marcando cada uno completado.</li>
+  <li><strong>Persistencia</strong> — <code>SaveState()</code>/<code>LoadState()</code>
+    guarda herramientas de usuario y habilidades activas en disco. Sobrevive entre sesiones.</li>
+</ul>
+<p>
+Requiere Harbour MT VM (<code>libhbvmmt</code>) para el despacho multi-agente.
+Referencia completa: <a href="https://fivetechsoft.github.io/FWH_docs/classes/Agent.md">
+  Documentaci&oacute;n de la clase Agent</a>.
+Ver ejemplo: <code>samples\agenticai\agenticai2.prg</code>.
+</p>
+
 <h2 id="remoteview">Remote View &mdash; Vista y Control en Vivo desde el Navegador</h2>
 <p>
 Un nuevo subsistema (<code>source/internal/remoteview/</code>) permite que cualquier navegador en la

@@ -18,6 +18,39 @@ Esta p&aacute;gina resume as mudan&ccedil;as e adi&ccedil;&otilde;es no FiveWin 
 vers&atilde;o 26.05 (Maio 2026), em rela&ccedil;&atilde;o &agrave; vers&atilde;o anterior 26.03 (Mar&ccedil;o 2026).
 </p>
 
+<h2 id="agent">Classe Agent &mdash; Agente Aut&ocirc;nomo de IA</h2>
+<p>
+Uma nova classe <code>source\classes\agent.prg</code> implementa um agente de IA aut&ocirc;nomo
+para codifica&ccedil;&atilde;o em Harbour/FiveWin — o mesmo motor agente que alimenta o
+<a href="https://fivetechsoft.github.io/Agents/">Agents Web</a>.
+</p>
+<ul>
+  <li><strong>Loop</strong> — <code>Run()</code>/<code>Step()</code>: observar &rarr; decidir &rarr; agir.
+    14 passos m&aacute;x., DeepSeek V4 via libcurl.</li>
+  <li><strong>15 ferramentas integradas</strong> — list_files, read_file, write_file, delete_file,
+    shell, python, sql, web_search, web_fetch, register_tool, unregister_tool,
+    user_tools, create_skill, toggle_skill, classify_disk.</li>
+  <li><strong>Ferramentas din&acirc;micas</strong> — <code>RegisterTool()</code> permite ao agente criar
+    suas pr&oacute;prias ferramentas a partir de scripts. <code>UnregisterTool()</code> as remove sem excluir
+    o script. As ferramentas persistem em <code>agent_state/user_tools.json</code>.</li>
+  <li><strong>Habilidades</strong> — instru&ccedil;&otilde;es reutiliz&aacute;veis injetadas no prompt do sistema.
+    5 integradas (reviewer, summarizer, refactor, documenter, tester) + habilidades em disco.
+    <code>ToggleSkill()</code> ativa/desativa sem excluir o arquivo.</li>
+  <li><strong>Multi-agente</strong> — <code>DispatchAgents()</code> lan&ccedil;a at&eacute; 4
+    sub-agentes em paralelo via <code>hb_threadStart()</code>. Cada um com sua pr&oacute;pria inst&acirc;ncia,
+    sem dispatch/ask_user. Contrato compartilhado para consist&ecirc;ncia.</li>
+  <li><strong>Planejamento</strong> — <code>GeneratePlan()</code> solicita ao LLM de 3 a 6 passos
+    JSON. <code>ExecutePlan()</code> os executa sequencialmente, marcando cada um como conclu&iacute;do.</li>
+  <li><strong>Persist&ecirc;ncia</strong> — <code>SaveState()</code>/<code>LoadState()</code>
+    salva ferramentas de usu&aacute;rio e habilidades ativas no disco. Sobrevive entre sess&otilde;es.</li>
+</ul>
+<p>
+Requer Harbour MT VM (<code>libhbvmmt</code>) para despacho multi-agente.
+Refer&ecirc;ncia completa: <a href="https://fivetechsoft.github.io/FWH_docs/classes/Agent.md">
+  Documenta&ccedil;&atilde;o da classe Agent</a>.
+Ver exemplo: <code>samples\agenticai\agenticai2.prg</code>.
+</p>
+
 <h2 id="remoteview">Remote View &mdash; Visualiza&ccedil;&atilde;o e Controle ao Vivo pelo Navegador</h2>
 <p>
 Um novo subsistema (<code>source/internal/remoteview/</code>) permite que qualquer navegador na
@@ -75,6 +108,22 @@ automaticamente a partir do reposit&oacute;rio principal via GitHub Actions.
 </p>
 
 <h2 id="new-classes">Novas Classes</h2>
+
+<h3>TKnob &mdash; controle de knob rotativo (UI)</h3>
+<p>
+Um moderno controle de knob rotativo de <strong>Silvio Falconi</strong>
+(<code>source/classes/tknob.prg</code>), voltado para interfaces de &aacute;udio, MIDI e
+sintetizadores. Derivado de <code>TControl</code> e desenhado completamente com GDI
+(sem DLL adicional): indicador LED ou LINE, anel exterior iluminado com brilho,
+marcas externas opcionais, modos unipolar (0..127) e bipolar (-30..+30), controle com
+arraste e roda do mouse (<kbd>CTRL</kbd> para um passo mais fino), rein&iacute;cio com
+duplo clique, estado habilitado/desabilitado, valor interno mais r&oacute;tulo externo com
+fontes separadas, e callbacks <code>bSetGet</code> / <code>bChanged</code> /
+<code>bAction</code>. Inclui um comando declarativo
+<code>@ &lt;linha&gt;,&lt;col&gt; KNOB</code> em <code>include/tknob.ch</code>.
+Ver <a href="../../pt/ui/tknob.html">TKnob</a>. Exemplos:
+<code>samples/knobtst1.prg</code>, <code>samples/knobtst2.prg</code>.
+</p>
 
 <h3>THFTask e TChatAgent &mdash; utilidades FWAI (IA)</h3>
 <p>
