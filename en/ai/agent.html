@@ -31,13 +31,14 @@ flowchart TB
         Run --> Step --> Run
     end
     subgraph Tools["Tools"]
-        BuiltIn["Built-in (15)"]
+        BuiltIn["Built-in (18)"]
         User["User tools (dynamic)"]
         Skills["Skills (system prompt)"]
     end
     subgraph Advanced["Advanced"]
         Dispatch["DispatchAgents() → threads"]
         Plan["GeneratePlan() → ExecutePlan()"]
+        Hooks["Hooks: pre/post tool callbacks"]
         Persist["SaveState() / LoadState()"]
     end
     Core --> Tools --> Advanced
@@ -61,6 +62,7 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
 <tr><td><code>cModel</code></td><td>String</td><td>Model ID (default: <code>deepseek-v4-pro</code>)</td></tr>
 <tr><td><code>nMaxSteps</code></td><td>Numeric</td><td>Max iterations per Run() (default: 14)</td></tr>
 <tr><td><code>nTokensIn/Out/Cache</code></td><td>Numeric</td><td>Token counters</td></tr>
+<tr><td><code>aHooks</code></td><td>Array</td><td>Registered hooks <code>{name, event, block, priority, active}</code></td></tr>
 </table>
 
 <h2 id="core">Core Methods</h2>
@@ -107,6 +109,21 @@ returns the raw response. Updates token metrics. This is the core LLM RPC.</p>
 </table>
 <p>Tools persist in <code>agent_state/user_tools.json</code>. Built-in tools are fixed; user tools
 are dynamic and survive between sessions.</p>
+
+<h2 id="hooks">Hooks</h2>
+<p>Hooks are callbacks that execute before/after tool calls, enabling logging, auditing,
+validation, and cancellation without modifying tool code.</p>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>RegisterHook(cName,cEvent,bBlock,[nPriority])</code></td><td>Register a hook. Events: <code>pre_tool_use</code>, <code>post_tool_use</code>, <code>on_error</code>, <code>on_complete</code>. Pre-hooks return <code>.F.</code> to cancel.</td></tr>
+<tr><td><code>UnregisterHook(cName)</code></td><td>Remove a hook by name.</td></tr>
+<tr><td><code>ListHooks()</code></td><td>List all registered hooks with event, priority, and status.</td></tr>
+<tr><td><code>RunHooks(cEvent,hContext)</code></td><td>Execute all hooks for an event. Called internally by <code>ExecTool()</code>.</td></tr>
+<tr><td><code>LLMRegisterHook(cName,cEvent,cAction,[nPriority])</code></td><td>Register hook from LLM using preset actions: <code>log</code>, <code>audit</code>, <code>block_shell</code>, <code>block_delete</code>, <code>block_write</code>.</td></tr>
+</table>
+<p>The hook context hash <code>hContext</code> contains: <code>{name, args, result}</code>.
+Pre-hooks receive the tool name and arguments; return <code>.F.</code> to cancel execution.
+Post-hooks receive the result and can modify <code>hContext["result"]</code>.</p>
 
 <h2 id="skills">Skills</h2>
 <table>
@@ -176,6 +193,17 @@ description, marks it <code>"done"</code>, activates the next. Stops when all st
       "Escribe tests automáticamente." )
    oAgent:ToggleSkill( "prueba", .T. )
 
+   // Register a hook to audit all tool calls
+   oAgent:RegisterHook( "audit_log", "post_tool_use", ;
+      {| h | ? "AUDIT:", h["name"], hb_ValToStr( h["args"] ) }, 50 )
+
+   // Register a hook to block shell commands (pre-hook)
+   oAgent:RegisterHook( "safe_mode", "pre_tool_use", ;
+      {| h | iif( h["name"] == "shell", .F., .T. ) }, 10 )
+
+   // Or use LLM-driven preset hooks
+   oAgent:LLMRegisterHook( "llm_audit", "post_tool_use", "audit" )
+
    // Generate and execute a plan
    oAgent:GeneratePlan( "Crea una app TODO en PHP+SQLite" )
    oAgent:ExecutePlan()
@@ -192,6 +220,8 @@ RETURN</code></pre>
   <li><strong>Harbour MT VM required</strong> for <code>DispatchAgents()</code>. Link against <code>libhbvmmt</code>.</li>
   <li><strong>API Key</strong>: set via environment variable <code>DEEPSEEK_API_KEY</code> or constructor.</li>
   <li><strong>Streaming</strong>: Step() uses SSE streaming with stream_options for real-time token metrics.</li>
+  <li><strong>Hooks</strong>: pre/post callbacks on tool execution. Use <code>RegisterHook()</code> for
+    custom codeblocks, or <code>LLMRegisterHook()</code> with presets (log, audit, block_*).</li>
   <li><strong>Interrupt/Inject</strong>: pass <code>interrupt</code> and <code>inject</code> codeblocks to New() for external cancellation and user interjections.</li>
   <li><strong>Contract</strong>: the <code>cContract</code> parameter in <code>DispatchAgents()</code> is critical.
     Without it, parallel sub-agents diverge on naming conventions. Always provide exact

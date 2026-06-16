@@ -31,13 +31,14 @@ flowchart TB
         Run --> Step --> Run
     end
     subgraph Tools["Tools"]
-        BuiltIn["Integradas (15)"]
+        BuiltIn["Integradas (18)"]
         User["Tools de usuario (dinámicas)"]
         Skills["Skills (system prompt)"]
     end
     subgraph Advanced["Advanced"]
         Dispatch["DispatchAgents() → hilos"]
         Plan["GeneratePlan() → ExecutePlan()"]
+        Hooks["Hooks: callbacks pre/post tool"]
         Persist["SaveState() / LoadState()"]
     end
     Core --> Tools --> Advanced
@@ -61,6 +62,7 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
 <tr><td><code>cModel</code></td><td>String</td><td>ID del modelo (defecto: <code>deepseek-v4-pro</code>)</td></tr>
 <tr><td><code>nMaxSteps</code></td><td>Numeric</td><td>Máx iteraciones por Run() (defecto: 14)</td></tr>
 <tr><td><code>nTokensIn/Out/Cache</code></td><td>Numeric</td><td>Contadores de tokens</td></tr>
+<tr><td><code>aHooks</code></td><td>Array</td><td>Hooks registrados <code>{name, event, block, priority, active}</code></td></tr>
 </table>
 
 <h2 id="core">Métodos Principales</h2>
@@ -107,6 +109,21 @@ devuelve la respuesta bruta. Actualiza métricas de tokens. Es el RPC central de
 </table>
 <p>Las tools persisten en <code>agent_state/user_tools.json</code>. Las integradas son fijas; las del usuario
 son dinámicas y sobreviven entre sesiones.</p>
+
+<h2 id="hooks">Hooks</h2>
+<p>Los hooks son callbacks que se ejecutan antes/después de cada tool call, permitiendo
+logging, auditoría, validación y cancelación sin modificar el código de las tools.</p>
+<table>
+<tr><th>Method</th><th>Description</th></tr>
+<tr><td><code>RegisterHook(cName,cEvent,bBlock,[nPriority])</code></td><td>Registra un hook. Eventos: <code>pre_tool_use</code>, <code>post_tool_use</code>, <code>on_error</code>, <code>on_complete</code>. Pre-hooks devuelven <code>.F.</code> para cancelar.</td></tr>
+<tr><td><code>UnregisterHook(cName)</code></td><td>Elimina un hook por nombre.</td></tr>
+<tr><td><code>ListHooks()</code></td><td>Lista todos los hooks registrados con evento, prioridad y estado.</td></tr>
+<tr><td><code>RunHooks(cEvent,hContext)</code></td><td>Ejecuta todos los hooks de un evento. Llamado internamente por <code>ExecTool()</code>.</td></tr>
+<tr><td><code>LLMRegisterHook(cName,cEvent,cAction,[nPriority])</code></td><td>Registra hook desde el LLM usando acciones predefinidas: <code>log</code>, <code>audit</code>, <code>block_shell</code>, <code>block_delete</code>, <code>block_write</code>.</td></tr>
+</table>
+<p>El hash de contexto <code>hContext</code> contiene: <code>{name, args, result}</code>.
+Los pre-hooks reciben el nombre de la tool y sus argumentos; devuelven <code>.F.</code> para cancelar.
+Los post-hooks reciben el resultado y pueden modificar <code>hContext["result"]</code>.</p>
 
 <h2 id="skills">Skills</h2>
 <table>
@@ -176,6 +193,17 @@ descripción, lo marca <code>"done"</code>, activa el siguiente. Para cuando tod
       "Escribe tests automáticamente." )
    oAgent:ToggleSkill( "prueba", .T. )
 
+   // Registrar un hook para auditar todas las tool calls
+   oAgent:RegisterHook( "audit_log", "post_tool_use", ;
+      {| h | ? "AUDIT:", h["name"], hb_ValToStr( h["args"] ) }, 50 )
+
+   // Registrar un hook para bloquear comandos shell (pre-hook)
+   oAgent:RegisterHook( "safe_mode", "pre_tool_use", ;
+      {| h | iif( h["name"] == "shell", .F., .T. ) }, 10 )
+
+   // O usar presets predefinidos para el LLM
+   oAgent:LLMRegisterHook( "llm_audit", "post_tool_use", "audit" )
+
    // Generate and execute a plan
    oAgent:GeneratePlan( "Crea una app TODO en PHP+SQLite" )
    oAgent:ExecutePlan()
@@ -191,7 +219,9 @@ RETURN</code></pre>
 <ul>
   <li><strong>Requiere Harbour MT VM</strong> for <code>DispatchAgents()</code>. Enlazar contra <code>libhbvmmt</code>.</li>
   <li><strong>API Key</strong>: configurar vía variable de entorno <code>DEEPSEEK_API_KEY</code> o constructor.</li>
-  <li><strong>Streaming</strong>: streaming token a token vía SSE está planeado pero no implementado aún.</li>
+  <li><strong>Streaming</strong>: Step() usa streaming SSE con stream_options para métricas de tokens en tiempo real.</li>
+  <li><strong>Hooks</strong>: callbacks pre/post en la ejecución de tools. Usar <code>RegisterHook()</code> para
+    codeblocks personalizados, o <code>LLMRegisterHook()</code> con presets (log, audit, block_*).</li>
   <li><strong>Contrato</strong>: el parámetro <code>cContract</code> en <code>DispatchAgents()</code> es crítico.
     Sin él, los sub-agentes paralelos divergen en convenciones de nombres. Proporciona siempre
     nombres exactos de tablas, columnas, funciones y rutas de archivos.</li>
