@@ -26,16 +26,20 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
  │    ↑                         ↓    │
  │    └── result ←──────────────┘    │
  ├───────────────────────────────────┤
- │  Built-in tools (19)              │
+ │  Built-in tools (29)              │
  │  User tools (dynamic)             │
  │  Skills (system prompt)           │
  ├───────────────────────────────────┤
-│  DispatchAgents() → threads       │
-│  GeneratePlan() → ExecutePlan()   │
-│  Distill() → patterns → skills    │
-│  Dream() → memory consolidation   │
-│  Checkpoints → save/restore state │
-│  SaveState() / LoadState()        │
+│  Edit / Glob / Grep               │
+│  Git status/diff/log/commit/push  │
+│  Tasks create/list/done/block     │
+│  Actors spawn/wait/send/cancel   │
+│  Checkpoints save/load/list       │
+│  DispatchAgents → threads        │
+│  GeneratePlan → ExecutePlan      │
+│  Distill → patterns → skills     │
+│  Dream → memory consolidation    │
+│  SaveState / LoadState           │
 └───────────────────────────────────┘
 ```
 
@@ -56,6 +60,7 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
 |------|--------|
 | `list_files` | `Tool_ListFiles( [cDir] )` |
 | `read_file` | `Tool_ReadFile( cPath )` |
+| `edit_file` | `Tool_EditFile( cPath, cOldStr, cNewStr )` — precise text replacement |
 | `write_file` | `Tool_WriteFile( cPath, cContent )` — asks permission |
 | `delete_file` | `Tool_DeleteFile( cPath )` — asks permission |
 | `shell` | `Tool_Shell( cCmd )` |
@@ -63,6 +68,23 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
 | `sql` | `Tool_Sql( cDb, cQuery )` |
 | `web_search` | `Tool_WebSearch( cQuery )` |
 | `web_fetch` | `Tool_WebFetch( cUrl )` |
+
+### Search
+
+| Method | Description |
+|--------|-------------|
+| `Tool_Glob( cPattern, [cDir] )` | Find files matching pattern (e.g. `*.prg`, `**/*.c`). Returns file paths. |
+| `Tool_Grep( cPattern, [cDir] )` | Search file contents across source files. Returns `file:line:content`. Max 50 results. |
+
+### Git
+
+| Method | Description |
+|--------|-------------|
+| `Tool_GitStatus()` | Show git working tree status (short format). |
+| `Tool_GitDiff()` | Show unstaged changes. Truncated at 30KB. |
+| `Tool_GitLog( [nCount] )` | Show recent commits (default 10). |
+| `Tool_GitCommit( cMessage )` | Stage all changes and commit. |
+| `Tool_GitPush()` | Push to remote. |
 
 ### Dynamic Tools
 
@@ -144,6 +166,34 @@ LLM tools: `save_checkpoint`, `list_checkpoints`, `load_checkpoint`, `delete_che
 
 Checkpoint fields: `id`, `step`, `label`, `ts`, `messages`, `plan`, `shared`, `goal`, `toolHistory`, `toolCount`, `model`, `maxSteps`.
 
+### Tasks
+
+Persistent task tracking across `Run()` calls. Tasks have lifecycle: open → in_progress → done/blocked.
+
+| Method | Description |
+|--------|-------------|
+| `TaskCreate( cSummary )` | Create a new task. Returns description with auto-incremented ID. |
+| `TaskList()` | List all tasks with status icons: `[ ]` open, `[>]` in_progress, `[!]` blocked, `[x]` done. |
+| `TaskDone( nId )` | Mark task as completed. |
+| `TaskBlock( nId, cReason )` | Block task with reason. |
+| `TaskStart( nId )` | Mark task as in-progress. |
+
+LLM tools: `task_create`, `task_list`, `task_done`, `task_block`, `task_start`.
+
+### Actors (Persistent Sub-Agents)
+
+Long-lived background agents that survive beyond a single `Run()` call. They share `aSharedContext` with the parent.
+
+| Method | Description |
+|--------|-------------|
+| `ActorSpawn( cPrompt )` | Launch background agent in a thread. Returns actor ID. |
+| `ActorWait( [nId] )` | Block until actor finishes. No ID = wait for all. |
+| `ActorSend( nId, cMsg )` | Inject a message into a running actor via `bInject`. |
+| `ActorList()` | List all actors with status and last result. |
+| `ActorCancel( nId )` | Cancel a running actor via `Abort()`. |
+
+LLM tools: `spawn_actor`, `wait_actor`, `send_actor`, `list_actors`, `cancel_actor`.
+
 ### Utilities
 
 | Method | Description |
@@ -171,6 +221,8 @@ Checkpoint fields: `id`, `step`, `label`, `ts`, `messages`, `plan`, `shared`, `g
 | `cCheckpointDir` | String | Directory for checkpoint files (`.agents/`) |
 | `nCheckpointInterval` | Numeric | Auto-checkpoint every N messages (default: 3, 0 = disabled) |
 | `nCheckpointId` | Numeric | Auto-incrementing checkpoint counter |
+| `aTasks` | Array | Persistent tasks `[{id, summary, status, created, updated, notes}]` |
+| `aActors` | Array | Persistent sub-agents `[{id, prompt, status, result, agent, thread, created}]` |
 | `cModel` | String | Model ID (default: `deepseek-v4-pro`) |
 | `nMaxSteps` | Numeric | Max iterations per Run() (default: 14) |
 | `nTokensIn/Out/Cache` | Numeric | Token counters for cost tracking |

@@ -55,6 +55,7 @@ oAgent:Run( "Crie um app TODO em PHP+SQLite com 3 sub-agentes" )
 |------------|--------|
 | `list_files` | `Tool_ListFiles( [cDir] )` |
 | `read_file` | `Tool_ReadFile( cPath )` |
+| `edit_file` | `Tool_EditFile( cPath, cOldStr, cNewStr )` — substituição precisa de texto |
 | `write_file` | `Tool_WriteFile( cPath, cContent )` — solicita permissão |
 | `delete_file` | `Tool_DeleteFile( cPath )` — solicita permissão |
 | `shell` | `Tool_Shell( cCmd )` |
@@ -62,6 +63,23 @@ oAgent:Run( "Crie um app TODO em PHP+SQLite com 3 sub-agentes" )
 | `sql` | `Tool_Sql( cDb, cQuery )` |
 | `web_search` | `Tool_WebSearch( cQuery )` |
 | `web_fetch` | `Tool_WebFetch( cUrl )` |
+
+### Busca
+
+| Método | Descrição |
+|--------|-----------|
+| `Tool_Glob( cPattern, [cDir] )` | Busca arquivos por padrão (*.prg, **/*.c). Retorna caminhos. |
+| `Tool_Grep( cPattern, [cDir] )` | Busca conteúdo em arquivos fonte. Retorna arquivo:linha:conteúdo. Max 50 resultados. |
+
+### Git
+
+| Método | Descrição |
+|--------|-----------|
+| `Tool_GitStatus()` | Estado do working tree git. |
+| `Tool_GitDiff()` | Alterações não commitadas. Truncado a 30KB. |
+| `Tool_GitLog( [nCount] )` | Histórico de commits recentes (default 10). |
+| `Tool_GitCommit( cMessage )` | Preparar e confirmar todas as alterações. |
+| `Tool_GitPush()` | Enviar commits ao remoto. |
 
 ### Ferramentas Dinâmicas
 
@@ -142,6 +160,34 @@ Salvar/restaurar estado completo do agente para retomada de tarefas. Arquivos `.
 Tools para o LLM: `save_checkpoint`, `list_checkpoints`, `load_checkpoint`, `delete_checkpoint`.
 
 Campos do checkpoint: `id`, `step`, `label`, `ts`, `messages`, `plan`, `shared`, `goal`, `toolHistory`, `toolCount`, `model`, `maxSteps`.
+
+### Tarefas
+
+Tracking persistente de tarefas entre chamadas a `Run()`. Ciclo de vida: open → in_progress → done/blocked.
+
+| Método | Descrição |
+|--------|-----------|
+| `TaskCreate( cSummary )` | Criar nova tarefa. Retorna ID auto-incremental. |
+| `TaskList()` | Listar tarefas com ícones: `[ ]` aberta, `[>]` em progresso, `[!]` bloqueada, `[x]` concluída. |
+| `TaskDone( nId )` | Marcar tarefa como concluída. |
+| `TaskBlock( nId, cReason )` | Bloquear tarefa com motivo. |
+| `TaskStart( nId )` | Marcar tarefa como em progresso. |
+
+Tools para o LLM: `task_create`, `task_list`, `task_done`, `task_block`, `task_start`.
+
+### Atores (Sub-Agentes Persistentes)
+
+Sub-agentes de longa vida que sobrevivem além de uma chamada a `Run()`. Compartilham `aSharedContext` com o pai.
+
+| Método | Descrição |
+|--------|-----------|
+| `ActorSpawn( cPrompt )` | Lançar agente em background em uma thread. Retorna ID. |
+| `ActorWait( [nId] )` | Bloquear até terminar. Sem ID = esperar todos. |
+| `ActorSend( nId, cMsg )` | Injetar mensagem em ator ativo via `bInject`. |
+| `ActorList()` | Listar atores com estado e último resultado. |
+| `ActorCancel( nId )` | Cancelar ator ativo via `Abort()`. |
+
+Tools para o LLM: `spawn_actor`, `wait_actor`, `send_actor`, `list_actors`, `cancel_actor`.
 
 ### Utilitários
 
