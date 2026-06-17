@@ -186,11 +186,16 @@ custom port, SCP file transfer, and host key scanning.
 </table>
 <p>Sample: <code>samples\misc\tssh.prg</code>.</p>
 
-<h2 id="transformer-fix">Transformer Class &mdash; Multi-Head &amp; Padding</h2>
+<h2 id="transformer-fix">Transformer Class &mdash; Multi-Head, GELU &amp; Padding</h2>
 <ul>
   <li><strong>MultiHeadAttention</strong> &mdash; validates <code>d_model % n_heads == 0</code>
     at construction with <code>ALERT()</code> if not divisible. Uses exact integer division
     for <code>head_dim</code> instead of <code>Int()</code> to avoid truncation.</li>
+  <li><strong>FeedForward</strong> &mdash; GELU activation replaces ReLU (tanh approximation:
+    <code>0.5*x*(1+tanh(√(2/π)*(x+0.044715*x³)))</code>). GELU derivative uses
+    CDF+PDF formula for correct gradient flow. <code>ff_dim</code> now configurable
+    (default <code>4*d_model</code>). Validates <code>d_model > 0</code> and
+    <code>ff_dim > 0</code>.</li>
   <li><strong>EmbeddingLookup</strong> &mdash; PAD token (index 0) now returns a zero
     vector instead of crashing with <code>"Bound error: array access"</code> on
     <code>aVocab[0]</code>.</li>

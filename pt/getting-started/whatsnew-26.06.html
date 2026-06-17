@@ -189,12 +189,17 @@ porta personalizada, transfer&ecirc;ncia SCP e varredura de chaves de host.
 </table>
 <p>Exemplo: <code>samples\misc\tssh.prg</code>.</p>
 
-<h2 id="transformer-fix">Classe Transformer &mdash; Multi-Head e Padding</h2>
+<h2 id="transformer-fix">Classe Transformer &mdash; Multi-Head, GELU e Padding</h2>
 <ul>
   <li><strong>MultiHeadAttention</strong> &mdash; valida <code>d_model % n_heads == 0</code>
     na constru&ccedil;&atilde;o com <code>ALERT()</code> se nao for divisivel. Usa divisao
     inteira exata para <code>head_dim</code> ao inves de <code>Int()</code> para evitar
     truncamento.</li>
+  <li><strong>FeedForward</strong> &mdash; ativacao GELU substitui ReLU
+    (aproximacao tanh: <code>0.5*x*(1+tanh(√(2/π)*(x+0.044715*x³)))</code>).
+    A derivada do GELU usa formula CDF+PDF para fluxo de gradientes correto.
+    <code>ff_dim</code> agora configuravel (default <code>4*d_model</code>). Valida
+    <code>d_model > 0</code> e <code>ff_dim > 0</code>.</li>
   <li><strong>EmbeddingLookup</strong> &mdash; o token PAD (indice 0) agora retorna
     um vetor de zeros ao inves de falhar com
     <code>"Bound error: array access"</code> em <code>aVocab[0]</code>.</li>
@@ -202,6 +207,9 @@ porta personalizada, transfer&ecirc;ncia SCP e varredura de chaves de host.
     PAD (indice 0 em <code>src_indices</code> e <code>pos_indices</code>).
     Corrige o treinamento com sequencias de comprimento variavel preenchidas ate
     <code>max_seq_len</code>.</li>
+  <li><strong>transxbrowse.prg</strong> agora usa <code>nHeads=2</code> para demonstrar
+    attention multi-head.</li>
+</ul>
   <li><strong>transxbrowse.prg</strong> agora usa <code>nHeads=2</code> para demonstrar
     attention multi-head.</li>
 </ul>
