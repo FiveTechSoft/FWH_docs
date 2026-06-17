@@ -126,6 +126,23 @@ Habilidades integradas: `reviewer`, `summarizer`, `refactor`, `documenter`, `tes
 | `SaveState( cDir )` | Salva ferramentas de usuário e habilidades ativas em `user_tools.json`. |
 | `LoadState( cDir )` | Restaura do disco ao iniciar. Também carrega habilidades do diretório `skills/`. |
 
+### Checkpoints
+
+Salvar/restaurar estado completo do agente para retomada de tarefas. Arquivos `.json` em `.agents/`.
+
+| Método | Descrição |
+|--------|-----------|
+| `SaveCheckpoint( [cLabel] )` | Salva mensagens, plano, contexto compartilhado, objetivo e histórico de tools em `.agents/cp_N.json`. |
+| `LoadCheckpoint( [nId] )` | Restaura estado a partir de checkpoint. `nId=0` carrega o último. |
+| `ListCheckpoints()` | Lista todos os checkpoints disponíveis com id, label, passo, nº mensagens, nº tools. |
+| `DeleteCheckpoint( nId )` | Remove checkpoint da memória e do disco. |
+| `AutoCheckpoint()` | Executado internamente a cada `nCheckpointInterval` mensagens durante `Run()`. Desativado se o intervalo for 0. |
+| `LoadCheckpoints()` | Carrega todos os `cp_*.json` de `.agents/` ao iniciar (chamado automaticamente por `New()`). |
+
+Tools para o LLM: `save_checkpoint`, `list_checkpoints`, `load_checkpoint`, `delete_checkpoint`.
+
+Campos do checkpoint: `id`, `step`, `label`, `ts`, `messages`, `plan`, `shared`, `goal`, `toolHistory`, `toolCount`, `model`, `maxSteps`.
+
 ### Utilitários
 
 | Método | Descrição |

@@ -26,7 +26,7 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
  │    ↑                         ↓    │
  │    └── result ←──────────────┘    │
  ├───────────────────────────────────┤
- │  Built-in tools (15)              │
+ │  Built-in tools (19)              │
  │  User tools (dynamic)             │
  │  Skills (system prompt)           │
  ├───────────────────────────────────┤
@@ -34,6 +34,7 @@ oAgent:Run( "Crea una app TODO en PHP+SQLite con 3 sub-agentes" )
 │  GeneratePlan() → ExecutePlan()   │
 │  Distill() → patterns → skills    │
 │  Dream() → memory consolidation   │
+│  Checkpoints → save/restore state │
 │  SaveState() / LoadState()        │
 └───────────────────────────────────┘
 ```
@@ -126,6 +127,23 @@ Built-in skills: `reviewer`, `summarizer`, `refactor`, `documenter`, `tester`.
 | `SaveState( cDir )` | Save user tools and active skills to `user_tools.json`. |
 | `LoadState( cDir )` | Restore from disk on startup. Also loads skills from `skills/` dir. |
 
+### Checkpoints
+
+Save/restore full agent state for task resumption. Files stored as `.json` in `.agents/`.
+
+| Method | Description |
+|--------|-------------|
+| `SaveCheckpoint( [cLabel] )` | Save messages, plan, shared context, goal, tool history to `.agents/cp_N.json`. Returns description string. |
+| `LoadCheckpoint( [nId] )` | Restore state from checkpoint. `nId=0` or NIL loads the latest. |
+| `ListCheckpoints()` | List all available checkpoints with id, label, step, messages count, tool count. |
+| `DeleteCheckpoint( nId )` | Remove checkpoint from memory and disk. |
+| `AutoCheckpoint()` | Called internally every `nCheckpointInterval` messages during `Run()`. Disabled if interval is 0. |
+| `LoadCheckpoints()` | Load all `cp_*.json` from `.agents/` on startup (called automatically by `New()`). |
+
+LLM tools: `save_checkpoint`, `list_checkpoints`, `load_checkpoint`, `delete_checkpoint`.
+
+Checkpoint fields: `id`, `step`, `label`, `ts`, `messages`, `plan`, `shared`, `goal`, `toolHistory`, `toolCount`, `model`, `maxSteps`.
+
 ### Utilities
 
 | Method | Description |
@@ -149,6 +167,10 @@ Built-in skills: `reviewer`, `summarizer`, `refactor`, `documenter`, `tester`.
 | `aDistilled` | Array | Discovered workflows `[{name, type, pattern, content}]` |
 | `aMemoryDigest` | Hash | Consolidated memory `{rules, decisions, patterns, trajectory, notes, timestamp}` |
 | `cMemoryDir` | String | Base directory for memory files (`agent_state/memory/`) |
+| `aCheckpoints` | Array | Checkpoints in memory `[{id, step, label, ts, messages, plan, shared, goal, toolHistory}]` |
+| `cCheckpointDir` | String | Directory for checkpoint files (`.agents/`) |
+| `nCheckpointInterval` | Numeric | Auto-checkpoint every N messages (default: 3, 0 = disabled) |
+| `nCheckpointId` | Numeric | Auto-incrementing checkpoint counter |
 | `cModel` | String | Model ID (default: `deepseek-v4-pro`) |
 | `nMaxSteps` | Numeric | Max iterations per Run() (default: 14) |
 | `nTokensIn/Out/Cache` | Numeric | Token counters for cost tracking |
