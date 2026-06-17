@@ -188,6 +188,17 @@ puerto personalizado, transferencia SCP y escaneo de claves de host.
 </table>
 <p>Ejemplo: <code>samples\misc\tssh.prg</code>.</p>
 
+<h2 id="transformer-fix">Clase Transformer &mdash; Soporte de Padding</h2>
+<ul>
+  <li><strong>EmbeddingLookup</strong> &mdash; el token PAD (&iacute;ndice 0) ahora
+    devuelve un vector de ceros en lugar de fallar con
+    <code>"Bound error: array access"</code> en <code>aVocab[0]</code>.</li>
+  <li><strong>Backward</strong> &mdash; omite la acumulaci&oacute;n de gradientes para
+    tokens PAD (&iacute;ndice 0 en <code>src_indices</code> y <code>pos_indices</code>).
+    Corrige el entrenamiento con secuencias de longitud variable rellenadas a
+    <code>max_seq_len</code>.</li>
+</ul>
+
 <h2 id="remoteview">Remote View &mdash; Multi-Cliente y Login</h2>
 <ul>
   <li><strong>Multi-cliente</strong> — cada espectador obtiene su propio servidor en su
@@ -360,6 +371,15 @@ Un solo conjunto de archivos objeto C enlaza contra Harbour o xHarbour.
 </p>
 
 <h2 id="new-samples">Nuevos Ejemplos</h2>
+
+<h3>transxbrowse &mdash; Clasificador de Texto Transformer en XBrowse</h3>
+<p>
+<code>samples\ai\transxbrowse.prg</code> entrena una red neuronal Transformer para
+clasificar frases en espa&ntilde;ol en 6 categor&iacute;as (Saludo, Despedida,
+Agradecimiento, Pregunta, Comando, Respuesta) usando un vocabulario de 25 tokens.
+Muestra todas las predicciones en una cuadr&iacute;cula XBrowse con porcentaje
+de confianza y estado OK/FAIL. El t&iacute;tulo de la ventana muestra la precisi&oacute;n.
+</p>
 
 <h3>githubdb &mdash; githubDB + XBrowse</h3>
 <p>

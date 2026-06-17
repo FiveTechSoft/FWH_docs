@@ -189,6 +189,17 @@ porta personalizada, transfer&ecirc;ncia SCP e varredura de chaves de host.
 </table>
 <p>Exemplo: <code>samples\misc\tssh.prg</code>.</p>
 
+<h2 id="transformer-fix">Classe Transformer &mdash; Suporte a Padding</h2>
+<ul>
+  <li><strong>EmbeddingLookup</strong> &mdash; o token PAD (indice 0) agora retorna
+    um vetor de zeros ao inves de falhar com
+    <code>"Bound error: array access"</code> em <code>aVocab[0]</code>.</li>
+  <li><strong>Backward</strong> &mdash; ignora a acumulacao de gradientes para tokens
+    PAD (indice 0 em <code>src_indices</code> e <code>pos_indices</code>).
+    Corrige o treinamento com sequencias de comprimento variavel preenchidas ate
+    <code>max_seq_len</code>.</li>
+</ul>
+
 <h2 id="remoteview">Remote View &mdash; Multi-Cliente e Login</h2>
 <ul>
   <li><strong>Multi-cliente</strong> — cada visualizador obt&eacute;m seu pr&oacute;prio servidor
@@ -360,6 +371,15 @@ Um &uacute;nico conjunto de arquivos objeto C vincula contra Harbour ou xHarbour
 </p>
 
 <h2 id="new-samples">Novos Exemplos</h2>
+
+<h3>transxbrowse &mdash; Classificador de Texto Transformer no XBrowse</h3>
+<p>
+<code>samples\ai\transxbrowse.prg</code> treina uma rede neural Transformer para
+classificar frases em espanhol em 6 categorias (Saudacao, Despedida, Agradecimento,
+Pergunta, Comando, Resposta) usando um vocabulario de 25 tokens. Mostra todas as
+previsoes em uma grade XBrowse com porcentagem de confianca e status OK/FAIL.
+O titulo da janela mostra a precisao.
+</p>
 
 <h3>githubdb &mdash; githubDB + XBrowse</h3>
 <p>
