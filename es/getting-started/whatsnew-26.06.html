@@ -188,8 +188,12 @@ puerto personalizado, transferencia SCP y escaneo de claves de host.
 </table>
 <p>Ejemplo: <code>samples\misc\tssh.prg</code>.</p>
 
-<h2 id="transformer-fix">Clase Transformer &mdash; Soporte de Padding</h2>
+<h2 id="transformer-fix">Clase Transformer &mdash; Multi-Head y Padding</h2>
 <ul>
+  <li><strong>MultiHeadAttention</strong> &mdash; valida <code>d_model % n_heads == 0</code>
+    en la construcci&oacute;n con <code>ALERT()</code> si no es divisible. Usa divisi&oacute;n
+    entera exacta para <code>head_dim</code> en lugar de <code>Int()</code> para evitar
+    truncamiento.</li>
   <li><strong>EmbeddingLookup</strong> &mdash; el token PAD (&iacute;ndice 0) ahora
     devuelve un vector de ceros en lugar de fallar con
     <code>"Bound error: array access"</code> en <code>aVocab[0]</code>.</li>
@@ -197,6 +201,8 @@ puerto personalizado, transferencia SCP y escaneo de claves de host.
     tokens PAD (&iacute;ndice 0 en <code>src_indices</code> y <code>pos_indices</code>).
     Corrige el entrenamiento con secuencias de longitud variable rellenadas a
     <code>max_seq_len</code>.</li>
+  <li><strong>transxbrowse.prg</strong> ahora usa <code>nHeads=2</code> para demostrar
+    attention multi-head.</li>
 </ul>
 
 <h2 id="remoteview">Remote View &mdash; Multi-Cliente y Login</h2>
