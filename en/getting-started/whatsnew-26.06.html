@@ -186,8 +186,12 @@ custom port, SCP file transfer, and host key scanning.
 </table>
 <p>Sample: <code>samples\misc\tssh.prg</code>.</p>
 
-<h2 id="transformer-fix">Transformer Class &mdash; Multi-Head, GELU &amp; Padding</h2>
+<h2 id="transformer-fix">Transformer Class &mdash; Multi-Head, GELU, LR Scheduler &amp; Padding</h2>
 <ul>
+  <li><strong>LRScheduler</strong> &mdash; new class implementing Transformer paper warmup +
+    inverse sqrt decay: <code>lr = d_model^(-0.5) * min(step^(-0.5), step*warmup^(-1.5))</code>.
+    Methods: <code>New(d_model, warmup_steps, base_lr)</code>,
+    <code>GetLR(step)</code>, <code>Update(optimizer, step)</code>.</li>
   <li><strong>MultiHeadAttention</strong> &mdash; validates <code>d_model % n_heads == 0</code>
     at construction with <code>ALERT()</code> if not divisible. Uses exact integer division
     for <code>head_dim</code> instead of <code>Int()</code> to avoid truncation.</li>
@@ -202,8 +206,8 @@ custom port, SCP file transfer, and host key scanning.
   <li><strong>Backward</strong> &mdash; skips gradient accumulation for PAD tokens
     (index 0 in both <code>src_indices</code> and <code>pos_indices</code>).
     Fixes training with variable-length sequences padded to <code>max_seq_len</code>.</li>
-  <li><strong>transxbrowse.prg</strong> sample now uses <code>nHeads=2</code> to
-    demonstrate multi-head attention.</li>
+  <li><strong>transxbrowse.prg</strong> sample now uses <code>nHeads=2</code> and
+    <code>LRScheduler</code> to demonstrate multi-head attention with warmup scheduling.</li>
 </ul>
 
 <h2 id="remoteview">Remote View &mdash; Multi-Client &amp; Login</h2>
