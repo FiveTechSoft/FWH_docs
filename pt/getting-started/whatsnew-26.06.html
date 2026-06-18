@@ -398,7 +398,23 @@ Um &uacute;nico conjunto de arquivos objeto C vincula contra Harbour ou xHarbour
 classificar frases em espanhol em 6 categorias (Saudacao, Despedida, Agradecimento,
 Pergunta, Comando, Resposta) usando um vocabulario de 25 tokens. Mostra todas as
 previsoes em uma grade XBrowse com porcentagem de confianca e status OK/FAIL.
-O titulo da janela mostra a precisao.
+O titulo da janela mostra a precisao. Usa LRScheduler para agendamento de warmup.
+</p>
+
+<h3>transsave &mdash; Salvar/Carregar Modelo Transformer</h3>
+<p>
+<code>samples\ai\transsave.prg</code> demonstra o ciclo de vida completo do modelo:
+treina um classificador Transformer, salva em disco com <code>Save()</code>
+(hb_Serialize), carrega de volta com <code>Load()</code>, e verifica que as
+previsoes coincidem. Resultados no XBrowse.
+</p>
+
+<h3>transgen &mdash; Geracao de Texto Transformer</h3>
+<p>
+<code>samples\ai\transgen.prg</code> treina um Transformer em sequencias de caracteres
+e gera novo texto autoregressivamente a partir de tokens semente. Usa
+<code>Generate()</code> com amostragem por temperatura. Resultados no XBrowse
+com pontuacoes de confianca.
 </p>
 
 <h3>githubdb &mdash; githubDB + XBrowse</h3>

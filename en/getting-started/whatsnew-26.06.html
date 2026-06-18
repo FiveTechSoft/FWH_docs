@@ -381,7 +381,23 @@ A single set of C object files links against Harbour or xHarbour.
 Spanish phrases into 6 categories (Saludo, Despedida, Agradecimiento, Pregunta,
 Comando, Respuesta) using a 25-token vocabulary. Displays all predictions in an
 XBrowse grid with confidence percentage and OK/FAIL status. Window title shows
-accuracy.
+accuracy. Uses LRScheduler for warmup scheduling.
+</p>
+
+<h3>transsave &mdash; Transformer Save/Load Roundtrip</h3>
+<p>
+<code>samples\ai\transsave.prg</code> demonstrates the full model lifecycle: trains a
+Transformer classifier, saves it to disk via <code>Save()</code> (hb_Serialize),
+loads it back via <code>Load()</code>, and verifies that predictions match.
+Results displayed in XBrowse.
+</p>
+
+<h3>transgen &mdash; Transformer Text Generation</h3>
+<p>
+<code>samples\ai\transgen.prg</code> trains a Transformer on character sequences
+and generates new text autoregressively from seed tokens. Uses
+<code>Generate()</code> with temperature sampling. Results displayed in XBrowse
+with confidence scores.
 </p>
 
 <h3>githubdb &mdash; githubDB + XBrowse</h3>
