@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TVItem - FWH Docs</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>TVItem</h1>
+<p class="class-source">Source: <code>source/classes/vitem.prg</code></p>
+<p class="class-hierarchy">Standalone class (not inheriting TControl)</p>
+
+<p>
+TVItem represents a single item within a TVMenu panel. Each TVItem holds a text caption,
+optional bitmap/icon, action codeblock, and display properties. When created, a TVItem
+automatically adds itself to its parent TVMenu's aItems array. TVItem supports multiple
+separator styles, group headings, popup menus, when-clauses, and custom coloring.
+</p>
+
+<h2 id="new">New() Constructor</h2>
+<pre>
+TVItem():New( oParent, cText, cBmp1, cBmp2, lGroup, nClrText, nClrPane,;
+              nTextAlign, nImgAlign, nHeight, nLeft, separator, nWidth,;
+              lUnder, nLeftImg, nClrPane2, lVGrad, bAction, oPopup,;
+              nClrPSel, nClrTSel, lMirGrad, nSteps, cToolTip,;
+              nColorSep, lIcon, nTop, bWhen, nClrPSel2 )
+</pre>
+<table>
+<thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>oParent</td><td>TVMenu</td><td>Parent menu (required)</td></tr>
+<tr><td>cText</td><td>Character</td><td>Item caption text</td></tr>
+<tr><td>cBmp1</td><td>Character/Numeric</td><td>Bitmap file path, resource name, or bitmap handle</td></tr>
+<tr><td>lGroup</td><td>Logical</td><td>Is a group heading (default: .f.)</td></tr>
+<tr><td>nClrText</td><td>Numeric</td><td>Custom text color (nil = parent default)</td></tr>
+<tr><td>nClrPane</td><td>Numeric</td><td>Custom background color</td></tr>
+<tr><td>nTextAlign</td><td>Character</td><td>"LEFT", "CENTER", "RIGHT", "MULTILINE"</td></tr>
+<tr><td>nImgAlign</td><td>Character</td><td>"IMAGELEFT" (default), "IMAGECENTER", "IMAGERIGHT"</td></tr>
+<tr><td>separator</td><td>Character</td><td>"LINE", "SEPARADOR", "INSET", "DOTDOT"</td></tr>
+<tr><td>bAction</td><td>Codeblock</td><td>Item action codeblock</td></tr>
+<tr><td>oPopup</td><td>TPopup</td><td>Associated popup menu</td></tr>
+<tr><td>bWhen</td><td>Codeblock</td><td>When clause (returns .t. to enable)</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+<table>
+<thead><tr><th>Method</th><th>Returns</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>SetImage(cBmp, lIcon)</code></td><td>nil</td><td>Set image from file, resource, object, or numeric handle</td></tr>
+<tr><td><code>SetBold(lBold)</code></td><td>Logical</td><td>Toggle bold text</td></tr>
+<tr><td><code>SetDialog(cResName)</code></td><td>nil</td><td>Associate a dialog resource</td></tr>
+<tr><td><code>lOption()</code></td><td>Logical</td><td>Is this the currently selected item</td></tr>
+<tr><td><code>EvalWhen()</code></td><td>Logical</td><td>Evaluate when-clause</td></tr>
+</tbody>
+</table>
+
+<h2 id="data">Key DATA Members</h2>
+<table>
+<thead><tr><th>DATA</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>cCaption</code></td><td>Character</td><td>Display text</td></tr>
+<tr><td><code>hBmp</code></td><td>Numeric</td><td>Bitmap handle</td></tr>
+<tr><td><code>nImage</code></td><td>Numeric</td><td>Image list index</td></tr>
+<tr><td><code>bAction</code></td><td>Codeblock</td><td>Item action</td></tr>
+<tr><td><code>lDisable</code></td><td>Logical</td><td>Item is disabled/grayed</td></tr>
+<tr><td><code>lGroup</code></td><td>Logical</td><td>Is group heading</td></tr>
+<tr><td><code>nSeparator</code></td><td>Numeric</td><td>Separator type (0=none, 1-4=styles)</td></tr>
+<tr><td><code>oPopup</code></td><td>TPopup</td><td>Associated popup menu</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Example</h2>
+<pre>
+local oItem
+
+// Simple text item
+oItem := TVItem():New( oMenu, "Documents" )
+
+// Item with bitmap handle
+oItem := TVItem():New( oMenu, "Home" )
+oItem:SetImage( hMyBitmap )
+
+// Separator
+oItem := TVItem():New( oMenu, "" )
+oItem:nSeparator := 2
+
+// Group heading
+oItem := TVItem():New( oMenu, "Settings" )
+oItem:lGroup := .t.
+</pre>
+
+</main>
+</body>
+</html>

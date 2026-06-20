@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TVItem - FWH Docs</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>TVItem</h1>
+<p class="class-source">Fonte: <code>source/classes/vitem.prg</code></p>
+<p class="class-hierarchy">Classe independente (nao herda de TControl)</p>
+
+<p>
+TVItem representa um item individual dentro de um painel TVMenu. Cada TVItem contem
+um caption de texto, bitmap/icone opcional, bloco de acao e propriedades de exibicao.
+Ao ser criado, um TVItem automaticamente se adiciona ao array aItems do TVMenu pai.
+TVItem suporta estilos de separador, titulos de grupo, menus popup, clausulas when
+e cores personalizadas.
+</p>
+
+<h2 id="new">Construtor New()</h2>
+<pre>
+TVItem():New( oParent, cText, cBmp1, cBmp2, lGroup, nClrText, nClrPane,;
+              nTextAlign, nImgAlign, nHeight, nLeft, separator, nWidth,;
+              lUnder, nLeftImg, nClrPane2, lVGrad, bAction, oPopup,;
+              nClrPSel, nClrTSel, lMirGrad, nSteps, cToolTip,;
+              nColorSep, lIcon, nTop, bWhen, nClrPSel2 )
+</pre>
+<table>
+<thead><tr><th>Parametro</th><th>Tipo</th><th>Descricao</th></tr></thead>
+<tbody>
+<tr><td>oParent</td><td>TVMenu</td><td>Menu pai (obrigatorio)</td></tr>
+<tr><td>cText</td><td>Caractere</td><td>Texto do caption</td></tr>
+<tr><td>cBmp1</td><td>Caractere/Numerico</td><td>Caminho do bitmap, nome do recurso ou handle</td></tr>
+<tr><td>lGroup</td><td>Logico</td><td>E titulo de grupo (padrao: .f.)</td></tr>
+<tr><td>nClrText</td><td>Numerico</td><td>Cor do texto personalizada</td></tr>
+<tr><td>nClrPane</td><td>Numerico</td><td>Cor de fundo personalizada</td></tr>
+<tr><td>separator</td><td>Caractere</td><td>"LINE", "SEPARADOR", "INSET", "DOTDOT"</td></tr>
+<tr><td>bAction</td><td>Bloco</td><td>Bloco de acao do item</td></tr>
+<tr><td>bWhen</td><td>Bloco</td><td>Clausula when (retorna .t. para habilitar)</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Metodos</h2>
+<table>
+<thead><tr><th>Metodo</th><th>Retorna</th><th>Descricao</th></tr></thead>
+<tbody>
+<tr><td><code>SetImage(cBmp, lIcon)</code></td><td>nil</td><td>Definir imagem de arquivo, recurso ou handle numerico</td></tr>
+<tr><td><code>SetBold(lBold)</code></td><td>Logico</td><td>Alternar texto em negrito</td></tr>
+<tr><td><code>SetDialog(cResName)</code></td><td>nil</td><td>Associar recurso de dialogo</td></tr>
+<tr><td><code>lOption()</code></td><td>Logico</td><td>E o item selecionado atualmente</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Exemplo</h2>
+<pre>
+local oItem
+
+oItem := TVItem():New( oMenu, "Documentos" )
+
+oItem := TVItem():New( oMenu, "Inicio" )
+oItem:SetImage( hMeuBitmap )
+
+oItem := TVItem():New( oMenu, "" )
+oItem:nSeparator := 2
+</pre>
+
+</main>
+</body>
+</html>

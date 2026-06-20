@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TVMenu - FWH Docs</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>TVMenu</h1>
+<p class="class-source">Fuente: <code>source/classes/VMenu.prg</code></p>
+<p class="class-hierarchy">Hereda de: <code>TControl</code></p>
+
+<p>
+TVMenu es un panel estilo ExplorerBar que muestra una lista de objetos TVItem.
+Soporta encabezado colapsable, animacion de abrir/cerrar, multiples estilos de seleccion
+(SOLID, INSET, XBOX, BUMP, ETCHED, RAISED, UNDERLINE), fondos con degradado y
+renderizado con temas. TVMenu es el contenedor padre de los objetos TVItem, que se
+anaden automaticamente al array aItems del menu al crearse.
+</p>
+
+<h2 id="new">Constructor New()</h2>
+<pre>
+TVMenu():New( nTop, nLeft, nWidth, nHeight, oWnd, bAction, nClrText, nClrPane,;
+              oFont, lBorder, nClrBorder, nHItem, cTextAlign, under, nMargen,;
+              nClrPSel, nSpeed, selmode, bChange, nClrTSel, oAttach,;
+              nClrTOver, nClrPOver, nClrPOver2, nClrPSel2,;
+              lVGradSel, lMGradSel, nClrPane2, cWaterMark )
+</pre>
+<table>
+<thead><tr><th>Parametro</th><th>Tipo</th><th>Descripcion</th></tr></thead>
+<tbody>
+<tr><td>nTop, nLeft</td><td>Numerico</td><td>Posicion en pixeles</td></tr>
+<tr><td>nWidth, nHeight</td><td>Numerico</td><td>Dimensiones en pixeles</td></tr>
+<tr><td>oWnd</td><td>TWindow</td><td>Ventana padre</td></tr>
+<tr><td>bAction</td><td>Bloque</td><td>Accion por defecto para los items</td></tr>
+<tr><td>nClrText</td><td>Numerico</td><td>Color de texto (por defecto: blanco)</td></tr>
+<tr><td>nClrPane</td><td>Numerico</td><td>Color de fondo (por defecto: gris claro)</td></tr>
+<tr><td>oFont</td><td>TFont</td><td>Fuente para el texto de los items</td></tr>
+<tr><td>lBorder</td><td>Logico</td><td>Mostrar borde (por defecto: .f.)</td></tr>
+<tr><td>nHItem</td><td>Numerico</td><td>Altura minima de item en pixeles</td></tr>
+<tr><td>cTextAlign</td><td>Caracter</td><td>"LEFT", "CENTER", "RIGHT", "MULTILINE"</td></tr>
+<tr><td>under</td><td>Caracter</td><td>Estilo de seleccion: "SOLID", "INSET", "XBOX", etc.</td></tr>
+<tr><td>selmode</td><td>Caracter</td><td>Modo de relleno: "FILLED", "NONE", "DOTS", etc.</td></tr>
+<tr><td>bChange</td><td>Bloque</td><td>Se ejecuta al cambiar la seleccion</td></tr>
+<tr><td>cWaterMark</td><td>Caracter</td><td>Nombre del archivo bitmap para marca de agua</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Metodos</h2>
+<table>
+<thead><tr><th>Metodo</th><th>Retorna</th><th>Descripcion</th></tr></thead>
+<tbody>
+<tr><td><code>SetTitle(cCaption, nHTitle, oFont, ...)</code></td><td>nil</td><td>Establecer encabezado colapsable</td></tr>
+<tr><td><code>CollapseToggle()</code></td><td>nil</td><td>Alternar estado colapsado/expandido</td></tr>
+<tr><td><code>NextItem()</code></td><td>nil</td><td>Mover seleccion al siguiente item</td></tr>
+<tr><td><code>PrevItem()</code></td><td>nil</td><td>Mover seleccion al item anterior</td></tr>
+<tr><td><code>ResizeItems()</code></td><td>nil</td><td>Recalcular posiciones de items</td></tr>
+</tbody>
+</table>
+
+<h2 id="data">Miembros DATA Principales</h2>
+<table>
+<thead><tr><th>DATA</th><th>Tipo</th><th>Descripcion</th></tr></thead>
+<tbody>
+<tr><td><code>aItems</code></td><td>Array</td><td>Array de objetos TVItem</td></tr>
+<tr><td><code>nOption</code></td><td>Numerico</td><td>Indice del item seleccionado actualmente</td></tr>
+<tr><td><code>cTitle</code></td><td>Caracter</td><td>Texto del titulo</td></tr>
+<tr><td><code>lBorder</code></td><td>Logico</td><td>Mostrar borde</td></tr>
+<tr><td><code>nHItem</code></td><td>Numerico</td><td>Altura minima de item</td></tr>
+<tr><td><code>oImageList</code></td><td>TC5ImgList</td><td>Lista de imagenes para bitmaps de items</td></tr>
+</tbody>
+</table>
+
+<h2 id="example">Ejemplo</h2>
+<pre>
+local oMenu, oItem
+
+oMenu := TVMenu():New( 0, 0, 220, 380, oWnd, ;
+         {|| MsgInfo("Accion") }, ;
+         RGB(55,65,80), RGB(245,246,248), ;
+         oFont, .t., RGB(220,224,230), ;
+         0, , "SOLID", 5, , 1, "FILLED" )
+
+oMenu:SetTitle( "Explorador", 28, oFont, ;
+                RGB(255,255,255), RGB(70,130,180), ;
+                , 50, .f., , , , , , .t., 17 )
+
+oItem := TVItem():New( oMenu, "Inicio" )
+oItem:SetImage( hBmp )
+
+oItem := TVItem():New( oMenu, "Documentos" )
+oItem:SetImage( hBmp2 )
+</pre>
+
+</main>
+</body>
+</html>
