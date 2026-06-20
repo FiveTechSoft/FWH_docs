@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
@@ -436,6 +436,93 @@ DEACTIVATE TIMER oTimer</code></pre>
    [ COLOR cClrFore [, cClrBack ] ] ;
    [ FONT oFont ] ;
    [ NOINSET ]</code></pre>
+
+<!-- ===== VMENU / VITEM ===== -->
+<h2 id="vmenu">Comandos VMENU (Painel ExplorerBar)</h2>
+
+<h3>DEFINE VMENU</h3>
+<pre><code class="language-harbour">DEFINE VMENU [ oMenu ] ;
+   [ AT nTop, nLeft ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ OF oWnd ] ;
+   [ ACTION bAction ] ;
+   [ COLORS nClrText [, nClrPane] ] ;
+   [ FONT oFont ] ;
+   [ BORDER ] ;
+   [ BORDERCOLOR nClrBorder ] ;
+   [ ITEMHEIGHT nHItem ] ;
+   [ TEXTCENTER | TEXTRIGHT | TEXTMULTILINE ] ;
+   [ STYLE "SOLID" | "INSET" | "XBOX" | "BUMP" ] ;
+   [ MARGEN nMargen ] ;
+   [ SELECTCOLOR nClrPSel ] ;
+   [ SELMODE "FILLED" | "NONE" | "DOTS" ] ;
+   [ ON CHANGE bChange ] ;
+   [ SELECTTEXTCOLOR nClrTSel ] ;
+   [ VGRADSEL ] ;
+   [ PANE2COLOR nClrPane2 ] ;
+   [ WATERMARK cWaterMark ]</code></pre>
+
+<h3>REDEFINE VMENU</h3>
+<pre><code class="language-harbour">REDEFINE VMENU [ oMenu ] ;
+   [ ID nId ] ;
+   [ OF oWnd ] ;
+   [ ACTION bAction ] ;
+   [ COLORS nClrText [, nClrPane] ] ;
+   [ FONT oFont ] ;
+   [ BORDER ] ;
+   [ BORDERCOLOR nClrBorder ] ;
+   [ ITEMHEIGHT nHItem ] ;
+   [ TEXTCENTER | TEXTRIGHT | TEXTMULTILINE ] ;
+   [ STYLE "SOLID" | "INSET" | "XBOX" ] ;
+   [ SELMODE "FILLED" | "NONE" | "DOTS" ] ;
+   [ ON CHANGE bChange ] ;
+   [ SELECTTEXTCOLOR nClrTSel ]</code></pre>
+
+<h3>VMENUITEM</h3>
+<pre><code class="language-harbour">VMENUITEM [ oItem ] ;
+   [ OF oMenu ] ;
+   [ PROMPT cText ] ;
+   [ BITMAP cBmp ] ;
+   [ GROUP | HEADER ] ;
+   [ COLORS nClrText [, nClrPane] ] ;
+   [ TEXTCENTER | TEXTRIGHT | TEXTMULTILINE ] ;
+   [ IMAGECENTER | IMAGERIGHT ] ;
+   [ HEIGHT nHeight ] ;
+   [ SEPARATOR | LINE | INSET | DOTDOT ] ;
+   [ ACTION bAction ] ;
+   [ POPUP oPopup ] ;
+   [ WHEN bWhen ] ;
+   [ TOOLTIP cToolTip ]</code></pre>
+
+<h2 id="vmenu-notes">Notas VMENU</h2>
+<ul>
+<li><code>DEFINE VMENU</code> cria um painel TVMenu (estilo ExplorerBar) dentro de uma janela.</li>
+<li><code>VMENUITEM</code> cria um TVItem e o adiciona automaticamente a lista de itens do VMENU pai.</li>
+<li>As constantes <code>SEPMODE</code> (FILLED, NONE, DOTS, LFILLED, RFILLED, LFOLDER, RFOLDER) controlam como os itens selecionados sao destacados.</li>
+<li>O parametro <code>STYLE</code> define o estilo da borda de selecao (SOLID, INSET, XBOX, BUMP, ETCHED, RAISED, UNDERLINE).</li>
+<li>Use <code>SetImage()</code> no item retornado para adicionar um bitmap: <code>oItem:SetImage( hBitmap )</code>.</li>
+</ul>
+
+<h2 id="vmenu-example">Exemplo VMENU</h2>
+<pre><code class="language-harbour">local oMenu, oItem
+
+DEFINE VMENU oMenu OF oWnd ;
+   SIZE 220, 380 ;
+   COLORS RGB(55,65,80), RGB(245,246,248) ;
+   BORDER ;
+   ITEMHEIGHT 40 ;
+   STYLE "SOLID" ;
+   SELMODE "FILLED"
+
+oMenu:SetTitle( "Explorador", 28, oFont, ;
+   RGB(255,255,255), RGB(70,130,180) )
+
+VMENUITEM PROMPT "Inicio" OF oMenu
+VMENUITEM PROMPT "Documentos" OF oMenu
+VMENUITEM SEPARATOR OF oMenu
+VMENUITEM PROMPT "Configuracion" OF oMenu
+VMENUITEM PROMPT "Ajuda" OF oMenu</code></pre>
+
 
 </main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
