@@ -79,22 +79,90 @@ TVMenu():New( nTop, nLeft, nWidth, nHeight, oWnd, bAction, nClrText, nClrPane,;
 <pre>
 local oMenu, oItem
 
-oMenu := TVMenu():New( 0, 0, 220, 380, oWnd, ;
-         {|| MsgInfo("Accion") }, ;
-         RGB(55,65,80), RGB(245,246,248), ;
-         oFont, .t., RGB(220,224,230), ;
-         0, , "SOLID", 5, , 1, "FILLED" )
+DEFINE VMENU oMenu OF oWnd ;
+   SIZE 220, 380 ;
+   COLORS RGB(55,65,80), RGB(245,246,248) ;
+   BORDER ;
+   ITEMHEIGHT 40 ;
+   STYLE "SOLID" ;
+   SELMODE "FILLED"
 
 oMenu:SetTitle( "Explorador", 28, oFont, ;
-                RGB(255,255,255), RGB(70,130,180), ;
-                , 50, .f., , , , , , .t., 17 )
+   RGB(255,255,255), RGB(70,130,180) )
 
-oItem := TVItem():New( oMenu, "Inicio" )
-oItem:SetImage( hBmp )
-
-oItem := TVItem():New( oMenu, "Documentos" )
-oItem:SetImage( hBmp2 )
+VMENUITEM PROMPT "Inicio" OF oMenu
+VMENUITEM PROMPT "Documentos" OF oMenu
+VMENUITEM SEPARATOR OF oMenu
+VMENUITEM PROMPT "Configuracion" OF oMenu
+VMENUITEM PROMPT "Ayuda" OF oMenu
 </pre>
+
+<h2 id="commands">Comandos Preprocesador</h2>
+
+<h3>DEFINE VMENU</h3>
+<p>Crea un panel TVMenu (estilo ExplorerBar) dentro de una ventana.</p>
+<pre>
+DEFINE VMENU [ oMenu ] ;
+   [ AT nTop, nLeft ] ;
+   [ SIZE nWidth, nHeight ] ;
+   [ OF oWnd ] ;
+   [ ACTION bAction ] ;
+   [ COLORS nClrText [, nClrPane] ] ;
+   [ FONT oFont ] ;
+   [ BORDER ] ;
+   [ BORDERCOLOR nClrBorder ] ;
+   [ ITEMHEIGHT nHItem ] ;
+   [ TEXTCENTER | TEXTRIGHT | TEXTMULTILINE ] ;
+   [ STYLE "SOLID" | "INSET" | "XBOX" | "BUMP" ] ;
+   [ MARGEN nMargen ] ;
+   [ SELECTCOLOR nClrPSel ] ;
+   [ SELMODE "FILLED" | "NONE" | "DOTS" ] ;
+   [ ON CHANGE bChange ] ;
+   [ SELECTTEXTCOLOR nClrTSel ] ;
+   [ VGRADSEL ] ;
+   [ PANE2COLOR nClrPane2 ] ;
+   [ WATERMARK cWaterMark ]
+</pre>
+
+<h3>REDEFINE VMENU</h3>
+<p>Redefine un TVMenu desde un recurso de dialogo.</p>
+<pre>
+REDEFINE VMENU [ oMenu ] ;
+   [ ID nId ] ;
+   [ OF oWnd ] ;
+   [ ACTION bAction ] ;
+   [ COLORS nClrText [, nClrPane] ] ;
+   [ FONT oFont ] ;
+   [ BORDER ] ;
+   [ BORDERCOLOR nClrBorder ] ;
+   [ ITEMHEIGHT nHItem ] ;
+   [ TEXTCENTER | TEXTRIGHT | TEXTMULTILINE ] ;
+   [ STYLE "SOLID" | "INSET" | "XBOX" ] ;
+   [ SELMODE "FILLED" | "NONE" | "DOTS" ] ;
+   [ ON CHANGE bChange ] ;
+   [ SELECTTEXTCOLOR nClrTSel ]
+</pre>
+
+<h3>VMENUITEM</h3>
+<p>Crea un TVItem y lo anade automaticamente al menu padre.</p>
+<pre>
+VMENUITEM [ oItem ] ;
+   [ OF oMenu ] ;
+   [ PROMPT cText ] ;
+   [ BITMAP cBmp ] ;
+   [ GROUP | HEADER ] ;
+   [ COLORS nClrText [, nClrPane] ] ;
+   [ TEXTCENTER | TEXTRIGHT | TEXTMULTILINE ] ;
+   [ IMAGECENTER | IMAGERIGHT ] ;
+   [ HEIGHT nHeight ] ;
+   [ SEPARATOR | LINE | INSET | DOTDOT ] ;
+   [ ACTION bAction ] ;
+   [ POPUP oPopup ] ;
+   [ WHEN bWhen ] ;
+   [ TOOLTIP cToolTip ]
+</pre>
+
+<h2 id="notes">Notas</h2>
 
 </main>
 <aside id="toc"><div id="toc-title">En esta pagina</div><div id="toc-links"></div></aside>
