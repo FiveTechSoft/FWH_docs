@@ -436,6 +436,15 @@ Fully configurable via <code>aEditSeq</code> static array (default <code>{3,5,7}
 Uses <code>PostMessage</code>-based column advance (zero timers).
 </p>
 
+<h2 id="bug-fixes">Bug Fixes</h2>
+<ul>
+  <li><strong>TFolder crash "No exported method: MOVE"</strong> — <code>AdjustRect()</code>
+    called <code>oDlg:Move()</code> on elements of <code>::aDialogs</code> without
+    checking for NIL. Added nil guard for <code>::aDialogs[1]</code> and each
+    <code>oDlg</code> in the AEval callback, consistent with the pattern used
+    elsewhere in the same class.</li>
+</ul>
+
 <h2 id="dev-tools">Development Tools</h2>
 <ul>
   <li><strong>VS Code tasks</strong> — <code>vscode/tasks.json</code> with five tasks:

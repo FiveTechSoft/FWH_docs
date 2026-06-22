@@ -455,6 +455,15 @@ cancela. Totalmente configur&aacute;vel via array est&aacute;tico <code>aEditSeq
 <code>PostMessage</code> (sem timers).
 </p>
 
+<h2 id="bug-fixes">Corre&ccedil;&otilde;es de Erros</h2>
+<ul>
+  <li><strong>TFolder crash "No exported method: MOVE"</strong> — <code>AdjustRect()</code>
+    chamava <code>oDlg:Move()</code> em elementos de <code>::aDialogs</code> sem
+    verificar se eram NIL. Adicionada verifica&ccedil;&atilde;o de NIL para
+    <code>::aDialogs[1]</code> e cada <code>oDlg</code> no callback do AEval,
+    consistente com o padr&atilde;o usado no resto da classe.</li>
+</ul>
+
 <h2 id="dev-tools">Ferramentas de Desenvolvimento</h2>
 <ul>
   <li><strong>Tarefas VS Code</strong> — <code>vscode/tasks.json</code> com cinco tarefas:
