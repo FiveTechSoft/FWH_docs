@@ -1,6 +1,6 @@
 # Funciones Internas del Sistema
 
-**Archivo Fuente:** [source/internal/system.prg](..\source\internal\system.prg)
+**Archivo Fuente:** [source/function/system.prg](..\source\function\system.prg)
 
 ## 1. Propósito y Alcance
 
