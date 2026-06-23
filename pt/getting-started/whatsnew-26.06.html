@@ -48,6 +48,38 @@ incluindo posi&ccedil;&otilde;es, larguras, alturas e tamanhos de fonte.
     com diretivas <code>#define</code> para os IDs dos controles.</li>
 </ul>
 
+<h2 id="smartbutton-fixes">TSmartButton &mdash; Correc&ccedil;&otilde;es</h2>
+<p>
+O controle <code>TSmartButton</code> (<code>source\classes\smartbtn.prg</code>) tinha dois
+erros no tratamento da a&ccedil;&atilde;o, ambos corrigidos:
+</p>
+<ul>
+  <li><strong>Bot&otilde;es ativos n&atilde;o executavam seu ACTION.</strong> Os m&eacute;todos
+    <code>LButtonDown</code>, <code>LButtonUp</code> e <code>KeyChar</code> tinham a
+    condi&ccedil;&atilde;o de desabilitado invertida (<code>IF ! ::lDisabled RETURN 0</code>),
+    pulando o caminho de captura/clique em bot&otilde;es ativos. Corrigido para
+    <code>IF ::lDisabled</code>.</li>
+  <li><strong>Bot&otilde;es desabilitados ainda executavam seu ACTION.</strong>
+    <code>New()</code> definia por padr&atilde;o <code>bWhen := {||.t.}</code>. Como o
+    <code>AEvalWhen()</code> do propriet&aacute;rio reativa qualquer controle com
+    <code>bWhen</code> n&atilde;o nulo a cada evento (chamando <code>::Enable()</code>, que
+    limpa <code>::lDisabled</code>), um bot&atilde;o desabilitado via <code>:lDisabled</code> /
+    <code>:Disable()</code> era reativado silenciosamente. O valor padr&atilde;o de
+    <code>bWhen</code> foi removido para que o estado desabilitado persista.</li>
+  <li>Removido um <code>MsgInfo()</code> de depura&ccedil;&atilde;o esquecido em
+    <code>SetImage()</code>.</li>
+  <li>O exemplo <code>samples\ui\testsmart.prg</code> mostra as quatro formas (retangular,
+    arredondada, p&iacute;lula, c&iacute;rculo) nos estados normal / hover / pressionado /
+    desabilitado.</li>
+</ul>
+<p>
+Corre&ccedil;&atilde;o de compila&ccedil;&atilde;o relacionada: faltavam em <code>vitem.prg</code>
+os <code>#define BDR_RAISEDOUTER</code> (0x0001) e <code>BDR_SUNKENOUTER</code> (0x0002); as
+macros <code>EDGE_*</code> referenciavam esses s&iacute;mbolos n&atilde;o definidos, gerando
+avisos W0001 de refer&ecirc;ncia amb&iacute;gua que abortavam a compila&ccedil;&atilde;o de
+<code>FiveH.lib</code> com <code>-es1</code>.
+</p>
+
 <h2 id="agent-improvements">Classe Agent &mdash; Melhorias Importantes</h2>
 <p>
 A classe Agent (<code>source\classes\agent.prg</code>) recebeu melhorias substanciais

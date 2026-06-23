@@ -47,6 +47,35 @@ resize proportionally, including positions, widths, heights and font sizes.
     with <code>#define</code> directives for control IDs.</li>
 </ul>
 
+<h2 id="smartbutton-fixes">TSmartButton &mdash; Fixes</h2>
+<p>
+The <code>TSmartButton</code> control (<code>source\classes\smartbtn.prg</code>) had two
+action-handling bugs, both fixed:
+</p>
+<ul>
+  <li><strong>Enabled buttons did not fire their ACTION.</strong> The
+    <code>LButtonDown</code>, <code>LButtonUp</code> and <code>KeyChar</code> methods had an
+    inverted disabled guard (<code>IF ! ::lDisabled RETURN 0</code>), so the
+    capture/click path was skipped on active buttons. Corrected to
+    <code>IF ::lDisabled</code>.</li>
+  <li><strong>Disabled buttons still executed their ACTION.</strong> <code>New()</code>
+    defaulted <code>bWhen := {||.t.}</code>. Because the owner's <code>AEvalWhen()</code>
+    re-enables any control with a non-nil <code>bWhen</code> on every event (calling
+    <code>::Enable()</code>, which clears <code>::lDisabled</code>), a button disabled via
+    <code>:lDisabled</code> / <code>:Disable()</code> was silently re-activated. The
+    <code>bWhen</code> default was removed so the disabled state persists.</li>
+  <li>Removed a leftover debug <code>MsgInfo()</code> popup from <code>SetImage()</code>.</li>
+  <li>Sample <code>samples\ui\testsmart.prg</code> shows the four shapes (rectangular,
+    rounded, pill, circle) across normal / hover / pressed / disabled states.</li>
+</ul>
+<p>
+Related build fix: <code>vitem.prg</code> was missing
+<code>#define BDR_RAISEDOUTER</code> (0x0001) and <code>BDR_SUNKENOUTER</code> (0x0002);
+the <code>EDGE_*</code> macros referenced these undefined symbols, raising W0001
+ambiguous-reference warnings that aborted the <code>FiveH.lib</code> build under
+<code>-es1</code>.
+</p>
+
 <h2 id="agent-improvements">Agent Class &mdash; Major Improvements</h2>
 <p>
 The Agent class (<code>source\classes\agent.prg</code>) received substantial upgrades

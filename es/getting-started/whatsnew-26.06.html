@@ -48,6 +48,38 @@ posiciones, anchos, alturas y tama&ntilde;os de fuente.
     con directivas <code>#define</code> para los IDs de los controles.</li>
 </ul>
 
+<h2 id="smartbutton-fixes">TSmartButton &mdash; Correcciones</h2>
+<p>
+El control <code>TSmartButton</code> (<code>source\classes\smartbtn.prg</code>) ten&iacute;a dos
+errores en el manejo de la acci&oacute;n, ambos corregidos:
+</p>
+<ul>
+  <li><strong>Los botones activos no ejecutaban su ACTION.</strong> Los m&eacute;todos
+    <code>LButtonDown</code>, <code>LButtonUp</code> y <code>KeyChar</code> ten&iacute;an la
+    condici&oacute;n de deshabilitado invertida (<code>IF ! ::lDisabled RETURN 0</code>), por lo
+    que se omit&iacute;a la captura/click en botones activos. Corregido a
+    <code>IF ::lDisabled</code>.</li>
+  <li><strong>Los botones deshabilitados s&iacute; ejecutaban su ACTION.</strong>
+    <code>New()</code> asignaba por defecto <code>bWhen := {||.t.}</code>. Como el
+    <code>AEvalWhen()</code> del propietario reactiva cualquier control con un
+    <code>bWhen</code> no nulo en cada evento (llamando a <code>::Enable()</code>, que limpia
+    <code>::lDisabled</code>), un bot&oacute;n deshabilitado con <code>:lDisabled</code> /
+    <code>:Disable()</code> se reactivaba silenciosamente. Se elimin&oacute; el valor por
+    defecto de <code>bWhen</code> para que el estado deshabilitado persista.</li>
+  <li>Se elimin&oacute; un <code>MsgInfo()</code> de depuraci&oacute;n olvidado en
+    <code>SetImage()</code>.</li>
+  <li>El ejemplo <code>samples\ui\testsmart.prg</code> muestra las cuatro formas (rectangular,
+    redondeada, p&iacute;ldora, c&iacute;rculo) en los estados normal / hover / pulsado /
+    deshabilitado.</li>
+</ul>
+<p>
+Correcci&oacute;n de compilaci&oacute;n relacionada: a <code>vitem.prg</code> le faltaban
+<code>#define BDR_RAISEDOUTER</code> (0x0001) y <code>BDR_SUNKENOUTER</code> (0x0002); las
+macros <code>EDGE_*</code> referenciaban esos s&iacute;mbolos no definidos, generando avisos
+W0001 de referencia ambigua que abortaban la compilaci&oacute;n de <code>FiveH.lib</code> con
+<code>-es1</code>.
+</p>
+
 <h2 id="agent-improvements">Clase Agent &mdash; Mejoras Importantes</h2>
 <p>
 La clase Agent (<code>source\classes\agent.prg</code>) recibi&oacute; mejoras sustanciales
