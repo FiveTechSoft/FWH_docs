@@ -47,6 +47,34 @@ resize proportionally, including positions, widths, heights and font sizes.
     with <code>#define</code> directives for control IDs.</li>
 </ul>
 
+<h2 id="bargetbtn-fix">XBrowse Bar GET Action Buttons &mdash; Fix</h2>
+<p>
+The action button shown on header-bar GETs (<code>oBrw:lGetBar</code> with
+<code>:cBarGetBmp</code> and <code>:bBarGetAction</code>) appeared tiny at the
+GET's top-left corner instead of square, full GET height and flush on the
+right side. Fixed in <code>source\classes\xbrowse.prg</code>.
+</p>
+<ul>
+  <li><strong>Cause.</strong> <code>TBtnBmp:Display()</code> calls
+    <code>CalcSize()</code> on every paint, which restored the button to its
+    bitmap-derived design size (~10&times;10, top-left) stored in
+    <code>aSizeRect</code>, silently undoing any prior placement. Only a stray
+    late repaint occasionally left it correct.</li>
+  <li><strong>Fix.</strong> <code>TXBrwColumn:CreateBarGet()</code> now builds the
+    GET without a button and creates the button once afterwards, then clears
+    <code>oBtn:aSizeRect</code> to disable the paint-time auto-resize so the
+    assigned geometry sticks. A new method
+    <code>TXBrwColumn:PlaceBarGetBtn()</code> sizes the button square
+    (<code>nGetBarHeight - 4</code>), flush right, and is called from
+    <code>CheckBarGet()</code> on every check so it also survives scrolling and
+    column-width changes.</li>
+  <li><strong>Note.</strong> <code>:cBarGetBmp</code> must reference a bitmap that
+    actually loads (a real linked resource name or a <code>.bmp</code> file path).
+    If it fails to load FiveWin falls back to the native <code>TButtonBmp</code>,
+    which does not render reliably. The <code>xbgetbtn</code> sample now points at
+    <code>..\..\..\bitmaps\16back.bmp</code>.</li>
+</ul>
+
 <h2 id="smartbutton-fixes">TSmartButton &mdash; Fixes</h2>
 <p>
 The <code>TSmartButton</code> control (<code>source\classes\smartbtn.prg</code>) had two

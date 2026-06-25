@@ -48,6 +48,37 @@ posiciones, anchos, alturas y tama&ntilde;os de fuente.
     con directivas <code>#define</code> para los IDs de los controles.</li>
 </ul>
 
+<h2 id="bargetbtn-fix">Botones de acci&oacute;n de los GET de barra de XBrowse &mdash; Correcci&oacute;n</h2>
+<p>
+El bot&oacute;n de acci&oacute;n que se muestra en los GET de la barra de cabecera
+(<code>oBrw:lGetBar</code> con <code>:cBarGetBmp</code> y <code>:bBarGetAction</code>)
+sal&iacute;a peque&ntilde;o en la esquina superior izquierda del GET en lugar de
+cuadrado, con el alto completo del GET y pegado a la derecha. Corregido en
+<code>source\classes\xbrowse.prg</code>.
+</p>
+<ul>
+  <li><strong>Causa.</strong> <code>TBtnBmp:Display()</code> llama a
+    <code>CalcSize()</code> en cada repintado, lo que restauraba el bot&oacute;n a
+    su tama&ntilde;o de dise&ntilde;o derivado del bitmap (~10&times;10, arriba a la
+    izquierda) almacenado en <code>aSizeRect</code>, deshaciendo en silencio
+    cualquier colocaci&oacute;n previa. Solo un repintado tard&iacute;o ocasional lo
+    dejaba bien.</li>
+  <li><strong>Soluci&oacute;n.</strong> <code>TXBrwColumn:CreateBarGet()</code> crea
+    ahora el GET sin bot&oacute;n y el bot&oacute;n se crea una sola vez despu&eacute;s;
+    luego se anula <code>oBtn:aSizeRect</code> para desactivar el
+    redimensionado autom&aacute;tico en cada pintado, de modo que la geometr&iacute;a
+    asignada se mantiene. Un nuevo m&eacute;todo
+    <code>TXBrwColumn:PlaceBarGetBtn()</code> dimensiona el bot&oacute;n cuadrado
+    (<code>nGetBarHeight - 4</code>), pegado a la derecha, y se llama desde
+    <code>CheckBarGet()</code> en cada comprobaci&oacute;n, por lo que tambi&eacute;n
+    sobrevive al scroll y a los cambios de ancho de columna.</li>
+  <li><strong>Nota.</strong> <code>:cBarGetBmp</code> debe apuntar a un bitmap que
+    cargue realmente (un nombre de recurso enlazado o la ruta a un fichero
+    <code>.bmp</code>). Si no carga, FiveWin recurre al bot&oacute;n nativo
+    <code>TButtonBmp</code>, que no se renderiza de forma fiable. El ejemplo
+    <code>xbgetbtn</code> apunta ahora a <code>..\..\..\bitmaps\16back.bmp</code>.</li>
+</ul>
+
 <h2 id="smartbutton-fixes">TSmartButton &mdash; Correcciones</h2>
 <p>
 El control <code>TSmartButton</code> (<code>source\classes\smartbtn.prg</code>) ten&iacute;a dos

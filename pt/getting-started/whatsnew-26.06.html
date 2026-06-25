@@ -48,6 +48,38 @@ incluindo posi&ccedil;&otilde;es, larguras, alturas e tamanhos de fonte.
     com diretivas <code>#define</code> para os IDs dos controles.</li>
 </ul>
 
+<h2 id="bargetbtn-fix">Bot&otilde;es de a&ccedil;&atilde;o dos GET de barra do XBrowse &mdash; Corre&ccedil;&atilde;o</h2>
+<p>
+O bot&atilde;o de a&ccedil;&atilde;o exibido nos GET da barra de cabe&ccedil;alho
+(<code>oBrw:lGetBar</code> com <code>:cBarGetBmp</code> e <code>:bBarGetAction</code>)
+aparecia pequeno no canto superior esquerdo do GET em vez de quadrado, com a
+altura total do GET e encostado &agrave; direita. Corrigido em
+<code>source\classes\xbrowse.prg</code>.
+</p>
+<ul>
+  <li><strong>Causa.</strong> <code>TBtnBmp:Display()</code> chama
+    <code>CalcSize()</code> em cada repintura, o que restaurava o bot&atilde;o ao
+    seu tamanho de desenho derivado do bitmap (~10&times;10, canto superior
+    esquerdo) guardado em <code>aSizeRect</code>, desfazendo silenciosamente
+    qualquer posicionamento anterior. Apenas uma repintura tardia ocasional o
+    deixava correto.</li>
+  <li><strong>Solu&ccedil;&atilde;o.</strong> <code>TXBrwColumn:CreateBarGet()</code> cria
+    agora o GET sem bot&atilde;o e o bot&atilde;o &eacute; criado uma &uacute;nica vez depois;
+    em seguida anula-se <code>oBtn:aSizeRect</code> para desativar o
+    redimensionamento autom&aacute;tico em cada pintura, de modo que a geometria
+    atribu&iacute;da se mant&eacute;m. Um novo m&eacute;todo
+    <code>TXBrwColumn:PlaceBarGetBtn()</code> dimensiona o bot&atilde;o quadrado
+    (<code>nGetBarHeight - 4</code>), encostado &agrave; direita, e &eacute; chamado a
+    partir de <code>CheckBarGet()</code> em cada verifica&ccedil;&atilde;o, pelo que
+    tamb&eacute;m sobrevive ao scroll e &agrave;s mudan&ccedil;as de largura de coluna.</li>
+  <li><strong>Nota.</strong> <code>:cBarGetBmp</code> deve apontar para um bitmap que
+    realmente carregue (um nome de recurso ligado ou o caminho de um ficheiro
+    <code>.bmp</code>). Se falhar o carregamento, o FiveWin recorre ao bot&atilde;o
+    nativo <code>TButtonBmp</code>, que n&atilde;o &eacute; renderizado de forma fi&aacute;vel.
+    O exemplo <code>xbgetbtn</code> aponta agora para
+    <code>..\..\..\bitmaps\16back.bmp</code>.</li>
+</ul>
+
 <h2 id="smartbutton-fixes">TSmartButton &mdash; Correc&ccedil;&otilde;es</h2>
 <p>
 O controle <code>TSmartButton</code> (<code>source\classes\smartbtn.prg</code>) tinha dois
