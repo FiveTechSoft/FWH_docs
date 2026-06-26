@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP Server Computer Use - FWH Docs</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>MCP Server — Computer Use</h1>
+<p class="class-source">Source: <code>mcp\mcp_server.prg</code></p>
+
+<p>
+A <strong>Model Context Protocol (MCP)</strong> server for desktop automation, built with
+Harbour/FiveWin. Exposes screenshot capture and UI action execution tools over stdio
+for AI clients like Claude Code, OpenCode, and Cursor.
+</p>
+
+<h2>Architecture</h2>
+<pre>
+┌─────────────────────┐      JSON-RPC 2.0       ┌──────────────────┐
+│  Claude Code /      │  stdin ──────────────►   │  mcp_server.exe  │
+│  OpenCode / Cursor  │  stdout ◄──────────────  │  (Harbour/FWH)   │
+│  (the brain)        │                          │  (the muscles)   │
+└─────────────────────┘                          └──────────────────┘
+        │                                                │
+        │  1. capture_screen → gets screenshot            │
+        │  2. analyzes image (client has vision)          │
+        │  3. execute_action → click/type/scroll          │
+        │  4. repeat...                                   │
+        ▼                                                ▼
+   Decides what                                    Windows Desktop
+   to do next                                      (GDI + Win32 API)
+</pre>
+
+<h2>Quick Start</h2>
+
+<h3>1. Build</h3>
+<pre><code class="language-bat">cd C:\FWH\mcp
+build.bat</code></pre>
+
+<h3>2. Configure Claude Code</h3>
+<p>Create <code>.mcp.json</code> in your project root:</p>
+<pre><code class="language-json">{
+  "mcpServers": {
+    "computer-use": {
+      "command": "C:\\FWH\\mcp\\mcp_server.exe"
+    }
+  }
+}</code></pre>
+
+<h3>3. Use</h3>
+<p>Ask Claude Code to interact with your desktop:</p>
+<pre><code>Open Notepad and type "Hello World"</code></pre>
+
+<h2>MCP Tools</h2>
+
+<table>
+<tr><th>Tool</th><th>Description</th><th>Parameters</th></tr>
+
+<tr>
+  <td><code>capture_screen</code></td>
+  <td>Captures full screen screenshot</td>
+  <td>
+    <code>format</code>: "base64" or "file" (required)<br>
+    <code>path</code>: file path when format=file
+  </td>
+</tr>
+
+<tr>
+  <td><code>execute_action</code></td>
+  <td>Executes a UI action on the desktop</td>
+  <td>
+    <code>action</code>: click | right_click | double_click | type | scroll | key | hover | navigate | wait (required)<br>
+    <code>x</code>: X coordinate 0-1000 (normalized)<br>
+    <code>y</code>: Y coordinate 0-1000 (normalized)<br>
+    <code>text</code>: text to type or URL to navigate<br>
+    <code>key</code>: key combo (ctrl+c, alt+tab, enter, etc.)<br>
+    <code>direction</code>: up | down | left | right (for scroll)<br>
+    <code>durationMs</code>: duration for wait action (default 1000)
+  </td>
+</tr>
+
+<tr>
+  <td><code>get_screen_size</code></td>
+  <td>Returns screen dimensions in pixels</td>
+  <td>None</td>
+</tr>
+
+<tr>
+  <td><code>get_action_history</code></td>
+  <td>Returns history of executed actions</td>
+  <td>
+    <code>last_n</code>: number of recent actions (default 10)
+  </td>
+</tr>
+
+<tr>
+  <td><code>reset_agent</code></td>
+  <td>Resets agent state and clears history</td>
+  <td>None</td>
+</tr>
+
+<tr>
+  <td><code>save_screenshot</code></td>
+  <td>Captures and saves screenshot to file</td>
+  <td>
+    <code>path</code>: file path to save (required)
+  </td>
+</tr>
+</table>
+
+<h2>Coordinate System</h2>
+<p>
+All coordinates are <strong>normalized to 0-1000</strong> relative to screen size,
+compatible with Gemini Computer Use format.
+</p>
+<pre>
+Screen (1920×1080):
+┌───────────────────────────────┐
+│ (0,0)                   (1000,0) │
+│                               │
+│     x=500, y=500 = center    │
+│                               │
+│ (0,1000)              (1000,1000) │
+└───────────────────────────────┘
+
+Conversion to pixels:
+  pixel_x = x × screen_width / 1000
+  pixel_y = y × screen_height / 1000
+</pre>
+
+<h2>Key Combinations</h2>
+<p>Supported key names for the <code>key</code> parameter:</p>
+<table>
+<tr><th>Key</th><th>Name</th><th>Key</th><th>Name</th></tr>
+<tr><td>Modifiers</td><td>ctrl, alt, shift</td><td>Navigation</td><td>home, end, pageup, pagedown</td></tr>
+<tr><td>Arrows</td><td>left, right, up, down</td><td>Function</td><td>f1-f12</td></tr>
+<tr><td>Edit</td><td>enter, tab, escape, backspace, delete</td><td>Letters</td><td>a-z</td></tr>
+<tr><td>Numbers</td><td>0-9</td><td>Other</td><td>space</td></tr>
+</table>
+<p>Combine with <code>+</code>: <code>ctrl+c</code>, <code>alt+tab</code>, <code>ctrl+shift+s</code></p>
+
+<h2>Technical Details</h2>
+<ul>
+  <li><strong>Protocol:</strong> MCP 2024-11-05 (JSON-RPC 2.0 over stdio)</li>
+  <li><strong>Transport:</strong> Newline-delimited JSON on stdin/stdout</li>
+  <li><strong>Build:</strong> Harbour + MSVC 64-bit (/subsystem:console)</li>
+  <li><strong>Win32 APIs:</strong> GetDC, BitBlt, CreateCompatibleBitmap, mouse_event, keybd_event</li>
+  <li><strong>No external dependencies:</strong> Pure Harbour/FWH + Windows APIs</li>
+</ul>
+
+<h2>Files</h2>
+<pre>
+C:\FWH\mcp\
+├── mcp_server.exe   (5.6 MB)  Compiled executable
+├── mcp_server.prg             Source code
+└── build.bat                  Build script
+</pre>
+
+</main>
+</body>
+</html>
