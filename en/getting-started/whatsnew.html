@@ -303,6 +303,56 @@ IDs, and bitmap name matching the button caption. Both integer IDs and
 decimal-string names are matched, covering Borland resource tools.
 </p>
 
+<h2 id="fivedbu">FiveDBU &mdash; Enhanced Database Utility</h2>
+<p>
+Major upgrade to <code>samples/database/fivedbu.prg</code>, the flagship DBU sample
+for DBF, ADO, ODBC and MariaDB. The monolithic source is now split into testable
+modules under <code>samples/database/fivedbu/</code>:
+</p>
+<ul>
+  <li><code>fivedbu.ch</code> &mdash; color constants and macros</li>
+  <li><code>fivedbu_lib.prg</code> &mdash; pure helpers (no UI)</li>
+  <li><code>tfivedbu.prg</code> &mdash; <code>TFiveDBU</code> class; preferences in
+    <code>%APPDATA%\fivedbu.ini</code></li>
+  <li><code>fivedbu_test.prg</code> &mdash; automated integration test mode</li>
+</ul>
+<ul>
+  <li><strong><code>--test</code> mode</strong> &mdash; <code>fivedbu.exe --test</code>
+    runs 32 integration tests (MDI, browse, structure dialog, folder, array browse).
+    Log: <code>tests/fivedbu_test.log</code>.</li>
+  <li><strong>Dark mode</strong> &mdash; checkbox in Preferences; persists to INI;
+    <code>BrwApplyColors()</code> applies dark or pijama striping on DBF browses.</li>
+  <li><strong>Free SQL</strong> &mdash; <code>RSFreeSql()</code> toolbar button on
+    ADO/ODBC browses: run arbitrary SQL (<code>SELECT</code> opens a new browse;
+    DML reports rows affected).</li>
+  <li><strong>ADO/Maria import</strong> &mdash; <code>ImpExpImportAdo()</code> imports
+    CSV/TXT into ADO or MariaDB rowsets; export writes CSV/TXT with header.</li>
+  <li><strong>Scoped relations</strong> &mdash; <code>RelEdit()</code> checkbox for
+    <code>DbInfo(DBI_SCOPEDRELATION)</code> on DBF parent-child links.</li>
+  <li><strong>MariaDB MRU</strong> &mdash; recent Maria connection strings in the
+    Database menu (like ADO/ODBC MRU).</li>
+  <li><strong>Soundex search</strong> &mdash; optional phonetic lookup via
+    <code>FiveDBU_Soundex()</code> (Harbour-safe empty-string handling).</li>
+</ul>
+<p>
+FWUnit adds <code>tst_fivedbu.prg</code> (15 asserts on
+<code>FiveDBU_ChrKeep</code>, <code>FiveDBU_Soundex</code>, <code>FiveDBU_ParseLine</code>,
+<code>FiveDBU_FieldList</code>, <code>FiveDBU_IsSelectSql</code>). Full suite:
+<strong>158/158</strong> on hm32. Build:
+<code>samples\build_new.bat fivedbu hm32</code>.
+</p>
+<p>
+<strong>FWString fix</strong> &mdash; removed a trailing-comma NIL row in
+<code>source/function/strings.prg</code> that caused <code>BASE/1068</code> when
+<code>FWString("&amp;Window")</code> was called from <code>TMENU:AddMdi</code>.
+CP1252 accent encoding restored for Spanish, Portuguese, French, German and Italian.
+</p>
+<p>
+<code>samples/database/fivedburv.prg</code> is the same DBU with
+<a href="../../en/internet/remoteview.html">Remote View</a> integrated
+(<code>ON INIT RemoteViewStart()</code>).
+</p>
+
 <h2 id="new-samples">New Samples</h2>
 
 <h3>calexmaria &mdash; TCalex + MySQL/MariaDB Calendar</h3>

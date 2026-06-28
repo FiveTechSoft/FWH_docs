@@ -314,6 +314,57 @@ e nome de bitmap correspondendo ao texto do bot&atilde;o. S&atilde;o correspondi
 nomes decimais, cobrindo as ferramentas de recursos da Borland.
 </p>
 
+<h2 id="fivedbu">FiveDBU &mdash; Utilit&aacute;rio de Banco de Dados Aprimorado</h2>
+<p>
+Grande atualiza&ccedil;&atilde;o de <code>samples/database/fivedbu.prg</code>, o exemplo
+principal de DBU para DBF, ADO, ODBC e MariaDB. O c&oacute;digo monol&iacute;tico
+agora est&aacute; dividido em m&oacute;dulos test&aacute;veis em
+<code>samples/database/fivedbu/</code>:
+</p>
+<ul>
+  <li><code>fivedbu.ch</code> &mdash; constantes de cor e macros</li>
+  <li><code>fivedbu_lib.prg</code> &mdash; fun&ccedil;&otilde;es puras (sem UI)</li>
+  <li><code>tfivedbu.prg</code> &mdash; classe <code>TFiveDBU</code>; prefer&ecirc;ncias em
+    <code>%APPDATA%\fivedbu.ini</code></li>
+  <li><code>fivedbu_test.prg</code> &mdash; modo de testes de integra&ccedil;&atilde;o autom&aacute;ticos</li>
+</ul>
+<ul>
+  <li><strong>Modo <code>--test</code></strong> &mdash; <code>fivedbu.exe --test</code>
+    executa 32 testes de integra&ccedil;&atilde;o (MDI, browse, di&aacute;logo de estrutura,
+    folder, browse em array). Log: <code>tests/fivedbu_test.log</code>.</li>
+  <li><strong>Modo escuro</strong> &mdash; caixa em Prefer&ecirc;ncias; persiste no INI;
+    <code>BrwApplyColors()</code> aplica escuro ou listras pijama em browses DBF.</li>
+  <li><strong>SQL livre</strong> &mdash; bot&atilde;o <code>RSFreeSql()</code> em browses
+    ADO/ODBC: SQL arbitr&aacute;rio (<code>SELECT</code> abre browse; DML informa linhas afetadas).</li>
+  <li><strong>Importa&ccedil;&atilde;o ADO/Maria</strong> &mdash; <code>ImpExpImportAdo()</code>
+    importa CSV/TXT para rowsets ADO ou MariaDB; exporta&ccedil;&atilde;o para CSV/TXT com cabe&ccedil;alho.</li>
+  <li><strong>Rela&ccedil;&otilde;es com escopo</strong> &mdash; caixa em <code>RelEdit()</code>
+    para <code>DbInfo(DBI_SCOPEDRELATION)</code> em rela&ccedil;&otilde;es DBF.</li>
+  <li><strong>MRU MariaDB</strong> &mdash; conex&otilde;es Maria recentes no menu
+    Banco de dados (como ADO/ODBC).</li>
+  <li><strong>Busca Soundex</strong> &mdash; op&ccedil;&atilde;o fon&eacute;tica com
+    <code>FiveDBU_Soundex()</code> (segura no Harbour com strings vazias).</li>
+</ul>
+<p>
+FWUnit adiciona <code>tst_fivedbu.prg</code> (15 asser&ccedil;&otilde;es sobre
+<code>FiveDBU_ChrKeep</code>, <code>FiveDBU_Soundex</code>, <code>FiveDBU_ParseLine</code>,
+<code>FiveDBU_FieldList</code>, <code>FiveDBU_IsSelectSql</code>). Suite completa:
+<strong>158/158</strong> em hm32. Compilar:
+<code>samples\build_new.bat fivedbu hm32</code>.
+</p>
+<p>
+<strong>Corre&ccedil;&atilde;o FWString</strong> &mdash; removida linha NIL por v&iacute;rgula final em
+<code>source/function/strings.prg</code> que causava <code>BASE/1068</code> ao chamar
+<code>FWString("&amp;Window")</code> de <code>TMENU:AddMdi</code>.
+Codifica&ccedil;&atilde;o CP1252 restaurada para espanhol, portugu&ecirc;s, franc&ecirc;s,
+alem&atilde;o e italiano.
+</p>
+<p>
+<code>samples/database/fivedburv.prg</code> &eacute; o mesmo DBU com
+<a href="../../pt/internet/remoteview.html">Remote View</a> integrado
+(<code>ON INIT RemoteViewStart()</code>).
+</p>
+
 <h2 id="new-samples">Novos Exemplos</h2>
 
 <h3>calexmaria &mdash; Calend&aacute;rio TCalex + MySQL/MariaDB</h3>
