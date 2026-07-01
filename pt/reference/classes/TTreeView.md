@@ -188,6 +188,11 @@ sequenceDiagram
     TTreeView->>Application: Custom checkbox handling
 ```
 
+> **Nota sobre modo Unicode:** Quando `FW_SetUnicode(.T.)` está ativo, o controle TreeView
+> envia `TVN_SELCHANGEDW` (-456) em vez de `TVN_SELCHANGEDA` (-402). O framework
+> trata ambas notificações automaticamente, assim os callbacks `bChanged`
+> funcionam corretamente nos modos ANSI e Unicode.
+
 ## Usage Patterns
 
 ### Basic Tree View
