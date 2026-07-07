@@ -545,6 +545,23 @@ cancela. Totalmente configurable mediante array est&aacute;tico <code>aEditSeq</
     <code>::aDialogs[1]</code> y cada <code>oDlg</code> en el callback de AEval,
     consistente con el patr&oacute;n usado en el resto de la clase.</li>
 </ul>
+  <li><strong>TGet:KeyDown lee variable desactualizada en bKeyDown</strong> — En xHarbour,
+    <code>TGet:KeyDown</code> evaluaba <code>bKeyDown</code> antes de sincronizar el
+    buffer de edici&oacute;n con la variable vinculada. Los callbacks que le&iacute;an la variable
+    (ej. manejadores de tecla Enter) ve&iacute;an un valor desactualizado/vac&iacute;o. Corregido:
+    se llama a <code>VarPut(UnTransform())</code> o <code>VarPut(GetText())</code> antes
+    de <code>Eval(bKeyDown)</code> sin resetear <code>oGet:Original</code>/<code>oGet:Changed</code>.</li>
+  <li><strong>FWMariaConnection di&aacute;logo de error en ingl&eacute;s hardcoded</strong> —
+    <code>ShowError()</code> llamaba a <code>Msg_Alert()</code> incondicionalmente,
+    mostrando un MessageBox en ingl&eacute;s aunque <code>lShowErrors</code> fuera <code>.F.</code>.
+    Corregido: <code>ShowError()</code> ahora verifica <code>lShowErrors .or. lShowMessages</code>
+    antes de llamar a <code>Msg_Alert()</code>.</li>
+  <li><strong>FWMariaConnection reconexi&oacute;n silenciosa sin hook</strong> — Cuando la
+    conexi&oacute;n ca&iacute;a con <code>lReConnect</code> activo, <code>ReConnect()</code> cerraba y
+    reconectaba sin callback. El estado de sesi&oacute;n (<code>SET SESSION</code>) se perd&iacute;a
+    y transacciones abiertas se divid&iacute;an silenciosamente. Corregido:
+    <code>ReConnect()</code> ahora dispara <code>bOnLostServer</code> antes de cerrar
+    + reconectar.</li>
 
 <h2 id="dev-tools">Herramientas de Desarrollo</h2>
 <ul>

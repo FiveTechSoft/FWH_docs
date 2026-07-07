@@ -517,6 +517,24 @@ Uses <code>PostMessage</code>-based column advance (zero timers).
     checking for NIL. Added nil guard for <code>::aDialogs[1]</code> and each
     <code>oDlg</code> in the AEval callback, consistent with the pattern used
     elsewhere in the same class.</li>
+
+  <li><strong>TGet:KeyDown bKeyDown reads stale variable</strong> &mdash; On xHarbour,
+    <code>TGet:KeyDown</code> evaluated <code>bKeyDown</code> before syncing the edit
+    buffer to the bound variable. Callbacks that read the variable (e.g. Enter key
+    handlers) saw a stale/empty value. Fixed: call <code>VarPut(UnTransform())</code>
+    or <code>VarPut(GetText())</code> before <code>Eval(bKeyDown)</code> without
+    resetting <code>oGet:Original</code>/<code>oGet:Changed</code>.</li>
+  <li><strong>FWMariaConnection hardcoded English error dialog</strong> &mdash;
+    <code>ShowError()</code> called <code>Msg_Alert()</code> unconditionally, showing
+    a hardcoded English MessageBox even with <code>lShowErrors := .F.</code>. Fixed:
+    <code>ShowError()</code> now checks <code>lShowErrors .or. lShowMessages</code>
+    before calling <code>Msg_Alert()</code>.</li>
+  <li><strong>FWMariaConnection silent reconnect no hook</strong> &mdash; When the connection
+    dropped with <code>lReConnect</code> on, <code>ReConnect()</code> closed and
+    reconnected silently with no callback. Session state (<code>SET SESSION</code>
+    variables) was lost and open transactions were silently split. Fixed:
+    <code>ReConnect()</code> now fires <code>bOnLostServer</code> before closing
+    + reconnecting.</li>
 </ul>
 
 <h2 id="dev-tools">Development Tools</h2>
