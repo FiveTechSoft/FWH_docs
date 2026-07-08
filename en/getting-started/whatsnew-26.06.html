@@ -521,20 +521,32 @@ Uses <code>PostMessage</code>-based column advance (zero timers).
   <li><strong>TGet:KeyDown bKeyDown reads stale variable</strong> &mdash; On xHarbour,
     <code>TGet:KeyDown</code> evaluated <code>bKeyDown</code> before syncing the edit
     buffer to the bound variable. Callbacks that read the variable (e.g. Enter key
-    handlers) saw a stale/empty value. Fixed: call <code>VarPut(UnTransform())</code>
-    or <code>VarPut(GetText())</code> before <code>Eval(bKeyDown)</code> without
-    resetting <code>oGet:Original</code>/<code>oGet:Changed</code>.</li>
+    handlers) saw a stale/empty value. Fixed: sync <code>oGet:buffer</code> from
+    <code>GetWindowText</code>/<code>GetText()</code>, then call
+    <code>VarPut(UnTransform())</code> or <code>VarPut(GetText())</code> before
+    <code>Eval(bKeyDown)</code> without resetting <code>oGet:Original</code>/<code>oGet:Changed</code>.
+    Sample: <code>samples\getkdwn.prg</code>.</li>
   <li><strong>FWMariaConnection hardcoded English error dialog</strong> &mdash;
     <code>ShowError()</code> called <code>Msg_Alert()</code> unconditionally, showing
     a hardcoded English MessageBox even with <code>lShowErrors := .F.</code>. Fixed:
     <code>ShowError()</code> now checks <code>lShowErrors .or. lShowMessages</code>
-    before calling <code>Msg_Alert()</code>.</li>
+    before calling <code>Msg_Alert()</code>. Connect errors can be localised via
+    <code>MARIA_ONCONNECTERROR( nError, cErrMsg, oCn )</code> or
+    <code>:bOnConnectError</code>; the lost-server suffix uses <code>FWString()</code>.
+    Sample: <code>samples\fwmalost.prg</code>.</li>
   <li><strong>FWMariaConnection silent reconnect no hook</strong> &mdash; When the connection
-    dropped with <code>lReConnect</code> on, <code>ReConnect()</code> closed and
-    reconnected silently with no callback. Session state (<code>SET SESSION</code>
-    variables) was lost and open transactions were silently split. Fixed:
-    <code>ReConnect()</code> now fires <code>bOnLostServer</code> before closing
-    + reconnecting.</li>
+    dropped, <code>mysql_ping</code> auto-reconnect retried the next statement in C
+    with no callback and without re-applying <code>SET SESSION</code> state
+    (<code>time_zone</code>, <code>lc_time_names</code>, etc.). Fixed: C marks
+    reconnect but does not retry the failing query; <code>Check()</code>/<code>ReConnect()</code>
+    fire <code>bOnLostServer</code> and <code>RestoreSessionState()</code> re-applies
+    tracked session vars before PRG retries. Sample: <code>samples\fwmatz.prg</code>.</li>
+  <li><strong>FWMariaConnection transaction silently split on auto-reconnect</strong> &mdash;
+    If the socket died with <code>START TRANSACTION</code> open, <code>mysql_ping</code>
+    retried the next statement on a fresh autocommit session with no error. Fixed:
+    client-side <code>lInTransaction</code> tracking; <code>HandleLostTxn()</code> blocks
+    ping-retry in C and PRG while a transaction is open, fires <code>bOnLostServer</code>,
+    and surfaces error 2013 with a localised message. Sample: <code>samples\fwmatx.prg</code>.</li>
 </ul>
 
 <h2 id="dev-tools">Development Tools</h2>

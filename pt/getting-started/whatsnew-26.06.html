@@ -544,24 +544,32 @@ cancela. Totalmente configur&aacute;vel via array est&aacute;tico <code>aEditSeq
     verificar se eram NIL. Adicionada verifica&ccedil;&atilde;o de NIL para
     <code>::aDialogs[1]</code> e cada <code>oDlg</code> no callback do AEval,
     consistente com o padr&atilde;o usado no resto da classe.</li>
-</ul>
-  <li><strong>TGet:KeyDown l&ecirc; vari&aacute;vel desatualizada no bKeyDown</strong> — No xHarbour,
+  <li><strong>TGet:KeyDown l&ecirc; vari&aacute;vel desatualizada no bKeyDown</strong> &mdash; No xHarbour,
     <code>TGet:KeyDown</code> avaliava <code>bKeyDown</code> antes de sincronizar o
     buffer de edi&ccedil;&atilde;o com a vari&aacute;vel vinculada. Callbacks que liam a vari&aacute;vel
     (ex. handlers de tecla Enter) viam um valor desatualizado/vazio. Corrigido:
-    chamada <code>VarPut(UnTransform())</code> ou <code>VarPut(GetText())</code> antes
-    de <code>Eval(bKeyDown)</code> sem resetar <code>oGet:Original</code>/<code>oGet:Changed</code>.</li>
-  <li><strong>FWMariaConnection di&aacute;logo de erro em ingl&ecirc;s hardcoded</strong> —
-    <code>ShowError()</code> chamava <code>Msg_Alert()</code> incondicionalmente,
+    sincronizar <code>oGet:buffer</code> a partir de <code>GetWindowText</code>/<code>GetText()</code>,
+    depois <code>VarPut(UnTransform())</code> ou <code>VarPut(GetText())</code> antes
+    de <code>Eval(bKeyDown)</code> sem resetar <code>oGet:Original</code>/<code>oGet:Changed</code>.
+    Exemplo: <code>samples\getkdwn.prg</code>.</li>
+  <li><strong>FWMariaConnection di&aacute;logo de erro em ingl&ecirc;s hardcoded</strong> &mdash; <code>ShowError()</code> chamava <code>Msg_Alert()</code> incondicionalmente,
     exibindo um MessageBox em ingl&ecirc;s mesmo com <code>lShowErrors := .F.</code>.
     Corrigido: <code>ShowError()</code> agora verifica <code>lShowErrors .or. lShowMessages</code>
-    antes de chamar <code>Msg_Alert()</code>.</li>
-  <li><strong>FWMariaConnection reconex&atilde;o silenciosa sem hook</strong> — Quando a
-    conex&atilde;o ca&iacute;a com <code>lReConnect</code> ativo, <code>ReConnect()</code> fechava e
-    reconectava sem callback. O estado da sess&atilde;o (<code>SET SESSION</code>) era perdido
-    e transa&ccedil;&otilde;es abertas eram divididas silenciosamente. Corrigido:
-    <code>ReConnect()</code> agora dispara <code>bOnLostServer</code> antes de fechar
-    + reconectar.</li>
+    antes de chamar <code>Msg_Alert()</code>. Erros de conex&atilde;o localiz&aacute;veis via
+    <code>MARIA_ONCONNECTERROR( nError, cErrMsg, oCn )</code> ou <code>:bOnConnectError</code>;
+    o sufixo de servidor perdido usa <code>FWString()</code>.
+    Exemplo: <code>samples\fwmalost.prg</code>.</li>
+  <li><strong>FWMariaConnection reconex&atilde;o silenciosa sem hook</strong> &mdash; Quando a
+    conex&atilde;o ca&iacute;a, <code>mysql_ping</code> reexecutava a pr&oacute;xima instru&ccedil;&atilde;o em C sem callback
+    nem re-aplicar <code>SET SESSION</code>. Corrigido: C marca a reconex&atilde;o sem reexecutar;
+    <code>Check()</code>/<code>ReConnect()</code> disparam <code>bOnLostServer</code> e
+    <code>RestoreSessionState()</code> restaura o estado antes do reintento em PRG.
+    Exemplo: <code>samples\fwmatz.prg</code>.</li>
+  <li><strong>FWMariaConnection transa&ccedil;&atilde;o dividida em auto-reconnect</strong> &mdash;
+    Com <code>START TRANSACTION</code> aberto, <code>mysql_ping</code> reexecutava em autocommit
+    sem erro. Corrigido: <code>lInTransaction</code>, <code>HandleLostTxn()</code>, erro 2013.
+    Exemplo: <code>samples\fwmatx.prg</code>.</li>
+</ul>
 
 <h2 id="dev-tools">Ferramentas de Desenvolvimento</h2>
 <ul>
