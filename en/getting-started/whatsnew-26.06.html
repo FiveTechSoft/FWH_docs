@@ -547,6 +547,20 @@ Uses <code>PostMessage</code>-based column advance (zero timers).
     client-side <code>lInTransaction</code> tracking; <code>HandleLostTxn()</code> blocks
     ping-retry in C and PRG while a transaction is open, fires <code>bOnLostServer</code>,
     and surfaces error 2013 with a localised message. Sample: <code>samples\fwmatx.prg</code>.</li>
+  <li><strong>FWMariaConnection schema metadata cache</strong> &mdash; Restored
+    <code>hMetaCache</code> for <code>DbExists</code>, <code>TableExists</code>,
+    <code>FKeyColumns</code> and <code>ListViews</code>. DDL invalidates the cache;
+    <code>ClearMetaCache()</code> clears it explicitly. <code>CurrentDB()</code> short-circuits
+    when <code>::cDB</code> is set; <code>SelectDB()</code> forces a re-read.
+    Unit tests: <code>samples\fwmaria_ut.prg</code>.</li>
+  <li><strong>FWMariaConnection xHarbour BASE/1066 on Execute_Sql</strong> &mdash;
+    <code>FWMARIA_WAS_RECONNECTED()</code> could return NIL under xHarbour. Fixed:
+    <code>MariaWasReconnected()</code> wrapper; init-command and multi-result sets drained
+    after <code>mysql_real_connect</code> and at end of <code>Execute_Sql</code>.</li>
+  <li><strong>FWMariaConnection Connect hang on SHOW variables</strong> &mdash;
+    Bootstrap <code>SHOW variables</code> during <code>Connect</code> could hang when
+    reconnect/clear logic ran on the first post-connect query. Fixed: <code>lInConnect</code>
+    skips that path during connect bootstrap.</li>
 </ul>
 
 <h2 id="dev-tools">Development Tools</h2>

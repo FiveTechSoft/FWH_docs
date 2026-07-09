@@ -569,6 +569,18 @@ cancela. Totalmente configurable mediante array est&aacute;tico <code>aEditSeq</
     Con <code>START TRANSACTION</code> abierto, <code>mysql_ping</code> reintentaba en autocommit
     sin error. Corregido: <code>lInTransaction</code>, <code>HandleLostTxn()</code>, error 2013.
     Ejemplo: <code>samples\fwmatx.prg</code>.</li>
+  <li><strong>FWMariaConnection cach&eacute; de metadatos de esquema</strong> &mdash;
+    Restaurado <code>hMetaCache</code> para <code>DbExists</code>, <code>TableExists</code>,
+    <code>FKeyColumns</code> y <code>ListViews</code>. DDL invalida la cach&eacute;;
+    <code>ClearMetaCache()</code> la limpia expl&iacute;citamente.
+    Tests: <code>samples\fwmaria_ut.prg</code>.</li>
+  <li><strong>FWMariaConnection BASE/1066 xHarbour en Execute_Sql</strong> &mdash;
+    <code>FWMARIA_WAS_RECONNECTED()</code> pod&iacute;a devolver NIL en xHarbour. Corregido:
+    wrapper <code>MariaWasReconnected()</code>; drenado de resultados tras
+    <code>mysql_real_connect</code> y al final de <code>Execute_Sql</code>.</li>
+  <li><strong>FWMariaConnection cuelgue en Connect (SHOW variables)</strong> &mdash;
+    La consulta bootstrap durante <code>Connect</code> pod&iacute;a colgarse. Corregido:
+    <code>lInConnect</code> omite reconexi&oacute;n/drenado en el arranque de conexi&oacute;n.</li>
 </ul>
 
 <h2 id="dev-tools">Herramientas de Desarrollo</h2>
