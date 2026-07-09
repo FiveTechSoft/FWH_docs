@@ -37,7 +37,7 @@ This comprehensive reference provides detailed information about all FiveWin cla
 | [MsgYesNo()](functions/alerts.md#msgyesno) | Yes/No confirmation | `.T.` (Yes) or `.F.` (No) |
 | [MsgOkCancel()](functions/alerts.md#msgokcancel) | OK/Cancel confirmation | `.T.` (OK) or `.F.` (Cancel) |
 | [MsgRetryCancel()](functions/alerts.md#msgretrycancel) | Retry/Cancel confirmation | `.T.` (Retry) or `.F.` (Cancel) |
-| [MsgYesNoCancel()](functions/alerts.md#msgyesnocancel) | Yes/No/Cancel confirmation | 1 (Yes), 2 (No), 3 (Cancel) |
+| [MsgYesNoCancel()](functions/alerts.md#msgyesnocancel) | Yes/No/Cancel confirmation | 6 (Yes), 7 (No), 2 (Cancel) |
 
 ### Database Functions
 

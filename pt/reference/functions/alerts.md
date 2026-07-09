@@ -51,7 +51,7 @@ graph TD
 | `MsgYesNo(cMessage, cTitle)` | Displays Yes/No dialog | `.T.` (Yes) or `.F.` (No) |
 | `MsgOkCancel(cMessage, cTitle)` | Displays OK/Cancel dialog | `.T.` (OK) or `.F.` (Cancel) |
 | `MsgRetryCancel(cMessage, cTitle)` | Displays Retry/Cancel dialog | `.T.` (Retry) or `.F.` (Cancel) |
-| `MsgYesNoCancel(cMessage, cTitle)` | Displays Yes/No/Cancel dialog | 1 (Yes), 2 (No), 3 (Cancel) |
+| `MsgYesNoCancel(cMessage, cTitle)` | Displays Yes/No/Cancel dialog | 6 (Yes), 7 (No), 2 (Cancel) |
 
 ## Message Dialog Flow
 
@@ -219,7 +219,7 @@ static function ConnectToServer( cURL )
 
 ### MsgYesNoCancel()
 
-Displays a dialog with Yes, No, and Cancel buttons, returning 1 for Yes, 2 for No, and 3 for Cancel.
+Displays a dialog with Yes, No, and Cancel buttons, returning the Windows MessageBox code: 6 (`IDYES`) for Yes, 7 (`IDNO`) for No, and 2 (`IDCANCEL`) for Cancel.
 
 ```harbour
 #include "FiveWin.ch"
@@ -231,17 +231,17 @@ function Main()
    nChoice = MsgYesNoCancel( "Save changes before closing?" )
    
    switch nChoice
-   case 1  // Yes
+   case IDYES  // 6
       ? "Saving changes..."
       // SaveChanges()
       exit
    
-   case 2  // No
+   case IDNO  // 7
       ? "Closing without saving"
       // CloseWithoutSaving()
       exit
    
-   case 3  // Cancel
+   case IDCANCEL  // 2
       ? "Operation cancelled"
       // CancelClose()
       exit
@@ -397,17 +397,17 @@ static function CloseDialog( oDlg )
    
    if lModified
       switch MsgYesNoCancel( "Save changes to " + cDocument + "?" )
-      case 1  // Yes
+      case IDYES  // 6
          // SaveDocument()
          MsgInfo( "Document saved" )
          oDlg:End()
          exit
          
-      case 2  // No
+      case IDNO  // 7
          oDlg:End()
          exit
          
-      case 3  // Cancel
+      case IDCANCEL  // 2
          // Do nothing, keep dialog open
          exit
       endswitch
