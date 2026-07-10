@@ -1,36 +1,40 @@
-# FiveWin Documentation
+# FiveWin (FWH) Documentation
 
-Welcome to the official documentation for FiveWin, a powerful framework for building Windows applications using the Harbour programming language.
+Welcome to the official documentation for **FiveWin for Harbour/xHarbour (FWH)**,
+the framework for building Windows applications with Harbour/xHarbour.
 
-## Purpose and Scope
+> **Current version:** FWH 26.06
+> **Entry point:** open [`index.html`](index.html) — it redirects to the
+> localized documentation.
 
-FiveWin provides a comprehensive set of tools and libraries to create modern, feature-rich graphical user interfaces (GUIs) for Windows. It simplifies Windows programming by providing a high-level, object-oriented API that wraps the complexities of the Windows API.
+## Localized documentation
 
-The framework is designed for developers who want to leverage their existing xBase knowledge (Clipper, dBase, Harbour) to build robust and professional-looking Windows applications.
+The documentation is maintained in three languages:
 
-## Key Features
+* [English](en/getting-started/overview.html)
+* [Español](es/getting-started/overview.html)
+* [Português](pt/getting-started/overview.html)
 
-*   **Rich GUI Toolkit:** A complete set of classes for creating windows, dialogs, and a wide range of controls, including buttons, listboxes, menus, and more.
-*   **Event-Driven Model:** A classic event-driven architecture that is easy to understand and use.
-*   **Database Integration:** Built-in support for various database systems.
-*   **Extensible:** Support for ActiveX and VBX controls, allowing for easy integration of third-party components.
-*   **Modern UI:** Support for modern UI elements and visual styles.
+Each language tree has the same structure:
 
-## Getting Started
+* `getting-started/` – installation, build system, samples, what's new
+* `core/` – base classes (`TWindow`, `TDialog`, `TControl`, ...)
+* `ui/` – controls and visual components
+* `advanced/` – advanced topics (DLLs, Unicode, diagrams)
+* `ai/` – AI classes (`TAgent`, `GPT2Model`, `THFTokenizer`, `TSemanticIndex`, ...)
+* `reference/` – full class and function reference
+* `data/`, `internet/`, `printing/`, `utilities/` – topic areas
 
-To start using FiveWin, you will need a Harbour compiler and the FiveWin framework. You can find more information on how to set up your development environment in the [Installation Guide](installation.md).
+## This folder (`docs/`)
 
-## Documentation Structure
+* `index.html` – redirect to the localized docs (use this)
+* `README.md` – how the documentation is organized and how to contribute
+* `STRUCTURE.md` – detailed map of the `en/es/pt` documentation trees
+* `MIGRATION.md` – guidelines for keeping the three languages in sync
+* `STATUS.md` – current state of the documentation
+* `TEMPLATE.md` – template for authoring a new doc page
+* `check_links.bat` – verifies internal links across the docs
+* `css/`, `js/` – assets used by the HTML pages
+* `archive/` – historical / superseded markdown docs (kept for reference only)
 
-This documentation is organized into the following sections:
-
-*   **[Architecture](architecture.md):** A high-level overview of the framework's architecture.
-*   **[Modules](modules/):** Detailed documentation for each of the core modules.
-*   **[Classes](classes/):** In-depth documentation for the main classes.
-*   **[Functions](functions/):** A reference for all the public functions.
-*   **[Tutorials](tutorials/):** Step-by-step guides on how to build applications with FiveWin.
-
-## Further Reading
-
-*   [FiveWin Website](http://www.fivetechsoft.com/)
-*   [Harbour Project](https://harbour.github.io/)
+See [`README.md`](README.md) for details.

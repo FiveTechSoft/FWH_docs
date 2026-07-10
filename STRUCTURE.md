@@ -1,60 +1,45 @@
-# FiveWin Documentation Structure
+# FWH Documentation Structure
 
-This document outlines the complete structure of the FiveWin documentation.
+The FWH documentation is delivered as localized HTML under `en/`, `es/` and `pt/`.
+`index.html` redirects to `en/getting-started/overview.html`. This document maps
+the structure (the three languages share the same layout).
 
-## Root Level
+## Root of `docs/`
 
-* `index.md` - Main documentation entry point
-* `architecture.md` - High-level architecture overview
-* `installation.md` - Installation guide
-* `README.md` - Documentation directory README
-* `TEMPLATE.md` - Standard documentation template
-* `MIGRATION.md` - Guide for migrating Spanish docs to English
-* `standardize_lang.bat` - Script to help with language standardization
+* `index.html` – entry point (redirect)
+* `README.md`, `STRUCTURE.md`, `MIGRATION.md`, `STATUS.md`, `TEMPLATE.md`
+* `check_links.bat`
+* `css/`, `js/` – assets for the HTML pages
+* `archive/` – historical / superseded markdown docs
 
-## Modules Directory
+## Per-language tree (`en/`, `es/`, `pt/`)
 
-* `modules/`
-  * `classes.md` - Overview of the classes module
-  * `functions.md` - Overview of the functions module
-  * `winapi.md` - Overview of Windows API wrappers
+```
+getting-started/
+  overview.html, installation.html, build-system.html, samples-guide.html,
+  examples.html, tglossary.html, tlocalization.html,
+  whatsnew.html, whatsnew-26.06.html
+core/        TWindow, TDialog, TControl, TMDI*, TObjFile, TSymTable, TInier
+ui/          All controls (TButton, TGet, TListBox, xBrowse, Ribbon, ...)
+advanced/    dll.html, unicode.html, advanced-diagrams.md
+ai/          agent, agenticai, gpt2model, hftokenizer, mcp-server,
+             tai_glossary, tfwlanguagemodel, thftask, tsemanticindex,
+             ttransformer, pytorch-lite-roadmap (HTML)
+reference/
+  index.md, classes.html, functions.html, modules/
+  classes/   – one page per class
+  functions/ – one page per function group
+  modules/   – module overviews
+data/ internet/ printing/ utilities/ – topic areas
+```
 
-## Reference Directory
+## Notes
 
-* `reference/`
-  * `index.md` - Reference section entry point
-  * `classes/`
-    * `index.md` - Class reference overview
-    * `TButton.md` - Button control documentation
-    * `TControl.md` - Base control documentation
-    * `TDialog.md` - Dialog documentation
-    * *(Additional class documentation to be added)*
-  * `functions/`
-    * `index.md` - Function reference overview
-    * `alerts.md` - Alert and message functions
-    * `database.md` - Database functions
-    * *(Additional function documentation to be added)*
-  * `winapi/`
-    * `index.md` - Windows API wrappers overview
-    * *(Windows API wrapper documentation to be added)*
-
-## Tutorials Directory
-
-* `tutorials/`
-  * `index.md` - Tutorials section entry point
-  * `getting-started.md` - Getting started tutorial
-  * *(Additional tutorials to be added)*
-
-## Original Directories (to be reorganized)
-
-* `classes/` - Original class documentation (to be moved to reference/classes/)
-* `functions/` - Original function documentation (to be moved to reference/functions/)
-* *(Other directories to be reorganized as needed)*
-
-## File Migration Process
-
-1. Move files from original directories to their proper locations in the reference structure
-2. Translate Spanish content to English
-3. Standardize formatting using the TEMPLATE.md
-4. Update internal links to reflect new locations
-5. Delete original files after successful migration
+* The HTML trees under `en/`, `es/` and `pt/` are the **single source of truth**.
+* An earlier effort kept an incomplete markdown mirror at the docs root
+  (`classes/`, `modules/`, `tutorials/`, plus `index.md`/`architecture.md`/
+  `installation.md` and other standalone `.md` files). Those files have been
+  moved to `archive/`; they are kept for historical reference only and are no
+  longer the maintained documentation.
+* `index.html` must remain at the docs root and redirect to
+  `en/getting-started/overview.html`.

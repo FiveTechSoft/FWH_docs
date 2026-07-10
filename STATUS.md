@@ -1,77 +1,37 @@
-# FiveWin Documentation Reorganization - Status Report
+# FWH Documentation — Status
 
-## Project Summary
+**Version:** FWH 26.06
+**Form:** Localized HTML under `en/`, `es/`, `pt/` (entry point: `index.html`).
 
-The FiveWin documentation has been significantly reorganized and improved to provide a more structured, consistent, and accessible resource for developers.
+## Current / up to date
 
-## Key Improvements Made
+* Getting-started guides (installation, build system, samples, what's new 26.06).
+* Core class docs (`TWindow`, `TDialog`, `TControl`, MDI).
+* Full UI control reference (`ui/`).
+* AI classes: `TAgent`, `TTransformer`/`GPT2Model`, `THFTask`, `TSemanticIndex`,
+  `TWhisperCpp`, `TFWLanguageModel`, `HFTokenizer`, plus the PyTorch-lite roadmap.
+* Full function & class reference under `reference/`.
 
-### 1. Structured Organization
-- Created a clear hierarchical structure with proper categorization
-- Separated reference documentation from tutorials and guides
-- Established standardized paths for different types of documentation
+## Known gaps
 
-### 2. Standardized Templates
-- Developed a consistent documentation template for all components
-- Created guidelines for formatting and structure
-- Provided examples for common documentation patterns
+* `en/` is missing the `classes/` topic folder that `es/` and `pt/` have.
+* Some `es/`/`pt/` pages may lag behind `en/` (keep in sync per `MIGRATION.md`).
 
-### 3. Language Consistency
-- Identified mixed-language documentation (English and Spanish)
-- Created tools and guidelines for translation
-- Established English as the standard language for all documentation
+## Maintenance
 
-### 4. Missing Content Creation
-- Created installation guide
-- Developed getting started tutorial
-- Added comprehensive README files
-- Provided migration and structure documentation
+* `check_links.bat` verifies internal links across the docs.
+* New pages use `TEMPLATE.md` and are added to all three languages.
+* Historical markdown sources are preserved in `archive/`.
 
-### 5. Tooling and Automation
-- Created scripts for link checking
-- Developed tools for language standardization
-- Provided batch scripts for reorganization
+## Restructure notes (2026)
 
-## Current State
+The docs root previously mixed an obsolete markdown mirror (root-level
+`classes/`, `modules/`, `tutorials/`, stale `index.md`/`architecture.md`/
+`installation.md`, plus standalone topic `.md` files and AI auxiliary material)
+with the real localized HTML trees. That markdown layer described a
+`reference/`-centric structure that was never built and contained broken links.
 
-The documentation now follows a logical structure:
-
-```
-docs/
-├── Core Documentation (index, architecture, installation)
-├── Modules Overview (classes, functions, winapi)
-├── Reference (detailed API documentation)
-├── Tutorials (learning guides)
-└── Maintenance Tools (templates, scripts, guides)
-```
-
-## Files Reorganized
-
-Successfully moved:
-- 10+ class documentation files to `reference/classes/`
-- 2+ function documentation files to `reference/functions/`
-- 1+ module documentation files to `reference/modules/`
-
-## Remaining Work
-
-1. **Translation**: Approximately 20+ files still need to be translated from Spanish to English
-2. **Standardization**: Files need to be updated to match the standard template
-3. **Organization**: Remaining files need to be moved to appropriate locations
-4. **Content Creation**: Some documentation is still missing for certain components
-
-## Recommendations for Next Steps
-
-1. **Prioritize Translation**: Focus on the most commonly used components first
-2. **Maintain Consistency**: Use the TEMPLATE.md for all new and updated documentation
-3. **Regular Maintenance**: Run link checking scripts periodically
-4. **Community Involvement**: Encourage contributors to follow established guidelines
-
-## Tools for Continued Maintenance
-
-- `TEMPLATE.md` - Documentation template
-- `MIGRATION.md` - Translation and standardization guide
-- `STRUCTURE.md` - Current documentation structure
-- `check_links.bat` - Link verification tool
-- `standardize_lang.bat` - Language standardization helper
-
-This reorganization provides a solid foundation for maintaining high-quality documentation that will be easier for developers to navigate and contribute to.
+The markdown mirror and auxiliary files were moved to `archive/`; the root now
+holds only the accurate meta-docs (`README.md`, `STRUCTURE.md`, `MIGRATION.md`,
+`STATUS.md`, `TEMPLATE.md`, `check_links.bat`) and the HTML trees. The
+`en/`/`es/`/`pt/` HTML set is the single source of truth.
