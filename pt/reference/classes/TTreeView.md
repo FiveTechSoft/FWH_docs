@@ -2,7 +2,7 @@
 
 The `TTreeView` class provides a comprehensive implementation of a tree view control that displays hierarchical data in a collapsible tree structure. It supports advanced features including checkboxes, editable labels, custom images, and extensive event handling.
 
-**Source File:** [source/classes/ttreevie.prg](../../../source/classes/ttreevie.prg)
+**Source File:** [source/classes/ttreevie.prg](../../../../source/classes/ttreevie.prg)
 
 ## Overview
 

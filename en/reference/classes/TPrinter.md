@@ -2,7 +2,7 @@
 
 The `TPrinter` class provides a comprehensive abstraction of the Windows printing subsystem. It dramatically simplifies the creation of reports and documents by allowing developers to draw text, shapes, and images on a page without directly handling the complexity of the Windows GDI API.
 
-**Source File:** [source/classes/printer.prg](../../../source/classes/printer.prg)
+**Source File:** [source/classes/printer.prg](../../../../source/classes/printer.prg)
 
 ## Overview
 

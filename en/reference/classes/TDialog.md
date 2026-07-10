@@ -2,7 +2,7 @@
 
 The `TDialog` class provides comprehensive functionality for creating dialog windows in FiveWin applications. It serves as a specialized container for UI controls and manages the complete lifecycle of dialog interactions.
 
-**Source File:** [source/classes/dialog.prg](../../../source/classes/dialog.prg)
+**Source File:** [source/classes/dialog.prg](../../../../source/classes/dialog.prg)
 
 ## Overview
 

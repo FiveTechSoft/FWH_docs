@@ -2,7 +2,7 @@
 
 This index provides a comprehensive overview of all documented functions in the FiveWin framework, organized by category for easy navigation and reference.
 
-**Source Directory:** [source/function/](../../../source/function/)
+**Source Directory:** [source/function/](../../../../source/function/)
 
 ## Overview
 
@@ -417,7 +417,7 @@ graph TD
 * [Harbour Function Reference](https://harbour.github.io/doc/functions.html) - Standard Harbour function documentation
 * [Windows API Documentation](https://docs.microsoft.com/en-us/windows/win32/api/) - Microsoft Windows API reference
 * [TClass Class Reference](../classes/) - Object-oriented class documentation
-* [FiveWin.ch Include File](../../../source/include/FiveWin.ch) - Core FiveWin constants and definitions
+* [FiveWin.ch Include File](../../../../source/include/FiveWin.ch) - Core FiveWin constants and definitions
 
 ## Best Practices
 

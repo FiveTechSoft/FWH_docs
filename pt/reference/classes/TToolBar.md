@@ -2,7 +2,7 @@
 
 The `TToolBar` class provides a comprehensive implementation of a toolbar control that displays a row of buttons, typically used for quick access to frequently used commands and functions. It supports advanced features including tooltips, custom images, button states, and dropdown menus.
 
-**Source File:** [source/classes/toolbar.prg](../../../source/classes/toolbar.prg)
+**Source File:** [source/classes/toolbar.prg](../../../../source/classes/toolbar.prg)
 
 ## Overview
 

@@ -2,7 +2,7 @@
 
 The `TComboBox` class provides a comprehensive implementation of a combo box control that combines a drop-down list with an editable text field. It offers advanced functionality including data binding, incremental search, custom drawing, and sophisticated event handling.
 
-**Source File:** [source/classes/combobox.prg](../../../source/classes/combobox.prg)
+**Source File:** [source/classes/combobox.prg](../../../../source/classes/combobox.prg)
 
 ## Overview
 

@@ -2,7 +2,7 @@
 
 The FiveWin array functions provide a comprehensive library for array manipulation and operations, extending the standard Harbour array capabilities. These functions cover areas such as array creation, manipulation, searching, sorting, and advanced operations.
 
-**Source Files:** [source/function/arrays.prg](../../../source/function/arrays.prg), [source/function/matrices.prg](../../../source/function/matrices.prg)
+**Source Files:** [source/function/arrays.prg](../../../../source/function/arrays.prg), [source/function/matrices.prg](../../../../source/function/matrices.prg)
 
 ## Overview
 

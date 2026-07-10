@@ -2,7 +2,7 @@
 
 The `TReg32` class provides a comprehensive interface for reading from and writing to the Windows Registry, which is a hierarchical database that stores configuration settings and options for the Windows operating system and installed applications. It supports various data types including strings, numbers, dates, logical values, and binary data.
 
-**Source File:** [source/classes/reg32.prg](../../../source/classes/reg32.prg)
+**Source File:** [source/classes/reg32.prg](../../../../source/classes/reg32.prg)
 
 ## Overview
 

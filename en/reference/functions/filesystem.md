@@ -2,7 +2,7 @@
 
 The FiveWin file system functions provide a comprehensive library for file and directory operations, extending the standard Harbour file handling capabilities. These functions cover areas such as file manipulation, directory management, file attributes, path operations, and disk space management.
 
-**Source Files:** [source/function/files.prg](../../../source/function/files.prg), [source/function/directory.prg](../../../source/function/directory.prg), [source/function/disk.prg](../../../source/function/disk.prg)
+**Source Files:** [source/function/files.prg](../../../../source/function/files.prg), [source/function/directory.prg](../../../../source/function/directory.prg), [source/function/disk.prg](../../../../source/function/disk.prg)
 
 ## Overview
 

@@ -2,7 +2,7 @@
 
 The FiveWin ADO functions provide a comprehensive interface for working with ActiveX Data Objects, enabling access to various database systems through a unified object-oriented interface. These functions extend the standard Harbour database capabilities with support for SQL Server, Oracle, MySQL, PostgreSQL, and other OLE DB/ODBC data sources.
 
-**Source File:** [source/function/adofuncs.prg](../../../source/function/adofuncs.prg)
+**Source File:** [source/function/adofuncs.prg](../../../../source/function/adofuncs.prg)
 
 ## Overview
 

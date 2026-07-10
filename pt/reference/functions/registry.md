@@ -2,7 +2,7 @@
 
 The FiveWin registry functions provide a comprehensive library for accessing and manipulating the Windows Registry, extending the standard Harbour registry capabilities. These functions cover areas such as registry key management, value operations, security settings, and system configuration.
 
-**Source Files:** [source/function/registry.prg](../../../source/function/registry.prg), [source/function/reg32.prg](../../../source/function/reg32.prg)
+**Source Files:** [source/function/registry.prg](../../../../source/function/registry.prg), [source/function/reg32.prg](../../../../source/function/reg32.prg)
 
 ## Overview
 

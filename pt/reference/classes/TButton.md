@@ -2,7 +2,7 @@
 
 The `TButton` class represents a standard Windows push button control that users can click to trigger actions in your application.
 
-**Source File:** [source/classes/button.prg](../../../source/classes/button.prg)
+**Source File:** [source/classes/button.prg](../../../../source/classes/button.prg)
 
 ## Overview
 

@@ -2,7 +2,7 @@
 
 The `TListBox` class represents a list box control that displays a list of items from which users can select one or more items. It provides a versatile interface for presenting choices and handling user selections.
 
-**Source File:** [source/classes/listbox.prg](../../../source/classes/listbox.prg)
+**Source File:** [source/classes/listbox.prg](../../../../source/classes/listbox.prg)
 
 ## Overview
 

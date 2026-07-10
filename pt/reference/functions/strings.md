@@ -2,7 +2,7 @@
 
 The FiveWin string functions provide a comprehensive library for string manipulation, formatting, and processing. These functions extend the standard Harbour string capabilities with specialized operations for common programming tasks.
 
-**Source Files:** [source/function/strings.prg](../../../source/function/strings.prg), [source/function/strfunc.prg](../../../source/function/strfunc.prg)
+**Source Files:** [source/function/strings.prg](../../../../source/function/strings.prg), [source/function/strfunc.prg](../../../../source/function/strfunc.prg)
 
 ## Overview
 

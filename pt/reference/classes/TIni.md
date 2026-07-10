@@ -2,7 +2,7 @@
 
 The `TIni` class provides a comprehensive interface for reading from and writing to INI (Initialization) files, which are simple text files used to store configuration settings in a structured format. It supports reading and writing various data types including strings, numbers, dates, and logical values.
 
-**Source File:** [source/classes/ini.prg](../../../source/classes/ini.prg)
+**Source File:** [source/classes/ini.prg](../../../../source/classes/ini.prg)
 
 ## Overview
 

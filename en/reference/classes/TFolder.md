@@ -2,7 +2,7 @@
 
 The `TFolder` class implements a tab folder control that provides one of the most common ways to organize complex user interfaces. It inherits from `TControl` and acts as a container that manages multiple pages, where each page is an independent `TDialog` object.
 
-**Source File:** [source/classes/folder.prg](../../../source/classes/folder.prg)
+**Source File:** [source/classes/folder.prg](../../../../source/classes/folder.prg)
 
 ## Overview
 

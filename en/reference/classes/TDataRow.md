@@ -2,7 +2,7 @@
 
 The `TDataRow` class provides a comprehensive abstraction for managing a single data record, serving as an intermediary between various data sources and user interfaces for data editing. It implements the core functionality for loading, editing, and saving individual records.
 
-**Source File:** [source/classes/datarow.prg](../../../source/classes/datarow.prg)
+**Source File:** [source/classes/datarow.prg](../../../../source/classes/datarow.prg)
 
 ## Overview
 

@@ -1,6 +1,6 @@
 # Clase `TXBrowse`
 
-**Archivo Fuente:** [source/classes/xbrowse.prg](..\source\classes\xbrowse.prg)
+**Archivo Fuente:** [source/classes/xbrowse.prg](..\..\..\source\classes\xbrowse.prg)
 
 ## 1. Propósito y Alcance
 

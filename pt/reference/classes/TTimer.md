@@ -2,7 +2,7 @@
 
 The `TTimer` class provides a comprehensive interface for creating and managing timer events in FiveWin applications. It allows you to execute code at regular intervals, enabling features like periodic updates, animations, timeouts, and background processing.
 
-**Source File:** [source/classes/timer.prg](../../../source/classes/timer.prg)
+**Source File:** [source/classes/timer.prg](../../../../source/classes/timer.prg)
 
 ## Overview
 

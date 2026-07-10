@@ -1,6 +1,6 @@
 # Clase `TRadio`
 
-**Archivo Fuente:** [source/classes/radio.prg](..\source\classes\radio.prg)
+**Archivo Fuente:** [source/classes/radio.prg](..\..\..\source\classes\radio.prg)
 
 ## 1. Propósito y Alcance
 

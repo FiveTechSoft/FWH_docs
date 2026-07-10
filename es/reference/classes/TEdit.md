@@ -2,7 +2,7 @@
 
 The `TEdit` class implements a standard text editing control that allows users to input and modify text data. It serves as the foundation for the `GET` functionality in the FiveWin framework.
 
-**Source File:** [source/classes/edit.prg](../../../source/classes/edit.prg)
+**Source File:** [source/classes/edit.prg](../../../../source/classes/edit.prg)
 
 ## Overview
 

@@ -2,7 +2,7 @@
 
 FiveWin provides a comprehensive set of functions for displaying message boxes and alerts to users. These functions offer a simple yet powerful way to communicate with users, request input, and provide feedback in your applications.
 
-**Source File:** [source/function/alert.prg](../../../source/function/alert.prg)
+**Source File:** [source/function/alert.prg](../../../../source/function/alert.prg)
 
 ## Overview
 

@@ -2,7 +2,7 @@
 
 The FiveWin mathematical functions provide a comprehensive library of mathematical operations that extend the standard Harbour mathematics capabilities. These functions cover areas such as trigonometry, logarithms, exponential functions, statistical calculations, and financial mathematics.
 
-**Source Files:** [source/function/math.prg](../../../source/function/math.prg), [source/function/matrices.prg](../../../source/function/matrices.prg)
+**Source Files:** [source/function/math.prg](../../../../source/function/math.prg), [source/function/matrices.prg](../../../../source/function/matrices.prg)
 
 ## Overview
 

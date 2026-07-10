@@ -2,7 +2,7 @@
 
 The FiveWin date/time functions provide a comprehensive library for date and time manipulation, extending the standard Harbour date/time capabilities. These functions cover areas such as date arithmetic, formatting, parsing, timezone handling, and calendar operations.
 
-**Source Files:** [source/function/datetime.prg](../../../source/function/datetime.prg), [source/function/now.prg](../../../source/function/now.prg), [source/function/date.prg](../../../source/function/date.prg)
+**Source Files:** [source/function/datetime.prg](../../../../source/function/datetime.prg), [source/function/now.prg](../../../../source/function/now.prg), [source/function/date.prg](../../../../source/function/date.prg)
 
 ## Overview
 

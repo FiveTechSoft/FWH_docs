@@ -1,6 +1,6 @@
 # Clase `TRadMenu`
 
-**Archivo Fuente:** [source/classes/radmenu.prg](..\source\classes\radmenu.prg)
+**Archivo Fuente:** [source/classes/radmenu.prg](..\..\..\source\classes\radmenu.prg)
 
 ## 1. Propósito y Alcance
 
