@@ -280,6 +280,18 @@ escuras. Os submenus usam o estilo 2013 para menus pop-up escuros.
 
 <h2 id="fixes">Corre&ccedil;&otilde;es Not&aacute;veis</h2>
 
+<h3>FW_SaveImage: encerramento silencioso com bitmaps alpha</h3>
+<p>
+Corrigido o encerramento imediato do processo ao salvar HBITMAP de 32 bits com canal
+alpha em JPG, PNG, GIF ou TIFF via <code>FW_SaveImage()</code>. Uma corre&ccedil;&atilde;o de
+memory leak de mar&ccedil;o de 2025 em <code>GDIP_SAVEIMAGE()</code> fazia um
+<code>delete</code> duplicado ap&oacute;s <code>BitmapFromAlphaBmp()</code>, que j&aacute; libera
+a imagem original internamente. Cen&aacute;rio t&iacute;pico:
+<code>FW_BarCodeBmp()</code> + <code>bmp2alpha()</code> +
+<code>FW_SaveImage( hBmp, cFile + '.jpg' )</code>. Restaurada a atribui&ccedil;&atilde;o
+correta em <code>source/winapi/gdipfwh.cpp</code>.
+</p>
+
 <h3>TTrayIcon no Windows 11</h3>
 <p>
 Corrigido o problema do menu pop-up que n&atilde;o aparecia no Windows 11. O Windows 11 se recusa a exibir

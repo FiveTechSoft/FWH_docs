@@ -275,6 +275,18 @@ oscuros. Los submen&uacute;s usan el estilo 2013 para men&uacute;s emergentes os
 
 <h2 id="fixes">Correcciones Destacadas</h2>
 
+<h3>FW_SaveImage: cierre silencioso con bitmaps alpha</h3>
+<p>
+Corregido el cierre inmediato del proceso al guardar HBITMAP de 32 bits con canal
+alpha en JPG, PNG, GIF o TIFF mediante <code>FW_SaveImage()</code>. Una correcci&oacute;n
+de memory leak de marzo de 2025 en <code>GDIP_SAVEIMAGE()</code> hac&iacute;a un
+<code>delete</code> duplicado tras <code>BitmapFromAlphaBmp()</code>, que ya libera
+la imagen original internamente. Escenario t&iacute;pico:
+<code>FW_BarCodeBmp()</code> + <code>bmp2alpha()</code> +
+<code>FW_SaveImage( hBmp, cFile + '.jpg' )</code>. Restaurada la asignaci&oacute;n
+correcta en <code>source/winapi/gdipfwh.cpp</code>.
+</p>
+
 <h3>TTrayIcon en Windows 11</h3>
 <p>
 Corregido el problema del men&uacute; emergente que no aparec&iacute;a en Windows 11. Windows 11 rechaza mostrar

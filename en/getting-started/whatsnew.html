@@ -269,6 +269,17 @@ colors. Submenus use the 2013 style for dark popups.
 
 <h2 id="fixes">Notable Fixes</h2>
 
+<h3>FW_SaveImage alpha bitmap crash</h3>
+<p>
+Fixed a silent process exit when <code>FW_SaveImage()</code> saved 32-bit alpha
+HBITMAPs to JPG, PNG, GIF or TIFF. A March 2025 memory-leak fix in
+<code>GDIP_SAVEIMAGE()</code> double-deleted the GDI+ bitmap after
+<code>BitmapFromAlphaBmp()</code>, which already frees the original internally.
+Typical scenario: <code>FW_BarCodeBmp()</code> + <code>bmp2alpha()</code> +
+<code>FW_SaveImage( hBmp, cFile + '.jpg' )</code>. Restored the correct
+assignment in <code>source/winapi/gdipfwh.cpp</code>.
+</p>
+
 <h3>TTrayIcon on Windows 11</h3>
 <p>
 Fixed popup menu not appearing under Windows 11. Win11 refuses to display
