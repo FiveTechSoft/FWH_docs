@@ -280,6 +280,20 @@ escuras. Os submenus usam o estilo 2013 para menus pop-up escuros.
 
 <h2 id="fixes">Corre&ccedil;&otilde;es Not&aacute;veis</h2>
 
+<h3>TWBrowse: erro de limites de array ao arrastar ou rolar com in&eacute;rcia</h3>
+<p>
+Corrigido o <code>Error BASE/1132</code> (array bound error) ao arrastar ou rolar
+com in&eacute;rcia um <code>TWBrowse</code> perto do final dos dados.
+<code>LButtonUp()</code> (rolagem inercial) e <code>MouseMove()</code> (arraste)
+avan&ccedil;avam <code>::nAt</code> diretamente pelo n&uacute;mero de linhas vis&iacute;veis,
+ignorando a limita&ccedil;&atilde;o a <code>[1, nLen]</code> que o <code>bSkip</code> de
+<code>SetArray()</code> j&aacute; imp&otilde;e. Quando restavam menos registros que linhas
+vis&iacute;veis, <code>::nAt</code> ultrapassava <code>::nLen</code> e a pr&oacute;xima
+avalia&ccedil;&atilde;o de <code>bLine</code> indexava al&eacute;m do final do array.
+As tr&ecirc;s escritas diretas agora aplicam a mesma limita&ccedil;&atilde;o:
+<code>::nAt := Min( Max( ::nAt, 1 ), Eval( ::bLogicLen, Self ) )</code>.
+</p>
+
 <h3>FW_SaveImage: encerramento silencioso com bitmaps alpha</h3>
 <p>
 Corrigido o encerramento imediato do processo ao salvar HBITMAP de 32 bits com canal

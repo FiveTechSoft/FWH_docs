@@ -275,6 +275,20 @@ oscuros. Los submen&uacute;s usan el estilo 2013 para men&uacute;s emergentes os
 
 <h2 id="fixes">Correcciones Destacadas</h2>
 
+<h3>TWBrowse: error de l&iacute;mites de array al arrastrar o hacer scroll inercial</h3>
+<p>
+Corregido el <code>Error BASE/1132</code> (array bound error) al arrastrar o hacer
+scroll inercial en un <code>TWBrowse</code> cerca del final de los datos.
+<code>LButtonUp()</code> (scroll inercial) y <code>MouseMove()</code> (arrastre)
+avanzaban <code>::nAt</code> directamente seg&uacute;n el n&uacute;mero de filas visibles,
+saltando la limitaci&oacute;n a <code>[1, nLen]</code> que el <code>bSkip</code> de
+<code>SetArray()</code> ya impone. Cuando quedaban menos registros que filas
+visibles, <code>::nAt</code> superaba <code>::nLen</code> y la siguiente
+evaluaci&oacute;n de <code>bLine</code> indexaba m&aacute;s all&aacute; del final del array.
+Las tres escrituras directas aplican ahora la misma limitaci&oacute;n:
+<code>::nAt := Min( Max( ::nAt, 1 ), Eval( ::bLogicLen, Self ) )</code>.
+</p>
+
 <h3>FW_SaveImage: cierre silencioso con bitmaps alpha</h3>
 <p>
 Corregido el cierre inmediato del proceso al guardar HBITMAP de 32 bits con canal

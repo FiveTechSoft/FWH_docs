@@ -269,6 +269,19 @@ colors. Submenus use the 2013 style for dark popups.
 
 <h2 id="fixes">Notable Fixes</h2>
 
+<h3>TWBrowse array bound error on drag / inertial scroll</h3>
+<p>
+Fixed <code>Error BASE/1132</code> (array bound error) when dragging or
+flick-scrolling a <code>TWBrowse</code> near the end of the data.
+<code>LButtonUp()</code> (inertial scroll) and <code>MouseMove()</code> (drag)
+advanced <code>::nAt</code> directly by the visible row count, bypassing the
+<code>[1, nLen]</code> clamp that <code>SetArray()</code>'s <code>bSkip</code>
+already enforces. When fewer records remained than visible rows,
+<code>::nAt</code> overshot <code>::nLen</code> and the next <code>bLine</code>
+evaluation indexed past the end of the array. The three direct writes now apply
+the same clamp: <code>::nAt := Min( Max( ::nAt, 1 ), Eval( ::bLogicLen, Self ) )</code>.
+</p>
+
 <h3>FW_SaveImage alpha bitmap crash</h3>
 <p>
 Fixed a silent process exit when <code>FW_SaveImage()</code> saved 32-bit alpha
