@@ -462,6 +462,15 @@ de janela (<code>SS_RIGHT</code>, <code>SS_CENTER</code>) quando <code>::nAlign<
 Agradecimentos a Carlos Sincuir.
 </p>
 
+<h3>TX8 (drop-down do TComboMetro) — Agora Subclasse&aacute;vel</h3>
+<p>
+A classe <code>TX8</code> (a lista drop-down baseada em <code>TXBrowse</code> usada pelo
+<code>TComboMetro</code>, <code>source\classes\combom.prg</code>) n&atilde;o &eacute; mais declarada
+<code>STATIC</code>: as aplica&ccedil;&otilde;es podem herd&aacute;-la ou fazer <code>OVERRIDE</code> de seus
+m&eacute;todos (dire&ccedil;&atilde;o do drop-down, cores de sele&ccedil;&atilde;o, etc.) sem manter
+uma c&oacute;pia privada de <code>combom.prg</code>. Sem mudan&ccedil;a de comportamento.
+</p>
+
 <h3>fwhxhb.h — Compatibilidade C Harbour/xHarbour</h3>
 <p>
 <code>include/fwhxhb.h</code> mapeia a API C exclusiva do Harbour
@@ -560,11 +569,18 @@ cancela. Totalmente configur&aacute;vel via array est&aacute;tico <code>aEditSeq
     o sufixo de servidor perdido usa <code>FWString()</code>.
     Exemplo: <code>samples\fwmalost.prg</code>.</li>
   <li><strong>FWMariaConnection reconex&atilde;o silenciosa sem hook</strong> &mdash; Quando a
-    conex&atilde;o ca&iacute;a, <code>mysql_ping</code> reexecutava a pr&oacute;xima instru&ccedil;&atilde;o em C sem callback
-    nem re-aplicar <code>SET SESSION</code>. Corrigido: C marca a reconex&atilde;o sem reexecutar;
-    <code>Check()</code>/<code>ReConnect()</code> disparam <code>bOnLostServer</code> e
-    <code>RestoreSessionState()</code> restaura o estado antes do reintento em PRG.
-    Exemplo: <code>samples\fwmatz.prg</code>.</li>
+    conex&atilde;o ca&iacute;a (KILL, <code>wait_timeout</code>, rede inst&aacute;vel), a op&ccedil;&atilde;o
+    <code>MYSQL_OPT_RECONNECT</code> permitia que <code>mysql_real_query()</code> reabrisse a
+    sess&atilde;o e reexecutasse a instru&ccedil;&atilde;o <em>internamente</em>: sem erro, sem callback, e todo o
+    estado <code>SET SESSION</code> (<code>time_zone</code>, <code>sql_mode</code>, etc.) voltava
+    em sil&ecirc;ncio aos valores padr&atilde;o do servidor. Corrigido: o auto-reconnect do driver
+    fica desativado; uma sess&atilde;o morta sempre produz um erro e apenas o helper C
+    <code>mysql_ping_reconnect()</code> a revive, marcando a reconex&atilde;o pela mudan&ccedil;a de
+    <code>mysql_thread_id()</code>. A camada PRG dispara <code>bOnLostServer</code>, re-aplica o
+    estado de sess&atilde;o (<code>RestoreSessionState()</code>) e reexecuta a instru&ccedil;&atilde;o que falhou,
+    tanto no <code>ReConnect()</code> expl&iacute;cito quanto na via autom&aacute;tica
+    (<code>Execute()</code> sobre uma conex&atilde;o ca&iacute;da).
+    Exemplo: <code>samples\fwmatz.prg</code>; testes: <code>samples\fwmaria_ut.prg</code>.</li>
   <li><strong>FWMariaConnection transa&ccedil;&atilde;o dividida em auto-reconnect</strong> &mdash;
     Com <code>START TRANSACTION</code> aberto, <code>mysql_ping</code> reexecutava em autocommit
     sem erro. Corrigido: <code>lInTransaction</code>, <code>HandleLostTxn()</code>, erro 2013.

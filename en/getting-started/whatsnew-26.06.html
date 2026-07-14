@@ -437,6 +437,15 @@ New <code>DATA nAlign</code> and <code>METHOD AlignText(nAlign)</code>.
 Thanks to Carlos Sincuir.
 </p>
 
+<h3>TX8 (TComboMetro drop-down) — Now Subclassable</h3>
+<p>
+The <code>TX8</code> class (the <code>TXBrowse</code>-based drop-down list used by
+<code>TComboMetro</code>, <code>source\classes\combom.prg</code>) is no longer declared
+<code>STATIC</code>, so applications can subclass it or <code>OVERRIDE</code> its methods
+(drop-down direction, selection colors, etc.) without keeping a private copy of
+<code>combom.prg</code>. No behavior change.
+</p>
+
 <h3>fwhxhb.h — Harbour/xHarbour C Compatibility</h3>
 <p>
 <code>include/fwhxhb.h</code> maps Harbour-only C API
@@ -535,12 +544,19 @@ Uses <code>PostMessage</code>-based column advance (zero timers).
     <code>:bOnConnectError</code>; the lost-server suffix uses <code>FWString()</code>.
     Sample: <code>samples\fwmalost.prg</code>.</li>
   <li><strong>FWMariaConnection silent reconnect no hook</strong> &mdash; When the connection
-    dropped, <code>mysql_ping</code> auto-reconnect retried the next statement in C
-    with no callback and without re-applying <code>SET SESSION</code> state
-    (<code>time_zone</code>, <code>lc_time_names</code>, etc.). Fixed: C marks
-    reconnect but does not retry the failing query; <code>Check()</code>/<code>ReConnect()</code>
-    fire <code>bOnLostServer</code> and <code>RestoreSessionState()</code> re-applies
-    tracked session vars before PRG retries. Sample: <code>samples\fwmatz.prg</code>.</li>
+    dropped (KILL, <code>wait_timeout</code>, network oscillation), the client-library
+    option <code>MYSQL_OPT_RECONNECT</code> let <code>mysql_real_query()</code> re-open the
+    session and retry the statement <em>internally</em>: no error, no callback, and all
+    <code>SET SESSION</code> state (<code>time_zone</code>, <code>sql_mode</code>,
+    <code>lc_time_names</code>, etc.) silently reverted to server defaults. Fixed:
+    driver-level auto-reconnect is now disabled; a dead session always surfaces as an
+    error and only the controlled C helper <code>mysql_ping_reconnect()</code> revives it,
+    flagging the reconnect via <code>mysql_thread_id()</code> change. The PRG layer then
+    fires <code>bOnLostServer</code>, re-applies tracked session vars
+    (<code>RestoreSessionState()</code>) and retries the failed statement &mdash; both on the
+    explicit <code>ReConnect()</code> path and on the automatic path (plain
+    <code>Execute()</code> on a dropped connection). Sample: <code>samples\fwmatz.prg</code>;
+    unit tests: <code>samples\fwmaria_ut.prg</code>.</li>
   <li><strong>FWMariaConnection transaction silently split on auto-reconnect</strong> &mdash;
     If the socket died with <code>START TRANSACTION</code> open, <code>mysql_ping</code>
     retried the next statement on a fresh autocommit session with no error. Fixed:
