@@ -268,6 +268,7 @@
   "ttransformer":"ai/ttransformer.html",
   "ttensorlogic":"ai/tensorlogic.html",
   "tensorlogic":"ai/tensorlogic.html",
+  "tensorlogic-tutorial":"ai/tensorlogic-tutorial.html",
   "ttrayicon":"ui/ttrayicon.html",
   "ttreeitem":"reference/ttreeitem.html",
   "ttreeview":"ui/ttreeview.html",
