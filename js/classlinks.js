@@ -266,6 +266,8 @@
   "ttoolbar":"ui/ttoolbar.html",
   "ttrackbar":"ui/ttrackbar.html",
   "ttransformer":"ai/ttransformer.html",
+  "ttensorlogic":"ai/tensorlogic.html",
+  "tensorlogic":"ai/tensorlogic.html",
   "ttrayicon":"ui/ttrayicon.html",
   "ttreeitem":"reference/ttreeitem.html",
   "ttreeview":"ui/ttreeview.html",

@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Tensor Logic - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>Tensor Logic</h1>
+<p class="class-source">Fuente: <code>source/classes/tensorlogic.prg</code>, <code>source/function/fwtensor.c</code></p>
+
+<p>
+FiveWin implementa <em>Tensor Logic: The Language of AI</em> de Pedro Domingos
+(<a href="https://arxiv.org/abs/2510.12269">arXiv:2510.12269</a>). Su idea clave: una regla lógica y una
+suma de Einstein son la <strong>misma operación</strong>. Un programa es un conjunto de <em>ecuaciones
+tensoriales</em>; cada ecuación hace el join de los tensores de su lado derecho (producto sobre índices
+compartidos), proyecta los índices que no aparecen en el lado izquierdo (suma) y aplica opcionalmente
+una no-linealidad. Un mismo motor ejecuta redes neuronales (atención, MLPs) y razonamiento simbólico
+(Datalog sobre tablas DBF) — y puede diferenciar cualquier programa automáticamente.
+</p>
+
+<div class="mermaid">
+flowchart LR
+    EQ["Ecuación tensorial<br/>Y[i] = f( W[i,j] * X[j] )"] --> N[Neuronal: atención, MLP, transformer]
+    EQ --> S[Simbólico: reglas Datalog sobre DBFs]
+    EQ --> G["Autodiff: gradiente =<br/>mismo einsum, factores intercambiados"]
+</div>
+
+<h2 id="equations">Ecuaciones tensoriales</h2>
+
+<pre><code class="language-harbour">oTL := TTensorLogic():New()
+oTL:Let( "W", { { 1, -1, 0 }, { 0, 1, -1 } } )     // liga tensores (arrays o FW_Tensor)
+oTL:Let( "X", { 1, 2, 0.5 } )
+oTL:Let( "B", { 2, -2 } )
+oTL:Eq( "Y[i] = step( W[i,j] * X[j] + B[i] )" )    // un perceptron, una ecuacion
+oTL:Run()                                          // forward chaining hasta punto fijo
+? oTL:GetArray( "Y" )</code></pre>
+
+<p>Los índices repetidos a la derecha se joinean; los que faltan a la izquierda se suman.
+No-linealidades: <code>step</code>, <code>sigmoid</code>, <code>relu</code>, <code>tanh</code>,
+<code>gelu</code>, <code>softmax</code> (último índice), <code>lnorm</code> (layer norm, último índice,
+sin parte afín — gamma/beta se expresan como ecuaciones adicionales). Los factores numéricos escalan
+un término: <code>"S[p,q] = Q[p,k] * K[q,k] * 0.7071"</code>.</p>
+
+<h2 id="class">TTensorLogic</h2>
+
+<table>
+<thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>Let( cName, uData )</code></td><td>Liga un tensor (array anidado de cualquier rango o FW_Tensor).</td></tr>
+<tr><td><code>Param( cName, uData )</code></td><td>Let + marcar como entrenable (lo actualiza <code>Step()</code>).</td></tr>
+<tr><td><code>Eq( cEquation )</code></td><td>Añade una ecuación tensorial (string).</td></tr>
+<tr><td><code>Run( nMaxPasses, nTol )</code></td><td>Forward chaining hasta punto fijo — las reglas Datalog recursivas convergen.</td></tr>
+<tr><td><code>Forward()</code></td><td>Una pasada, cachea pre-activaciones para Backward().</td></tr>
+<tr><td><code>ZeroGrad() / Seed( cName, tGrad ) / Backward() / GetGrad( cName ) / Step( nLr )</code></td><td>Diferenciación automática + SGD. El gradiente de una ecuación es el mismo einsum con factor y salida intercambiados — sin código de backprop por capa.</td></tr>
+<tr><td><code>Get( cName ) / GetArray( cName )</code></td><td>Tensor resultado / array anidado.</td></tr>
+<tr><td><code>LetDbf( cName, cAlias, aFields, oDomain )</code></td><td>Registros DBF → tensor booleano de relación (una dimensión por campo).</td></tr>
+<tr><td><code>LetSet( cName, aEntities, oDomain )</code></td><td>Lista de nombres → tensor booleano unario.</td></tr>
+<tr><td><code>Query( cName, oDomain, nThresh )</code></td><td>Tensor resultado → tuplas de nombres de entidades.</td></tr>
+</tbody>
+</table>
+
+<p><code>TTLDomain</code> mantiene el mapa entidad ↔ índice compartido por todas las relaciones:
+<code>New / Add / Id / Name / Len / Harvest( cAlias, aFields )</code>.</p>
+
+<h2 id="datalog">Datalog sobre tablas DBF</h2>
+
+<pre><code class="language-harbour">USE tlfam ALIAS FAM NEW              // campos PARENT, CHILD
+oDom := TTLDomain():New()
+oDom:Harvest( "FAM", { "PARENT", "CHILD" } )       // fijar el dominio primero
+oTL:LetDbf( "Parent", "FAM", { "PARENT", "CHILD" }, oDom )
+oTL:LetSet( "Male", { "abe", "homer" }, oDom )
+oTL:Let( "NotEq", TL_NotEq( oDom:Len() ) )
+oTL:Let( "Ancestor", FWT_New( { oDom:Len(), oDom:Len() } ) )
+
+oTL:Eq( "Father[x,y] = step( Parent[x,y] * Male[x] )" )
+oTL:Eq( "Sibling[x,y] = step( Parent[p,x] * Parent[p,y] * NotEq[x,y] )" )
+oTL:Eq( "Ancestor[x,y] = step( Parent[x,y] + Ancestor[x,z] * Parent[z,y] )" )  // recursiva
+oTL:Run( 20 )                                      // punto fijo
+AEval( oTL:Query( "Ancestor", oDom ), {| a | QOut( a[1] + " -> " + a[2] ) } )</code></pre>
+
+<p>Razonamiento en espacio de embeddings (el puente neuro-simbólico del paper): entidades como
+vectores unitarios, la relación embebida, consulta inversa y sigmoide con temperatura — T→0 deductivo
+(0/1 duro), T alto analógico:</p>
+
+<pre><code class="language-harbour">oE:Let( "Emb", TL_UnitEmb( n, 256, 1.234 ) )
+oE:Eq( "EmbR[i,j] = Parent[x,y] * Emb[x,i] * Emb[y,j]" )
+oE:Eq( "Score[x,y] = EmbR[i,j] * Emb[x,i] * Emb[y,j]" )   // ~1 si (x,y) esta en Parent
+tSoft := FWT_Sigmoid( tShifted, nTemperature )</code></pre>
+
+<h2 id="transformer">Un transformer como ecuaciones</h2>
+
+<p><code>samples/ai/tltransformer.prg</code> escribe un transformer estilo GPT como ~15 ecuaciones por
+capa. Las cabezas son un <em>índice</em> (sin trocear columnas): <code>WQ[d,h,k]</code> absorbe el
+reparto por cabeza y <code>WO[h,k,d]</code> absorbe concat+Wo. Con los mismos pesos reproduce
+<code>ForwardSeq()</code> de la clase <a href="ttransformer.html">Transformer</a> clásica con precisión
+1e-8, y entrena y genera con el autodiff genérico — cero código de backprop específico:</p>
+
+<pre><code class="language-harbour">oTL:Eq( "Q[h,p,k] = H0[p,d] * WQ[d,h,k]" )
+oTL:Eq( "S[h,p,q] = Q[h,p,k] * K[h,q,k] * 0.5 + OnesH[h] * Mask[p,q]" )
+oTL:Eq( "A[h,p,q.] = softmax( S[h,p,q] )" )
+oTL:Eq( "O[h,p,k] = A[h,p,q] * V[h,q,k]" )
+oTL:Eq( "Att[p,d] = O[h,p,k] * WO[h,k,d]" )
+oTL:Eq( "N1[p,d] = lnorm( Att[p,d] + H0[p,d] )" )   // residual + layer norm
+// ... FFN, segunda norma, proyeccion a vocabulario, softmax</code></pre>
+
+<h2 id="engine">Motor C (fwtensor.c)</h2>
+
+<table>
+<thead><tr><th>Función</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td><code>FWT_EinSum( cSpec, t1, ... )</code></td><td>Suma de Einstein generalizada, p.ej. <code>"ij,jk->ik"</code>, <code>"pd,qd->pq"</code>, hasta 6 operandos. La primitiva de tensor logic.</td></tr>
+<tr><td><code>FWT_SoftmaxLast / FWT_LNormLast</code></td><td>Softmax / layer norm sobre la última dimensión, cualquier rango.</td></tr>
+<tr><td><code>FWT_Sigmoid( t, nT ) / FWT_Step( t, nThresh ) / FWT_ReLU / FWT_Tanh / FWT_GELU</code></td><td>No-linealidades elemento a elemento; sigmoid acepta la temperatura de razonamiento.</td></tr>
+<tr><td><code>FWT_ActDeriv / FWT_SoftmaxBackwardLast / FWT_LNormBackwardLast</code></td><td>Kernels backward usados por TTensorLogic:Backward().</td></tr>
+<tr><td><code>FWT_Mul / FWT_Sub / FWT_Fill / FWT_Clone / FWT_MaxDiff</code></td><td>Operaciones elementwise y utilidades.</td></tr>
+<tr><td><code>FWT_BlasActive()</code></td><td>.T. cuando hay backend OpenBLAS sgemm cargado.</td></tr>
+</tbody>
+</table>
+
+<h2 id="openblas">Aceleración OpenBLAS</h2>
+
+<p>
+<code>fwtensor.c</code> carga OpenBLAS <strong>dinámicamente</strong> en el primer uso — nunca es una
+dependencia dura: <code>libopenblas.dll</code> en el PATH o junto al exe, o la variable de entorno
+<code>FWT_BLAS_DLL</code> (con <code>off</code> fuerza los bucles C portables; también detecta builds
+ILP64 como <code>libscipy_openblas64_</code> de numpy). <code>FWT_MatMul</code> y todo
+<code>FWT_EinSum</code> de 2 operandos reducible a un GEMM (por lotes) corre sobre
+<code>cblas_sgemm</code>, usando las transposiciones de BLAS para que los patrones de atención no
+necesiten reempaquetado.
+</p>
+
+<table>
+<thead><tr><th>Patrón (Xeon W-2140B, 8c)</th><th>Bucles C</th><th>OpenBLAS</th><th>PyTorch 2.11 / MKL</th></tr></thead>
+<tbody>
+<tr><td>matmul 1024x1024x1024</td><td>0.32 GFLOPS</td><td>497 GFLOPS</td><td>982 GFLOPS</td></tr>
+<tr><td>matmul 512x512x512</td><td>0.32 GFLOPS</td><td>290 GFLOPS</td><td>806 GFLOPS</td></tr>
+<tr><td>attention scores p=512 d=64</td><td>0.31 GFLOPS</td><td>55 GFLOPS</td><td>466 GFLOPS</td></tr>
+</tbody>
+</table>
+
+<p>El OpenBLAS de numpy alcanza 446 GFLOPS en el matmul de 1024 en la misma máquina — el einsum de FWH
+iguala el rendimiento clase BLAS; la distancia restante a PyTorch son los kernels AVX-512 de MKL y menor
+overhead por llamada, no el lenguaje.</p>
+
+<h2 id="samples">Ejemplos</h2>
+<ul>
+<li><code>samples/ai/tensorlogic.prg</code> — suite del motor: einsum vs matmul, cabeza de atención en 6 ecuaciones, punto fijo Datalog, comprobaciones de gradiente vs diferencias finitas, entrenamiento XOR (9 PASS).</li>
+<li><code>samples/ai/tltransformer.prg</code> — transformer como ecuaciones, paridad con la clase clásica, entrenamiento + generación (3 PASS).</li>
+<li><code>samples/ai/tldatalog.prg</code> — Datalog sobre un DBF familiar + razonamiento en embeddings con temperatura (6 PASS).</li>
+<li><code>samples/ai/tlbench.prg</code> — benchmark de einsum, BLAS vs bucles C.</li>
+<li><code>samples/ai/tlminillm.prg</code> — mini-LLM estilo DeepSeek/MiMo como ecuaciones puras: atención latente MLA, RoPE, mixture-of-experts, predicción multi-token (3 PASS).</li>
+<li><code>samples/ai/tlfwcode.prg</code> — entrenamiento char-level sobre fuentes FWH reales.</li>
+</ul>
+
+<h2>Ver también</h2><ul><li><a href="ttransformer.html">Transformer Neural Network</a></li><li><a href="pytorch-lite-roadmap.html">PyTorch-lite roadmap</a></li><li><a href="../../es/reference/classes.html">Clases alfabético</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="ttransformer.html">&larr; ttransformer</a> | <a href="tai_glossary.html">tai_glossary &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script></body>
+</html>

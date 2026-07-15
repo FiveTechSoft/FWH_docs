@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Tensor Logic - FWH Docs</title><script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script><link rel="stylesheet" href="../../css/style.css"></head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>Tensor Logic</h1>
+<p class="class-source">Source: <code>source/classes/tensorlogic.prg</code>, <code>source/function/fwtensor.c</code></p>
+
+<p>
+FiveWin implements Pedro Domingos' <em>Tensor Logic: The Language of AI</em>
+(<a href="https://arxiv.org/abs/2510.12269">arXiv:2510.12269</a>). Its key insight: a logical rule and an
+Einstein summation are the <strong>same operation</strong>. A program is just a set of <em>tensor equations</em>;
+each equation joins the tensors on its right-hand side (product over shared indices), projects out the
+indices that do not appear on the left-hand side (summation), and optionally applies a nonlinearity.
+One engine therefore runs both neural networks (attention, MLPs) and symbolic reasoning (Datalog over
+DBF tables) — and can differentiate any program automatically.
+</p>
+
+<div class="mermaid">
+flowchart LR
+    EQ["Tensor equation<br/>Y[i] = f( W[i,j] * X[j] )"] --> N[Neural: attention, MLP, transformer]
+    EQ --> S[Symbolic: Datalog rules over DBFs]
+    EQ --> G["Autodiff: gradient =<br/>same einsum, factors swapped"]
+</div>
+
+<h2 id="equations">Tensor equations</h2>
+
+<pre><code class="language-harbour">oTL := TTensorLogic():New()
+oTL:Let( "W", { { 1, -1, 0 }, { 0, 1, -1 } } )     // bind tensors (arrays or FW_Tensor)
+oTL:Let( "X", { 1, 2, 0.5 } )
+oTL:Let( "B", { 2, -2 } )
+oTL:Eq( "Y[i] = step( W[i,j] * X[j] + B[i] )" )    // a perceptron, one equation
+oTL:Run()                                          // forward chaining to fixpoint
+? oTL:GetArray( "Y" )</code></pre>
+
+<p>Indices repeated on the right are joined; indices missing from the left are summed out.
+Supported nonlinearities: <code>step</code>, <code>sigmoid</code>, <code>relu</code>, <code>tanh</code>,
+<code>gelu</code>, <code>softmax</code> (last index), <code>lnorm</code> (layer norm, last index, no affine
+part — express gamma/beta as further equations). Numeric factors scale a term:
+<code>"S[p,q] = Q[p,k] * K[q,k] * 0.7071"</code>.</p>
+
+<h2 id="class">TTensorLogic</h2>
+
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>Let( cName, uData )</code></td><td>Bind a tensor (nested array of any rank or FW_Tensor).</td></tr>
+<tr><td><code>Param( cName, uData )</code></td><td>Let + mark as learnable (updated by <code>Step()</code>).</td></tr>
+<tr><td><code>Eq( cEquation )</code></td><td>Add a tensor equation (string form).</td></tr>
+<tr><td><code>Run( nMaxPasses, nTol )</code></td><td>Forward chaining until fixpoint — recursive Datalog rules converge.</td></tr>
+<tr><td><code>Forward()</code></td><td>Single pass, caches pre-activations for Backward().</td></tr>
+<tr><td><code>ZeroGrad() / Seed( cName, tGrad ) / Backward() / GetGrad( cName ) / Step( nLr )</code></td><td>Automatic differentiation + SGD. The gradient of an equation is the same einsum with factor and output swapped — no per-layer backprop code.</td></tr>
+<tr><td><code>Get( cName ) / GetArray( cName )</code></td><td>Result tensor / nested array.</td></tr>
+<tr><td><code>LetDbf( cName, cAlias, aFields, oDomain )</code></td><td>DBF records → boolean relation tensor (one dimension per field).</td></tr>
+<tr><td><code>LetSet( cName, aEntities, oDomain )</code></td><td>List of names → unary boolean tensor.</td></tr>
+<tr><td><code>Query( cName, oDomain, nThresh )</code></td><td>Result tensor → tuples of entity names.</td></tr>
+</tbody>
+</table>
+
+<p><code>TTLDomain</code> keeps the entity ↔ index map shared by all relations:
+<code>New / Add / Id / Name / Len / Harvest( cAlias, aFields )</code>.</p>
+
+<h2 id="datalog">Datalog over DBF tables</h2>
+
+<pre><code class="language-harbour">USE tlfam ALIAS FAM NEW              // fields PARENT, CHILD
+oDom := TTLDomain():New()
+oDom:Harvest( "FAM", { "PARENT", "CHILD" } )       // fix the domain first
+oTL:LetDbf( "Parent", "FAM", { "PARENT", "CHILD" }, oDom )
+oTL:LetSet( "Male", { "abe", "homer" }, oDom )
+oTL:Let( "NotEq", TL_NotEq( oDom:Len() ) )
+oTL:Let( "Ancestor", FWT_New( { oDom:Len(), oDom:Len() } ) )
+
+oTL:Eq( "Father[x,y] = step( Parent[x,y] * Male[x] )" )
+oTL:Eq( "Sibling[x,y] = step( Parent[p,x] * Parent[p,y] * NotEq[x,y] )" )
+oTL:Eq( "Ancestor[x,y] = step( Parent[x,y] + Ancestor[x,z] * Parent[z,y] )" )  // recursive
+oTL:Run( 20 )                                      // fixpoint
+AEval( oTL:Query( "Ancestor", oDom ), {| a | QOut( a[1] + " -> " + a[2] ) } )</code></pre>
+
+<p>Reasoning in embedding space (the paper's neural-symbolic bridge): embed entities as unit vectors,
+embed the relation, query it back, and use a temperature sigmoid — T→0 is deductive (hard 0/1),
+higher T analogical:</p>
+
+<pre><code class="language-harbour">oE:Let( "Emb", TL_UnitEmb( n, 256, 1.234 ) )
+oE:Eq( "EmbR[i,j] = Parent[x,y] * Emb[x,i] * Emb[y,j]" )
+oE:Eq( "Score[x,y] = EmbR[i,j] * Emb[x,i] * Emb[y,j]" )   // ~1 iff (x,y) in Parent
+tSoft := FWT_Sigmoid( tShifted, nTemperature )</code></pre>
+
+<h2 id="transformer">A transformer as equations</h2>
+
+<p><code>samples/ai/tltransformer.prg</code> writes a GPT-style transformer as ~15 equations per layer.
+Heads are an <em>index</em> (no column slicing): <code>WQ[d,h,k]</code> absorbs the per-head split and
+<code>WO[h,k,d]</code> absorbs concat+Wo. With identical weights it reproduces the classic
+<a href="ttransformer.html">Transformer</a> class <code>ForwardSeq()</code> to 1e-8, and it trains and
+generates through the generic autodiff — zero transformer-specific backprop code:</p>
+
+<pre><code class="language-harbour">oTL:Eq( "Q[h,p,k] = H0[p,d] * WQ[d,h,k]" )
+oTL:Eq( "S[h,p,q] = Q[h,p,k] * K[h,q,k] * 0.5 + OnesH[h] * Mask[p,q]" )
+oTL:Eq( "A[h,p,q.] = softmax( S[h,p,q] )" )
+oTL:Eq( "O[h,p,k] = A[h,p,q] * V[h,q,k]" )
+oTL:Eq( "Att[p,d] = O[h,p,k] * WO[h,k,d]" )
+oTL:Eq( "N1[p,d] = lnorm( Att[p,d] + H0[p,d] )" )   // residual + layer norm
+// ... FFN, second norm, vocabulary projection, softmax</code></pre>
+
+<h2 id="engine">C engine (fwtensor.c)</h2>
+
+<table>
+<thead><tr><th>Function</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>FWT_EinSum( cSpec, t1, ... )</code></td><td>Generalized Einstein summation, e.g. <code>"ij,jk->ik"</code>, <code>"pd,qd->pq"</code>, up to 6 operands. The tensor-logic primitive.</td></tr>
+<tr><td><code>FWT_SoftmaxLast / FWT_LNormLast</code></td><td>Softmax / layer norm over the last dimension, any rank.</td></tr>
+<tr><td><code>FWT_Sigmoid( t, nT ) / FWT_Step( t, nThresh ) / FWT_ReLU / FWT_Tanh / FWT_GELU</code></td><td>Elementwise nonlinearities; sigmoid takes the reasoning temperature.</td></tr>
+<tr><td><code>FWT_ActDeriv / FWT_SoftmaxBackwardLast / FWT_LNormBackwardLast</code></td><td>Backward kernels used by TTensorLogic:Backward().</td></tr>
+<tr><td><code>FWT_Mul / FWT_Sub / FWT_Fill / FWT_Clone / FWT_MaxDiff</code></td><td>Elementwise and utility operations.</td></tr>
+<tr><td><code>FWT_BlasActive()</code></td><td>.T. when an OpenBLAS sgemm backend is loaded.</td></tr>
+</tbody>
+</table>
+
+<h2 id="openblas">OpenBLAS acceleration</h2>
+
+<p>
+<code>fwtensor.c</code> loads OpenBLAS <strong>dynamically</strong> at first use — never a hard dependency:
+<code>libopenblas.dll</code> on the PATH or beside the exe, or the <code>FWT_BLAS_DLL</code> environment
+variable (set it to <code>off</code> to force the portable C loops; ILP64 builds such as numpy's
+<code>libscipy_openblas64_</code> are detected too). <code>FWT_MatMul</code> and every 2-operand
+<code>FWT_EinSum</code> reducible to a (batched) GEMM run on <code>cblas_sgemm</code>, using BLAS
+transposes so the common attention patterns need no repacking.
+</p>
+
+<table>
+<thead><tr><th>Pattern (Xeon W-2140B, 8c)</th><th>C loops</th><th>OpenBLAS</th><th>PyTorch 2.11 / MKL</th></tr></thead>
+<tbody>
+<tr><td>matmul 1024x1024x1024</td><td>0.32 GFLOPS</td><td>497 GFLOPS</td><td>982 GFLOPS</td></tr>
+<tr><td>matmul 512x512x512</td><td>0.32 GFLOPS</td><td>290 GFLOPS</td><td>806 GFLOPS</td></tr>
+<tr><td>attention scores p=512 d=64</td><td>0.31 GFLOPS</td><td>55 GFLOPS</td><td>466 GFLOPS</td></tr>
+</tbody>
+</table>
+
+<p>numpy's own OpenBLAS reaches 446 GFLOPS on the 1024 matmul on the same machine — the FWH einsum
+matches BLAS-class performance; the remaining gap to PyTorch is MKL's AVX-512 kernels and lower
+per-call overhead, not the language.</p>
+
+<h2 id="samples">Samples</h2>
+<ul>
+<li><code>samples/ai/tensorlogic.prg</code> — engine test suite: einsum vs matmul, attention head as 6 equations, Datalog fixpoint, gradient checks vs finite differences, XOR training (9 PASS).</li>
+<li><code>samples/ai/tltransformer.prg</code> — transformer as equations, parity with the classic class, training + generation (3 PASS).</li>
+<li><code>samples/ai/tldatalog.prg</code> — Datalog over a family DBF + embedding-space reasoning with temperature (6 PASS).</li>
+<li><code>samples/ai/tlbench.prg</code> — einsum benchmark, BLAS vs C loops.</li>
+<li><code>samples/ai/tlminillm.prg</code> — DeepSeek/MiMo-style mini-LLM as pure equations: MLA latent attention, RoPE, mixture-of-experts, multi-token prediction (3 PASS).</li>
+<li><code>samples/ai/tlfwcode.prg</code> — char-level training on real FWH sources.</li>
+</ul>
+
+<h2>See Also</h2><ul><li><a href="ttransformer.html">Transformer Neural Network</a></li><li><a href="pytorch-lite-roadmap.html">PyTorch-lite roadmap</a></li><li><a href="../../en/reference/classes.html">Classes Alphabetical</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="ttransformer.html">&larr; ttransformer</a> | <a href="tai_glossary.html">tai_glossary &rarr;</a></nav></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script></body>
+</html>
