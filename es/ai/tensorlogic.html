@@ -50,6 +50,8 @@ un término: <code>"S[p,q] = Q[p,k] * K[q,k] * 0.7071"</code>.</p>
 <tr><td><code>Run( nMaxPasses, nTol )</code></td><td>Forward chaining hasta punto fijo — las reglas Datalog recursivas convergen.</td></tr>
 <tr><td><code>Forward()</code></td><td>Una pasada, cachea pre-activaciones para Backward().</td></tr>
 <tr><td><code>ZeroGrad() / Seed( cName, tGrad ) / Backward() / GetGrad( cName ) / Step( nLr )</code></td><td>Diferenciación automática + SGD. El gradiente de una ecuación es el mismo einsum con factor y salida intercambiados — sin código de backprop por capa.</td></tr>
+<tr><td><code>StepAdam( nLr, nB1, nB2, nEps ) / ClipGrads( nMaxNorm ) / ClearActGrads()</code></td><td>Optimizador Adam (kernel C), clipping global L2 de gradientes y acumulación de gradientes por mini-batch.</td></tr>
+<tr><td><code>SaveParams( cFile, hUser ) / LoadParams( cFile )</code></td><td>Checkpointing: persistencia float32 de cada tensor Param() más un hash de usuario.</td></tr>
 <tr><td><code>Get( cName ) / GetArray( cName )</code></td><td>Tensor resultado / array anidado.</td></tr>
 <tr><td><code>LetDbf( cName, cAlias, aFields, oDomain )</code></td><td>Registros DBF → tensor booleano de relación (una dimensión por campo).</td></tr>
 <tr><td><code>LetSet( cName, aEntities, oDomain )</code></td><td>Lista de nombres → tensor booleano unario.</td></tr>
@@ -147,7 +149,7 @@ overhead por llamada, no el lenguaje.</p>
 <li><code>samples/ai/tldatalog.prg</code> — Datalog sobre un DBF familiar + razonamiento en embeddings con temperatura (6 PASS).</li>
 <li><code>samples/ai/tlbench.prg</code> — benchmark de einsum, BLAS vs bucles C.</li>
 <li><code>samples/ai/tlminillm.prg</code> — mini-LLM estilo DeepSeek/MiMo como ecuaciones puras: atención latente MLA, RoPE, mixture-of-experts, predicción multi-token (3 PASS).</li>
-<li><code>samples/ai/tlfwcode.prg</code> — entrenamiento char-level sobre fuentes FWH reales.</li>
+<li><code>samples/ai/tlfwcode.prg</code> — modelo de lenguaje char-level sobre fuentes FWH reales: Adam + warmup/cosine, acumulación por lotes, clipping, split train/val, checkpoint del mejor-val con resume, sampling top-k.</li>
 </ul>
 
 <h2>Ver también</h2><ul><li><a href="ttransformer.html">Transformer Neural Network</a></li><li><a href="pytorch-lite-roadmap.html">PyTorch-lite roadmap</a></li><li><a href="../../es/reference/classes.html">Clases alfabético</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="ttransformer.html">&larr; ttransformer</a> | <a href="tai_glossary.html">tai_glossary &rarr;</a></nav></main>

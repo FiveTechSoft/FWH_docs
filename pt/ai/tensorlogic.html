@@ -50,6 +50,8 @@ gamma/beta são equações adicionais). Fatores numéricos escalam um termo:
 <tr><td><code>Run( nMaxPasses, nTol )</code></td><td>Forward chaining até ponto fixo — regras Datalog recursivas convergem.</td></tr>
 <tr><td><code>Forward()</code></td><td>Uma passada, guarda pré-ativações para Backward().</td></tr>
 <tr><td><code>ZeroGrad() / Seed( cName, tGrad ) / Backward() / GetGrad( cName ) / Step( nLr )</code></td><td>Diferenciação automática + SGD. O gradiente de uma equação é o mesmo einsum com fator e saída trocados — sem código de backprop por camada.</td></tr>
+<tr><td><code>StepAdam( nLr, nB1, nB2, nEps ) / ClipGrads( nMaxNorm ) / ClearActGrads()</code></td><td>Otimizador Adam (kernel C), clipping global L2 de gradientes e acumulação de gradientes por mini-batch.</td></tr>
+<tr><td><code>SaveParams( cFile, hUser ) / LoadParams( cFile )</code></td><td>Checkpointing: persistência float32 de cada tensor Param() mais um hash de usuário.</td></tr>
 <tr><td><code>Get( cName ) / GetArray( cName )</code></td><td>Tensor resultado / array aninhado.</td></tr>
 <tr><td><code>LetDbf( cName, cAlias, aFields, oDomain )</code></td><td>Registros DBF → tensor booleano de relação (uma dimensão por campo).</td></tr>
 <tr><td><code>LetSet( cName, aEntities, oDomain )</code></td><td>Lista de nomes → tensor booleano unário.</td></tr>
@@ -147,7 +149,7 @@ por chamada, não a linguagem.</p>
 <li><code>samples/ai/tldatalog.prg</code> — Datalog sobre um DBF de família + raciocínio em embeddings com temperatura (6 PASS).</li>
 <li><code>samples/ai/tlbench.prg</code> — benchmark do einsum, BLAS vs loops C.</li>
 <li><code>samples/ai/tlminillm.prg</code> — mini-LLM estilo DeepSeek/MiMo como equações puras: atenção latente MLA, RoPE, mixture-of-experts, predição multi-token (3 PASS).</li>
-<li><code>samples/ai/tlfwcode.prg</code> — treino char-level sobre fontes FWH reais.</li>
+<li><code>samples/ai/tlfwcode.prg</code> — modelo de linguagem char-level sobre fontes FWH reais: Adam + warmup/cosine, acumulação por lotes, clipping, split train/val, checkpoint do melhor-val com resume, sampling top-k.</li>
 </ul>
 
 <h2>Veja também</h2><ul><li><a href="ttransformer.html">Transformer Neural Network</a></li><li><a href="pytorch-lite-roadmap.html">PyTorch-lite roadmap</a></li><li><a href="../../pt/reference/classes.html">Classes alfabético</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="ttransformer.html">&larr; ttransformer</a> | <a href="tai_glossary.html">tai_glossary &rarr;</a></nav></main>

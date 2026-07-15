@@ -50,6 +50,8 @@ part — express gamma/beta as further equations). Numeric factors scale a term:
 <tr><td><code>Run( nMaxPasses, nTol )</code></td><td>Forward chaining until fixpoint — recursive Datalog rules converge.</td></tr>
 <tr><td><code>Forward()</code></td><td>Single pass, caches pre-activations for Backward().</td></tr>
 <tr><td><code>ZeroGrad() / Seed( cName, tGrad ) / Backward() / GetGrad( cName ) / Step( nLr )</code></td><td>Automatic differentiation + SGD. The gradient of an equation is the same einsum with factor and output swapped — no per-layer backprop code.</td></tr>
+<tr><td><code>StepAdam( nLr, nB1, nB2, nEps ) / ClipGrads( nMaxNorm ) / ClearActGrads()</code></td><td>Adam optimizer (C kernel), global L2 gradient clipping, and mini-batch gradient accumulation support.</td></tr>
+<tr><td><code>SaveParams( cFile, hUser ) / LoadParams( cFile )</code></td><td>Checkpointing: raw float32 persistence of every Param() tensor plus a user hash.</td></tr>
 <tr><td><code>Get( cName ) / GetArray( cName )</code></td><td>Result tensor / nested array.</td></tr>
 <tr><td><code>LetDbf( cName, cAlias, aFields, oDomain )</code></td><td>DBF records → boolean relation tensor (one dimension per field).</td></tr>
 <tr><td><code>LetSet( cName, aEntities, oDomain )</code></td><td>List of names → unary boolean tensor.</td></tr>
@@ -146,7 +148,7 @@ per-call overhead, not the language.</p>
 <li><code>samples/ai/tldatalog.prg</code> — Datalog over a family DBF + embedding-space reasoning with temperature (6 PASS).</li>
 <li><code>samples/ai/tlbench.prg</code> — einsum benchmark, BLAS vs C loops.</li>
 <li><code>samples/ai/tlminillm.prg</code> — DeepSeek/MiMo-style mini-LLM as pure equations: MLA latent attention, RoPE, mixture-of-experts, multi-token prediction (3 PASS).</li>
-<li><code>samples/ai/tlfwcode.prg</code> — char-level training on real FWH sources.</li>
+<li><code>samples/ai/tlfwcode.prg</code> — char-level language model on real FWH sources: Adam + warmup/cosine, batch gradient accumulation, clipping, train/val split, best-val checkpointing and resume, top-k sampling.</li>
 </ul>
 
 <h2>See Also</h2><ul><li><a href="ttransformer.html">Transformer Neural Network</a></li><li><a href="pytorch-lite-roadmap.html">PyTorch-lite roadmap</a></li><li><a href="../../en/reference/classes.html">Classes Alphabetical</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="ttransformer.html">&larr; ttransformer</a> | <a href="tai_glossary.html">tai_glossary &rarr;</a></nav></main>
