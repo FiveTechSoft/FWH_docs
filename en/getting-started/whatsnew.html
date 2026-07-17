@@ -269,6 +269,20 @@ colors. Submenus use the 2013 style for dark popups.
 
 <h2 id="fixes">Notable Fixes</h2>
 
+<h3>TXBrowse "Zero divisor" in SelectRow() without totaled columns</h3>
+<p>
+Fixed a <em>Zero divisor</em> runtime error when calling
+<code>oBrw:SelectRow( n )</code> (or clicking the checkbox column created by
+<code>SetMultiSelectCol()</code>) on a multi-select browse that has no
+<code>SetSum()</code> / totaled columns. <code>SelectRow()</code> now saves and
+recalculates totals only when <code>::aSumCols</code> is not empty,
+<code>ReCalcTotals()</code> returns immediately when there are no totaled
+columns, and the standard-deviation footer guards its division (the
+<code>nCount - 1</code> divisor could be zero with a single counted row).
+Ctrl+click, Shift+click, double click and header select-all/clear keep
+<code>aSelected</code> consistent with no changes required in user code.
+</p>
+
 <h3>TWBrowse array bound error on drag / inertial scroll</h3>
 <p>
 Fixed <code>Error BASE/1132</code> (array bound error) when dragging or

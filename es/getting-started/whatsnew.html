@@ -275,6 +275,21 @@ oscuros. Los submen&uacute;s usan el estilo 2013 para men&uacute;s emergentes os
 
 <h2 id="fixes">Correcciones Destacadas</h2>
 
+<h3>TXBrowse: "Zero divisor" en SelectRow() sin columnas totalizadas</h3>
+<p>
+Corregido el error <em>Zero divisor</em> al llamar a
+<code>oBrw:SelectRow( n )</code> (o al pulsar la columna de checkbox creada por
+<code>SetMultiSelectCol()</code>) en un browse de selecci&oacute;n m&uacute;ltiple
+sin columnas <code>SetSum()</code> / totalizadas. <code>SelectRow()</code> ahora
+solo guarda y recalcula totales cuando <code>::aSumCols</code> no est&aacute;
+vac&iacute;o, <code>ReCalcTotals()</code> retorna inmediatamente cuando no hay
+columnas totalizadas, y el pie de desviaci&oacute;n est&aacute;ndar protege su
+divisi&oacute;n (el divisor <code>nCount - 1</code> pod&iacute;a ser cero con una
+sola fila contada). Ctrl+click, Shift+click, doble click y seleccionar/limpiar
+todo desde la cabecera mantienen <code>aSelected</code> consistente sin cambios
+en el c&oacute;digo de usuario.
+</p>
+
 <h3>TWBrowse: error de l&iacute;mites de array al arrastrar o hacer scroll inercial</h3>
 <p>
 Corregido el <code>Error BASE/1132</code> (array bound error) al arrastrar o hacer

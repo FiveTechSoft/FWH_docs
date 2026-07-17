@@ -280,6 +280,22 @@ escuras. Os submenus usam o estilo 2013 para menus pop-up escuros.
 
 <h2 id="fixes">Corre&ccedil;&otilde;es Not&aacute;veis</h2>
 
+<h3>TXBrowse: "Zero divisor" em SelectRow() sem colunas totalizadas</h3>
+<p>
+Corrigido o erro <em>Zero divisor</em> ao chamar
+<code>oBrw:SelectRow( n )</code> (ou ao clicar na coluna de checkbox criada por
+<code>SetMultiSelectCol()</code>) em um browse de sele&ccedil;&atilde;o
+m&uacute;ltipla sem colunas <code>SetSum()</code> / totalizadas.
+<code>SelectRow()</code> agora s&oacute; salva e recalcula totais quando
+<code>::aSumCols</code> n&atilde;o est&aacute; vazio, <code>ReCalcTotals()</code>
+retorna imediatamente quando n&atilde;o h&aacute; colunas totalizadas, e o
+rodap&eacute; de desvio padr&atilde;o protege sua divis&atilde;o (o divisor
+<code>nCount - 1</code> podia ser zero com uma &uacute;nica linha contada).
+Ctrl+click, Shift+click, duplo clique e selecionar/limpar tudo pelo
+cabe&ccedil;alho mant&ecirc;m <code>aSelected</code> consistente sem
+altera&ccedil;&otilde;es no c&oacute;digo do usu&aacute;rio.
+</p>
+
 <h3>TWBrowse: erro de limites de array ao arrastar ou rolar com in&eacute;rcia</h3>
 <p>
 Corrigido o <code>Error BASE/1132</code> (array bound error) ao arrastar ou rolar
