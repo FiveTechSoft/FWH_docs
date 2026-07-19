@@ -64,7 +64,7 @@ flowchart LR
 <tr><td><code>lReceipt</code></td><td>Logical</td><td><code>.F.</code></td><td>Request a read receipt</td></tr>
 <tr><td><code>lFromUser</code></td><td>Logical</td><td><code>.T.</code></td><td>Prompt user before sending</td></tr>
 <tr><td><code>aOrigin</code></td><td>Array</td><td><code>{}</code></td><td>Originator address information</td></tr>
-<tr><td><code>aRecipients</code></td><td>Array</td><td><code>{}</code></td><td>Array of recipient addresses</td></tr>
+<tr><td><code>aRecipients</code></td><td>Array</td><td><code>{}</code></td><td>Array de destinatários; cada item é <code>{ cNome [, cEndereco ] }</code></td></tr>
 <tr><td><code>aFiles</code></td><td>Array</td><td><code>{}</code></td><td>Array of file paths to attach</td></tr>
 <tr><td><code>nRetCode</code></td><td>Numeric</td><td><code>0</code></td><td>Return code from MAPISendMail (0 = success)</td></tr>
 </tbody>
@@ -95,8 +95,9 @@ function Main()
    oMail := TMail():New( "Report for May 2026", ;
                          "Please find the attached report.",,,, .T. )
 
-   // Add recipients
-   oMail:aRecipients := { "user@example.com", "manager@example.com" }
+   // Destinatários: cada entrada é { cNome [, cEndereco ] }
+   oMail:aRecipients := { { "user@example.com" }, ;
+                          { "Manager", "manager@example.com" } }
 
    // Attach files
    oMail:aFiles := { "C:\reports\may2026.xlsx", "C:\reports\summary.pdf" }
@@ -139,14 +140,45 @@ return nil</code></pre>
 </tbody>
 </table>
 
-<h2 id="notes">Notes</h2>
+<h2 id="define-mail">Comando DEFINE MAIL</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "Mail.ch"
+
+function Main()
+
+   local oMail, cEmail := "user@example.com"
+
+   DEFINE MAIL oMail ;
+      SUBJECT "Relatório" ;
+      TEXT "Segue o relatório em anexo." ;
+      TO cEmail ;              // só nome — FWH preenche o endereço se faltar
+      // TO cEmail, cEmail ;   // nome + endereço explícitos
+      FILES "C:\reports\may2026.xlsx", "may2026.xlsx" ;
+      FROM USER
+
+   ACTIVATE MAIL oMail
+
+   MsgInfo( oMail:nRetCode )
+
+return nil</code></pre>
+
+<p>
+<code>TO &lt;cName&gt; [,&lt;cAddress&gt;]</code> mapeia para um par <code>MapiRecipDesc</code>.
+Se apenas um parâmetro for passado, o FWH usa esse valor também como endereço
+quando o endereço estaria vazio, para que clientes como o Thunderbird preencham
+o campo <strong>Para:</strong> corretamente. Prefira <code>TO cEmail, cEmail</code> se quiser a forma
+dupla explícita no código.
+</p>
+
+<h2 id="notes">Notas</h2>
 
 <ul>
-<li>TMail uses the default MAPI client installed on the system. Outlook, Windows Mail, Thunderbird (with MAPI plugin), and most email clients support MAPI.</li>
-<li>When <code>lFromUser</code> is <code>.T.</code> (default), the email client's compose window opens for the user to review and send. When <code>.F.</code>, the email is sent silently.</li>
-<li>The <code>aFiles</code> array accepts full paths to files. Attachments can be any file type supported by the recipient's email client.</li>
-<li>Recipients in <code>aRecipients</code> can be simple email address strings or MAPI recipient structures with name and address fields.</li>
-<li>Check <code>nRetCode</code> after <code>Activate()</code> to determine if the send was successful.</li>
+<li>TMail usa o cliente MAPI padrão do sistema. Outlook, Windows Mail, Thunderbird (com plugin MAPI) e a maioria dos clientes de e-mail suportam MAPI.</li>
+<li>Quando <code>lFromUser</code> é <code>.T.</code> (padrão), a janela de composição do cliente abre para o usuário revisar e enviar. Com <code>.F.</code>, o e-mail é enviado em silêncio.</li>
+<li>O array <code>aFiles</code> aceita pares <code>{ cCaminhoCompleto, cNomeExibicao }</code> (como produz a cláusula <code>FILES</code> de <code>DEFINE MAIL</code>).</li>
+<li>Cada elemento de <code>aRecipients</code> deve ser um array <code>{ cNome [, cEndereco ] }</code>. Se <code>cEndereco</code> for omitido ou vazio, <code>MAPISendMail()</code> reutiliza <code>cNome</code> como endereço (necessário para Thunderbird e outros clientes Simple MAPI estritos).</li>
+<li>Verifique <code>nRetCode</code> após <code>Activate()</code> para saber se o envio foi bem-sucedido.</li>
 </ul>
 
 <h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/functions.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/data/tlocks.html">&larr; tlocks</a> | <a href="../../pt/data/tmariaconnect.html">tmariaconnect &rarr;</a></nav></main>

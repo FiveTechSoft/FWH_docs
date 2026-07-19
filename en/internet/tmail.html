@@ -64,7 +64,7 @@ flowchart LR
 <tr><td><code>lReceipt</code></td><td>Logical</td><td><code>.F.</code></td><td>Request a read receipt</td></tr>
 <tr><td><code>lFromUser</code></td><td>Logical</td><td><code>.T.</code></td><td>Prompt user before sending</td></tr>
 <tr><td><code>aOrigin</code></td><td>Array</td><td><code>{}</code></td><td>Originator address information</td></tr>
-<tr><td><code>aRecipients</code></td><td>Array</td><td><code>{}</code></td><td>Array of recipient addresses</td></tr>
+<tr><td><code>aRecipients</code></td><td>Array</td><td><code>{}</code></td><td>Array of recipients; each item is <code>{ cName [, cAddress ] }</code></td></tr>
 <tr><td><code>aFiles</code></td><td>Array</td><td><code>{}</code></td><td>Array of file paths to attach</td></tr>
 <tr><td><code>nRetCode</code></td><td>Numeric</td><td><code>0</code></td><td>Return code from MAPISendMail (0 = success)</td></tr>
 </tbody>
@@ -95,8 +95,10 @@ function Main()
    oMail := TMail():New( "Report for May 2026", ;
                          "Please find the attached report.",,,, .T. )
 
-   // Add recipients
-   oMail:aRecipients := { "user@example.com", "manager@example.com" }
+   // Add recipients: each entry is { cName [, cAddress ] }
+   // Single string alone is not enough for all MAPI clients (e.g. Thunderbird).
+   oMail:aRecipients := { { "user@example.com" }, ;
+                          { "Manager", "manager@example.com" } }
 
    // Attach files
    oMail:aFiles := { "C:\reports\may2026.xlsx", "C:\reports\summary.pdf" }
@@ -139,13 +141,44 @@ return nil</code></pre>
 </tbody>
 </table>
 
+<h2 id="define-mail">DEFINE MAIL command</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+#include "Mail.ch"
+
+function Main()
+
+   local oMail, cEmail := "user@example.com"
+
+   DEFINE MAIL oMail ;
+      SUBJECT "Report" ;
+      TEXT "Please find the attached report." ;
+      TO cEmail ;              // name only — OK (FWH fills address if empty)
+      // TO cEmail, cEmail ;   // explicit name + address (always safe)
+      FILES "C:\reports\may2026.xlsx", "may2026.xlsx" ;
+      FROM USER
+
+   ACTIVATE MAIL oMail
+
+   MsgInfo( oMail:nRetCode )
+
+return nil</code></pre>
+
+<p>
+<code>TO &lt;cName&gt; [,&lt;cAddress&gt;]</code> maps to a <code>MapiRecipDesc</code> pair.
+If only one parameter is given, FWH sets both display name and address to that
+value when the address would otherwise be empty, so clients such as Thunderbird
+fill the <strong>To:</strong> field correctly. Prefer <code>TO cEmail, cEmail</code> when you want
+the dual form explicit in source.
+</p>
+
 <h2 id="notes">Notes</h2>
 
 <ul>
 <li>TMail uses the default MAPI client installed on the system. Outlook, Windows Mail, Thunderbird (with MAPI plugin), and most email clients support MAPI.</li>
 <li>When <code>lFromUser</code> is <code>.T.</code> (default), the email client's compose window opens for the user to review and send. When <code>.F.</code>, the email is sent silently.</li>
-<li>The <code>aFiles</code> array accepts full paths to files. Attachments can be any file type supported by the recipient's email client.</li>
-<li>Recipients in <code>aRecipients</code> can be simple email address strings or MAPI recipient structures with name and address fields.</li>
+<li>The <code>aFiles</code> array accepts pairs <code>{ cFullPath, cDisplayName }</code> (as produced by the <code>FILES</code> clause of <code>DEFINE MAIL</code>).</li>
+<li>Each element of <code>aRecipients</code> should be an array <code>{ cName [, cAddress ] }</code>. If <code>cAddress</code> is omitted or empty, <code>MAPISendMail()</code> reuses <code>cName</code> as the address (needed for Thunderbird and other strict Simple MAPI clients).</li>
 <li>Check <code>nRetCode</code> after <code>Activate()</code> to determine if the send was successful.</li>
 </ul>
 
