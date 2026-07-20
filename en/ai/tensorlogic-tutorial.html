@@ -4,7 +4,7 @@
 <main id="content">
 
 <h1>Tensor Logic: from 0 to 100</h1>
-<p class="class-source">Runnable companion: <code>samples/ai/tltutor.prg</code> (build it, run it, read <code>tltutor.log</code> next to this page)</p>
+<p class="class-source">Runnable companion: <code>samples/ai/tltutor.prg</code> — build it, run it, read <code>tltutor.log</code> next to this page</p>
 
 <p>
 This tutorial takes you from "what is a tensor" to training a language model on FWH source code,
@@ -14,6 +14,118 @@ Einstein summation are the same operation</strong>. Every lesson below is a func
 <code>tltutor.prg</code> — the outputs shown are its real output.
 </p>
 
+<p>Full API: <a href="tensorlogic.html">Tensor Logic reference</a>.</p>
+
+<!-- ============================================================ -->
+<h2 id="howto">How to use Tensor Logic — step by step</h2>
+
+<h3 id="step0">Step 0 — Prerequisites</h3>
+<ul>
+<li>FiveWin for Harbour installed (this tree under <code>C:\fwteam</code>).</li>
+<li>A compiler variant already able to build samples (e.g. Harbour + BCC32 →
+  <code>hb32</code>). See <a href="../getting-started/build-system.html">Build System</a>.</li>
+<li>FWH libraries rebuilt so they include <code>tensorlogic.prg</code> and
+  <code>fwtensor.c</code>:
+<pre><code class="language-bat">cd /d C:\fwteam
+C:\fwteam\mfwh_new.bat hb32</code></pre>
+  (Use <code>hm32</code>, <code>hm64</code>, <code>hg64</code>, … for other variants.)</li>
+<li><strong>Optional but recommended:</strong> OpenBLAS. Place
+  <code>libopenblas.dll</code> on the PATH or next to your exe
+  (a copy lives in <code>samples\ai\libopenblas.dll</code>). Without it the pure-C loops
+  still work, just slower. Force portable mode with
+  <code>set FWT_BLAS_DLL=off</code>.</li>
+</ul>
+
+<h3 id="step1">Step 1 — Build and run the tutorial sample</h3>
+<pre><code class="language-bat">cd /d C:\fwteam\samples\ai
+C:\fwteam\samples\build_new.bat tltutor hb32
+tltutor.exe
+type tltutor.log</code></pre>
+<p>You should see nine lesson blocks ending with
+<code>TUTORIAL COMPLETE — next: tltransformer.prg, tlminillm.prg, tlfwcode.prg</code>.
+Keep <code>tltutor.log</code> open while you read the lessons below.</p>
+
+<h3 id="step2">Step 2 — Mental model (30 seconds)</h3>
+<div class="mermaid">
+flowchart TD
+    T[FW_Tensor float32] --> E[FWT_EinSum join + project]
+    E --> P[TTensorLogic program: named tensors + Eq strings]
+    P --> N[Neural nets: attention, MLP, transformer]
+    P --> S[Symbolic: Datalog over DBF]
+    P --> A[Autodiff: Forward / Seed / Backward / StepAdam]
+</div>
+<ol>
+<li>A <strong>tensor</strong> is an n-D array of float32 in C memory.</li>
+<li>An <strong>einsum</strong> multiplies along shared indices (join) and sums away indices
+  missing from the output (projection).</li>
+<li>A <strong>tensor logic program</strong> is named tensors + equation strings evaluated by
+  <code>Run()</code> (fixpoint) or <code>Forward()</code> (one pass for training).</li>
+<li>The <strong>gradient</strong> of an equation is the same einsum with a factor and the
+  output swapped — so any program is trainable with no hand-written backprop.</li>
+</ol>
+
+<h3 id="step3">Step 3 — Your first program (copy-paste)</h3>
+<p>Create a small PRG, or type this into a scratch sample:</p>
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+FUNCTION Main()
+   LOCAL oTL := TTensorLogic():New()
+
+   oTL:Let( "W", { { 1, -1, 0 }, { 0, 1, -1 } } )
+   oTL:Let( "X", { 1, 2, 0.5 } )
+   oTL:Let( "B", { 2, -2 } )
+   oTL:Eq( "Y[i] = step( W[i,j] * X[j] + B[i] )" )
+   if ! oTL:Run()
+      ? "Error:", oTL:cError
+      RETURN NIL
+   endif
+   ? oTL:GetArray( "Y" )     // {1, 0}
+   ? "BLAS active?", FWT_BlasActive()
+RETURN NIL</code></pre>
+<pre><code class="language-bat">C:\fwteam\samples\build_new.bat myfirst hb32
+myfirst.exe</code></pre>
+
+<h3 id="step4">Step 4 — Train something (AND gate)</h3>
+<pre><code class="language-harbour">oTL := TTensorLogic():New()
+oTL:Let(   "X", { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } } )
+oTL:Let(   "Ones", { 1, 1, 1, 1 } )
+oTL:Param( "W", { { 0.1 }, { -0.1 } } )   // Param = learnable
+oTL:Param( "B", { 0 } )
+oTL:Eq( "Y[n,o] = sigmoid( X[n,f] * W[f,o] + Ones[n] * B[o] )" )
+tT := FWT_FromArray( { { 0 }, { 0 }, { 0 }, { 1 } } )
+
+for e := 1 to 300
+   oTL:Forward()
+   oTL:ZeroGrad()
+   oTL:Seed( "Y", FWT_Scale( FWT_Sub( oTL:Get( "Y" ), tT ), 2 ) )
+   oTL:Backward()
+   oTL:ClipGrads( 1.0 )
+   oTL:StepAdam( 0.05 )
+next
+// Y ≈ {0.00, 0.11, 0.11, 0.88} for targets {0,0,0,1}
+oTL:SaveParams( "and.chk" )</code></pre>
+<p>That loop — Forward / ZeroGrad / Seed / Backward / Clip / Adam — is the same one used by
+the full language-model samples.</p>
+
+<h3 id="step5">Step 5 — Climb the sample ladder</h3>
+<table>
+<thead><tr><th>Order</th><th>Sample</th><th>What you learn</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code>tltutor.prg</code></td><td>All nine lessons of this page.</td></tr>
+<tr><td>2</td><td><code>tensorlogic.prg</code></td><td>Engine tests, XOR training (9 PASS).</td></tr>
+<tr><td>3</td><td><code>tldatalog.prg</code></td><td>Rules over a family DBF + embedding temperature.</td></tr>
+<tr><td>4</td><td><code>tltransformer.prg</code></td><td>GPT-style model as equations; parity with classic Transformer.</td></tr>
+<tr><td>5</td><td><code>tlbench.prg</code></td><td>BLAS vs C speed numbers.</td></tr>
+<tr><td>6</td><td><code>tlminillm.prg</code></td><td>MLA, RoPE, MoE, multi-token prediction — still equations.</td></tr>
+<tr><td>7</td><td><code>tlfwcode.prg</code></td><td>Train a char LM on real FWH sources (warmup, val split, checkpoints).</td></tr>
+<tr><td>8</td><td><code>tlc.prg</code></td><td>Synthetic code training + grammar-constrained decoding.</td></tr>
+</tbody>
+</table>
+<pre><code class="language-bat">C:\fwteam\samples\build_new.bat tensorlogic hb32
+tensorlogic.exe
+type tensorlogic.log</code></pre>
+
+<!-- ============================================================ -->
 <h2 id="l1">Lesson 1 — Tensors</h2>
 <p>A tensor is an n-dimensional array of numbers. In FWH it is an <code>FW_Tensor</code>: a flat
 float32 buffer in C memory (fast, compact), created and inspected from PRG:</p>
@@ -22,6 +134,11 @@ FWT_Set( t, 1, 10 )                      // flat 1-based indexing, row-major
 FWT_Set( t, 6, 60 )
 ? FWT_Shape( t )                         // {2, 3}
 t := FWT_FromArray( { { 1, 2 }, { 3, 4 } } )   // from a nested array</code></pre>
+<p><strong>Expected output</strong> (from <code>tltutor.log</code>):</p>
+<pre><code>=== Lesson 1: tensors ===
+shape = {2, 3}, size = 6
+t = {{10.00, 0.00, 0.00}, {0.00, 0.00, 60.00}}
+from array = {{1.00, 2.00}, {3.00, 4.00}}</code></pre>
 
 <h2 id="l2">Lesson 2 — Einsum: the only operation you need</h2>
 <p>An einsum spec names each operand's indices and the output's. Two rules:</p>
@@ -36,8 +153,13 @@ FWT_EinSum( "ij,jk->ik", A, B )     // matrix product (join j, project j)
 FWT_EinSum( "i,j->ij",   v, w )     // outer product  (no projection)
 FWT_EinSum( "i,i->",     v, v )     // dot product    (everything projected)</code></pre>
 <p>All of linear algebra is one primitive with different index patterns. When OpenBLAS is present
-these run on <code>cblas_sgemm</code> (see the <a href="tensorlogic.html">reference page</a> for the
+these run on <code>cblas_sgemm</code> (see the <a href="tensorlogic.html#openblas">reference</a> for the
 497 GFLOPS benchmark).</p>
+<pre><code>=== Lesson 2: einsum ===
+row sums     'ij->i'    = {6.00, 15.00}
+transpose    'ij->ji'   = {{1.00, 4.00}, {2.00, 5.00}, {3.00, 6.00}}
+matmul       'ij,jk->ik' = {{14.00, 32.00}, {32.00, 77.00}}
+dot 'i,i->' of {1,0,2} = 5.00</code></pre>
 
 <h2 id="l3">Lesson 3 — Your first program: equations</h2>
 <p><code>TTensorLogic</code> holds named tensors and equations written as strings. This complete
@@ -52,6 +174,8 @@ oTL:Run()
 <p>Read it as einsum: <code>j</code> is joined and projected (that is W·X), <code>+ B[i]</code> adds a
 second term, <code>step()</code> is the nonlinearity. Available: <code>step, sigmoid, relu, tanh,
 gelu, softmax, lnorm</code>.</p>
+<pre><code>=== Lesson 3: first equation (a perceptron) ===
+W.X + B = {1, -0.5} ; step -> Y = {1.00, 0.00}</code></pre>
 
 <h2 id="l4">Lesson 4 — Logical rules ARE equations</h2>
 <p>Store a relation as a boolean tensor (1 = fact holds). Then the Datalog rule
@@ -63,6 +187,8 @@ oTL:Eq( "Grandparent[x,z] = step( Parent[x,y] * Parent[y,z] )" )
 oTL:Run()      // Grandparent: (1,3) and (2,4)</code></pre>
 <p>This is the paper's central claim, in working code: neural nets (lesson 3) and logic (lesson 4)
 run on the same engine.</p>
+<pre><code>=== Lesson 4: logic rules (Grandparent) ===
+Grandparent = {{0,0,1,0}, {0,0,0,1}, {0,0,0,0}, {0,0,0,0}}</code></pre>
 
 <h2 id="l5">Lesson 5 — Recursion: forward chaining to a fixpoint</h2>
 <p><code>Run()</code> re-evaluates all equations until nothing changes, so recursive rules just work.
@@ -70,6 +196,8 @@ Transitive closure:</p>
 <pre><code class="language-harbour">oTL:Let( "Ancestor", { {0,0,0,0}, {0,0,0,0}, {0,0,0,0}, {0,0,0,0} } )  // seed empty
 oTL:Eq( "Ancestor[x,y] = step( Parent[x,y] + Ancestor[x,z] * Parent[z,y] )" )
 oTL:Run( 20 )  // Ancestor of 1: {2,3,4}; of 2: {3,4}; of 3: {4}</code></pre>
+<pre><code>=== Lesson 5: recursion to fixpoint (Ancestor) ===
+Ancestor = {{0,1,1,1}, {0,0,1,1}, {0,0,0,1}, {0,0,0,0}}</code></pre>
 
 <h2 id="l6">Lesson 6 — Datalog over your DBF tables</h2>
 <p>An xBase table IS a relation. <code>TTLDomain</code> maps entity names to tensor indices,
@@ -81,6 +209,11 @@ oTL:Eq( "Grandparent[x,z] = step( Parent[x,y] * Parent[y,z] )" )
 oTL:Run()
 AEval( oTL:Query( "Grandparent", oDom ), ;
        {| a | QOut( a[1] + " -> " + a[2] ) } )     // abe -> bart, abe -> lisa</code></pre>
+<pre><code>=== Lesson 6: Datalog over a DBF ===
+grandparent: abe -> bart
+grandparent: abe -> lisa</code></pre>
+<p><strong>Tip:</strong> always <code>Harvest()</code> every relation before sizing tensors, so the domain
+is complete and dimensions match across rules.</p>
 
 <h2 id="l7">Lesson 7 — Neural blocks: softmax and attention</h2>
 <p>A trailing <code>.</code> on a left-hand index marks the softmax axis. One attention head is six
@@ -91,6 +224,9 @@ oTL:Eq( "V[p,k] = X[p,d] * WV[d,k]" )
 oTL:Eq( "S[p,q] = Q[p,k] * K[q,k] * 0.7071" )   // scaled scores (1/sqrt(dk))
 oTL:Eq( "A[p,q.] = softmax( S[p,q] )" )          // rows sum to 1
 oTL:Eq( "O[p,k] = A[p,q] * V[q,k]" )             // attended values</code></pre>
+<pre><code>=== Lesson 7: attention in 6 equations ===
+attention row 1 = {0.33, 0.33, 0.34}
+row sum = 1.000000  (softmax => 1)</code></pre>
 
 <h2 id="l8">Lesson 8 — Autodiff: the gradient is another program</h2>
 <p>For <code>Z = X1 * X2 * ... * Xn</code>, the gradient w.r.t. any factor is <em>the same einsum
@@ -104,6 +240,10 @@ oTL:Seed( "Y", FWT_Scale( FWT_Sub( oTL:Get("Y"), tTarget ), 2 ) )  // dL/dY
 oTL:Backward()                                       // reverse sweep
 ? FWT_Get( oTL:GetGrad( "W" ), 1 )   // -0.19283922
 // finite differences on the same weight: -0.19283742  — they match</code></pre>
+<pre><code>=== Lesson 8: automatic differentiation ===
+dL/dW[1,1] analytic = -0.19283922, finite differences = -0.19283742</code></pre>
+<p>Use <code>Forward()</code> (not <code>Run()</code>) when training: it caches the pre-activations
+that <code>Backward()</code> needs.</p>
 
 <h2 id="l9">Lesson 9 — Training for real: Adam, clipping, batches</h2>
 <p>The professional loop adds an Adam optimizer (C kernel), global gradient clipping, mini-batch
@@ -116,29 +256,70 @@ gradient accumulation and checkpointing. Learning the AND gate:</p>
    oTL:ClipGrads( 1.0 )
    oTL:StepAdam( 0.05 )
 next        // Y -> {0.00, 0.11, 0.11, 0.88} for targets {0,0,0,1}</code></pre>
-<p>For batches: <code>ZeroGrad()</code> once, then <code>TTransformerTL:AccumStep()</code> per window
-(parameter grads accumulate, activation grads reset), then clip + Adam.
-<code>SaveParams()/LoadParams()</code> checkpoint every learnable tensor.</p>
+<pre><code>=== Lesson 9: Adam training (AND gate) ===
+epoch  100  loss 0.179205
+epoch  200  loss 0.073157
+epoch  300  loss 0.039337
+Y after training (targets 0,0,0,1) = {{0.00}, {0.11}, {0.11}, {0.88}}</code></pre>
+<p>For batches with <code>TTransformerTL</code>:</p>
+<pre><code class="language-harbour">oT:oTL:ZeroGrad()
+for i := 1 to nBatch
+   oT:AccumStep( aWin[i], aTgt[i], 1 / nBatch )  // param grads accumulate
+next
+oT:oTL:ClipGrads( 1.0 )
+oT:oTL:StepAdam( nLr )
+oT:oTL:SaveParams( "model.chk", { "vocab" => aVocab } )</code></pre>
 
-<h2 id="l10">Lesson 10 — From 100 onward</h2>
+<h2 id="l10">Lesson 10 — Transformer facade and beyond</h2>
+<p>You do not have to write every equation by hand. <code>TTransformerTL</code> builds a GPT-style
+stack for you:</p>
+<pre><code class="language-harbour">oT := TTransformerTL():New( 2, 8, 2, nVocab )   // layers, d_model, heads, vocab
+aProbs := oT:ForwardSeq( { 2, 3, 4, 5, 6 } )
+nLoss  := oT:TrainStep( aIds, aTargets, 0.01 )
+aGen   := oT:Generate( { 1 }, 8 )</code></pre>
+<p>Under the hood that is still a <code>TTensorLogic</code> program — inspect
+<code>oT:oTL:aEqs</code> or open <code>samples/ai/tltransformer.prg</code>.</p>
+
 <ul>
-<li><strong>A real transformer</strong>: <code>samples/ai/tltransformer.prg</code> writes a GPT-style
-transformer as ~15 equations per layer and reproduces the classic <code>Transformer</code> class
-output to 1e-8 with the same weights.</li>
+<li><strong>A real transformer</strong>: <code>samples/ai/tltransformer.prg</code> writes ~15 equations
+  per layer and reproduces the classic <code>Transformer</code> class output closely with the same
+  weights (test: <code>tl_parity_forwardseq</code>).</li>
 <li><strong>A modern LLM</strong>: <code>samples/ai/tlminillm.prg</code> adds DeepSeek/MiMo techniques —
-MLA latent attention, RoPE (a signed-permutation join!), mixture-of-experts, multi-token
-prediction — all still just equations.</li>
+  MLA latent attention, RoPE (a signed-permutation join!), mixture-of-experts, multi-token
+  prediction — all still just equations.</li>
 <li><strong>Train on real data</strong>: <code>samples/ai/tlfwcode.prg</code> trains a char-level model
-on FWH source code with warmup+cosine LR, train/val split, best-val checkpoints and resume
-(<code>TLFW_RESUME=1</code>).</li>
+  on FWH source code with warmup+cosine LR, train/val split, best-val checkpoints and resume
+  (<code>set TLFW_RESUME=1</code>). Tune with <code>TLFW_STEPS</code>, <code>TLFW_BATCH</code>,
+  <code>TLFW_LAYERS</code>, <code>TLFW_DMODEL</code>, <code>TLFW_HEADS</code>,
+  <code>TLFW_WINDOW</code>, <code>TLFW_LR</code>, …</li>
+<li><strong>Synthetic code training</strong>: <code>samples/ai/tlc.prg</code> — generator + oracle,
+  execution learning, grammar-constrained decoding (100% valid programs even untrained).</li>
 <li><strong>Speed</strong>: <code>samples/ai/tlbench.prg</code> — with OpenBLAS the einsum reaches
-497 GFLOPS on a 1024 matmul (PyTorch/MKL: 982 on the same machine).</li>
+  497 GFLOPS on a 1024 matmul (PyTorch/MKL: 982 on the same machine).</li>
 </ul>
 
 <p>The mental model to keep: <em>everything — a rule, a layer, a gradient — is a set of tensor
 equations, and an equation is one einsum plus a nonlinearity.</em></p>
 
-<h2>See Also</h2><ul><li><a href="tensorlogic.html">Tensor Logic (reference)</a></li><li><a href="ttransformer.html">Transformer Neural Network</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="tensorlogic.html">&larr; tensorlogic</a> | <a href="ttransformer.html">ttransformer &rarr;</a></nav></main>
+<h2 id="cheatsheet">Cheat sheet</h2>
+<table>
+<thead><tr><th>Goal</th><th>API</th></tr></thead>
+<tbody>
+<tr><td>Bind data</td><td><code>oTL:Let( "X", aOrTensor )</code></td></tr>
+<tr><td>Learnable weight</td><td><code>oTL:Param( "W", aOrTensor )</code></td></tr>
+<tr><td>Add equation</td><td><code>oTL:Eq( "Y[i] = relu( W[i,j] * X[j] )" )</code></td></tr>
+<tr><td>Symbolic fixpoint</td><td><code>oTL:Run( 20 )</code></td></tr>
+<tr><td>Train step</td><td><code>Forward → ZeroGrad → Seed → Backward → ClipGrads → StepAdam</code></td></tr>
+<tr><td>Read result</td><td><code>oTL:Get( "Y" )</code> / <code>GetArray( "Y" )</code></td></tr>
+<tr><td>DBF → relation</td><td><code>oDom:Harvest</code> then <code>LetDbf</code></td></tr>
+<tr><td>Relation → names</td><td><code>oTL:Query( "R", oDom )</code></td></tr>
+<tr><td>Checkpoint</td><td><code>SaveParams / LoadParams</code></td></tr>
+<tr><td>Ready-made transformer</td><td><code>TTransformerTL():New(...)</code></td></tr>
+<tr><td>Is BLAS on?</td><td><code>FWT_BlasActive()</code></td></tr>
+</tbody>
+</table>
+
+<h2>See Also</h2><ul><li><a href="tensorlogic.html">Tensor Logic (reference)</a></li><li><a href="ttransformer.html">Transformer Neural Network</a></li><li><a href="../getting-started/build-system.html">Build System</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="tensorlogic.html">&larr; tensorlogic</a> | <a href="ttransformer.html">ttransformer &rarr;</a></nav></main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
 <script src="../../js/nav.js"></script></body>

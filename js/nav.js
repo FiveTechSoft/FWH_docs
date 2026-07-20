@@ -136,7 +136,10 @@
       'internet/topenai.html', 'TOpenAI',
       'internet/remoteview.html', 'Remote View',
       'internet/tai.html', L.aiClasses,
-      'ai/agent.html', 'Class Agent'
+      'ai/agent.html', 'Class Agent',
+      'ai/tensorlogic.html', 'Tensor Logic',
+      'ai/tensorlogic-tutorial.html', 'Tensor Logic Tutorial',
+      'ai/ttransformer.html', 'Transformer'
     ]) +
     section(L.ref, [
       'reference/classes.html', L.classIdx,

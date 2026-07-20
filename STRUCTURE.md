@@ -24,7 +24,8 @@ ui/          All controls (TButton, TGet, TListBox, xBrowse, Ribbon, ...)
 advanced/    dll.html, unicode.html, advanced-diagrams.md
 ai/          agent, agenticai, gpt2model, hftokenizer, mcp-server,
              tai_glossary, tfwlanguagemodel, thftask, tsemanticindex,
-             ttransformer, pytorch-lite-roadmap (HTML)
+             ttransformer, tensorlogic, tensorlogic-tutorial,
+             pytorch-lite-roadmap (HTML)
 reference/
   index.md, classes.html, functions.html, modules/
   classes/   – one page per class
