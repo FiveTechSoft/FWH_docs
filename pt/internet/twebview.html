@@ -58,7 +58,8 @@ flowchart LR
 <tr><td><code>bOnBind</code></td><td>Block</td><td>Callback block when JavaScript calls <code>SendToFWH()</code></td></tr>
 <tr><td><code>bOnNavigationCompleted</code></td><td>Block</td><td>Callback when page navigation finishes</td></tr>
 <tr><td><code>bOnEval</code></td><td>Block</td><td>Callback with result of JavaScript evaluation</td></tr>
-<tr><td><code>cUserDataFolder</code></td><td>Character</td><td>Path for cookies, cache, and user data storage</td></tr>
+<tr><td><code>cUserDataFolder</code></td><td>Character</td><td>Caminho para cookies, cache e dados do usuário</td></tr>
+<tr><td><code>cBrowserExecutableFolder</code></td><td>Character</td><td>Pasta opcional do Fixed Version Runtime (Microsoft <code>browserExecutableFolder</code>). Vazio = Runtime Evergreen do sistema</td></tr>
 </tbody>
 </table>
 
@@ -69,7 +70,7 @@ flowchart LR
 <tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( oWndParent, cUserDataFolder )</code></td><td>Create WebView2 control. If oWndParent is nil, creates its own window.</td></tr>
+<tr><td><code>New( oWndParent, cUserDataFolder, cBrowserExecutableFolder )</code></td><td>Cria o controle WebView2. Se oWndParent for nil, cria sua própria janela. 2.º param opcional = pasta de perfil isolado; 3.º = raiz do Fixed Version Runtime (pasta com <code>msedgewebview2.exe</code>). Ambos devem ser passados no construtor porque o ambiente WebView2 é criado imediatamente.</td></tr>
 <tr><td><code>Navigate( cURL )</code></td><td>Navigate to a URL</td></tr>
 <tr><td><code>SetHtml( cHtml )</code></td><td>Display HTML string directly</td></tr>
 <tr><td><code>Eval( cJavaScript )</code></td><td>Execute JavaScript code in the web page</td></tr>
@@ -225,12 +226,37 @@ FW_WebView( cHtml, oWnd )</code></pre>
 HTML content. If <code>oWnd</code> is an existing TWebView2, it reuses it; otherwise creates a new one.
 </p>
 
-<h2 id="requirements">Requirements</h2>
+<h2 id="fixed-version">Fixed Version Runtime (standalone)</h2>
+
+<p>
+Em sistemas antigos (p. ex. Windows Server 2012 R2) o Runtime Evergreen atual pode
+deixar de funcionar, enquanto a Microsoft ainda permite distribuir um pacote
+<strong>Fixed Version</strong> com o aplicativo. Passe a pasta do pacote como terceiro
+parâmetro de <code>New()</code>:
+</p>
+
+<pre><code class="language-harbour">// Runtime Evergreen do sistema (padrão)
+oWV := TWebView2():New( oWnd )
+
+// Fixed Version Runtime distribuído com o app
+oWV := TWebView2():New( oWnd, , "C:\MeuApp\WebView2Runtime" )
+
+// Perfil isolado + Fixed Version
+oWV := TWebView2():New( oWnd, "C:\MeuApp\UserData", "C:\MeuApp\WebView2Runtime" )</code></pre>
+
+<p>
+O caminho deve ser a raiz do Fixed Version (pasta com <code>msedgewebview2.exe</code>).
+Internamente o FWH carrega <code>{pasta}\EBWebView\x64\EmbeddedBrowserWebView.dll</code>
+(ou <code>x86</code> em 32 bits). Se uma pasta for indicada e a DLL não for encontrada,
+<strong>não</strong> há fallback para o Evergreen do sistema.
+</p>
+
+<h2 id="requirements">Requisitos</h2>
 
 <ul>
-<li>Windows 10 or later with the WebView2 Runtime installed (ships with Windows 11 by default)</li>
-<li>The WebView2 Runtime is a separate download for Windows 10: <a href="https://developer.microsoft.com/en-us/microsoft-edge/webview2/" target="_blank">WebView2 Runtime</a></li>
-<li>User data (cookies, cache) is stored in the <code>cUserDataFolder</code>. If not specified, a default location is used.</li>
+<li>Runtime WebView2: o <strong>Evergreen</strong> instalado na máquina, ou um pacote <strong>Fixed Version</strong> com o app (veja acima)</li>
+<li>Download Evergreen: <a href="https://developer.microsoft.com/en-us/microsoft-edge/webview2/" target="_blank">WebView2 Runtime</a> (incluído no Windows 11 por padrão)</li>
+<li>Dados do usuário (cookies, cache) ficam em <code>cUserDataFolder</code>. Se não for indicado, usa-se um caminho padrão em AppData</li>
 </ul>
 
 <h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/functions.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/internet/twebsocketserver.html">&larr; twebsocketserver</a> | <a href="../../pt/internet/twebview2.html">twebview2 &rarr;</a></nav></main>

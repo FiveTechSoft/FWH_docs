@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's New in 26.07 - FWH Docs</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>What's New in FWH 26.07</h1>
+
+<p>
+Highlights of FiveWin for Harbour/xHarbour version <strong>26.07</strong> (July 2026).
+See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
+</p>
+
+<h2 id="webview2-fixed-version">TWebView2 — Fixed Version Runtime</h2>
+<p>
+<code>TWebView2():New()</code> accepts a third optional parameter
+<code>cBrowserExecutableFolder</code> (Microsoft's <code>browserExecutableFolder</code>).
+When set, WebView2 loads a Fixed Version / standalone Runtime from that folder instead
+of the Evergreen Runtime installed on the system.
+</p>
+<ul>
+  <li>Useful on older OS (e.g. Windows Server 2012 R2) where current Evergreen builds no longer work</li>
+  <li>Useful when the Runtime cannot be installed machine-wide</li>
+  <li>Path = Fixed Version root (folder that contains <code>msedgewebview2.exe</code>)</li>
+  <li>Must be passed in the constructor (the environment is created in <code>New()</code>)</li>
+  <li>Existing code without the parameter is unchanged</li>
+</ul>
+<pre><code class="language-harbour">oWeb := TWebView2():New( oWnd, , "C:\MyApp\WebView2Runtime" )</code></pre>
+<p>
+Also fixed: the second parameter <code>cUserDataFolder</code> was being overwritten with a
+default AppData path; it is now honoured.
+</p>
+<p>
+Full reference: <a href="../../en/internet/twebview.html">TWebView2</a>.
+</p>
+
+<h2 id="other">Other July 2026 fixes</h2>
+<ul>
+  <li><strong>MAPISendMail</strong> — when TO is given with a single parameter, fill empty
+    <code>lpszAddress</code> from the display name (Thunderbird / stricter Simple MAPI clients)</li>
+  <li><strong>TXBrowse:SelectRow()</strong> — zero-divisor when using multi-select columns without totals</li>
+  <li><strong>window.prg</strong> — added TSBROWSE to <code>cBrwClassList</code></li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

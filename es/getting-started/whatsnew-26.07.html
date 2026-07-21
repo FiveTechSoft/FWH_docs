@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novedades 26.07 - Documentación FWH</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>Novedades en FWH 26.07</h1>
+
+<p>
+Novedades de FiveWin for Harbour/xHarbour versión <strong>26.07</strong> (julio 2026).
+Consulte también <code>whatsnew.txt</code> en la raíz de FWH para el diario completo.
+</p>
+
+<h2 id="webview2-fixed-version">TWebView2 — Fixed Version Runtime</h2>
+<p>
+<code>TWebView2():New()</code> acepta un tercer parámetro opcional
+<code>cBrowserExecutableFolder</code> (el <code>browserExecutableFolder</code> de Microsoft).
+Cuando se indica, WebView2 carga un Runtime Fixed Version / standalone desde esa carpeta
+en lugar del Runtime Evergreen instalado en el sistema.
+</p>
+<ul>
+  <li>Útil en SO antiguos (p. ej. Windows Server 2012 R2) donde el Evergreen actual ya no funciona</li>
+  <li>Útil cuando no se puede instalar o actualizar el Runtime en la máquina</li>
+  <li>Ruta = raíz del Fixed Version (carpeta con <code>msedgewebview2.exe</code>)</li>
+  <li>Debe pasarse en el constructor (el entorno se crea en <code>New()</code>)</li>
+  <li>El código existente sin el parámetro no cambia</li>
+</ul>
+<pre><code class="language-harbour">oWeb := TWebView2():New( oWnd, , "C:\MiPrograma\WebView2Runtime" )</code></pre>
+<p>
+También se corrigió el segundo parámetro <code>cUserDataFolder</code>: se sobrescribía con
+una ruta por defecto en AppData; ahora se respeta.
+</p>
+<p>
+Referencia: <a href="../../es/internet/twebview.html">TWebView2</a>.
+</p>
+
+<h2 id="other">Otros arreglos de julio 2026</h2>
+<ul>
+  <li><strong>MAPISendMail</strong> — con TO de un solo parámetro, rellena <code>lpszAddress</code>
+    vacío desde el nombre (Thunderbird / clientes Simple MAPI estrictos)</li>
+  <li><strong>TXBrowse:SelectRow()</strong> — división por cero con columnas multi-select sin totales</li>
+  <li><strong>window.prg</strong> — TSBROWSE añadido a <code>cBrwClassList</code></li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

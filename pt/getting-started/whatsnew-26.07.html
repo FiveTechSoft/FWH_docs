@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novidades 26.07 - Documentação FWH</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>Novidades no FWH 26.07</h1>
+
+<p>
+Destaques do FiveWin for Harbour/xHarbour versão <strong>26.07</strong> (julho 2026).
+Veja também <code>whatsnew.txt</code> na raiz do FWH para o diário completo.
+</p>
+
+<h2 id="webview2-fixed-version">TWebView2 — Fixed Version Runtime</h2>
+<p>
+<code>TWebView2():New()</code> aceita um terceiro parâmetro opcional
+<code>cBrowserExecutableFolder</code> (o <code>browserExecutableFolder</code> da Microsoft).
+Quando definido, o WebView2 carrega um Runtime Fixed Version / standalone dessa pasta
+em vez do Runtime Evergreen instalado no sistema.
+</p>
+<ul>
+  <li>Útil em SO antigos (p. ex. Windows Server 2012 R2) onde o Evergreen atual não funciona</li>
+  <li>Útil quando o Runtime não pode ser instalado na máquina</li>
+  <li>Caminho = raiz do Fixed Version (pasta com <code>msedgewebview2.exe</code>)</li>
+  <li>Deve ser passado no construtor (o ambiente é criado em <code>New()</code>)</li>
+  <li>Código existente sem o parâmetro permanece igual</li>
+</ul>
+<pre><code class="language-harbour">oWeb := TWebView2():New( oWnd, , "C:\MeuApp\WebView2Runtime" )</code></pre>
+<p>
+Também corrigido: o segundo parâmetro <code>cUserDataFolder</code> era sobrescrito com um
+caminho padrão em AppData; agora é respeitado.
+</p>
+<p>
+Referência: <a href="../../pt/internet/twebview.html">TWebView2</a>.
+</p>
+
+<h2 id="other">Outras correções de julho 2026</h2>
+<ul>
+  <li><strong>MAPISendMail</strong> — com TO de um parâmetro, preenche <code>lpszAddress</code>
+    vazio a partir do nome (Thunderbird / clientes Simple MAPI estritos)</li>
+  <li><strong>TXBrowse:SelectRow()</strong> — divisão por zero com colunas multi-select sem totais</li>
+  <li><strong>window.prg</strong> — TSBROWSE adicionado a <code>cBrwClassList</code></li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>
