@@ -17,6 +17,31 @@ Highlights of FiveWin for Harbour/xHarbour version <strong>26.07</strong> (July 
 See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
 </p>
 
+<h2 id="fw-demodb">FW_DemoDB() — new demo MySQL host</h2>
+<p>
+The free cloud demo MySQL server used by FWH samples has moved.
+<code>FW_DemoDB()</code> now connects to a single host:
+</p>
+<ul>
+  <li><strong>Host:</strong> <code>mail.fivetechsoft.com</code></li>
+  <li><strong>Database:</strong> <code>fivetech_test</code></li>
+  <li><strong>User:</strong> <code>fivetech_test</code></li>
+  <li><strong>Password:</strong> <code>fivewin2026</code></li>
+</ul>
+<p>
+The former second server (<code>nServer = 2</code>) was removed. If the first
+parameter is a character string it is still treated as <code>cLib</code>
+(<code>"FWH"</code>, <code>"ADO"</code> or <code>"DLP"</code>); numeric values
+are ignored. Existing sample calls need no source changes after rebuilding the
+PRG library.
+</p>
+<pre><code class="language-harbour">oCn := FW_DemoDB()           // FWH native (default)
+oCn := FW_DemoDB( "ADO" )    // via ADO
+oCn := FW_DemoDB( "DLP" )    // via Dolphin, if linked</code></pre>
+<p>
+See also <a href="../../en/data/mariadb.html#fw-demodb">MariaDB / MySQL — FW_DemoDB()</a>.
+</p>
+
 <h2 id="webview2-fixed-version">TWebView2 — Fixed Version Runtime</h2>
 <p>
 <code>TWebView2():New()</code> accepts a third optional parameter

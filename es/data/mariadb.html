@@ -136,6 +136,34 @@ sequenceDiagram
     Rec-->>App: lSaved = .T.
 </div>
 
+<h2 id="fw-demodb">FW_DemoDB() — servidor demo en la nube</h2>
+
+<p>
+Para samples y pruebas rápidas sin un servidor MySQL propio,
+<code>FW_DemoDB( [cLib] )</code> se conecta a la base demo gratuita de FWH en
+<code>mail.fivetechsoft.com</code> (base / usuario <code>fivetech_test</code>).
+<code>cLib</code> opcional: <code>"FWH"</code> (por defecto, nativo),
+<code>"ADO"</code> o <code>"DLP"</code> (Dolphin, si está enlazado).
+</p>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+
+   local oCn := FW_DemoDB()   // o FW_DemoDB( "ADO" )
+
+   ? oCn:cServerInfo
+   ? oCn:QueryResult( "SELECT DATABASE()" )
+   XBROWSER oCn:RowSet( "customer" )
+   oCn:Close()
+
+return nil</code></pre>
+
+<p>
+Fuente: <code>source/internal/fwmaria.prg</code>. Ver samples en
+<code>samples/misc/maria*.prg</code>.
+</p>
+
 <h2 id="example-connect">Example: Connection Setup</h2>
 
 <pre><code class="language-harbour">#include "FiveWin.ch"

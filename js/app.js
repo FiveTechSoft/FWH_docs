@@ -22,7 +22,7 @@ var searchIndex = [
   { k: "tdatabase database dbf rdd open close skip seek filter goto append delete fieldget fieldput", t: "TDatabase", u: "../../en/data/tdatabase.html", s: "Data Access" },
   { k: "trecset trecordset ado recordset activex sql server access", t: "TRecordSet (ADO)", u: "../../en/data/trecset.html", s: "Data Access" },
   { k: "todbc odbc connection sql execute query fetch commit rollback", t: "TODBC", u: "../../en/data/todbc.html", s: "Data Access" },
-  { k: "mariadb mysql fwmariarecord connection crud query insert update", t: "MariaDB / MySQL", u: "../../en/data/mariadb.html", s: "Data Access" },
+  { k: "mariadb mysql fwmariarecord connection crud query insert update fw_demodb demodb demo", t: "MariaDB / MySQL", u: "../../en/data/mariadb.html", s: "Data Access" },
   // Printing
   { k: "tprinter printer print page say line box bitmap pdf startpage endpage paper orientation", t: "TPrinter", u: "../../en/printing/tprinter.html", s: "Printing" },
   { k: "treport report column group header footer summary excel export", t: "TReport", u: "../../en/printing/treport.html", s: "Printing" },
