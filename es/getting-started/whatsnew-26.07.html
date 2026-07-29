@@ -17,6 +17,32 @@ Novedades de FiveWin for Harbour/xHarbour versión <strong>26.07</strong> (julio
 Consulte también <code>whatsnew.txt</code> en la raíz de FWH para el diario completo.
 </p>
 
+<h2 id="dshow-webcam">samples/misc/dshow.prg — webcam con DirectShow (Windows moderno)</h2>
+<p>
+<code>samples/misc/dshow.prg</code> muestra vista previa de webcam y captura BMP
+con DirectShow, sin <code>qedit.dll</code> / <code>ISampleGrabber</code>
+(no disponibles en Windows actuales). La vista se reparentiza en un diálogo
+FiveWin con <code>IVideoWindow</code>; las capturas usan
+<code>IBasicVideo::GetCurrentImage()</code>.
+</p>
+<ul>
+  <li><strong>Corrección COM:</strong> <code>CoInitializeEx</code> usa
+    <code>COINIT_APARTMENTTHREADED</code> (STA), como los hilos UI de FiveWin.
+    Con <code>COINIT_MULTITHREADED</code> fallaba con
+    <code>RPC_E_CHANGED_MODE</code> si COM ya estaba en STA.</li>
+  <li><strong>Compiladores:</strong> Harbour+MSVC (<code>hm32</code>/<code>hm64</code>)
+    y xHarbour+BCC32 (<code>xb32</code>), con compatibilidad C Harbour/xHarbour
+    y supresión de avisos de cabeceras SDK en BCC.</li>
+</ul>
+<pre><code>cd samples\misc
+build_new.bat dshow hm32
+build_new.bat dshow hm64
+build_new.bat dshow xb32</code></pre>
+<p>
+Relacionado: clase <a href="../../es/ui/twebcam.html">TWebCam</a> (VFW legado) y
+<code>samples/misc/webcam.prg</code>.
+</p>
+
 <h2 id="fw-demodb">FW_DemoDB() — nuevo servidor demo MySQL</h2>
 <p>
 El servidor MySQL demo en la nube usado por los samples de FWH ha cambiado.
@@ -71,6 +97,8 @@ Referencia: <a href="../../es/internet/twebview.html">TWebView2</a>.
     vacío desde el nombre (Thunderbird / clientes Simple MAPI estrictos)</li>
   <li><strong>TXBrowse:SelectRow()</strong> — división por cero con columnas multi-select sin totales</li>
   <li><strong>window.prg</strong> — TSBROWSE añadido a <code>cBrwClassList</code></li>
+  <li><strong>dshow.prg</strong> — sample DirectShow de webcam: apartamento COM STA, sin qedit.dll,
+    multi-toolchain (ver <a href="#dshow-webcam">arriba</a>)</li>
 </ul>
 
 </main>

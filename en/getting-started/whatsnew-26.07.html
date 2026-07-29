@@ -17,6 +17,31 @@ Highlights of FiveWin for Harbour/xHarbour version <strong>26.07</strong> (July 
 See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
 </p>
 
+<h2 id="dshow-webcam">samples/misc/dshow.prg — DirectShow webcam (modern Windows)</h2>
+<p>
+<code>samples/misc/dshow.prg</code> shows live webcam preview and BMP snapshot
+using DirectShow without <code>qedit.dll</code> / <code>ISampleGrabber</code>
+(unavailable on current Windows). Preview is reparented into a FiveWin dialog
+via <code>IVideoWindow</code>; snapshots use <code>IBasicVideo::GetCurrentImage()</code>.
+</p>
+<ul>
+  <li><strong>COM fix:</strong> <code>CoInitializeEx</code> uses
+    <code>COINIT_APARTMENTTHREADED</code> (STA), matching FiveWin UI threads.
+    The previous <code>COINIT_MULTITHREADED</code> path failed with
+    <code>RPC_E_CHANGED_MODE</code> when COM was already STA.</li>
+  <li><strong>Toolchains:</strong> Harbour+MSVC (<code>hm32</code>/<code>hm64</code>)
+    and xHarbour+BCC32 (<code>xb32</code>) with Harbour/xHarbour C compatibility
+    and BCC SDK-header warning suppressions.</li>
+</ul>
+<pre><code>cd samples\misc
+build_new.bat dshow hm32
+build_new.bat dshow hm64
+build_new.bat dshow xb32</code></pre>
+<p>
+Related: class <a href="../../en/ui/twebcam.html">TWebCam</a> (legacy VFW) and
+<code>samples/misc/webcam.prg</code>.
+</p>
+
 <h2 id="fw-demodb">FW_DemoDB() — new demo MySQL host</h2>
 <p>
 The free cloud demo MySQL server used by FWH samples has moved.
@@ -71,6 +96,8 @@ Full reference: <a href="../../en/internet/twebview.html">TWebView2</a>.
     <code>lpszAddress</code> from the display name (Thunderbird / stricter Simple MAPI clients)</li>
   <li><strong>TXBrowse:SelectRow()</strong> — zero-divisor when using multi-select columns without totals</li>
   <li><strong>window.prg</strong> — added TSBROWSE to <code>cBrwClassList</code></li>
+  <li><strong>dshow.prg</strong> — DirectShow webcam sample: STA COM apartment, no qedit.dll,
+    multi-toolchain build (see <a href="#dshow-webcam">above</a>)</li>
 </ul>
 
 </main>
