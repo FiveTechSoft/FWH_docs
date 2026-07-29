@@ -17,6 +17,33 @@ Highlights of FiveWin for Harbour/xHarbour version <strong>26.07</strong> (July 
 See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
 </p>
 
+<h2 id="f1-help-empty-nhelpid">TControl F1 / CHM help — empty nHelpId bubbles to parent</h2>
+<p>
+F1 / <code>WM_HELP</code> is delivered to the focused control.
+When the control had an empty <code>nHelpId</code>, FWH returned without
+opening help, so <code>oWnd:nHelpId</code> / <code>oDlg:nHelpId</code> was
+never used. <code>TControl:__HelpTopic()</code> now calls
+<code>::oWnd:HelpTopic()</code> so the window/dialog context is applied.
+</p>
+<p>CHM context help behaviour:</p>
+<ul>
+  <li><strong>Control numeric <code>nHelpId</code></strong> —
+    <code>HelpPopup()</code> (small popup; requires
+    <code>SetHelpPopup( "popups.txt" )</code> for CHM text popups)</li>
+  <li><strong>Control character topic name</strong> —
+    <code>HelpTopic()</code> full CHM viewer</li>
+  <li><strong>Window/dialog <code>nHelpId</code> or empty control id</strong> —
+    parent <code>HelpTopic()</code> full CHM viewer</li>
+  <li><strong>Explicit <code>HelpTopic( nId )</code> / <code>HelpTopic( "topic" )</code></strong> —
+    always full CHM viewer</li>
+</ul>
+<p>
+Topic names must match real <code>.htm</code> files inside the CHM.
+<code>HelpSetPos()</code> only applies to classic <code>.hlp</code>, not CHM.
+Sample: <code>samples/test/testchmhlp.prg</code> (+ <code>popups.txt</code>).
+Rebuild the PRG library after update.
+</p>
+
 <h2 id="dshow-webcam">samples/misc/dshow.prg — DirectShow webcam (modern Windows)</h2>
 <p>
 <code>samples/misc/dshow.prg</code> shows live webcam preview and BMP snapshot
@@ -98,6 +125,8 @@ Full reference: <a href="../../en/internet/twebview.html">TWebView2</a>.
   <li><strong>window.prg</strong> — added TSBROWSE to <code>cBrwClassList</code></li>
   <li><strong>dshow.prg</strong> — DirectShow webcam sample: STA COM apartment, no qedit.dll,
     multi-toolchain build (see <a href="#dshow-webcam">above</a>)</li>
+  <li><strong>TControl F1 help</strong> — empty <code>nHelpId</code> bubbles to parent
+    (see <a href="#f1-help-empty-nhelpid">above</a>)</li>
 </ul>
 
 </main>

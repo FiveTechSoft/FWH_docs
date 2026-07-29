@@ -17,6 +17,33 @@ Novedades de FiveWin for Harbour/xHarbour versión <strong>26.07</strong> (julio
 Consulte también <code>whatsnew.txt</code> en la raíz de FWH para el diario completo.
 </p>
 
+<h2 id="f1-help-empty-nhelpid">TControl F1 / ayuda CHM — nHelpId vacío sube al padre</h2>
+<p>
+F1 / <code>WM_HELP</code> llega al control con el foco.
+Si el control tenía <code>nHelpId</code> vacío, FWH no abría ayuda y no se
+usaba <code>oWnd:nHelpId</code> / <code>oDlg:nHelpId</code>.
+<code>TControl:__HelpTopic()</code> ahora llama a
+<code>::oWnd:HelpTopic()</code> para aplicar el contexto de la ventana/diálogo.
+</p>
+<p>Comportamiento de la ayuda contextual CHM:</p>
+<ul>
+  <li><strong>Control con <code>nHelpId</code> numérico</strong> —
+    <code>HelpPopup()</code> (popup pequeño; requiere
+    <code>SetHelpPopup( "popups.txt" )</code> para popups de texto CHM)</li>
+  <li><strong>Control con nombre de topic (carácter)</strong> —
+    <code>HelpTopic()</code> visor CHM completo</li>
+  <li><strong>nHelpId de ventana/diálogo o control vacío</strong> —
+    <code>HelpTopic()</code> del padre, visor completo</li>
+  <li><strong><code>HelpTopic( nId )</code> / <code>HelpTopic( "topic" )</code> explícito</strong> —
+    siempre visor CHM completo</li>
+</ul>
+<p>
+Los nombres de topic deben coincidir con los <code>.htm</code> reales del CHM.
+<code>HelpSetPos()</code> solo aplica a <code>.hlp</code> clásico, no a CHM.
+Sample: <code>samples/test/testchmhlp.prg</code> (+ <code>popups.txt</code>).
+Recompilar la librería PRG tras la actualización.
+</p>
+
 <h2 id="dshow-webcam">samples/misc/dshow.prg — webcam con DirectShow (Windows moderno)</h2>
 <p>
 <code>samples/misc/dshow.prg</code> muestra vista previa de webcam y captura BMP
@@ -99,6 +126,8 @@ Referencia: <a href="../../es/internet/twebview.html">TWebView2</a>.
   <li><strong>window.prg</strong> — TSBROWSE añadido a <code>cBrwClassList</code></li>
   <li><strong>dshow.prg</strong> — sample DirectShow de webcam: apartamento COM STA, sin qedit.dll,
     multi-toolchain (ver <a href="#dshow-webcam">arriba</a>)</li>
+  <li><strong>TControl F1 help</strong> — <code>nHelpId</code> vacío sube al padre
+    (ver <a href="#f1-help-empty-nhelpid">arriba</a>)</li>
 </ul>
 
 </main>
