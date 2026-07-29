@@ -17,6 +17,36 @@ Novedades de FiveWin for Harbour/xHarbour versión <strong>26.07</strong> (julio
 Consulte también <code>whatsnew.txt</code> en la raíz de FWH para el diario completo.
 </p>
 
+<h2 id="xbrml250-multiline-limit">XBrowse multilínea + LimitText (sample xbrml250)</h2>
+<p>
+Nuevo sample <code>samples/ui/xbrowse/xbrml250.prg</code>: edición de una
+columna de texto larga en varias líneas dentro de la celda, con tope de
+longitud (ejemplo: 250 caracteres).
+</p>
+<ul>
+  <li><strong><code>nDataLines &gt;= 2</code></strong> y
+    <code>cEditPicture</code> vacío para que XBrowse cree un
+    <code>TMultiGet</code> (wrap al escribir). Si pones
+    <code>cEditPicture := Replicate( "X", 250 )</code> se fuerza un
+    <code>TGet</code> de una sola línea y se pierde el wrap.</li>
+  <li><strong><code>bOnPreEdit</code></strong>: siempre
+    <code>RTrim()</code> del texto del editor y luego
+    <code>oEditGet:LimitText( nMax )</code>. Valores rellenados a longitud
+    fija (<code>PadR</code> / <code>Space(250)</code>) llenan el límite y
+    impiden escribir; <code>TMultiGet</code> no hace SelectAll como
+    <code>TGet</code>.</li>
+  <li><strong>Teclas:</strong> Intro termina la edición; Ctrl+Intro o
+    Shift+Intro insertan un solo salto de línea real. No uses
+    <code>Replace( CRLF )</code> a mano: se duplica el salto (tu inserción
+    más el EDIT multilínea / <code>ES_WANTRETURN</code>).</li>
+  <li><strong><code>bOnPostEdit</code></strong>: guardar
+    <code>Left( xVal, nMax )</code> (opcionalmente <code>PadR</code> si el
+    backend exige ancho fijo).</li>
+</ul>
+<p>
+Detalle: <a href="../../es/ui/txbrowse.html#multiline-edit">TXBrowse edición multilínea</a>.
+</p>
+
 <h2 id="f1-help-empty-nhelpid">TControl F1 / ayuda CHM — nHelpId vacío sube al padre</h2>
 <p>
 F1 / <code>WM_HELP</code> llega al control con el foco.

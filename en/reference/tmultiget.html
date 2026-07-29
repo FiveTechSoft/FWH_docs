@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -8,11 +8,38 @@
 </head>
 <body><nav id="sidebar"></nav><main id="content">
 <h1>TMultiGet</h1>
-<p class="class-source">Source: <code>source/classes/tmultiget.prg</code></p>
+<p class="class-source">Source: <code>source/classes/mget.prg</code></p>
+
 <h2>Overview</h2>
-<p>TMultiGet class — part of the FiveWin for Harbour/xHarbour framework.</p>
-<p>See <a href="../../en/reference/classes.html">Classes Alphabetical</a> for full class list.</p>
-<h2>See Also</h2><ul><li><a href="../../en/reference/classes.html">Classes Alphabetical</a></li><li><a href="../../en/reference/functions.html">Functions</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../en/utilities/tmsword.html">&larr; tmsword</a> | <a href="../../en/ui/tmybox.html">tmybox &rarr;</a></nav></main>
+<p>
+<code>TMultiGet</code> is the multi-line Windows EDIT control wrapper used for
+memo-style input. XBrowse creates a temporary <code>TMultiGet</code> for in-cell
+editing when the column value is character, <code>nDataLines &gt;= 2</code>, and
+<code>cEditPicture</code> is empty.
+</p>
+
+<h2 id="limittext">LimitText( nChars )</h2>
+<p>
+<code>oMGet:LimitText( nChars )</code> sends <code>EM_LIMITTEXT</code> so the user
+cannot type or paste beyond <code>nChars</code>. Pass <code>0</code> for unlimited
+(default for a standalone multi-get).
+</p>
+<p>
+When limiting XBrowse cells that store fixed-width padded strings
+(<code>PadR</code> / <code>Space(n)</code>), always <code>RTrim()</code> the text
+before <code>LimitText(n)</code>; otherwise the control is already full and
+accepts no further input. See
+<a href="../../en/ui/txbrowse.html#multiline-edit">TXBrowse multi-line cell edit</a>
+and sample <code>samples/ui/xbrowse/xbrml250.prg</code>.
+</p>
+
+<h2>See Also</h2>
+<ul>
+  <li><a href="../../en/ui/txbrowse.html#multiline-edit">TXBrowse multi-line cell edit</a></li>
+  <li><a href="../../en/ui/tget.html">TGet</a></li>
+  <li><a href="../../en/reference/classes.html">Classes Alphabetical</a></li>
+</ul>
+<nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../en/utilities/tmsword.html">&larr; tmsword</a> | <a href="../../en/ui/tmybox.html">tmybox &rarr;</a></nav></main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script>
 </body></html>

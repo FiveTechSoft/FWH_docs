@@ -401,6 +401,56 @@ STATIC FUNCTION SetBrwHeight( oDlg, oBrw, nHeight )
 
 RETURN NIL</code></pre>
 
+<h2 id="multiline-edit">Edición multilínea en celda con longitud máxima</h2>
+
+<p>
+Con <code>nDataLines &gt;= 2</code> (browse o columna) y valor carácter, XBrowse
+abre un <strong>TMultiGet</strong> en la celda
+<strong>solo si <code>cEditPicture</code> está vacío</strong>. Un picture no vacío
+fuerza <code>TGet</code> de una línea y se pierde el wrap al escribir.
+</p>
+
+<pre><code class="language-harbour">#define MAX_MNEMO 250
+
+oBrw:nDataLines := 3
+oCol := oBrw:aCols[ 2 ]
+oCol:nEditType  := EDIT_GET
+// NO pongas oCol:cEditPicture := Replicate( "X", MAX_MNEMO )
+
+oCol:bOnPreEdit := {| oCol |
+   local oGet := oCol:oEditGet, bOrig, c
+   if oGet != nil .and. oGet:IsKindOf( "TMULTIGET" )
+      c := RTrim( oGet:cText )          // quitar relleno antes de LimitText
+      oGet:cText := c
+      oGet:LimitText( MAX_MNEMO )
+      oGet:SetPos( Len( c ) )
+      // Intro termina; Ctrl/Shift+Intro = un salto de línea real
+      bOrig := oGet:bKeyDown
+      oGet:bKeyDown := {| nKey |
+         If( nKey == VK_RETURN .and. ;
+            ( GetKeyState( VK_CONTROL ) .or. GetKeyState( VK_SHIFT ) ), ;
+            nil, ;
+            If( bOrig != nil, Eval( bOrig, nKey ), nil ) ) }
+   endif
+   return nil }
+
+oCol:bOnPostEdit := {| o, x, n |
+   If( n != VK_ESCAPE .and. x != nil, o:Value := Left( x, MAX_MNEMO ), ) }</code></pre>
+
+<ul>
+  <li><strong>RTrim antes de LimitText</strong> — campos rellenados
+    (<code>PadR( ..., 250 )</code> / <code>Space(250)</code>) ya tienen longitud
+    250; <code>LimitText(250)</code> bloquea cada tecla.
+    <code>TMultiGet</code> no hace SelectAll como <code>TGet</code>.</li>
+  <li><strong>Intro</strong> termina la celda (comportamiento XBrowse).
+    <strong>Ctrl+Intro</strong> o <strong>Shift+Intro</strong> insertan un
+    salto vía el EDIT multilínea. No llames a
+    <code>Replace( CRLF )</code> o obtendrás dos saltos.</li>
+  <li>El wrap al borde de la celda es solo visual; los saltos reales son
+    <code>CRLF</code> en la cadena guardada.</li>
+  <li>Sample de referencia: <code>samples/ui/xbrowse/xbrml250.prg</code>.</li>
+</ul>
+
 <h2 id="tips">Tips and Best Practices</h2>
 
 <ul>
@@ -412,6 +462,8 @@ RETURN NIL</code></pre>
   <li><strong>Double-buffer painting</strong>: TXBrowse paints to an off-screen bitmap, then blits to screen. This eliminates flicker but means you should call <code>Refresh()</code> -- not <code>Invalidate()</code> -- to force a redraw.</li>
   <li><strong>For very large arrays</strong>, consider using <code>SetRDD()</code> with a temporary DBF instead, as array navigation does not virtualize seeks.</li>
   <li><strong>Resizing the browse at runtime</strong>: a plain <code>oBrw:nHeight :=</code> assignment repaints twice (immediate <code>MoveWindow()</code> repaint plus the later <code>Refresh()</code>) and flickers. Wrap the resize in <code>WM_SETREDRAW</code> 0/1 on the parent dialog and add <code>WS_CLIPCHILDREN</code> to the dialog style -- see Example 5.</li>
+  <li><strong>Celdas de texto largo multilínea</strong> — ver
+    <a href="#multiline-edit">Edición multilínea en celda con longitud máxima</a>.</li>
 </ul>
 
 <h2 id="see-also">Ver También</h2>
@@ -419,7 +471,8 @@ RETURN NIL</code></pre>
   <li><a href="../../es/core/tcontrol.html">TControl</a> -- parent class</li>
   <li><a href="../../es/data/tdatabase.html">TDatabase</a> -- high-level DBF wrapper often used with TXBrowse</li>
   <li><a href="../../es/data/trecset.html">TRecordSet (ADO)</a> -- ADO data source for <code>SetAdo()</code></li>
-  <li><a href="../../es/ui/tget.html">TGet</a> -- used internally for cell editing</li>
+  <li><a href="../../es/ui/tget.html">TGet</a> -- editor de celda de una línea</li>
+  <li><a href="../../es/reference/tmultiget.html">TMultiGet</a> -- editor multilínea cuando <code>nDataLines &gt;= 2</code></li>
 </ul>
 
 </main>

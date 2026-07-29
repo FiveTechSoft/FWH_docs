@@ -401,6 +401,23 @@ STATIC FUNCTION SetBrwHeight( oDlg, oBrw, nHeight )
 
 RETURN NIL</code></pre>
 
+<h2 id="multiline-edit">Edição multilinha na célula com comprimento máximo</h2>
+
+<p>
+Com <code>nDataLines &gt;= 2</code> e valor carácter, o XBrowse abre um
+<strong>TMultiGet</strong> na célula <strong>somente se
+<code>cEditPicture</code> estiver vazio</strong>. Picture força
+<code>TGet</code> de uma linha e perde o wrap ao digitar.
+</p>
+<p>
+Padrão recomendado: <code>RTrim</code> + <code>LimitText( nMax )</code> em
+<code>bOnPreEdit</code>; ENTER termina a edição; Ctrl+ENTER / Shift+ENTER
+inserem um único quebra-linha (não chamar <code>Replace( CRLF )</code>).
+Sample: <code>samples/ui/xbrowse/xbrml250.prg</code>. Detalhes com código:
+<a href="../../en/ui/txbrowse.html#multiline-edit">documentação EN</a> /
+<a href="../../es/ui/txbrowse.html#multiline-edit">ES</a>.
+</p>
+
 <h2 id="tips">Tips and Best Practices</h2>
 
 <ul>
@@ -412,6 +429,8 @@ RETURN NIL</code></pre>
   <li><strong>Double-buffer painting</strong>: TXBrowse paints to an off-screen bitmap, then blits to screen. This eliminates flicker but means you should call <code>Refresh()</code> -- not <code>Invalidate()</code> -- to force a redraw.</li>
   <li><strong>For very large arrays</strong>, consider using <code>SetRDD()</code> with a temporary DBF instead, as array navigation does not virtualize seeks.</li>
   <li><strong>Resizing the browse at runtime</strong>: a plain <code>oBrw:nHeight :=</code> assignment repaints twice (immediate <code>MoveWindow()</code> repaint plus the later <code>Refresh()</code>) and flickers. Wrap the resize in <code>WM_SETREDRAW</code> 0/1 on the parent dialog and add <code>WS_CLIPCHILDREN</code> to the dialog style -- see Example 5.</li>
+  <li><strong>Células de texto longo multilinha</strong> — ver
+    <a href="#multiline-edit">Edição multilinha na célula com comprimento máximo</a>.</li>
 </ul>
 
 <h2 id="see-also">Veja Também</h2>
@@ -419,7 +438,8 @@ RETURN NIL</code></pre>
   <li><a href="../../pt/core/tcontrol.html">TControl</a> -- parent class</li>
   <li><a href="../../pt/data/tdatabase.html">TDatabase</a> -- high-level DBF wrapper often used with TXBrowse</li>
   <li><a href="../../pt/data/trecset.html">TRecordSet (ADO)</a> -- ADO data source for <code>SetAdo()</code></li>
-  <li><a href="../../pt/ui/tget.html">TGet</a> -- used internally for cell editing</li>
+  <li><a href="../../pt/ui/tget.html">TGet</a> -- editor de célula de uma linha</li>
+  <li><a href="../../en/reference/tmultiget.html">TMultiGet</a> -- editor multilinha quando <code>nDataLines &gt;= 2</code></li>
 </ul>
 
 </main>

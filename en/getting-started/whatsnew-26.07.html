@@ -17,6 +17,36 @@ Highlights of FiveWin for Harbour/xHarbour version <strong>26.07</strong> (July 
 See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
 </p>
 
+<h2 id="xbrml250-multiline-limit">XBrowse multi-line cell + LimitText (xbrml250 sample)</h2>
+<p>
+New sample <code>samples/ui/xbrowse/xbrml250.prg</code> shows how to edit a
+long character column in several lines inside the cell, while capping the
+length (example: 250 characters).
+</p>
+<ul>
+  <li><strong>Use <code>nDataLines &gt;= 2</code></strong> and leave
+    <code>cEditPicture</code> empty so XBrowse creates a
+    <code>TMultiGet</code> (word-wrap while typing). Setting
+    <code>cEditPicture := Replicate( "X", 250 )</code> forces a single-line
+    <code>TGet</code> and disables wrap.</li>
+  <li><strong><code>bOnPreEdit</code></strong>: always
+    <code>RTrim()</code> the editor text, then
+    <code>oEditGet:LimitText( nMax )</code>. Fixed-length padded values
+    (<code>PadR</code> / <code>Space(250)</code>) already fill the limit and
+    block typing; <code>TMultiGet</code> does not auto-SelectAll like
+    <code>TGet</code>.</li>
+  <li><strong>Keys:</strong> ENTER ends the cell edit; Ctrl+ENTER or
+    Shift+ENTER inserts one real line break. Do not call
+    <code>Replace( CRLF )</code> yourself or you get two breaks (your insert
+    plus the multiline EDIT / <code>ES_WANTRETURN</code>).</li>
+  <li><strong><code>bOnPostEdit</code></strong>: store
+    <code>Left( xVal, nMax )</code> (optionally <code>PadR</code> if the
+    backend needs a fixed width).</li>
+</ul>
+<p>
+Full notes: <a href="../../en/ui/txbrowse.html#multiline-edit">TXBrowse multi-line cell edit</a>.
+</p>
+
 <h2 id="f1-help-empty-nhelpid">TControl F1 / CHM help — empty nHelpId bubbles to parent</h2>
 <p>
 F1 / <code>WM_HELP</code> is delivered to the focused control.

@@ -17,6 +17,27 @@ Destaques do FiveWin for Harbour/xHarbour versão <strong>26.07</strong> (julho 
 Veja também <code>whatsnew.txt</code> na raiz do FWH para o diário completo.
 </p>
 
+<h2 id="xbrml250-multiline-limit">XBrowse multilinha + LimitText (sample xbrml250)</h2>
+<p>
+Novo sample <code>samples/ui/xbrowse/xbrml250.prg</code>: edição de coluna de
+texto longa em várias linhas na célula, com limite de comprimento
+(exemplo: 250 caracteres).
+</p>
+<ul>
+  <li><code>nDataLines &gt;= 2</code> e <code>cEditPicture</code> vazio →
+    <code>TMultiGet</code> com wrap ao digitar. Picture força
+    <code>TGet</code> de uma linha.</li>
+  <li><code>bOnPreEdit</code>: <code>RTrim()</code> e depois
+    <code>LimitText( nMax )</code> (campos com PadR/Space bloqueiam digitação).</li>
+  <li>ENTER termina a edição; Ctrl+ENTER / Shift+ENTER = um único quebra-linha
+    (não chamar <code>Replace( CRLF )</code> — duplica o salto).</li>
+  <li><code>bOnPostEdit</code>: <code>Left( xVal, nMax )</code>.</li>
+</ul>
+<p>
+Detalhes: <a href="../../en/ui/txbrowse.html#multiline-edit">TXBrowse multi-line cell edit</a>
+(documentação EN; ES em <a href="../../es/ui/txbrowse.html#multiline-edit">es/ui/txbrowse.html</a>).
+</p>
+
 <h2 id="fw-demodb">FW_DemoDB() — novo servidor demo MySQL</h2>
 <p>
 O servidor MySQL demo na nuvem usado pelos samples do FWH mudou.
