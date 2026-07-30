@@ -182,6 +182,10 @@ e sobrevive a ciclos modais. Ideal para a maioria das aplica&ccedil;&otilde;es.
       <td>Janela principal + di&aacute;logo filho. A captura comp&otilde;e os popups pertencentes, pelo que o di&aacute;logo aparece tamb&eacute;m no navegador</td>
     </tr>
     <tr>
+      <td><code>samples/RemoteView/testrvweb.prg</code></td>
+      <td>Remote View + TWebView2 (Edge HTML/JS dentro da janela publicada)</td>
+    </tr>
+    <tr>
       <td><code>samples/database/fivedburv.prg</code></td>
       <td>FiveDBU integrado com Remote View: <code>ON INIT RemoteViewStart()</code> + menu popup com bot&atilde;o direito</td>
     </tr>
@@ -401,11 +405,36 @@ use <code>hb_threadStart</code> + <code>RemoteViewServe</code> +
       <td>Login antes de lançar: o utilizador remoto identifica-se num diálogo e depois a app abre</td>
     </tr>
     <tr>
+      <td><code>samples/RemoteView/testrvweb.prg</code></td>
+      <td>Remote View + TWebView2: Edge WebView2 (HTML/JS, SendToFWH) dentro de uma janela publicada com RemoteViewStart</td>
+    </tr>
+    <tr>
       <td><code>samples/database/fivedburv.prg</code></td>
       <td>FiveDBU com Remote View integrado na porta 8080</td>
     </tr>
   </tbody>
 </table>
+
+<h2 id="webview2">Remote View + WebView2</h2>
+<p>
+  <code>testrvweb.prg</code> mostra como embutir
+  <code>TWebView2</code> (Microsoft Edge) numa janela FiveWin e public&aacute;-la
+  com <code>RemoteViewStart</code>. Em local: barra de bot&otilde;es nativos mais
+  a superf&iacute;cie web (HTML demo, <code>Navigate</code>, <code>Eval</code>,
+  <code>SendToFWH</code> &rarr; <code>bOnBind</code>). Em remoto: qualquer
+  browser na LAN abre <code>http://host:8080</code> e v&ecirc;/controla toda a
+  janela (controlos FWH e conte&uacute;do WebView2 capturado com
+  <code>PW_RENDERFULLCONTENT</code>).
+</p>
+<p>
+  <strong>Disposi&ccedil;&atilde;o no mesmo ecr&atilde;:</strong> coloque a
+  janela desktop em baixo (<code>FROM nTop, nLeft TO &hellip; PIXEL</code>) para
+  a p&aacute;gina do browser (a imagem em direto) ficar em cima. Use um
+  <code>RemoteViewSetOffset( nX, nY )</code> modesto para desenhar a janela
+  perto do topo do bitmap. Requer Runtime WebView2 (Edge Evergreen ou Fixed
+  Version). Compilar: <code>build_new.bat testrvweb hm64</code> (qualquer
+  variante mono-cliente; n&atilde;o &eacute; preciso <code>-mt</code>).
+</p>
 
 <h2 id="auth-pattern">Padrão de autenticação (login antes de lançar)</h2>
 <p>

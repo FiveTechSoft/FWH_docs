@@ -179,6 +179,10 @@ survives modal loops. Ideal for most applications.
       <td>Main window + child dialog. The capture composites owned popups, so the dialog appears in the browser too</td>
     </tr>
     <tr>
+      <td><code>samples/RemoteView/testrvweb.prg</code></td>
+      <td>Remote View + TWebView2 (Edge HTML/JS inside the published window)</td>
+    </tr>
+    <tr>
       <td><code>samples/database/fivedburv.prg</code></td>
       <td>FiveDBU integrated with Remote View: <code>ON INIT RemoteViewStart()</code> + right-click popup menu</td>
     </tr>
@@ -387,11 +391,36 @@ For apps that need multiple simultaneous clients, use
       <td>Login before launch: remote user authenticates in a dialog, then the app UI opens</td>
     </tr>
     <tr>
+      <td><code>samples/RemoteView/testrvweb.prg</code></td>
+      <td>Remote View + TWebView2: Edge WebView2 (HTML/JS, SendToFWH) inside a window published with RemoteViewStart</td>
+    </tr>
+    <tr>
       <td><code>samples/database/fivedburv.prg</code></td>
       <td>FiveDBU with integrated Remote View on port 8080</td>
     </tr>
   </tbody>
 </table>
+
+<h2 id="webview2">Remote View + WebView2</h2>
+<p>
+  <code>testrvweb.prg</code> shows how to embed
+  <code>TWebView2</code> (Microsoft Edge) in a FiveWin window and publish that
+  same window with <code>RemoteViewStart</code>. Locally you get a native toolbar
+  plus the web surface (demo HTML, <code>Navigate</code>, <code>Eval</code>,
+  <code>SendToFWH</code> &rarr; <code>bOnBind</code>). Remotely, any browser on
+  the LAN opens <code>http://host:8080</code> and sees/controls the whole window
+  (FWH controls and WebView2 content captured via
+  <code>PW_RENDERFULLCONTENT</code>).
+</p>
+<p>
+  <strong>Same-screen layout:</strong> put the real desktop window low on the
+  screen (<code>FROM nTop, nLeft TO &hellip; PIXEL</code>) so the browser page
+  (the live image) can sit above it. Use a modest
+  <code>RemoteViewSetOffset( nX, nY )</code> so the window paints near the top of
+  the Remote View bitmap. Requires the WebView2 Runtime (Edge Evergreen or Fixed
+  Version). Compile: <code>build_new.bat testrvweb hm64</code> (or any single-client
+  variant; no <code>-mt</code> needed).
+</p>
 
 <h2 id="auth-pattern">Authentication Pattern (login before launch)</h2>
 <p>
