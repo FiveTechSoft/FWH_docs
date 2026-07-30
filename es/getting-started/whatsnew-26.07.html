@@ -74,30 +74,37 @@ Sample: <code>samples/test/testchmhlp.prg</code> (+ <code>popups.txt</code>).
 Recompilar la librería PRG tras la actualización.
 </p>
 
-<h2 id="dshow-webcam">samples/misc/dshow.prg — webcam con DirectShow (Windows moderno)</h2>
+<h2 id="dshow-webcam">samples/misc/dshow.prg — webcam (Media Foundation)</h2>
 <p>
 <code>samples/misc/dshow.prg</code> muestra vista previa de webcam y captura BMP
-con DirectShow, sin <code>qedit.dll</code> / <code>ISampleGrabber</code>
-(no disponibles en Windows actuales). La vista se reparentiza en un diálogo
-FiveWin con <code>IVideoWindow</code>; las capturas usan
-<code>IBasicVideo::GetCurrentImage()</code>.
+en un diálogo FiveWin. En Windows 10/11, DirectShow
+<code>IVideoWindow</code> / <code>GetCurrentImage</code> suele devolver un
+buffer <strong>negro</strong> aunque el grafo esté en Running (comprobado con
+FaceTime HD / UVC). El sample usa por tanto
+<strong>Media Foundation</strong> mediante una DLL auxiliar.
 </p>
 <ul>
-  <li><strong>Corrección COM:</strong> <code>CoInitializeEx</code> usa
-    <code>COINIT_APARTMENTTHREADED</code> (STA), como los hilos UI de FiveWin.
-    Con <code>COINIT_MULTITHREADED</code> fallaba con
-    <code>RPC_E_CHANGED_MODE</code> si COM ya estaba en STA.</li>
-  <li><strong>Compiladores:</strong> Harbour+MSVC (<code>hm32</code>/<code>hm64</code>)
-    y xHarbour+BCC32 (<code>xb32</code>), con compatibilidad C Harbour/xHarbour
-    y supresión de avisos de cabeceras SDK en BCC.</li>
+  <li><strong>DLL auxiliar:</strong> <code>samples/misc/mfcam.cpp</code> →
+    <code>mfcam.dll</code> (32-bit) / <code>mfcam64.dll</code> (64-bit).
+    Compilar una vez con MSVC: <code>build_mfcam.bat</code>. Colocar la DLL
+    junto al EXE del sample.</li>
+  <li><strong>UI:</strong> un timer graba cada frame a BMP y lo carga en un
+    control <code>IMAGE</code> real (vista en vivo) y opcionalmente el snapshot.</li>
+  <li><strong>Compiladores:</strong> cualquier variante con
+    <code>build_new.bat</code>; verificado con xHarbour + BCC32
+    (<code>xb32</code>).</li>
+  <li><strong>Diagnóstico (opcional):</strong>
+    <code>build_camtest.bat</code> genera tests C++ puros sin FiveWin —
+    <code>camtest_mf64.exe</code> (MF, recomendado) y
+    <code>camtest64.exe</code> (DirectShow; a menudo negro en el mismo PC).</li>
 </ul>
 <pre><code>cd samples\misc
-build_new.bat dshow hm32
-build_new.bat dshow hm64
-build_new.bat dshow xb32</code></pre>
+build_mfcam.bat
+build_new.bat dshow xb32
+dshow.exe</code></pre>
 <p>
 Relacionado: clase <a href="../../es/ui/twebcam.html">TWebCam</a> (VFW legado) y
-<code>samples/misc/webcam.prg</code>.
+<code>samples/web/webcam.prg</code>.
 </p>
 
 <h2 id="fw-demodb">FW_DemoDB() — nuevo servidor demo MySQL</h2>
@@ -154,8 +161,8 @@ Referencia: <a href="../../es/internet/twebview.html">TWebView2</a>.
     vacío desde el nombre (Thunderbird / clientes Simple MAPI estrictos)</li>
   <li><strong>TXBrowse:SelectRow()</strong> — división por cero con columnas multi-select sin totales</li>
   <li><strong>window.prg</strong> — TSBROWSE añadido a <code>cBrwClassList</code></li>
-  <li><strong>dshow.prg</strong> — sample DirectShow de webcam: apartamento COM STA, sin qedit.dll,
-    multi-toolchain (ver <a href="#dshow-webcam">arriba</a>)</li>
+  <li><strong>dshow.prg</strong> — sample webcam con Media Foundation
+    (<code>mfcam.dll</code>); ver <a href="#dshow-webcam">arriba</a></li>
   <li><strong>TControl F1 help</strong> — <code>nHelpId</code> vacío sube al padre
     (ver <a href="#f1-help-empty-nhelpid">arriba</a>)</li>
 </ul>
