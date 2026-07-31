@@ -17,6 +17,34 @@ Destaques do FiveWin for Harbour/xHarbour versão <strong>26.07</strong> (julho 
 Veja também <code>whatsnew.txt</code> na raiz do FWH para o diário completo.
 </p>
 
+<h2 id="desktopweb-login">DesktopWeb — um PRG, desktop + browser (login.prg)</h2>
+<p>
+Novo sample <code>samples/DesktopWeb/login.prg</code>: uma única aplicação
+que expõe o <strong>mesmo HTML/CSS/JS</strong> ao desktop e a qualquer
+browser.
+</p>
+<ul>
+  <li>Servidor HTTP multi-thread na porta <strong>8080</strong>
+    (<code>hb_threadStart</code> + <code>hb_socket*</code>; compilar com
+    <code>-mt</code>)</li>
+  <li>Desktop: <code>TWebView2</code> navega para
+    <code>http://localhost:8080/</code></li>
+  <li>Browser: a mesma URL</li>
+  <li>Páginas partilhadas: login moderno e dashboard de consultas de clínica</li>
+  <li>Lógica partilhada: <code>ValidateLogin()</code> em Harbour;
+    sessão por cookie <code>DWSESS</code></li>
+  <li>API: <code>POST /api/login</code>, <code>POST /api/cmd</code>,
+    <code>GET /dashboard</code>, <code>GET /logout</code></li>
+  <li>Demo: <code>admin</code>/<code>1234</code>,
+    <code>demo</code>/<code>demo</code></li>
+</ul>
+<p>
+Compilar: <code>cd samples\DesktopWeb</code> e <code>build.bat</code>
+(ou <code>build_new.bat login hm64 -mt</code>). Requer Runtime WebView2
+para a janela desktop. Ver
+<a href="../../pt/internet/twebview2.html">TWebView2</a>.
+</p>
+
 <h2 id="remoteview-webview2">Remote View + WebView2 (testrvweb)</h2>
 <p>
 Novo exemplo <code>samples/RemoteView/testrvweb.prg</code> que combina

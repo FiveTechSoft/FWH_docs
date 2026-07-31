@@ -10,9 +10,41 @@
 <h1>TWebView2</h1>
 <p class="class-source">Fonte: <code>source/classes/twebview2.prg</code></p>
 <h2>Overview</h2>
-<p>TWebView2 class — part of the FiveWin for Harbour/xHarbour framework.</p>
+<p>
+<code>TWebView2</code> incorpora Microsoft Edge WebView2 numa janela ou diálogo
+FiveWin. Serve para alojar UIs HTML/CSS/JS modernas junto de controlos FWH
+nativos. Requer o
+<a href="https://developer.microsoft.com/en-us/microsoft-edge/webview2/">Runtime WebView2</a>.
+</p>
+
+<h2 id="desktopweb">Desktop + Web com uma única UI</h2>
+<p>
+O sample <code>samples/DesktopWeb/login.prg</code> mostra o padrão em que
+<strong>desktop e browser partilham o mesmo HTML/CSS/JS</strong>:
+</p>
+<ul>
+  <li>Um servidor HTTP multi-thread na porta <code>8080</code> serve login e
+    dashboard gerados em Harbour.</li>
+  <li>O shell desktop cria <code>TWebView2</code> e faz
+    <code>Navigate("http://localhost:8080/")</code>.</li>
+  <li>Qualquer browser abre a mesma URL com a mesma UI e API.</li>
+  <li>A validação de credenciais está em PRG (<code>ValidateLogin</code>);
+    sessão com cookie <code>DWSESS</code>.</li>
+</ul>
+<p>
+Compilar com VM multi-thread: <code>samples\DesktopWeb\build.bat</code> ou
+<code>build_new.bat login hm64 -mt</code>. Demo:
+<code>admin</code>/<code>1234</code>, <code>demo</code>/<code>demo</code>.
+</p>
+
 <p>See <a href="../../pt/reference/classes.html">Classes Alfabético</a> for full class list.</p>
-<h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/functions.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/internet/twebview.html">&larr; twebview</a> | <a href="../../pt/reference/tweekview.html">tweekview &rarr;</a></nav></main>
+<h2>Veja Também</h2><ul>
+<li><a href="../../pt/internet/twebview.html">TWebView</a></li>
+<li><a href="../../pt/internet/remoteview.html">Remote View</a></li>
+<li><a href="../../pt/getting-started/whatsnew-26.07.html#desktopweb-login">Novidades 26.07</a></li>
+<li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li>
+<li><a href="../../pt/reference/functions.html">Funções</a></li>
+</ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/internet/twebview.html">&larr; twebview</a> | <a href="../../pt/reference/tweekview.html">tweekview &rarr;</a></nav></main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script>
 </body></html>

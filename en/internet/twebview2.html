@@ -10,9 +10,62 @@
 <h1>TWebView2</h1>
 <p class="class-source">Source: <code>source/classes/twebview2.prg</code></p>
 <h2>Overview</h2>
-<p>TWebView2 class — part of the FiveWin for Harbour/xHarbour framework.</p>
+<p>
+<code>TWebView2</code> embeds Microsoft Edge WebView2 in a FiveWin window or
+dialog. Use it to host modern HTML/CSS/JS UIs next to native FWH controls.
+Requires the <a href="https://developer.microsoft.com/en-us/microsoft-edge/webview2/">WebView2 Runtime</a>
+(Evergreen or Fixed Version).
+</p>
+
+<h2 id="desktopweb">Desktop + Web with one UI</h2>
+<p>
+Sample <code>samples/DesktopWeb/login.prg</code> shows a full pattern where
+<strong>desktop and browser share the same HTML/CSS/JS</strong>:
+</p>
+<ul>
+  <li>An embedded multi-thread HTTP server listens on port <code>8080</code>
+    and serves login + dashboard pages generated in Harbour.</li>
+  <li>The desktop shell creates <code>TWebView2</code> and
+    <code>Navigate("http://localhost:8080/")</code>.</li>
+  <li>Any browser opens the same URL and gets the identical UI and API.</li>
+  <li>Credential validation runs in PRG (<code>ValidateLogin</code>), not in
+    JavaScript. Sessions use cookie <code>DWSESS</code>.</li>
+</ul>
+<pre><code>// Desktop shell (simplified)
+StartHttpServer( 8080 )
+oWeb := TWebView2():New()
+oWeb:Navigate( "http://localhost:8080/" )
+oWeb:Run()
+</code></pre>
+<p>
+Build with multi-thread VM: <code>samples\DesktopWeb\build.bat</code> or
+<code>build_new.bat login hm64 -mt</code>. Demo users:
+<code>admin</code>/<code>1234</code>, <code>demo</code>/<code>demo</code>.
+</p>
+
+<h2>Key methods</h2>
+<ul>
+  <li><code>New( oWndParent, cUserDataFolder, cBrowserExecutableFolder )</code></li>
+  <li><code>Navigate( cUrl )</code> / <code>SetHtml( cHtml )</code></li>
+  <li><code>Eval( cJavaScript )</code> / <code>InjectJavascript( cScript )</code></li>
+  <li><code>bOnBind</code> — receives arguments from JS <code>SendToFWH(...)</code></li>
+  <li><code>SetSize</code>, <code>SetTitle</code>, <code>SetUserAgent</code>,
+    <code>OpenDevToolsWindow</code>, <code>End</code></li>
+</ul>
+<p>
+For Remote View + WebView2 together, see
+<code>samples/RemoteView/testrvweb.prg</code> and
+<a href="remoteview.html#webview2">Remote View</a>.
+</p>
+
 <p>See <a href="../../en/reference/classes.html">Classes Alphabetical</a> for full class list.</p>
-<h2>See Also</h2><ul><li><a href="../../en/reference/classes.html">Classes Alphabetical</a></li><li><a href="../../en/reference/functions.html">Functions</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../en/internet/twebview.html">&larr; twebview</a> | <a href="../../en/reference/tweekview.html">tweekview &rarr;</a></nav></main>
+<h2>See Also</h2><ul>
+<li><a href="../../en/internet/twebview.html">TWebView</a></li>
+<li><a href="../../en/internet/remoteview.html">Remote View</a></li>
+<li><a href="../../en/getting-started/whatsnew-26.07.html#desktopweb-login">What's New 26.07</a></li>
+<li><a href="../../en/reference/classes.html">Classes Alphabetical</a></li>
+<li><a href="../../en/reference/functions.html">Functions</a></li>
+</ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../en/internet/twebview.html">&larr; twebview</a> | <a href="../../en/reference/tweekview.html">tweekview &rarr;</a></nav></main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script><script src="../../js/nav.js"></script>
 </body></html>
