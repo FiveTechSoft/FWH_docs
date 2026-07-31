@@ -58,6 +58,37 @@ Detalhes: <a href="../../en/ui/txbrowse.html#multiline-edit">TXBrowse multi-line
 (documentação EN; ES em <a href="../../es/ui/txbrowse.html#multiline-edit">es/ui/txbrowse.html</a>).
 </p>
 
+<h2 id="dshow-webcam">samples/misc/dshow.prg — webcam (Media Foundation)</h2>
+<p>
+<code>samples/misc/dshow.prg</code> mostra preview ao vivo da webcam e captura BMP
+num diálogo FiveWin. No Windows 10/11, DirectShow
+<code>IVideoWindow</code> / <code>GetCurrentImage</code> costuma devolver um
+buffer <strong>preto</strong> mesmo com o grafo em Running (verificado com
+FaceTime HD / UVC). O sample usa por isso
+<strong>Media Foundation</strong> através de código C embutido no PRG.
+</p>
+<ul>
+  <li><strong>C autocontido:</strong> o antigo helper <code>mfcam.cpp</code>
+    foi convertido para C dentro de <code>#pragma BEGINDUMP</code>. GUIDs e
+    vtables COM mínimas são declaradas localmente; os entry points MF/COM são
+    resolvidos em runtime a partir das DLLs do sistema <code>ole32</code>,
+    <code>mfplat</code>, <code>mf</code> e <code>mfreadwrite</code>. Não são
+    necessários <code>mfcam.dll</code>, headers do SDK de MF nem bibliotecas de
+    importação <code>mf*.lib</code>.</li>
+  <li><strong>UI:</strong> um timer grava cada frame em BMP e carrega-o num
+    control <code>IMAGE</code> real (preview ao vivo) e snapshot opcional.</li>
+  <li><strong>Compiladores:</strong> qualquer variante com
+    <code>build_new.bat</code>; verificado com xHarbour + BCC32
+    (<code>xb32</code>).</li>
+  <li><strong>Diagnóstico (opcional):</strong>
+    <code>build_camtest.bat</code> gera testes C++ puros sem FiveWin —
+    <code>camtest_mf64.exe</code> (MF, recomendado) e
+    <code>camtest64.exe</code> (DirectShow; muitas vezes preto no mesmo PC).</li>
+</ul>
+<pre><code>cd samples\misc
+build_new.bat dshow xb32
+dshow.exe</code></pre>
+
 <h2 id="fw-demodb">FW_DemoDB() — novo servidor demo MySQL</h2>
 <p>
 O servidor MySQL demo na nuvem usado pelos samples do FWH mudou.
@@ -112,6 +143,8 @@ Referência: <a href="../../pt/internet/twebview.html">TWebView2</a>.
     vazio a partir do nome (Thunderbird / clientes Simple MAPI estritos)</li>
   <li><strong>TXBrowse:SelectRow()</strong> — divisão por zero com colunas multi-select sem totais</li>
   <li><strong>window.prg</strong> — TSBROWSE adicionado a <code>cBrwClassList</code></li>
+  <li><strong>dshow.prg</strong> — sample webcam com código C Media Foundation autocontido;
+    ver <a href="#dshow-webcam">acima</a></li>
 </ul>
 
 </main>

@@ -101,13 +101,16 @@ en un diálogo FiveWin. En Windows 10/11, DirectShow
 <code>IVideoWindow</code> / <code>GetCurrentImage</code> suele devolver un
 buffer <strong>negro</strong> aunque el grafo esté en Running (comprobado con
 FaceTime HD / UVC). El sample usa por tanto
-<strong>Media Foundation</strong> mediante una DLL auxiliar.
+<strong>Media Foundation</strong> mediante código C integrado en el PRG.
 </p>
 <ul>
-  <li><strong>DLL auxiliar:</strong> <code>samples/misc/mfcam.cpp</code> →
-    <code>mfcam.dll</code> (32-bit) / <code>mfcam64.dll</code> (64-bit).
-    Compilar una vez con MSVC: <code>build_mfcam.bat</code>. Colocar la DLL
-    junto al EXE del sample.</li>
+  <li><strong>C autocontenido:</strong> el antiguo helper
+    <code>mfcam.cpp</code> se convirtió a C dentro de
+    <code>#pragma BEGINDUMP</code>. Los GUIDs y vtables COM mínimas se declaran
+    localmente; los puntos de entrada MF/COM se resuelven en runtime desde las
+    DLLs del sistema <code>ole32</code>, <code>mfplat</code>, <code>mf</code> y
+    <code>mfreadwrite</code>. No hacen falta <code>mfcam.dll</code>, cabeceras
+    del SDK de MF ni librerías de importación <code>mf*.lib</code>.</li>
   <li><strong>UI:</strong> un timer graba cada frame a BMP y lo carga en un
     control <code>IMAGE</code> real (vista en vivo) y opcionalmente el snapshot.</li>
   <li><strong>Compiladores:</strong> cualquier variante con
@@ -119,7 +122,6 @@ FaceTime HD / UVC). El sample usa por tanto
     <code>camtest64.exe</code> (DirectShow; a menudo negro en el mismo PC).</li>
 </ul>
 <pre><code>cd samples\misc
-build_mfcam.bat
 build_new.bat dshow xb32
 dshow.exe</code></pre>
 <p>
@@ -181,8 +183,8 @@ Referencia: <a href="../../es/internet/twebview.html">TWebView2</a>.
     vacío desde el nombre (Thunderbird / clientes Simple MAPI estrictos)</li>
   <li><strong>TXBrowse:SelectRow()</strong> — división por cero con columnas multi-select sin totales</li>
   <li><strong>window.prg</strong> — TSBROWSE añadido a <code>cBrwClassList</code></li>
-  <li><strong>dshow.prg</strong> — sample webcam con Media Foundation
-    (<code>mfcam.dll</code>); ver <a href="#dshow-webcam">arriba</a></li>
+  <li><strong>dshow.prg</strong> — sample webcam con código C Media Foundation autocontenido;
+    ver <a href="#dshow-webcam">arriba</a></li>
   <li><strong>TControl F1 help</strong> — <code>nHelpId</code> vacío sube al padre
     (ver <a href="#f1-help-empty-nhelpid">arriba</a>)</li>
 </ul>
