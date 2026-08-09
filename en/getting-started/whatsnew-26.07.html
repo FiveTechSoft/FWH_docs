@@ -142,15 +142,23 @@ with FaceTime HD / UVC). The sample therefore uses
   <li><strong>UI:</strong> a timer grabs each frame to a BMP and loads it into
     a real <code>IMAGE</code> control (live preview) and optional snapshot.</li>
   <li><strong>Toolchains:</strong> any sample variant via
-    <code>build_new.bat</code>; verified with xHarbour + BCC32
+    <code>build_new.bat</code>. Verified with Harbour 64-bit
+    (<code>hb64</code>, <code>hm64</code>) and xHarbour + BCC32
     (<code>xb32</code>).</li>
+  <li><strong>64-bit fix (Aug 2026):</strong> embedded C includes
+    <code>hbapiitm.h</code> so <code>hb_itemArrayNew</code> /
+    <code>hb_itemReturnRelease</code> use pointer prototypes. Without it,
+    64-bit builds crashed with ACCESS_VIOLATION in
+    <code>MfCamStatus()</code> after Connect (return truncated to
+    <code>int</code>).</li>
   <li><strong>Diagnostics (optional):</strong>
     <code>build_camtest.bat</code> builds pure C++ tests without FiveWin —
     <code>camtest_mf64.exe</code> (MF, recommended) and
     <code>camtest64.exe</code> (DirectShow; often black on the same hardware).</li>
 </ul>
 <pre><code>cd samples\misc
-build_new.bat dshow xb32
+build_new.bat dshow hb64
+:: or: build_new.bat dshow hm64 / xb32
 dshow.exe</code></pre>
 <p>
 Related: class <a href="../../en/ui/twebcam.html">TWebCam</a> (legacy VFW) and
@@ -212,7 +220,8 @@ Full reference: <a href="../../en/internet/twebview.html">TWebView2</a>.
   <li><strong>TXBrowse:SelectRow()</strong> — zero-divisor when using multi-select columns without totals</li>
   <li><strong>window.prg</strong> — added TSBROWSE to <code>cBrwClassList</code></li>
   <li><strong>dshow.prg</strong> — webcam sample via self-contained Media Foundation C code;
-    see <a href="#dshow-webcam">above</a></li>
+    64-bit Harbour needs <code>hbapiitm.h</code> in the embedded C (see
+    <a href="#dshow-webcam">above</a>)</li>
   <li><strong>TControl F1 help</strong> — empty <code>nHelpId</code> bubbles to parent
     (see <a href="#f1-help-empty-nhelpid">above</a>)</li>
 </ul>

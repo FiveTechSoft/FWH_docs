@@ -106,15 +106,23 @@ FaceTime HD / UVC). O sample usa por isso
   <li><strong>UI:</strong> um timer grava cada frame em BMP e carrega-o num
     control <code>IMAGE</code> real (preview ao vivo) e snapshot opcional.</li>
   <li><strong>Compiladores:</strong> qualquer variante com
-    <code>build_new.bat</code>; verificado com xHarbour + BCC32
+    <code>build_new.bat</code>. Verificado com Harbour 64 bits
+    (<code>hb64</code>, <code>hm64</code>) e xHarbour + BCC32
     (<code>xb32</code>).</li>
+  <li><strong>Fix 64 bits (ago 2026):</strong> o C embutido inclui
+    <code>hbapiitm.h</code> para que <code>hb_itemArrayNew</code> /
+    <code>hb_itemReturnRelease</code> usem protótipos de ponteiro. Sem ele,
+    builds 64 bits crashavam com ACCESS_VIOLATION em
+    <code>MfCamStatus()</code> após Connect (retorno truncado para
+    <code>int</code>).</li>
   <li><strong>Diagnóstico (opcional):</strong>
     <code>build_camtest.bat</code> gera testes C++ puros sem FiveWin —
     <code>camtest_mf64.exe</code> (MF, recomendado) e
     <code>camtest64.exe</code> (DirectShow; muitas vezes preto no mesmo PC).</li>
 </ul>
 <pre><code>cd samples\misc
-build_new.bat dshow xb32
+build_new.bat dshow hb64
+:: ou: build_new.bat dshow hm64 / xb32
 dshow.exe</code></pre>
 
 <h2 id="fw-demodb">FW_DemoDB() — novo servidor demo MySQL</h2>
@@ -172,7 +180,8 @@ Referência: <a href="../../pt/internet/twebview.html">TWebView2</a>.
   <li><strong>TXBrowse:SelectRow()</strong> — divisão por zero com colunas multi-select sem totais</li>
   <li><strong>window.prg</strong> — TSBROWSE adicionado a <code>cBrwClassList</code></li>
   <li><strong>dshow.prg</strong> — sample webcam com código C Media Foundation autocontido;
-    ver <a href="#dshow-webcam">acima</a></li>
+    Harbour 64 bits precisa de <code>hbapiitm.h</code> no C embutido (ver
+    <a href="#dshow-webcam">acima</a>)</li>
 </ul>
 
 <h2 id="tdashgauge">TDashGauge — Medidor Semicircular para Dashboards</h2>

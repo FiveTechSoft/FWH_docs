@@ -142,15 +142,23 @@ FaceTime HD / UVC). El sample usa por tanto
   <li><strong>UI:</strong> un timer graba cada frame a BMP y lo carga en un
     control <code>IMAGE</code> real (vista en vivo) y opcionalmente el snapshot.</li>
   <li><strong>Compiladores:</strong> cualquier variante con
-    <code>build_new.bat</code>; verificado con xHarbour + BCC32
+    <code>build_new.bat</code>. Verificado con Harbour 64 bits
+    (<code>hb64</code>, <code>hm64</code>) y xHarbour + BCC32
     (<code>xb32</code>).</li>
+  <li><strong>Fix 64 bits (ago 2026):</strong> el C embebido incluye
+    <code>hbapiitm.h</code> para que <code>hb_itemArrayNew</code> /
+    <code>hb_itemReturnRelease</code> usen prototipos de puntero. Sin él,
+    los builds 64 bits caían con ACCESS_VIOLATION en
+    <code>MfCamStatus()</code> tras Connect (retorno truncado a
+    <code>int</code>).</li>
   <li><strong>Diagnóstico (opcional):</strong>
     <code>build_camtest.bat</code> genera tests C++ puros sin FiveWin —
     <code>camtest_mf64.exe</code> (MF, recomendado) y
     <code>camtest64.exe</code> (DirectShow; a menudo negro en el mismo PC).</li>
 </ul>
 <pre><code>cd samples\misc
-build_new.bat dshow xb32
+build_new.bat dshow hb64
+:: o: build_new.bat dshow hm64 / xb32
 dshow.exe</code></pre>
 <p>
 Relacionado: clase <a href="../../es/ui/twebcam.html">TWebCam</a> (VFW legado) y
@@ -212,7 +220,8 @@ Referencia: <a href="../../es/internet/twebview.html">TWebView2</a>.
   <li><strong>TXBrowse:SelectRow()</strong> — división por cero con columnas multi-select sin totales</li>
   <li><strong>window.prg</strong> — TSBROWSE añadido a <code>cBrwClassList</code></li>
   <li><strong>dshow.prg</strong> — sample webcam con código C Media Foundation autocontenido;
-    ver <a href="#dshow-webcam">arriba</a></li>
+    Harbour 64 bits necesita <code>hbapiitm.h</code> en el C embebido (ver
+    <a href="#dshow-webcam">arriba</a>)</li>
   <li><strong>TControl F1 help</strong> — <code>nHelpId</code> vacío sube al padre
     (ver <a href="#f1-help-empty-nhelpid">arriba</a>)</li>
 </ul>
