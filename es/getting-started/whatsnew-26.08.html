@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novedades 26.08 - FWH Docs</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>Novedades en FWH 26.08</h1>
+
+<p>
+Resumen de FiveWin for Harbour/xHarbour versión <strong>26.08</strong> (agosto 2026).
+Ver también <code>whatsnew.txt</code> en la raíz de FWH para el registro día a día.
+</p>
+
+<h2 id="testblur">samples/test/testblur.prg — blur con JPG/PNG</h2>
+<p>
+<code>samples/test/testblur.prg</code> demuestra el efecto C embebido
+<code>Blur( hBitmap, nRadius )</code> (box blur, 0–100). Antes solo cargaba BMP
+con <code>PalBmpRead</code>. Ahora carga imágenes habituales y muestra un
+slider horizontal visible bajo la imagen.
+</p>
+<ul>
+  <li><strong>Formatos:</strong> BMP, JPG/JPEG, PNG (y otros soportados por
+    <code>FW_ReadImage</code> / FreeImage / GDI+)</li>
+  <li><strong>UI:</strong> <code>DEFINE DIALOG</code> con
+    <code>PIXEL TRUEPIXEL</code> para que imagen y controles usen la misma
+    rejilla en píxeles; sin <code>TRUEPIXEL</code>, los controles PIXEL pueden
+    quedar fuera del template del diálogo y no verse</li>
+  <li><strong>Slider:</strong> TSlider horizontal bajo el bitmap (0–100);
+    valor junto a la etiqueta “Blur:”</li>
+  <li><strong>CLI:</strong> <code>testblur.exe ruta\a\imagen.jpg</code> omite el
+    diálogo de fichero si la ruta existe</li>
+</ul>
+<pre><code>cd samples\test
+build_new.bat testblur hb32
+testblur.exe
+:: o: testblur.exe C:\ruta\foto.jpg</code></pre>
+<p>
+Relacionado: <code>FW_ReadImage()</code> / <code>PalBmpDraw()</code>, y el sample
+<code>samples\test\testblu2.prg</code> (blur sobre fondo de XBrowse).
+</p>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>
