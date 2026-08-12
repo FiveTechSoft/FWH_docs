@@ -19,10 +19,13 @@ Ver también <code>whatsnew.txt</code> en la raíz de FWH para el registro día 
 
 <h2 id="testblur">samples/test/testblur.prg — blur con JPG/PNG</h2>
 <p>
-<code>samples/test/testblur.prg</code> demuestra el efecto C embebido
-<code>Blur( hBitmap, nRadius )</code> (box blur, 0–100). Antes solo cargaba BMP
-con <code>PalBmpRead</code>. Ahora carga imágenes habituales y muestra un
-slider horizontal visible bajo la imagen.
+<code>samples/test/testblur.prg</code> demuestra el efecto de la librería FWH
+<code>Blur( hBitmap, nRadius )</code> (box blur, 0–100, en
+<code>source/internal/ribbon.c</code>). Antes solo cargaba BMP con
+<code>PalBmpRead</code> y duplicaba el C en un <code>#pragma BEGINDUMP</code>.
+Ahora carga imágenes habituales, muestra un slider horizontal visible bajo la
+imagen y enlaza <code>Blur()</code> desde FiveHC / FiveC (sample solo PRG;
+Win32 <code>hb_retnl</code>, Win64 <code>hb_retnll</code>).
 </p>
 <ul>
   <li><strong>Formatos:</strong> BMP, JPG/JPEG, PNG (y otros soportados por
@@ -33,6 +36,8 @@ slider horizontal visible bajo la imagen.
     quedar fuera del template del diálogo y no verse</li>
   <li><strong>Slider:</strong> TSlider horizontal bajo el bitmap (0–100);
     valor junto a la etiqueta “Blur:”</li>
+  <li><strong>API:</strong> <code>Blur( hBmp, nRadius )</code> de la librería C
+    FWH — sin C embebido en el sample</li>
   <li><strong>CLI:</strong> <code>testblur.exe ruta\a\imagen.jpg</code> omite el
     diálogo de fichero si la ruta existe</li>
 </ul>
@@ -41,7 +46,8 @@ build_new.bat testblur hb32
 testblur.exe
 :: o: testblur.exe C:\ruta\foto.jpg</code></pre>
 <p>
-Relacionado: <code>FW_ReadImage()</code> / <code>PalBmpDraw()</code>, y el sample
+Relacionado: <code>FW_ReadImage()</code> / <code>PalBmpDraw()</code>,
+<code>source/internal/ribbon.c</code> (<code>HB_FUNC( BLUR )</code>), y el sample
 <code>samples\test\testblu2.prg</code> (blur sobre fondo de XBrowse).
 </p>
 
