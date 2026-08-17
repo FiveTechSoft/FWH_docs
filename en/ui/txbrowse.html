@@ -171,6 +171,22 @@ classDiagram
 </tbody>
 </table>
 
+<h2 id="blclicked">bLClicked and BookMark</h2>
+<p>
+A left click on a data cell first moves the browse to that row
+(<code>Skip()</code> updates <code>BookMark</code>) and then evaluates
+<code>oBrw:bLClicked</code> once. Code that reads
+<code>oBrw:BookMark</code> inside the block — typical for a radio-style
+<code>SetCheck()</code> column — therefore sees the clicked record, not
+the previous current row. The block is niled during
+<code>Super:LButtonDown()</code> so TControl / TWindow do not fire it a
+second time.
+</p>
+<p>
+Sample: <code>samples/system/xbrwin7c.prg</code>. See
+<a href="../getting-started/whatsnew-26.08.html#xbrowse-blclicked">What's New 26.08</a>.
+</p>
+
 <h2 id="commands">Commands (XBrowse.ch)</h2>
 
 <p>FiveWin provides two command styles for creating TXBrowse controls:</p>

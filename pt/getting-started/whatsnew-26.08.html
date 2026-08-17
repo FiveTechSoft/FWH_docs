@@ -17,6 +17,24 @@ Destaques do FiveWin for Harbour/xHarbour versão <strong>26.08</strong> (agosto
 Veja também <code>whatsnew.txt</code> na raiz do FWH para o log dia a dia.
 </p>
 
+<h2 id="xbrowse-blclicked">TXBrowse:bLClicked depois de BookMark</h2>
+<p>
+<code>TXBrowse:LButtonDown()</code> avalia <code>bLClicked</code>
+<strong>uma vez, depois</strong> da mudança de linha
+(<code>Skip()</code> / <code>BookMark</code>). A correção de abril 2026
+do disparo duplo executava o bloco antes do movimento, então
+<code>oBrw:BookMark</code> ainda era o registro anterior. Colunas
+<code>SetCheck()</code> no estilo rádio que fazem
+<code>nSelectedRow := oBrw:BookMark</code> em <code>bLClicked</code>
+marcavam a linha atual antiga, não a clicada.
+</p>
+<p>
+<code>bLClicked</code> continua anulado em volta de
+<code>Super:LButtonDown()</code> para TControl / TWindow não o
+avaliarem de novo. Sample: <code>samples/system/xbrwin7c.prg</code>. Ver
+<a href="../../pt/ui/txbrowse.html#blclicked">TXBrowse bLClicked</a>.
+</p>
+
 <h2 id="testblur">samples/test/testblur.prg — blur com JPG/PNG</h2>
 <p>
 <code>samples/test/testblur.prg</code> demonstra o efeito da biblioteca FWH

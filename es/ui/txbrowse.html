@@ -171,6 +171,22 @@ classDiagram
 </tbody>
 </table>
 
+<h2 id="blclicked">bLClicked y BookMark</h2>
+<p>
+Un clic izquierdo en una celda de datos primero mueve el browse a esa
+fila (<code>Skip()</code> actualiza <code>BookMark</code>) y después
+evalúa <code>oBrw:bLClicked</code> una sola vez. El código que lee
+<code>oBrw:BookMark</code> dentro del bloque — típico de una columna
+<code>SetCheck()</code> tipo radio — ve el registro clicado, no la fila
+actual anterior. El bloque se nilea durante
+<code>Super:LButtonDown()</code> para que TControl / TWindow no lo
+disparen otra vez.
+</p>
+<p>
+Sample: <code>samples/system/xbrwin7c.prg</code>. Ver
+<a href="../getting-started/whatsnew-26.08.html#xbrowse-blclicked">Novedades 26.08</a>.
+</p>
+
 <h2 id="commands">Commands (XBrowse.ch)</h2>
 
 <p>FiveWin provides two command styles for creating TXBrowse controls:</p>
