@@ -17,6 +17,24 @@ Highlights of FiveWin for Harbour/xHarbour version <strong>26.08</strong> (Augus
 See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
 </p>
 
+<h2 id="fwh64-tc5imglst">FWH64: TC5ImgList / TVMenu in Five64.a</h2>
+<p>
+<code>TC5ImgList</code>, <code>TVMenu</code> and <code>TVItem</code> were
+added to <code>fwh.hbp</code> on 20 June 2026 (32-bit and MSVC64) but
+never to <code>makes/hb_bcc64/prg_list.txt</code>. FWH64
+(<code>Five64.a</code> / <code>Fivexh64.a</code>) therefore linked
+without those classes: VMenu failed with
+“Class TC5ImgList not found” while 32-bit was fine.
+</p>
+<p>
+The three PRGs are now in the BCC64 list. Sample
+<code>samples/test/vmenu_test.prg</code> builds and runs with
+<code>build_new.bat vmenu_test hb64</code>. Older June/July FWH64
+work-around: compile <code>source/classes/tc5imglst.prg</code> into
+the app. See
+<a href="../../en/reference/tvmenu.html">TVMenu</a>.
+</p>
+
 <h2 id="xbrowse-blclicked">TXBrowse:bLClicked after BookMark</h2>
 <p>
 <code>TXBrowse:LButtonDown()</code> now evaluates <code>bLClicked</code>
