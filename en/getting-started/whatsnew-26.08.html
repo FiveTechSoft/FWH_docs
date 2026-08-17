@@ -17,6 +17,33 @@ Highlights of FiveWin for Harbour/xHarbour version <strong>26.08</strong> (Augus
 See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
 </p>
 
+<h2 id="topencode">TOpenCode — free models (OpenCode Zen)</h2>
+<p>
+New class <code>TOpenCode</code> (<code>source/classes/topencode.prg</code>)
+calls <code>https://opencode.ai/zen/v1/chat/completions</code> with
+<code>Authorization: Bearer public</code> — no API key. Free models include
+<code>hy3-free</code>, <code>mimo-v2.5-free</code> and
+<code>deepseek-v4-flash-free</code>. Sync <code>Send</code> /
+<code>SendWithSystem</code>; async <code>SendAsync</code> /
+<code>SendWithSystemAsync</code> via <code>hb_threadStart</code> (build with
+<code>mt</code> so the linker uses <code>hbvmmt</code>). Rate-limit answers
+retry another free model. Concurrent async calls use unique
+<code>oc_&lt;ms&gt;_&lt;seq&gt;.json</code> names and write through a
+<code>.part</code> file then rename.
+</p>
+<ul>
+  <li><code>samples/ai/opencode1.prg</code> — three agents in parallel</li>
+  <li><code>samples/ai/opencode2.prg</code> + <code>opencode2.html</code> —
+    TWebView2 WhatsApp-style designer (agents left, chat right, add/edit roles)</li>
+</ul>
+<pre><code>cd samples\ai
+build_new.bat opencode1 hb32 mt
+build_new.bat opencode2 hb32 mt
+:: run from samples\ai (libcurl.dll)</code></pre>
+<p>
+See <a href="../../en/internet/topencode.html">TOpenCode</a>.
+</p>
+
 <h2 id="fwh64-tc5imglst">FWH64: TC5ImgList / TVMenu in Five64.a</h2>
 <p>
 <code>TC5ImgList</code>, <code>TVMenu</code> and <code>TVItem</code> were

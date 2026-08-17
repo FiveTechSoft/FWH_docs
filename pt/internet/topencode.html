@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOpenCode (OpenCode Zen) - Documentação FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>TOpenCode (OpenCode Zen)</h1>
+<p class="class-source">Fonte: <code>source/classes/topencode.prg</code></p>
+
+<p>
+TOpenCode usa a API de chat <strong>OpenCode Zen</strong>
+(<code>https://opencode.ai/zen/v1/chat/completions</code>) com
+<code>Authorization: Bearer public</code>. Sem chave API. Modelos gratuitos
+(<code>hy3-free</code>, <code>mimo-v2.5-free</code>,
+<code>deepseek-v4-flash-free</code>, etc.).
+<code>SendAsync</code> exige a VM Harbour MT
+(<code>build_new.bat &lt;sample&gt; hb32 mt</code>).
+</p>
+
+<h2 id="methods">Métodos</h2>
+<table>
+<thead><tr><th>Método</th><th>Descrição</th></tr></thead>
+<tbody>
+<tr><td><code>New( cModel )</code></td><td>Um handle curl por instância (vários agentes em paralelo).</td></tr>
+<tr><td><code>Send( cPrompt )</code> / <code>SendWithSystem()</code></td><td>Síncrono; em rate limit tenta outro modelo free.</td></tr>
+<tr><td><code>SendAsync()</code> / <code>SendWithSystemAsync()</code></td><td>Retorna já. Consultar <code>IsRunning()</code>.</td></tr>
+<tr><td><code>GetValue()</code></td><td>Texto do assistente (UTF-8 → ACP).</td></tr>
+</tbody>
+</table>
+<p>
+Async grava <code>oc_&lt;ms&gt;_&lt;seq&gt;.json</code> via <code>.part</code>
++ rename: três <code>SendAsync()</code> no mesmo tick não colidem.
+</p>
+
+<h2 id="samples">Samples</h2>
+<ul>
+<li><code>samples/ai/opencode1.prg</code> — 3 agentes concorrentes.</li>
+<li><code>samples/ai/opencode2.prg</code> + <code>opencode2.html</code> —
+TWebView2 estilo WhatsApp: agentes à esquerda, chat à direita, papéis.</li>
+</ul>
+<pre><code>cd samples\ai
+build_new.bat opencode2 hb32 mt</code></pre>
+<p>Executar a partir de <code>samples\ai</code> para achar <code>libcurl.dll</code>.</p>
+
+<h2>Ver também</h2>
+<ul>
+<li><a href="../../pt/internet/topenai.html">TOpenAI e outras classes IA</a></li>
+<li><a href="../../pt/internet/twebview.html">TWebView2</a></li>
+</ul>
+</main>
+<aside id="toc"><div id="toc-title">Nesta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

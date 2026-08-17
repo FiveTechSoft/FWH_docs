@@ -30,6 +30,7 @@ var searchIndex = [
   // Internet
   { k: "twebview twebview2 webview chromium browser html javascript navigate eval", t: "TWebView2", u: "../../en/internet/twebview.html", s: "Internet & AI" },
   { k: "topenai tchatgpt openai chatgpt gpt ai api send prompt image stream", t: "TOpenAI / TChatGPT", u: "../../en/internet/topenai.html", s: "Internet & AI" },
+  { k: "topencode opencode zen free hy3 mimo sendasync agent opencode1 opencode2", t: "TOpenCode (Zen free)", u: "../../en/internet/topencode.html", s: "Internet & AI" },
   { k: "tollama ollama local ai llama mistral codellama", t: "TOLlama (Local AI)", u: "../../en/internet/topenai.html#ollama", s: "Internet & AI" },
   { k: "tdeepseek deepseek reasoning coding", t: "TDeepSeek", u: "../../en/internet/topenai.html#deepseek", s: "Internet & AI" },
   { k: "tgemini gemini google vision upload", t: "TGemini (Google)", u: "../../en/internet/topenai.html#gemini", s: "Internet & AI" },

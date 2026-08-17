@@ -134,6 +134,7 @@
       'internet/tftp.html', 'TFtp',
       'internet/twhatsapp.html', 'TWhatsApp',
       'internet/topenai.html', 'TOpenAI',
+      'internet/topencode.html', 'TOpenCode',
       'internet/remoteview.html', 'Remote View',
       'internet/tai.html', L.aiClasses,
       'ai/agent.html', 'Class Agent',

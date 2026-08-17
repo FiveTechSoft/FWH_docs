@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOpenCode (OpenCode Zen) - FWH Docs</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>TOpenCode (OpenCode Zen)</h1>
+<p class="class-source">Source: <code>source/classes/topencode.prg</code></p>
+
+<p>
+TOpenCode talks to the <strong>OpenCode Zen</strong> chat API
+(<code>https://opencode.ai/zen/v1/chat/completions</code>) with
+<code>Authorization: Bearer public</code>. No API key. Free models
+(<code>hy3-free</code>, <code>mimo-v2.5-free</code>,
+<code>deepseek-v4-flash-free</code>, <code>nemotron-3-ultra-free</code>,
+<code>nemotron-3.5-lightning-free</code>, <code>laguna-s-2.1-free</code>).
+Uses <code>hb_curl</code>. Async methods need the Harbour MT VM
+(<code>build_new.bat &lt;sample&gt; hb32 mt</code>).
+</p>
+
+<h2 id="architecture">Architecture</h2>
+<div class="mermaid">
+flowchart LR
+    A[TOpenCode] --> B[hb_curl]
+    B --> C["opencode.ai/zen/v1/chat/completions"]
+    A -->|SendAsync| D[hb_threadStart]
+    D --> E[oc_*.json]
+</div>
+
+<h2 id="data">Key DATA</h2>
+<table>
+<thead><tr><th>DATA</th><th>Default</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>cModel</code></td><td><code>"hy3-free"</code></td><td>Zen free model</td></tr>
+<tr><td><code>cUrl</code></td><td>Zen chat completions</td><td>Endpoint</td></tr>
+<tr><td><code>nTemperature</code></td><td><code>0.7</code></td><td>0.0–2.0</td></tr>
+<tr><td><code>aFallbackModels</code></td><td>other free models</td><td>Used on rate limit</td></tr>
+<tr><td><code>lRunning</code></td><td><code>.F.</code></td><td>Async in flight</td></tr>
+</tbody>
+</table>
+
+<h2 id="methods">Methods</h2>
+<table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>New( cModel )</code></td><td>Own curl handle per instance (safe to run several in parallel).</td></tr>
+<tr><td><code>Send( cPrompt )</code></td><td>Sync. Retries with <code>cFallbackModel()</code> on rate limit.</td></tr>
+<tr><td><code>SendWithSystem( cSys, cUser )</code></td><td>Sync with a system prompt (agent role).</td></tr>
+<tr><td><code>SendAsync( cPrompt )</code></td><td>Returns at once. Poll <code>IsRunning()</code>.</td></tr>
+<tr><td><code>SendWithSystemAsync( cSys, cUser )</code></td><td>Async + system prompt.</td></tr>
+<tr><td><code>IsRunning()</code></td><td><code>.T.</code> until the worker writes the result file.</td></tr>
+<tr><td><code>GetValue()</code></td><td>Assistant text from JSON; UTF-8 → ACP.</td></tr>
+<tr><td><code>Wait() / End()</code></td><td>Join the thread; cleanup curl.</td></tr>
+<tr><td><code>SetModel() / SetTemperature()</code></td><td>Change model / temperature.</td></tr>
+</tbody>
+</table>
+
+<p>
+Async writes <code>oc_&lt;ms&gt;_&lt;seq&gt;.json</code> via a <code>.part</code>
+file then rename, so three <code>SendAsync()</code> calls in the same tick
+do not collide and <code>IsRunning()</code> never reads a half-written body.
+</p>
+
+<h2 id="example">Example</h2>
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function Main()
+   local o := TOpenCode():New( "mimo-v2.5-free" )
+   o:Send( "Say hello in one sentence." )
+   MsgInfo( o:GetValue() )
+   o:End()
+return nil</code></pre>
+
+<h2 id="samples">Samples</h2>
+<table>
+<thead><tr><th>Sample</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>samples/ai/opencode1.prg</code></td><td>Three agents, each with its own TOpenCode, SendAsync + timer. Build <code>hb32 mt</code>.</td></tr>
+<tr><td><code>samples/ai/opencode2.prg</code></td><td>TWebView2 UI (WhatsApp layout): agents left, chat right, add/edit roles. Persists <code>opencode2.json</code>. Needs <code>opencode2.html</code> next to the exe. Build <code>hb32 mt</code>.</td></tr>
+</tbody>
+</table>
+<pre><code>cd samples\ai
+build_new.bat opencode1 hb32 mt
+build_new.bat opencode2 hb32 mt
+:: run from this folder (libcurl.dll)</code></pre>
+
+<h2 id="notes">Notes</h2>
+<ul>
+<li>No API key. OAuth / <code>auth.json</code> on TOpenCode is unused (Zen rejects <code>sk-</code> keys).</li>
+<li>Async requires <code>hbvmmt</code> — pass <code>mt</code> to <code>build_new.bat</code>.</li>
+<li>32-bit samples need the x86 <code>libcurl.dll</code> beside the exe (<code>samples\ai</code>).</li>
+<li>Do not call the Zen API from inside <code>TWebView2:bOnBind</code>; queue the work and run it from a timer (see opencode2).</li>
+</ul>
+
+<h2>See Also</h2>
+<ul>
+<li><a href="../../en/internet/topenai.html">TOpenAI and other AI classes</a></li>
+<li><a href="../../en/internet/twebview.html">TWebView2</a></li>
+<li><a href="../../en/getting-started/samples-guide.html">Samples guide</a></li>
+</ul>
+<nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)">
+<a href="../../en/internet/topenai.html">&larr; TOpenAI</a> |
+<a href="../../en/internet/twebview.html">TWebView2 &rarr;</a>
+</nav>
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

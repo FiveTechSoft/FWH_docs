@@ -175,6 +175,7 @@
   "todbc":"data/todbc.html",
   "tollama":"internet/tollama.html",
   "topenai":"internet/topenai.html",
+  "topencode":"internet/topencode.html",
   "tordinfo":"data/tordinfo.html",
   "torm":"data/torm.html",
   "toutlook":"ui/toutlook.html",
