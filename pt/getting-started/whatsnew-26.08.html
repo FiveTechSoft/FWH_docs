@@ -17,6 +17,32 @@ Destaques do FiveWin for Harbour/xHarbour versão <strong>26.08</strong> (agosto
 Veja também <code>whatsnew.txt</code> na raiz do FWH para o log dia a dia.
 </p>
 
+<h2 id="xhb-commercial-link">xHarbour Commercial: externos não resolvidos corrigidos</h2>
+<p>
+Ao linkar o FWH 26.08 com xHarbour Commercial falhava com
+<code>Unresolved external _HB_FUN_FW_PALBMPREGISTER</code> /
+<code>_HB_FUN_FW_PALBMPUNREGISTER</code> (referenciados de
+<code>Fivehmx.lib(bitmap.obj)</code>) e
+<code>_HB_FUN_WEBVIEW2_SETBACKGROUNDCOLOR</code>
+(<code>Fivehmx.lib(twebview2.obj)</code>).
+</p>
+<p>
+<code>lib\Fivehcm.lib</code> (a lib C para xHB Commercial, VC98) estava
+desatualizada: era anterior a <code>source/internal/fwpalctl.c</code>
+(<code>FW_PalBmpRegister</code> / <code>FW_PalBmpUnregister</code>, usados
+pelo TBitmap com paleta) e ao novo
+<code>WebView2_SetBackgroundColor()</code> em
+<code>source/winapi/webview2.c</code>. A lib foi reconstruída com
+<code>makes/build_fivehcm.ps1</code>. Também foram corrigidos dois bugs
+que bloqueavam essa reconstrução: <code>include/xhbcompat.h</code> usava
+<code>HB_EXTERN_BEGIN</code> e <code>long long</code> embora seja incluído
+forçadamente (-FI) antes de <code>hbapi.h</code> (VC98, C89), e
+<code>source/internal/twebview/cwebview.cpp</code> usava
+<code>INVALID_FILE_ATTRIBUTES</code>, que o SDK do VC98 não define.
+Verificado: <code>makes/xhb_commercial/go.bat</code> linka
+<code>test.exe</code> sem externos não resolvidos.
+</p>
+
 <h2 id="topencode">TOpenCode — modelos free (OpenCode Zen)</h2>
 <p>
 Nova classe <code>TOpenCode</code> (<code>source/classes/topencode.prg</code>):
@@ -37,6 +63,28 @@ Ficheiros temp únicos e escrita atómica para vários agentes ao mesmo tempo.
 build_new.bat opencode2 hb32 mt</code></pre>
 <p>
 Ver <a href="../../pt/internet/topencode.html">TOpenCode</a>.
+</p>
+
+<h2 id="libcurl-static">libcurl estático + equipes de agentes no opencode2</h2>
+<p>
+<code>TOpenCode</code> fala HTTP com <code>hbcurl</code> e um
+<code>libcurl</code> estático (Schannel): não é preciso distribuir o
+<code>libcurl.dll</code>. A pasta <code>3rdparty/</code> guarda os
+fontes do curl (<code>curl.tgz</code>, <code>curl-src/</code>) e os
+scripts .bat que constroem <code>lib/libcurl_static*.{lib,a}</code>
+para bcc32, bcc64, msvc32, msvc64 e gcc.
+</p>
+<p>
+<code>samples/ai/opencode2.prg</code> agora é uma equipe de agentes:
+"New team" desenha uma equipe especializada a partir da atividade; os
+agentes se consultam entre si com etiquetas <code>[[ASK:Nome]]</code>
+e seguem o protocolo saudação &rarr; tema &rarr; rodadas &rarr;
+proposta. As retentativas usam backoff com cooldown e fallback
+adaptativo (primeiro o último modelo que respondeu); se a cadeia Zen
+se esgota, cai para um modelo local via Ollama
+(<code>ollama:&lt;modelo&gt;</code> em 127.0.0.1:11434). Os envios em
+curso são gravados em <code>opencode2.json</code> e retomados ao
+reiniciar.
 </p>
 
 <h2 id="fwh64-tc5imglst">FWH64: TC5ImgList / TVMenu em Five64.a</h2>

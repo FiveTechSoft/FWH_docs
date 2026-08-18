@@ -17,6 +17,32 @@ Highlights of FiveWin for Harbour/xHarbour version <strong>26.08</strong> (Augus
 See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
 </p>
 
+<h2 id="xhb-commercial-link">xHarbour Commercial: unresolved externals fixed</h2>
+<p>
+Linking FWH 26.08 with xHarbour Commercial failed with
+<code>Unresolved external _HB_FUN_FW_PALBMPREGISTER</code> /
+<code>_HB_FUN_FW_PALBMPUNREGISTER</code> (referenced from
+<code>Fivehmx.lib(bitmap.obj)</code>) and
+<code>_HB_FUN_WEBVIEW2_SETBACKGROUNDCOLOR</code>
+(<code>Fivehmx.lib(twebview2.obj)</code>).
+</p>
+<p>
+<code>lib\Fivehcm.lib</code> (the xHB Commercial C lib, VC98) was stale:
+it predated <code>source/internal/fwpalctl.c</code>
+(<code>FW_PalBmpRegister</code> / <code>FW_PalBmpUnregister</code>, used by
+the palette-aware TBitmap) and the new
+<code>WebView2_SetBackgroundColor()</code> in
+<code>source/winapi/webview2.c</code>. The lib has been rebuilt with
+<code>makes/build_fivehcm.ps1</code>. Two bugs that had been blocking the
+rebuild are fixed as well: <code>include/xhbcompat.h</code> used
+<code>HB_EXTERN_BEGIN</code> and <code>long long</code> although it is
+force-included before <code>hbapi.h</code> (VC98, C89), and
+<code>source/internal/twebview/cwebview.cpp</code> used
+<code>INVALID_FILE_ATTRIBUTES</code>, which the VC98 SDK does not define.
+Verified: <code>makes/xhb_commercial/go.bat</code> links
+<code>test.exe</code> with zero unresolved externals.
+</p>
+
 <h2 id="topencode">TOpenCode — free models (OpenCode Zen)</h2>
 <p>
 New class <code>TOpenCode</code> (<code>source/classes/topencode.prg</code>)
@@ -42,6 +68,27 @@ build_new.bat opencode2 hb32 mt
 :: run from samples\ai (libcurl.dll)</code></pre>
 <p>
 See <a href="../../en/internet/topencode.html">TOpenCode</a>.
+</p>
+
+<h2 id="libcurl-static">Static libcurl + opencode2 team agents</h2>
+<p>
+<code>TOpenCode</code> now talks HTTP through <code>hbcurl</code> with a
+static <code>libcurl</code> (Schannel) — no <code>libcurl.dll</code> to
+ship. The <code>3rdparty/</code> folder keeps the curl sources
+(<code>curl.tgz</code>, <code>curl-src/</code>) and the batch scripts
+that build <code>lib/libcurl_static*.{lib,a}</code> for bcc32, bcc64,
+msvc32, msvc64 and gcc.
+</p>
+<p>
+<code>samples/ai/opencode2.prg</code> grew into a team-of-agents sample:
+"New team" designs a specialized team from the activity; agents consult
+each other with <code>[[ASK:Name]]</code> tags and run a
+greet &rarr; topic &rarr; talk &rarr; proposal protocol. Retries use
+backoff with cooldown and adaptive fallback (last good model first);
+when the Zen free chain is exhausted it falls back to a local model via
+Ollama (<code>ollama:&lt;model&gt;</code> at 127.0.0.1:11434). Pending
+sends are persisted to <code>opencode2.json</code> and resumed on
+restart.
 </p>
 
 <h2 id="fwh64-tc5imglst">FWH64: TC5ImgList / TVMenu in Five64.a</h2>
