@@ -17,6 +17,29 @@ Resumen de FiveWin for Harbour/xHarbour versión <strong>26.08</strong> (agosto 
 Ver también <code>whatsnew.txt</code> en la raíz de FWH para el registro día a día.
 </p>
 
+<h2 id="xbrfooter">Totales de TXBrowse en diálogos de recurso</h2>
+<p>
+Nuevo sample <code>samples/ui/xbrowse/brwfooter.prg</code> (+
+<code>brwfooter.rc</code>): muestra cómo colocar un TXBrowse con totales
+en el pie dentro de un diálogo creado desde un recurso binario
+(<code>CreateFromResource()</code>): activar la fila de totales con
+<code>oBrw:lFooter := .T.</code>, poner <code>nFooterType := AGGR_SUM</code>
+en cada columna numérica, cargar los datos con
+<code>SetArray( aData, .T. )</code> <em>antes</em> de configurar las
+columnas (SetArray con .T. regenera aCols) y llamar a
+<code>MakeTotals()</code>.
+</p>
+<p>
+Dos trampas documentadas: el control del .rc debe usar la clase de
+ventana <code>"TXBrowse"</code> (registrada por
+<code>CreateFromResource()</code>); clases como <code>RichEdit20W</code>
+cuya DLL no está cargada hacen que <code>DialogBox()</code> falle con
+"Cannot create Dialog Box". Y los bloques bStrData deben usar
+<code>oBrw:nArrayAt</code> — no <code>oBrw:nAt</code> — porque nAt llama
+a ColAtPos() antes de que exista <code>::aDisplay</code> durante
+INITIATE/ADJUST.
+</p>
+
 <h2 id="xhb-commercial-link">xHarbour Commercial: externos no resueltos corregidos</h2>
 <p>
 Al enlazar FWH 26.08 con xHarbour Commercial fallaba con
