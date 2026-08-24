@@ -38,6 +38,18 @@ cuja DLL não está carregada fazem <code>DialogBox()</code> falhar com
 ColAtPos() antes de <code>::aDisplay</code> existir durante
 INITIATE/ADJUST.
 </p>
+<p>
+Formatação numérica: <strong>não</strong> defina <code>bStrData</code> nas
+colunas numéricas de array. O <code>bStrData</code> padrão
+(<code>ArrCell</code>) aplica <code>oCol:cEditPicture</code> às células
+de dados; um bloco próprio que devolva o número bruto é exibido com
+<code>Str()</code> e o picture é ignorado. Os totais não são afetados,
+pois <code>MakeTotals()</code> lê o valor bruto via
+<code>bEditValue</code> (<code>::Value</code>), não via
+<code>bStrData</code>. Use <code>cEditPicture := "999,999,999"</code>
+para as células, <code>cFooterPicture</code> para o total do rodapé e
+<code>nFootStrAlign := AL_RIGHT</code> para alinhá-lo à direita.
+</p>
 
 <h2 id="xhb-commercial-link">xHarbour Commercial: externos não resolvidos corrigidos</h2>
 <p>

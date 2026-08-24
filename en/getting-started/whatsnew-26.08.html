@@ -37,6 +37,18 @@ data blocks should use <code>oBrw:nArrayAt</code> — not
 <code>oBrw:nAt</code> — because nAt calls ColAtPos() before
 <code>::aDisplay</code> exists during INITIATE/ADJUST.
 </p>
+<p>
+Numeric formatting: do <strong>not</strong> set <code>bStrData</code> on
+numeric array columns. The default <code>bStrData</code>
+(<code>ArrCell</code>) applies <code>oCol:cEditPicture</code> to data
+cells; a custom block returning the raw number is displayed with plain
+<code>Str()</code> and the picture is ignored. Footer totals are
+unaffected either way, because <code>MakeTotals()</code> reads the raw
+value via <code>bEditValue</code> (<code>::Value</code>), not via
+<code>bStrData</code>. Use <code>cEditPicture := "999,999,999"</code> for
+the cells, <code>cFooterPicture</code> for the footer total and
+<code>nFootStrAlign := AL_RIGHT</code> to right align it.
+</p>
 
 <h2 id="xhb-commercial-link">xHarbour Commercial: unresolved externals fixed</h2>
 <p>
