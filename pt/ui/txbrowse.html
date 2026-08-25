@@ -434,6 +434,37 @@ Sample: <code>samples/ui/xbrowse/xbrml250.prg</code>. Detalhes com código:
 <a href="../../es/ui/txbrowse.html#multiline-edit">ES</a>.
 </p>
 
+<h2 id="cell-charts">Gráficos na célula: BAR, LINE e GAUGE</h2>
+
+<p>
+Uma coluna pode desenhar seus valores numéricos como um pequeno gráfico
+dentro de cada célula. Configuração via DATAs da coluna:
+</p>
+
+<ul>
+  <li><code>oCol:aChartCols</code> — array de séries; cada elemento é um nome de coluna, um objeto coluna, um nome de cabeçalho de grupo, ou um code block que devolve o valor numérico.</li>
+  <li><code>oCol:cChartType</code> — "BAR" (padrão), "LINE" ou "GAUGE".</li>
+  <li><code>oCol:aChartColors</code> — uma cor por série (cores METRO automáticas se omitido).</li>
+  <li><code>oCol:nChartMaxVal</code> — máximo fixo opcional da escala; sobe automaticamente ao maior valor encontrado.</li>
+</ul>
+
+<p>
+"GAUGE" é um modo aditivo pensado para células com um único valor, onde o
+aspecto clássico "BAR" (várias séries lado a lado) aparece como um bloco
+sólido preenchendo toda a célula. O GAUGE desenha uma trilha cinza fina com
+padding lateral centralizada verticalmente, mais uma barra proporcional ao
+valor na cor da série e um rótulo "NN.N%" por cima. As células "LINE" e
+"BAR" mantêm seu desenho original. Detalhes com código:
+<a href="../../en/ui/txbrowse.html#cell-charts">documentação EN</a> /
+<a href="../../es/ui/txbrowse.html#cell-charts">ES</a>.
+</p>
+
+<pre><code class="language-harbour">oCol:aChartCols   := { {|| nPct } }         // uma série a partir de um block...
+oCol:aChartCols   := { "nDone", "nTotal" }  // ...ou várias colunas pelo nome
+oCol:cChartType   := "GAUGE"
+oCol:aChartColors := { CLR_HBLUE }
+oCol:nChartMaxVal := 100                    // escala fixa opcional</code></pre>
+
 <h2 id="tips">Tips and Best Practices</h2>
 
 <ul>

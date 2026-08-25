@@ -467,6 +467,35 @@ oCol:bOnPostEdit := {| o, x, n |
   <li>Sample de referencia: <code>samples/ui/xbrowse/xbrml250.prg</code>.</li>
 </ul>
 
+<h2 id="cell-charts">Gráficas en celda: BAR, LINE y GAUGE</h2>
+
+<p>
+Una columna puede pintar sus valores numéricos como una pequeña gráfica
+dentro de cada celda. Se configuran con estos DATAs de la columna:
+</p>
+
+<ul>
+  <li><code>oCol:aChartCols</code> — array de series; cada elemento es un nombre de columna, un objeto columna, un nombre de cabecera de grupo, o un code block que devuelve el valor numérico.</li>
+  <li><code>oCol:cChartType</code> — "BAR" (por defecto), "LINE" o "GAUGE".</li>
+  <li><code>oCol:aChartColors</code> — un color por serie (si se omite se asignan colores METRO automáticamente).</li>
+  <li><code>oCol:nChartMaxVal</code> — máximo fijo opcional de la escala; sube automáticamente al mayor valor encontrado.</li>
+</ul>
+
+<p>
+"GAUGE" es un modo aditivo pensado para celdas con un solo valor, donde el
+aspecto clásico "BAR" (varias series lado a lado) se ve como un bloque
+sólido llenando toda la celda. GAUGE pinta una pista gris fina con padding
+lateral centrada verticalmente, más una barra proporcional al valor en el
+color de la serie y una etiqueta "NN.N%" encima. Las celdas "LINE" y "BAR"
+conservan su renderizado original.
+</p>
+
+<pre><code class="language-harbour">oCol:aChartCols   := { {|| nPct } }         // una serie desde un block...
+oCol:aChartCols   := { "nDone", "nTotal" }  // ...o varias columnas por nombre
+oCol:cChartType   := "GAUGE"
+oCol:aChartColors := { CLR_HBLUE }
+oCol:nChartMaxVal := 100                    // escala fija opcional</code></pre>
+
 <h2 id="tips">Tips and Best Practices</h2>
 
 <ul>
