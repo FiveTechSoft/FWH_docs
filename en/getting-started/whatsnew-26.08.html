@@ -17,6 +17,33 @@ Highlights of FiveWin for Harbour/xHarbour version <strong>26.08</strong> (Augus
 See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
 </p>
 
+<h2 id="tgraph-auto-refresh">TGraph auto-refresh + KPI browse sample</h2>
+<p>
+TGraph repaints itself when the data changes
+(<code>source/classes/tgraph.prg</code>): new <code>lAutoRefresh</code>
+DATA (.T. by default). Any change through <code>AddSerie</code>,
+<code>SetYVals</code>, <code>SelSerie</code>, <code>SelPeriod</code>,
+<code>aTable</code>, <code>ResizeSerie</code>, <code>SetValue</code>,
+<code>SetSerieValues</code>, <code>SetData</code>,
+<code>SetXYValue</code>, <code>SetXYData</code>, <code>DelSerie</code> or
+<code>ClearSeries</code> triggers <code>DoRefresh()</code>
+automatically. Group batch updates with
+<code>BeginUpdate()</code> ... <code>EndUpdate()</code> for a single
+repaint, or set <code>lAutoRefresh := .F.</code> and refresh manually
+with <code>Update()</code>. Direct assignments to <code>::aData</code> /
+<code>::aSeries</code> cannot be intercepted — use the
+<code>Set*()</code> methods or call <code>Refresh()</code> afterwards.
+Docs: en/es/pt ui/tgraph.html#auto-refresh.
+</p>
+<p>
+New sample <code>samples/graphics/graphkpi.prg</code>: two TXBrowse
+controls (contexts + prompts) with KPI columns and footer totals, a
+docked buttonbar on top, a statusbar with the selected KPIs, and a
+splitter-resizable TGraph that follows navigation and metric changes
+without rebuilding the control. Reminder: code-created browses need
+<code>oBrw:CreateFromCode()</code>.
+</p>
+
 <h2 id="xbrfooter">TXBrowse footers in resource dialogs</h2>
 <p>
 New sample <code>samples/ui/xbrowse/brwfooter.prg</code> (+

@@ -17,6 +17,34 @@ Resumen de FiveWin for Harbour/xHarbour versión <strong>26.08</strong> (agosto 
 Ver también <code>whatsnew.txt</code> en la raíz de FWH para el registro día a día.
 </p>
 
+<h2 id="tgraph-auto-refresh">TGraph auto-refresh + sample KPI con browse</h2>
+<p>
+TGraph se repinta solo cuando cambian los datos
+(<code>source/classes/tgraph.prg</code>): nuevo DATA
+<code>lAutoRefresh</code> (.T. por defecto). Cualquier cambio vía
+<code>AddSerie</code>, <code>SetYVals</code>, <code>SelSerie</code>,
+<code>SelPeriod</code>, <code>aTable</code>, <code>ResizeSerie</code>,
+<code>SetValue</code>, <code>SetSerieValues</code>,
+<code>SetData</code>, <code>SetXYValue</code>, <code>SetXYData</code>,
+<code>DelSerie</code> o <code>ClearSeries</code> dispara
+<code>DoRefresh()</code> automáticamente. Agrupa cambios masivos con
+<code>BeginUpdate()</code> ... <code>EndUpdate()</code> para un único
+repintado, o pon <code>lAutoRefresh := .F.</code> y refresca a mano con
+<code>Update()</code>. Las asignaciones directas a <code>::aData</code> /
+<code>::aSeries</code> no se pueden interceptar — usa los métodos
+<code>Set*()</code> o llama a <code>Refresh()</code> después.
+Docs: en/es/pt ui/tgraph.html#auto-refresh.
+</p>
+<p>
+Nuevo sample <code>samples/graphics/graphkpi.prg</code>: dos controles
+TXBrowse (contextos + prompts) con columnas KPI y totales al pie, una
+buttonbar acoplada arriba, una barra de estado con los KPIs
+seleccionados y un TGraph redimensionable con splitters que sigue la
+navegación y los cambios de métricas sin rehacer el control.
+Recuerda: los browses creados por código necesitan
+<code>oBrw:CreateFromCode()</code>.
+</p>
+
 <h2 id="xbrfooter">Totales de TXBrowse en diálogos de recurso</h2>
 <p>
 Nuevo sample <code>samples/ui/xbrowse/brwfooter.prg</code> (+

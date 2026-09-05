@@ -67,6 +67,7 @@ with support for multiple series, 3D rendering, legends, grid lines, and export 
 <tr><td><code>nMinVal</code></td><td>Numeric</td><td>Minimum Y-axis value</td></tr>
 <tr><td><code>nClrBack</code></td><td>Numeric</td><td>Background color</td></tr>
 <tr><td><code>cBitmap</code></td><td>Character</td><td>Background bitmap file</td></tr>
+<tr><td><code>lAutoRefresh</code></td><td>Logical</td><td>Auto-repaint on data changes (.T. by default)</td></tr>
 </tbody>
 </table>
 
@@ -90,10 +91,58 @@ with support for multiple series, 3D rendering, legends, grid lines, and export 
 <tr><td><code>PrintGraph( lPrev, oPrn, nY, nX, cFile, nPorY, nPorX, lUser, lHoriz, nTypePage )</code></td><td>Advanced printing with preview and zoom options</td></tr>
 <tr><td><code>Copy2ClipBoard( lMsg )</code></td><td>Copy chart image to clipboard</td></tr>
 <tr><td><code>ResizeSerie( nNewSize )</code></td><td>Resize the number of series dynamically</td></tr>
+<tr><td><code>SetValue( nSerie, nPos, nValue, lRefresh )</code></td><td>Change one value and repaint automatically</td></tr>
+<tr><td><code>GetValue( nSerie, nPos )</code></td><td>Read one chart value</td></tr>
+<tr><td><code>SetData( aData, lRefresh )</code></td><td>Replace all chart data and repaint automatically</td></tr>
+<tr><td><code>SetSerieValues( nSerie, aValues, lRefresh )</code></td><td>Replace one series and repaint automatically</td></tr>
+<tr><td><code>SetXYValue( nSerie, nPos, xVal, yVal, lRefresh )</code></td><td>Change one XY point and repaint automatically</td></tr>
+<tr><td><code>SetXYData( aXYValues, lRefresh )</code></td><td>Replace all XY data and repaint automatically</td></tr>
+<tr><td><code>DelSerie( nSerie, lRefresh )</code></td><td>Delete a series and repaint automatically</td></tr>
+<tr><td><code>ClearSeries( lRefresh )</code></td><td>Delete all series and repaint automatically</td></tr>
+<tr><td><code>BeginUpdate()</code></td><td>Open an update block: repaints are deferred</td></tr>
+<tr><td><code>EndUpdate( lRefresh )</code></td><td>Close the block and repaint once</td></tr>
+<tr><td><code>DoRefresh()</code></td><td>Repaint now (honors lAutoRefresh and update blocks). Alias: Update()</td></tr>
 <tr><td><code>Default()</code></td><td>Apply default chart settings and fonts</td></tr>
 <tr><td><code>Destroy()</code></td><td>Destroy the chart and free resources</td></tr>
 </tbody>
 </table>
+
+<h2 id="auto-refresh">Auto-Refresh</h2>
+
+<p>
+With <code>lAutoRefresh</code> set (.T. by default), every data change
+repaints the chart by itself — no need to rebuild the control or call
+<code>Refresh()</code> manually. Change metrics while navigating and the
+graph follows:
+</p>
+
+<pre><code class="language-harbour">// One value changes -&gt; the chart repaints itself
+oGraph:SetValue( 1, 3, 1250 )
+
+// Replace a whole series at once
+oGraph:SetSerieValues( 2, { 10, 20, 30, 25, 40 } )
+
+// Batch many changes with a single repaint at the end
+oGraph:BeginUpdate()
+oGraph:cTitle := "New title"
+oGraph:SetData( { aVals1, aVals2 } )
+oGraph:EndUpdate()
+
+// Suspend automatic repaints and refresh manually
+oGraph:lAutoRefresh := .F.
+...
+oGraph:Update()</code></pre>
+
+<p>
+Sample <code>samples/graphics/graphkpi.prg</code> shows the pattern in a
+full window: two TXBrowse controls with KPI columns and footer totals, a
+docked buttonbar, a statusbar with the selected KPIs, and a
+splitter-resizable TGraph that repaints itself while browsing or when the
+metrics change. Note: code-created browses need
+<code>oBrw:CreateFromCode()</code>, and direct assignments to
+<code>::aData</code> / <code>::aSeries</code> cannot be intercepted — use
+the <code>Set*()</code> methods or call <code>Refresh()</code> afterwards.
+</p>
 
 <h2 id="example">Example: Bar Chart with Two Series</h2>
 
@@ -136,6 +185,7 @@ return nil</code></pre>
 <li>XY charts (types 6 and 7) expect data as arrays of <code>{ x, y }</code> coordinate pairs. Use <code>AddXYSerie()</code> to add XY series.</li>
 <li>Export to image uses <code>Save2Bmp()</code> internally. The chart can also be copied to clipboard for pasting into other applications.</li>
 <li>The popup menu (enabled via <code>lPopUp</code>) provides right-click access to chart type switching, grid toggles, and export options at runtime.</li>
+<li>Direct assignments to <code>::aData</code> / <code>::aSeries</code> do not repaint: use the <code>Set*()</code> methods or call <code>Refresh()</code> afterwards.</li>
 </ul>
 
 <h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/functions.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/reference/tgmail.html">&larr; tgmail</a> | <a href="../../pt/internet/tgrok.html">tgrok &rarr;</a></nav></main>
