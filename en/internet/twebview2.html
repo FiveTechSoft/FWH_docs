@@ -46,12 +46,40 @@ Build with multi-thread VM: <code>samples\DesktopWeb\build.bat</code> or
 <h2>Key methods</h2>
 <ul>
   <li><code>New( oWndParent, cUserDataFolder, cBrowserExecutableFolder )</code></li>
-  <li><code>Navigate( cUrl )</code> / <code>SetHtml( cHtml )</code></li>
+  <li><code>Navigate( cUrl )</code> / <code>NavigateEx( cUrl, cMethod, cHeaders, cBody )</code> / <code>SetHtml( cHtml )</code></li>
   <li><code>Eval( cJavaScript )</code> / <code>InjectJavascript( cScript )</code></li>
   <li><code>bOnBind</code> — receives arguments from JS <code>SendToFWH(...)</code></li>
+  <li><code>GoBack/GoForward/Reload/Stop</code>, <code>CanGoBack/CanGoForward</code>,
+    <code>GetSource/GetDocumentTitle/GetBrowserVersion</code>, <code>Print</code></li>
+  <li><code>SetZoomFactor/GetZoomFactor</code>, <code>SetDefaultScriptDialogs</code></li>
+  <li><code>CapturePreview( cPng )</code> (async) / <code>PrintToPdf( cPdf, lLandscape )</code> (async)</li>
+  <li><code>Add/RemoveWebResourceRequestedFilter</code> — return <code>.T.</code> from
+    <code>bOnWebResource</code> to block the request</li>
+  <li><code>ClearSession/ClearBrowsingData</code>, <code>EnableConsole</code> (console.* interception),
+    <code>SetDefaultContextMenus/SetContextMenuExclude</code></li>
+  <li><code>CloseWebView/Reinitialize/SetSizeRatio</code>, <code>Diag/Reregister</code> diagnostics</li>
   <li><code>SetSize</code>, <code>SetTitle</code>, <code>SetUserAgent</code>,
-    <code>SetBackGroundColor</code>, <code>OpenDevToolsWindow</code>, <code>End</code></li>
+    <code>SetBackGroundColor</code>, <code>OpenDevToolsWindow</code>, <code>ShowDownloads</code>, <code>End</code></li>
 </ul>
+
+<h2>Events (bOn*)</h2>
+<ul>
+  <li><code>bOnNavigationStarting</code> — return <code>.T.</code> to cancel</li>
+  <li><code>bOnNavigationCompleted</code>, <code>bOnSourceChanged</code>, <code>bOnHistoryChanged</code>,
+    <code>bOnDocumentTitleChanged</code>, <code>bOnEval</code>, <code>bOnConsole</code></li>
+  <li><code>bOnNewWindow</code>, <code>bOnPermission</code> (1 = allow, 2 = deny),
+    <code>bOnWebResource</code>, <code>bOnFullScreen</code>, <code>bOnProcessFailed</code></li>
+  <li><code>bOnFrameNavStarting</code> (cancelable) / <code>bOnFrameNavCompleted</code></li>
+  <li><code>bOnCapturePreview</code>, <code>bOnPrintToPdf</code>, <code>bOnClearBrowsingData</code>,
+    <code>bOnZoomFactorChanged</code>, <code>bOnScriptDialog</code> (<code>.T.</code> = Accept)</li>
+</ul>
+<p>
+New constants live in <code>include/WebView2.ch</code>
+(<code>WV_CONTEXT_*</code>, <code>WV_DIALOG_*</code>, <code>WV_PERM_*</code>, <code>WV_FAIL_*</code>).
+Demo: <code>samples/webview2/wvdemo.prg</code> with external page <code>pulse.html</code>
+(unattended <code>AUTO</code> mode). Default profile folder
+<code>%LOCALAPPDATA%\FWH_webview2_UserData</code>.
+</p>
 <p>
 For Remote View + WebView2 together, see
 <code>samples/RemoteView/testrvweb.prg</code> and
