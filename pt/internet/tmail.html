@@ -165,10 +165,14 @@ return nil</code></pre>
 
 <p>
 <code>TO &lt;cName&gt; [,&lt;cAddress&gt;]</code> mapeia para um par <code>MapiRecipDesc</code>.
-Se apenas um parâmetro for passado, o FWH usa esse valor também como endereço
-quando o endereço estaria vazio, para que clientes como o Thunderbird preencham
-o campo <strong>Para:</strong> corretamente. Prefira <code>TO cEmail, cEmail</code> se quiser a forma
-dupla explícita no código.
+Se apenas um parâmetro for passado e o endereço estaria vazio, o FWH preenche com a
+forma tipada <code>SMTP:cName</code> quando o nome parece um e-mail (contém
+<code>@</code>), para que clientes como o Thunderbird preencham o campo
+<strong>Para:</strong> e o Outlook/Exchange entreguem os anexos corretamente.
+Chame <code>SetMapiAddrFill( .F. )</code> antes de enviar para desativar o
+preenchimento e deixar <code>lpszAddress</code> vazio para o cliente resolver
+( comportamento anterior a 26.07). Prefira <code>TO cEmail, cEmail</code> se
+quiser a forma dupla explícita no código — o endereço explícito nunca é reescrito.
 </p>
 
 <h2 id="notes">Notas</h2>
@@ -177,7 +181,7 @@ dupla explícita no código.
 <li>TMail usa o cliente MAPI padrão do sistema. Outlook, Windows Mail, Thunderbird (com plugin MAPI) e a maioria dos clientes de e-mail suportam MAPI.</li>
 <li>Quando <code>lFromUser</code> é <code>.T.</code> (padrão), a janela de composição do cliente abre para o usuário revisar e enviar. Com <code>.F.</code>, o e-mail é enviado em silêncio.</li>
 <li>O array <code>aFiles</code> aceita pares <code>{ cCaminhoCompleto, cNomeExibicao }</code> (como produz a cláusula <code>FILES</code> de <code>DEFINE MAIL</code>).</li>
-<li>Cada elemento de <code>aRecipients</code> deve ser um array <code>{ cNome [, cEndereco ] }</code>. Se <code>cEndereco</code> for omitido ou vazio, <code>MAPISendMail()</code> reutiliza <code>cNome</code> como endereço (necessário para Thunderbird e outros clientes Simple MAPI estritos).</li>
+<li>Cada elemento de <code>aRecipients</code> deve ser um array <code>{ cNome [, cEndereco ] }</code>. Se <code>cEndereco</code> for omitido ou vazio, <code>MAPISendMail()</code> preenche com <code>SMTP:cNome</code> quando <code>cNome</code> contém <code>@</code> (necessário para Thunderbird e outros clientes Simple MAPI estritos); caso contrário, fica vazio para o cliente resolver. Chame <code>SetMapiAddrFill( .F. )</code> para desativar o preenchimento completamente.</li>
 <li>Verifique <code>nRetCode</code> após <code>Activate()</code> para saber se o envio foi bem-sucedido.</li>
 </ul>
 

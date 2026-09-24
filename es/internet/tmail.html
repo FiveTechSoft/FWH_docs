@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -165,10 +165,14 @@ return nil</code></pre>
 
 <p>
 <code>TO &lt;cName&gt; [,&lt;cAddress&gt;]</code> se mapea a un par <code>MapiRecipDesc</code>.
-Si solo se pasa un parámetro, FWH usa ese valor también como dirección cuando
-la dirección estaría vacía, de modo que clientes como Thunderbird rellenan el
-campo <strong>Para:</strong> correctamente. Use <code>TO cEmail, cEmail</code> si prefiere la forma
-dual explícita en el código.
+Si solo se pasa un parámetro y la dirección estaría vacía, FWH la rellena con la
+forma tipada <code>SMTP:cName</code> cuando el nombre parece un correo (contiene
+<code>@</code>), de modo que clientes como Thunderbird rellenan el campo
+<strong>Para:</strong> y Outlook/Exchange entregan los adjuntos correctamente.
+Llame a <code>SetMapiAddrFill( .F. )</code> antes de enviar para desactivar el
+relleno y dejar <code>lpszAddress</code> vacía para que el cliente la resuelva
+( comportamiento previo a 26.07). Use <code>TO cEmail, cEmail</code> si prefiere
+la forma dual explícita en el código — la dirección explícita nunca se reescribe.
 </p>
 
 <h2 id="notes">Notas</h2>
@@ -177,7 +181,7 @@ dual explícita en el código.
 <li>TMail usa el cliente MAPI predeterminado del sistema. Outlook, Windows Mail, Thunderbird (con plugin MAPI) y la mayoría de clientes de correo soportan MAPI.</li>
 <li>Cuando <code>lFromUser</code> es <code>.T.</code> (por defecto), se abre la ventana de composición del cliente para revisar y enviar. Con <code>.F.</code>, se envía en silencio.</li>
 <li>El array <code>aFiles</code> acepta pares <code>{ cRutaCompleta, cNombreVisible }</code> (como genera la cláusula <code>FILES</code> de <code>DEFINE MAIL</code>).</li>
-<li>Cada elemento de <code>aRecipients</code> debe ser un array <code>{ cNombre [, cDireccion ] }</code>. Si <code>cDireccion</code> se omite o está vacía, <code>MAPISendMail()</code> reutiliza <code>cNombre</code> como dirección (necesario para Thunderbird y otros clientes Simple MAPI estrictos).</li>
+<li>Cada elemento de <code>aRecipients</code> debe ser un array <code>{ cNombre [, cDireccion ] }</code>. Si <code>cDireccion</code> se omite o está vacía, <code>MAPISendMail()</code> la rellena con <code>SMTP:cNombre</code> cuando <code>cNombre</code> contiene <code>@</code> (necesario para Thunderbird y otros clientes Simple MAPI estrictos); si no, se deja vacía para que el cliente la resuelva. Llame a <code>SetMapiAddrFill( .F. )</code> para desactivar el relleno por completo.</li>
 <li>Compruebe <code>nRetCode</code> después de <code>Activate()</code> para saber si el envío fue correcto.</li>
 </ul>
 

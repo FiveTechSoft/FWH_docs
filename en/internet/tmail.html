@@ -166,10 +166,14 @@ return nil</code></pre>
 
 <p>
 <code>TO &lt;cName&gt; [,&lt;cAddress&gt;]</code> maps to a <code>MapiRecipDesc</code> pair.
-If only one parameter is given, FWH sets both display name and address to that
-value when the address would otherwise be empty, so clients such as Thunderbird
-fill the <strong>To:</strong> field correctly. Prefer <code>TO cEmail, cEmail</code> when you want
-the dual form explicit in source.
+If only one parameter is given and the address would otherwise be empty, FWH
+fills it with the typed form <code>SMTP:cName</code> when the name looks like an
+e-mail (contains <code>@</code>), so clients such as Thunderbird fill the
+<strong>To:</strong> field and Outlook/Exchange deliver attachments correctly.
+Call <code>SetMapiAddrFill( .F. )</code> before sending to disable the fill and
+leave <code>lpszAddress</code> empty for the client to resolve (pre-26.07
+behaviour). Prefer <code>TO cEmail, cEmail</code> when you want the dual form
+explicit in source — the explicit address is never rewritten.
 </p>
 
 <h2 id="notes">Notes</h2>
@@ -178,7 +182,7 @@ the dual form explicit in source.
 <li>TMail uses the default MAPI client installed on the system. Outlook, Windows Mail, Thunderbird (with MAPI plugin), and most email clients support MAPI.</li>
 <li>When <code>lFromUser</code> is <code>.T.</code> (default), the email client's compose window opens for the user to review and send. When <code>.F.</code>, the email is sent silently.</li>
 <li>The <code>aFiles</code> array accepts pairs <code>{ cFullPath, cDisplayName }</code> (as produced by the <code>FILES</code> clause of <code>DEFINE MAIL</code>).</li>
-<li>Each element of <code>aRecipients</code> should be an array <code>{ cName [, cAddress ] }</code>. If <code>cAddress</code> is omitted or empty, <code>MAPISendMail()</code> reuses <code>cName</code> as the address (needed for Thunderbird and other strict Simple MAPI clients).</li>
+<li>Each element of <code>aRecipients</code> should be an array <code>{ cName [, cAddress ] }</code>. If <code>cAddress</code> is omitted or empty, <code>MAPISendMail()</code> fills it with <code>SMTP:cName</code> when <code>cName</code> contains <code>@</code> (needed for Thunderbird and other strict Simple MAPI clients); otherwise it is left empty for the client to resolve. Call <code>SetMapiAddrFill( .F. )</code> to disable the fill entirely.</li>
 <li>Check <code>nRetCode</code> after <code>Activate()</code> to determine if the send was successful.</li>
 </ul>
 
