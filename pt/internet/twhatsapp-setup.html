@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de configuração do TWhatsApp - Documentação FWH</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>Guia de configuração do TWhatsApp</h1>
+
+<p>
+Guia passo a passo para ir do zero à sua primeira mensagem de WhatsApp enviada com o
+<a href="../../pt/internet/twhatsapp.html">TWhatsApp</a>. Toda a configuração no lado da Meta
+leva uns 15 minutos e não precisa de verificação de empresa nem de revisão do aplicativo enquanto
+você testa com o seu próprio número de telefone.
+</p>
+
+<h2 id="create-app">1. Crie o seu aplicativo Meta</h2>
+
+<p>
+Acesse <a href="https://developers.facebook.com" target="_blank">developers.facebook.com</a>
+e entre com a sua conta do Facebook. Abra <strong>Meus aplicativos</strong> (canto superior
+direito) e escolha <strong>Criar aplicativo</strong>. Dê um nome, por exemplo <code>FWH</code>, e
+conclua o assistente.
+</p>
+
+<p>
+Depois de criado, abra <strong>Configurações do aplicativo &gt; Básicas</strong> no menu
+lateral. Essa página mostra o seu <strong>ID do aplicativo</strong> - você não precisa dele para
+o TWhatsApp, mas ele identifica o aplicativo:
+</p>
+
+<img src="../../images/twhatsapp/twhatsapp-setup-app.jpg" alt="Página de configurações básicas do aplicativo FWH, mostrando o ID do aplicativo" style="max-width:100%;height:auto;border:1px solid var(--border);border-radius:8px;margin:12px 0">
+
+<p>
+<em>Nota:</em> a Meta avisa sobre um limite de 15 aplicativos em contas de desenvolvedor novas e
+não verificadas. Se a sua conta é antiga, normalmente você consegue criar o aplicativo mesmo
+assim, como neste exemplo.
+</p>
+
+<h2 id="use-case">2. Adicione o caso de uso do WhatsApp</h2>
+
+<p>
+No menu lateral do aplicativo, abra <strong>Casos de uso</strong>, clique em
+<strong>Adicionar casos de uso</strong> e adicione <strong>"Conecte-se com os clientes pelo
+WhatsApp"</strong>. Depois clique em <strong>Personalizar</strong> nesse caso de uso:
+</p>
+
+<img src="../../images/twhatsapp/twhatsapp-setup-usecases.jpg" alt="Página de casos de uso com o caso de uso do WhatsApp adicionado e o botão Personalizar" style="max-width:100%;height:auto;border:1px solid var(--border);border-radius:8px;margin:12px 0">
+
+<h2 id="paso1">3. Obtenha o seu token e o Phone Number ID</h2>
+
+<p>
+Dentro do caso de uso do WhatsApp, o menu lateral mostra o grupo
+<strong>Configuração básica</strong>. Quando perguntarem o tipo de integração, escolha
+<strong>Integrar com a API</strong>:
+</p>
+
+<img src="../../images/twhatsapp/twhatsapp-setup-customize.jpg" alt="Página Personalizar o caso de uso, com o menu Configuração básica e o Passo 1. Testar" style="max-width:100%;height:auto;border:1px solid var(--border);border-radius:8px;margin:12px 0">
+
+<p>
+Abra o <strong>Passo 1. Testar</strong>. Essa tela tem tudo o que o TWhatsApp precisa:
+</p>
+
+<ul>
+<li><strong>Token de acesso temporário</strong> - válido por 24 horas. Este é o seu <code>cToken</code>.</li>
+<li><strong>ID do número de telefone</strong> - o ID numérico do número de teste. Este é o seu <code>cPhoneId</code>.</li>
+<li><strong>Remetente de teste</strong> - um número da Meta (<code>+1 555 xxx xxxx</code>) do qual saem as suas mensagens durante os testes.</li>
+<li><strong>Destinatário</strong> - adicione aqui o seu próprio número e confirme com o código SMS que a Meta envia. No modo de teste você só pode escrever para destinatários registrados.</li>
+</ul>
+
+<p>
+<strong>Guarde o token com cuidado.</strong> Nunca o cole em chats nem e-mails: copie direto para
+um gerenciador de senhas ou para o seu programa de teste no seu PC. Se um vazar, gere outro na
+mesma tela e descarte o antigo.
+</p>
+
+<p>
+<em>Opcional:</em> a Meta também cria uma versão de teste do seu aplicativo
+(<code>&lt;seu app&gt; - Test1</code>) com a sua própria página de configurações. Você pode usá-la
+para experimentar sem tocar no aplicativo principal:
+</p>
+
+<img src="../../images/twhatsapp/twhatsapp-setup-test-app.jpg" alt="Página de configurações da versão de teste do aplicativo criada automaticamente" style="max-width:100%;height:auto;border:1px solid var(--border);border-radius:8px;margin:12px 0">
+
+<h2 id="first-send">4. Envie a mensagem de teste pela página da Meta</h2>
+
+<p>
+Ainda no <strong>Passo 1. Testar</strong>, pressione o botão <strong>Enviar mensagem</strong>
+da própria Meta. A Meta entrega uma mensagem de modelo <code>hello_world</code> do remetente de
+teste para o seu número registrado. Se chegar, o seu aplicativo, o remetente e o destinatário
+estão funcionando - todo o resto acontece no seu código.
+</p>
+
+<h2 id="fwh-sample">5. Envie a partir do Harbour com o TWhatsApp</h2>
+
+<p>
+No seu PC, abra o exemplo do FWH em <code>samples/whatsapp/twhatsapp.prg</code> e defina os seus
+dois valores:
+</p>
+
+<pre><code>oWhatsApp := TWhatsApp():New()
+oWhatsApp:cToken   := "COLE-SEU-TOKEN-AQUI"        // token temporário do Passo 1
+oWhatsApp:cPhoneId := "COLE-SEU-PHONE-NUMBER-ID"   // phone number ID do Passo 1
+
+oWhatsApp:SendText( "34600000000", "Olá do FiveWin!" )</code></pre>
+
+<p>
+Compile e execute o exemplo. A mensagem sai do seu próprio código Harbour - esse é o momento
+especial. Para a referência completa dos membros, veja a
+<a href="../../pt/internet/twhatsapp.html">página da classe TWhatsApp</a>.
+</p>
+
+<h2 id="next-steps">6. Próximos passos</h2>
+
+<ul>
+<li><strong>Token permanente:</strong> o token temporário expira em 24 horas. Para produção,
+crie um <em>usuário do sistema</em> nas configurações do Meta Business, atribua a ele o
+aplicativo e os ativos do WhatsApp, e gere um token de acesso permanente com a permissão
+<code>whatsapp_business_messaging</code>.</li>
+<li><strong>Seu próprio número remetente:</strong> o passo 2 da Configuração básica
+(<em>Configuração de produção</em>) registra o seu número comercial e o nome exibido.</li>
+<li><strong>Verificação da empresa:</strong> só é necessária para escrever a qualquer usuário em
+grande escala (passo 3). Testar com os seus próprios números registrados funciona sem ela.</li>
+<li><strong>Um cadastro mais suave para os seus usuários:</strong> se você distribui aplicações
+FWH para os seus próprios clientes, vale olhar o programa de <em>Tech Provider</em> da Meta: com
+o Embedded Signup os seus usuários fazem toda essa configuração com poucos cliques a partir do
+seu aplicativo, em vez de percorrer o painel da Meta manualmente.</li>
+</ul>
+
+<h2>See Also</h2><ul><li><a href="../../pt/internet/twhatsapp.html">TWhatsApp</a></li><li><a href="../../pt/reference/classes.html">Classes Alphabetical</a></li></ul></main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script></body>
+</html>

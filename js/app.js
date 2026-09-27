@@ -28,6 +28,7 @@ var searchIndex = [
   { k: "treport report column group header footer summary excel export", t: "TReport", u: "../../en/printing/treport.html", s: "Printing" },
   { k: "easyreport vrd visual report designer wysiwyg printarea pagebreak easyrep", t: "EasyReport", u: "../../en/printing/easyreport.html", s: "Printing" },
   // Internet
+  { k: "twhatsapp whatsapp cloud api meta setup token phone number id guide configuración", t: "TWhatsApp Setup Guide", u: "../../en/internet/twhatsapp-setup.html", s: "Internet & AI" },
   { k: "twebview twebview2 webview chromium browser html javascript navigate eval", t: "TWebView2", u: "../../en/internet/twebview.html", s: "Internet & AI" },
   { k: "topenai tchatgpt openai chatgpt gpt ai api send prompt image stream", t: "TOpenAI / TChatGPT", u: "../../en/internet/topenai.html", s: "Internet & AI" },
   { k: "topencode opencode zen free hy3 mimo sendasync agent opencode1 opencode2", t: "TOpenCode (Zen free)", u: "../../en/internet/topencode.html", s: "Internet & AI" },
@@ -150,6 +151,7 @@ var NAV = [
     { u: "internet/twebserver.html", l: "TWebServer" },
     { u: "internet/tsocket.html",    l: "TSocket" },
     { u: "internet/topenai.html",    l: "TOpenAI" },
+    { u: "internet/twhatsapp-setup.html", l: { en: "TWhatsApp Setup", es: "Configuración TWhatsApp", pt: "Configuração TWhatsApp" } },
     { u: "internet/tai.html",        l: { en: "AI Classes", es: "Clases de IA", pt: "Classes de IA" } },
   ]},
   { t: { en: "Reference", es: "Referencia", pt: "Referência" }, items: [

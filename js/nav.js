@@ -10,6 +10,7 @@
   var labels = {
     en: {
       title: "FWH Documentation", version: "Version 26.09",
+      twaSetup: "TWhatsApp Setup",
       gettingStarted: "Getting Started",
       overview: "Framework Overview", install: "Installation", build: "Build System",
       samples: "Samples &amp; Learning Path", local: "Localization", whatsnew: "What's New",
@@ -27,6 +28,7 @@
     },
     es: {
       title: "Documentación FWH", version: "Versión 26.09",
+      twaSetup: "Configuración TWhatsApp",
       gettingStarted: "Primeros Pasos",
       overview: "Visión General", install: "Instalación", build: "Sistema de Compilación",
       samples: "Ejemplos y Ruta de Aprendizaje", local: "Localización", whatsnew: "Novedades",
@@ -44,6 +46,7 @@
     },
     pt: {
       title: "Documentação FWH", version: "Versão 26.09",
+      twaSetup: "Configuração TWhatsApp",
       gettingStarted: "Primeiros Passos",
       overview: "Visão Geral", install: "Instalação", build: "Sistema de Compilação",
       samples: "Exemplos e Rota de Aprendizagem", local: "Localização", whatsnew: "Novidades",
@@ -133,6 +136,7 @@
       'internet/tpop3.html', 'TPop3',
       'internet/tftp.html', 'TFtp',
       'internet/twhatsapp.html', 'TWhatsApp',
+      'internet/twhatsapp-setup.html', L.twaSetup,
       'internet/topenai.html', 'TOpenAI',
       'internet/topencode.html', 'TOpenCode',
       'internet/remoteview.html', 'Remote View',
