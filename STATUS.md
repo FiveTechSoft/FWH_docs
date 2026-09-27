@@ -1,11 +1,11 @@
 # FWH Documentation — Status
 
-**Version:** FWH 26.06
+**Version:** FWH 26.09
 **Form:** Localized HTML under `en/`, `es/`, `pt/` (entry point: `index.html`).
 
 ## Current / up to date
 
-* Getting-started guides (installation, build system, samples, what's new 26.06).
+* Getting-started guides (installation, build system, samples, what's new 26.09).
 * Core class docs (`TWindow`, `TDialog`, `TControl`, MDI).
 * Full UI control reference (`ui/`).
 * AI classes: `TAgent`, `TTransformer`/`GPT2Model`, `THFTask`, `TSemanticIndex`,

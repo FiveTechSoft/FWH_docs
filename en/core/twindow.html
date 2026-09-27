@@ -355,6 +355,10 @@ return nil</code></pre>
 
 <p>The docking system follows a standard layout algorithm: the message bar occupies the bottom, the toolbar the top, then left/right docks claim their widths, and the client control fills whatever space remains. Assign a control to the slot and call <code>AdjClient()</code> (or the specific <code>Adj*()</code> method) to position it. In the <code>ON RESIZE</code> handler, call the methods again to adapt to size changes.</p>
 
+<h2 id="dark-mode">Dark mode and title bar</h2>
+<p><code>FW_SetDarkMode( .T. )</code> (see <a href="tdialog.html#dark-mode-api">FW_SetDarkMode</a>) themes plain TWindow applications too, not only dialogs: <code>TWindow:SetDarkMode()</code> cascades the theme to all controls and to the buttonbar, and windows created after the call pick up the global dark mode automatically on <code>Activate()</code>.</p>
+<p>The title bar follows the theme: with dark mode on, every window and dialog gets a dark caption automatically, using the dark mode colors. <code>FW_SetCaptionColors( nClrText, nClrBack )</code> sets custom caption text/background colors (also in light mode), <code>FW_SetCaptionColors( nil, nil )</code> restores the automatic colors and <code>FW_SetCaptionColors()</code> with no parameters queries the current custom colors. Caption theming uses the DWM and requires Windows 11; on older Windows it silently does nothing.</p>
+
 <h2 id="see-also">See Also</h2>
 <ul>
 <li><a href="tdialog.html">TDialog</a> &mdash; Modal and modeless dialog boxes (inherits from TWindow)</li>

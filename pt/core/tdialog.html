@@ -357,6 +357,21 @@ lIsDark := FW_SetDarkMode()
 </ul>
 </p>
 
+<h2 id="caption-colors">Dark title bar &mdash; FW_SetCaptionColors</h2>
+<p>With <code>FW_SetDarkMode( .T. )</code> every window and dialog also gets a dark title bar automatically, using the dark mode colors. <code>FW_SetCaptionColors()</code> customizes the caption, also in light mode:</p>
+
+<pre><code>// Custom caption text/background colors
+FW_SetCaptionColors( nClrText, nClrBack )
+
+// Back to the automatic colors
+FW_SetCaptionColors( nil, nil )
+
+// Query the custom colors: { nClrText, nClrBack } or nil
+aClrs := FW_SetCaptionColors()
+</code></pre>
+
+<p>The caption theme is applied through the DWM (<code>DwmSetWindowAttribute</code>, with <code>dwmapi.dll</code> loaded at runtime, so there is no new dependency). It requires Windows 11; on older Windows it silently does nothing.</p>
+
 <h2 id="see-also">Veja Também</h2>
 <ul>
 <li><a href="twindow.html">TWindow</a> &mdash; Parent class with shared methods and DATA</li>

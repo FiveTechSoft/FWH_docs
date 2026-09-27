@@ -4,7 +4,7 @@ This directory contains the documentation for **FiveWin for Harbour/xHarbour (FW
 
 ## Current version
 
-FWH **26.06**. The HTML documentation under `en/`, `es/` and `pt/` is the
+FWH **26.09**. The HTML documentation under `en/`, `es/` and `pt/` is the
 published, maintained form.
 
 ## How to read the docs
@@ -50,4 +50,17 @@ The same tree exists under `en/`, `es/` and `pt/`.
 
 See the project root: `mfwh_new.bat <variant>` builds the FWH libraries;
 `samples\build_new.bat <prog> <variant>` builds a sample. Variants:
-`hb32 hm32 hm64 hg32 hg64 hb64 xb32 xb64 xm64`.
+`hb32 hm32 hm64 hg32 hg64 hb64 xb32 xb64 xm32 xm64`.
+
+## Verifying a build
+
+Run the console suites with `samples\test\fwunit\run_all.bat` (builds and
+runs them) and the FWMariaConnection tests with
+`samples\run_fwmaria_ut.bat offline` (no server needed). The automated build
+check runs the same suites on every variant (Harbour and xHarbour, 32 and 64
+bit), not only on hm32. For a build check,
+build these samples with `samples\build_new.bat <prog> <variant>`:
+`database\fivedbu` (DBF and GUI), `menus\vistamenu` (TVistaMenu),
+`test\testmail` (MAPI), `web\webview` (WebView2), `RemoteView\testrv` and
+`database\fivedburv` (RemoteView), `misc\UTestmnu` (menus and Unicode) and
+`fwmaria_ut` (FWMariaConnection).

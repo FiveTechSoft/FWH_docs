@@ -33,6 +33,7 @@ TBitmap is a control that displays a bitmap image from a file, resource, or hand
 <tr><td><code>nZoom</code></td><td>Numeric</td><td>Zoom factor (1 = original size)</td></tr>
 <tr><td><code>lTransparent</code></td><td>Logical</td><td>Enable transparent background drawing</td></tr>
 <tr><td><code>lStretch</code></td><td>Logical</td><td>Stretch bitmap to fit the control dimensions</td></tr>
+<tr><td><code>lAspectRatio</code></td><td>Logical</td><td>Scale proportionally, center the image and leave the remaining area in the control background color; off by default</td></tr>
 <tr><td><code>nImgWidth</code></td><td>Numeric</td><td>Original bitmap width in pixels</td></tr>
 <tr><td><code>nImgHeight</code></td><td>Numeric</td><td>Original bitmap height in pixels</td></tr>
 <tr><td><code>lHasAlpha</code></td><td>Logical</td><td>Whether the bitmap has an alpha channel</td></tr>
@@ -47,7 +48,7 @@ TBitmap is a control that displays a bitmap image from a file, resource, or hand
 <tr><th>Method</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>New( nTop, nLeft, nW, nH, cRes, cFile, lNoBorder, oWnd, bLClicked, bRClicked, lScroll, lStretch, oCursor, cMsg, lUpdate, bWhen, lPixel, bValid, lDesign )</code></td><td>Create a new bitmap control</td></tr>
+<tr><td><code>New( nTop, nLeft, nW, nH, cRes, cFile, lNoBorder, oWnd, bLClicked, bRClicked, lScroll, lStretch, oCursor, cMsg, lUpdate, bWhen, lPixel, bValid, lDesign, lAspectRatio )</code></td><td>Create a new bitmap control</td></tr>
 <tr><td><code>ReDefine( nId, cRes, cFile, oWnd, ... )</code></td><td>Redefine from a dialog resource placeholder</td></tr>
 <tr><td><code>LoadImage( cResName, cBmpFile )</code></td><td>Load bitmap from resource name or disk file</td></tr>
 <tr><td><code>LoadBMP( cBmpFile )</code></td><td>Load a bitmap from disk by filename</td></tr>
@@ -85,6 +86,7 @@ return nil</code></pre>
 <li>Use the <code>BITMAP ... FILE cFile</code> clause to load from disk, or <code>BITMAP ... RESOURCE cRes</code> for embedded resources.</li>
 <li>The <code>nWidth</code> and <code>nHeight</code> access methods return the zoomed bitmap dimensions automatically based on the original image size and <code>::nZoom</code>.</li>
 <li>Enable <code>lScroll</code> to show scrollbars when the bitmap is larger than the control area. Use <code>lStretch</code> to fit the bitmap to the control rectangle.</li>
+<li>Use ASPECT em @ ... BITMAP ou REDEFINE BITMAP para escalar proporcionalmente e centralizar. Tambem pode definir oBmp:lAspectRatio := .T. e chamar oBmp:Refresh(). ASPECT tem prioridade sobre ADJUST; dimensoes zero nao desenham nada.</li>
 <li>The <code>aHotAreas</code> array can define clickable regions on the bitmap for interactive image maps.</li>
 </ul>
 

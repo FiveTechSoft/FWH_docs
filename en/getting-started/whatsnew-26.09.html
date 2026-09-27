@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's New in 26.09 - FWH Docs</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>What's New in FWH 26.09</h1>
+
+<p>
+Highlights of FiveWin for Harbour/xHarbour version <strong>26.09</strong> (September 2026).
+See also <code>whatsnew.txt</code> in the FWH root for the full day-by-day log.
+</p>
+
+<h2 id="dark-caption">Automatic dark title bar + FW_SetCaptionColors</h2>
+<p>
+With <code>FW_SetDarkMode( .T. )</code> every <strong>WINDOW</strong> and
+<strong>DIALOG</strong> now gets a dark title bar automatically, using the dark
+mode colors: no extra code needed
+(<code>source/classes/dialog.prg</code>, <code>source/classes/window.prg</code>).
+</p>
+<p>
+The new <code>FW_SetCaptionColors()</code> function customizes the caption
+(<code>source/classes/dialog.prg</code>):
+</p>
+<pre><code>// Custom caption text/background colors (also in light mode)
+FW_SetCaptionColors( nClrText, nClrBack )
+
+// Back to the automatic colors
+FW_SetCaptionColors( nil, nil )
+
+// Query the custom colors: { nClrText, nClrBack } or nil
+aClrs := FW_SetCaptionColors()</code></pre>
+<p>
+Caption theming uses the DWM (<code>DwmSetWindowAttribute</code>, with
+<code>dwmapi.dll</code> loaded at runtime, so there is no new dependency).
+It requires Windows 11; on older Windows it silently does nothing.
+See <a href="../../en/core/tdialog.html#caption-colors">TDialog caption colors</a>
+and <a href="../../en/core/twindow.html#dark-mode">TWindow dark mode</a>.
+</p>
+
+<h2 id="tbitmap-aspect">TBitmap ASPECT: proportional scaling</h2>
+<p>
+New <code>ASPECT</code> option for <code>@ ... BITMAP</code> and
+<code>REDEFINE BITMAP</code>, and new <code>lAspectRatio</code> property
+(<code>source/classes/bitmap.prg</code>): the bitmap is drawn proportionally
+scaled and centered inside the control, without distortion, leaving the
+remaining area in the control background color. It takes precedence over
+<code>ADJUST</code>; zero dimensions draw nothing. You can also set
+<code>oBmp:lAspectRatio := .T.</code> and call <code>oBmp:Refresh()</code>.
+See <a href="../../en/ui/tbitmap.html">TBitmap</a>.
+</p>
+
+<h2 id="scrollpanel-hscroll-fix">TScrollPanel: focus jump after horizontal scroll fixed</h2>
+<p>
+After a horizontal scroll, the <code>bGotFocus</code> handler that
+<code>SetRange()</code> assigns to tab-stop controls still called
+<code>ControlIntoView()</code>, yanking the panel back. It is now skipped
+after a horizontal scroll too (<code>lHScrolled</code>), as it already was
+after a vertical one (<code>source/classes/scrlpanl.prg</code>). No changes
+required in user code. See <a href="../../en/ui/tscrollpanel.html">TScrollPanel</a>.
+</p>
+
+<h2 id="twebview2-natives">TWebView2: from 10 to 40+ natives</h2>
+<p>
+<code>TWebView2</code> (<code>source/classes/twebview2.prg</code>,
+<code>source/internal/twebview/cwebview.cpp</code>,
+<code>source/winapi/webview2.c</code>, <code>include/WebView2.ch</code>) grows
+from 10 to more than 40 natives. New methods:
+<code>NavigateEx( cUrl, cMethod, cHeaders, cBody )</code> (native POST),
+<code>GoBack</code>/<code>GoForward</code>/<code>Reload</code>/<code>Stop</code>,
+<code>CanGoBack</code>/<code>CanGoForward</code>, <code>GetSource</code>,
+<code>GetDocumentTitle</code>, <code>GetBrowserVersion</code>, <code>Print</code>,
+<code>SetZoomFactor</code>/<code>GetZoomFactor</code>,
+<code>SetDefaultScriptDialogs</code>,
+<code>SetDefaultContextMenus</code>/<code>SetContextMenuExclude</code>,
+<code>CapturePreview</code> (async PNG) / <code>PrintToPdf</code> (async PDF),
+<code>Add/RemoveWebResourceRequestedFilter</code>,
+<code>ClearSession</code>/<code>ClearBrowsingData</code>,
+<code>EnableConsole</code>, <code>CloseWebView</code>, <code>Reinitialize</code>,
+<code>SetSizeRatio</code> and <code>Diag</code>/<code>Reregister</code>
+diagnostics. New <code>bOn*</code> events: NavigationStarting (cancelable),
+SourceChanged, HistoryChanged, DocumentTitleChanged, NewWindow, Permission
+(allow/deny), FullScreen, ProcessFailed, FrameNavStarting/Completed and
+Console. The default user data folder is
+<code>%LOCALAPPDATA%\FWH_webview2_UserData</code>. Fully backward compatible;
+new sample in <code>samples/webview2/</code>.
+</p>
+
+<h2 id="tprolog">TProlog: a Prolog engine inside FiveWin</h2>
+<p>
+New class <code>TProlog</code> (<code>source/classes/tprolog.prg</code>):
+a Prolog engine embedded in Harbour/FiveWin, with facts and rules,
+backtracking, unification (optional occurs-check), cut (<code>!</code>),
+negation (<code>not/\+</code>), <code>findall/3</code>, arithmetic
+(<code>is/2</code>, <code>=:=/2</code>, ...) and fast native list builtins
+(<code>member</code>, <code>append</code>, <code>permutation</code>,
+<code>numlist</code>, <code>alldiff</code>, <code>sort</code>,
+<code>between</code>, ...). <code>Query()</code> returns an array of hashes
+<code>{ VarName =&gt; "term" }</code>. The C core
+(<code>source/function/prolog.c</code>, trail + owned term heap) solves the
+8-queens problem (all 92 solutions) about 230x faster than the previous
+Harbour interpreter. Samples: <code>samples/ai/tprolog.prg</code>,
+<code>samples/ai/tprologbench.prg</code> and <code>samples/ai/plpad.prg</code>,
+a Prolog pad with syntax highlighting, a 3D graph of the knowledge base and
+an "explain" button powered by TOpenCode.
+</p>
+
+<h2 id="mapi-addr-fill">MAPI: typed SMTP address fill</h2>
+<p>
+<code>MAPISendMail()</code> / <code>DEFINE MAIL</code> with a single-parameter
+<code>TO cEmail</code>: the 26.07 fallback copied the bare display name into
+<code>lpszAddress</code> (no type prefix), which made Outlook build a one-off
+recipient and Exchange Online never deliver the attachment.
+<code>mapi.c</code> now fills the typed form <code>SMTP:user@domain</code>,
+only when the name contains <code>@</code>. The new optional
+<code>SetMapiAddrFill( .F. )</code> restores the pre-26.07 behaviour of
+leaving <code>lpszAddress</code> empty for the client to resolve. The dual
+form <code>TO cName, cAddress</code> is unchanged.
+</p>
+
+<h2 id="iswindows10">IsWindows10() fixed on Windows Server</h2>
+<p>
+<code>IsWindows10()</code> now reads the build number, the same way
+<code>IsWindows11()</code> does, instead of the registry product name, which
+says "Windows Server" on server editions: it wrongly returned <code>.F.</code>
+on Windows Server 2016/2019/2022.
+</p>
+
+<h2 id="xb64-mingw-link">xHarbour 64 and MinGW link fixes</h2>
+<p>
+xHarbour + BCC 64 (xb64): <code>Fivexh64.a</code> was missing everything in
+<code>source/function/harbour.prg</code> (<code>ASend()</code>,
+<code>OSend()</code>, <code>OClone()</code>, <code>ParamCount()</code>,
+<code>OleInvoke()</code> and more), so xHarbour 64-bit apps failed to link
+with errors like <code>Unresolved external 'HB_FUN_ASEND'</code>;
+<code>TVistaMenu</code> was missing too. Both are in now, and
+<code>mfwh_new.bat xb64</code> lists any source that fails to compile and
+stops, instead of silently leaving it out of the lib.
+</p>
+<p>
+The FiveWin libs also build again with MinGW 32
+(<code>source/internal/remoteview/capture.c</code> defines
+<code>SM_CXPADDEDBORDER</code> when the SDK headers lack it), and FWMariaDB
+apps link with xHarbour + MSVC 32 (<code>source/internal/fwmaria.prg</code>
+uses its own <code>nxs_crypt</code> and Adler-32 there).
+</p>
+
+<h2 id="topencode-fix">TOpenCode talks to OpenCode Zen again</h2>
+<p>
+<code>TOpenCode</code> (<code>source/classes/topencode.prg</code>) works with
+the Zen service again: the <code>x-opencode-session: public</code> header is
+sent (the old requests failed with MissingSessionID), the free-model catalog
+is up to date (<code>ling-3.0-flash-fin-free</code> default) and HTTP status
+falls back to the return value. See
+<a href="../../en/internet/topencode.html">TOpenCode</a>.
+</p>
+
+<h2 id="samples-2609">New samples</h2>
+<ul>
+  <li><code>samples/menus/vistamenu.prg</code> — a minimal
+    <code>TVistaMenu</code> example (lateral menu with three items); this
+    class had no sample to build.</li>
+  <li><code>samples/ai/plpad.prg</code> — Prolog pad: paste or open a
+    <code>.pl</code> file, consult it with <code>TProlog</code> and run
+    queries, with a TWebView2/three.js graph of <code>node()</code>/<code>edge()</code>.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

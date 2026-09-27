@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novedades 26.09 - FWH Docs</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav id="sidebar"></nav>
+<main id="content">
+
+<h1>Novedades en FWH 26.09</h1>
+
+<p>
+Resumen de FiveWin for Harbour/xHarbour versión <strong>26.09</strong> (septiembre 2026).
+Ver también <code>whatsnew.txt</code> en la raíz de FWH para el registro día a día.
+</p>
+
+<h2 id="dark-caption">Barra de título oscura automática + FW_SetCaptionColors</h2>
+<p>
+Con <code>FW_SetDarkMode( .T. )</code> ahora toda <strong>WINDOW</strong> y todo
+<strong>DIALOG</strong> recibe automáticamente una barra de título oscura, con los
+colores del modo oscuro: sin código adicional
+(<code>source/classes/dialog.prg</code>, <code>source/classes/window.prg</code>).
+</p>
+<p>
+La nueva función <code>FW_SetCaptionColors()</code> personaliza la barra de título
+(<code>source/classes/dialog.prg</code>):
+</p>
+<pre><code>// Colores personalizados de texto/fondo del título (también en modo claro)
+FW_SetCaptionColors( nClrText, nClrBack )
+
+// Volver a los colores automáticos
+FW_SetCaptionColors( nil, nil )
+
+// Consultar los colores personalizados: { nClrText, nClrBack } o nil
+aClrs := FW_SetCaptionColors()</code></pre>
+<p>
+El tema del título usa DWM (<code>DwmSetWindowAttribute</code>, con
+<code>dwmapi.dll</code> cargada en tiempo de ejecución, sin nueva dependencia).
+Requiere Windows 11; en Windows anteriores no hace nada.
+Ver <a href="../../es/core/tdialog.html#caption-colors">colores de título en TDialog</a>
+y <a href="../../es/core/twindow.html#dark-mode">modo oscuro en TWindow</a>.
+</p>
+
+<h2 id="tbitmap-aspect">TBitmap ASPECT: escalado proporcional</h2>
+<p>
+Nueva opción <code>ASPECT</code> para <code>@ ... BITMAP</code> y
+<code>REDEFINE BITMAP</code>, y nueva propiedad <code>lAspectRatio</code>
+(<code>source/classes/bitmap.prg</code>): el bitmap se dibuja escalado
+proporcionalmente y centrado dentro del control, sin distorsión, dejando el
+área restante en el color de fondo del control. Tiene precedencia sobre
+<code>ADJUST</code>; dimensiones cero no dibujan nada. También vale asignar
+<code>oBmp:lAspectRatio := .T.</code> y llamar a <code>oBmp:Refresh()</code>.
+Ver <a href="../../es/ui/tbitmap.html">TBitmap</a>.
+</p>
+
+<h2 id="scrollpanel-hscroll-fix">TScrollPanel: salto de foco tras scroll horizontal corregido</h2>
+<p>
+Tras un scroll horizontal, el manejador <code>bGotFocus</code> que
+<code>SetRange()</code> asigna a los controles con tab-stop seguía llamando a
+<code>ControlIntoView()</code>, devolviendo el panel a su posición. Ahora también
+se omite tras un scroll horizontal (<code>lHScrolled</code>), como ya ocurría con
+el vertical (<code>source/classes/scrlpanl.prg</code>). No requiere cambios en el
+código de usuario. Ver <a href="../../es/ui/tscrollpanel.html">TScrollPanel</a>.
+</p>
+
+<h2 id="twebview2-natives">TWebView2: de 10 a más de 40 nativos</h2>
+<p>
+<code>TWebView2</code> (<code>source/classes/twebview2.prg</code>,
+<code>source/internal/twebview/cwebview.cpp</code>,
+<code>source/winapi/webview2.c</code>, <code>include/WebView2.ch</code>) pasa de
+10 a más de 40 nativos. Nuevos métodos:
+<code>NavigateEx( cUrl, cMethod, cHeaders, cBody )</code> (POST nativo),
+<code>GoBack</code>/<code>GoForward</code>/<code>Reload</code>/<code>Stop</code>,
+<code>CanGoBack</code>/<code>CanGoForward</code>, <code>GetSource</code>,
+<code>GetDocumentTitle</code>, <code>GetBrowserVersion</code>, <code>Print</code>,
+<code>SetZoomFactor</code>/<code>GetZoomFactor</code>,
+<code>SetDefaultScriptDialogs</code>,
+<code>SetDefaultContextMenus</code>/<code>SetContextMenuExclude</code>,
+<code>CapturePreview</code> (PNG asíncrono) / <code>PrintToPdf</code> (PDF asíncrono),
+<code>Add/RemoveWebResourceRequestedFilter</code>,
+<code>ClearSession</code>/<code>ClearBrowsingData</code>,
+<code>EnableConsole</code>, <code>CloseWebView</code>, <code>Reinitialize</code>,
+<code>SetSizeRatio</code> y diagnósticos <code>Diag</code>/<code>Reregister</code>.
+Nuevos eventos <code>bOn*</code>: NavigationStarting (cancelable), SourceChanged,
+HistoryChanged, DocumentTitleChanged, NewWindow, Permission (permitir/denegar),
+FullScreen, ProcessFailed, FrameNavStarting/Completed y Console. La carpeta de
+datos de usuario por defecto es <code>%LOCALAPPDATA%\FWH_webview2_UserData</code>.
+Totalmente compatible hacia atrás; nuevo ejemplo en <code>samples/webview2/</code>.
+</p>
+
+<h2 id="tprolog">TProlog: un motor Prolog dentro de FiveWin</h2>
+<p>
+Nueva clase <code>TProlog</code> (<code>source/classes/tprolog.prg</code>):
+un motor Prolog integrado en Harbour/FiveWin, con hechos y reglas,
+backtracking, unificación (occurs-check opcional), corte (<code>!</code>),
+negación (<code>not/\+</code>), <code>findall/3</code>, aritmética
+(<code>is/2</code>, <code>=:=/2</code>, ...) y builtins nativos rápidos de listas
+(<code>member</code>, <code>append</code>, <code>permutation</code>,
+<code>numlist</code>, <code>alldiff</code>, <code>sort</code>,
+<code>between</code>, ...). <code>Query()</code> devuelve un array de hashes
+<code>{ VarName =&gt; "term" }</code>. El núcleo en C
+(<code>source/function/prolog.c</code>, trail + heap de términos propio) resuelve
+el problema de las 8 reinas (las 92 soluciones) unas 230 veces más rápido que el
+intérprete Harbour anterior. Ejemplos: <code>samples/ai/tprolog.prg</code>,
+<code>samples/ai/tprologbench.prg</code> y <code>samples/ai/plpad.prg</code>,
+un editor Prolog con resaltado de sintaxis, grafo 3D de la base de conocimiento
+y botón de explicación con TOpenCode.
+</p>
+
+<h2 id="mapi-addr-fill">MAPI: relleno de dirección SMTP con tipo</h2>
+<p>
+<code>MAPISendMail()</code> / <code>DEFINE MAIL</code> con <code>TO cEmail</code>
+de un solo parámetro: el fallback de la 26.07 copiaba el nombre tal cual a
+<code>lpszAddress</code> (sin prefijo de tipo), lo que hacía que Outlook creara un
+destinatario ocasional y Exchange Online no entregara nunca el adjunto.
+<code>mapi.c</code> ahora rellena la forma con tipo <code>SMTP:user@domain</code>,
+solo cuando el nombre contiene <code>@</code>. La nueva función opcional
+<code>SetMapiAddrFill( .F. )</code> restaura el comportamiento anterior a 26.07
+de dejar <code>lpszAddress</code> vacío para que lo resuelva el cliente. La forma
+dual <code>TO cName, cAddress</code> no cambia.
+</p>
+
+<h2 id="iswindows10">IsWindows10() corregido en Windows Server</h2>
+<p>
+<code>IsWindows10()</code> ahora lee el número de build, igual que
+<code>IsWindows11()</code>, en lugar del nombre de producto del registro, que en
+ediciones servidor dice "Windows Server": devolvía <code>.F.</code> por error en
+Windows Server 2016/2019/2022.
+</p>
+
+<h2 id="xb64-mingw-link">Correcciones de enlazado en xHarbour 64 y MinGW</h2>
+<p>
+xHarbour + BCC 64 (xb64): a <code>Fivexh64.a</code> le faltaba todo lo de
+<code>source/function/harbour.prg</code> (<code>ASend()</code>,
+<code>OSend()</code>, <code>OClone()</code>, <code>ParamCount()</code>,
+<code>OleInvoke()</code> y más), así que las aplicaciones xHarbour 64 bits no
+enlazaban, con errores como <code>Unresolved external 'HB_FUN_ASEND'</code>;
+también faltaba <code>TVistaMenu</code>. Ya están incluidos, y
+<code>mfwh_new.bat xb64</code> ahora lista cualquier fuente que no compile y se
+detiene, en lugar de dejarla fuera de la librería sin avisar.
+</p>
+<p>
+Las librerías FiveWin también vuelven a compilar con MinGW 32
+(<code>source/internal/remoteview/capture.c</code> define
+<code>SM_CXPADDEDBORDER</code> cuando las cabeceras del SDK no lo tienen), y las
+aplicaciones FWMariaDB enlazan con xHarbour + MSVC 32
+(<code>source/internal/fwmaria.prg</code> usa su propio <code>nxs_crypt</code> y
+Adler-32 ahí).
+</p>
+
+<h2 id="topencode-fix">TOpenCode vuelve a hablar con OpenCode Zen</h2>
+<p>
+<code>TOpenCode</code> (<code>source/classes/topencode.prg</code>) funciona de
+nuevo con el servicio Zen: se envía la cabecera
+<code>x-opencode-session: public</code> (las peticiones antiguas fallaban con
+MissingSessionID), el catálogo de modelos gratuitos está al día
+(<code>ling-3.0-flash-fin-free</code> por defecto) y el estado HTTP usa el valor
+de retorno como respaldo. Ver <a href="../../es/internet/topencode.html">TOpenCode</a>.
+</p>
+
+<h2 id="samples-2609">Nuevos ejemplos</h2>
+<ul>
+  <li><code>samples/menus/vistamenu.prg</code> — un ejemplo mínimo de
+    <code>TVistaMenu</code> (menú lateral con tres elementos); esta clase no
+    tenía ningún ejemplo que compilar.</li>
+  <li><code>samples/ai/plpad.prg</code> — editor Prolog: pega o abre un archivo
+    <code>.pl</code>, consúltalo con <code>TProlog</code> y ejecuta consultas,
+    con un grafo TWebView2/three.js de <code>node()</code>/<code>edge()</code>.</li>
+</ul>
+
+</main>
+<aside id="toc"><div id="toc-title">En esta página</div><div id="toc-links"></div></aside>
+<script src="../../js/app.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>
