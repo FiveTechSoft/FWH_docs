@@ -3,7 +3,7 @@
 Welcome to the official documentation for **FiveWin for Harbour/xHarbour (FWH)**,
 the framework for building Windows applications with Harbour/xHarbour.
 
-> **Current version:** FWH 26.06
+> **Current version:** FWH 26.09
 > **Entry point:** open [`index.html`](index.html) — it redirects to the
 > localized documentation.
 

@@ -14,7 +14,6 @@
 
 ## Known gaps
 
-* `en/` is missing the `classes/` topic folder that `es/` and `pt/` have.
 * Some `es/`/`pt/` pages may lag behind `en/` (keep in sync per `MIGRATION.md`).
 
 ## Maintenance

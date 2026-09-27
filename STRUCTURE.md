@@ -18,7 +18,7 @@ the structure (the three languages share the same layout).
 getting-started/
   overview.html, installation.html, build-system.html, samples-guide.html,
   examples.html, tglossary.html, tlocalization.html,
-  whatsnew.html, whatsnew-26.06.html
+  whatsnew.html, whatsnew-26.06.html ... whatsnew-26.09.html
 core/        TWindow, TDialog, TControl, TMDI*, TObjFile, TSymTable, TInier
 ui/          All controls (TButton, TGet, TListBox, xBrowse, Ribbon, ...)
 advanced/    dll.html, unicode.html, advanced-diagrams.md
