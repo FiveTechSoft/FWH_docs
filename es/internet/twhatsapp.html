@@ -49,16 +49,23 @@ All message types are sent as JSON payloads through the Graph API.
 <tr><td><code>New( cToken, cPhoneId, cVersion )</code></td><td>Constructor. Initializes cURL handle and stores credentials. Optionally sets API version.</td></tr>
 <tr><td><code>End()</code></td><td>Clean up the cURL handle. Call when done with the object.</td></tr>
 <tr><td><code>SendText( cTo, cMsg, lPreviewUrl )</code></td><td>Send a plain text message. <code>lPreviewUrl</code> enables link preview generation.</td></tr>
-<tr><td><code>SendTemplate( cTo, cName, cLang, aBodyParams )</code></td><td>Send a pre-approved message template with optional body parameter values.</td></tr>
+<tr><td><code>SendTemplate( cTo, cName, cLang, aBodyParams, hHeader, aButtons )</code></td><td>Send a pre-approved message template. All parameters are optional: <code>aBodyParams</code> is an array of body values, <code>hHeader</code> is <code>{ "type" =&gt; "text"|"image"|"document"|"video", ... }</code> (text header takes <code>"text"</code>; media headers take <code>"link"</code> or <code>"id"</code>, document also <code>"filename"</code>) and <code>aButtons</code> is <code>{ { "sub_type" =&gt; "quick_reply", "payload" =&gt; c }, { "sub_type" =&gt; "url", "text" =&gt; cDynamicSuffix } }</code>. Phone number buttons need no parameters.</td></tr>
 <tr><td><code>SendImage( cTo, cLinkOrId, cCaption )</code></td><td>Send an image by URL or previously uploaded media ID.</td></tr>
 <tr><td><code>SendDocument( cTo, cLinkOrId, cFilename, cCaption )</code></td><td>Send a document by URL or media ID with optional filename and caption.</td></tr>
 <tr><td><code>SendAudio( cTo, cLinkOrId )</code></td><td>Send an audio file by URL or media ID.</td></tr>
 <tr><td><code>SendVideo( cTo, cLinkOrId, cCaption )</code></td><td>Send a video by URL or media ID with optional caption.</td></tr>
 <tr><td><code>SendLocation( cTo, nLat, nLong, cName, cAddress )</code></td><td>Send a location pin with latitude, longitude, and optional name/address.</td></tr>
+<tr><td><code>SendButtons( cTo, cBody, aButtons, cHeader, cFooter )</code></td><td>Send an interactive message with up to 3 reply buttons: <code>aButtons</code> is <code>{ { "id" =&gt; cId, "title" =&gt; cLabel }, ... }</code> (labels max 20 characters). <code>cHeader</code> and <code>cFooter</code> are optional text.</td></tr>
+<tr><td><code>SendList( cTo, cBody, cButton, aRows, cHeader, cFooter )</code></td><td>Send an interactive list message: <code>cButton</code> is the label that opens the list and <code>aRows</code> is <code>{ { "id" =&gt; cId, "title" =&gt; cTitle, "description" =&gt; cDesc }, ... }</code> (max 10 rows). <code>cHeader</code> and <code>cFooter</code> are optional text.</td></tr>
+<tr><td><code>SendReaction( cTo, cMsgId, cEmoji )</code></td><td>React with an emoji to a received message. An empty <code>cEmoji</code> removes the reaction.</td></tr>
+<tr><td><code>SendContact( cTo, aContacts )</code></td><td>Send one or more contact cards. Each contact is <code>{ "name" =&gt; cFullName, "first" =&gt; c, "last" =&gt; c, "phones" =&gt; { cPhone, ... }, "emails" =&gt; { cEmail, ... }, "company" =&gt; c, "title" =&gt; c }</code>; only <code>"name"</code> is required.</td></tr>
+<tr><td><code>MarkAsRead( cMsgId, lTyping )</code></td><td>Mark a received message as read (blue checks). With <code>lTyping = .T.</code> it also shows the typing indicator. <code>cMsgId</code> is the id of a message received via webhook.</td></tr>
 <tr><td><code>UploadMedia( cFileName, cMimeType )</code></td><td>Upload a media file to WhatsApp servers. Returns the media ID string, or nil on failure.</td></tr>
 <tr><td><code>DownloadMedia( cMediaId, cTargetFile )</code></td><td>Download a media file from WhatsApp servers and save to disk. Returns .T. on success.</td></tr>
 <tr><td><code>GetMessageId()</code></td><td>Extract the message ID from the last API response. Returns empty string on failure.</td></tr>
 <tr><td><code>GetError()</code></td><td>Extract the error message from the last API response. Returns empty string if no error.</td></tr>
+<tr><td><code>GetErrorCode()</code></td><td>Numeric Meta error code from the last API response, 0 if none.</td></tr>
+<tr><td><code>GetFbTraceId()</code></td><td>Meta <code>fbtrace_id</code> from the last error response, useful when reporting problems to Meta support.</td></tr>
 </tbody>
 </table>
 
@@ -96,6 +103,41 @@ function SendTemplate()
 
    // "welcome_message" must be pre-approved by Meta
    oWA:SendTemplate( "5215512345678", "welcome_message", "en_US", aParams )
+   oWA:End()
+
+return nil</code></pre>
+
+<h2 id="example-template-full">Example: Template with Header and Buttons</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function SendTemplateFull()
+
+   local oWA := TWhatsApp():New( "EAAx...token", "123456789" )
+
+   // "order_update" must exist and be approved in the Meta app:
+   // body with 2 parameters, image header, quick reply + dynamic URL buttons
+   oWA:SendTemplate( "5215512345678", "order_update", "es_ES", ;
+      { "Ana", "1234" }, ;
+      { "type" =&gt; "image", "link" =&gt; "https://www.fivetechsoft.com/images/fivewin_logo.png" }, ;
+      { { "sub_type" =&gt; "quick_reply", "payload" =&gt; "track_1234" }, ;
+        { "sub_type" =&gt; "url", "text" =&gt; "order/1234" } } )
+   oWA:End()
+
+return nil</code></pre>
+
+<h2 id="example-buttons">Example: Interactive Buttons</h2>
+
+<pre><code class="language-harbour">#include "FiveWin.ch"
+
+function SendButtons()
+
+   local oWA := TWhatsApp():New( "EAAx...token", "123456789" )
+
+   oWA:SendButtons( "5215512345678", "Do you confirm the appointment tomorrow at 10:00?", ;
+      { { "id" =&gt; "confirm_yes", "title" =&gt; "Confirm" }, ;
+        { "id" =&gt; "confirm_no",  "title" =&gt; "Cancel" } }, ;
+      "Appointment", "Reply with one tap" )
    oWA:End()
 
 return nil</code></pre>
