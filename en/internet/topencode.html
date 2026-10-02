@@ -18,9 +18,8 @@
 TOpenCode talks to the <strong>OpenCode Zen</strong> chat API
 (<code>https://opencode.ai/zen/v1/chat/completions</code>) with
 <code>Authorization: Bearer public</code>. No API key. Free models
-(<code>hy3-free</code>, <code>mimo-v2.5-free</code>,
-<code>deepseek-v4-flash-free</code>, <code>nemotron-3-ultra-free</code>,
-<code>nemotron-3.5-lightning-free</code>, <code>laguna-s-2.1-free</code>).
+(<code>mimo-v2.6-flash-free</code>, <code>mimo-v2.5-free</code>,
+<code>space-bunny-free</code>, <code>big-pickle</code>, <code>nemotron-3-ultra-free</code>).
 Uses <code>hb_curl</code>. Async methods need the Harbour MT VM
 (<code>build_new.bat &lt;sample&gt; hb32 mt</code>).
 </p>
@@ -45,10 +44,11 @@ flowchart LR
 <table>
 <thead><tr><th>DATA</th><th>Default</th><th>Description</th></tr></thead>
 <tbody>
-<tr><td><code>cModel</code></td><td><code>"hy3-free"</code></td><td>Zen free model</td></tr>
+<tr><td><code>cModel</code></td><td><code>"mimo-v2.6-flash-free"</code></td><td>Zen free model</td></tr>
 <tr><td><code>cUrl</code></td><td>Zen chat completions</td><td>Endpoint</td></tr>
 <tr><td><code>nTemperature</code></td><td><code>0.7</code></td><td>0.0–2.0</td></tr>
 <tr><td><code>aFallbackModels</code></td><td>other free models</td><td>Used on rate limit</td></tr>
+<tr><td><code>lVerifySSL</code></td><td><code>.T.</code></td><td>Verify the server certificate. Leave it on; set <code>.F.</code> only to diagnose a certificate problem.</td></tr>
 <tr><td><code>lRunning</code></td><td><code>.F.</code></td><td>Async in flight</td></tr>
 </tbody>
 </table>
@@ -62,7 +62,7 @@ flowchart LR
 <tr><td><code>SendWithSystem( cSys, cUser )</code></td><td>Sync with a system prompt (agent role).</td></tr>
 <tr><td><code>SendAsync( cPrompt )</code></td><td>Returns at once. Poll <code>IsRunning()</code>.</td></tr>
 <tr><td><code>SendWithSystemAsync( cSys, cUser )</code></td><td>Async + system prompt.</td></tr>
-<tr><td><code>IsRunning()</code></td><td><code>.T.</code> until the worker writes the result file.</td></tr>
+<tr><td><code>IsRunning()</code></td><td><code>.T.</code> until the worker finishes. If the worker ends without a result, it returns <code>.F.</code> and <code>GetValue()</code> reports an error instead of waiting forever.</td></tr>
 <tr><td><code>GetValue()</code></td><td>Assistant text from JSON; UTF-8 → ACP.</td></tr>
 <tr><td><code>Wait() / End()</code></td><td>Join the thread; cleanup curl.</td></tr>
 <tr><td><code>SetModel() / SetTemperature()</code></td><td>Change model / temperature.</td></tr>
@@ -100,6 +100,7 @@ build_new.bat opencode2 hb32 mt
 
 <h2 id="notes">Notes</h2>
 <ul>
+<li>Best effort: the free tier of OpenCode Zen only answers requests that look like they come from the OpenCode client, so TOpenCode sends the headers and tool list that tier expects. Zen may change this or the free model list at any time; if a model stops answering, call <code>SetModel()</code> with another free model.</li>
 <li>No API key. OAuth / <code>auth.json</code> on TOpenCode is unused (Zen rejects <code>sk-</code> keys).</li>
 <li>Async requires <code>hbvmmt</code> — pass <code>mt</code> to <code>build_new.bat</code>.</li>
 <li>32-bit samples need the x86 <code>libcurl.dll</code> beside the exe (<code>samples\ai</code>).</li>

@@ -8,7 +8,7 @@ E: ["TEdit","TEmbeddings","TEnhMetaFile","TEReport","TExplorerBar","TExplorerLis
 F: ["TFGet","TField","TFile","TFileGTF","TFLine","TFolder","TFolderEx","TFont","TForm","TFTP","TFtpClient","TFTPFile","TFtpServer","TFtpSession","TFWLanguageModel","FW_EReport","FWER_BarCode","FWMariaRecord","FWMSWordDoc","FWPdf","FWStack"],
 G: ["TGantt","TGemini","TGet","TGif","TGmail","GPT2Model","TGraph","Graphics","TGrok","TGroup","TGroupEx"],
 H: ["THeader","THFTask","THorzScroll","THotKey","THtmlPage","HFTokenizer"],
-I: ["TIcon","TIconGet","TIconGroup","TImage","TImageBase64","TImageList","TIndex","TIni","TIniER","TInternet","TIPAddress"],
+I: ["TIcon","TIconGet","TIconGroup","TImage","TImageBase64","TImageList","TIndex","TIni","TIniER","TInstinct","TInternet","TIPAddress"],
 K: ["TKimi","TKnob"],
 L: ["TLayout","TLayoutManager","TLex","TLibFile","TLinkList","TListBox","TListView","TLocks"],
 M: ["TMail","TMci","TMdiChild","TMdiClient","TMdiFrame","TMenu","TMenuItem","TMetaFile","TMeter","TMeterEx","TMetro","TMetroPanel","TMnuComp","TMonthView","TMru","TMsgBar","TMsgItem","TMultiGet","TMyBox","TMyTitle"],

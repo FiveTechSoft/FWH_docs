@@ -18,8 +18,8 @@
 TOpenCode usa la API de chat <strong>OpenCode Zen</strong>
 (<code>https://opencode.ai/zen/v1/chat/completions</code>) con
 <code>Authorization: Bearer public</code>. Sin clave API. Modelos gratuitos
-(<code>hy3-free</code>, <code>mimo-v2.5-free</code>,
-<code>deepseek-v4-flash-free</code>, etc.).
+(<code>mimo-v2.6-flash-free</code>, <code>mimo-v2.5-free</code>,
+<code>space-bunny-free</code>, <code>big-pickle</code>, <code>nemotron-3-ultra-free</code>).
 <code>SendAsync</code> exige la VM Harbour MT
 (<code>build_new.bat &lt;sample&gt; hb32 mt</code>).
 </p>
@@ -37,14 +37,17 @@ bcc32/bcc64/msvc32/msvc64/gcc).
 <tbody>
 <tr><td><code>New( cModel )</code></td><td>Un handle curl por instancia (varios agentes en paralelo).</td></tr>
 <tr><td><code>Send( cPrompt )</code> / <code>SendWithSystem()</code></td><td>Síncrono; si hay rate limit, prueba otro modelo free.</td></tr>
-<tr><td><code>SendAsync()</code> / <code>SendWithSystemAsync()</code></td><td>Vuelve al momento. Consultar <code>IsRunning()</code>.</td></tr>
+<tr><td><code>SendAsync()</code> / <code>SendWithSystemAsync()</code></td><td>Vuelve al momento. Consultar <code>IsRunning()</code>; si el hilo termina sin resultado devuelve <code>.F.</code> y <code>GetValue()</code> informa del error.</td></tr>
 <tr><td><code>GetValue()</code></td><td>Texto del asistente (UTF-8 → ACP).</td></tr>
+<tr><td><code>lVerifySSL</code></td><td>Verifica el certificado del servidor (por defecto <code>.T.</code>). Déjalo activado.</td></tr>
 </tbody>
 </table>
 <p>
 Async escribe <code>oc_&lt;ms&gt;_&lt;seq&gt;.json</code> vía <code>.part</code>
 + rename: tres <code>SendAsync()</code> en el mismo tick no chocan.
 </p>
+
+<p><strong>Mejor esfuerzo:</strong> el nivel gratuito de OpenCode Zen solo responde a peticiones que parecen venir del cliente OpenCode, y TOpenCode envía las cabeceras y la lista de herramientas que ese nivel espera. Zen puede cambiarlo, o la lista de modelos gratuitos, en cualquier momento; si un modelo deja de responder, usa <code>SetModel()</code> con otro modelo gratuito.</p>
 
 <h2 id="samples">Samples</h2>
 <ul>

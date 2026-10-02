@@ -18,8 +18,8 @@
 TOpenCode usa a API de chat <strong>OpenCode Zen</strong>
 (<code>https://opencode.ai/zen/v1/chat/completions</code>) com
 <code>Authorization: Bearer public</code>. Sem chave API. Modelos gratuitos
-(<code>hy3-free</code>, <code>mimo-v2.5-free</code>,
-<code>deepseek-v4-flash-free</code>, etc.).
+(<code>mimo-v2.6-flash-free</code>, <code>mimo-v2.5-free</code>,
+<code>space-bunny-free</code>, <code>big-pickle</code>, <code>nemotron-3-ultra-free</code>).
 <code>SendAsync</code> exige a VM Harbour MT
 (<code>build_new.bat &lt;sample&gt; hb32 mt</code>).
 </p>
@@ -37,14 +37,17 @@ bcc32/bcc64/msvc32/msvc64/gcc).
 <tbody>
 <tr><td><code>New( cModel )</code></td><td>Um handle curl por instância (vários agentes em paralelo).</td></tr>
 <tr><td><code>Send( cPrompt )</code> / <code>SendWithSystem()</code></td><td>Síncrono; em rate limit tenta outro modelo free.</td></tr>
-<tr><td><code>SendAsync()</code> / <code>SendWithSystemAsync()</code></td><td>Retorna já. Consultar <code>IsRunning()</code>.</td></tr>
+<tr><td><code>SendAsync()</code> / <code>SendWithSystemAsync()</code></td><td>Retorna já. Consultar <code>IsRunning()</code>; se a thread terminar sem resultado retorna <code>.F.</code> e <code>GetValue()</code> informa o erro.</td></tr>
 <tr><td><code>GetValue()</code></td><td>Texto do assistente (UTF-8 → ACP).</td></tr>
+<tr><td><code>lVerifySSL</code></td><td>Verifica o certificado do servidor (padrão <code>.T.</code>). Deixe ativado.</td></tr>
 </tbody>
 </table>
 <p>
 Async grava <code>oc_&lt;ms&gt;_&lt;seq&gt;.json</code> via <code>.part</code>
 + rename: três <code>SendAsync()</code> no mesmo tick não colidem.
 </p>
+
+<p><strong>Melhor esforço:</strong> o nível gratuito do OpenCode Zen só responde a pedidos que parecem vir do cliente OpenCode, e o TOpenCode envia os cabeçalhos e a lista de ferramentas que esse nível espera. O Zen pode mudar isso, ou a lista de modelos gratuitos, a qualquer momento; se um modelo deixar de responder, use <code>SetModel()</code> com outro modelo gratuito.</p>
 
 <h2 id="samples">Samples</h2>
 <ul>

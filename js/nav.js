@@ -135,6 +135,7 @@
       'internet/tsmtp.html', 'TSmtp',
       'internet/tpop3.html', 'TPop3',
       'internet/tftp.html', 'TFtp',
+      'internet/tinstinct.html', 'TInstinct',
       'internet/twhatsapp.html', 'TWhatsApp',
       'internet/twhatsapp-setup.html', L.twaSetup,
       'internet/topenai.html', 'TOpenAI',

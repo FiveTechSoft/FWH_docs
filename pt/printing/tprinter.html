@@ -408,6 +408,18 @@ can produce PDF output simply by setting one class data flag at the start of the
 print job, with no changes to the drawing logic itself.
 </p>
 
+<h2 id="keep-printer">Manter a impressora selecionada entre trabalhos de impressão</h2>
+<p>
+Por padrão cada trabalho de impressão começa com a impressora padrão do Windows, então a impressora escolhida com <code>oPrn:Setup()</code> (<code>PrinterSetup()</code>) ou <code>PageSetup()</code> é esquecida ao fim do trabalho. Chame <code>PrinterKeepSetup( .T. )</code> uma vez (por exemplo na inicialização) para manter a impressora selecionada, o papel e a orientação nos próximos trabalhos de impressão da aplicação (<code>source/winapi/printdc.c</code>):
+</p>
+<pre><code>PrinterKeepSetup( .T. )          // mantém a impressora escolhida entre trabalhos
+PrinterKeepSetup( .F. )          // padrão: cada trabalho usa a impressora padrão
+lKeeping := PrinterKeepSetup()   // consulta o estado atual
+PrinterResetSetup()              // esquece a impressora mantida</code></pre>
+<p>
+Cancelar o diálogo de configuração não altera nada. Se a impressora mantida deixou de estar disponível (removida ou inutilizável), o FWH usa em silêncio a padrão. Com a opção desativada (padrão) o comportamento é exatamente o de sempre.
+</p>
+
 <h2>Veja Também</h2><ul><li><a href="../../pt/reference/classes.html">Classes Alfabético</a></li><li><a href="../../pt/reference/functions.html">Funções</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../pt/printing/tpreview.html">&larr; tpreview</a> | <a href="../../pt/reference/tprogress.html">tprogress &rarr;</a></nav></main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>

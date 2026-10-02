@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TInstinct - Documentación FWH</title><link rel="stylesheet" href="../../css/style.css"></head>
+<body><nav id="sidebar"></nav><main id="content">
+<h1>TInstinct</h1><p class="class-source">source/classes/tinstinct.prg</p>
+<p>Prototipo de transporte por correo para que una aplicación hable con el Instinct de su propio usuario. No es una API oficial. Necesita un receptor configurado por separado; enviar correo no autoriza acciones.</p><h2>Configuración</h2>
+<ul><li><code>cFrom</code>: Remitente de la aplicación.</li><li><code>cToken</code>: Secreto compartido acordado por un medio seguro; no lo escribas en el código.</li><li><code>cTo</code>: Dirección del asistente del usuario. Pregúntale cuál es su dirección; no hay destino por defecto.</li></ul>
+<p>Solo admite un relay local (127.0.0.1 o localhost). El salto externo debe usar TLS y validar certificados. Los puertos por defecto son SMTP 25 y POP 110; pueden cambiarse con nSmtpPort y nPopPort. Configura cPopUser/cPopPassword para un buzón dedicado de respuestas.</p><h2>Ejemplos</h2>
+<pre><code>oInstinct := TInstinct():New( cFrom, cToken, cTo )
+if oInstinct:Send( "Hello Instinct" )
+   cAnswer := oInstinct:Answer( 10 )
+endif
+
+// Register once, then call Pump() from the application's timer:
+oInstinct:OnAnswer( {| cText, cId | MsgInfo( cText, cId ) } )
+oInstinct:Pump()</code></pre>
+<p>Answer() espera y bloquea. OnAnswer() registra el bloque; Pump() sondea una vez desde un timer, pero la conexión puede ocupar hasta nTimeout. No crea un hilo en segundo plano.</p><p><code>samples/instinct/tinstinct.prg</code>: <code>INSTINCT_FROM</code>, <code>INSTINCT_TOKEN</code>, <code>INSTINCT_TO</code>, <code>INSTINCT_POP_USER</code>, <code>INSTINCT_POP_PASSWORD</code>.</p>
+<h2>Estado y límites</h2><ul>
+<li><code>cError</code>: último error. <code>cLog</code>: registro de actividad. <code>SaveLog( cFile )</code>: guarda el registro.</li>
+<li><code>Send( cText, cId )</code>: .T. significa aceptación del relay, no entrega. No reintentes a ciegas tras un timeout final.</li>
+<li><code>ParseReply( cRaw, cExpectedId )</code>: valida MIME simple text/plain, JSON completo y tipos id/text. El análisis no autentica al remitente.</li>
+<li><code>PollOnce( nLimit )</code>: respuestas nuevas, hasta 20 mensajes por defecto (1..100). El estado UIDL se guarda en <code>cUidlFile</code>; no se borra correo. Archiva el correo tratado en el buzón dedicado.</li>
+<li><code>nMaxBytes</code>: 1048576. <code>nTimeout</code>: 5000 ms. <code>Answer( nSeconds, cId )</code>: 1..3600 segundos, por defecto 30.</li>
+</ul><p>El límite cuenta mensajes no tratados, no las primeras posiciones del buzón: los UIDL ya vistos se saltan y las llamadas siguientes avanzan al resto. Answer() conserva respuestas de otros IDs en aPending para otro Answer() o Pump(). Esa cola vive en la instancia; usa una sola instancia por buzón y consúmela antes de cerrarla. El buzón conserva los correos: archiva los tratados para evitar sondeos largos.</p></main><script src="../../js/nav.js"></script><script src="../../js/app.js"></script></body></html>

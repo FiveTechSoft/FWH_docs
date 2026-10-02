@@ -1,4 +1,5 @@
 ﻿var classLinks = {
+  "tinstinct":"internet/tinstinct.html",
   "tacctable":"reference/tacctable.html",
   "tactivex":"ui/tactivex.html",
   "tai":"internet/tai.html",

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TInstinct - Documentation FWH</title><link rel="stylesheet" href="../../css/style.css"></head>
+<body><nav id="sidebar"></nav><main id="content">
+<h1>TInstinct</h1><p class="class-source">source/classes/tinstinct.prg</p>
+<p>Prototype email transport for an application to talk to its user's own Instinct. This is not an official API. A separately configured receiver is required; sending email does not authorize actions.</p><h2>Configuration</h2>
+<ul><li><code>cFrom</code>: Application sender mailbox.</li><li><code>cToken</code>: Shared secret agreed through a secure means; keep it out of source code.</li><li><code>cTo</code>: The user's assistant mailbox. Ask the assistant for its address; there is no default destination.</li></ul>
+<p>Only a local relay (127.0.0.1 or localhost) is accepted. The external hop must use TLS and validate certificates. Default ports are SMTP 25 and POP 110; override nSmtpPort and nPopPort as needed. Set cPopUser/cPopPassword for a dedicated reply mailbox.</p><h2>Examples</h2>
+<pre><code>oInstinct := TInstinct():New( cFrom, cToken, cTo )
+if oInstinct:Send( "Hello Instinct" )
+   cAnswer := oInstinct:Answer( 10 )
+endif
+
+// Register once, then call Pump() from the application's timer:
+oInstinct:OnAnswer( {| cText, cId | MsgInfo( cText, cId ) } )
+oInstinct:Pump()</code></pre>
+<p>Answer() waits and blocks. OnAnswer() registers a callback; Pump() polls once from a timer, but the connection can take up to nTimeout. It does not start a background thread.</p><p><code>samples/instinct/tinstinct.prg</code>: <code>INSTINCT_FROM</code>, <code>INSTINCT_TOKEN</code>, <code>INSTINCT_TO</code>, <code>INSTINCT_POP_USER</code>, <code>INSTINCT_POP_PASSWORD</code>.</p>
+<h2>State and limits</h2><ul>
+<li><code>cError</code>: last error. <code>cLog</code>: activity log. <code>SaveLog( cFile )</code>: save the log.</li>
+<li><code>Send( cText, cId )</code>: .T. means relay acceptance, not delivery. Do not retry blindly after a final timeout.</li>
+<li><code>ParseReply( cRaw, cExpectedId )</code>: validates simple text/plain MIME, complete JSON and id/text types. Parsing does not authenticate the sender.</li>
+<li><code>PollOnce( nLimit )</code>: new replies, up to 20 messages by default (1..100). UIDL state is stored in <code>cUidlFile</code>; no messages are deleted. Archive processed mail in the dedicated mailbox.</li>
+<li><code>nMaxBytes</code>: 1048576. <code>nTimeout</code>: 5000 ms. <code>Answer( nSeconds, cId )</code>: 1..3600 seconds, default 30.</li>
+</ul><p>The limit counts unprocessed messages, not the first mailbox positions: seen UIDLs are skipped and later calls reach the remaining mail. Answer() retains other-ID replies in aPending for another Answer() or Pump(). That queue lives in the instance; use one instance per mailbox and drain it before closing. Mail is kept on the server: archive processed mail to avoid long scans.</p></main><script src="../../js/nav.js"></script><script src="../../js/app.js"></script></body></html>

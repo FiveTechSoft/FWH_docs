@@ -408,6 +408,18 @@ can produce PDF output simply by setting one class data flag at the start of the
 print job, with no changes to the drawing logic itself.
 </p>
 
+<h2 id="keep-printer">Keeping the selected printer between print jobs</h2>
+<p>
+By default every print job starts with the Windows default printer, so a printer chosen with <code>oPrn:Setup()</code> (<code>PrinterSetup()</code>) or <code>PageSetup()</code> is forgotten when the job ends. Call <code>PrinterKeepSetup( .T. )</code> once (for example at startup) to keep the selected printer, its paper and orientation for the following print jobs of the application (<code>source/winapi/printdc.c</code>):
+</p>
+<pre><code>PrinterKeepSetup( .T. )          // keep the selected printer between jobs
+PrinterKeepSetup( .F. )          // default: every job starts with the default printer
+lKeeping := PrinterKeepSetup()   // query the current state
+PrinterResetSetup()              // forget the kept printer</code></pre>
+<p>
+Cancelling the setup dialog changes nothing. If the kept printer is no longer available (removed or unusable), FWH silently uses the default printer. With the option off (default) the behavior is exactly the same as before.
+</p>
+
 <h2>See Also</h2><ul><li><a href="../../en/reference/classes.html">Classes Alphabetical</a></li><li><a href="../../en/reference/functions.html">Functions</a></li></ul><nav style="margin-top:16px;padding:12px 0;border-top:1px solid var(--border)"><a href="../../en/printing/tpreview.html">&larr; tpreview</a> | <a href="../../en/reference/tprogress.html">tprogress &rarr;</a></nav></main>
 <aside id="toc"><div id="toc-title">On this page</div><div id="toc-links"></div></aside>
 <script src="../../js/app.js"></script>
