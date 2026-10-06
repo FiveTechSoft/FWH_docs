@@ -50,8 +50,8 @@ and full DDL/DML execution.
 <tr><td><code>New( cServer, cDB, cUser, cPassword, nPort, nFlags, chr_set, cMsgLang, cLocale )</code></td><td>Create and open a connection to the server</td></tr>
 <tr><td><code>Connect( lShowErr )</code></td><td>Establish (or re-establish) the TCP/IP connection</td></tr>
 <tr><td><code>QueryResult( cSql, aParams )</code></td><td>Execute SELECT and return array of row arrays</td></tr>
-<tr><td><code>RowSet( cSql, aParams, nLimit, lReadOnly )</code></td><td>Execute query and return an FRecSet object</td></tr>
-<tr><td><code>Query( cSql, aParams )</code></td><td>Alias for RowSet()</td></tr>
+<tr><td><code>RowSet( cSql, aParams, nLimit, lReadOnly )</code></td><td>Execute query and return an FRecSet object (see <a href="#rowset-params">RowSet parameters</a>)</td></tr>
+<tr><td><code>Query( cSql, aParams )</code></td><td>Alias for RowSet() (same parameters)</td></tr>
 <tr><td><code>Execute( cSql, aParams )</code></td><td>Execute DDL/DML and return result structure</td></tr>
 <tr><td><code>TableExists( cTableName, cDbName, cTableType )</code></td><td>Check if a table exists</td></tr>
 <tr><td><code>TableStructure( cTable, lByteWidth )</code></td><td>Get table column structure as an array</td></tr>
@@ -71,6 +71,31 @@ and full DDL/DML execution.
 <tr><td><code>End()</code></td><td>Alias for Close()</td></tr>
 </tbody>
 </table>
+
+<h3 id="rowset-params">RowSet parameters</h3>
+
+<p>Signature: <code>RowSet( cSql, [aParams], [nLimit], [lReadOnly] )</code>. Only <code>cSql</code> has a fixed position. The other parameters are recognised by <strong>type</strong>, not by position: an array is <code>aParams</code>, a number is <code>nLimit</code> and a logical value is <code>lReadOnly</code>. So <code>oCn:RowSet( cSql, .T. )</code> and <code>oCn:RowSet( cSql, aParams, .T. )</code> both open a read-only RowSet.</p>
+
+<table>
+<thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>cSql</code></td><td>Character</td><td>SQL statement (SELECT, SHOW, EXPLAIN, WITH, ANALYZE/CHECK/OPTIMIZE/REPAIR TABLE), a table name (equivalent to <code>SELECT * FROM table</code>) or the name of a .dbf file.</td></tr>
+<tr><td><code>aParams</code></td><td>Array</td><td>Values for the <code>?</code> placeholders in <code>cSql</code>.</td></tr>
+<tr><td><code>nLimit</code></td><td>Numeric</td><td>Maximum number of rows per page. It is only applied when <code>cSql</code> has an ORDER BY clause.</td></tr>
+<tr><td><code>lReadOnly</code></td><td>Logical</td><td>Default <code>.F.</code>. If <code>.T.</code>, the RowSet is read-only.</td></tr>
+</tbody>
+</table>
+
+<h4>lReadOnly</h4>
+
+<p>With <code>lReadOnly := .T.</code>, <code>SetUp()</code> skips the detection of the base table (table or view) and the preparation of the RowSet to edit and save. This avoids extra queries to the server and can make opening the RowSet noticeably faster, mainly with large queries or slow connections.</p>
+<p>Statements other than SELECT (SHOW, EXPLAIN, WITH, ANALYZE, CHECK, OPTIMIZE and REPAIR TABLE) are always opened read-only.</p>
+<p><strong>Warning:</strong> a read-only RowSet can not be edited or saved. <code>Update()</code>, <code>Append()</code>, <code>AppendBlank()</code> and <code>Gather()</code> return <code>.F.</code>, and changes made in an XBrowse are not written to the database. <code>lReadOnly</code> is unrelated to <code>lShowError</code>.</p>
+
+<pre><code>// Example
+oRs := oCn:RowSet( "SELECT id, name FROM customers", .T. )
+oRs := oCn:RowSet( "SELECT * FROM orders WHERE year = ?", { 2026 }, .T. )
+</code></pre>
 
 <!-- ================================================================ -->
 <h2 id="frecset">FRecSet - MariaDB Result Set</h2>

@@ -37,22 +37,134 @@ Compilar com VM multi-thread: <code>samples\DesktopWeb\build.bat</code> ou
 <code>admin</code>/<code>1234</code>, <code>demo</code>/<code>demo</code>.
 </p>
 
-<h2>Métodos principais (26.09)</h2>
-<ul>
-  <li><code>NavigateEx( cUrl, cMethod, cHeaders, cBody )</code>, <code>GoBack/GoForward/Reload/Stop</code>,
-    <code>GetSource/GetDocumentTitle/GetBrowserVersion</code>, <code>Print</code></li>
-  <li><code>SetZoomFactor/GetZoomFactor</code>, <code>SetDefaultScriptDialogs</code>,
-    <code>CapturePreview/PrintToPdf</code> (assíncronos),
-    <code>Add/RemoveWebResourceRequestedFilter</code>,
-    <code>ClearSession/ClearBrowsingData</code>, <code>EnableConsole</code>,
-    <code>CloseWebView/Reinitialize</code>, <code>Diag/Reregister</code></li>
-  <li>Eventos <code>bOn*</code>: NavigationStarting (cancelável), SourceChanged, HistoryChanged,
-    DocumentTitleChanged, NewWindow, Permission, WebResource, FullScreen, ProcessFailed,
-    FrameNavStarting/Completed, Console, CapturePreview, PrintToPdf, ClearBrowsingData,
-    ZoomFactorChanged, ScriptDialog. Constantes em <code>include/WebView2.ch</code>.
-    Demo: <code>samples/webview2/wvdemo.prg</code> + <code>pulse.html</code>.</li>
-</ul>
+<h2 id="extended-api">FWH 26.09</h2>
+<p>A API ampliada, incluindo bOnConsole e EnableConsole, está disponível desde FWH 26.09, dia 12 (12 de setembro de 2026). São recursos da biblioteca FWH; atualizar apenas o Runtime da Microsoft não basta. Bibliotecas anteriores podem não ter o setter DATA _BONCONSOLE nem o método EnableConsole.</p>
+<h2 id="methods">Referência de métodos</h2>
+<p>C = string, N = número, L = lógico, HWND = handle do Windows. NIL indica ausência de retorno de estado; não é indicador de sucesso. "delegated" indica retorno do método da janela; "virtual" é um hook vazio. Início assíncrono e sucesso final são distintos.</p>
+<div style="overflow-x:auto"><table><thead><tr><th>Assinatura</th><th>Retorno</th><th>Comportamento</th></tr></thead><tbody>
+<tr><td><code>New( oWndParent, cUserDataFolder, cBrowserExecutableFolder )</code></td><td><code>Self</code></td><td>Cria a vista em oWndParent, ou uma janela própria se for NIL. Verifique hWebView se a criação falhar. O perfil vazio usa %LOCALAPPDATA%\FWH_webview2_UserData. O terceiro argumento seleciona a pasta do Runtime Fixed Version na criação.</td></tr>
+<tr><td><code>Navigate( cUrl )</code></td><td><code>NIL</code></td><td>Inicia a navegação; bOnNavigationCompleted informa a conclusão.</td></tr>
+<tr><td><code>NavigateEx( cUrl, cMethod, cHeaders, cBody )</code></td><td><code>L</code></td><td>Envia uma requisição HTTP. O método vazio usa GET; os cabeçalhos usam linhas Nome: Valor separadas por CRLF. .T. indica início, não sucesso HTTP. Em runtimes antigos apenas GET simples pode usar Navigate como alternativa.</td></tr>
+<tr><td><code>SetHtml( cHtml )</code></td><td><code>NIL</code></td><td>Carrega uma string HTML.</td></tr>
+<tr><td><code>Eval( cJavaScript )</code></td><td><code>NIL</code></td><td>Executa JavaScript na página; o resultado codificado em JSON chega de forma assíncrona a bOnEval.</td></tr>
+<tr><td><code>InjectJavascript( cScript )</code></td><td><code>NIL</code></td><td>Adiciona um elemento script por Eval. A CSP da página pode bloqueá-lo; os escapes do template JS também são processados. Use Eval para execução direta.</td></tr>
+<tr><td><code>GoBack()</code></td><td><code>NIL</code></td><td>Volta no histórico.</td></tr>
+<tr><td><code>GoForward()</code></td><td><code>NIL</code></td><td>Avança no histórico.</td></tr>
+<tr><td><code>Reload()</code></td><td><code>NIL</code></td><td>Recarrega a página atual.</td></tr>
+<tr><td><code>Stop()</code></td><td><code>NIL</code></td><td>Para a navegação atual.</td></tr>
+<tr><td><code>Print()</code></td><td><code>NIL</code></td><td>Chama window.print() por Eval; não retorna um resultado síncrono de impressão.</td></tr>
+<tr><td><code>CanGoBack()</code></td><td><code>L</code></td><td>Indica se há entrada anterior no histórico; .F. se indisponível.</td></tr>
+<tr><td><code>CanGoForward()</code></td><td><code>L</code></td><td>Indica se há entrada seguinte no histórico; .F. se indisponível.</td></tr>
+<tr><td><code>GetSource()</code></td><td><code>C</code></td><td>Retorna a URL atual, não o HTML da página; string vazia se indisponível.</td></tr>
+<tr><td><code>GetDocumentTitle()</code></td><td><code>C</code></td><td>Retorna o título do documento, ou uma string vazia.</td></tr>
+<tr><td><code>GetBrowserVersion()</code></td><td><code>C</code></td><td>Lê no registro do Windows a versão instalada do Runtime Evergreen, ou uma string vazia. Não consulta a pasta Fixed Version selecionada.</td></tr>
+<tr><td><code>SetZoomFactor( nZoom )</code></td><td><code>NIL</code></td><td>Ajusta o zoom do navegador apenas se 0.1 &lt; nZoom &lt; 10.0.</td></tr>
+<tr><td><code>GetZoomFactor()</code></td><td><code>N</code></td><td>Retorna o zoom do navegador; 1.0 sem controlador.</td></tr>
+<tr><td><code>SetSizeRatio( nRatio )</code></td><td><code>N</code></td><td>Armazena e retorna nRatio (inicialmente 1.0); não redimensiona o navegador nem muda o zoom.</td></tr>
+<tr><td><code>GetSizeRatio()</code></td><td><code>N</code></td><td>Retorna o fator de escala armazenado para a aplicação.</td></tr>
+<tr><td><code>SetSize( nWidth, nHeight )</code></td><td><code>NIL</code></td><td>Ajusta o tamanho do WebView em pixels.</td></tr>
+<tr><td><code>SetTitle( cText )</code></td><td><code>L</code></td><td>Chama SetWindowText em oWnd; retorna o indicador de sucesso da API do Windows.</td></tr>
+<tr><td><code>Center()</code></td><td><code>delegated</code></td><td>Delega a oWnd:Center(); o retorno pertence à classe da janela.</td></tr>
+<tr><td><code>Run()</code></td><td><code>delegated</code></td><td>Delega a oWnd:Activate(); não é um resultado de estado do WebView.</td></tr>
+<tr><td><code>SetParent( oWnd )</code></td><td><code>HWND</code></td><td>Armazena o novo pai, aplica estilos child/visible e reatribui a janela. Retorna o pai anterior de SetParent; zero também pode indicar ausência de pai anterior.</td></tr>
+<tr><td><code>GetWindow()</code></td><td><code>HWND</code></td><td>Retorna oWnd:hWnd, o handle da janela FWH associada.</td></tr>
+<tr><td><code>SetUserAgent( cUserAgent )</code></td><td><code>NIL</code></td><td>Altera o user agent do navegador.</td></tr>
+<tr><td><code>SetBackGroundColor( nRgb )</code></td><td><code>NIL</code></td><td>Ajusta o fundo do controlador com um valor RGB do Windows.</td></tr>
+<tr><td><code>OpenDevToolsWindow( lOnOff )</code></td><td><code>NIL</code></td><td>Abre as ferramentas de desenvolvimento com .T.; .F. não fecha uma janela de ferramentas já aberta.</td></tr>
+<tr><td><code>ShowDownloads( lOnOff )</code></td><td><code>NIL</code></td><td>Controla se a interface padrão aparece ao iniciar futuros downloads; .F. marca-os atendidos. Não abre nem fecha um diálogo de downloads existente.</td></tr>
+<tr><td><code>SetDefaultScriptDialogs( lOn )</code></td><td><code>NIL</code></td><td>Ativa/desativa os diálogos JS padrão; NIL usa .T. Use bOnScriptDialog para aceitá-los.</td></tr>
+<tr><td><code>SetDefaultContextMenus( lOn )</code></td><td><code>NIL</code></td><td>Ativa/desativa os menus de contexto padrão; NIL usa .T.</td></tr>
+<tr><td><code>CloseWebView()</code></td><td><code>NIL</code></td><td>Fecha o navegador/controlador; o objeto da classe permanece.</td></tr>
+<tr><td><code>Reinitialize()</code></td><td><code>NIL</code></td><td>Fecha e recria ambiente/controlador e reassocia eventos. Não retorna indicador de sucesso; restaure o estado da página/aplicação.</td></tr>
+<tr><td><code>Reregister()</code></td><td><code>NIL</code></td><td>Reassocia eventos de zoom, diálogo JS e recursos web; remove antes os registros antigos.</td></tr>
+<tr><td><code>End()</code></td><td><code>NIL</code></td><td>Destrói a vista nativa, limpa hWebView e remove o objeto do registro de vistas.</td></tr>
+<tr><td><code>SetContextMenuExclude( cCsv )</code></td><td><code>C</code></td><td>Armazena e retorna a lista CSV (NIL torna-se vazio). O filtro por item não está implementado com o SDK incluído.</td></tr>
+<tr><td><code>EnableConsole( lOnOff )</code></td><td><code>L</code></td><td>Ajusta e retorna lConsole (NIL usa .T.). Consulte a seção de console para injeção e desativação.</td></tr>
+<tr><td><code>CapturePreview( cPngPath )</code></td><td><code>L</code></td><td>Inicia captura PNG assíncrona. .F. indica que não iniciou; com .T. aguarde bOnCapturePreview(lOk,cPath,hWebView).</td></tr>
+<tr><td><code>PrintToPdf( cPdfPath, lLandscape )</code></td><td><code>L</code></td><td>Inicia exportação PDF assíncrona (.F./NIL em lLandscape indica retrato). Requer interfaces compatíveis do runtime. O resultado final chega a bOnPrintToPdf(lOk,cPath,hWebView), não ao indicador de início.</td></tr>
+<tr><td><code>AddWebResourceRequestedFilter( cUri, nContext )</code></td><td><code>NIL</code></td><td>Adiciona um filtro por padrão de URL; NIL no contexto usa WV_CONTEXT_ALL (0). bOnWebResource recebe as correspondências.</td></tr>
+<tr><td><code>RemoveWebResourceRequestedFilter( cUri, nContext )</code></td><td><code>NIL</code></td><td>Remove um filtro por padrão de URL; NIL no contexto usa WV_CONTEXT_ALL (0). bOnWebResource recebe as correspondências.</td></tr>
+<tr><td><code>AddHostObject( cName )</code></td><td><code>.F.</code></td><td>Não implementado: não registra objeto host IDispatch.</td></tr>
+<tr><td><code>RemoveHostObject( cName )</code></td><td><code>.T.</code></td><td>Operação de compatibilidade sem efeito; não remove objeto host nativo.</td></tr>
+<tr><td><code>ClearBrowsingData( nKinds )</code></td><td><code>.T.</code></td><td>Enfileira remoção JS de cookies acessíveis, local/session storage e Cache Storage; NIL em nKinds usa 0. nKinds consta na confirmação, mas não seleciona categorias nativas. O evento assíncrono confirma o script, não a remoção de cada item.</td></tr>
+<tr><td><code>ClearSession()</code></td><td><code>.T.</code></td><td>Alias de ClearBrowsingData(0); não apaga todo o perfil.</td></tr>
+<tr><td><code>ClearAllBrowsingData()</code></td><td><code>.T.</code></td><td>Alias de ClearBrowsingData(0); apesar do nome não remove cookies HttpOnly nem todo o perfil.</td></tr>
+<tr><td><code>Diag( nKind )</code></td><td><code>N</code></td><td>NIL usa 0. 0/1/2: HRESULT de registro para zoom/diálogo/recurso web. 3/4/5: contadores de eventos. Outros valores usam o contador de recursos web; sem vista nativa retorna -999.</td></tr>
+<tr><td><code>Terminate()</code></td><td><code>virtual</code></td><td>Hook virtual vazio; não substitui End().</td></tr>
+<tr><td><code>Destroy()</code></td><td><code>virtual</code></td><td>Hook virtual vazio; não substitui End().</td></tr>
+</tbody></table></div>
+<h2 id="events">Blocos de eventos</h2>
+<p>Atribua blocos com estes argumentos. hWebView é o ponteiro da vista nativa, não o objeto FWH; bOnBind recebe oWebView como segundo argumento. Retornos afetam o comportamento apenas quando indicado.</p>
+<div style="overflow-x:auto"><table><thead><tr><th>Assinatura</th><th>Comportamento</th></tr></thead><tbody>
+<tr><td><code>bOnBind( uParams, oWebView )</code></td><td>Recebe argumentos comuns de SendToFWH; retorno ignorado. Arrays de um elemento são desempacotados; console/limpeza usam eventos separados.</td></tr>
+<tr><td><code>bOnEval( cJson, hWebView )</code></td><td>Resultado JavaScript codificado em JSON; retorno ignorado.</td></tr>
+<tr><td><code>bOnConsole( cJson, hWebView )</code></td><td>JSON de console descrito abaixo; retorno ignorado.</td></tr>
+<tr><td><code>bOnNavigationCompleted( cUrl, hWebView )</code></td><td>Navegação principal concluída. Retorno ignorado.</td></tr>
+<tr><td><code>bOnSourceChanged( cUrl, hWebView )</code></td><td>URL de origem alterada. Retorno ignorado.</td></tr>
+<tr><td><code>bOnDocumentTitleChanged( cTitle, hWebView )</code></td><td>Título do documento alterado. Retorno ignorado.</td></tr>
+<tr><td><code>bOnHistoryChanged( lCanBack, lCanFwd, hWebView )</code></td><td>Disponibilidade do histórico alterada. Retorno ignorado.</td></tr>
+<tr><td><code>bOnFrameNavCompleted( cUrl, hWebView )</code></td><td>Navegação do frame concluída. Retorno ignorado.</td></tr>
+<tr><td><code>bOnCapturePreview( lOk, cPath, hWebView )</code></td><td>Resultado final da captura/gravação PNG. Retorno ignorado.</td></tr>
+<tr><td><code>bOnPrintToPdf( lOk, cPath, hWebView )</code></td><td>Resultado final da exportação PDF. Retorno ignorado.</td></tr>
+<tr><td><code>bOnClearBrowsingData( lOk, cWhat, hWebView )</code></td><td>Confirmação JS: .T., &quot;javascript&quot;; não comprova remoção completa do perfil. Retorno ignorado.</td></tr>
+<tr><td><code>bOnZoomFactorChanged( nZoom, hWebView )</code></td><td>Zoom do navegador alterado. Retorno ignorado.</td></tr>
+<tr><td><code>bOnProcessFailed( nKind, hWebView )</code></td><td>Falha do processo do navegador; tipo WV_FAIL_*. Retorno ignorado.</td></tr>
+<tr><td><code>bOnFullScreen( lFull, hWebView )</code></td><td>Estado HTML de tela cheia alterado. Retorno ignorado.</td></tr>
+<tr><td><code>bOnNavigationStarting( cUrl, hWebView )</code></td><td>Retorne .T. para cancelar; outros valores, ou valores não lógicos, não cancelam.</td></tr>
+<tr><td><code>bOnFrameNavStarting( cUrl, hWebView )</code></td><td>Retorne .T. para cancelar; outros valores, ou valores não lógicos, não cancelam.</td></tr>
+<tr><td><code>bOnNewWindow( cUrl, hWebView )</code></td><td>Apenas notificação: a vista nativa navega à URL e marca a requisição como atendida; o retorno não seleciona outra janela.</td></tr>
+<tr><td><code>bOnPermission( cUrl, nKind, hWebView )</code></td><td>Retorne WV_PERM_ALLOW (1), WV_PERM_DENY (2), ou 0 para padrão; nKind é o tipo de permissão do runtime.</td></tr>
+<tr><td><code>bOnWebResource( cUrl, nContext, hWebView )</code></td><td>Retorne .T. ou número diferente de zero para bloquear com HTTP 403 vazio; caso contrário permite. Instale os filtros antes.</td></tr>
+<tr><td><code>bOnScriptDialog( cUri, nKind, cMsg, cDefault, hWebView )</code></td><td>Retorne .T. para Accept; .F. mantém a gestão padrão (ou sem diálogo se desativada). Um bloco instalado com retorno não lógico é tratado como .T. Tipos WV_DIALOG_*. Não é exposta a troca da resposta de prompt.</td></tr>
+<tr><td><code>bOnHostObject( cObjName, cMethod, cArg, hWebView )</code></td><td>Hook reservado com retorno C; o registro nativo de objetos host não está implementado.</td></tr>
+</tbody></table></div>
+<h2 id="console">Console JavaScript</h2>
+<p>EnableConsole(.T.) intercepta console.log/warn/error/info sem remover a saída original do console e adiciona um listener de erros JavaScript. Envia um envelope interno por SendToFWH; bOnConsole recebe a string JSON interna, não o envelope externo. args contém strings: objetos são convertidos com JSON.stringify. line consta nos erros de window, não nas chamadas comuns a console.</p>
+<p>Chame EnableConsole(.T.) após cada navegação principal: a interceptação é instalada uma vez por documento. EnableConsole(.F.) interrompe a entrega pelo despachante do console, mas não desfaz a interceptação JavaScript já instalada. Seu retorno lógico é o indicador armazenado, não prova de injeção correta. O console é separado das mensagens comuns de bOnBind.</p>
+<h3>Exemplos de JSON recebido</h3>
+<pre><code>{
+  &quot;type&quot;: &quot;log&quot;,
+  &quot;args&quot;: [
+    &quot;ready&quot;,
+    &quot;{\&quot;count\&quot;:2}&quot;
+  ],
+  &quot;url&quot;: &quot;https://example.com/&quot;
+}
 
+{
+  &quot;type&quot;: &quot;error&quot;,
+  &quot;args&quot;: [
+    &quot;Uncaught ReferenceError: x is not defined&quot;
+  ],
+  &quot;url&quot;: &quot;https://example.com/&quot;,
+  &quot;line&quot;: 12
+}</code></pre>
+<h3>Exemplo de console</h3>
+<pre><code>oWeb := TWebView2():New( oWnd )
+IF ! Empty( oWeb:hWebView )
+   oWeb:bOnConsole := { | cJson, hWebView | LogConsole( cJson ) }
+   oWeb:bOnNavigationCompleted := { | cUrl, hWebView | oWeb:EnableConsole( .T. ) }
+   oWeb:Navigate( &quot;https://example.com/&quot; )
+ENDIF
+
+STATIC FUNCTION LogConsole( cJson )
+   LOCAL hData
+   hb_jsonDecode( cJson, @hData )
+   IF ValType( hData ) == &quot;H&quot;
+      // hData[ &quot;type&quot; ], hData[ &quot;args&quot; ], hData[ &quot;url&quot; ]
+      // hData[ &quot;line&quot; ]: only for a window error
+      OutputDebugString( cJson )
+   ENDIF
+RETURN NIL</code></pre>
+<h3 id="compatibility">Compatibilidade de bibliotecas</h3>
+<p>Para aceitar bibliotecas FWH anteriores, verifique a atribuição do DATA e a chamada a EnableConsole. Use a mesma verificação ao ativar o rastreamento após navegar. Apenas o diagnóstico do console é omitido; o tráfego comum SendToFWH/bOnBind não muda.</p>
+<pre><code>IF __objHasMsg( oWeb, &quot;_BONCONSOLE&quot; ) .AND. ;
+   __objHasMsg( oWeb, &quot;ENABLECONSOLE&quot; )
+   oWeb:bOnConsole := { | cJson, hWebView | LogConsole( cJson ) }
+   oWeb:EnableConsole( .T. )
+ENDIF</code></pre>
+<h2 id="limits">Limites e requisitos do runtime</h2>
+<p>AddHostObject não está implementado. SetContextMenuExclude armazena a lista mas não filtra itens do menu. A limpeza usa JavaScript, não apaga todo o perfil nem cookies HttpOnly. Verifique o resultado PNG/PDF assíncrono nos eventos. As interfaces disponíveis do runtime podem limitar PDF, downloads e requisições HTTP. Consulte samples/webview2/wvdemo.prg + pulse.html e as constantes WV_CONTEXT_*, WV_DIALOG_*, WV_PERM_* e WV_FAIL_* em include/WebView2.ch.</p>
 <p>See <a href="../../pt/reference/classes.html">Classes Alfabético</a> for full class list.</p>
 <h2>Veja Também</h2><ul>
 <li><a href="../../pt/internet/twebview.html">TWebView</a></li>
